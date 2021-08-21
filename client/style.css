@@ -1,0 +1,393 @@
+
+body {
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+div {
+    user-select: none;
+}
+button {
+    outline: none;
+    cursor: pointer;
+}
+canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+}
+
+#gameDiv {
+    top: 100%;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #000000;
+    padding: 0px;
+    margin: 0px;
+}
+#ctx {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#worldMapCanvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(40,40,40,0.5);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(20,20,20,0.5);
+}
+@font-face {
+    font-family: 'pixel';
+    src: url(/client/websiteAssets/MiniSet2.ttf@14d552ae72d147f7b96abae4220f32c0.woff) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.UI-display-light {
+    position: absolute;
+    font-family: 'pixel';
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #362a1e;
+    border: 1px solid #000000;
+    cursor: default;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+}
+.UI-button-light {
+    position: absolute;
+    font-family: 'pixel';
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #362a1e;
+    border: 1px solid #000000;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+}
+.UI-button-light:hover {
+    background-color: #231913;
+}
+.UI-dropdown-light {
+    position: absolute;
+    font-family: 'pixel';
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #362a1e;
+    border: 1px solid #000000;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    display: none;
+}
+.UI-dropdown-light:hover {
+    background-color: #231913;
+}
+.UI-input-light {
+    position: absolute;
+    font-family: 'pixel';
+    color: #000000;
+    border: 1px solid #000000;
+    transition-duration: 0.4s;
+    cursor: text;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+}
+.UI-text-light {
+    position: absolute;
+    font-family: 'pixel';
+    color: #000000;
+    border: 0px;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+}
+.UI-link-light {
+    color: #00ff90;
+}
+.UI-link-light:focus {
+    color: #00aa70;
+}
+
+
+#pageDiv {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-image: url("./maps/Preview.png");
+    background-size: 100%, 100%;
+}
+#pageShade {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    opacity: 0.3;
+}
+#pageScroll {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+}
+#pageName {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, 0%);
+    font-size: 80px;
+    font-family: 'pixel';
+    color: #000000;
+}
+
+#pageStackLeft {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 35%;
+    height: auto;
+}
+#pageStackRight {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    width: 35%;
+    height: auto;
+}
+.pageStackInner {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+}
+.pageStackOuter {
+    position: relative;
+    top: 0px;
+    left: 0%;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    min-height: 0px;
+    margin-bottom: 8px;
+}
+#signInput {
+    position: static;
+    top: 8px;
+    float: left;
+    width: auto;
+}
+#signLabel {
+    position: static;
+    top: 8px;
+    left: 8px;
+    float: left;
+    width: auto;
+}
+#signBottom {
+    position: static;
+    top: 52px;
+    left: 8px;
+    float: left;
+    width: auto;
+    margin-bottom: 12px;
+}
+#username {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#password {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#newPassword {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#usernameLabel {
+    position: relative;
+    top: 8px;
+    left: 8px;
+    color: #ffffff;
+}
+#passwordLabel {
+    position: relative;
+    top: 12px;
+    left: 8px;
+    color: #ffffff;
+}
+#newPasswordLabel {
+    position: relative;
+    top: 12px;
+    left: 8px;
+    color: #ffffff;
+}
+#signIn {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#createAccount {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#deleteAccount {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#changePassword {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+
+.disconnectedDiv {
+    background-color: #ff0000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    font-family: 'pixel';
+    text-align: center;
+    font-size: 75px;
+    color: #000000;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    transition-duration: 0.4s;
+    opacity: 0.75;
+    user-select: none;
+}
+.disconnectedDiv:hover {
+    opacity: 1;
+    font-size: 150px;
+}
+
+
+#respawn {
+    background-color: #555555;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    font-family: 'pixel';
+    text-align: center;
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    transition-duration: 0.4s;
+    opacity: 0.75;
+    user-select: none;
+    transform: translate(-50%, -50%);
+}
+#respawn:hover {
+    opacity: 1;
+    user-select: none;
+}
+#respawnTimer {
+    top: 35%;
+    left: 50%;
+    position: absolute;
+    font-family: 'pixel';
+    text-align: center;
+    font-size: 45px;
+    color: #ffffff;
+    transform: translate(-50%, -50%);
+}
+#deathScreen {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background: rgba(255,0,0,0.3);
+}
+
+#mapFade {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0;
+    cursor: crosshair;
+}
+#regionDisplay {
+    position: absolute;
+    font-size: 60px;
+    top: 15%;
+    left: 50%;
+    margin-right: -50%;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transform: translate(-50%, -50%);
+    color: #362b20;
+    background-color: #725640;
+    border: 1px solid #000000;
+    opacity: 0;
+    cursor: crosshair;
+}

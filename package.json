@@ -1,0 +1,23 @@
+{
+  "name": "meadowguarder",
+  "version": "1.0.0",
+  "description": "NodeJs RPG game",
+  "main": "app.js",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "pathfinding": "^0.4.18",
+    "pg": "^8.6.0",
+    "socket.io": "^2.4.1"
+  },
+  "engines": {
+    "node": "12.16.3",
+    "npm": "6.14.4"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
