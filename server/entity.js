@@ -373,12 +373,14 @@ Actor = function(param){
                         var ny = Math.floor(self.y / 64) - dy;
                         if(nx < size && nx > 0 && ny < size && ny > 0 && trackX < size && trackX > 0 && trackY < size && trackY > 0){
                             var path = finder.findPath(nx,ny,trackX,trackY,grid);
-                            self.trackingPath = PF.Util.compressPath(path);
-                            for(var i in self.trackingPath){
-                                self.trackingPath[i][0] += dx;
-                                self.trackingPath[i][1] += dy;
+                            if(path[0]){
+                                self.trackingPath = PF.Util.compressPath(path);
+                                for(var i in self.trackingPath){
+                                    self.trackingPath[i][0] += dx;
+                                    self.trackingPath[i][1] += dy;
+                                }
+                                self.trackingPath.shift();
                             }
-                            self.trackingPath.shift();
                         }
                     }
                 }
@@ -703,6 +705,9 @@ Actor = function(param){
             }
         }
         self.onHit(pt);
+        if(pt.type === 'Projectile'){
+            pt.onHit(self);
+        }
     }
     self.shootProjectile = function(projectileType,param){
         var direction = param.direction / 180 * Math.PI || self.direction / 180 * Math.PI;
@@ -787,6 +792,23 @@ Player = function(param,socket){
     self.hp = 100;
     self.hpMax = 100;
     playerMap[self.map] += 1;
+    self.onDeath = function(pt){
+        for(var i in Projectile.list){
+            if(Projectile.list[i].parent === pt.id){
+                Projectile.list[i].toRemove = true;
+            }
+        }
+        pt.canMove = false;
+        pt.keyPress = {
+            left:false,
+            right:false,
+            up:false,
+            down:false,
+            attack:false,
+            second:false,
+            heal:false,
+        }
+    }
     var lastSelf = {};
     self.update = function(){
         self.mapChange += 1;
@@ -1027,6 +1049,20 @@ Player.onConnect = function(socket,username){
         socket.emit('selfId',{id:socket.id});
 
         socket.on('keyPress',function(data){
+            if(data.inputId === 'releaseAll'){
+                player.keyPress = {
+                    up:false,
+                    down:false,
+                    left:false,
+                    right:false,
+                    attack:false,
+                    second:false,
+                    heal:false,
+                };
+            }
+            if(player.hp < 1){
+                return;
+            }
             if(data.inputId === player.keyMap.left || data.inputId === player.secondKeyMap.left || data.inputId === player.thirdKeyMap.left){
                 player.keyPress.left = data.state;
             }
@@ -1054,17 +1090,6 @@ Player.onConnect = function(socket,username){
                 player.rawMouseY = data.state.y;
                 player.mouseX = data.state.x + player.x;
                 player.mouseY = data.state.y + player.y;
-            }
-            if(data.inputId === 'releaseAll'){
-                player.keyPress = {
-                    up:false,
-                    down:false,
-                    left:false,
-                    right:false,
-                    attack:false,
-                    second:false,
-                    heal:false,
-                };
             }
         });
 
@@ -1139,6 +1164,13 @@ Projectile = function(param){
     self.width = 28 * 4;
     self.height = 8 * 4;
     self.stats = param.stats;
+    self.pierce = 1 || param.pierce;
+    self.onHit = function(pt){
+        self.pierce -= 1;
+        if(self.pierce === 0){
+            self.toRemove = true;
+        }
+    }
     var lastSelf = {};
     self.update = function(){
         self.updatePosition();
