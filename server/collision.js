@@ -3,7 +3,7 @@ Collision = function(param){
     self.map = param.map;
     self.x = param.x;
     self.y = param.y;
-    self.id = "" + self.map + ":" + (~~(self.x / 64) * 64) + ":" + (~~(self.y / 64) * 64) + ":";
+    self.id = "" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":";
     self.width = param.width;
     self.height = param.height;
     self.info = param.info;
@@ -20,7 +20,7 @@ Collision.list = {};
 
 Spawner = function(param){
     var self = Entity(param);
-    self.id = "" + self.map + ":" + (~~(self.x / 64) * 64) + ":" + (~~(self.y / 64) * 64) + ":";
+    self.id = "" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":";
     self.spawned = false;
     self.toRemove = false;
     self.spawnId = param.spawnId;

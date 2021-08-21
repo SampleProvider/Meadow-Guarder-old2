@@ -212,7 +212,7 @@ setInterval(function(){
 				Monster.list[i].onDamage(Projectile.list[j]);
 				if(Monster.list[i].toRemove){
 					delete Monster.list[i];
-					continue;
+					break;
 				}
 			}
 		}

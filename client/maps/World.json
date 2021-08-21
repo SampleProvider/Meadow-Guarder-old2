@@ -165,12 +165,12 @@
                  "x":0,
                  "y":0
                 }],
-         "height":16,
+         "height":32,
          "id":9,
          "name":"Spawner:skeleton:",
          "opacity":1,
          "startx":0,
-         "starty":0,
+         "starty":-16,
          "type":"tilelayer",
          "visible":false,
          "width":16,
@@ -187,7 +187,7 @@
         {
          "columns":208,
          "firstgid":1,
-         "image":"tileset1 - No Shadows.png",
+         "image":"..\/..\/..\/Meadow Guarder1\/client\/maps\/tileset1 - No Shadows.png",
          "imageheight":2752,
          "imagewidth":3328,
          "margin":0,
@@ -7820,7 +7820,7 @@
         {
          "columns":4,
          "firstgid":35777,
-         "image":"specialtiles.png",
+         "image":"..\/..\/..\/Meadow Guarder1\/client\/maps\/specialtiles.png",
          "imageheight":80,
          "imagewidth":64,
          "margin":0,

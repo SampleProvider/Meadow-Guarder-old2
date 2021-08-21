@@ -350,7 +350,7 @@ Actor = function(param){
                 var trackX = Math.floor(self.trackingEntity.x / 64) - dx;
                 var trackY = Math.floor(self.trackingEntity.y / 64) - dy;
                 self.trackTime += 1;
-                if(trackX !== self.trackingPos.x || trackY !== self.trackingPos.y || self.justCollided){
+                if(trackX !== self.trackingPos.x || trackY !== self.trackingPos.y){
                     if(self.trackTime > 50 + 50 * Math.random()){
                         self.trackTime = 0;
                         self.trackingPos.x = trackX;
@@ -364,7 +364,7 @@ Actor = function(param){
                             for(var j = 0;j < size;j++){
                                 var x = dx * 64 + i * 64;
                                 var y = dy * 64 + j * 64;
-                                if(Collision.list[self.map + ':' + x / 64 + ':' + y / 64 + ':']){
+                                if(Collision.list[self.map + ':' + x + ':' + y + ':']){
                                     grid.setWalkableAt(i,j,false);
                                 }
                             }
@@ -1115,6 +1115,11 @@ Player.getAllInitPack = function(socket){
             for(var i in Projectile.list){
                 if(Projectile.list[i].map === player.map){
                     pack.projectile.push(Projectile.list[i].getInitPack());
+                }
+            }
+            for(var i in Monster.list){
+                if(Monster.list[i].map === player.map){
+                    pack.monster.push(Monster.list[i].getInitPack());
                 }
             }
             socket.emit('update',pack);
