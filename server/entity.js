@@ -97,10 +97,12 @@ Entity = function(param){
     }
     self.update = function(){
         self.updatePosition();
+        self.x = Math.round(self.x);
+        self.y = Math.round(self.y);
     }
     self.updatePosition = function(){
-        self.x += Math.round(self.spdX);
-        self.y += Math.round(self.spdY);
+        self.x += self.spdX;
+        self.y += self.spdY;
     }
 	self.getDistance = function(pt){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
@@ -318,9 +320,6 @@ Actor = function(param){
 
     self.randomPos = {
         walking:false,
-        waypoint:false,
-        currentWaypoint:null,
-        waypointAttemptTime:0,
         x:0,
         y:0,
         directionX:0,
@@ -423,83 +422,39 @@ Actor = function(param){
                 self.spdY *= self.trackCircleDirection;
                 self.spdX += Math.cos(angle) * (self.trackDistance - self.getDistance(self.trackingEntity)) / self.trackDistance * 2;
                 self.spdY += Math.sin(angle) * (self.trackDistance - self.getDistance(self.trackingEntity)) / self.trackDistance * 2;
-                if(self.randomPos.walking){
-                    if(self.randomPos.waypoint){
-                        if(self.randomPos.currentWaypoint){
-                            self.randomPos.currentWaypoint = null;
-                            self.trackingEntity = undefined;
-                            self.randomPos.waypointAttemptTime = 0;
-                            self.spdX = 0;
-                            self.spdY = 0;
-                        }
-                    }
-                }
             }
         }
-        if(self.randomPos.walking){
-            if(self.randomPos.waypoint){
-                if(self.randomPos.currentWaypoint){
-                    if(self.randomPos.waypointAttemptTime > 1200){
-                        self.randomPos.currentWaypoint = undefined;
-                        self.trackingEntity = undefined;
-                        self.randomPos.waypointAttemptTime = 0;
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                    else if(self.randomPos.currentWaypoint.map !== self.map){
-                        self.randomPos.currentWaypoint = undefined;
-                        self.trackingEntity = undefined;
-                        self.randomPos.waypointAttemptTime = 0;
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                }
-                else{
-                    if(self.randomPos.waypointAttemptTime > 60 + Math.random() * 60){
-                        var waypoints = [];
-                        for(var i in WayPoint.list){
-                            if(WayPoint.list[i].info.id === self.id && WayPoint.list[i].map === self.map && WayPoint.list[i].x > self.x - 14 * 64 && WayPoint.list[i].x < self.x + 14 * 64 && WayPoint.list[i].y > self.y - 14 * 64 && WayPoint.list[i].y < self.y + 14 * 64){
-                                waypoints.push(WayPoint.list[i]);
-                            }
-                        }
-                        self.randomPos.currentWaypoint = waypoints[Math.floor(Math.random() * waypoints.length)];
-                        self.trackEntity(self.randomPos.currentWaypoint,0);
-                    }
-                }
-                self.randomPos.waypointAttemptTime += 1;
+        else if(self.randomPos.walking){
+            if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
+                self.spdX = Math.round(Math.random() * 2 - 1);
+                self.randomPos.timeX = 0;
+                self.randomPos.waitTimeX = 30 * Math.random() + 30;
             }
-            else if(self.trackingEntity === undefined){
-                if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
-                    self.spdX = Math.round(Math.random() * 2 - 1);
-                    self.randomPos.timeX = 0;
-                    self.randomPos.waitTimeX = 30 * Math.random() + 30;
-                }
-                else if(self.spdX !== 0 && self.randomPos.timeX > self.randomPos.waitTimeX){
-                    self.spdX = 0;
-                    self.randomPos.timeX = 0;
-                    self.randomPos.walkTimeX = 50 * Math.random() + 50;
-                }
-                if(self.spdY === 0 && self.randomPos.timeY > self.randomPos.walkTimeY){
-                    self.spdY = Math.round(Math.random() * 2 - 1);
-                    self.randomPos.timeY = 0;
-                    self.randomPos.waitTimeY = 30 * Math.random() + 30;
-                }
-                else if(self.spdY !== 0 && self.randomPos.timeY > self.randomPos.waitTimeY){
-                    self.spdY = 0;
-                    self.randomPos.timeY = 0;
-                    self.randomPos.walkTimeY = 50 * Math.random() + 50;
-                }
-                self.randomPos.timeX += 1;
-                self.randomPos.timeY += 1;
-                if(Math.abs(self.x - self.randomPos.x) > 256){
-                    self.spdX = -1 * Math.abs(self.x - self.randomPos.x) / (self.x - self.randomPos.x);
-                }
-                if(Math.abs(self.y - self.randomPos.y) > 256){
-                    self.spdY = -1 * Math.abs(self.y - self.randomPos.y) / (self.y - self.randomPos.y);
-                }
+            else if(self.spdX !== 0 && self.randomPos.timeX > self.randomPos.waitTimeX){
+                self.spdX = 0;
+                self.randomPos.timeX = 0;
+                self.randomPos.walkTimeX = 50 * Math.random() + 50;
+            }
+            if(self.spdY === 0 && self.randomPos.timeY > self.randomPos.walkTimeY){
+                self.spdY = Math.round(Math.random() * 2 - 1);
+                self.randomPos.timeY = 0;
+                self.randomPos.waitTimeY = 30 * Math.random() + 30;
+            }
+            else if(self.spdY !== 0 && self.randomPos.timeY > self.randomPos.waitTimeY){
+                self.spdY = 0;
+                self.randomPos.timeY = 0;
+                self.randomPos.walkTimeY = 50 * Math.random() + 50;
+            }
+            self.randomPos.timeX += 1;
+            self.randomPos.timeY += 1;
+            if(Math.abs(self.x - self.randomPos.x) > 256){
+                self.spdX = -1 * Math.abs(self.x - self.randomPos.x) / (self.x - self.randomPos.x);
+            }
+            if(Math.abs(self.y - self.randomPos.y) > 256){
+                self.spdY = -1 * Math.abs(self.y - self.randomPos.y) / (self.y - self.randomPos.y);
             }
         }
-        // if(self.pushPt !== undefined && self.invincible === false){
+        // if(self.pushPt !== null && self.invincible === false){
         //     var pushPower = self.pushPt.pushPower * (Math.random() + 1);
         //     if(pushPower !== 0){
         //         self.moveSpeed = pushPower * 5 * (1 - self.pushResist);
@@ -537,12 +492,11 @@ Actor = function(param){
         self.trackingEntity = pt;
         self.trackingPath = [];
         self.trackDistance = distance;
-        self.trackingPos = {x:undefined,y:undefined};
+        self.trackingPos = {x:null,y:null};
         self.trackCircleDirection = 1;
     }
-    self.randomWalk = function(walking,waypoint){
+    self.randomWalk = function(walking){
         self.randomPos.walking = walking;
-        self.randomPos.waypoint = waypoint;
         self.randomPos.x = self.x;
         self.randomPos.y = self.y;
     }
@@ -868,6 +822,8 @@ Player = function(param,socket){
             }
             self.updateCollisions();
         }
+        self.x = Math.round(self.x);
+        self.y = Math.round(self.y);
         self.updateAttack();
         self.updateHp();
         self.updateAnimation();
@@ -1202,6 +1158,8 @@ Projectile = function(param){
     var lastSelf = {};
     self.update = function(){
         self.updatePosition();
+        self.x = Math.round(self.x);
+        self.y = Math.round(self.y);
         self.updateCollisions();
         self.timer -= 1;
         if(self.timer === 0){
@@ -1297,13 +1255,21 @@ Monster = function(param){
     self.changeSize();
     self.hp = self.hpMax;
     self.target = null;
+    self.damaged = false;
     self.type = 'Monster';
-    self.aggro = 4;
+    self.aggro = 6;
     self.attackState = 'passive';
     self.attackPhase = 1;
     self.spawnId = param.spawnId;
     self.reload = 0;
-    self.randomWalk(true,false);
+    self.randomWalk(true);
+    self.onHit = function(pt){
+        if(self.target === null){
+            self.target = pt.parent;
+            self.trackEntity(Player.list[pt.parent],0);
+            self.damaged = true;
+        }
+    }
     var lastSelf = {};
     self.update = function(){
         self.moveSpeed = self.maxSpeed;
@@ -1314,6 +1280,8 @@ Monster = function(param){
             }
             self.updateCollisions();
         }
+        self.x = Math.round(self.x);
+        self.y = Math.round(self.y);
         self.updateHp();
         self.updateAnimation();
         self.updateTarget();
@@ -1335,7 +1303,7 @@ Monster = function(param){
                     self.spdY = 0;
                 }
                 else{
-                    if(self.getDistance(Player.list[self.target]) > self.aggro * 64 * 1.5){
+                    if(self.getDistance(Player.list[self.target]) > self.aggro * 64 * 2 && self.damaged === false){
                         self.target = null;
                         self.trackingEntity = null;
                         self.spdX = 0;
@@ -1357,6 +1325,7 @@ Monster = function(param){
                         if(self.getDistance(Player.list[i]) < self.aggro * 64){
                             self.target = i;
                             self.trackEntity(Player.list[i],0);
+                            self.damaged = false;
                         }
                     }
                 }
