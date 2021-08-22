@@ -1,0 +1,46 @@
+{
+    "skeleton":{
+        "name":"Skeleton",
+        "hpMax":"50",
+        "stats":{
+            "damage":5,
+            "defense":2,
+            "heal":0
+        },
+        "maxSpeed":5,
+        "drawSize":"medium"
+    },
+    "snake":{
+        "name":"Snake",
+        "hpMax":"25",
+        "stats":{
+            "damage":5,
+            "defense":0,
+            "heal":0
+        },
+        "maxSpeed":7,
+        "drawSize":"small"
+    },
+    "slime":{
+        "name":"Slime",
+        "hpMax":"75",
+        "stats":{
+            "damage":8,
+            "defense":0,
+            "heal":5
+        },
+        "maxSpeed":3,
+        "drawSize":"small"
+    },
+    "jellyeye":{
+        "name":"Jelly Eye",
+        "hpMax":"300",
+        "stats":{
+            "damage":11,
+            "defense":4,
+            "heal":0
+        },
+        "maxSpeed":5,
+        "drawSize":"big"
+    }
+}

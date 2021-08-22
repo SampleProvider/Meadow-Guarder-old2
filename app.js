@@ -205,6 +205,11 @@ setInterval(function(){
 				Player.list[i].onDamage(Projectile.list[j]);
 			}
 		}
+		for(var j in Monster.list){
+			if(Player.list[i].isColliding(Monster.list[j])){
+				Player.list[i].onDamage(Monster.list[j]);
+			}
+		}
 	}
 	for(var i in Monster.list){
 		for(var j in Projectile.list){

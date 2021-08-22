@@ -57,38 +57,44 @@ resetCanvas(ctx);
 var Img = {};
 Img.player = new Image();
 Img.player.src = '/client/img/player.png';
-Img.skeleton = new Image();
-Img.skeleton.src = '/client/img/skeleton.png';
-Img.playerBody = new Image();
-Img.playerBody.src = '/client/img/Player Map Body.png';
-Img.playerShirt = new Image();
-Img.playerShirt.src = '/client/img/Player Map Shirt.png';
-Img.playerShirtExtra = {};
-Img.playerShirtExtra.none = new Image();
-Img.playerShirtExtra.none.src = '/client/img/Player Map Bald.png';
-Img.playerShirtExtra.shirtPouch = new Image();
-Img.playerShirtExtra.shirtPouch.src = '/client/img/Player Map Shirt Pouch.png';
-Img.playerShirtExtra.shirtNecklace = new Image();
-Img.playerShirtExtra.shirtNecklace.src = '/client/img/Player Map Shirt Necklace.png';
-Img.playerPants = new Image();
-Img.playerPants.src = '/client/img/Player Map Pants.png';
-Img.playerHair = {};
-Img.playerHair.shortHair = new Image();
-Img.playerHair.shortHair.src = '/client/img/Player Map Hair Short.png';
-Img.playerHair.longHair = new Image();
-Img.playerHair.longHair.src = '/client/img/Player Map Hair Long.png';
-Img.playerHair.bald = new Image();
-Img.playerHair.bald.src = '/client/img/Player Map Bald.png';
-Img.playerHair.mohawkHair = new Image();
-Img.playerHair.mohawkHair.src = '/client/img/Player Map Hair Mohawk.png';
-Img.playerHair.shortHat = new Image();
-Img.playerHair.shortHat.src = '/client/img/Player Map Hat Short.png';
-Img.playerHair.longHat = new Image();
-Img.playerHair.longHat.src = '/client/img/Player Map Hat Long.png';
-Img.playerHair.vikingHat = new Image();
-Img.playerHair.vikingHat.src = '/client/img/Player Map Hat Viking.png';
-Img.arrow = new Image();
-Img.arrow.src = '/client/img/arrow.png';
+
+var request = new XMLHttpRequest();
+request.open('GET',"/client/data/projectiles.json",true);
+request.onload = function(){
+    if(this.status >= 200 && this.status < 400){
+        var json = JSON.parse(this.response);
+        for(var i in json){
+            Img[i] = new Image();
+            Img[i].src = '/client/img/' + i + '.png';
+        }
+    }
+    else{
+
+    }
+};
+request.onerror = function(){
+    
+};
+request.send();
+var request2 = new XMLHttpRequest();
+request2.open('GET',"/client/data/monsters.json",true);
+request2.onload = function(){
+    if(this.status >= 200 && this.status < 400){
+        var json = JSON.parse(this.response);
+        for(var i in json){
+            Img[i] = new Image();
+            Img[i].src = '/client/img/' + i + '.png';
+        }
+    }
+    else{
+
+    }
+};
+request2.onerror = function(){
+    
+};
+request2.send();
+
 Img.greenHealthBar = new Image();
 Img.greenHealthBar.src = '/client/img/greenHealthBar.png';
 Img.redHealthBar = new Image();
@@ -139,7 +145,7 @@ var renderPlayer = function(img,shadeValues){
     finalGl.drawImage(temp,0,0,72 * 4,152 * 4);
     return finalTemp;
 }
-var drawPlayer = function(img,canvas,animationDirection,animation,x,y,size){
+var drawPlayer = function(img,canvas,animationDirection,animation,x,y,size,drawSize){
     var animationValue = 0;
     switch(animationDirection){
         case "down":
@@ -155,7 +161,15 @@ var drawPlayer = function(img,canvas,animationDirection,animation,x,y,size){
             animationValue = 3;
             break;
     }
-    canvas.drawImage(img,16 * animation,24 * animationValue,16,24,x - size * 8,y - size * 18,size * 16,size * 24);
+    if(drawSize === 'small'){
+        canvas.drawImage(img,16 * animation,16 * animationValue,16,16,x - size * 8,y - size * 8,size * 16,size * 16);
+    }
+    else if(drawSize === 'medium'){
+        canvas.drawImage(img,16 * animation,24 * animationValue,16,24,x - size * 8,y - size * 18,size * 16,size * 24);
+    }
+    else{
+        canvas.drawImage(img,32 * animation,32 * animationValue,32,32,x - size * 16,y - size * 16,size * 32,size * 32);
+    }
     return canvas;
 }
 var arrayIsEqual = function(arr1,arr2){

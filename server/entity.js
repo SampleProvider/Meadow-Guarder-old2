@@ -1,5 +1,6 @@
 
 var PF = require('pathfinding');
+const { setFlagsFromString } = require('v8');
 
 addToChat = function(style,message,debug){
     var d = new Date();
@@ -30,6 +31,8 @@ var playerMap = {};
 
 tiles = [];
 
+var monsterData = require('./../client/data/monsters.json');
+var projectileData = require('./../client/data/projectiles.json');
 
 spawnMonster = function(spawner,spawnId){
     var monster = new Monster({
@@ -288,6 +291,7 @@ Actor = function(param){
     self.stats = {
         damage:1,
         defense:0,
+        heal:0,
     };
 
     self.animate = true;
@@ -305,6 +309,13 @@ Actor = function(param){
     self.trackDistance = 0;
     self.trackCircleDirection = 1;
     self.trackTime = 100;
+
+    self.drawSize = 'medium';
+
+    self.name = 'null';
+
+    self.maxSpeed = 10;
+    self.moveSpeed = 10;
 
     self.randomPos = {
         walking:false,
@@ -458,7 +469,7 @@ Actor = function(param){
                 }
                 self.randomPos.waypointAttemptTime += 1;
             }
-            else if(self.trackingEntity === undefined && self.followingEntity === undefined){
+            else if(self.trackingEntity === undefined){
                 if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
                     self.spdX = Math.round(Math.random() * 2 - 1);
                     self.randomPos.timeX = 0;
@@ -721,15 +732,33 @@ Actor = function(param){
         }
         var projectile = new Projectile({
             parent:param.id || self.id,
-            x:param.x || self.x + Math.cos(direction) * param.distance || self.x + Math.cos(direction) * 10,
-            y:param.x || self.y + Math.sin(direction) * param.distance || self.y + Math.sin(direction) * 10,
+            x:param.x || self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) || self.x + Math.cos(direction) * projectileData[projectileType].width * 2,
+            y:param.x || self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) || self.y + Math.sin(direction) * projectileData[projectileType].width * 2,
             spdX:Math.cos(direction) * param.speed || Math.cos(direction) * 10,
-            spdY:Math.cos(direction) * param.speed || Math.sin(direction) * 10,
+            spdY:Math.sin(direction) * param.speed || Math.sin(direction) * 10,
             direction:self.direction || param.direction,
             map:self.map,
             stats:stats,
             projectileType:projectileType || 'arrow',
         });
+    }
+    self.changeSize = function(){
+        if(self.drawSize === 'small'){
+            self.width = 56;
+            self.height = 64;
+        }
+        else if(self.drawSize === 'medium'){
+            self.width = 56;
+            self.height = 52;
+        }
+        else{
+            self.width = 112;
+            self.height = 112;
+        }
+    }
+    self.updateHp = function(){
+        self.hp += self.stats.heal / 20;
+        self.hp = Math.min(self.hpMax,self.hp);
     }
     return self;
 }
@@ -782,15 +811,19 @@ Player = function(param,socket){
         hairType:'vikingHat',
     };
     self.username = param.username;
-    self.displayName = param.username;
-    self.width = 56;
-    self.height = 52;
+    self.name = param.username;
+    self.changeSize();
     self.x = 32;
     self.y = 32;
-    self.moveSpeed = 10;
     self.type = 'Player';
     self.hp = 100;
     self.hpMax = 100;
+    self.stats = {
+        damage:5,
+        defense:0,
+        heal:2,
+    }
+    self.reload = 0;
     playerMap[self.map] += 1;
     self.onDeath = function(pt){
         for(var i in Projectile.list){
@@ -812,6 +845,7 @@ Player = function(param,socket){
     var lastSelf = {};
     self.update = function(){
         self.mapChange += 1;
+        self.moveSpeed = self.maxSpeed;
         for(var i = 0;i < self.moveSpeed;i++){
             self.updateSpd();
             self.updateMove();
@@ -821,6 +855,7 @@ Player = function(param,socket){
             self.updateCollisions();
         }
         self.updateAttack();
+        self.updateHp();
         self.updateAnimation();
         if(self.mapChange === 0){
             self.canMove = false;
@@ -879,10 +914,11 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
+        self.reload += 1;
         if(self.keyPress.attack){
-            self.shootProjectile('arrow',{
-                distance:16,
-            });
+            if(self.reload % 5 === 0){
+                self.shootProjectile('arrow',{});
+            }
         }
     }
     self.getUpdatePack = function(){
@@ -904,9 +940,9 @@ Player = function(param,socket){
             pack.username = self.username;
             lastSelf.username = self.username;
         }
-        if(lastSelf.displayName !== self.displayName){
-            pack.displayName = self.displayName;
-            lastSelf.displayName = self.displayName;
+        if(lastSelf.name !== self.name){
+            pack.name = self.name;
+            lastSelf.name = self.name;
         }
         for(var i in self.img){
             if(lastSelf.img){
@@ -954,6 +990,10 @@ Player = function(param,socket){
             pack.hpMax = self.hpMax;
             lastSelf.hpMax = self.hpMax;
         }
+        if(lastSelf.drawSize !== self.drawSize){
+            pack.drawSize = self.drawSize;
+            lastSelf.drawSize = self.drawSize;
+        }
         for(var i in self.stats){
             if(lastSelf.stats !== undefined){
                 if(lastSelf.stats[i] !== undefined){
@@ -972,37 +1012,6 @@ Player = function(param,socket){
                 lastSelf.stats = Object.create(self.stats);
             }
         }
-        for(var i in self.debuffs){
-            if(lastSelf.debuffs !== undefined){
-                if(lastSelf.debuffs[i] !== undefined){
-                    if(self.debuffs[i].id !== lastSelf.debuffs[i].id){
-                        pack.debuffs = self.debuffs;
-                        lastSelf.debuffs = JSON.parse(JSON.stringify(self.debuffs));
-                    }
-                    else if(self.debuffs[i].time !== lastSelf.debuffs[i].time){
-                        pack.debuffs = self.debuffs;
-                        lastSelf.debuffs = JSON.parse(JSON.stringify(self.debuffs));
-                    }
-                }
-                else{
-                    pack.debuffs = self.debuffs;
-                    lastSelf.debuffs = JSON.parse(JSON.stringify(self.debuffs));
-                }
-            }
-            else{
-                pack.debuffs = self.debuffs;
-                lastSelf.debuffs = JSON.parse(JSON.stringify(self.debuffs));
-            }
-        }
-        for(var i in lastSelf.debuffs){
-            if(self.debuffs[i] !== undefined){
-
-            }
-            else{
-                pack.debuffs = self.debuffs;
-                lastSelf.debuffs = JSON.parse(JSON.stringify(self.debuffs));
-            }
-        }
         return pack;
     }
     self.getInitPack = function(){
@@ -1012,15 +1021,15 @@ Player = function(param,socket){
         pack.y = self.y;
         pack.map = self.map;
         pack.username = self.username;
-        pack.displayName = self.displayName;
+        pack.name = self.name;
         pack.img = self.img;
         pack.animation = self.animation;
         pack.animationDirection = self.animationDirection;
         pack.direction = self.direction;
         pack.hp = self.hp;
         pack.hpMax = self.hpMax;
+        pack.drawSize = self.drawSize;
         pack.stats = self.stats;
-        pack.debuffs = self.debuffs;
         pack.type = self.type;
         return pack;
     }
@@ -1095,20 +1104,20 @@ Player.onConnect = function(socket,username){
 
         socket.on('respawn',function(data){
             if(player.hp > 0){
-                addToChat('style="color: #ff0000">',player.displayName + ' cheated using respawn.');
+                addToChat('style="color: #ff0000">',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
                 return;
             }
             player.hp = Math.round(player.hpMax / 2);
             // player.teleport(ENV.Spawnpoint.x,ENV.Spawnpoint.y,ENV.Spawnpoint.map);
-            addToChat('style="color: #00ff00">',player.displayName + ' respawned.');
+            addToChat('style="color: #00ff00">',player.name + ' respawned.');
         });
 
         socket.on('init',function(data){
             Player.getAllInitPack(socket);
         });
         Player.getAllInitPack(socket);
-        addToChat('style="color: #00ff00">',player.displayName + " just logged on.");
+        addToChat('style="color: #00ff00">',player.name + " just logged on.");
     });
 }
 Player.onDisconnect = function(socket){
@@ -1123,7 +1132,7 @@ Player.onDisconnect = function(socket){
     storeDatabase(Player.list);
     if(Player.list[socket.id]){
         playerMap[Player.list[socket.id].map] -= 1;
-        addToChat('style="color: #ff0000">',Player.list[socket.id].displayName + " logged off.");
+        addToChat('style="color: #ff0000">',Player.list[socket.id].name + " logged off.");
         delete Player.list[socket.id];
     }
 }
@@ -1161,8 +1170,11 @@ Projectile = function(param){
     self.timer = 40;
     self.parent = param.parent;
     self.type = 'Projectile';
-    self.width = 28 * 4;
-    self.height = 8 * 4;
+    for(var i in projectileData[self.projectileType]){
+        self[i] = projectileData[self.projectileType][i];
+    }
+    self.width *= 4;
+    self.height *= 4;
     self.stats = param.stats;
     self.pierce = 1 || param.pierce;
     self.onHit = function(pt){
@@ -1219,6 +1231,14 @@ Projectile = function(param){
             pack.y = self.y;
             lastSelf.y = self.y;
         }
+        if(lastSelf.width !== self.width){
+            pack.width = self.width;
+            lastSelf.width = self.width;
+        }
+        if(lastSelf.height !== self.height){
+            pack.height = self.height;
+            lastSelf.height = self.height;
+        }
         if(lastSelf.direction !== self.direction){
             pack.direction = self.direction;
             lastSelf.direction = self.direction;
@@ -1234,6 +1254,8 @@ Projectile = function(param){
         pack.id = self.id;
         pack.x = self.x;
         pack.y = self.y;
+        pack.width = self.width;
+        pack.height = self.height;
         pack.direction = self.direction;
         pack.projectileType = self.projectileType;
         return pack;
@@ -1246,20 +1268,29 @@ Projectile.list = {};
 Monster = function(param){
     var self = Actor(param);
     self.monsterType = param.monsterType;
+    for(var i in monsterData[self.monsterType]){
+        if(i === 'stats'){
+            for(var j in monsterData[self.monsterType][i]){
+                self.stats[j] = monsterData[self.monsterType][i][j];
+            }
+        }
+        else{
+            self[i] = monsterData[self.monsterType][i];
+        }
+    }
+    self.changeSize();
+    self.hp = self.hpMax;
     self.target = null;
-    self.moveSpeed = 5;
     self.type = 'Monster';
     self.aggro = 8;
     self.attackState = 'passive';
     self.attackPhase = 1;
-    self.width = 56;
-    self.height = 52;
-    self.hpMax = 100;
-    self.hp = 100;
     self.spawnId = param.spawnId;
+    self.reload = 0;
     self.randomWalk(true,false);
     var lastSelf = {};
     self.update = function(){
+        self.moveSpeed = self.maxSpeed;
         for(var i = 0;i < self.moveSpeed;i++){
             self.updateMove();
             if(self.canMove){
@@ -1267,6 +1298,7 @@ Monster = function(param){
             }
             self.updateCollisions();
         }
+        self.updateHp();
         self.updateAnimation();
         self.updateTarget();
         self.updateAttack();
@@ -1316,11 +1348,35 @@ Monster = function(param){
         }
     }
     self.updateAttack = function(){
-        if(self.target){
-            self.direction = Math.atan2(Player.list[self.target].y - self.y,Player.list[self.target].x - self.x) / Math.PI * 180;
-            self.shootProjectile('arrow',{
-                distance:16,
-            });
+        if(!self.target){
+            self.reload = 0;
+            return;
+        }
+        self.reload += 1;
+        self.direction = Math.atan2(Player.list[self.target].y - self.y,Player.list[self.target].x - self.x) / Math.PI * 180;
+        switch(self.monsterType){
+            case 'skeleton':
+                if(self.reload % 20 === 19){
+                    self.shootProjectile('bone',{
+                        speed:20,
+                    });
+                }
+                break;
+            case 'snake':
+                if(self.reload % 5 === 4){
+                    self.shootProjectile('snakeSpit',{
+                        speed:20,
+                    });
+                }
+                break;
+            case 'jellyeye':
+                if(self.reload % 2 === 0){
+                    self.shootProjectile('eye',{
+                        direction:self.direction + Math.random() * 20 - 10,
+                        speed:35,
+                    });
+                }
+                break;
         }
     }
     self.getUpdatePack = function(){
@@ -1366,6 +1422,14 @@ Monster = function(param){
             pack.hpMax = self.hpMax;
             lastSelf.hpMax = self.hpMax;
         }
+        if(lastSelf.drawSize !== self.drawSize){
+            pack.drawSize = self.drawSize;
+            lastSelf.drawSize = self.drawSize;
+        }
+        if(lastSelf.name !== self.name){
+            pack.name = self.name;
+            lastSelf.name = self.name;
+        }
         if(lastSelf.monsterType !== self.monsterType){
             pack.monsterType = self.monsterType;
             lastSelf.monsterType = self.monsterType;
@@ -1385,6 +1449,8 @@ Monster = function(param){
         pack.direction = self.direction;
         pack.hp = self.hp;
         pack.hpMax = self.hpMax;
+        pack.drawSize = self.drawSize;
+        pack.name = self.name;
         pack.monsterType = self.monsterType;
         pack.type = self.type;
         return pack;
@@ -1425,14 +1491,7 @@ var renderWorld = function(json,name){
                         }
                         if(tile_idx + 1 === json.tilesets[1].firstgid + 9){
                             if(json.layers[i].name.includes('Spawner')){
-                                var spawnId = "";
-                                for(var l = 8;l < json.layers[i].name.length;l++){
-                                    if(json.layers[i].name[l] === ':'){
-                                        if(spawnId === ""){
-                                            spawnId = json.layers[i].name.substr(0,l);
-                                        }
-                                    }
-                                }
+                                spawnId = json.layers[i].name.substr(8,json.layers[i].name.length - 9);
                                 var spawner = new Spawner({
                                     x:s_x + 32,
                                     y:s_y + 32,
