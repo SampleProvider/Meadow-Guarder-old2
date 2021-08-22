@@ -757,6 +757,9 @@ Actor = function(param){
         }
     }
     self.updateHp = function(){
+        if(self.hp < 1){
+            return;
+        }
         self.hp += self.stats.heal / 20;
         self.hp = Math.min(self.hpMax,self.hp);
     }
