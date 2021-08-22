@@ -37,7 +37,7 @@
         "hpMax":"300",
         "stats":{
             "damage":11,
-            "defense":4,
+            "defense":3,
             "heal":0
         },
         "maxSpeed":5,

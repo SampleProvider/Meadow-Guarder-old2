@@ -1108,6 +1108,7 @@ Player.onConnect = function(socket,username){
                 Player.onDisconnect(SOCKET_LIST[player.id]);
                 return;
             }
+            player.canMove = true;
             player.hp = Math.round(player.hpMax / 2);
             // player.teleport(ENV.Spawnpoint.x,ENV.Spawnpoint.y,ENV.Spawnpoint.map);
             addToChat('style="color: #00ff00">',player.name + ' respawned.');
@@ -1372,8 +1373,8 @@ Monster = function(param){
             case 'jellyeye':
                 if(self.reload % 2 === 0){
                     self.shootProjectile('eye',{
-                        direction:self.direction + Math.random() * 20 - 10,
-                        speed:35,
+                        direction:Math.floor(Math.random() * 10) * 36 + Math.random() * 10 - 5,
+                        speed:15,
                     });
                 }
                 break;
