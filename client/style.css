@@ -402,6 +402,7 @@ canvas {
     padding: 0px;
     background-color: #ffffff;
     opacity: 0.3;
+    border: 1px solid #000000;
 }
 #chatText {
     position: absolute;

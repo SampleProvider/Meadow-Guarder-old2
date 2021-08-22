@@ -165,6 +165,7 @@ io.sockets.on('connection',function(socket){
 					socket.emit('disconnected');
 					Player.onDisconnect(socket);
 					delete SOCKET_LIST[socket.id];
+					return;
 				}
 			}
 			var notSpace = false;
