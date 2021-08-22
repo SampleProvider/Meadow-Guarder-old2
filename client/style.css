@@ -62,7 +62,7 @@ canvas {
     width: 20px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(40,40,40,0.5);
+    background: rgba(30,30,30,0.5);
 }
 ::-webkit-scrollbar-thumb {
     background: rgba(20,20,20,0.5);
@@ -390,4 +390,34 @@ canvas {
     border: 1px solid #000000;
     opacity: 0;
     cursor: crosshair;
+}
+
+#chatBackground {
+    position: absolute;
+    left: 0%;
+    bottom: 26px;
+    width: 400px;
+    height: 150px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    opacity: 0.3;
+}
+#chatText {
+    position: absolute;
+    left: 0%;
+    bottom: 26px;
+    width: 400px;
+    height: 150px;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    font-size: small;
+}
+#chatInput {
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    height: 20px;
+    width: 388px;
 }

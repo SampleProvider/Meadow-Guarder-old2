@@ -1,8 +1,7 @@
 
 var PF = require('pathfinding');
-const { setFlagsFromString } = require('v8');
 
-addToChat = function(style,message,debug){
+addToChat = function(color,message,debug){
     var d = new Date();
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
@@ -18,13 +17,12 @@ addToChat = function(style,message,debug){
         m = '00';
     }
     console.error("[" + h + ":" + m + "] " + message);
-    // for(var i in Player.list){
-    //     SOCKET_LIST[i].emit('addToChat',{
-    //         style:style,
-    //         message:message,
-    //         debug:debug,
-    //     });
-    // }
+    for(var i in Player.list){
+        SOCKET_LIST[i].emit('addToChat',{
+            color:color,
+            message:message,
+        });
+    }
 }
 
 var playerMap = {};
@@ -151,6 +149,7 @@ Entity = function(param){
             x:0,
             y:1,
         }
+        var axis3 = null;
 
         var vectorDotProduct = function(pt1,pt2){
             return (pt1.x * pt2.x) + (pt1.y * pt2.y);
@@ -228,7 +227,7 @@ Entity = function(param){
             return false;
         }
         
-        if(axis3 === undefined){
+        if(axis3 === null){
             return true;
         }
 
@@ -710,6 +709,7 @@ Actor = function(param){
             self.onDeath(self);
             if(self.type === 'Player'){
                 SOCKET_LIST[self.id].emit('death');
+                addToChat('#ff0000',self.name + ' died.');
             }
             else{
                 self.toRemove = true;
@@ -765,7 +765,7 @@ Actor = function(param){
 
 Player = function(param,socket){
     var self = Actor(param);
-    self.id = param.id;
+
     self.keyPress = {
         left:false,
         right:false,
@@ -810,20 +810,31 @@ Player = function(param,socket){
         hair:[Math.random() * 255,Math.random() * 255,Math.random() * 255,0.5],
         hairType:'vikingHat',
     };
+
     self.username = param.username;
     self.name = param.username;
+
     self.changeSize();
+
     self.x = 32;
     self.y = 32;
+
     self.type = 'Player';
+
     self.hp = 100;
     self.hpMax = 100;
+
     self.stats = {
         damage:5,
         defense:0,
         heal:2,
     }
+
     self.reload = 0;
+
+    self.lastChat = 0;
+    self.chatWarnings = 0;
+    self.textColor = '#000000'
     playerMap[self.map] += 1;
     self.onDeath = function(pt){
         for(var i in Projectile.list){
@@ -890,6 +901,7 @@ Player = function(param,socket){
             self.canMove = true;
             self.invincible = false;
         }
+        self.lastChat -= 1;
     }
     self.updateSpd = function(){
         self.spdX = 0;
@@ -1104,21 +1116,21 @@ Player.onConnect = function(socket,username){
 
         socket.on('respawn',function(data){
             if(player.hp > 0){
-                addToChat('style="color: #ff0000">',player.name + ' cheated using respawn.');
+                addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
                 return;
             }
             player.canMove = true;
             player.hp = Math.round(player.hpMax / 2);
             // player.teleport(ENV.Spawnpoint.x,ENV.Spawnpoint.y,ENV.Spawnpoint.map);
-            addToChat('style="color: #00ff00">',player.name + ' respawned.');
+            addToChat('#00ff00',player.name + ' respawned.');
         });
 
         socket.on('init',function(data){
             Player.getAllInitPack(socket);
         });
         Player.getAllInitPack(socket);
-        addToChat('style="color: #00ff00">',player.name + " just logged on.");
+        addToChat('#00ff00',player.name + " just logged on.");
     });
 }
 Player.onDisconnect = function(socket){
@@ -1133,7 +1145,7 @@ Player.onDisconnect = function(socket){
     storeDatabase(Player.list);
     if(Player.list[socket.id]){
         playerMap[Player.list[socket.id].map] -= 1;
-        addToChat('style="color: #ff0000">',Player.list[socket.id].name + " logged off.");
+        addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
         delete Player.list[socket.id];
     }
 }

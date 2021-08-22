@@ -468,6 +468,9 @@ setInterval(function(){
 },1000/80);
 
 document.onkeydown = function(event){
+    if(chatPress){
+        return;
+    }
     if(!event.isTrusted){
         socket.emit('timeout');
     }
@@ -478,6 +481,7 @@ document.onkeydown = function(event){
     socket.emit('keyPress',{inputId:key,state:true});
 }
 document.onkeyup = function(event){
+    chatPress = false;
     var key = event.key || event.keyCode;
     socket.emit('keyPress',{inputId:key,state:false});
 }

@@ -140,6 +140,15 @@
     	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></div>
 		<div id="regionDisplay" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></div>
+		<div id="chatBackground" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event);">
+			
+		</div>
+		<div id="chatText" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event);">
+				
+		</div>
+		<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);">
+			<input id="chatInput" class="UI-input-light" type="text"></input>
+		</form>
 	</div>
 	<div id="deathDiv" style="display:none;">
 		<div id="deathScreen"></div>
@@ -150,6 +159,7 @@
 		<button class="disconnectedDiv">Disconnected</button>
 	</div>
 	<script src="/client/game.js" defer></script>
+	<script src="/client/chat.js" defer></script>
 	<script src="/client/entity.js" defer></script>
 	<script src="/client/maps.js" defer></script>
 	<script src="/client/signIn.js" defer></script>

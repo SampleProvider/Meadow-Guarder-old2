@@ -151,6 +151,40 @@ io.sockets.on('connection',function(socket){
 		Player.onDisconnect(socket);
 		delete SOCKET_LIST[socket.id];
 	});
+	socket.on('chatMessage',function(data){
+		if(Player.list[socket.id]){
+			if(Player.list[socket.id].lastChat > 0){
+				Player.list[socket.id].chatWarnings += 1.5;
+				if(Player.list[socket.id].chatWarnings > 5){
+					socket.emit('addToChat',{
+						color:'#ff0000',
+						message:'[!] Spamming the chat has been detected on this account. Please lower your chat message rate.',
+					});
+				}
+				if(Player.list[socket.id].chatWarnings > 10){
+					socket.emit('disconnected');
+					Player.onDisconnect(socket);
+					delete SOCKET_LIST[socket.id];
+				}
+			}
+			var notSpace = false;
+			for(var i = 0;i < data.length;i++){
+				if(data[i] !== ' '){
+					notSpace = true;
+				}
+			}
+			if(notSpace){
+				addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + data);
+				Player.list[socket.id].lastChat = 20;
+				Player.list[socket.id].chatWarnings -= 0.5;
+			}
+		}
+		else{
+			socket.emit('disconnected');
+			Player.onDisconnect(socket);
+			delete SOCKET_LIST[socket.id];
+		}
+	});
 });
 
 setInterval(function(){
