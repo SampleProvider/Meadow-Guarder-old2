@@ -428,22 +428,22 @@ Actor = function(param){
             if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
                 self.spdX = Math.round(Math.random() * 2 - 1);
                 self.randomPos.timeX = 0;
-                self.randomPos.waitTimeX = 30 * Math.random() + 30;
+                self.randomPos.waitTimeX = 100 * Math.random() + 100;
             }
             else if(self.spdX !== 0 && self.randomPos.timeX > self.randomPos.waitTimeX){
                 self.spdX = 0;
                 self.randomPos.timeX = 0;
-                self.randomPos.walkTimeX = 50 * Math.random() + 50;
+                self.randomPos.walkTimeX = 200 * Math.random() + 200;
             }
             if(self.spdY === 0 && self.randomPos.timeY > self.randomPos.walkTimeY){
                 self.spdY = Math.round(Math.random() * 2 - 1);
                 self.randomPos.timeY = 0;
-                self.randomPos.waitTimeY = 30 * Math.random() + 30;
+                self.randomPos.waitTimeY = 100 * Math.random() + 100;
             }
             else if(self.spdY !== 0 && self.randomPos.timeY > self.randomPos.waitTimeY){
                 self.spdY = 0;
                 self.randomPos.timeY = 0;
-                self.randomPos.walkTimeY = 50 * Math.random() + 50;
+                self.randomPos.walkTimeY = 200 * Math.random() + 200;
             }
             self.randomPos.timeX += 1;
             self.randomPos.timeY += 1;
