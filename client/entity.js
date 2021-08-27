@@ -147,6 +147,12 @@ var Projectile = function(initPack){
     self.parentType = initPack.parentType;
     self.animations = initPack.animations;
     self.animation = initPack.animation;
+    self.fade = 0;
+    self.fadeState = 0;
+    if(self.relativeToParent !== false){
+        self.fade = 1;
+        self.fadeState = 1;
+    }
     self.update = function(){
         if(self.interpolationStage > 0){
             self.x += self.spdX;
@@ -155,6 +161,26 @@ var Projectile = function(initPack){
         self.interpolationStage -= 1;
     }
     self.draw = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+            self.fade += 0.05;
+            if(self.fade >= 1){
+                self.fade = 1;
+                self.fadeState = 1;
+            }
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+            self.fade -= 0.05;
+            if(self.fade <= 0){
+                ctx.globalAlpha = 1;
+                self.toRemove = true;
+                return;
+            }
+        }
         self.animation = Math.floor(self.animation);
         increaseProjectileByParent(self);
         ctx.save();
@@ -163,6 +189,9 @@ var Projectile = function(initPack){
         ctx.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
         ctx.restore();
         decreaseProjectileByParent(self);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
     }
     Projectile.list[self.id] = self;
     return self;

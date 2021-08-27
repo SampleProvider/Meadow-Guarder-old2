@@ -486,7 +486,15 @@ socket.on('update',function(data){
     }
     for(var i in Projectile.list){
         if(Projectile.list[i].updated === false){
-            delete Projectile.list[i];
+            if(Projectile.list[i].relativeToParent === false){
+                if(Projectile.list[i].fadeState === 1){
+                    Projectile.list[i].fadeState = 2;
+                    Projectile.list[i].fade = 0.99;
+                }
+            }
+            else{
+                delete Projectile.list[i];
+            }
         }
     }
     for(var i in Monster.list){
@@ -674,6 +682,10 @@ setInterval(function(){
         Monster.list[i].update();
     }
     for(var i in Projectile.list){
+        if(Projectile.list[i].toRemove){
+            delete Projectile.list[i];
+            continue;
+        }
         Projectile.list[i].update();
     }
     for(var i in Npc.list){
