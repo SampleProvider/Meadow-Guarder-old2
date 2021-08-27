@@ -116,6 +116,26 @@ request3.onerror = function(){
     
 };
 request3.send();
+var request3 = new XMLHttpRequest();
+request3.open('GET',"/client/data/harvestableNpcs.json",true);
+request3.onload = function(){
+    if(this.status >= 200 && this.status < 400){
+        var json = JSON.parse(this.response);
+        for(var i in json){
+            Img[i + '0'] = new Image();
+            Img[i + '0'].src = '/client/img/harvestableNpcs/' + i + '0.png';
+            Img[i + '1'] = new Image();
+            Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
+        }
+    }
+    else{
+
+    }
+};
+request3.onerror = function(){
+    
+};
+request3.send();
 
 var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
@@ -238,6 +258,9 @@ socket.on('update',function(data){
     }
     for(var i in Npc.list){
         Npc.list[i].updated = false;
+    }
+    for(var i in HarvestableNpc.list){
+        HarvestableNpc.list[i].updated = false;
     }
     for(var i in DroppedItem.list){
         DroppedItem.list[i].updated = false;
@@ -437,6 +460,44 @@ socket.on('update',function(data){
                 }
             }
         }
+        if(data.harvestableNpc.length > 0){
+            for(var i = 0;i < data.harvestableNpc.length;i++){
+                if(HarvestableNpc.list[data.harvestableNpc[i].id]){
+                    var harvestableNpc = HarvestableNpc.list[data.harvestableNpc[i].id];
+                    harvestableNpc.spdX = 0;
+                    harvestableNpc.spdY = 0;
+                    harvestableNpc.interpolationStage = 4;
+                    harvestableNpc.updated = true;
+                    for(var j in data.harvestableNpc[i]){
+                        if(j === 'id'){
+
+                        }
+                        else if(j === 'x'){
+                            if(!harvestableNpc.x){
+                                harvestableNpc.x = data.harvestableNpc[i].x;
+                            }
+                            else{
+                                harvestableNpc.spdX = (data.harvestableNpc[i].x - harvestableNpc.x) / 4;
+                            }
+                        }
+                        else if(j === 'y'){
+                            if(!harvestableNpc.y){
+                                harvestableNpc.y = data.harvestableNpc[i].y;
+                            }
+                            else{
+                                harvestableNpc.spdY = (data.harvestableNpc[i].y - harvestableNpc.y) / 4;
+                            }
+                        }
+                        else{
+                            harvestableNpc[j] = data.harvestableNpc[i][j];
+                        }
+                    }
+                }
+                else{
+                    new HarvestableNpc(data.harvestableNpc[i]);
+                }
+            }
+        }
         if(data.droppedItem.length > 0){
             for(var i = 0;i < data.droppedItem.length;i++){
                 if(DroppedItem.list[data.droppedItem[i].id]){
@@ -510,6 +571,14 @@ socket.on('update',function(data){
             if(Npc.list[i].fadeState === 1){
                 Npc.list[i].fadeState = 2;
                 Npc.list[i].fade = 0.99;
+            }
+        }
+    }
+    for(var i in HarvestableNpc.list){
+        if(HarvestableNpc.list[i].updated === false){
+            if(HarvestableNpc.list[i].fadeState === 1){
+                HarvestableNpc.list[i].fadeState = 2;
+                HarvestableNpc.list[i].fade = 0.99;
             }
         }
     }
@@ -727,6 +796,15 @@ setInterval(function(){
             }
         }
     }
+    for(var i in HarvestableNpc.list){
+        for(var j = -1;j < 2;j++){
+            for(var k = -1;k < 2;k++){
+                if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
+                    HarvestableNpc.list[i].drawLayer0();
+                }
+            }
+        }
+    }
 
     var entities = [];
     for(var i in Player.list){
@@ -796,6 +874,15 @@ setInterval(function(){
         for(var j = -1;j < 2;j++){
             if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':']){
                 ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
+            }
+        }
+    }
+    for(var i in HarvestableNpc.list){
+        for(var j = -1;j < 2;j++){
+            for(var k = -1;k < 2;k++){
+                if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
+                    HarvestableNpc.list[i].drawLayer1();
+                }
             }
         }
     }

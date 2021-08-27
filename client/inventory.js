@@ -67,6 +67,7 @@ Inventory = function(socket,server){
             self.refreshItem(index);
             return index;
         }
+        return false;
     }
     self.removeItem = function(item,amount){
         var amountFound = 0;
@@ -411,6 +412,10 @@ Inventory = function(socket,server){
             }
             self.items[1] = {
                 id:'coppershiv',
+                amount:1,
+            }
+            self.items[2] = {
+                id:'scythe',
                 amount:1,
             }
             self.refreshInventory();

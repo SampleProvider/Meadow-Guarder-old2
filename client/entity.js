@@ -118,7 +118,7 @@ var Player = function(initPack){
         }
         if(inventory.items[inventory.hotbarSelectedItem]){
             if(inventory.items[inventory.hotbarSelectedItem].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].damage){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
                     ctx.save();
                     ctx.translate(self.x,self.y);
                     ctx.rotate((self.direction - 225) / 180 * Math.PI);
@@ -214,6 +214,7 @@ var Monster = function(initPack){
         }
         else{
             ctx.globalAlpha = self.fade;
+            self.hp = 0;
             self.fade -= 0.05;
             if(self.fade <= 0){
                 ctx.globalAlpha = 1;
@@ -287,6 +288,66 @@ var Npc = function(initPack){
     return self;
 }
 Npc.list = {};
+
+var HarvestableNpc = function(initPack){
+    var self = Entity(initPack);
+    self.img = initPack.img;
+    self.fade = 0;
+    self.fadeState = 0;
+    self.drawLayer0 = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+            self.fade += 0.05;
+            if(self.fade >= 1){
+                self.fade = 1;
+                self.fadeState = 1;
+            }
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+            self.fade -= 0.05;
+            if(self.fade <= 0){
+                ctx.globalAlpha = 1;
+                self.toRemove = true;
+                return;
+            }
+        }
+        if(self.img !== 'none'){
+            if(Img[self.img + '0']){
+                console.log(self.img,self.x,self.y)
+                ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height);
+            }
+        }
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
+    }
+    self.drawLayer1 = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+        }
+        if(self.img !== 'none'){
+            if(Img[self.img + '1']){
+                ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2 - self.height,self.width,self.height);
+            }
+        }
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
+    }
+    HarvestableNpc.list[self.id] = self;
+    return self;
+}
+HarvestableNpc.list = {};
 
 var DroppedItem = function(initPack){
     var self = Entity(initPack);

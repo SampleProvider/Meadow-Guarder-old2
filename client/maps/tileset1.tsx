@@ -480,6 +480,7 @@
    <object id="7" x="14" y="8" width="1" height="3"/>
   </objectgroup>
  </tile>
+ <tile id="2565" type="cottonPlant"/>
  <tile id="2732">
   <objectgroup draworder="index" id="2">
    <object id="1" x="10" y="11" width="6" height="5"/>

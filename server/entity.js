@@ -31,6 +31,7 @@ tiles = [];
 
 var monsterData = require('./../client/data/monsters.json');
 var projectileData = require('./../client/data/projectiles.json');
+var harvestableNpcData = require('./../client/data/harvestableNpcs.json');
 
 require('./../client/inventory.js');
 
@@ -551,14 +552,13 @@ Actor = function(param){
             if(Math.random() < self.itemDrops[i].chance * Player.list[pt].luck){
                 var amount = self.itemDrops[i].amount;
                 while(amount !== 0){
-                    var amountDropped = Math.ceil(Math.random() * amount);
-                    amount -= amountDropped;
+                    amount -= 1;
                     new DroppedItem({
                         x:self.x,
                         y:self.y,
                         map:self.map,
                         item:i,
-                        amount:amountDropped,
+                        amount:1,
                         parent:pt,
                         allPlayers:false,
                     });
@@ -715,6 +715,10 @@ Player = function(param,socket){
     }
     self.luck = 1;
 
+    self.pickaxePower = 0;
+    self.axePower = 0;
+    self.scythePower = 0;
+
     self.reload = 0;
     self.useTime = 0;
     self.weaponState = 0;
@@ -844,9 +848,7 @@ Player = function(param,socket){
         if(self.inventory.updateStats){
             self.inventory.updateStats = false;
 
-            self.hp = 100;
             self.hpMax = 100;
-            self.mana = 100;
             self.manaMax = 100;
             
             self.stats = {
@@ -857,6 +859,10 @@ Player = function(param,socket){
                 critChance:0,
             }
             self.luck = 1;
+
+            self.pickaxePower = 0;
+            self.axePower = 0;
+            self.scythePower = 0;
 
             self.maxSpeed = 10;
 
@@ -882,6 +888,15 @@ Player = function(param,socket){
                             }
                             if(item.useTime){
                                 self.useTime = item.useTime;
+                            }
+                            if(item.pickaxePower){
+                                self.pickaxePower = item.pickaxePower;
+                            }
+                            if(item.axePower){
+                                self.axePower = item.axePower;
+                            }
+                            if(item.scythePower){
+                                self.scythePower = item.scythePower;
                             }
                             if(item.weaponData){
                                 for(var j in item.weaponData){
@@ -925,6 +940,9 @@ Player = function(param,socket){
                         if(item.extraMovementSpeed !== undefined){
                             self.maxSpeed += item.extraMovementSpeed;
                         }
+                        if(item.extraDamage !== undefined){
+                            self.damage += item.extraDamage;
+                        }
                         if(item.weaponData){
                             for(var j in item.weaponData){
                                 if(self.weaponData[j]){
@@ -942,6 +960,85 @@ Player = function(param,socket){
                         }
                         catch(err){
                             console.log(err);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    self.updateHarvest = function(){
+        if(self.keyPress.attack === true){
+            if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
+                for(var i in HarvestableNpc.list){
+                    if(HarvestableNpc.list[i].img !== 'none'){
+                        if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && self.pickaxePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x - npc.width / 2 <= self.mouseX && npc.x + npc.width / 2 >= self.mouseX && npc.y - npc.height / 2 <= self.mouseY && npc.y + npc.height / 2 >= self.mouseY){
+                                    var amount = Math.ceil(npc.harvestAmount * Math.random());
+                                    while(amount > 0){
+                                        amount -= 1;
+                                        new DroppedItem({
+                                            item:npc.harvest,
+                                            amount:1,
+                                            x:npc.x,
+                                            y:npc.y,
+                                            map:npc.map,
+                                            parent:self.id,
+                                            allPlayers:false,
+                                        });
+                                    }
+                                    npc.img = 'none';
+                                    npc.timer = 2400 + 1200 * Math.random();
+                                    self.keyPress.attack = false;
+                                }
+                            }
+                        }
+                        else if(HarvestableNpc.list[i].harvestTool === 'axe' && self.axePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x - npc.width / 2 <= self.mouseX && npc.x + npc.width / 2 >= self.mouseX && npc.y - npc.height / 2 <= self.mouseY && npc.y + npc.height / 2 >= self.mouseY){
+                                    var amount = Math.ceil(npc.harvestAmount * Math.random());
+                                    while(amount > 0){
+                                        amount -= 1;
+                                        new DroppedItem({
+                                            item:npc.harvest,
+                                            amount:1,
+                                            x:npc.x,
+                                            y:npc.y,
+                                            map:npc.map,
+                                            parent:self.id,
+                                            allPlayers:false,
+                                        });
+                                    }
+                                    npc.img = 'none';
+                                    npc.timer = 2400 + 1200 * Math.random();
+                                    self.keyPress.attack = false;
+                                }
+                            }
+                        }
+                        else if(HarvestableNpc.list[i].harvestTool === 'scythe' && self.scythePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x - npc.width / 2 <= self.mouseX && npc.x + npc.width / 2 >= self.mouseX && npc.y - npc.height / 2 <= self.mouseY && npc.y + npc.height / 2 >= self.mouseY){
+                                    var amount = Math.ceil(npc.harvestAmount * Math.random());
+                                    while(amount > 0){
+                                        amount -= 1;
+                                        new DroppedItem({
+                                            item:npc.harvest,
+                                            amount:1,
+                                            x:npc.x,
+                                            y:npc.y,
+                                            map:npc.map,
+                                            parent:self.id,
+                                            allPlayers:false,
+                                        });
+                                    }
+                                    npc.img = 'none';
+                                    npc.timer = 2400 + 1200 * Math.random();
+                                    self.keyPress.attack = false;
+                                }
+                            }
                         }
                     }
                 }
@@ -1128,6 +1225,20 @@ Player.onConnect = function(socket,username){
             }
             if(data.inputId === player.keyMap.attack || data.inputId === player.secondKeyMap.attack || data.inputId === player.thirdKeyMap.attack){
                 player.keyPress.attack = data.state;
+                if(data.state === true){
+                    for(var i in DroppedItem.list){
+                        if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
+                            if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
+                                if(player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount) !== false){
+                                    player.keyPress.attack = false;
+                                    delete DroppedItem.list[i];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    player.updateHarvest();
+                }
             }
             if(data.inputId === player.keyMap.second || data.inputId === player.secondKeyMap.second || data.inputId === player.thirdKeyMap.second){
                 player.keyPress.second = data.state;
@@ -1181,7 +1292,7 @@ Player.getAllInitPack = function(socket){
     try{
         var player = Player.list[socket.id];
         if(player){
-            var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+            var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             for(var i in Player.list){
                 if(Player.list[i].map === player.map){
                     pack.player.push(Player.list[i].getInitPack());
@@ -1205,6 +1316,11 @@ Player.getAllInitPack = function(socket){
             for(var i in DroppedItem.list){
                 if(DroppedItem.list[i].map === player.map){
                     pack.droppedItem.push(DroppedItem.list[i].getInitPack());
+                }
+            }
+            for(var i in HarvestableNpc.list){
+                if(HarvestableNpc.list[i].map === player.map){
+                    pack.harvestableNpc.push(HarvestableNpc.list[i].getInitPack());
                 }
             }
             socket.emit('update',pack);
@@ -1620,6 +1736,8 @@ Monster.list = {};
 
 Npc = function(param){
     var self = Actor(param);
+    self.harvest = param.harvest;
+    self.changeSize();
     self.randomWalk(true);
     var lastSelf = {};
     self.update = function(){
@@ -1727,6 +1845,10 @@ Npc = function(param){
             pack.drawSize = self.drawSize;
             lastSelf.drawSize = self.drawSize;
         }
+        if(lastSelf.harvest !== self.harvest){
+            pack.harvest = self.harvest;
+            lastSelf.harvest = self.harvest;
+        }
         return pack;
     }
     self.getInitPack = function(){
@@ -1743,6 +1865,7 @@ Npc = function(param){
         pack.hp = self.hp;
         pack.hpMax = self.hpMax;
         pack.drawSize = self.drawSize;
+        pack.harvest = self.harvest;
         pack.type = self.type;
         return pack;
     }
@@ -1750,6 +1873,86 @@ Npc = function(param){
     return self;
 }
 Npc.list = {};
+
+HarvestableNpc = function(param){
+    var self = Entity(param);
+    self.img = param.img;
+    for(var i in harvestableNpcData[self.img]){
+        self[i] = harvestableNpcData[self.img][i];
+    }
+    self.timer = 0;
+    var lastSelf = {};
+    self.update = function(){
+        if(self.timer <= 0){
+            self.img = param.img;
+        }
+        self.timer -= 1;
+    }
+    self.getUpdatePack = function(){
+        var pack = {};
+        pack.id = self.id;
+        if(lastSelf.x !== self.x){
+            pack.x = self.x;
+            lastSelf.x = self.x;
+        }
+        if(lastSelf.y !== self.y){
+            pack.y = self.y;
+            lastSelf.y = self.y;
+        }
+        if(lastSelf.width !== self.width){
+            pack.width = self.width;
+            lastSelf.width = self.width;
+        }
+        if(lastSelf.height !== self.height){
+            pack.height = self.height;
+            lastSelf.height = self.height;
+        }
+        if(lastSelf.map !== self.map){
+            pack.map = self.map;
+            lastSelf.map = self.map;
+        }
+        if(lastSelf.img !== self.img){
+            pack.img = self.img;
+            lastSelf.img = self.img;
+        }
+        if(lastSelf.name !== self.name){
+            pack.name = self.name;
+            lastSelf.name = self.name;
+        }
+        if(lastSelf.animationDirection !== self.animationDirection){
+            pack.animationDirection = self.animationDirection;
+            lastSelf.animationDirection = self.animationDirection;
+        }
+        if(lastSelf.animation !== self.animation){
+            pack.animation = self.animation;
+            lastSelf.animation = self.animation;
+        }
+        if(lastSelf.drawSize !== self.drawSize){
+            pack.drawSize = self.drawSize;
+            lastSelf.drawSize = self.drawSize;
+        }
+        return pack;
+    }
+    self.getInitPack = function(){
+        var pack = {};
+        pack.id = self.id;
+        pack.x = self.x;
+        pack.y = self.y;
+        pack.width = self.width;
+        pack.height = self.height;
+        pack.map = self.map;
+        pack.img = self.img;
+        pack.name = self.name;
+        pack.animation = self.animation;
+        pack.animationDirection = self.animationDirection;
+        pack.drawSize = self.drawSize;
+        pack.type = self.type;
+        return pack;
+    }
+    HarvestableNpc.list[self.id] = self;
+    return self;
+}
+HarvestableNpc.list = {};
 
 DroppedItem = function(param){
 	var self = Entity(param);
@@ -1851,15 +2054,27 @@ var renderWorld = function(json,name){
                         s_x += json.layers[i].chunks[j].x * 64;
                         s_y += json.layers[i].chunks[j].y * 64;
                         for(var l in json.tilesets[0].tiles){
-                            if(json.tilesets[0].tiles[l].id === tile_idx && json.tilesets[0].tiles[l].objectgroup){
-                                for(var m in json.tilesets[0].tiles[l].objectgroup.objects){
-                                    new Collision({
-                                        x:s_x + json.tilesets[0].tiles[l].objectgroup.objects[m].x * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].width * 2,
-                                        y:s_y + json.tilesets[0].tiles[l].objectgroup.objects[m].y * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].height * 2,
-                                        width:json.tilesets[0].tiles[l].objectgroup.objects[m].width * 4,
-                                        height:json.tilesets[0].tiles[l].objectgroup.objects[m].height * 4,
+                            if(json.tilesets[0].tiles[l].id === tile_idx){
+                                if(json.tilesets[0].tiles[l].objectgroup){
+                                    for(var m in json.tilesets[0].tiles[l].objectgroup.objects){
+                                        new Collision({
+                                            x:s_x + json.tilesets[0].tiles[l].objectgroup.objects[m].x * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].width * 2,
+                                            y:s_y + json.tilesets[0].tiles[l].objectgroup.objects[m].y * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].height * 2,
+                                            width:json.tilesets[0].tiles[l].objectgroup.objects[m].width * 4,
+                                            height:json.tilesets[0].tiles[l].objectgroup.objects[m].height * 4,
+                                            map:name,
+                                            info:json.tilesets[0].tiles[l].type,
+                                        });
+                                    }
+                                }
+                                else if(harvestableNpcData[json.tilesets[0].tiles[l].type]){
+                                    new HarvestableNpc({
+                                        x:s_x + 32,
+                                        y:s_y + 32,
+                                        width:64,
+                                        height:64,
                                         map:name,
-                                        info:json.tilesets[0].tiles[l].type,
+                                        img:json.tilesets[0].tiles[l].type,
                                     });
                                 }
                             }

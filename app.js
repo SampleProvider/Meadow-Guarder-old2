@@ -200,9 +200,9 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Player.list[i].map]){
-                pack[Player.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+                pack[Player.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             }
-            var updatePack = Player.list[i].getUpdatePack();
+            var updatePack = Player.list[i].getInitPack();
             pack[Player.list[i].map].player.push(updatePack);
         }
     }
@@ -214,9 +214,9 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Projectile.list[i].map]){
-                pack[Projectile.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+                pack[Projectile.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             }
-            var updatePack = Projectile.list[i].getUpdatePack();
+            var updatePack = Projectile.list[i].getInitPack();
             pack[Projectile.list[i].map].projectile.push(updatePack);
         }
     }
@@ -237,9 +237,9 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Monster.list[i].map]){
-                pack[Monster.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+                pack[Monster.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             }
-            var updatePack = Monster.list[i].getUpdatePack();
+            var updatePack = Monster.list[i].getInitPack();
             pack[Monster.list[i].map].monster.push(updatePack);
         }
     }
@@ -251,10 +251,24 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[DroppedItem.list[i].map]){
-                pack[DroppedItem.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+                pack[DroppedItem.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             }
-            var updatePack = DroppedItem.list[i].getUpdatePack();
+            var updatePack = DroppedItem.list[i].getInitPack();
             pack[DroppedItem.list[i].map].droppedItem.push(updatePack);
+        }
+    }
+    for(var i in HarvestableNpc.list){
+        if(HarvestableNpc.list[i]){
+            HarvestableNpc.list[i].update();
+			if(HarvestableNpc.list[i].toRemove){
+				delete HarvestableNpc.list[i];
+				continue;
+			}
+            if(!pack[HarvestableNpc.list[i].map]){
+                pack[HarvestableNpc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+            }
+            var updatePack = HarvestableNpc.list[i].getInitPack();
+            pack[HarvestableNpc.list[i].map].harvestableNpc.push(updatePack);
         }
     }
     for(var i in Npc.list){
@@ -265,9 +279,9 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Npc.list[i].map]){
-                pack[Npc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+                pack[Npc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             }
-            var updatePack = Npc.list[i].getUpdatePack();
+            var updatePack = Npc.list[i].getInitPack();
             pack[Npc.list[i].map].npc.push(updatePack);
         }
     }
@@ -282,16 +296,7 @@ setInterval(function(){
 				Player.list[i].onDamage(Monster.list[j]);
 			}
 		}
-		if(Player.list[i].keyPress.second === true){
-			for(var j in DroppedItem.list){
-				if(DroppedItem.list[j].parent + '' === i + '' || DroppedItem.list[j].allPlayers){
-					if(DroppedItem.list[j].isColliding({x:Player.list[i].mouseX,y:Player.list[i].mouseY,width:0,height:0,map:Player.list[i].map,type:'Player'})){
-						Player.list[i].inventory.addItem(DroppedItem.list[j].item,DroppedItem.list[j].amount);
-						delete DroppedItem.list[j];
-						continue;
-					}
-				}
-			}
+		if(Player.list[i].keyPress.attack === true){
 		}
 	}
 	for(var i in Monster.list){
