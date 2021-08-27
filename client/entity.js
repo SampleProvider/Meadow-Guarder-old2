@@ -10,6 +10,7 @@ var Entity = function(initPack){
     self.type = initPack.type;
     self.map = initPack.map;
     self.interpolationStage = 3;
+    self.toRemove = false;
     self.updated = true;
     self.update = function(){
         if(self.interpolationStage > 0){
@@ -314,7 +315,6 @@ var HarvestableNpc = function(initPack){
         }
         if(self.img !== 'none'){
             if(Img[self.img + '0']){
-                console.log(self.img,self.x,self.y)
                 ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height);
             }
         }

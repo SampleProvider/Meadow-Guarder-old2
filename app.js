@@ -260,8 +260,7 @@ setInterval(function(){
     for(var i in HarvestableNpc.list){
         if(HarvestableNpc.list[i]){
             HarvestableNpc.list[i].update();
-			if(HarvestableNpc.list[i].toRemove){
-				delete HarvestableNpc.list[i];
+			if(HarvestableNpc.list[i].img === 'none'){
 				continue;
 			}
             if(!pack[HarvestableNpc.list[i].map]){

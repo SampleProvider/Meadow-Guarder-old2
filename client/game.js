@@ -878,6 +878,10 @@ setInterval(function(){
         }
     }
     for(var i in HarvestableNpc.list){
+        if(HarvestableNpc.list[i].toRemove){
+            delete HarvestableNpc.list[i];
+            continue;
+        }
         for(var j = -1;j < 2;j++){
             for(var k = -1;k < 2;k++){
                 if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
