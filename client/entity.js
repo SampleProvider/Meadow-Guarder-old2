@@ -33,6 +33,8 @@ var Actor = function(initPack){
     self.drawSize = initPack.drawSize;
     self.animation = initPack.animation;
     self.animationDirection = initPack.animationDirection;
+    self.fade = 0;
+    self.fadeState = 0;
     self.stats = initPack.stats;
     self.drawName = function(){
         ctx.font = "15px pixel";
@@ -42,7 +44,7 @@ var Actor = function(initPack){
             var yDistance = 8;
         }
         else if(self.drawSize === 'medium'){
-            var yDistance = 18;
+            var yDistance = 17;
         }
         else{
             var yDistance = 16;
@@ -50,18 +52,27 @@ var Actor = function(initPack){
         ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 32));
     }
     self.drawHp = function(){
+        if(self.fadeState !== 1){
+            if(self.fade <= 0){
+                return;
+            }
+            ctx.globalAlpha = self.fade;
+        }
         self.drawName();
         if(self.drawSize === 'small'){
             var yDistance = 8;
         }
         else if(self.drawSize === 'medium'){
-            var yDistance = 18;
+            var yDistance = 17;
         }
         else{
             var yDistance = 16;
         }
         ctx.drawImage(Img.greenHealthBar,0,0,42,5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,126,15);
         ctx.drawImage(Img.greenHealthBar,0,6,Math.round(42 * self.hp / self.hpMax),5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,Math.round(126 * self.hp / self.hpMax),15);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
     }
     return self;
 }
@@ -85,8 +96,43 @@ var Player = function(initPack){
     self.level = initPack.level;
     self.debuffs = initPack.debuffs;
     self.draw = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+            self.fade += 0.05;
+            if(self.fade >= 1){
+                self.fade = 1;
+                self.fadeState = 1;
+            }
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+            self.fade -= 0.05;
+            if(self.fade <= 0){
+                ctx.globalAlpha = 1;
+                self.toRemove = true;
+                return;
+            }
+        }
+        if(inventory.items[inventory.hotbarSelectedItem]){
+            if(inventory.items[inventory.hotbarSelectedItem].id){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].damage){
+                    ctx.save();
+                    ctx.translate(self.x,self.y);
+                    ctx.rotate((self.direction - 225) / 180 * Math.PI);
+                    ctx.drawImage(Img[inventory.items[inventory.hotbarSelectedItem].id],-Img[inventory.items[inventory.hotbarSelectedItem].id].width * 4,-Img[inventory.items[inventory.hotbarSelectedItem].id].height * 4,Img[inventory.items[inventory.hotbarSelectedItem].id].width * 4,Img[inventory.items[inventory.hotbarSelectedItem].id].height * 4);
+                    ctx.restore();
+                }
+            }
+        }
         self.animation = Math.floor(self.animation);
         drawPlayer(Img.player,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        //drawPlayer(Img.sword,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,'large');
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
     }
     Player.list[self.id] = self;
     return self;
@@ -96,6 +142,11 @@ var Projectile = function(initPack){
     var self = Entity(initPack);
     self.direction = initPack.direction;
     self.projectileType = initPack.projectileType;
+    self.canCollide = initPack.canCollide;
+    self.relativeToParent = initPack.relativeToParent;
+    self.parentType = initPack.parentType;
+    self.animations = initPack.animations;
+    self.animation = initPack.animation;
     self.update = function(){
         if(self.interpolationStage > 0){
             self.x += self.spdX;
@@ -104,62 +155,14 @@ var Projectile = function(initPack){
         self.interpolationStage -= 1;
     }
     self.draw = function(){
-        // var x = self.x;
-        // var y = self.y;
-        // if(self.relativeToPlayer && Player.list[self.relativeToPlayer]){
-        //     x += Player.list[self.relativeToPlayer].x;
-        //     y += Player.list[self.relativeToPlayer].y;
-        // }
-        // if(projectileData[self.projectileType] && showParticles){
-        //     if(projectileData[self.projectileType].light.a === 0){
-
-        //     }
-        //     else{
-        //         var light = Object.create(projectileData[self.projectileType].light);
-        //         for(var i in Projectile.list){
-        //             var pX = Projectile.list[i].x;
-        //             var pY = Projectile.list[i].y;
-        //             if(Projectile.list[i].relativeToPlayer && Player.list[Projectile.list[i].relativeToPlayer]){
-        //                 pX += Player.list[Projectile.list[i].relativeToPlayer].x;
-        //                 pY += Player.list[Projectile.list[i].relativeToPlayer].y;
-        //             }
-        //             if(getDistance(x,y,pX,pY) < light.radius && i !== self.id){
-        //                 light.r += (255 - light.r) / 15;
-        //                 light.g += (255 - light.g) / 15;
-        //                 light.b += (255 - light.b) / 15;
-        //                 light.a *= 0.95;
-        //                 light.radius *= 0.98;
-        //             }
-        //         }
-        //         entityLightList[self.id] = {
-        //             x:Math.round(x),
-        //             y:Math.round(y),
-        //             map:self.map,
-        //             r:Math.min(light.r,255),
-        //             g:Math.min(light.g,255),
-        //             b:Math.min(light.b,255),
-        //             a:Math.max(light.a,0.05),
-        //             radius:Math.max(light.radius,40),
-        //         }
-        //     }
-        // }
-        // if(self.relativeToPlayer && Player.list[self.relativeToPlayer]){
-        //     ctx0.translate(self.x + Player.list[self.relativeToPlayer].x,self.y + Player.list[self.relativeToPlayer].y);
-        // }
-        // else{
+        self.animation = Math.floor(self.animation);
+        increaseProjectileByParent(self);
+        ctx.save();
         ctx.translate(Math.round(self.x),Math.round(self.y));
-        // }
         ctx.rotate(self.direction * Math.PI / 180);
-        // if(projectileData[self.projectileType]){
-            ctx.drawImage(Img[self.projectileType],0,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
-        // }
-        ctx.rotate(-self.direction * Math.PI / 180);
-        // if(self.relativeToPlayer && Player.list[self.relativeToPlayer]){
-        //     ctx0.translate(-self.x - Player.list[self.relativeToPlayer].x,-self.y - Player.list[self.relativeToPlayer].y);
-        // }
-        // else{
-        ctx.translate(-Math.round(self.x),-Math.round(self.y));
-        // }
+        ctx.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
+        ctx.restore();
+        decreaseProjectileByParent(self);
     }
     Projectile.list[self.id] = self;
     return self;
@@ -167,40 +170,106 @@ var Projectile = function(initPack){
 Projectile.list = {};
 var Monster = function(initPack){
     var self = Actor(initPack);
-    // self.renderedImg = {
-    //     body:renderPlayer(Img.playerBody,self.img.body),
-    //     shirt:renderPlayer(Img.playerShirt,self.img.shirt),
-    //     pants:renderPlayer(Img.playerPants,self.img.pants),
-    //     hair:renderPlayer(Img.playerHair[self.img.hairType],self.img.hair),
-    // }
-    // self.render = document.createElement('canvas');
-    // var renderCtx = self.render.getContext('2d');
-    // renderCtx.canvas.width = 72 * 4;
-    // renderCtx.canvas.height = 152 * 4;
-    // renderCtx.drawImage(self.renderedImg.body,0,0);
-    // renderCtx.drawImage(self.renderedImg.shirt,0,0);
-    // renderCtx.drawImage(self.renderedImg.pants,0,0);
-    // renderCtx.drawImage(self.renderedImg.hair,0,0);
     self.monsterType = initPack.monsterType;
     self.draw = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+            self.fade += 0.05;
+            if(self.fade >= 1){
+                self.fade = 1;
+                self.fadeState = 1;
+            }
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+            self.fade -= 0.05;
+            if(self.fade <= 0){
+                ctx.globalAlpha = 1;
+                self.toRemove = true;
+                return;
+            }
+        }
         self.animation = Math.floor(self.animation);
         drawPlayer(Img[self.monsterType],ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
     }
     self.drawHp = function(){
+        if(self.fadeState !== 1){
+            if(self.fade <= 0){
+                return;
+            }
+            ctx.globalAlpha = self.fade;
+        }
         self.drawName();
         if(self.drawSize === 'small'){
             var yDistance = 8;
         }
         else if(self.drawSize === 'medium'){
-            var yDistance = 18;
+            var yDistance = 17;
         }
         else{
             var yDistance = 16;
         }
         ctx.drawImage(Img.redHealthBar,0,0,42,5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,126,15);
         ctx.drawImage(Img.redHealthBar,0,6,Math.round(42 * self.hp / self.hpMax),5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,Math.round(126 * self.hp / self.hpMax),15);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
     }
     Monster.list[self.id] = self;
     return self;
 }
 Monster.list = {};
+var Npc = function(initPack){
+    var self = Actor(initPack);
+    self.draw = function(){
+        if(self.fadeState === 0){
+            ctx.globalAlpha = self.fade;
+            self.fade += 0.05;
+            if(self.fade >= 1){
+                self.fade = 1;
+                self.fadeState = 1;
+            }
+        }
+        else if(self.fadeState === 1){
+
+        }
+        else{
+            ctx.globalAlpha = self.fade;
+            self.fade -= 0.05;
+            if(self.fade <= 0){
+                ctx.globalAlpha = 1;
+                self.toRemove = true;
+                return;
+            }
+        }
+        self.animation = Math.floor(self.animation);
+        drawPlayer(Img.player,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
+    }
+    Npc.list[self.id] = self;
+    return self;
+}
+Npc.list = {};
+
+var DroppedItem = function(initPack){
+    var self = Entity(initPack);
+    self.item = initPack.item;
+    self.parent = initPack.parent;
+    self.allPlayers = initPack.allPlayers;
+    self.draw = function(){
+        if(self.parent === selfId || self.allPlayers){
+            ctx.drawImage(Img[self.item],self.x - 36,self.y - 36,72,72);
+        }
+    }
+    DroppedItem.list[self.id] = self;
+    return self;
+}
+DroppedItem.list = {};

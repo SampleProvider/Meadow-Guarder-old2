@@ -59,7 +59,7 @@ canvas {
     image-rendering: crisp-edges;
 }
 ::-webkit-scrollbar {
-    width: 20px;
+    width: 10px;
 }
 ::-webkit-scrollbar-track {
     background: rgba(30,30,30,0.5);
@@ -392,33 +392,349 @@ canvas {
     cursor: crosshair;
 }
 
+#chatDiv {
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: 400px;
+    height: 170px;
+    margin: 8px;
+    padding-left: 0px;
+    padding-top: 4px;
+    padding-right: 0px;
+    padding-bottom: 8px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
 #chatBackground {
     position: absolute;
-    left: 0%;
-    bottom: 26px;
+    left: 4px;
+    bottom: 4px;
     width: 400px;
-    height: 150px;
+    height: 170px;
+    margin: 8px;
+    padding-left: 0px;
+    padding-top: 4px;
+    padding-right: 0px;
+    padding-bottom: 8px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+#chatText {
+    position: static;
+    width: 390px;
+    height: 155px;
+    margin: 0px;
+    padding-left: 4px;
+    padding-bottom: 0px;
+    overflow-y: scroll;
+    font-size: small;
+    border-radius: 4px;
+}
+#chatInput {
+    position: static;
+    width: 400px;
+    height: 15px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 4px;
+}
+
+#bottomRightBar {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 174px;
+    height: 60px;
+    padding: 0px;
+    padding-left: 4px;
+    border-radius: 4px;
+}
+.bottomRightButton {
+    position: relative;
+    right: 0px;
+    width: 52px;
+    height: 52px;
+    margin-left: 0px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 0px;
+    background-color: #725640;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    float: left;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.bottomRightButton:hover {
+    background-color: #5c4634;
+}
+
+#inventoryBackground {
+    position: absolute;
+    right: 8px;
+    bottom: 76px;
+    width: 570px;
+    height: 250px;
     margin: 0px;
     padding: 0px;
     background-color: #ffffff;
     opacity: 0.3;
     border: 1px solid #000000;
+    border-radius: 8px;
 }
-#chatText {
+#inventoryDiv {
     position: absolute;
-    left: 0%;
-    bottom: 26px;
-    width: 400px;
-    height: 150px;
+    right: 8px;
+    bottom: 76px;
+    width: 570px;
+    height: 250px;
     margin: 0px;
     padding: 0px;
     overflow-y: scroll;
     font-size: small;
 }
-#chatInput {
+#inventoryItems {
     position: absolute;
-    bottom: 0px;
-    left: 0%;
+    top: 150px;
+    left: 0px;
     height: 20px;
-    width: 388px;
+    width: 560px;
+}
+#hotbarDiv {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 584px;
+    height: 60px;
+    margin: 0px;
+    padding: 0px;
+    font-size: small;
+    border-radius: 4px;
+    transform: translate(-50%, 0%);
+}
+#hotbarItems {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    margin: 0px;
+    padding: 0px;
+    height: 20px;
+    width: 584px;
+}
+.hotbarSlot {
+    position: static;
+    right: 0px;
+    width: 52px;
+    height: 52px;
+    margin-left: 0px;
+    margin-right: 4px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+    padding: 0px;
+    background-color: #725640;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    float: left;
+    cursor: pointer;
+}
+.hotbarRow {
+    position: relative;
+    font-family: 'pixel';
+    font-size: 13px;
+    color: #ffffff;
+    margin: 8px;
+    width: 584px;
+}
+.inventorySlot {
+    position: static;
+    font-family: 'pixel';
+    font-size: 13px;
+    color: #ffffff;
+    border: 1px solid #000000;
+    width: 36px;
+    height: 36px;
+    float: left;
+    background-color: #725640;
+    margin: 8px;
+}
+.inventoryRow {
+    position: relative;
+    font-family: 'pixel';
+    font-size: 13px;
+    color: #ffffff;
+    margin: 8px;
+}
+.itemImage {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    image-rendering: pixelated;
+}
+.itemImageLarge {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    image-rendering: pixelated;
+}
+.outlineImage {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 36px;
+    height: 36px;
+    image-rendering: pixelated;
+}
+.itemMenu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+}
+#inventorySlothelmet {
+    position: absolute;
+    left: 40%;
+    top: -148px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotchestplate {
+    position: absolute;
+    left: 40%;
+    top: -102px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotboots {
+    position: absolute;
+    left: 40%;
+    top: -56px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotring {
+    position: absolute;
+    left: 60%;
+    top: -148px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotshield {
+    position: absolute;
+    left: 60%;
+    top: -102px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#draggingItem {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    z-index: 10;
+    image-rendering: pixelated;
+}
+
+#selfDisplay {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 160px;
+    height: 80px;
+    background-color: #362a1e;
+    border: 1px solid #000000;
+}
+#healthBar {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+}
+#healthBarValue {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 150px;
+    height: 20px;
+    background-color: #0069AA;
+}
+#healthBarText {
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
+}
+#xpBar {
+    position: absolute;
+    left: 5px;
+    top: 30px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+}
+#xpBarValue {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 150px;
+    height: 20px;
+    background-color: #cccc00;
+}
+#xpBarText {
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
+}
+#manaBar {
+    position: absolute;
+    left: 5px;
+    top: 55px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+}
+#manaBarValue {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 150px;
+    height: 20px;
+    background-color: #9900ff;
+}
+#manaBarText {
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    width: 150px;
+    height: 20px;
+    font-family: "pixel";
+    text-align: center;
+    color: #ffffff;
 }

@@ -200,7 +200,7 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Player.list[i].map]){
-                pack[Player.list[i].map] = {player:[],projectile:[],monster:[]};
+                pack[Player.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
             }
             var updatePack = Player.list[i].getUpdatePack();
             pack[Player.list[i].map].player.push(updatePack);
@@ -214,7 +214,7 @@ setInterval(function(){
 				continue;
 			}
             if(!pack[Projectile.list[i].map]){
-                pack[Projectile.list[i].map] = {player:[],projectile:[],monster:[]};
+                pack[Projectile.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
             }
             var updatePack = Projectile.list[i].getUpdatePack();
             pack[Projectile.list[i].map].projectile.push(updatePack);
@@ -222,21 +222,58 @@ setInterval(function(){
     }
     for(var i in Monster.list){
         if(Monster.list[i]){
+			var update = false;
+			for(var j in Player.list){
+				if(Monster.list[i].getDistance(Player.list[j]) < 1024 * 2){
+					update = true;
+				}
+			}
+			if(update === false){
+				continue;
+			}
             Monster.list[i].update();
 			if(Monster.list[i].toRemove){
 				delete Monster.list[i];
 				continue;
 			}
             if(!pack[Monster.list[i].map]){
-                pack[Monster.list[i].map] = {player:[],projectile:[],monster:[]};
+                pack[Monster.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
             }
             var updatePack = Monster.list[i].getUpdatePack();
             pack[Monster.list[i].map].monster.push(updatePack);
         }
     }
+    for(var i in DroppedItem.list){
+        if(DroppedItem.list[i]){
+            DroppedItem.list[i].update();
+			if(DroppedItem.list[i].toRemove){
+				delete DroppedItem.list[i];
+				continue;
+			}
+            if(!pack[DroppedItem.list[i].map]){
+                pack[DroppedItem.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+            }
+            var updatePack = DroppedItem.list[i].getUpdatePack();
+            pack[DroppedItem.list[i].map].droppedItem.push(updatePack);
+        }
+    }
+    for(var i in Npc.list){
+        if(Npc.list[i]){
+            Npc.list[i].update();
+			if(Npc.list[i].toRemove){
+				delete Npc.list[i];
+				continue;
+			}
+            if(!pack[Npc.list[i].map]){
+                pack[Npc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[]};
+            }
+            var updatePack = Npc.list[i].getUpdatePack();
+            pack[Npc.list[i].map].npc.push(updatePack);
+        }
+    }
 	for(var i in Player.list){
 		for(var j in Projectile.list){
-			if(Player.list[i].isColliding(Projectile.list[j]) && i + '' !== Projectile.list[j].parent + ''){
+			if(Projectile.list[j].isColliding(Player.list[i]) && i + '' !== Projectile.list[j].parent + ''){
 				Player.list[i].onDamage(Projectile.list[j]);
 			}
 		}
@@ -245,10 +282,21 @@ setInterval(function(){
 				Player.list[i].onDamage(Monster.list[j]);
 			}
 		}
+		if(Player.list[i].keyPress.second === true){
+			for(var j in DroppedItem.list){
+				if(DroppedItem.list[j].parent + '' === i + '' || DroppedItem.list[j].allPlayers){
+					if(DroppedItem.list[j].isColliding({x:Player.list[i].mouseX,y:Player.list[i].mouseY,width:0,height:0,map:Player.list[i].map,type:'Player'})){
+						Player.list[i].inventory.addItem(DroppedItem.list[j].item,DroppedItem.list[j].amount);
+						delete DroppedItem.list[j];
+						continue;
+					}
+				}
+			}
+		}
 	}
 	for(var i in Monster.list){
 		for(var j in Projectile.list){
-			if(Monster.list[i].isColliding(Projectile.list[j]) && i + '' !== Projectile.list[j].parent + ''){
+			if(Projectile.list[j].isColliding(Monster.list[i]) && i + '' !== Projectile.list[j].parent + ''){
 				Monster.list[i].onDamage(Projectile.list[j]);
 				if(Monster.list[i].toRemove){
 					delete Monster.list[i];

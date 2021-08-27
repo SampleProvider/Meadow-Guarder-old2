@@ -8,7 +8,17 @@
             "heal":0
         },
         "maxSpeed":5,
-        "drawSize":"medium"
+        "drawSize":"medium",
+        "itemDrops":{
+            "bow":{
+                "chance":0.5,
+                "amount":1
+            },
+            "copperstaff":{
+                "chance":0.2,
+                "amount":1
+            }
+        }
     },
     "snake":{
         "name":"Snake",
@@ -19,7 +29,17 @@
             "heal":0
         },
         "maxSpeed":7,
-        "drawSize":"small"
+        "drawSize":"small",
+        "itemDrops":{
+            "armor":{
+                "chance":0.5,
+                "amount":1
+            },
+            "coppersword":{
+                "chance":0.5,
+                "amount":1
+            }
+        }
     },
     "slime":{
         "name":"Slime",
@@ -30,7 +50,13 @@
             "heal":5
         },
         "maxSpeed":3,
-        "drawSize":"small"
+        "drawSize":"small",
+        "itemDrops":{
+            "wood":{
+                "chance":0.5,
+                "amount":5
+            }
+        }
     },
     "jellyeye":{
         "name":"Jelly Eye",
@@ -41,6 +67,12 @@
             "heal":0
         },
         "maxSpeed":5,
-        "drawSize":"big"
+        "drawSize":"big",
+        "itemDrops":{
+            "copperstaff":{
+                "chance":1,
+                "amount":1
+            }
+        }
     }
 }
