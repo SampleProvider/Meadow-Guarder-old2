@@ -719,6 +719,8 @@ Player = function(param,socket){
     self.axePower = 0;
     self.scythePower = 0;
 
+    self.currentItem = '';
+
     self.reload = 0;
     self.useTime = 0;
     self.weaponState = 0;
@@ -864,9 +866,11 @@ Player = function(param,socket){
             self.axePower = 0;
             self.scythePower = 0;
 
+            self.currentItem = '';
+
             self.maxSpeed = 10;
 
-            self.weaponState = 0;
+            self.useTime = 0;
             self.weaponData = {};
 
             var maxSlots = self.inventory.maxSlots;
@@ -880,6 +884,7 @@ Player = function(param,socket){
                             if(item.equip !== 'hotbar'){
                                 continue;
                             }
+                            self.currentItem = self.inventory.items[i].id;
                             if(item.damage){
                                 self.stats.damage += item.damage;
                             }
@@ -1126,6 +1131,10 @@ Player = function(param,socket){
             pack.manaMax = self.manaMax;
             lastSelf.manaMax = self.manaMax;
         }
+        if(lastSelf.currentItem !== self.currentItem){
+            pack.currentItem = self.currentItem;
+            lastSelf.currentItem = self.currentItem;
+        }
         if(lastSelf.drawSize !== self.drawSize){
             pack.drawSize = self.drawSize;
             lastSelf.drawSize = self.drawSize;
@@ -1167,6 +1176,7 @@ Player = function(param,socket){
         pack.xpMax = self.xpMax;
         pack.mana = self.mana;
         pack.manaMax = self.manaMax;
+        pack.currentItem = self.currentItem;
         pack.drawSize = self.drawSize;
         pack.stats = self.stats;
         pack.type = self.type;

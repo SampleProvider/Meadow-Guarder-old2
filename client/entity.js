@@ -94,6 +94,7 @@ var Player = function(initPack){
     // renderCtx.drawImage(self.renderedImg.pants,0,0);
     // renderCtx.drawImage(self.renderedImg.hair,0,0);
     self.level = initPack.level;
+    self.currentItem = initPack.currentItem;
     self.debuffs = initPack.debuffs;
     self.draw = function(){
         if(self.fadeState === 0){
@@ -116,16 +117,12 @@ var Player = function(initPack){
                 return;
             }
         }
-        if(inventory.items[inventory.hotbarSelectedItem]){
-            if(inventory.items[inventory.hotbarSelectedItem].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
-                    ctx.save();
-                    ctx.translate(self.x,self.y);
-                    ctx.rotate((self.direction - 225) / 180 * Math.PI);
-                    ctx.drawImage(Img[inventory.items[inventory.hotbarSelectedItem].id],-Img[inventory.items[inventory.hotbarSelectedItem].id].width * 4,-Img[inventory.items[inventory.hotbarSelectedItem].id].height * 4,Img[inventory.items[inventory.hotbarSelectedItem].id].width * 4,Img[inventory.items[inventory.hotbarSelectedItem].id].height * 4);
-                    ctx.restore();
-                }
-            }
+        if(Img[self.currentItem]){
+            ctx.save();
+            ctx.translate(self.x,self.y);
+            ctx.rotate((self.direction - 225) / 180 * Math.PI);
+            ctx.drawImage(Img[self.currentItem],-Img[self.currentItem].width * 4,-Img[self.currentItem].height * 4,Img[self.currentItem].width * 4,Img[self.currentItem].height * 4);
+            ctx.restore();
         }
         self.animation = Math.floor(self.animation);
         drawPlayer(Img.player,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
