@@ -1,21 +1,4 @@
 {
-    "bow":{
-        "name":"Bow",
-        "equip":"hotbar",
-        "damage":6,
-        "damageType":"ranged",
-        "critChance":1,
-        "useTime":5,
-        "rarity":2,
-        "maxStack":1,
-        "weaponData":{
-            "1":[{
-                "id":"projectile",
-                "projectileType":"arrow",
-                "param":{}
-            }]
-        }
-    },
     "coppershiv":{
         "name":"Copper Shiv",
         "equip":"hotbar",
@@ -35,6 +18,23 @@
                     "pierce":-1,
                     "timer":1
                 }
+            }]
+        }
+    },
+    "copperbow":{
+        "name":"Copper Bow",
+        "equip":"hotbar",
+        "damage":6,
+        "damageType":"ranged",
+        "critChance":1,
+        "useTime":5,
+        "rarity":2,
+        "maxStack":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"arrow",
+                "param":{}
             }]
         }
     },
@@ -79,22 +79,42 @@
             }]
         }
     },
+    "copperwaraxe":{
+        "name":"Copper Waraxe",
+        "equip":"hotbar",
+        "damage":19,
+        "damageType":"rogue",
+        "critChance":0.04,
+        "useTime":18,
+        "rarity":1,
+        "maxStack":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"copperwaraxeprojectile",
+                "param":{
+                    "pierce":-1,
+                    "projectilePattern":"waraxe",
+                    "speed":30,
+                    "spin":30,
+                    "canCollide":false,
+                    "timer":80
+                }
+            }]
+        }
+    },
     "wood":{
         "name":"Wood",
         "rarity":1,
-        "maxStack":10
+        "maxStack":1000
     },
-    "armor":{
-        "name":"Armor",
+    "copperchestplate":{
+        "name":"Copper Chestplate",
         "equip":"chestplate",
         "rarity":0,
-        "defense":5,
-        "extraHp":2,
-        "extraMana":3,
-        "extraHpRegen":2,
-        "extraManaRegen":0.2,
-        "extraMovementSpeed":1,
-        "extraDamage":3,
+        "defense":2,
+        "extraHp":12,
+        "extraHpRegen":8,
         "maxStack":1,
         "weaponData":{
             "2":[{
@@ -104,8 +124,19 @@
             }]
         }
     },
-    "scythe":{
-        "name":"Scythe",
+    "oldhat":{
+        "name":"Old Hat",
+        "equip":"helmet",
+        "rarity":0,
+        "defense":2,
+        "extraMana":13,
+        "extraManaRegen":0.5,
+        "extraMovementSpeed":5,
+        "extraDamage":2,
+        "maxStack":1
+    },
+    "wornscythe":{
+        "name":"Worn Scythe",
         "equip":"hotbar",
         "rarity":0,
         "scythePower":10,

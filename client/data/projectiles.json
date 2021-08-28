@@ -27,5 +27,9 @@
     "copperswordprojectile":{
         "width":24,
         "height":24
+    },
+    "copperwaraxeprojectile":{
+        "width":24,
+        "height":24
     }
 }

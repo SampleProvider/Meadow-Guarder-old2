@@ -106,6 +106,8 @@ request3.onload = function(){
         for(var i in json){
             Img[i] = new Image();
             Img[i].src = '/client/img/items/' + i + '.png';
+            Img[i + 'select'] = new Image();
+            Img[i + 'select'].src = '/client/img/items/' + i + 'select.png';
         }
     }
     else{
@@ -116,9 +118,9 @@ request3.onerror = function(){
     
 };
 request3.send();
-var request3 = new XMLHttpRequest();
-request3.open('GET',"/client/data/harvestableNpcs.json",true);
-request3.onload = function(){
+var request4 = new XMLHttpRequest();
+request4.open('GET',"/client/data/harvestableNpcs.json",true);
+request4.onload = function(){
     if(this.status >= 200 && this.status < 400){
         var json = JSON.parse(this.response);
         for(var i in json){
@@ -132,10 +134,10 @@ request3.onload = function(){
 
     }
 };
-request3.onerror = function(){
+request4.onerror = function(){
     
 };
-request3.send();
+request4.send();
 
 var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
@@ -797,62 +799,64 @@ setInterval(function(){
         }
     }
     for(var i in HarvestableNpc.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
                     HarvestableNpc.list[i].drawLayer0();
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
+
+    selected = false;
 
     var entities = [];
     for(var i in Player.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
                     entities.push(Player.list[i]);
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     for(var i in Projectile.list){
-        increaseProjectileByParent(Projectile.list[i]);
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Projectile.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // increaseProjectileByParent(Projectile.list[i]);
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Projectile.list[i]) === findChunk(Player.list[selfId],j,k)){
                     entities.push(Projectile.list[i]);
-                }
-            }
-        }
-        decreaseProjectileByParent(Projectile.list[i]);
+        //         }
+        //     }
+        // }
+        // decreaseProjectileByParent(Projectile.list[i]);
     }
     for(var i in Monster.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
                     entities.push(Monster.list[i]);
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     for(var i in Npc.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Npc.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Npc.list[i]) === findChunk(Player.list[selfId],j,k)){
                     entities.push(Npc.list[i]);
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     for(var i in DroppedItem.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(DroppedItem.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(DroppedItem.list[i]) === findChunk(Player.list[selfId],j,k)){
                     entities.push(DroppedItem.list[i]);
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     function compare(a,b){
         var ay = a.y;
@@ -882,13 +886,13 @@ setInterval(function(){
             delete HarvestableNpc.list[i];
             continue;
         }
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
                     HarvestableNpc.list[i].drawLayer1();
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
 
     ctx.globalAlpha = 0.5;
@@ -896,22 +900,22 @@ setInterval(function(){
     ctx.globalAlpha = 1;
 
     for(var i in Player.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
                     Player.list[i].drawHp();
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     for(var i in Monster.list){
-        for(var j = -1;j < 2;j++){
-            for(var k = -1;k < 2;k++){
-                if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
+        // for(var j = -1;j < 2;j++){
+        //     for(var k = -1;k < 2;k++){
+        //         if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
                     Monster.list[i].drawHp();
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
     ctx.restore();
 

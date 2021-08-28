@@ -937,10 +937,10 @@ Player = function(param,socket){
                             self.manaMax += item.extraMana;
                         }
                         if(item.extraHpRegen !== undefined){
-                            self.hpRegen += item.extraHpRegen;
+                            self.stats.hpRegen += item.extraHpRegen;
                         }
                         if(item.extraManaRegen !== undefined){
-                            self.manaRegen += item.extraManaRegen;
+                            self.stats.manaRegen += item.extraManaRegen;
                         }
                         if(item.extraMovementSpeed !== undefined){
                             self.maxSpeed += item.extraMovementSpeed;
@@ -1392,13 +1392,6 @@ Projectile = function(param){
             self.toRemove = true;
             return;
         }
-        if(self.projectilePattern === 'swordSlash'){
-            self.x = Player.list[self.relativeToParent].x;
-            self.y = Player.list[self.relativeToParent].y;
-            self.direction += 20;
-            self.spdX = -Math.sin(self.direction / 180 * Math.PI) * 1;
-            self.spdY = Math.cos(self.direction / 180 * Math.PI) * 1;
-        }
         if(self.projectilePattern === 'shiv'){
             self.x = Player.list[self.relativeToParent].x;
             self.y = Player.list[self.relativeToParent].y;
@@ -1412,6 +1405,23 @@ Projectile = function(param){
             self.direction = Player.list[self.relativeToParent].direction + 135;
             self.spdX = Math.cos(Player.list[self.relativeToParent].direction / 180 * Math.PI) * 48 * Math.sqrt(2);
             self.spdY = Math.sin(Player.list[self.relativeToParent].direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+        }
+        if(self.projectilePattern === 'waraxe'){
+            if(Player.list[self.parent].x > self.x){
+                self.spdX += 1;
+            }
+            else if(Player.list[self.parent].x < self.x){
+                self.spdX -= 1;
+            }
+            if(Player.list[self.parent].y > self.y){
+                self.spdY += 1;
+            }
+            else if(Player.list[self.parent].y < self.y){
+                self.spdY -= 1;
+            }
+            if(self.getDistance(Player.list[self.parent]) < 64 && self.timer < 40){
+                self.toRemove = true;
+            }
         }
     }
     self.updateCollisions = function(){
@@ -1657,6 +1667,7 @@ Monster = function(param){
                 if(self.reload % 2 === 0){
                     self.shootProjectile('eye',{
                         direction:Math.floor(Math.random() * 10) * 36 + Math.random() * 10 - 5,
+                        spin:20,
                         speed:15,
                     });
                 }

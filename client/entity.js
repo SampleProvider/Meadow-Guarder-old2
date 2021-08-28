@@ -346,6 +346,8 @@ var HarvestableNpc = function(initPack){
 }
 HarvestableNpc.list = {};
 
+var selected = false;
+
 var DroppedItem = function(initPack){
     var self = Entity(initPack);
     self.item = initPack.item;
@@ -353,7 +355,13 @@ var DroppedItem = function(initPack){
     self.allPlayers = initPack.allPlayers;
     self.draw = function(){
         if(self.parent === selfId || self.allPlayers){
-            ctx.drawImage(Img[self.item],self.x - 36,self.y - 36,72,72);
+            if(Player.list[selfId].x + mouseX > self.x - 36 && Player.list[selfId].x + mouseX < self.x + 36 && Player.list[selfId].y + mouseY > self.y - 36 && Player.list[selfId].y + mouseY < self.y + 36 && selected === false){
+                ctx.drawImage(Img[self.item + 'select'],self.x - 36,self.y - 36,72,72);
+                selected = true;
+            }
+            else{
+                ctx.drawImage(Img[self.item],self.x - 36,self.y - 36,72,72);
+            }
         }
     }
     DroppedItem.list[self.id] = self;

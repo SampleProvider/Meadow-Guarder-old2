@@ -415,7 +415,7 @@ Inventory = function(socket,server){
                 amount:1,
             }
             self.items[2] = {
-                id:'scythe',
+                id:'wornscythe',
                 amount:1,
             }
             self.refreshInventory();
