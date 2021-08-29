@@ -28,6 +28,9 @@ document.getElementById('signIn').onclick = function(){
     if(canSignIn === false){
         return;
     }
+    if(document.getElementById('username').value === ''){
+        return;
+    }
     canSignIn = false;
     setTimeout(function(){
         canSignIn = true;
@@ -91,7 +94,7 @@ document.getElementById('signIn').onclick = function(){
             Img[i + '1'] = new Image();
             Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
             currentAmount += 1;
-            signError.innerHTML = '<span style="color: #55ff55">Loading Npcs... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
+            signError.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
         }
     });
     loadAllMaps();
