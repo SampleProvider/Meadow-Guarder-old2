@@ -6,7 +6,7 @@ Inventory = function(socket,server){
         draggingItem:-1,
         draggingX:-1,
         draggingY:-1,
-        maxSlots:10,
+        maxSlots:20,
         hotbarSelectedItem:-1,
         updateStats:true,
     }
@@ -489,6 +489,9 @@ Inventory = function(socket,server){
                             self.items[index2] = item1;
                             self.updateStats = true;
                         }
+                    }
+                    if(index1 === self.hotbarSelectedItem || index2 === self.hotbarSelectedItem){
+                        self.updateStats = true;
                     }
                     self.refreshItem(index1);
                     self.refreshItem(index2);

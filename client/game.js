@@ -26,6 +26,7 @@ var mouseY = 0;
 var cameraX = 0;
 var cameraY = 0;
 var selfId = null;
+var scrollAllowed = true;
 
 var shadeSpeed = -0.01;
 var shadeAmount = 1;
@@ -176,7 +177,7 @@ socket.on('selfId',function(data){
         gameDiv.style.display = 'inline-block';
         window.requestAnimationFrame(loop);
         socket.emit('signInFinished');
-    },500);
+    },750);
 });
 socket.on('update',function(data){
     for(var i in Player.list){
@@ -1048,6 +1049,12 @@ mouseUp = function(event){
         socket.emit('keyPress',{inputId:'second',state:false});
     }
 }
+mouseOut = function(event){
+    scrollAllowed = false;
+}
+mouseIn = function(event){
+    scrollAllowed = true;
+}
 document.querySelectorAll("button").forEach(function(item){
     item.addEventListener('focus',function(){
         this.blur();
@@ -1062,6 +1069,9 @@ document.oncontextmenu = function(event){
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){
+    if(scrollAllowed === false){
+        return;
+    }
     var hotbarSlots = document.getElementsByClassName('hotbarSlot');
     for(var i = 0;i < hotbarSlots.length;i++){
         hotbarSlots[i].style.border = '1px solid #000000';

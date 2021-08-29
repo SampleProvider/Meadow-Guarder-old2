@@ -171,37 +171,37 @@
 		</div>
 	</div>
 	<div id="gameDiv" style="display:none;">
-    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></canvas>
-		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></div>
-		<div id="regionDisplay" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"></div>
-		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);">
+    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></canvas>
+		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+		<div id="regionDisplay" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
 
 		</div>
-		<div id="chatDiv" class="UI-text-light" onmouseover="mouseUp(event);">
-			<div id="chatText" class="UI-text-light" onmouseover="mouseUp(event);">
+		<div id="chatDiv" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="chatText" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
 					
 			</div>
-			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);">
+			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);mouseOut(event);">
 				<input id="chatInput" class="UI-input-light" type="text"></input>
 			</form>
 		</div>
-		<div id="bottomRightBar" class="UI-display-light">
+		<div id="bottomRightBar" class="UI-display-light" onmouseover="mouseUp(event);">
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
-				<image id="bookButton" src="/client/websiteAssets/book.png" class="itemImageLarge" draggable="false"></image>
+				<image id="bookButton" src="/client/websiteAssets/book.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
-				<image id="inventoryButton" src="/client/websiteAssets/item.png" class="itemImageLarge" draggable="false"></image>
+				<image id="inventoryButton" src="/client/websiteAssets/item.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);" onclick="location.reload()">
-				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImageLarge" draggable="false" onclick="location.reload()"></image>
+				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImageLarge" draggable="false" onclick="location.reload()" onmouseover="mouseUp(event);"></image>
 			</div>
 		</div>
-		<div id="inventoryBackground" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);">
+		<div id="inventoryBackground" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);mouseOut(event);">
 			
 		</div>
-		<div id="inventoryDiv" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);">
-			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium" onmouseover="mouseUp(event);">Inventory [I]</div>
-			<div id="inventoryItems" onmouseover="mouseUp(event);">
+		<div id="inventoryDiv" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium" onmouseover="mouseUp(event);mouseOut(event);">Inventory [I]</div>
+			<div id="inventoryItems" onmouseover="mouseUp(event);mouseOut(event);">
 
 			</div>
 		</div>
@@ -210,18 +210,18 @@
 
 			</div>
 		</div>
-		<div id="selfDisplay" onmouseover="mouseUp(event)">
-			<div id="healthBar">
-				<div id="healthBarValue"></div>
-				<div id="healthBarText"></div>
+		<div id="selfDisplay" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+			<div id="healthBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
-			<div id="xpBar">
-				<div id="xpBarValue"></div>
-				<div id="xpBarText"></div>
+			<div id="xpBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
-			<div id="manaBar">
-				<div id="manaBarValue"></div>
-				<div id="manaBarText"></div>
+			<div id="manaBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
 		</div>
 	</div>
@@ -230,7 +230,7 @@
 		<div id="respawnTimer"></div>
 		<button id="respawn" onclick="respawn()" style="display:none;">Respawn</button>
 	</div>
-	<div id="disconnectedDiv" style="display:none;" onmouseover="mouseUp(event)" onclick="location.reload()">
+	<div id="disconnectedDiv" style="display:none;" onmouseover="mouseUp(event);mouseOut(event);" onclick="location.reload()">
 		<button class="disconnectedDiv">Disconnected</button>
 	</div>
 	<script src="/client/inventory.js" defer></script>

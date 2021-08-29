@@ -590,6 +590,7 @@ Actor = function(param){
     }
     self.shootProjectile = function(projectileType,param){
         var direction = param.direction / 180 * Math.PI || self.direction / 180 * Math.PI;
+        direction += Math.random() * param.directionDeviation - param.directionDeviation / 2 || 0
         var stats = Object.create(self.stats);
         if(param.stats){
             for(var i in param.stats){
@@ -616,6 +617,24 @@ Actor = function(param){
             parentType:param.parentType || self.type,
             projectilePattern:param.projectilePattern || false,
         });
+    }
+    self.doAttack = function(){
+        if(self.reload % self.useTime === 0){
+            self.weaponState += 1;
+            for(var i in self.weaponData){
+                if(self.weaponState % parseInt(i) === 0){
+                    for(var j = 0;j < self.weaponData[i].length;j++){
+                        if(self.weaponData[i][j]){
+                            switch(self.weaponData[i][j].id){
+                                case "projectile":
+                                    self.shootProjectile(self.weaponData[i][j].projectileType,self.weaponData[i][j].param);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     self.changeSize = function(){
         if(self.drawSize === 'small'){
@@ -843,22 +862,7 @@ Player = function(param,socket){
     self.updateAttack = function(){
         self.reload += 1;
         if(self.keyPress.attack){
-            if(self.reload % self.useTime === 0){
-                self.weaponState += 1;
-                for(var i in self.weaponData){
-                    if(self.weaponState % parseInt(i) === 0){
-                        for(var j = 0;j < self.weaponData[i].length;j++){
-                            if(self.weaponData[i][j]){
-                                switch(self.weaponData[i][j].id){
-                                    case "projectile":
-                                        self.shootProjectile(self.weaponData[i][j].projectileType,self.weaponData[i][j].param);
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            self.doAttack();
         }
     }
     self.updateStats = function(){
@@ -1211,7 +1215,6 @@ Player.onConnect = function(socket,username){
             username:username,
             database:database,
         },socket);
-
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
                 if(Player.list[i].map === player.map){
@@ -1219,6 +1222,7 @@ Player.onConnect = function(socket,username){
                 }
             }
         }
+        
         socket.emit('selfId',{id:socket.id});
 
         socket.on('keyPress',function(data){
@@ -1290,16 +1294,16 @@ Player.onConnect = function(socket,username){
             addToChat('#00ff00',player.name + ' respawned.');
         });
 
-        socket.on('signInFinished',function(data){
-            player.canMove = true;
-            player.invincible = false;
-        });
-
         socket.on('init',function(data){
             Player.getAllInitPack(socket);
         });
-        Player.getAllInitPack(socket);
-        addToChat('#00ff00',player.name + " just logged on.");
+
+        socket.on('signInFinished',function(data){
+            player.canMove = true;
+            player.invincible = false;
+            Player.getAllInitPack(socket);
+            addToChat('#00ff00',player.name + " just logged on.");
+        });
     });
 }
 Player.onDisconnect = function(socket){
@@ -1590,7 +1594,11 @@ Monster = function(param){
     self.attackState = 'passive';
     self.attackPhase = 1;
     self.spawnId = param.spawnId;
+
     self.reload = 0;
+    self.useTime = 1;
+    self.weaponState = 0;
+    
     self.randomWalk(true);
     self.onHit = function(pt){
         if(self.target === null){
@@ -1668,31 +1676,7 @@ Monster = function(param){
         }
         self.reload += 1;
         self.direction = Math.atan2(Player.list[self.target].y - self.y,Player.list[self.target].x - self.x) / Math.PI * 180;
-        switch(self.monsterType){
-            case 'skeleton':
-                if(self.reload % 20 === 19){
-                    self.shootProjectile('bone',{
-                        speed:20,
-                    });
-                }
-                break;
-            case 'snake':
-                if(self.reload % 5 === 4){
-                    self.shootProjectile('snakeSpit',{
-                        speed:20,
-                    });
-                }
-                break;
-            case 'jellyeye':
-                if(self.reload % 2 === 0){
-                    self.shootProjectile('eye',{
-                        direction:Math.floor(Math.random() * 10) * 36 + Math.random() * 10 - 5,
-                        spin:20,
-                        speed:15,
-                    });
-                }
-                break;
-        }
+        self.doAttack();
     }
     self.getUpdatePack = function(){
         var pack = {};

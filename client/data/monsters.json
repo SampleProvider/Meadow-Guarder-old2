@@ -18,6 +18,13 @@
                 "chance":0.2,
                 "amount":1
             }
+        },
+        "weaponData":{
+            "20":[{
+                "id":"projectile",
+                "projectileType":"bone",
+                "param":{}
+            }]
         }
     },
     "snake":{
@@ -39,6 +46,13 @@
                 "chance":0.5,
                 "amount":1
             }
+        },
+        "weaponData":{
+            "10":[{
+                "id":"projectile",
+                "projectileType":"snakeSpit",
+                "param":{}
+            }]
         }
     },
     "slime":{
@@ -56,7 +70,8 @@
                 "chance":0.5,
                 "amount":1
             }
-        }
+        },
+        "weaponData":{}
     },
     "jellyeye":{
         "name":"Jelly Eye",
@@ -73,6 +88,40 @@
                 "chance":1,
                 "amount":1
             }
+        },
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "direction":0,
+                    "directionDeviation":360
+                }
+            },
+            {
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "direction":0,
+                    "directionDeviation":360
+                }
+            },
+            {
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "direction":0,
+                    "directionDeviation":360
+                }
+            },
+            {
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "direction":0,
+                    "directionDeviation":360
+                }
+            }]
         }
     }
 }

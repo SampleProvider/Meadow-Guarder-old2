@@ -487,8 +487,8 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 570px;
-    height: 250px;
+    width: 530px;
+    height: 270px;
     margin: 0px;
     padding: 0px;
     background-color: #ffffff;
@@ -500,8 +500,8 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 570px;
-    height: 250px;
+    width: 530px;
+    height: 270px;
     margin: 0px;
     padding: 0px;
     overflow-y: scroll;
@@ -512,7 +512,7 @@ canvas {
     top: 150px;
     left: 0px;
     height: 20px;
-    width: 560px;
+    width: 520px;
 }
 #hotbarDiv {
     position: absolute;
@@ -565,11 +565,12 @@ canvas {
     font-size: 13px;
     color: #ffffff;
     border: 1px solid #000000;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     float: left;
     background-color: #725640;
-    margin: 8px;
+    margin: 4px;
+    border-radius: 4px;
 }
 .inventoryRow {
     position: relative;
@@ -580,8 +581,8 @@ canvas {
 }
 .itemImage {
     position: relative;
-    left: 0px;
-    top: 0px;
+    left: 2px;
+    top: 2px;
     width: 36px;
     height: 36px;
     cursor: pointer;
