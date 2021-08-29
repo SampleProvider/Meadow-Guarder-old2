@@ -490,7 +490,7 @@ Inventory = function(socket,server){
                             self.updateStats = true;
                         }
                     }
-                    if(index1 === self.hotbarSelectedItem || index2 === self.hotbarSelectedItem){
+                    if(index1 + '' === self.hotbarSelectedItem + '' || index2 + '' === self.hotbarSelectedItem + ''){
                         self.updateStats = true;
                     }
                     self.refreshItem(index1);
