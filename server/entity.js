@@ -741,6 +741,10 @@ Player = function(param,socket){
             }
         }
     }
+    else{
+        self.inventory.addItem('coppershiv',1);
+        self.inventory.addItem('wornscythe',1);
+    }
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;

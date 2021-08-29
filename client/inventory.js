@@ -410,14 +410,6 @@ Inventory = function(socket,server){
             if(self.items['shield'] === undefined){
                 self.items['shield'] = {};
             }
-            self.items[1] = {
-                id:'coppershiv',
-                amount:1,
-            }
-            self.items[2] = {
-                id:'wornscythe',
-                amount:1,
-            }
             self.refreshInventory();
         }
     }
