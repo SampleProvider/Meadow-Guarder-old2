@@ -188,8 +188,8 @@ Inventory = function(socket,server){
                     div.innerHTML = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div>';
                 }
                 div.className = 'itemMenu UI-display-light inventoryMenu';
-                div.style.left = (mouseX + WIDTH / 2 + 3) + 'px';
-                div.style.top = (mouseY + HEIGHT / 2 + 3) + 'px';
+                div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
+                div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
                 gameDiv.appendChild(div);
                 image.onmouseover = function(){
                     if(self.draggingItem === -1){
@@ -203,17 +203,17 @@ Inventory = function(socket,server){
                         div.style.right = '';
                         div.style.top = '';
                         div.style.bottom = '';
-                        if(mouseX + WIDTH / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                            div.style.right = window.innerWidth - (mouseX + WIDTH / 2 - 3) + 'px';
+                        if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
+                            div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
                         }
                         else{
-                            div.style.left = (mouseX + WIDTH / 2 + 3) + 'px';
+                            div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
                         }
-                        if(mouseY + HEIGHT / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                            div.style.bottom = window.innerHeight - (mouseY + HEIGHT / 2 - 3) + 'px';
+                        if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
+                            div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
                         }
                         else{
-                            div.style.top = (mouseY + HEIGHT / 2 + 3) + 'px';
+                            div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
                         }
                     }
                 }
@@ -232,17 +232,17 @@ Inventory = function(socket,server){
                         div.style.right = '';
                         div.style.top = '';
                         div.style.bottom = '';
-                        if(mouseX + WIDTH / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                            div.style.right = window.innerWidth - (mouseX + WIDTH / 2 - 3) + 'px';
+                        if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
+                            div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
                         }
                         else{
-                            div.style.left = (mouseX + WIDTH / 2 + 3) + 'px';
+                            div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
                         }
-                        if(mouseY + HEIGHT / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                            div.style.bottom = window.innerHeight - (mouseY + HEIGHT / 2 - 3) + 'px';
+                        if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
+                            div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
                         }
                         else{
-                            div.style.top = (mouseY + HEIGHT / 2 + 3) + 'px';
+                            div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
                         }
                     }
                 }
@@ -274,17 +274,17 @@ Inventory = function(socket,server){
                             div.style.right = '';
                             div.style.top = '';
                             div.style.bottom = '';
-                            if(mouseX + WIDTH / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                                div.style.right = window.innerWidth - (mouseX + WIDTH / 2 - 3) + 'px';
+                            if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
+                                div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
                             }
                             else{
-                                div.style.left = (mouseX + WIDTH / 2 + 3) + 'px';
+                                div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
                             }
-                            if(mouseY + HEIGHT / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                                div.style.bottom = window.innerHeight - (mouseY + HEIGHT / 2 - 3) + 'px';
+                            if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
+                                div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
                             }
                             else{
-                                div.style.top = (mouseY + HEIGHT / 2 + 3) + 'px';
+                                div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
                             }
                         }
                     }
@@ -297,8 +297,8 @@ Inventory = function(socket,server){
                     if(e.button === 0){
                         self.draggingItem = index;
                         var rect = image.getBoundingClientRect();
-                        self.draggingX = mouseX + WIDTH / 2 - rect.left;
-                        self.draggingY = mouseY + HEIGHT / 2 - rect.top;
+                        self.draggingX = mouseX + window.innerWidth / 2 - rect.left;
+                        self.draggingY = mouseY + window.innerHeight / 2 - rect.top;
                         var itemMenu = document.getElementsByClassName('itemMenu');
                         for(var i = 0;i < itemMenu.length;i++){
                             itemMenu[i].style.display = 'none';

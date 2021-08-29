@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "express": "^4.17.1",
     "pathfinding": "^0.4.18",
     "pg": "^8.7.1",

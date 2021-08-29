@@ -699,6 +699,9 @@ Player = function(param,socket){
 
     self.type = 'Player';
 
+    self.canMove = false;
+    self.invincible = true;
+
     self.hp = 100;
     self.hpMax = 100;
     self.xp = 0;
@@ -731,6 +734,14 @@ Player = function(param,socket){
     self.textColor = '#000000';
 
     self.inventory = new Inventory(socket,true);
+    if(param.database.items){
+        for(var i in param.database.items){
+            if(param.database.items[i]){
+                self.inventory.items[i] = param.database.items[i];
+            }
+        }
+    }
+    self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
     self.onDeath = function(pt){
@@ -1190,11 +1201,11 @@ Player = function(param,socket){
 Player.list = {};
 
 Player.onConnect = function(socket,username){
-    getDatabase(username,function(param){
+    getDatabase(username,function(database){
         var player = Player({
             id:socket.id,
             username:username,
-            param:param,
+            database:database,
         },socket);
 
         for(var i in SOCKET_LIST){
@@ -1273,6 +1284,11 @@ Player.onConnect = function(socket,username){
             player.hp = Math.round(player.hpMax / 2);
             // player.teleport(ENV.Spawnpoint.x,ENV.Spawnpoint.y,ENV.Spawnpoint.map);
             addToChat('#00ff00',player.name + ' respawned.');
+        });
+
+        socket.on('signInFinished',function(data){
+            player.canMove = true;
+            player.invincible = false;
         });
 
         socket.on('init',function(data){

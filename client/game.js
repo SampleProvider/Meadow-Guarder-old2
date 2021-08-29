@@ -62,82 +62,6 @@ Img.sword.src = '/client/img/sword.png';
 Img.select = new Image();
 Img.select.src = '/client/img/select.png';
 
-var request = new XMLHttpRequest();
-request.open('GET',"/client/data/projectiles.json",true);
-request.onload = function(){
-    if(this.status >= 200 && this.status < 400){
-        var json = JSON.parse(this.response);
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/projectiles/' + i + '.png';
-        }
-    }
-    else{
-
-    }
-};
-request.onerror = function(){
-    
-};
-request.send();
-var request2 = new XMLHttpRequest();
-request2.open('GET',"/client/data/monsters.json",true);
-request2.onload = function(){
-    if(this.status >= 200 && this.status < 400){
-        var json = JSON.parse(this.response);
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/monsters/' + i + '.png';
-        }
-    }
-    else{
-
-    }
-};
-request2.onerror = function(){
-    
-};
-request2.send();
-var request3 = new XMLHttpRequest();
-request3.open('GET',"/client/data/item.json",true);
-request3.onload = function(){
-    if(this.status >= 200 && this.status < 400){
-        var json = JSON.parse(this.response);
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/items/' + i + '.png';
-            Img[i + 'select'] = new Image();
-            Img[i + 'select'].src = '/client/img/items/' + i + 'select.png';
-        }
-    }
-    else{
-
-    }
-};
-request3.onerror = function(){
-    
-};
-request3.send();
-var request4 = new XMLHttpRequest();
-request4.open('GET',"/client/data/harvestableNpcs.json",true);
-request4.onload = function(){
-    if(this.status >= 200 && this.status < 400){
-        var json = JSON.parse(this.response);
-        for(var i in json){
-            Img[i + '0'] = new Image();
-            Img[i + '0'].src = '/client/img/harvestableNpcs/' + i + '0.png';
-            Img[i + '1'] = new Image();
-            Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
-        }
-    }
-    else{
-
-    }
-};
-request4.onerror = function(){
-    
-};
-request4.send();
 
 var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
@@ -243,10 +167,16 @@ var arrayIsEqual = function(arr1,arr2){
 };
 
 socket.on('selfId',function(data){
-    selfId = data.id;
-    // chat = '<div>Welcome to Meadow Guarders Open ' + VERSION + '!</div>';
-    // chatText.innerHTML = '<div>Welcome to Meadow Guarders Open ' + VERSION + '!</div>';
-    // gameDiv.style.display = 'inline-block';
+    signErrorText = signError.innerHTML;
+    signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signErrorText;
+    setTimeout(function(){
+        selfId = data.id;
+        chat = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
+        chatText.innerHTML = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
+        gameDiv.style.display = 'inline-block';
+        window.requestAnimationFrame(loop);
+        socket.emit('signInFinished');
+    },500);
 });
 socket.on('update',function(data){
     for(var i in Player.list){
@@ -720,7 +650,7 @@ var decreaseProjectileByParent = function(projectile){
     }
 }
 
-setInterval(function(){
+var loop = function(){
     if(!selfId){
         return;
     }
@@ -943,7 +873,9 @@ setInterval(function(){
     if(tileAnimation >= 8){
         tileAnimation = 0;
     }
-},1000/80);
+    window.requestAnimationFrame(loop);
+}
+
 
 document.onkeydown = function(event){
     if(chatPress){

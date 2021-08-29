@@ -35,7 +35,6 @@ io.sockets.on('connection',function(socket){
 		Database.isValidPassword(data,function(res){
 			if(res === 3){
 				Player.onConnect(socket,data.username);
-				// updateLeaderboard();
 			}
 			if(res === 2){
 				for(var i in Player.list){
@@ -59,45 +58,45 @@ io.sockets.on('connection',function(socket){
 			}
 		}
 		if(allSpaces){
-			socket.emit('createAccountResponse',{success:3});
+			socket.emit('createAccountResponse',{success:5,username:data.username});
 			return;
 		}
 		if(data.username.includes('--') || data.password.includes('--')){
-			socket.emit('createAccountResponse',{success:3});
+			socket.emit('createAccountResponse',{success:3,username:data.username});
 			return;
 		}
 		if(data.username.includes(';') || data.password.includes(';')){
-			socket.emit('createAccountResponse',{success:3});
+			socket.emit('createAccountResponse',{success:3,username:data.username});
 			return;
 		}
 		if(data.username.includes('\'') || data.password.includes('\'')){
-			socket.emit('createAccountResponse',{success:3});
+			socket.emit('createAccountResponse',{success:3,username:data.username});
 			return;
 		}
 		if(data.username.length > 3 && data.username.length < 41 && data.password.length < 41){
 			Database.isUsernameTaken(data,function(res){
 				if(res === 0){
-					socket.emit('createAccountResponse',{success:0});
+					socket.emit('createAccountResponse',{success:0,username:data.username});
 				}
 				else{
 					Database.addUser(data,function(){
-						socket.emit('createAccountResponse',{success:1});
+						socket.emit('createAccountResponse',{success:1,username:data.username});
 					});
 				}
 			});
 		}
 		else if(data.username.length > 40 || data.password.length > 40){
-			socket.emit('createAccountResponse',{success:4});
+			socket.emit('createAccountResponse',{success:4,username:data.username});
 			return;
 		}
 		else{
-			socket.emit('createAccountResponse',{success:2});
+			socket.emit('createAccountResponse',{success:2,username:data.username});
 			return;
 		}
 	});
 	socket.on('deleteAccount',function(data){
-		if(data.username === 'sp' || data.username === 'Suvanth' || data.username === 'the-real-tianmu'){
-			socket.emit('deleteAccountResponse',{success:0});
+		if(data.username === 'sp'){
+			socket.emit('deleteAccountResponse',{success:4,username:data.username});
 			return;
 		}
 		Database.isValidPassword(data,function(res){
@@ -106,28 +105,24 @@ io.sockets.on('connection',function(socket){
 
 				});
 			}
-			socket.emit('deleteAccountResponse',{success:res});
+			socket.emit('deleteAccountResponse',{success:res,username:data.username});
 		});
 	});
 	socket.on('changePassword',function(data){
-		if(data.username.includes(' ') || data.password.includes(' ') || data.newPassword.includes(' ')){
-			socket.emit('changePasswordResponse',{success:4});
+		if(data.newPassword.includes('--')){
+			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
 			return;
 		}
-		if(data.username.includes('--') || data.password.includes('--') || data.newPassword.includes('--')){
-			socket.emit('changePasswordResponse',{success:4});
+		if(data.newPassword.includes(';')){
+			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
 			return;
 		}
-		if(data.username.includes(';') || data.password.includes(';') || data.newPassword.includes(';')){
-			socket.emit('changePasswordResponse',{success:4});
+		if(data.newPassword.includes('\'')){
+			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
 			return;
 		}
-		if(data.username.includes('\'') || data.password.includes('\'') || data.newPassword.includes('\'')){
-			socket.emit('changePasswordResponse',{success:4});
-			return;
-		}
-		if(data.username.length > 40 || data.password.length > 40 || data.newPassword.length > 40){
-			socket.emit('changePasswordResponse',{success:4});
+		if(data.newPassword.length > 40){
+			socket.emit('changePasswordResponse',{success:5,username:data.username,newPassword:data.newPassword});
 			return;
 		}
 		else{
@@ -137,7 +132,7 @@ io.sockets.on('connection',function(socket){
 
 					});
 				}
-				socket.emit('changePasswordResponse',{success:res});
+				socket.emit('changePasswordResponse',{success:res,username:data.username,newPassword:data.newPassword});
 			});
 		}
 	});

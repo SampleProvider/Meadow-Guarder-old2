@@ -1,6 +1,6 @@
+var USE_DB = true;
 
-
-const { Client } = require('pg');
+const {Client} = require('pg');
 
 if(SERVER === 'localhost'){
 	require("./DATABASE_URL.js");
@@ -9,19 +9,21 @@ else{
 	connectionString = connectionString = process.env.DATABASE_URL;
 }
 
-// const client = new Client({
-// 	connectionString:connectionString,
-// 	ssl:{
-// 		rejectUnauthorized: false
-// 	}
-// });
+const client = new Client({
+	connectionString:connectionString,
+	ssl:{
+		rejectUnauthorized: false
+	}
+});
 
-// client.connect();
+client.connect();
 
 storeDatabase = function(players){
-    return;
+    if(!USE_DB){
+		return;
+	}
 	for(var i in players){
-		client.query('UPDATE progress SET qusername=\'' + players[i].username + '\', qprogress=\'' + JSON.stringify({inventory:players[i].inventory.items,currentEquip:players[i].inventory.currentEquip,xp:players[i].xp,level:players[i].level,questStats:players[i].questStats,img:players[i].img,coins:players[i].coins,devCoins:players[i].devCoins,materials:players[i].inventory.materials,petType:players[i].petType}) + '\' WHERE qusername=\'' + players[i].username + '\';', (err, res) => {
+		client.query('UPDATE progress SET username=\'' + players[i].username + '\', progress=\'' + JSON.stringify({items:players[i].inventory.items,xp:players[i].xp,level:players[i].level}) + '\' WHERE username=\'' + players[i].username + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}
@@ -29,10 +31,12 @@ storeDatabase = function(players){
 	}
 }
 getDatabase = function(username,cb){
-    return cb({});
-	client.query('SELECT * FROM progress WHERE qusername=\'' + username + '\';', (err, res) => {
+    if(!USE_DB){
+		return cb({});
+	}
+	client.query('SELECT * FROM progress WHERE username=\'' + username + '\';', (err, res) => {
 		if(res.rows[0]){
-			return cb(JSON.parse(res.rows[0].qprogress));
+			return cb(JSON.parse(res.rows[0].progress));
 		}
 		else{
 			return cb({});
@@ -40,20 +44,19 @@ getDatabase = function(username,cb){
 	});
 }
 
-var USE_DB = false;
-
 Database = {};
 
 Database.isValidPassword = function(data,cb){
-    if(!USE_DB)
+    if(!USE_DB){
 		return cb(3);
-	client.query('SELECT * FROM account WHERE qusername=\'' + data.username + '\';', (err, res) => {
+	}
+	client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(err){
 			throw err;
 		}
 		if(res.rows[0]){
 			var row = JSON.parse(JSON.stringify(res.rows[0]));
-			if(row.qpassword === data.password){
+			if(row.password === data.password){
 				for(var i in Player.list){
 					if(Player.list[i].username === data.username){
 						return cb(2);
@@ -71,9 +74,10 @@ Database.isValidPassword = function(data,cb){
 	});
 }
 Database.isUsernameTaken = function(data,cb){
-    if(!USE_DB)
-	    return cb(1);
-	client.query('SELECT * FROM account WHERE qusername=\'' + data.username + '\';', (err, res) => {
+    if(!USE_DB){
+		return;
+	}
+	client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(err){
 			throw err;
 		}
@@ -88,26 +92,26 @@ Database.isUsernameTaken = function(data,cb){
 Database.addUser = function(data,cb){
     if(!USE_DB)
 	    return cb();
-	client.query('INSERT INTO account(qusername, qpassword) VALUES (\'' + data.username + '\', \'' + data.password + '\');', (err, res) => {
+	client.query('INSERT INTO account(username, password) VALUES (\'' + data.username + '\', \'' + data.password + '\');', (err, res) => {
 		if(err){
 			throw err;
 		}
-		return cb();
-	});
-	client.query('INSERT INTO progress(qusername, qprogress) VALUES (\'' + data.username + '\', \'{}\');', (err, res) => {
-		if(err){
-			throw err;
-		}
+		client.query('INSERT INTO progress(username, progress) VALUES (\'' + data.username + '\', \'{}\');', (err, res) => {
+			if(err){
+				throw err;
+			}
+			return cb();
+		});
 	});
 }
 Database.removeUser = function(data,cb){
     if(!USE_DB)
 		return cb();
-	client.query('DELETE FROM account WHERE qusername=\'' + data.username + '\';', (err, res) => {
+	client.query('DELETE FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(err){
 			throw err;
 		}
-		client.query('DELETE FROM progress WHERE qusername=\'' + data.username + '\';', (err, res) => {
+		client.query('DELETE FROM progress WHERE username=\'' + data.username + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}
@@ -118,7 +122,7 @@ Database.removeUser = function(data,cb){
 Database.changePassword = function(data,cb){
     if(!USE_DB)
 		return cb();
-	client.query('UPDATE account SET qpassword=\'' + data.newPassword + '\'WHERE qusername=\'' + data.username + '\';', (err, res) => {
+	client.query('UPDATE account SET password=\'' + data.newPassword + '\'WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(err){
 			throw err;
 		}

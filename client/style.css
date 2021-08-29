@@ -12,6 +12,9 @@ button {
     cursor: pointer;
 }
 canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
     image-rendering: optimizeSpeed;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast; 
@@ -19,6 +22,8 @@ canvas {
     image-rendering: optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
     image-rendering: pixelated;
+    padding: 0px;
+    margin: 0px;
 }
 
 #gameDiv {
@@ -294,6 +299,11 @@ canvas {
     left: 8px;
 }
 #changePassword {
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+#signError {
     position: relative;
     top: 8px;
     left: 8px;

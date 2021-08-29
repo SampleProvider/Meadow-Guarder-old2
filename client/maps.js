@@ -1,4 +1,5 @@
 var loadedMap = {};
+var loadedPercent = 0;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset1 - No Shadows.png';
 var tilesetLoaded = false;
@@ -91,18 +92,21 @@ var loadMap = function(name){
     request.open('GET',"/client/maps/" + name + ".json",true);
     request.onload = function(){
         if(this.status >= 200 && this.status < 400){
-            // Success!
             var json = JSON.parse(this.response);
             loadTileset(json,name);
         }
         else{
-            // We reached our target server, but it returned an error
+
         }
     };
     request.onerror = function(){
-        // There was a connection error of some sort
+
     };
     request.send();
 }
-loadMap('World');
-loadMap('House');
+var loadAllMaps = function(){
+    signErrorText = signError.innerHTML;
+    signError.innerHTML = '<span style="color: #55ff55">Loading maps...</span><br>' + signErrorText;
+    loadMap('World');
+    loadMap('House');
+}
