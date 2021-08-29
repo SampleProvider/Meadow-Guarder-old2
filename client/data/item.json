@@ -145,6 +145,6 @@
     "cotton":{
         "name":"Cotton",
         "rarity":0,
-        "maxStack":10
+        "maxStack":1000
     }
 }
