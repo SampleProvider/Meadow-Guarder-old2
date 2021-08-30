@@ -456,7 +456,7 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 8px;
-    width: 174px;
+    width: 234px;
     height: 60px;
     padding: 0px;
     padding-left: 4px;
@@ -651,6 +651,45 @@ canvas {
     height: 64px;
     z-index: 10;
     image-rendering: pixelated;
+}
+
+
+#craftBackground {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 530px;
+    height: 270px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+#craftDiv {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 530px;
+    height: 270px;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    font-size: small;
+}
+#craftItems {
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    height: 20px;
+    width: 520px;
+}
+.divImage {
+    position: relative;
+    top: 4px;
+    left: 4px;
+    color: #ffffff;
 }
 
 #selfDisplay {

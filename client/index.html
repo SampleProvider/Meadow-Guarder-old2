@@ -187,6 +187,9 @@
 		</div>
 		<div id="bottomRightBar" class="UI-display-light" onmouseover="mouseUp(event);">
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
+				<image id="craftButton" src="/client/websiteAssets/craft.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
+			</div>
+			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
 				<image id="bookButton" src="/client/websiteAssets/book.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
@@ -196,17 +199,26 @@
 				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImageLarge" draggable="false" onclick="location.reload()" onmouseover="mouseUp(event);"></image>
 			</div>
 		</div>
-		<div id="inventoryBackground" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="inventoryBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
 			
 		</div>
-		<div id="inventoryDiv" class="UI-text-light" style="display: none" onmouseover="mouseUp(event);mouseOut(event);">
-			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium" onmouseover="mouseUp(event);mouseOut(event);">Inventory [I]</div>
+		<div id="inventoryDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Inventory [I]</div>
 			<div id="inventoryItems" onmouseover="mouseUp(event);mouseOut(event);">
 
 			</div>
 		</div>
 		<div id="hotbarDiv" class="UI-display-light">
 			<div id="hotbarItems" onmouseover="mouseUp(event);">
+
+			</div>
+		</div>
+		<div id="craftBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			
+		</div>
+		<div id="craftDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="craftHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Crafting [C]</div>
+			<div id="craftItems" onmouseover="mouseUp(event);mouseOut(event);">
 
 			</div>
 		</div>
@@ -224,13 +236,14 @@
 				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
 		</div>
+		<div id="itemMenu" class="itemMenu UI-display-light" style="display: none;"></div>
 	</div>
-	<div id="deathDiv" style="display:none;">
+	<div id="deathDiv" style="display: none;">
 		<div id="deathScreen"></div>
 		<div id="respawnTimer"></div>
-		<button id="respawn" onclick="respawn()" style="display:none;">Respawn</button>
+		<button id="respawn" onclick="respawn()" style="display: none;">Respawn</button>
 	</div>
-	<div id="disconnectedDiv" style="display:none;" onmouseover="mouseUp(event);mouseOut(event);" onclick="location.reload()">
+	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);" onclick="location.reload()">
 		<button class="disconnectedDiv">Disconnected</button>
 	</div>
 	<script src="/client/inventory.js" defer></script>

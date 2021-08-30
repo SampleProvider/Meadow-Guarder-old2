@@ -18,10 +18,12 @@ addToChat = function(color,message,debug){
     }
     console.error("[" + h + ":" + m + "] " + message);
     for(var i in Player.list){
-        SOCKET_LIST[i].emit('addToChat',{
-            color:color,
-            message:message,
-        });
+        if(SOCKET_LIST[i]){
+            SOCKET_LIST[i].emit('addToChat',{
+                color:color,
+                message:message,
+            });
+        }
     }
 }
 
@@ -763,7 +765,9 @@ Player = function(param,socket){
     else{
         self.inventory.addItem('coppershiv',1);
         self.inventory.addItem('wornscythe',1);
+        self.inventory.addItem('wornaxe',1);
     }
+    self.inventory.addItem('wornaxe',1);
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
@@ -1761,7 +1765,6 @@ Monster.list = {};
 
 Npc = function(param){
     var self = Actor(param);
-    self.harvest = param.harvest;
     self.changeSize();
     self.randomWalk(true);
     var lastSelf = {};
@@ -1870,10 +1873,6 @@ Npc = function(param){
             pack.drawSize = self.drawSize;
             lastSelf.drawSize = self.drawSize;
         }
-        if(lastSelf.harvest !== self.harvest){
-            pack.harvest = self.harvest;
-            lastSelf.harvest = self.harvest;
-        }
         return pack;
     }
     self.getInitPack = function(){
@@ -1890,7 +1889,6 @@ Npc = function(param){
         pack.hp = self.hp;
         pack.hpMax = self.hpMax;
         pack.drawSize = self.drawSize;
-        pack.harvest = self.harvest;
         pack.type = self.type;
         return pack;
     }

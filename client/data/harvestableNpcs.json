@@ -4,5 +4,11 @@
         "harvestAmount":3,
         "harvestPower":1,
         "harvestTool":"scythe"
+    },
+    "tree":{
+        "harvest":"wood",
+        "harvestAmount":3,
+        "harvestPower":1,
+        "harvestTool":"axe"
     }
 }

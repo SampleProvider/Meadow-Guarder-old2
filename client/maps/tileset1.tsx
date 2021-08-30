@@ -257,15 +257,7 @@
    <object id="8" x="0" y="0" width="10" height="6"/>
   </objectgroup>
  </tile>
- <tile id="1253">
-  <objectgroup draworder="index" id="3">
-   <object id="2" x="0" y="0" width="15" height="4"/>
-   <object id="3" x="2" y="4" width="13" height="2"/>
-   <object id="4" x="3" y="6" width="11" height="2"/>
-   <object id="5" x="4" y="8" width="8" height="5"/>
-   <object id="6" x="6" y="13" width="4" height="1"/>
-  </objectgroup>
- </tile>
+ <tile id="1253" type="tree"/>
  <tile id="1254">
   <objectgroup draworder="index" id="3">
    <object id="2" x="0" y="0" width="15" height="4"/>

@@ -142,6 +142,13 @@
         "scythePower":10,
         "maxStack":1
     },
+    "wornaxe":{
+        "name":"Worn Axe",
+        "equip":"hotbar",
+        "rarity":0,
+        "axePower":10,
+        "maxStack":1
+    },
     "cotton":{
         "name":"Cotton",
         "rarity":0,

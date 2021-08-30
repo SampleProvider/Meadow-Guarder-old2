@@ -1,0 +1,22 @@
+{
+    "items":[
+        {
+            "id":"wood",
+            "amount":1
+        },
+        {
+            "id":"wood",
+            "amount":10
+        }
+    ],
+    "materials":[
+        [{
+            "id":"copperwaraxe",
+            "amount":1
+        }],
+        [{
+            "id":"copperwaraxe",
+            "amount":10
+        }]
+    ]
+}

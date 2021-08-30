@@ -77,6 +77,15 @@ socket.on('refreshMenu',function(pack){
     inventory.maxSlots = pack;
     inventory.refreshMenu();
 });
+socket.on('refreshCraft',function(pack){
+    inventory.craftItems = pack;
+    inventory.refreshCraft();
+});
+socket.on('updateCraft',function(pack){
+    for(var i in inventory.craftItems.items){
+        inventory.updateCraftClient(i);
+    }
+});
 
 Img.greenHealthBar = new Image();
 Img.greenHealthBar.src = '/client/img/greenHealthBar.png';
@@ -889,6 +898,9 @@ document.onkeydown = function(event){
     if(key === 'i' || key === 'I'){
         toggleInventory();
     }
+    if(key === 'c' || key === 'c'){
+        toggleCraft();
+    }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }
@@ -919,7 +931,8 @@ document.onmousemove = function(event){
         // if(!talking){
         //     socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
         // }
-        var inSlot = false;
+        var inSlot = -1;
+        var slotType = '';
         var inventorySlots = document.getElementsByClassName('inventorySlot');
         for(var i = 0;i < inventorySlots.length;i++){
             if(inventorySlots[i].className.includes('inventoryMenuSlot') && document.getElementById('inventoryDiv').style.display === 'inline-block'){
@@ -928,7 +941,21 @@ document.onmousemove = function(event){
                     if(mouseX + WIDTH / 2 < rect.right){
                         if(mouseY + HEIGHT / 2 > rect.top){
                             if(mouseY + HEIGHT / 2 < rect.bottom){
-                                inSlot = true;
+                                inSlot = inventorySlots[i].id.substring(13);
+                                slotType = 'itemDescriptions';
+                            }
+                        }
+                    }
+                }
+            }
+            if(inventorySlots[i].className.includes('craftMenuSlot') && document.getElementById('craftDiv').style.display === 'inline-block'){
+                var rect = inventorySlots[i].getBoundingClientRect();
+                if(mouseX + WIDTH / 2 > rect.left){
+                    if(mouseX + WIDTH / 2 < rect.right){
+                        if(mouseY + HEIGHT / 2 > rect.top){
+                            if(mouseY + HEIGHT / 2 < rect.bottom){
+                                inSlot = inventorySlots[i].id.substring(9);
+                                slotType = 'craftDescriptions';
                             }
                         }
                     }
@@ -942,41 +969,65 @@ document.onmousemove = function(event){
                 if(mouseX + WIDTH / 2 < rect.right){
                     if(mouseY + HEIGHT / 2 > rect.top){
                         if(mouseY + HEIGHT / 2 < rect.bottom){
-                            inSlot = true;
+                            inSlot = inventorySlots[i].id.substring(13);
+                            slotType = 'itemDescriptions';
                         }
                     }
                 }
             }
         }
-        var itemMenu = document.getElementsByClassName('itemMenu');
-        if(inSlot === false){
-            for(var i = 0;i < itemMenu.length;i++){
-                if(itemMenu[i].style.display === 'inline-block'){
-                    itemMenu[i].style.display = 'none';
-                }
+        var itemMenu = document.getElementById('itemMenu');
+        if(inSlot === -1 || inventory.draggingItem !== -1){
+            if(itemMenu.style.display === 'inline-block'){
+                itemMenu.style.display = 'none';
             }
         }
         else{
-            for(var i = 0;i < itemMenu.length;i++){
-                if(itemMenu[i].style.display === 'inline-block'){
-                    var rect = itemMenu[i].getBoundingClientRect();
-                    itemMenu[i].style.left = '';
-                    itemMenu[i].style.right = '';
-                    itemMenu[i].style.top = '';
-                    itemMenu[i].style.bottom = '';
-                    if(event.clientX + 3 + rect.right - rect.left > window.innerWidth){
-                        itemMenu[i].style.right = window.innerWidth - (event.clientX - 3) + 'px';
+            if(itemMenu.style.display === 'none'){
+                if(slotType === 'craftDescriptions'){
+                    var rect = document.getElementById('craftBackground').getBoundingClientRect();
+                    if(mouseX + WIDTH / 2 > rect.left){
+                        if(mouseX + WIDTH / 2 < rect.right){
+                            if(mouseY + HEIGHT / 2 > rect.top){
+                                if(mouseY + HEIGHT / 2 < rect.bottom){
+                                    itemMenu.style.display = 'inline-block';
+                                    itemMenu.innerHTML = inventory[slotType][inSlot];
+                                }
+                            }
+                        }
                     }
-                    else{
-                        itemMenu[i].style.left = (event.clientX + 3) + 'px';
-                    }
-                    if(event.clientY + 3 + rect.bottom - rect.top > window.innerHeight){
-                        itemMenu[i].style.bottom = window.innerHeight - (event.clientY - 3) + 'px';
-                    }
-                    else{
-                        itemMenu[i].style.top = (event.clientY + 3) + 'px';
+
+                }
+                else if(inventory.items[inSlot].id){
+                    var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
+                    if(mouseX + WIDTH / 2 > rect.left){
+                        if(mouseX + WIDTH / 2 < rect.right){
+                            if(mouseY + HEIGHT / 2 > rect.top){
+                                if(mouseY + HEIGHT / 2 < rect.bottom){
+                                    itemMenu.style.display = 'inline-block';
+                                    itemMenu.innerHTML = inventory[slotType][inSlot];
+                                }
+                            }
+                        }
                     }
                 }
+            }
+            var rect = itemMenu.getBoundingClientRect();
+            itemMenu.style.left = '';
+            itemMenu.style.right = '';
+            itemMenu.style.top = '';
+            itemMenu.style.bottom = '';
+            if(event.clientX + 3 + rect.right - rect.left > window.innerWidth){
+                itemMenu.style.right = window.innerWidth - (event.clientX - 3) + 'px';
+            }
+            else{
+                itemMenu.style.left = (event.clientX + 3) + 'px';
+            }
+            if(event.clientY + 3 + rect.bottom - rect.top > window.innerHeight){
+                itemMenu.style.bottom = window.innerHeight - (event.clientY - 3) + 'px';
+            }
+            else{
+                itemMenu.style.top = (event.clientY + 3) + 'px';
             }
         }
         if(inventory.draggingItem !== -1){
@@ -991,10 +1042,7 @@ document.onmousemove = function(event){
 }
 document.onmouseup = function(event){
     if(inventory.draggingItem !== -1){
-        var itemMenu = document.getElementsByClassName('itemMenu');
-        for(var i = 0;i < itemMenu.length;i++){
-            itemMenu[i].style.display = 'none';
-        }
+        document.getElementById('itemMenu').style.display = 'none';
         var rect = document.getElementById('inventoryDiv').getBoundingClientRect();
         if(mouseX + WIDTH / 2 > rect.left && mouseX + WIDTH / 2 < rect.right && mouseY + HEIGHT / 2 > rect.top && mouseY + HEIGHT / 2 < rect.bottom){
             var draggedItem = false;

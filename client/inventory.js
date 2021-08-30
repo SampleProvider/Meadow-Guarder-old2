@@ -3,6 +3,9 @@ Inventory = function(socket,server){
         socket:socket,
         server:server,
         items:{},
+        itemDescriptions:{},
+        craftItems:{},
+        craftDescriptions:{},
         draggingItem:-1,
         draggingX:-1,
         draggingY:-1,
@@ -53,7 +56,11 @@ Inventory = function(socket,server){
             else{
                 self.items[index] = {id:id,amount:amount || 1};
             }
+            if(index + '' === self.hotbarSelectedItem + ''){
+                self.updateStats = true;
+            }
             self.refreshItem(index);
+            self.socket.emit('updateCraft');
             return index;
         }
         else if(hasSpace === 2){
@@ -65,6 +72,7 @@ Inventory = function(socket,server){
                 self.items[index] = {id:id,amount:amount + self.items[index].amount};
             }
             self.refreshItem(index);
+            self.socket.emit('updateCraft');
             return index;
         }
         return false;
@@ -77,15 +85,23 @@ Inventory = function(socket,server){
                     self.items[i].amount = self.items[i].amount - (amount - amountFound);
                     if(self.items[i].amount === 0){
                         self.items[i] = {};
+                        if(i + '' === self.hotbarSelectedItem + ''){
+                            self.updateStats = true;
+                        }
                     }
                     self.refreshItem(i);
+                    self.socket.emit('updateCraft');
                     return true;
                 }
                 amountFound += self.items[i].amount;
                 self.items[i] = {};
+                if(i + '' === self.hotbarSelectedItem + ''){
+                    self.updateStats = true;
+                }
                 self.refreshItem(i);
             }
         }
+        self.socket.emit('updateCraft');
         return false;
     }
     self.hasItem = function(item,amount){
@@ -135,7 +151,6 @@ Inventory = function(socket,server){
             }
             if(self.items[index].id){
                 var item = Item.list[self.items[index].id];
-                var div = document.createElement('div');
                 slot.innerHTML = "<image id='itemImage" + index + "' class='itemImage' src='/client/img/items/" + self.items[index].id + ".png'></image>";
                 var description = '';
                 if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
@@ -182,72 +197,10 @@ Inventory = function(socket,server){
                     itemName += ' (' + self.items[index].amount + ')';
                 }
                 if(item.description){
-                    div.innerHTML = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div>';
+                    self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div>';
                 }
                 else{
-                    div.innerHTML = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div>';
-                }
-                div.className = 'itemMenu UI-display-light inventoryMenu';
-                div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
-                div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
-                gameDiv.appendChild(div);
-                image.onmouseover = function(){
-                    if(self.draggingItem === -1){
-                        var itemMenu = document.getElementsByClassName('itemMenu');
-                        for(var i = 0;i < itemMenu.length;i++){
-                            itemMenu[i].style.display = 'none';
-                        }
-                        div.style.display = 'inline-block';
-                        var rect = div.getBoundingClientRect();
-                        div.style.left = '';
-                        div.style.right = '';
-                        div.style.top = '';
-                        div.style.bottom = '';
-                        if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                            div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
-                        }
-                        else{
-                            div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
-                        }
-                        if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                            div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
-                        }
-                        else{
-                            div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
-                        }
-                    }
-                }
-                image.onmouseout = function(){
-                    div.style.display = 'none';
-                }
-                div.onmouseover = function(){
-                    if(self.draggingItem === -1){
-                        var itemMenu = document.getElementsByClassName('itemMenu');
-                        for(var i = 0;i < itemMenu.length;i++){
-                            itemMenu[i].style.display = 'none';
-                        }
-                        div.style.display = 'inline-block';
-                        var rect = div.getBoundingClientRect();
-                        div.style.left = '';
-                        div.style.right = '';
-                        div.style.top = '';
-                        div.style.bottom = '';
-                        if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                            div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
-                        }
-                        else{
-                            div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
-                        }
-                        if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                            div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
-                        }
-                        else{
-                            div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
-                        }
-                    }
-                }
-                div.onmouseout = function(){
-                    div.style.display = 'none';
+                    self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div>';
                 }
                 if(index >= 0 && index <= 9){
                     hotbarSlot.innerHTML = "<image id='hotbarItemImage" + index + "' class='itemImageLarge hotbarItemImage' src='/client/img/items/" + self.items[index].id + ".png'></image>";
@@ -262,35 +215,6 @@ Inventory = function(socket,server){
                         self.hotbarSelectedItem = index;
                         socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
                     }
-                    hotbarItemImage.onmouseover = function(){
-                        if(self.draggingItem === -1){
-                            var itemMenu = document.getElementsByClassName('itemMenu');
-                            for(var i = 0;i < itemMenu.length;i++){
-                                itemMenu[i].style.display = 'none';
-                            }
-                            div.style.display = 'inline-block';
-                            var rect = div.getBoundingClientRect();
-                            div.style.left = '';
-                            div.style.right = '';
-                            div.style.top = '';
-                            div.style.bottom = '';
-                            if(mouseX + window.innerWidth / 2 + 3 + rect.right - rect.left > window.innerWidth){
-                                div.style.right = window.innerWidth - (mouseX + window.innerWidth / 2 - 3) + 'px';
-                            }
-                            else{
-                                div.style.left = (mouseX + window.innerWidth / 2 + 3) + 'px';
-                            }
-                            if(mouseY + window.innerHeight / 2 + 3 + rect.bottom - rect.top > window.innerHeight){
-                                div.style.bottom = window.innerHeight - (mouseY + window.innerHeight / 2 - 3) + 'px';
-                            }
-                            else{
-                                div.style.top = (mouseY + window.innerHeight / 2 + 3) + 'px';
-                            }
-                        }
-                    }
-                    hotbarItemImage.onmouseout = function(){
-                        div.style.display = 'none';
-                    }
                 }
                 image.draggable = false;
                 slot.onmousedown = function(e){
@@ -299,10 +223,7 @@ Inventory = function(socket,server){
                         var rect = image.getBoundingClientRect();
                         self.draggingX = mouseX + window.innerWidth / 2 - rect.left;
                         self.draggingY = mouseY + window.innerHeight / 2 - rect.top;
-                        var itemMenu = document.getElementsByClassName('itemMenu');
-                        for(var i = 0;i < itemMenu.length;i++){
-                            itemMenu[i].style.display = 'none';
-                        }
+                        document.getElementById('itemMenu').style.display = 'none';
                         slot.innerHTML = "";
                         document.getElementById('draggingItem').innerHTML = "<image class='itemImage' draggable=false src='/client/img/items/" + self.items[index].id + ".png'></image>";
                         document.getElementById('draggingItem').style.left = rect.left + 'px';
@@ -320,6 +241,165 @@ Inventory = function(socket,server){
                             div.style.display = 'none';
                         }
                     }
+                }
+            }
+        }
+    }
+    self.addCraftClient = function(index){
+        var slot = document.getElementById("craftSlot" + index);
+        if(slot){
+            slot.innerHTML = "";
+            slot.style.border = "1px solid #000000";
+            slot.onmousedown = function(){};
+            slot.className += ' craftMenuSlot';
+            if(self.craftItems.items[index].id){
+                var item = Item.list[self.craftItems.items[index].id];
+                slot.innerHTML = "<image id='craftImage" + index + "' class='itemImage' src='/client/img/items/" + self.craftItems.items[index].id + ".png'></image>";
+                var description = '';
+                if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
+                    description += 'When Equipped:<br>';
+                }
+                if(item.damage){
+                    if(item.damageType){
+                        description += '<span style="color: #33ee33">+' + item.damage + ' ' + item.damageType + ' damage.</span><br>';
+                    }
+                    if(item.critChance){
+                        description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+                    }
+                }
+                if(item.defense){
+                    description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
+                }
+                if(item.manaCost){
+                    description += 'Uses ' + item.manaCost + ' mana.<br>';
+                }
+                if(item.extraHp){
+                    description += '<span style="color: #33ee33">+' + item.extraHp + ' max health.</span><br>';
+                }
+                if(item.extraMana){
+                    description += '<span style="color: #33ee33">+' + item.extraMana + ' max mana.</span><br>';
+                }
+                if(item.extraHpRegen){
+                    description += '<span style="color: #33ee33">+' + item.extraHpRegen + ' health regeneration.</span><br>';
+                }
+                if(item.extraManaRegen){
+                    description += '<span style="color: #33ee33">+' + item.extraManaRegen + ' mana regeneration.</span><br>';
+                }
+                if(item.extraDamage){
+                    description += '<span style="color: #33ee33">+' + item.extraDamage + ' damage.</span><br>';
+                }
+                if(item.extraMovementSpeed){
+                    description += '<span style="color: #33ee33">+' + item.extraMovementSpeed + ' movement speed.</span><br>';
+                }
+                var image = document.getElementById('craftImage' + index);
+                var itemName = item.name;
+                if(self.craftItems.items[index].amount !== 1){
+                    itemName += ' (' + self.craftItems.items[index].amount + ')';
+                }
+                var craftMaterials = '';
+                var canCraft = true;
+                for(var i in self.craftItems.materials[index]){
+                    if(!self.hasItem(self.craftItems.materials[index][i].id,parseInt(self.craftItems.materials[index][i].amount,10))){
+                        canCraft = false;
+                        craftMaterials += " <span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + '</span><image class="divImage" src="/client/img/items/' + self.craftItems.materials[index][i].id + '.png"></image>';
+                    }
+                    else{
+                        craftMaterials += " " + self.craftItems.materials[index][i].amount + '<image class="divImage" src="/client/img/items/' + self.craftItems.materials[index][i].id + '.png"></image>';
+                    }
+                }
+                if(canCraft === false){
+                    slot.style.backgroundColor = "#ff5555";
+                }
+                else{
+                    slot.style.backgroundColor = "#725640";
+                }
+                if(item.description){
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div><br>Craft for ' + craftMaterials + '.';
+                }
+                else if(description !== ''){
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for ' + craftMaterials + '.';
+                }
+                else{
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Craft for ' + craftMaterials + '.';
+                }
+                image.draggable = false;
+                slot.onmousedown = function(){
+                    socket.emit('craftItem',index);
+                }
+            }
+        }
+    }
+    self.updateCraftClient = function(index){
+        var slot = document.getElementById("craftSlot" + index);
+        if(slot){
+            if(self.craftItems.items[index].id){
+                var item = Item.list[self.craftItems.items[index].id];
+                var description = '';
+                if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
+                    description += 'When Equipped:<br>';
+                }
+                if(item.damage){
+                    if(item.damageType){
+                        description += '<span style="color: #33ee33">+' + item.damage + ' ' + item.damageType + ' damage.</span><br>';
+                    }
+                    if(item.critChance){
+                        description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+                    }
+                }
+                if(item.defense){
+                    description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
+                }
+                if(item.manaCost){
+                    description += 'Uses ' + item.manaCost + ' mana.<br>';
+                }
+                if(item.extraHp){
+                    description += '<span style="color: #33ee33">+' + item.extraHp + ' max health.</span><br>';
+                }
+                if(item.extraMana){
+                    description += '<span style="color: #33ee33">+' + item.extraMana + ' max mana.</span><br>';
+                }
+                if(item.extraHpRegen){
+                    description += '<span style="color: #33ee33">+' + item.extraHpRegen + ' health regeneration.</span><br>';
+                }
+                if(item.extraManaRegen){
+                    description += '<span style="color: #33ee33">+' + item.extraManaRegen + ' mana regeneration.</span><br>';
+                }
+                if(item.extraDamage){
+                    description += '<span style="color: #33ee33">+' + item.extraDamage + ' damage.</span><br>';
+                }
+                if(item.extraMovementSpeed){
+                    description += '<span style="color: #33ee33">+' + item.extraMovementSpeed + ' movement speed.</span><br>';
+                }
+                var image = document.getElementById('craftImage' + index);
+                var itemName = item.name;
+                if(self.craftItems.items[index].amount !== 1){
+                    itemName += ' (' + self.craftItems.items[index].amount + ')';
+                }
+                var craftMaterials = '';
+                var canCraft = true;
+                for(var i in self.craftItems.materials[index]){
+                    if(!self.hasItem(self.craftItems.materials[index][i].id,parseInt(self.craftItems.materials[index][i].amount,10))){
+                        canCraft = false;
+                        craftMaterials += " <span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + '</span><image class="divImage" src="/client/img/items/' + self.craftItems.materials[index][i].id + '.png"></image>';
+                    }
+                    else{
+                        craftMaterials += " " + self.craftItems.materials[index][i].amount + '<image class="divImage" src="/client/img/items/' + self.craftItems.materials[index][i].id + '.png"></image>';
+                    }
+                }
+                if(canCraft === false){
+                    slot.style.backgroundColor = "#ff5555";
+                }
+                else{
+                    slot.style.backgroundColor = "#725640";
+                }
+                if(item.description){
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div><br>Craft for ' + craftMaterials + '.';
+                }
+                else if(description !== ''){
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for ' + craftMaterials + '.';
+                }
+                else{
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Craft for ' + craftMaterials + '.';
                 }
             }
         }
@@ -342,6 +422,9 @@ Inventory = function(socket,server){
         }
         for(var i in self.items){
             self.addItemClient(i);
+        }
+        for(var i in self.craftItems.items){
+            self.updateCraftClient(i);
         }
     }
     self.refreshMenu = function(){
@@ -413,7 +496,36 @@ Inventory = function(socket,server){
             self.refreshInventory();
         }
     }
+    self.refreshCraft = function(){
+        if(self.server){
+            if(self.socket !== undefined){
+                self.socket.emit('refreshCraft',self.craftItems);
+            }
+            return;
+        }
+        var craftItems = document.getElementById("craftItems");
+        craftItems.innerHTML = "";
+        var row = document.createElement('div');
+        for(var i = 0;i < self.craftItems.items.length;i++){
+            if(i % 10 === 0){
+                var row = document.createElement('div');
+                row.className = 'inventoryRow';
+                craftItems.appendChild(row);
+            }
+            var div = document.createElement('div');
+            div.id = 'craftSlot' + i;
+            div.className = 'inventorySlot';
+            row.appendChild(div);
+        }
+        for(var i in self.craftItems.items){
+            self.addCraftClient(i);
+        }
+    }
     self.refreshMenu();
+    if(self.server){
+        self.craftItems = require('./data/crafts.json');
+        self.refreshCraft();
+    }
     if(self.server && self.socket){
         self.socket.on("dragItem",function(data){
             try{
@@ -430,7 +542,11 @@ Inventory = function(socket,server){
                         allPlayers:true,
                     });
                     self.items[index1] = {};
+                    if(index1 + '' === self.hotbarSelectedItem + '' || index2 + '' === self.hotbarSelectedItem + ''){
+                        self.updateStats = true;
+                    }
                     self.refreshItem(index1);
+                    self.socket.emit('updateCraft');
                 }
                 else{
                     var index1 = data.index1;
@@ -531,7 +647,7 @@ Inventory = function(socket,server){
             try{
                 for(var i in self.craftItems.materials[data]){
                     if(!self.hasItem(self.craftItems.materials[data][i].id,self.craftItems.materials[data][i].amount)){
-                        Player.list[socket.id].sendNotification('[!] You do not have the required materials to craft ' + Item.list[self.craftItems.items[data].id].name + ' x' + self.craftItems.items[data].amount + '.');
+                        // Player.list[socket.id].sendNotification('[!] You do not have the required materials to craft ' + Item.list[self.craftItems.items[data].id].name + ' x' + self.craftItems.items[data].amount + '.');
                         return;
                     }
                 }
@@ -539,7 +655,7 @@ Inventory = function(socket,server){
                 for(var i in self.craftItems.materials[data]){
                     self.removeItem(self.craftItems.materials[data][i].id,self.craftItems.materials[data][i].amount);
                 }
-                Player.list[socket.id].sendNotification('You successfully crafted ' + Item.list[self.craftItems.items[data].id].name + ' x' + self.craftItems.items[data].amount + '.');
+                // Player.list[socket.id].sendNotification('You successfully crafted ' + Item.list[self.craftItems.items[data].id].name + ' x' + self.craftItems.items[data].amount + '.');
             }
             catch(err){
                 console.error(err);
@@ -586,4 +702,10 @@ catch(err){
         
     };
     request.send();
+}
+
+try{
+    
+}
+catch(err){
 }
