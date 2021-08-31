@@ -290,8 +290,6 @@ setInterval(function(){
 				Player.list[i].onDamage(Monster.list[j]);
 			}
 		}
-		if(Player.list[i].keyPress.attack === true){
-		}
 	}
 	for(var i in Monster.list){
 		for(var j in Projectile.list){

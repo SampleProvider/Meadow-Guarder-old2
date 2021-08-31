@@ -1894,6 +1894,20 @@
    <wangcolor name="Sand" color="#ff7700" tile="5238" probability="1"/>
    <wangcolor name="Path" color="#00e9ff" tile="3804" probability="1"/>
    <wangcolor name="Light Path" color="#ff00d8" tile="4428" probability="1"/>
+   <wangcolor name="Cave Dirt" color="#a000ff" tile="551" probability="1"/>
+   <wangtile tileid="337" wangid="0,0,0,7,0,0,0,0"/>
+   <wangtile tileid="338" wangid="0,0,0,7,0,7,0,0"/>
+   <wangtile tileid="339" wangid="0,0,0,0,0,7,0,0"/>
+   <wangtile tileid="340" wangid="0,7,0,0,0,7,0,7"/>
+   <wangtile tileid="342" wangid="0,7,0,7,0,0,0,7"/>
+   <wangtile tileid="545" wangid="0,7,0,7,0,0,0,0"/>
+   <wangtile tileid="547" wangid="0,0,0,0,0,7,0,7"/>
+   <wangtile tileid="551" wangid="0,7,0,7,0,7,0,7"/>
+   <wangtile tileid="753" wangid="0,7,0,0,0,0,0,0"/>
+   <wangtile tileid="754" wangid="0,7,0,0,0,0,0,7"/>
+   <wangtile tileid="755" wangid="0,0,0,0,0,0,0,7"/>
+   <wangtile tileid="756" wangid="0,0,0,7,0,7,0,7"/>
+   <wangtile tileid="758" wangid="0,7,0,7,0,7,0,0"/>
    <wangtile tileid="3595" wangid="0,1,0,5,0,1,0,1"/>
    <wangtile tileid="3596" wangid="0,1,0,5,0,5,0,1"/>
    <wangtile tileid="3597" wangid="0,1,0,1,0,5,0,1"/>
