@@ -41,9 +41,9 @@ var renderWorld = function(json,name){
                         if(tile_idx !== 0){
                             var img_x, img_y, s_x, s_y;
                             for(var m in tile.tiles){
-                                if(tile.tiles[m].id === tile_idx){
+                                if(tile.tiles[m].id === tile_idx - 1){
                                     if(tile.tiles[m].animation){
-                                        tile_idx = tile.tiles[m].animation[i].tileid;
+                                        tile_idx = tile.tiles[m].animation[i].tileid + 1;
                                     }
                                 }
                             }
