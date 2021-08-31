@@ -32,7 +32,7 @@ var shadeSpeed = -0.01;
 var shadeAmount = 1;
 var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
-var currentMap = 'World';
+var currentMap = '';
 
 var respawnTimer = 0;
 
@@ -615,11 +615,17 @@ var updateRespawn = function(){
     setTimeout(updateRespawn,1000);
 }
 socket.on('changeMap',function(data){
+    document.getElementById('regionDisplay').innerHTML = data.teleport;
     if(shadeAmount < 0){
         shadeAmount = 0;
     }
     currentMap = data.teleport;
     shadeSpeed = 3 / 40;
+});
+socket.on('regionChange',function(data){
+    document.getElementById('regionDisplay').innerHTML = data;
+    mapShadeAmount = 0;
+    mapShadeSpeed = 0.08;
 });
 
 var findChunk = function(pt,x,y){
@@ -865,8 +871,7 @@ var loop = function(){
     if(Player.list[selfId].map === currentMap && shadeAmount > 1.5){
         shadeSpeed = -3 / 40;
     }
-    if(shadeAmount < 0.25 && document.getElementById('regionDisplay').innerHTML !== Player.list[selfId].map){
-        document.getElementById('regionDisplay').innerHTML = Player.list[selfId].map;
+    if(shadeAmount < 0.25 && mapShadeSpeed !== 0.08 && currentMap !== ''){
         mapShadeAmount = 0;
         mapShadeSpeed = 0.08;
     }

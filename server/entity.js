@@ -27,13 +27,13 @@ addToChat = function(color,message,debug){
     }
 }
 
-var playerMap = {};
+playerMap = {};
 
 tiles = [];
 
-var monsterData = require('./../client/data/monsters.json');
-var projectileData = require('./../client/data/projectiles.json');
-var harvestableNpcData = require('./../client/data/harvestableNpcs.json');
+monsterData = require('./../client/data/monsters.json');
+projectileData = require('./../client/data/projectiles.json');
+harvestableNpcData = require('./../client/data/harvestableNpcs.json');
 
 require('./../client/inventory.js');
 
@@ -69,6 +69,7 @@ Entity = function(param){
     self.spdX = 0;
     self.spdY = 0;
     self.map = 'World';
+    self.region = null;
     self.toRemove = false;
     self.type = 'Entity';
     if(param){
@@ -204,6 +205,8 @@ Actor = function(param){
     self.drawSize = 'medium';
 
     self.name = param.name || 'null';
+
+    self.nextRegions = [];
 
     self.maxSpeed = 10;
     self.moveSpeed = 10;
@@ -439,6 +442,17 @@ Actor = function(param){
                 }
             }
         }
+        self.nextRegions = [];
+        for(var i = -1;i < 2;i++){
+            for(var j = -1;j < 2;j++){
+                if(RegionChanger.list[self.map + ":" + Math.round((self.x - 64) / 64 + i) * 64 + ":" + Math.round((self.y - 64) / 64 + j) * 64 + ":"]){
+                    self.doRegionChange(RegionChanger.list[self.map + ":" + Math.round((self.x - 64) / 64 + i) * 64 + ":" + Math.round((self.y - 64) / 64 + j) * 64 + ":"]);
+                }
+            }
+        }
+        if(self.nextRegions.length === 1){
+            self.changeRegion(self.nextRegions[0]);
+        }
         if(self.canCollide === false){
             return;
         }
@@ -541,6 +555,21 @@ Actor = function(param){
         }
         if(self.isColliding(transporter)){
             self.teleport(transporter.teleportx,transporter.teleporty,transporter.teleport);
+        }
+    }
+    self.doRegionChange = function(regionChanger){
+        if(self.isColliding(regionChanger)){
+            for(var i in self.nextRegions){
+                if(self.nextRegions[i] === regionChanger.region){
+                    return;
+                }
+            }
+            self.nextRegions.push(regionChanger.region);
+        }
+    }
+    self.changeRegion = function(region){
+        if(self.region !== region){
+            self.region = region;
         }
     }
     self.onHit = function(pt){
@@ -715,8 +744,8 @@ Player = function(param,socket){
 
     self.changeSize();
 
-    self.x = 32;
-    self.y = 32;
+    self.x = 0;
+    self.y = 0;
 
     self.type = 'Player';
 
@@ -767,7 +796,6 @@ Player = function(param,socket){
         self.inventory.addItem('wornscythe',1);
         self.inventory.addItem('wornaxe',1);
     }
-    self.inventory.addItem('wornaxe',1);
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
@@ -1071,6 +1099,12 @@ Player = function(param,socket){
                     }
                 }
             }
+        }
+    }
+    self.changeRegion = function(region){
+        if(self.region !== region){
+            self.region = region;
+            socket.emit('regionChange',self.region);
         }
     }
     self.getUpdatePack = function(){
@@ -2061,114 +2095,4 @@ DroppedItem = function(param){
 }
 DroppedItem.list = {};
 
-var renderWorld = function(json,name){
-    playerMap[name] = 0;
-    for(var i = 0;i < json.layers.length;i++){
-        if(json.layers[i].type === "tilelayer"){
-            for(var j = 0;j < json.layers[i].chunks.length;j++){
-                for(var k = 0;k < json.layers[i].chunks[j].data.length;k++){
-                    tile_idx = json.layers[i].chunks[j].data[k];
-                    if(tile_idx !== 0){
-                        var s_x, s_y;
-                        tile_idx -= 1;
-                        var size = 64;
-                        s_x = (k % 16) * size;
-                        s_y = ~~(k / 16) * size;
-                        s_x += json.layers[i].chunks[j].x * 64;
-                        s_y += json.layers[i].chunks[j].y * 64;
-                        for(var l in json.tilesets[0].tiles){
-                            if(json.tilesets[0].tiles[l].id === tile_idx){
-                                if(json.tilesets[0].tiles[l].objectgroup){
-                                    for(var m in json.tilesets[0].tiles[l].objectgroup.objects){
-                                        new Collision({
-                                            x:s_x + json.tilesets[0].tiles[l].objectgroup.objects[m].x * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].width * 2,
-                                            y:s_y + json.tilesets[0].tiles[l].objectgroup.objects[m].y * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].height * 2,
-                                            width:json.tilesets[0].tiles[l].objectgroup.objects[m].width * 4,
-                                            height:json.tilesets[0].tiles[l].objectgroup.objects[m].height * 4,
-                                            map:name,
-                                            info:json.tilesets[0].tiles[l].type,
-                                        });
-                                    }
-                                }
-                                else if(harvestableNpcData[json.tilesets[0].tiles[l].type]){
-                                    new HarvestableNpc({
-                                        x:s_x + 32,
-                                        y:s_y + 32,
-                                        width:64,
-                                        height:64,
-                                        map:name,
-                                        img:json.tilesets[0].tiles[l].type,
-                                    });
-                                }
-                            }
-                        }
-                        if(tile_idx + 1 === json.tilesets[1].firstgid){
-                            spawnId = json.layers[i].name.substr(8,json.layers[i].name.length - 9);
-                            var spawner = new Spawner({
-                                x:s_x + 32,
-                                y:s_y + 32,
-                                width:64,
-                                height:64,
-                                spawnId:spawnId,
-                                map:name,
-                            });
-                        }
-                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 1){
-                            var teleport = "";
-                            var teleportj = 0;
-                            var teleportx = "";
-                            var teleportxj = 0;
-                            var teleporty = "";
-                            var teleportyj = 0;
-                            var teleportdirection = "";
-                            for(var l = 0;l < json.layers[i].name.length;l++){
-                                if(json.layers[i].name[l] === ':'){
-                                    if(teleport === ""){
-                                        teleport = json.layers[i].name.substr(0,l);
-                                        teleportj = l;
-                                    }
-                                    else if(teleportx === ""){
-                                        teleportx = json.layers[i].name.substr(teleportj + 1,l - teleportj - 1);
-                                        teleportxj = l;
-                                    }
-                                    else if(teleporty === ""){
-                                        teleporty = json.layers[i].name.substr(teleportxj + 1,l - teleportxj - 1);
-                                        teleportyj = l;
-                                    }
-                                    else if(teleportdirection === ""){
-                                        teleportdirection = json.layers[i].name.substr(teleportyj + 1,l - teleportyj - 1);
-                                    }
-                                }
-                            }
-                            var transporter = new Transporter({
-                                x:s_x + 32,
-                                y:s_y + 32,
-                                width:64,
-                                height:64,
-                                teleport:teleport,
-                                teleportx:teleportx,
-                                teleporty:teleporty,
-                                teleportdirection:teleportdirection,
-                                map:name,
-                            });
-                        }
-                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 2){
-                            npcName = json.layers[i].name.substr(4,json.layers[i].name.length - 5);
-                            var npc = new Npc({
-                                x:s_x + 32,
-                                y:s_y + 32,
-                                map:name,
-                                name:npcName,
-                            });
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-var loadMap = function(name){
-    renderWorld(require('./../client/maps/' + name + '.json'),name);
-}
-loadMap('World');
-loadMap('House');
+require('./maps.js');

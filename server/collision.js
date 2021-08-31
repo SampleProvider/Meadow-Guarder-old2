@@ -54,6 +54,23 @@ Transporter = function(param){
 }
 Transporter.list = {};
 
+RegionChanger = function(param){
+    var self = Entity(param);
+    self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
+    self.region = param.region;
+    self.toRemove = false;
+    self.type = 'RegionChanger';
+    self.width = param.width;
+    self.height = param.height;
+    var super_update = self.update;
+    self.update = function(){
+        super_update();
+    }
+    RegionChanger.list[self.id] = self;
+    return self;
+}
+RegionChanger.list = {};
+
 QuestInfo = function(param){
     var self = Entity(param);
     self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
