@@ -34,7 +34,7 @@ document.getElementById('signIn').onclick = function(){
     canSignIn = false;
     setTimeout(function(){
         canSignIn = true;
-    },2000);
+    },3000);
     signError.innerHTML = '<span style="color: #55ff55">Sent packet to server.</span><br>';
     setTimeout(function(){
         signErrorText = signError.innerHTML;
@@ -100,9 +100,15 @@ document.getElementById('signIn').onclick = function(){
     loadAllMaps();
 }
 document.getElementById('createAccount').onclick = function(){
+    if(document.getElementById('username').value === ''){
+        return;
+    }
     socket.emit('createAccount',{username:document.getElementById('username').value,password:document.getElementById('password').value});
 }
 document.getElementById('deleteAccount').onclick = function(){
+    if(document.getElementById('username').value === ''){
+        return;
+    }
     if(deletePasswordState === 0){
         document.getElementById('deleteAccount').innerHTML = 'Are you sure?';
         deletePasswordState = 1;
@@ -114,6 +120,9 @@ document.getElementById('deleteAccount').onclick = function(){
     }
 }
 document.getElementById('changePassword').onclick = function(){
+    if(document.getElementById('username').value === ''){
+        return;
+    }
     if(changePasswordState === 0){
         changePasswordState += 1;
         document.getElementById('newPasswordLabel').style.display = 'inline-block';
