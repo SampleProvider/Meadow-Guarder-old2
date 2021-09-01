@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.5" tiledversion="1.7.2" name="tileset1" tilewidth="16" tileheight="16" tilecount="35776" columns="208">
  <image source="tileset1 - No Shadows.png" width="3328" height="2752"/>
+ <tile id="337">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="13" y="0" width="3" height="3"/>
+   <object id="2" x="6" y="1" width="7" height="3"/>
+   <object id="3" x="4" y="2" width="2" height="2"/>
+   <object id="6" x="2" y="4" width="9" height="12"/>
+  </objectgroup>
+ </tile>
+ <tile id="338">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="3"/>
+  </objectgroup>
+ </tile>
+ <tile id="339">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="4" width="9" height="12"/>
+   <object id="6" x="0" y="0" width="3" height="3"/>
+   <object id="7" x="3" y="1" width="7" height="3"/>
+   <object id="8" x="10" y="2" width="2" height="2"/>
+  </objectgroup>
+ </tile>
+ <tile id="340">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="11" width="9" height="5"/>
+   <object id="2" x="14" y="5" width="2" height="9"/>
+   <object id="3" x="11" y="5" width="3" height="6"/>
+   <object id="4" x="7" y="7" width="4" height="4"/>
+  </objectgroup>
+ </tile>
+ <tile id="342">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="2" y="11" width="9" height="5"/>
+   <object id="3" x="0" y="5" width="2" height="9"/>
+   <object id="4" x="2" y="5" width="3" height="6"/>
+   <object id="5" x="5" y="7" width="4" height="4"/>
+  </objectgroup>
+ </tile>
  <tile id="490">
   <objectgroup draworder="index" id="2">
    <object id="1" x="12" y="3" width="1" height="13"/>
@@ -15,6 +52,16 @@
    <object id="3" x="1" y="1" width="1" height="15"/>
    <object id="4" x="2" y="2" width="1" height="14"/>
    <object id="5" x="3" y="3" width="1" height="13"/>
+  </objectgroup>
+ </tile>
+ <tile id="545">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="0" width="9" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="547">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="0" width="9" height="16"/>
   </objectgroup>
  </tile>
  <tile id="629">
@@ -57,6 +104,35 @@
  <tile id="701">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="4" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="753">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="0" width="9" height="5"/>
+   <object id="2" x="2" y="5" width="14" height="9"/>
+  </objectgroup>
+ </tile>
+ <tile id="754">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="0" y="5" width="16" height="10"/>
+  </objectgroup>
+ </tile>
+ <tile id="755">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="5" width="14" height="9"/>
+   <object id="2" x="5" y="0" width="9" height="5"/>
+  </objectgroup>
+ </tile>
+ <tile id="756">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="0" width="9" height="2"/>
+   <object id="2" x="9" y="2" width="7" height="1"/>
+  </objectgroup>
+ </tile>
+ <tile id="758">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="0" width="9" height="2"/>
+   <object id="2" x="0" y="2" width="7" height="1"/>
   </objectgroup>
  </tile>
  <tile id="833">
@@ -319,6 +395,8 @@
    <object id="3" x="4" y="7" width="9" height="3"/>
   </objectgroup>
  </tile>
+ <tile id="1595" type="copperOre"/>
+ <tile id="1596" type="ironOre"/>
  <tile id="1675">
   <objectgroup draworder="index" id="2">
    <object id="1" x="4" y="0" width="12" height="3"/>
@@ -357,6 +435,7 @@
    <object id="2" x="0" y="3" width="5" height="2"/>
   </objectgroup>
  </tile>
+ <tile id="1803" type="coal"/>
  <tile id="1873">
   <objectgroup draworder="index" id="3">
    <object id="2" x="6" y="12" width="6" height="1"/>
@@ -1894,7 +1973,7 @@
    <wangcolor name="Sand" color="#ff7700" tile="5238" probability="1"/>
    <wangcolor name="Path" color="#00e9ff" tile="3804" probability="1"/>
    <wangcolor name="Light Path" color="#ff00d8" tile="4428" probability="1"/>
-   <wangcolor name="Cave Dirt" color="#a000ff" tile="551" probability="1"/>
+   <wangcolor name="Cave Dirt" color="#ffff00" tile="551" probability="1"/>
    <wangtile tileid="337" wangid="0,0,0,7,0,0,0,0"/>
    <wangtile tileid="338" wangid="0,0,0,7,0,7,0,0"/>
    <wangtile tileid="339" wangid="0,0,0,0,0,7,0,0"/>

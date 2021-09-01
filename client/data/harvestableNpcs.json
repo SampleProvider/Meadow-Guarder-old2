@@ -2,13 +2,31 @@
     "cottonPlant":{
         "harvest":"cotton",
         "harvestAmount":3,
-        "harvestPower":1,
+        "harvestPower":10,
         "harvestTool":"scythe"
     },
     "tree":{
         "harvest":"wood",
         "harvestAmount":3,
-        "harvestPower":1,
+        "harvestPower":10,
         "harvestTool":"axe"
+    },
+    "copperOre":{
+        "harvest":"copperore",
+        "harvestAmount":3,
+        "harvestPower":10,
+        "harvestTool":"pickaxe"
+    },
+    "ironOre":{
+        "harvest":"ironore",
+        "harvestAmount":3,
+        "harvestPower":15,
+        "harvestTool":"pickaxe"
+    },
+    "coal":{
+        "harvest":"coal",
+        "harvestAmount":3,
+        "harvestPower":5,
+        "harvestTool":"pickaxe"
     }
 }

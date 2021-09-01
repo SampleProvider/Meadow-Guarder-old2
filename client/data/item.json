@@ -27,7 +27,7 @@
         "damage":6,
         "damageType":"ranged",
         "critChance":1,
-        "useTime":5,
+        "useTime":6,
         "rarity":2,
         "maxStack":1,
         "weaponData":{
@@ -63,26 +63,24 @@
     "copperstaff":{
         "name":"Copper Staff",
         "equip":"hotbar",
-        "damage":6,
+        "damage":12,
         "damageType":"magic",
         "critChance":0.04,
-        "useTime":8,
+        "useTime":11,
         "rarity":1,
         "maxStack":1,
         "weaponData":{
             "1":[{
                 "id":"projectile",
                 "projectileType":"fireball",
-                "param":{
-                    "pierce":5
-                }
+                "param":{}
             }]
         }
     },
     "copperwaraxe":{
         "name":"Copper Waraxe",
         "equip":"hotbar",
-        "damage":19,
+        "damage":9,
         "damageType":"rogue",
         "critChance":0.04,
         "useTime":18,
@@ -103,11 +101,6 @@
             }]
         }
     },
-    "wood":{
-        "name":"Wood",
-        "rarity":1,
-        "maxStack":1000
-    },
     "copperchestplate":{
         "name":"Copper Chestplate",
         "equip":"chestplate",
@@ -115,14 +108,106 @@
         "defense":2,
         "extraHp":12,
         "extraHpRegen":8,
+        "maxStack":1
+    },
+    "ironbow":{
+        "name":"Iron Bow",
+        "equip":"hotbar",
+        "damage":10,
+        "damageType":"ranged",
+        "critChance":1,
+        "useTime":6,
+        "rarity":2,
         "maxStack":1,
         "weaponData":{
-            "2":[{
+            "1":[{
                 "id":"projectile",
-                "projectileType":"bone",
+                "projectileType":"arrow",
                 "param":{}
             }]
         }
+    },
+    "ironsword":{
+        "name":"Iron Sword",
+        "equip":"hotbar",
+        "damage":13,
+        "damageType":"melee",
+        "critChance":0.04,
+        "useTime":1,
+        "rarity":0,
+        "maxStack":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"ironswordprojectile",
+                "param":{
+                    "projectilePattern":"sword",
+                    "relativeToParent":true,
+                    "pierce":-1,
+                    "timer":1
+                }
+            }]
+        }
+    },
+    "ironstaff":{
+        "name":"Iron Staff",
+        "equip":"hotbar",
+        "damage":18,
+        "damageType":"magic",
+        "critChance":0.04,
+        "useTime":11,
+        "rarity":1,
+        "maxStack":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"fireball",
+                "param":{}
+            }]
+        }
+    },
+    "ironwaraxe":{
+        "name":"Iron Waraxe",
+        "equip":"hotbar",
+        "damage":14,
+        "damageType":"rogue",
+        "critChance":0.04,
+        "useTime":18,
+        "rarity":1,
+        "maxStack":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"ironwaraxeprojectile",
+                "param":{
+                    "pierce":-1,
+                    "projectilePattern":"waraxe",
+                    "speed":30,
+                    "spin":30,
+                    "canCollide":false,
+                    "timer":80
+                }
+            }]
+        }
+    },
+    "ironhelmet":{
+        "name":"Iron Helmet",
+        "equip":"helmet",
+        "rarity":0,
+        "defense":3,
+        "extraHp":20,
+        "extraHpRegen":3,
+        "maxStack":1
+    },
+    "ironchestplate":{
+        "name":"Iron Chestplate",
+        "equip":"chestplate",
+        "rarity":0,
+        "defense":5,
+        "extraHp":15,
+        "extraHpRegen":9,
+        "extraDamage":2,
+        "maxStack":1
     },
     "oldhat":{
         "name":"Old Hat",
@@ -149,8 +234,59 @@
         "axePower":10,
         "maxStack":1
     },
+    "wornpickaxe":{
+        "name":"Worn Pickaxe",
+        "equip":"hotbar",
+        "rarity":0,
+        "pickaxePower":10,
+        "maxStack":1
+    },
+    "copperpickaxe":{
+        "name":"Copper Pickaxe",
+        "equip":"hotbar",
+        "rarity":0,
+        "pickaxePower":15,
+        "maxStack":1
+    },
+    "ironpickaxe":{
+        "name":"Iron Pickaxe",
+        "equip":"hotbar",
+        "rarity":0,
+        "pickaxePower":20,
+        "maxStack":1
+    },
+    "wood":{
+        "name":"Wood",
+        "rarity":1,
+        "maxStack":1000
+    },
     "cotton":{
         "name":"Cotton",
+        "rarity":0,
+        "maxStack":1000
+    },
+    "coal":{
+        "name":"Coal",
+        "rarity":0,
+        "maxStack":1000
+    },
+    "copperore":{
+        "name":"Copper Ore",
+        "rarity":0,
+        "maxStack":1000
+    },
+    "ironore":{
+        "name":"Iron Ore",
+        "rarity":0,
+        "maxStack":1000
+    },
+    "copperbar":{
+        "name":"Copper Bar",
+        "rarity":0,
+        "maxStack":1000
+    },
+    "ironbar":{
+        "name":"Iron Bar",
         "rarity":0,
         "maxStack":1000
     }

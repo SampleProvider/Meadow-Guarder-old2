@@ -10,14 +10,7 @@
         "maxSpeed":5,
         "drawSize":"medium",
         "itemDrops":{
-            "copperbow":{
-                "chance":0.5,
-                "amount":1
-            },
-            "copperstaff":{
-                "chance":0.2,
-                "amount":1
-            }
+            
         },
         "weaponData":{
             "20":[{
@@ -38,14 +31,7 @@
         "maxSpeed":7,
         "drawSize":"small",
         "itemDrops":{
-            "copperchestplate":{
-                "chance":0.5,
-                "amount":1
-            },
-            "coppersword":{
-                "chance":0.5,
-                "amount":1
-            }
+
         },
         "weaponData":{
             "10":[{
@@ -84,42 +70,14 @@
         "maxSpeed":5,
         "drawSize":"big",
         "itemDrops":{
-            "copperwaraxe":{
-                "chance":1,
-                "amount":1
-            }
+
         },
         "weaponData":{
             "1":[{
                 "id":"projectile",
                 "projectileType":"eye",
                 "param":{
-                    "direction":0,
-                    "directionDeviation":360
-                }
-            },
-            {
-                "id":"projectile",
-                "projectileType":"eye",
-                "param":{
-                    "direction":0,
-                    "directionDeviation":360
-                }
-            },
-            {
-                "id":"projectile",
-                "projectileType":"eye",
-                "param":{
-                    "direction":0,
-                    "directionDeviation":360
-                }
-            },
-            {
-                "id":"projectile",
-                "projectileType":"eye",
-                "param":{
-                    "direction":0,
-                    "directionDeviation":360
+                    "directionDeviation":20
                 }
             }]
         }

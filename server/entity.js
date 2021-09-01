@@ -621,7 +621,7 @@ Actor = function(param){
     }
     self.shootProjectile = function(projectileType,param){
         var direction = param.direction / 180 * Math.PI || self.direction / 180 * Math.PI;
-        direction += Math.random() * param.directionDeviation - param.directionDeviation / 2 || 0
+        direction += Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 || 0
         var stats = Object.create(self.stats);
         if(param.stats){
             for(var i in param.stats){
@@ -702,7 +702,7 @@ Player = function(param,socket){
         attack:false,
         second:false,
         heal:false,
-    }
+    };
     self.keyMap = {
         up:'w',
         down:'s',
@@ -795,6 +795,7 @@ Player = function(param,socket){
         self.inventory.addItem('coppershiv',1);
         self.inventory.addItem('wornscythe',1);
         self.inventory.addItem('wornaxe',1);
+        self.inventory.addItem('wornpickaxe',1);
     }
     self.inventory.refreshInventory();
 
@@ -862,6 +863,10 @@ Player = function(param,socket){
                     SOCKET_LIST[i].emit('initEntity',self.getInitPack());
                 }
             }
+            self.keyPress.up = false;
+            self.keyPress.down = false;
+            self.keyPress.left = false;
+            self.keyPress.right = false;
         }
         if(self.mapChange === 10){
             self.canMove = true;
@@ -1388,6 +1393,7 @@ Player = function(param,socket){
                                         });
                                     }
                                     npc.img = 'none';
+                                    Collision.list["" + npc.map + ":" + (Math.floor(npc.x / 64) * 64) + ":" + (Math.floor(npc.y / 64) * 64) + ":"] = [];
                                     npc.timer = 2400 + 1200 * Math.random();
                                     self.keyPress.attack = false;
                                 }
@@ -1411,6 +1417,7 @@ Player = function(param,socket){
                                         });
                                     }
                                     npc.img = 'none';
+                                    Collision.list["" + npc.map + ":" + (Math.floor(npc.x / 64) * 64) + ":" + (Math.floor(npc.y / 64) * 64) + ":"] = [];
                                     npc.timer = 2400 + 1200 * Math.random();
                                     self.keyPress.attack = false;
                                 }
@@ -1434,6 +1441,7 @@ Player = function(param,socket){
                                         });
                                     }
                                     npc.img = 'none';
+                                    Collision.list["" + npc.map + ":" + (Math.floor(npc.x / 64) * 64) + ":" + (Math.floor(npc.y / 64) * 64) + ":"] = [];
                                     npc.timer = 2400 + 1200 * Math.random();
                                     self.keyPress.attack = false;
                                 }
@@ -2280,11 +2288,29 @@ HarvestableNpc = function(param){
     for(var i in harvestableNpcData[self.img]){
         self[i] = harvestableNpcData[self.img][i];
     }
+    Collision.list["" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":"] = [{
+        x:self.x,
+        y:self.y,
+        map:self.map,
+        width:self.width,
+        height:self.height,
+        info:'',
+        type:'Collision',
+    }];
     self.timer = 0;
     var lastSelf = {};
     self.update = function(){
         if(self.timer <= 0){
             self.img = param.img;
+            Collision.list["" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":"] = [{
+                x:self.x,
+                y:self.y,
+                map:self.map,
+                width:self.width,
+                height:self.height,
+                info:'',
+                type:'Collision',
+            }];
         }
         self.timer -= 1;
     }

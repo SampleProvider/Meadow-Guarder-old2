@@ -1,4 +1,5 @@
 var loadedMap = {};
+var mapData = {};
 var loadedPercent = 0;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset1 - No Shadows.png';
@@ -76,6 +77,34 @@ var renderWorld = function(json,name){
             }
         }
     }
+    var x1 = 0;
+    var y1 = 0;
+    var x2 = 0;
+    var y2 = 0;
+    for(var i in json.layers){
+        for(var j in json.layers[i].chunks){
+            if(json.layers[i].chunks[j].x * 64 < x1){
+                x1 = json.layers[i].chunks[j].x * 64;
+            }
+            if(json.layers[i].chunks[j].y * 64 < y1){
+                y1 = json.layers[i].chunks[j].y * 64;
+            }
+            if(json.layers[i].chunks[j].x * 64 + 16 * 64 > x2){
+                x2 = json.layers[i].chunks[j].x * 64 + 16 * 64;
+            }
+            if(json.layers[i].chunks[j].y * 64 + 16 * 64 > y2){
+                y2 = json.layers[i].chunks[j].y * 64 + 16 * 64;
+            }
+        }
+    }
+    mapData[name] = {
+        x1:x1,
+        y1:y1,
+        x2:x2,
+        y2:y2,
+        width:json.layers[0].width * 64,
+        height:json.layers[0].height * 64,
+    }
 }
 var loadTileset = function(json,name){
     if(tilesetLoaded){
@@ -108,5 +137,5 @@ var loadAllMaps = function(){
     signErrorText = signError.innerHTML;
     signError.innerHTML = '<span style="color: #55ff55">Loading maps...</span><br>' + signErrorText;
     loadMap('World');
-    loadMap('House');
+    loadMap('Cave of Light Floor 0');
 }

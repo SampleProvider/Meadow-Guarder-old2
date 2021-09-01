@@ -23,6 +23,8 @@ var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 var mouseX = 0;
 var mouseY = 0;
+var rawMouseX = 0;
+var rawMouseY = 0;
 var cameraX = 0;
 var cameraY = 0;
 var selfId = null;
@@ -731,6 +733,22 @@ var loop = function(){
     if(mouseCameraY < -128){
         mouseCameraY = -128;
     }
+    if(mapData[Player.list[selfId].map].width > window.innerWidth){
+        if(cameraX > -mapData[Player.list[selfId].map].x1){
+            cameraX = -mapData[Player.list[selfId].map].x1;
+        }
+        if(cameraX < window.innerWidth - mapData[Player.list[selfId].map].x2){
+            cameraX = window.innerWidth - mapData[Player.list[selfId].map].x2;
+        }
+    }
+    if(mapData[Player.list[selfId].map].height > window.innerHeight){
+        if(cameraY > -mapData[Player.list[selfId].map].y1){
+            cameraY = -mapData[Player.list[selfId].map].y1;
+        }
+        if(cameraY < window.innerHeight - mapData[Player.list[selfId].map].y2){
+            cameraY = window.innerHeight - mapData[Player.list[selfId].map].y2;
+        }
+    }
     // cameraX -= mouseCameraX;
     // cameraY -= mouseCameraY;
     cameraX = Math.round(cameraX);
@@ -871,7 +889,8 @@ var loop = function(){
     if(Player.list[selfId].map === currentMap && shadeAmount > 1.5){
         shadeSpeed = -3 / 40;
     }
-    if(shadeAmount < 0.25 && mapShadeSpeed !== 0.08 && currentMap !== ''){
+    if(shadeAmount < 0.25 && mapShadeSpeed !== 0.08 && currentMap !== '' && shadeSpeed === -3 / 40){
+        currentMap = '';
         mapShadeAmount = 0;
         mapShadeSpeed = 0.08;
     }
@@ -918,6 +937,8 @@ document.onkeyup = function(event){
 }
 document.onmousemove = function(event){
     if(selfId){
+        var x = -cameraX - Player.list[selfId].x + event.clientX;
+        var y = -cameraY - Player.list[selfId].y + event.clientY;
         if(event.clientY < 0){
             socket.emit('keyPress',{inputId:'releaseAll'});
         }
@@ -930,9 +951,11 @@ document.onmousemove = function(event){
         if(event.clientX > window.innerWidth){
             socket.emit('keyPress',{inputId:'releaseAll'});
         }
-        mouseX = event.clientX - WIDTH / 2;
-        mouseY = event.clientY - HEIGHT / 2;
-        socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        mouseX = x;
+        mouseY = y;
+        rawMouseX = event.clientX;
+        rawMouseY = event.clientY;
+        socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
         // if(!talking){
         //     socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
         // }
@@ -942,10 +965,10 @@ document.onmousemove = function(event){
         for(var i = 0;i < inventorySlots.length;i++){
             if(inventorySlots[i].className.includes('inventoryMenuSlot') && document.getElementById('inventoryDiv').style.display === 'inline-block'){
                 var rect = inventorySlots[i].getBoundingClientRect();
-                if(mouseX + WIDTH / 2 > rect.left){
-                    if(mouseX + WIDTH / 2 < rect.right){
-                        if(mouseY + HEIGHT / 2 > rect.top){
-                            if(mouseY + HEIGHT / 2 < rect.bottom){
+                if(rawMouseX > rect.left){
+                    if(rawMouseX < rect.right){
+                        if(rawMouseY > rect.top){
+                            if(rawMouseY < rect.bottom){
                                 inSlot = inventorySlots[i].id.substring(13);
                                 slotType = 'itemDescriptions';
                             }
@@ -955,10 +978,10 @@ document.onmousemove = function(event){
             }
             if(inventorySlots[i].className.includes('craftMenuSlot') && document.getElementById('craftDiv').style.display === 'inline-block'){
                 var rect = inventorySlots[i].getBoundingClientRect();
-                if(mouseX + WIDTH / 2 > rect.left){
-                    if(mouseX + WIDTH / 2 < rect.right){
-                        if(mouseY + HEIGHT / 2 > rect.top){
-                            if(mouseY + HEIGHT / 2 < rect.bottom){
+                if(rawMouseX > rect.left){
+                    if(rawMouseX < rect.right){
+                        if(rawMouseY > rect.top){
+                            if(rawMouseY < rect.bottom){
                                 inSlot = inventorySlots[i].id.substring(9);
                                 slotType = 'craftDescriptions';
                             }
@@ -970,10 +993,10 @@ document.onmousemove = function(event){
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             var rect = hotbarSlots[i].getBoundingClientRect();
-            if(mouseX + WIDTH / 2 > rect.left){
-                if(mouseX + WIDTH / 2 < rect.right){
-                    if(mouseY + HEIGHT / 2 > rect.top){
-                        if(mouseY + HEIGHT / 2 < rect.bottom){
+            if(rawMouseX > rect.left){
+                if(rawMouseX < rect.right){
+                    if(rawMouseY > rect.top){
+                        if(rawMouseY < rect.bottom){
                             inSlot = inventorySlots[i].id.substring(13);
                             slotType = 'itemDescriptions';
                         }
@@ -991,10 +1014,10 @@ document.onmousemove = function(event){
             if(itemMenu.style.display === 'none'){
                 if(slotType === 'craftDescriptions'){
                     var rect = document.getElementById('craftBackground').getBoundingClientRect();
-                    if(mouseX + WIDTH / 2 > rect.left){
-                        if(mouseX + WIDTH / 2 < rect.right){
-                            if(mouseY + HEIGHT / 2 > rect.top){
-                                if(mouseY + HEIGHT / 2 < rect.bottom){
+                    if(rawMouseX > rect.left){
+                        if(rawMouseX < rect.right){
+                            if(rawMouseY > rect.top){
+                                if(rawMouseY < rect.bottom){
                                     itemMenu.style.display = 'inline-block';
                                     itemMenu.innerHTML = inventory[slotType][inSlot];
                                 }
@@ -1005,10 +1028,10 @@ document.onmousemove = function(event){
                 }
                 else if(inventory.items[inSlot].id){
                     var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
-                    if(mouseX + WIDTH / 2 > rect.left){
-                        if(mouseX + WIDTH / 2 < rect.right){
-                            if(mouseY + HEIGHT / 2 > rect.top){
-                                if(mouseY + HEIGHT / 2 < rect.bottom){
+                    if(rawMouseX > rect.left){
+                        if(rawMouseX < rect.right){
+                            if(rawMouseY > rect.top){
+                                if(rawMouseY < rect.bottom){
                                     itemMenu.style.display = 'inline-block';
                                     itemMenu.innerHTML = inventory[slotType][inSlot];
                                 }
@@ -1049,12 +1072,12 @@ document.onmouseup = function(event){
     if(inventory.draggingItem !== -1){
         document.getElementById('itemMenu').style.display = 'none';
         var rect = document.getElementById('inventoryDiv').getBoundingClientRect();
-        if(mouseX + WIDTH / 2 > rect.left && mouseX + WIDTH / 2 < rect.right && mouseY + HEIGHT / 2 > rect.top && mouseY + HEIGHT / 2 < rect.bottom){
+        if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
             var draggedItem = false;
             var inventorySlots = document.getElementsByClassName('inventorySlot');
             for(var i = 0;i < inventorySlots.length;i++){
                 var rect = inventorySlots[i].getBoundingClientRect();
-                if(mouseX + WIDTH / 2 > rect.left && mouseX + WIDTH / 2 < rect.right && mouseY + HEIGHT / 2 > rect.top && mouseY + HEIGHT / 2 < rect.bottom){
+                if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
                     socket.emit('dragItem',{
                         index1:inventory.draggingItem,
                         index2:inventorySlots[i].id.substring(13),

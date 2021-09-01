@@ -116,4 +116,4 @@ var loadMap = function(name){
     renderWorld(require('./../client/maps/' + name + '.json'),name);
 }
 loadMap('World');
-loadMap('House');
+loadMap('Cave of Light Floor 0');

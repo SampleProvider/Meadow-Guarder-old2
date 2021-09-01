@@ -221,8 +221,8 @@ Inventory = function(socket,server){
                     if(e.button === 0){
                         self.draggingItem = index;
                         var rect = image.getBoundingClientRect();
-                        self.draggingX = mouseX + window.innerWidth / 2 - rect.left;
-                        self.draggingY = mouseY + window.innerHeight / 2 - rect.top;
+                        self.draggingX = rawMouseX - rect.left;
+                        self.draggingY = rawMouseY - rect.top;
                         document.getElementById('itemMenu').style.display = 'none';
                         slot.innerHTML = "";
                         document.getElementById('draggingItem').innerHTML = "<image class='itemImage' draggable=false src='/client/img/items/" + self.items[index].id + ".png'></image>";
@@ -238,7 +238,8 @@ Inventory = function(socket,server){
                                 index1:index,
                                 index2:item.equip,
                             });
-                            div.style.display = 'none';
+                            var itemMenu = document.getElementById('itemMenu');
+                            itemMenu.style.display = 'none';
                         }
                     }
                 }
