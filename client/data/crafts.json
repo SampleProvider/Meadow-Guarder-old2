@@ -53,11 +53,11 @@
             "amount":1
         },
         {
-            "id":"ironchestplate",
+            "id":"ironhelmet",
             "amount":1
         },
         {
-            "id":"ironhelmet",
+            "id":"ironchestplate",
             "amount":1
         }
     ],
