@@ -1,6 +1,7 @@
 var loadedMap = {};
 var mapData = {};
-var loadedPercent = 0;
+var numLoaded = 0;
+var totalMaps = 3;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset1 - No Shadows.png';
 var tilesetLoaded = false;
@@ -105,6 +106,9 @@ var renderWorld = function(json,name){
         width:json.layers[0].width * 64,
         height:json.layers[0].height * 64,
     }
+    numLoaded += 1;
+    var mapLoading = document.getElementById('mapLoading');
+    mapLoading.innerHTML = '<span style="color: #55ff55">Loading maps... (' + Math.round(numLoaded / totalMaps * 100) + '%)</span>';
 }
 var loadTileset = function(json,name){
     if(tilesetLoaded){
@@ -134,8 +138,8 @@ var loadMap = function(name){
     request.send();
 }
 var loadAllMaps = function(){
-    signErrorText = signError.innerHTML;
-    signError.innerHTML = '<span style="color: #55ff55">Loading maps...</span><br>' + signErrorText;
+    numLoaded = 0;
+    signError.innerHTML = '<div id="mapLoading"></div>' + signError.innerHTML;
     loadMap('World');
     loadMap('Cave of Light Floor 0');
     loadMap('Cave of Light Floor 1');

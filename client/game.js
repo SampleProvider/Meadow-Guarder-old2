@@ -179,8 +179,7 @@ var arrayIsEqual = function(arr1,arr2){
 };
 
 socket.on('selfId',function(data){
-    signErrorText = signError.innerHTML;
-    signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signErrorText;
+    signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         selfId = data.id;
         chat = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
@@ -188,6 +187,7 @@ socket.on('selfId',function(data){
         gameDiv.style.display = 'inline-block';
         window.requestAnimationFrame(loop);
         socket.emit('signInFinished');
+        canSignIn = true;
     },750);
 });
 socket.on('update',function(data){

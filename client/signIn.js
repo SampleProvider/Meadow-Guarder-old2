@@ -11,7 +11,6 @@ var loadJSON = function(json,cb){
     request.onload = function(){
         if(this.status >= 200 && this.status < 400){
             var json = JSON.parse(this.response);
-            signErrorText = signError.innerHTML;
             cb(json);
         }
         else{
@@ -32,16 +31,14 @@ document.getElementById('signIn').onclick = function(){
         return;
     }
     canSignIn = false;
+    signError.innerHTML = '<span style="color: #55ff55">Sent packet to server.</span>';
     setTimeout(function(){
-        canSignIn = true;
-    },3000);
-    signError.innerHTML = '<span style="color: #55ff55">Sent packet to server.</span><br>';
-    setTimeout(function(){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #55ff55">Waiting for server response...</span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #55ff55">Waiting for server response...</span><br>' + signError.innerHTML;
         socket.emit('signIn',{username:document.getElementById('username').value,password:document.getElementById('password').value});
-    },100)
+    },1000);
     loadJSON('projectiles',function(json){
+        signError.innerHTML = '<div id="projectileLoading"></div>' + signError.innerHTML;
+        var projectileLoading = document.getElementById('projectileLoading');
         var amount = 0;
         for(var i in json){
             amount += 1;
@@ -51,10 +48,12 @@ document.getElementById('signIn').onclick = function(){
             Img[i] = new Image();
             Img[i].src = '/client/img/projectiles/' + i + '.png';
             currentAmount += 1;
-            signError.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
+            projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + currentAmount / amount * 100 + '%)</span>';
         }
     });
     loadJSON('monsters',function(json){
+        signError.innerHTML = '<div id="monsterLoading"></div>' + signError.innerHTML;
+        var monsterLoading = document.getElementById('monsterLoading');
         var amount = 0;
         for(var i in json){
             amount += 1;
@@ -64,10 +63,12 @@ document.getElementById('signIn').onclick = function(){
             Img[i] = new Image();
             Img[i].src = '/client/img/monsters/' + i + '.png';
             currentAmount += 1;
-            signError.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
+            monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + currentAmount / amount * 100 + '%)</span>';
         }
     });
     loadJSON('item',function(json){
+        signError.innerHTML = '<div id="itemLoading"></div>' + signError.innerHTML;
+        var itemLoading = document.getElementById('itemLoading');
         var amount = 0;
         for(var i in json){
             amount += 1;
@@ -79,10 +80,12 @@ document.getElementById('signIn').onclick = function(){
             Img[i + 'select'] = new Image();
             Img[i + 'select'].src = '/client/img/items/' + i + 'select.png';
             currentAmount += 1;
-            signError.innerHTML = '<span style="color: #55ff55">Loading items... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
+            itemLoading.innerHTML = '<span style="color: #55ff55">Loading items... (' + currentAmount / amount * 100 + '%)</span>';
         }
     });
     loadJSON('harvestableNpcs',function(json){
+        signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
+        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
         var amount = 0;
         for(var i in json){
             amount += 1;
@@ -94,7 +97,7 @@ document.getElementById('signIn').onclick = function(){
             Img[i + '1'] = new Image();
             Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
             currentAmount += 1;
-            signError.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + currentAmount / amount * 100 + '%)</span><br>' + signErrorText;
+            harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + currentAmount / amount * 100 + '%)</span>';
         }
     });
     loadAllMaps();

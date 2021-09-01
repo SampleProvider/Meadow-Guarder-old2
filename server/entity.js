@@ -1,3 +1,15 @@
+var xpLevels = [
+    100,
+    500,
+    1500,
+    2500,
+    3500,
+    5000,
+    8000,
+    13000,
+    20000,
+];
+
 
 var PF = require('pathfinding');
 
@@ -596,6 +608,7 @@ Actor = function(param){
                 }
             }
         }
+        Player.list[pt].xp += Math.ceil(Math.random() * 5);
     }
     self.onDamage = function(pt){
         var hp = self.hp;
@@ -651,6 +664,14 @@ Actor = function(param){
     }
     self.doAttack = function(){
         if(self.reload % self.useTime === 0){
+            if(self.manaCost){
+                if(self.mana >= self.manaCost){
+                    self.mana -= self.manaCost;
+                }
+                else{
+                    return;
+                }
+            }
             self.weaponState += 1;
             for(var i in self.weaponData){
                 if(self.weaponState % parseInt(i) === 0){
@@ -759,6 +780,8 @@ Player = function(param,socket){
     self.mana = 100;
     self.manaMax = 100;
 
+    self.level = 0;
+
     self.stats = {
         damage:0,
         defense:0,
@@ -778,6 +801,7 @@ Player = function(param,socket){
     self.useTime = 0;
     self.weaponState = 0;
     self.weaponData = {};
+    self.manaCost = 0;
 
     self.lastChat = 0;
     self.chatWarnings = 0;
@@ -797,6 +821,13 @@ Player = function(param,socket){
         self.inventory.addItem('wornaxe',1);
         self.inventory.addItem('wornpickaxe',1);
     }
+    if(param.database.xp){
+        self.xp = param.database.xp;
+    }
+    if(param.database.level){
+        self.level = param.database.level;
+    }
+    self.xpMax = xpLevels[self.level];
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
@@ -834,6 +865,8 @@ Player = function(param,socket){
         self.updateStats();
         self.updateAttack();
         self.updateHp();
+        self.mana += self.stats.manaRegen / 20;
+        self.mana = Math.min(self.manaMax,self.mana);
         self.updateAnimation();
         if(self.mapChange === 0){
             self.canMove = false;
@@ -1271,9 +1304,10 @@ Player = function(param,socket){
 
             self.useTime = 0;
             self.weaponData = {};
+            self.manaCost = 0;
 
             var maxSlots = self.inventory.maxSlots;
-            self.inventory.maxSlots = 10;
+            self.inventory.maxSlots = 20;
 
             for(var i in self.inventory.items){
                 if(i >= 0){
@@ -1301,6 +1335,9 @@ Player = function(param,socket){
                             }
                             if(item.scythePower){
                                 self.scythePower = item.scythePower;
+                            }
+                            if(item.manaCost){
+                                self.manaCost += item.manaCost;
                             }
                             if(item.weaponData){
                                 for(var j in item.weaponData){
@@ -1346,6 +1383,9 @@ Player = function(param,socket){
                         }
                         if(item.extraDamage !== undefined){
                             self.damage += item.extraDamage;
+                        }
+                        if(item.manaCost){
+                            self.manaCost += item.manaCost;
                         }
                         if(item.weaponData){
                             for(var j in item.weaponData){
@@ -1449,6 +1489,19 @@ Player = function(param,socket){
                         }
                     }
                 }
+            }
+        }
+    }
+    self.updateXp = function(){
+        if(self.xp >= self.xpMax){
+            if(xpLevels[self.level]){
+                self.level += 1;
+                self.xpMax = xpLevels[self.level];
+                addToChat('#00ff00',self.displayName + ' is now level ' + self.level + '.');
+                self.xp = 0;
+            }
+            else{
+                self.xpMax = self.xp;
             }
         }
     }

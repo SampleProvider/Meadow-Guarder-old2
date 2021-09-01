@@ -63,10 +63,11 @@
     "copperstaff":{
         "name":"Copper Staff",
         "equip":"hotbar",
-        "damage":12,
+        "damage":19,
         "damageType":"magic",
         "critChance":0.04,
         "useTime":11,
+        "manaCost":5,
         "rarity":1,
         "maxStack":1,
         "weaponData":{
@@ -152,10 +153,11 @@
     "ironstaff":{
         "name":"Iron Staff",
         "equip":"hotbar",
-        "damage":18,
+        "damage":28,
         "damageType":"magic",
         "critChance":0.04,
         "useTime":11,
+        "manaCost":6,
         "rarity":1,
         "maxStack":1,
         "weaponData":{
