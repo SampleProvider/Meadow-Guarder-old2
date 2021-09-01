@@ -18,7 +18,7 @@ closeInventory = function(){
     settings.inventoryOpen = false;
     document.getElementById('inventoryBackground').style.display = 'none';
     document.getElementById('inventoryDiv').style.display = 'none';
-    var rect = document.getElementById('inventoryDiv').getBoundingClientRect();
+    var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
         var itemMenu = document.getElementById('itemMenu');
         itemMenu.style.display = 'none';
@@ -33,7 +33,7 @@ toggleInventory = function(){
     else{
         document.getElementById('inventoryBackground').style.display = 'none';
         document.getElementById('inventoryDiv').style.display = 'none';
-        var rect = document.getElementById('inventoryDiv').getBoundingClientRect();
+        var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
             var itemMenu = document.getElementById('itemMenu');
             itemMenu.style.display = 'none';
@@ -49,7 +49,7 @@ closeCraft = function(){
     settings.craftOpen = false;
     document.getElementById('craftBackground').style.display = 'none';
     document.getElementById('craftDiv').style.display = 'none';
-    var rect = document.getElementById('craftDiv').getBoundingClientRect();
+    var rect = document.getElementById('craftBackground').getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
         var itemMenu = document.getElementById('itemMenu');
         itemMenu.style.display = 'none';
@@ -64,7 +64,7 @@ toggleCraft = function(){
     else{
         document.getElementById('craftBackground').style.display = 'none';
         document.getElementById('craftDiv').style.display = 'none';
-        var rect = document.getElementById('craftDiv').getBoundingClientRect();
+        var rect = document.getElementById('craftBackground').getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
             var itemMenu = document.getElementById('itemMenu');
             itemMenu.style.display = 'none';

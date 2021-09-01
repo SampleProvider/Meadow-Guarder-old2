@@ -883,7 +883,7 @@ var loop = function(){
     }
     ctx.restore();
 
-    if(mapShadeAmount >= 3.5){
+    if(mapShadeAmount >= 8.5){
         mapShadeSpeed = -0.12;
     }
     if(Player.list[selfId].map === currentMap && shadeAmount > 1.5){

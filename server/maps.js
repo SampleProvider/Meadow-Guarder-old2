@@ -117,3 +117,4 @@ var loadMap = function(name){
 }
 loadMap('World');
 loadMap('Cave of Light Floor 0');
+loadMap('Cave of Light Floor 1');

@@ -138,4 +138,5 @@ var loadAllMaps = function(){
     signError.innerHTML = '<span style="color: #55ff55">Loading maps...</span><br>' + signErrorText;
     loadMap('World');
     loadMap('Cave of Light Floor 0');
+    loadMap('Cave of Light Floor 1');
 }
