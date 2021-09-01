@@ -961,6 +961,7 @@ document.onmousemove = function(event){
         // }
         var inSlot = -1;
         var slotType = '';
+        var hotbar = false;
         var inventorySlots = document.getElementsByClassName('inventorySlot');
         for(var i = 0;i < inventorySlots.length;i++){
             if(inventorySlots[i].className.includes('inventoryMenuSlot') && document.getElementById('inventoryDiv').style.display === 'inline-block'){
@@ -999,6 +1000,7 @@ document.onmousemove = function(event){
                         if(rawMouseY < rect.bottom){
                             inSlot = hotbarSlots[i].id.substring(10);
                             slotType = 'itemDescriptions';
+                            hotbar = true;
                         }
                     }
                 }
@@ -1026,7 +1028,7 @@ document.onmousemove = function(event){
                     }
 
                 }
-                else if(inventory.items[inSlot].id){
+                else if(inventory.items[inSlot].id && hotbar === false){
                     var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
                     if(rawMouseX > rect.left){
                         if(rawMouseX < rect.right){
@@ -1038,6 +1040,10 @@ document.onmousemove = function(event){
                             }
                         }
                     }
+                }
+                else if(inventory.items[inSlot].id && hotbar === true){
+                    itemMenu.style.display = 'inline-block';
+                    itemMenu.innerHTML = inventory[slotType][inSlot];
                 }
             }
             var rect = itemMenu.getBoundingClientRect();
