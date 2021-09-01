@@ -997,7 +997,7 @@ document.onmousemove = function(event){
                 if(rawMouseX < rect.right){
                     if(rawMouseY > rect.top){
                         if(rawMouseY < rect.bottom){
-                            inSlot = hotbarSlots[i].id.substring(13);
+                            inSlot = hotbarSlots[i].id.substring(10);
                             slotType = 'itemDescriptions';
                         }
                     }
