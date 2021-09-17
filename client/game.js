@@ -3,7 +3,7 @@ if(isFirefox === true) {
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
 
-var VERSION = '0.0.1';
+var VERSION = '0.0.2';
 
 var socket = io({
     reconnection:false,
@@ -43,12 +43,6 @@ var resetCanvas = function(ctx){
     ctx.filter = 'url(#remove-alpha)';
     ctx.imageSmoothingEnabled = false;
 }
-var pageDiv = document.getElementById('pageDiv');
-var gameDiv = document.getElementById('gameDiv');
-var disconnectedDiv = document.getElementById('disconnectedDiv');
-var deathDiv = document.getElementById('deathDiv');
-
-
 var ctxRaw = document.getElementById('ctx');
 var ctx = document.getElementById("ctx").getContext("2d");
 ctxRaw.style.width = window.innerWidth;
@@ -58,10 +52,16 @@ ctx.canvas.height = window.innerHeight;
 resetCanvas(ctx);
 
 var Img = {};
-Img.player = new Image();
-Img.player.src = '/client/img/player.png';
-Img.sword = new Image();
-Img.sword.src = '/client/img/sword.png';
+Img.Human = new Image();
+Img.Human.src = '/client/img/player/bodies/Human.png';
+Img.Orc = new Image();
+Img.Orc.src = '/client/img/player/bodies/Orc.png';
+Img.Undead = new Image();
+Img.Undead.src = '/client/img/player/bodies/Undead.png';
+Img.Panda = new Image();
+Img.Panda.src = '/client/img/player/bodies/Panda.png';
+Img.Avian = new Image();
+Img.Avian.src = '/client/img/player/bodies/Avian.png';
 Img.select = new Image();
 Img.select.src = '/client/img/select.png';
 
@@ -89,55 +89,26 @@ socket.on('updateCraft',function(pack){
     }
 });
 
-Img.greenHealthBar = new Image();
-Img.greenHealthBar.src = '/client/img/greenHealthBar.png';
-Img.redHealthBar = new Image();
-Img.redHealthBar.src = '/client/img/redHealthBar.png';
+Img.healthbar = new Image();
+Img.healthbar.src = '/client/img/healthbar.png';
 
-var renderPlayer = function(img,shadeValues){
+var renderPlayer = function(img){
     if(isFirefox){
         var temp = document.createElement('canvas');
-        temp.canvas.width = 72;
-        temp.canvas.heiht = 152;
+        temp.canvas.width = 128;
+        temp.canvas.height = 128;
     }
     else{
-        var temp = new OffscreenCanvas(72,152);
+        var temp = new OffscreenCanvas(128,128);
     }
     var gl = temp.getContext('2d');
     resetCanvas(gl);
-    gl.drawImage(img,0,0);
-    var imageData = gl.getImageData(0,0,72,152);
-    var rgba = imageData.data;
-    for(var i = 0;i < rgba.length;i += 4){
-        if(rgba[i] === 0 && rgba[i + 1] === 0 && rgba[i + 2] === 0){
-            //rgba[i + 3] = 0;
-        }
-        else{
-            if(shadeValues[0] !== -1){
-                rgba[i] = rgba[i] + (shadeValues[0] - rgba[i]) * shadeValues[3];
-            }
-            if(shadeValues[1] !== -1){
-                rgba[i + 1] = rgba[i + 1] + (shadeValues[1] - rgba[i + 1]) * shadeValues[3];
-            }
-            if(shadeValues[2] !== -1){
-                rgba[i + 2] = rgba[i + 2] + (shadeValues[2] - rgba[i + 2]) * shadeValues[3];
-            }
+    for(var i in img){
+        if(img[i] !== "none"){
+            gl.drawImage(Img[img[i]],0,0,128,128);
         }
     }
-    gl.clearRect(0,0,72,152);
-    gl.putImageData(imageData,0,0);
-    if(isFirefox){
-        var finalTemp = document.createElement('canvas');
-        finalTemp.canvas.width = 72 * 4;
-        finalTemp.canvas.height = 152 * 4;
-    }
-    else{
-        var finalTemp = new OffscreenCanvas(72 * 4,152 * 4);
-    }
-    var finalGl = finalTemp.getContext('2d');
-    resetCanvas(finalGl);
-    finalGl.drawImage(temp,0,0,72 * 4,152 * 4);
-    return finalTemp;
+    return temp;
 }
 var drawPlayer = function(img,canvas,animationDirection,animation,x,y,size,drawSize){
     var animationValue = 0;
@@ -156,13 +127,13 @@ var drawPlayer = function(img,canvas,animationDirection,animation,x,y,size,drawS
             break;
     }
     if(drawSize === 'small'){
-        canvas.drawImage(img,16 * animation,16 * animationValue,16,16,x - size * 8,y - size * 8.5,size * 16,size * 16);
+        canvas.drawImage(img,16 * animation,16 * animationValue,16,16,x - size * 8,y - size * 8,size * 16,size * 16);
     }
     else if(drawSize === 'medium'){
-        canvas.drawImage(img,16 * animation,24 * animationValue,16,24,x - size * 8,y - size * 17.5,size * 16,size * 24);
+        canvas.drawImage(img,32 * animation,32 * animationValue,32,32,x - size * 16,y - size * 24,size * 32,size * 32);
     }
     else{
-        canvas.drawImage(img,32 * animation,32 * animationValue,32,32,x - size * 16,y - size * 16.5,size * 32,size * 32);
+        canvas.drawImage(img,32 * animation,32 * animationValue,32,32,x - size * 16,y - size * 16,size * 32,size * 32);
     }
     return canvas;
 }
@@ -179,6 +150,14 @@ var arrayIsEqual = function(arr1,arr2){
 };
 
 socket.on('selfId',function(data){
+    var settingPlayers = document.getElementsByClassName('settingDropdown');
+    for(var i = 0;i < settingPlayers.length;i++){
+        for(var j = 0;j < settingPlayers[i].options.length;j++){
+            if(settingPlayers[i].options[j].value === data.img[settingPlayers[i].name]){
+                settingPlayers[i].selectedIndex = j;
+            }
+        }
+    }
     signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         selfId = data.id;
@@ -241,44 +220,48 @@ socket.on('update',function(data){
                         else if(j === 'hp'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('healthBarText').innerHTML = player.hp + " / " + player.hpMax;
-                                document.getElementById('healthBarValue').style.width = "" + 150 * player.hp / player.hpMax + "px";
+                                healthBarText.innerHTML = player.hp + " / " + player.hpMax;
+                                healthBarValue.style.width = "" + 150 * player.hp / player.hpMax + "px";
                             }
                         }
                         else if(j === 'hpMax'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('healthBarText').innerHTML = player.hp + " / " + player.hpMax;
-                                document.getElementById('healthBarValue').style.width = "" + 150 * player.hp / player.hpMax + "px";
+                                healthBarText.innerHTML = player.hp + " / " + player.hpMax;
+                                healthBarValue.style.width = "" + 150 * player.hp / player.hpMax + "px";
                             }
                         }
                         else if(j === 'xp'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('xpBarText').innerHTML = player.xp + " / " + player.xpMax;
-                                document.getElementById('xpBarValue').style.width = "" + 150 * player.xp / player.xpMax + "px";
+                                xpBarText.innerHTML = player.xp + " / " + player.xpMax;
+                                xpBarValue.style.width = "" + 150 * player.xp / player.xpMax + "px";
                             }
                         }
                         else if(j === 'xpMax'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('xpBarText').innerHTML = player.xp + " / " + player.xpMax;
-                                document.getElementById('xpBarValue').style.width = "" + 150 * player.xp / player.xpMax + "px";
+                                xpBarText.innerHTML = player.xp + " / " + player.xpMax;
+                                xpBarValue.style.width = "" + 150 * player.xp / player.xpMax + "px";
                             }
                         }
                         else if(j === 'mana'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('manaBarText').innerHTML = player.mana + " / " + player.manaMax;
-                                document.getElementById('manaBarValue').style.width = "" + 150 * player.mana / player.manaMax + "px";
+                                manaBarText.innerHTML = player.mana + " / " + player.manaMax;
+                                manaBarValue.style.width = "" + 150 * player.mana / player.manaMax + "px";
                             }
                         }
                         else if(j === 'manaMax'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                document.getElementById('manaBarText').innerHTML = player.mana + " / " + player.manaMax;
-                                document.getElementById('manaBarValue').style.width = "" + 150 * player.mana / player.manaMax + "px";
+                                manaBarText.innerHTML = player.mana + " / " + player.manaMax;
+                                manaBarValue.style.width = "" + 150 * player.mana / player.manaMax + "px";
                             }
+                        }
+                        else if(j === 'img'){
+                            player[j] = data.player[i][j];
+                            player.render = renderPlayer(player[j]);
                         }
                         else{
                             player[j] = data.player[i][j];
@@ -586,11 +569,11 @@ socket.on('death',function(data){
     deathDiv.style.display = 'inline-block';
     pageDiv.style.display = 'none';
     respawnTimer = 5;
-    document.getElementById('respawnTimer').innerHTML = respawnTimer;
-    document.getElementById('respawn').style.display = 'none';
+    respawnTimer.innerHTML = respawnTimer;
+    respawn.style.display = 'none';
     setTimeout(updateRespawn,1500);
-    document.getElementById('healthBarText').innerHTML = 0 + " / " + Player.list[selfId].hpMax;
-    document.getElementById('healthBarValue').style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
+    healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
+    healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
 });
 var respawn = function(){
     socket.emit('respawn');
@@ -610,14 +593,14 @@ var updateRespawn = function(){
         return;
     }
     respawnTimer = Math.max(respawnTimer - 1,0);
-    document.getElementById('respawnTimer').innerHTML = respawnTimer;
+    respawnTimer.innerHTML = respawnTimer;
     if(respawnTimer === 0){
-        document.getElementById('respawn').style.display = 'inline-block';
+        respawn.style.display = 'inline-block';
     }
     setTimeout(updateRespawn,1000);
 }
 socket.on('changeMap',function(data){
-    document.getElementById('regionDisplay').innerHTML = data.teleport;
+    regionDisplay.innerHTML = data.teleport;
     if(shadeAmount < 0){
         shadeAmount = 0;
     }
@@ -625,7 +608,7 @@ socket.on('changeMap',function(data){
     shadeSpeed = 3 / 40;
 });
 socket.on('regionChange',function(data){
-    document.getElementById('regionDisplay').innerHTML = data;
+    regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">' + data.mapName + '</div>';
     mapShadeAmount = 0;
     mapShadeSpeed = 0.08;
 });
@@ -897,10 +880,10 @@ var loop = function(){
     shadeAmount += shadeSpeed;
     mapShadeAmount += mapShadeSpeed;
     if(shadeAmount >= -1){
-        document.getElementById('mapFade').style.opacity = shadeAmount;
+        mapFade.style.opacity = shadeAmount;
     }
     if(mapShadeAmount >= -1){
-        document.getElementById('regionDisplay').style.opacity = mapShadeAmount;
+        regionDisplay.style.opacity = mapShadeAmount;
     }
 
     tileAnimation += 0.1;
@@ -908,6 +891,121 @@ var loop = function(){
         tileAnimation = 0;
     }
     window.requestAnimationFrame(loop);
+}
+
+var updateInventoryPopupMenu = function(scroll){
+    var inSlot = -1;
+    var slotType = '';
+    var hotbar = false;
+    var inventorySlots = document.getElementsByClassName('inventorySlot');
+    for(var i = 0;i < inventorySlots.length;i++){
+        if(inventorySlots[i].className.includes('inventoryMenuSlot') && inventoryDiv.style.display === 'inline-block'){
+            var rect = inventorySlots[i].getBoundingClientRect();
+            if(rawMouseX > rect.left){
+                if(rawMouseX < rect.right){
+                    if(rawMouseY > rect.top){
+                        if(rawMouseY < rect.bottom){
+                            inSlot = inventorySlots[i].id.substring(13);
+                            slotType = 'itemDescriptions';
+                        }
+                    }
+                }
+            }
+        }
+        if(inventorySlots[i].className.includes('craftMenuSlot') && craftDiv.style.display === 'inline-block'){
+            var rect = inventorySlots[i].getBoundingClientRect();
+            if(rawMouseX > rect.left){
+                if(rawMouseX < rect.right){
+                    if(rawMouseY > rect.top){
+                        if(rawMouseY < rect.bottom){
+                            inSlot = inventorySlots[i].id.substring(9);
+                            slotType = 'craftDescriptions';
+                        }
+                    }
+                }
+            }
+        }
+    }
+    var hotbarSlots = document.getElementsByClassName('hotbarSlot');
+    for(var i = 0;i < hotbarSlots.length;i++){
+        var rect = hotbarSlots[i].getBoundingClientRect();
+        if(rawMouseX > rect.left){
+            if(rawMouseX < rect.right){
+                if(rawMouseY > rect.top){
+                    if(rawMouseY < rect.bottom){
+                        inSlot = hotbarSlots[i].id.substring(10);
+                        slotType = 'itemDescriptions';
+                        hotbar = true;
+                    }
+                }
+            }
+        }
+    }
+    if(inSlot === -1 || inventory.draggingItem !== -1){
+        if(itemMenu.style.display === 'inline-block'){
+            itemMenu.style.display = 'none';
+        }
+    }
+    else{
+        if(itemMenu.style.display === 'none' || scroll){
+            if(slotType === 'craftDescriptions'){
+                var rect = craftBackground.getBoundingClientRect();
+                if(rawMouseX > rect.left){
+                    if(rawMouseX < rect.right){
+                        if(rawMouseY > rect.top){
+                            if(rawMouseY < rect.bottom){
+                                itemMenu.style.display = 'inline-block';
+                                itemMenu.innerHTML = inventory[slotType][inSlot];
+                            }
+                        }
+                    }
+                }
+
+            }
+            else if(inventory.items[inSlot].id && hotbar === false){
+                var rect = inventoryBackground.getBoundingClientRect();
+                if(rawMouseX > rect.left){
+                    if(rawMouseX < rect.right){
+                        if(rawMouseY > rect.top){
+                            if(rawMouseY < rect.bottom){
+                                itemMenu.style.display = 'inline-block';
+                                itemMenu.innerHTML = inventory[slotType][inSlot];
+                            }
+                        }
+                    }
+                }
+            }
+            else if(inventory.items[inSlot].id && hotbar === true){
+                itemMenu.style.display = 'inline-block';
+                itemMenu.innerHTML = inventory[slotType][inSlot];
+            }
+        }
+        var rect = itemMenu.getBoundingClientRect();
+        itemMenu.style.left = '';
+        itemMenu.style.right = '';
+        itemMenu.style.top = '';
+        itemMenu.style.bottom = '';
+        if(event.clientX + 3 + rect.right - rect.left > window.innerWidth){
+            itemMenu.style.right = window.innerWidth - (event.clientX - 3) + 'px';
+        }
+        else{
+            itemMenu.style.left = (event.clientX + 3) + 'px';
+        }
+        if(event.clientY + 3 + rect.bottom - rect.top > window.innerHeight){
+            itemMenu.style.bottom = window.innerHeight - (event.clientY - 3) + 'px';
+        }
+        else{
+            itemMenu.style.top = (event.clientY + 3) + 'px';
+        }
+    }
+    if(inventory.draggingItem !== -1){
+        draggingItem.style.left = (event.clientX - inventory.draggingX) + 'px';
+        draggingItem.style.top = (event.clientY - inventory.draggingY) + 'px';
+    }
+    else{
+        draggingItem.style.left = '-100px';
+        draggingItem.style.top = '-100px';
+    }
 }
 
 
@@ -925,6 +1023,9 @@ document.onkeydown = function(event){
     if(key === 'c' || key === 'c'){
         toggleCraft();
     }
+    if(key === 'b' || key === 'B'){
+        toggleSetting();
+    }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }
@@ -939,16 +1040,7 @@ document.onmousemove = function(event){
     if(selfId){
         var x = -cameraX - Player.list[selfId].x + event.clientX;
         var y = -cameraY - Player.list[selfId].y + event.clientY;
-        if(event.clientY < 0){
-            socket.emit('keyPress',{inputId:'releaseAll'});
-        }
         if(event.clientY > window.innerHeight){
-            socket.emit('keyPress',{inputId:'releaseAll'});
-        }
-        if(event.clientX < 0){
-            socket.emit('keyPress',{inputId:'releaseAll'});
-        }
-        if(event.clientX > window.innerWidth){
             socket.emit('keyPress',{inputId:'releaseAll'});
         }
         mouseX = x;
@@ -959,125 +1051,13 @@ document.onmousemove = function(event){
         // if(!talking){
         //     socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
         // }
-        var inSlot = -1;
-        var slotType = '';
-        var hotbar = false;
-        var inventorySlots = document.getElementsByClassName('inventorySlot');
-        for(var i = 0;i < inventorySlots.length;i++){
-            if(inventorySlots[i].className.includes('inventoryMenuSlot') && document.getElementById('inventoryDiv').style.display === 'inline-block'){
-                var rect = inventorySlots[i].getBoundingClientRect();
-                if(rawMouseX > rect.left){
-                    if(rawMouseX < rect.right){
-                        if(rawMouseY > rect.top){
-                            if(rawMouseY < rect.bottom){
-                                inSlot = inventorySlots[i].id.substring(13);
-                                slotType = 'itemDescriptions';
-                            }
-                        }
-                    }
-                }
-            }
-            if(inventorySlots[i].className.includes('craftMenuSlot') && document.getElementById('craftDiv').style.display === 'inline-block'){
-                var rect = inventorySlots[i].getBoundingClientRect();
-                if(rawMouseX > rect.left){
-                    if(rawMouseX < rect.right){
-                        if(rawMouseY > rect.top){
-                            if(rawMouseY < rect.bottom){
-                                inSlot = inventorySlots[i].id.substring(9);
-                                slotType = 'craftDescriptions';
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        var hotbarSlots = document.getElementsByClassName('hotbarSlot');
-        for(var i = 0;i < hotbarSlots.length;i++){
-            var rect = hotbarSlots[i].getBoundingClientRect();
-            if(rawMouseX > rect.left){
-                if(rawMouseX < rect.right){
-                    if(rawMouseY > rect.top){
-                        if(rawMouseY < rect.bottom){
-                            inSlot = hotbarSlots[i].id.substring(10);
-                            slotType = 'itemDescriptions';
-                            hotbar = true;
-                        }
-                    }
-                }
-            }
-        }
-        var itemMenu = document.getElementById('itemMenu');
-        if(inSlot === -1 || inventory.draggingItem !== -1){
-            if(itemMenu.style.display === 'inline-block'){
-                itemMenu.style.display = 'none';
-            }
-        }
-        else{
-            if(itemMenu.style.display === 'none'){
-                if(slotType === 'craftDescriptions'){
-                    var rect = document.getElementById('craftBackground').getBoundingClientRect();
-                    if(rawMouseX > rect.left){
-                        if(rawMouseX < rect.right){
-                            if(rawMouseY > rect.top){
-                                if(rawMouseY < rect.bottom){
-                                    itemMenu.style.display = 'inline-block';
-                                    itemMenu.innerHTML = inventory[slotType][inSlot];
-                                }
-                            }
-                        }
-                    }
-
-                }
-                else if(inventory.items[inSlot].id && hotbar === false){
-                    var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
-                    if(rawMouseX > rect.left){
-                        if(rawMouseX < rect.right){
-                            if(rawMouseY > rect.top){
-                                if(rawMouseY < rect.bottom){
-                                    itemMenu.style.display = 'inline-block';
-                                    itemMenu.innerHTML = inventory[slotType][inSlot];
-                                }
-                            }
-                        }
-                    }
-                }
-                else if(inventory.items[inSlot].id && hotbar === true){
-                    itemMenu.style.display = 'inline-block';
-                    itemMenu.innerHTML = inventory[slotType][inSlot];
-                }
-            }
-            var rect = itemMenu.getBoundingClientRect();
-            itemMenu.style.left = '';
-            itemMenu.style.right = '';
-            itemMenu.style.top = '';
-            itemMenu.style.bottom = '';
-            if(event.clientX + 3 + rect.right - rect.left > window.innerWidth){
-                itemMenu.style.right = window.innerWidth - (event.clientX - 3) + 'px';
-            }
-            else{
-                itemMenu.style.left = (event.clientX + 3) + 'px';
-            }
-            if(event.clientY + 3 + rect.bottom - rect.top > window.innerHeight){
-                itemMenu.style.bottom = window.innerHeight - (event.clientY - 3) + 'px';
-            }
-            else{
-                itemMenu.style.top = (event.clientY + 3) + 'px';
-            }
-        }
-        if(inventory.draggingItem !== -1){
-            document.getElementById('draggingItem').style.left = (event.clientX - inventory.draggingX) + 'px';
-            document.getElementById('draggingItem').style.top = (event.clientY - inventory.draggingY) + 'px';
-        }
-        else{
-            document.getElementById('draggingItem').style.left = '-100px';
-            document.getElementById('draggingItem').style.top = '-100px';
-        }
+        updateInventoryPopupMenu(false);
     }
 }
 document.onmouseup = function(event){
     if(inventory.draggingItem !== -1){
-        document.getElementById('itemMenu').style.display = 'none';
-        var rect = document.getElementById('inventoryDiv').getBoundingClientRect();
+        itemMenu.style.display = 'none';
+        var rect = inventoryDiv.getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
             var draggedItem = false;
             var inventorySlots = document.getElementsByClassName('inventorySlot');
@@ -1143,20 +1123,22 @@ document.querySelectorAll("button").forEach(function(item){
     });
 });
 window.onresize = function(){
-    document.getElementById('pageDiv').style.backgroundSize = window.innerWidth + 'px,' + window.innerHeight + 'px';
-    document.getElementById('pageDiv').style.width = window.innerWidth + 'px';
-    document.getElementById('pageDiv').style.height = window.innerHeight + 'px';
+    pageDiv.style.backgroundSize = window.innerWidth + 'px,' + window.innerHeight + 'px';
+    pageDiv.style.width = window.innerWidth + 'px';
+    pageDiv.style.height = window.innerHeight + 'px';
 }
 document.oncontextmenu = function(event){
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){
+    updateInventoryPopupMenu(true);
     if(scrollAllowed === false){
         return;
     }
     var hotbarSlots = document.getElementsByClassName('hotbarSlot');
     for(var i = 0;i < hotbarSlots.length;i++){
         hotbarSlots[i].style.border = '1px solid #000000';
+        hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
     }
     if(event.deltaY < 0){
         inventory.hotbarSelectedItem -= 1;
@@ -1171,5 +1153,6 @@ window.addEventListener('wheel',function(event){
         inventory.hotbarSelectedItem = 0;
     }
     document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).style.border = '1px solid #ffff00';
+    document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).className = 'hotbarSlot hotbarSlotSelected';
     socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
 });

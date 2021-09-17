@@ -92,6 +92,15 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
+.UI-display-light:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
+}
 .UI-button-light {
     position: absolute;
     font-family: 'pixel';
@@ -109,6 +118,15 @@ canvas {
 .UI-button-light:hover {
     background-color: #231913;
 }
+.UI-button-light:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
+}
 .UI-dropdown-light {
     position: absolute;
     font-family: 'pixel';
@@ -122,10 +140,18 @@ canvas {
     padding-right: 5px;
     padding-bottom: 2px;
     padding-left: 5px;
-    display: none;
 }
 .UI-dropdown-light:hover {
     background-color: #231913;
+}
+.UI-dropdown-light:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
 }
 .UI-input-light {
     position: absolute;
@@ -218,6 +244,15 @@ canvas {
     left: 0px;
     width: 100%;
     height: auto;
+}
+.pageStackInner:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
 }
 .pageStackOuter {
     position: relative;
@@ -386,7 +421,7 @@ canvas {
 }
 #regionDisplay {
     position: absolute;
-    font-size: 60px;
+    font-size: 45px;
     top: 15%;
     left: 50%;
     margin-right: -50%;
@@ -401,6 +436,15 @@ canvas {
     opacity: 0;
     cursor: crosshair;
 }
+#regionDisplaySmall {
+    position: static;
+    font-size: 30px;
+    text-align: center;
+    color: #362b20;
+    background-color: #725640;
+    border: none;
+    cursor: crosshair;
+}
 
 #chatDiv {
     position: absolute;
@@ -413,7 +457,8 @@ canvas {
     padding-top: 4px;
     padding-right: 0px;
     padding-bottom: 8px;
-    border: 1px solid #000000;
+    border: none;
+    background-color: transparent;
     border-radius: 8px;
 }
 #chatBackground {
@@ -462,6 +507,16 @@ canvas {
     padding-left: 4px;
     border-radius: 4px;
 }
+#bottomRightBar:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
+    border-radius: 4px;
+}
 .bottomRightButton {
     position: relative;
     right: 0px;
@@ -482,12 +537,22 @@ canvas {
 .bottomRightButton:hover {
     background-color: #5c4634;
 }
+.bottomRightButton::before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #988474;
+    border-radius: 3px;
+}
 
 #inventoryBackground {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 530px;
+    width: 630px;
     height: 270px;
     margin: 0px;
     padding: 0px;
@@ -500,19 +565,21 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 530px;
+    width: 630px;
     height: 270px;
     margin: 0px;
     padding: 0px;
     overflow-y: scroll;
     font-size: small;
+    background-color: transparent;
+    border: none;
 }
 #inventoryItems {
     position: absolute;
-    top: 150px;
+    top: 200px;
     left: 0px;
     height: 20px;
-    width: 520px;
+    width: 620px;
 }
 #hotbarDiv {
     position: absolute;
@@ -526,6 +593,16 @@ canvas {
     border-radius: 4px;
     transform: translate(-50%, 0%);
 }
+#hotbarDiv:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #725640;
+    border-radius: 4px;
+}
 #hotbarItems {
     position: absolute;
     top: -4px;
@@ -536,7 +613,7 @@ canvas {
     width: 584px;
 }
 .hotbarSlot {
-    position: static;
+    position: relative;
     right: 0px;
     width: 52px;
     height: 52px;
@@ -551,6 +628,26 @@ canvas {
     float: left;
     cursor: pointer;
 }
+.hotbarSlotNormal::before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #988474;
+    border-radius: 3px;
+}
+.hotbarSlotSelected::before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: none;
+    border-radius: 3px;
+}
 .hotbarRow {
     position: relative;
     font-family: 'pixel';
@@ -560,17 +657,27 @@ canvas {
     width: 584px;
 }
 .inventorySlot {
-    position: static;
+    position: relative;
     font-family: 'pixel';
     font-size: 13px;
     color: #ffffff;
     border: 1px solid #000000;
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     float: left;
     background-color: #725640;
     margin: 4px;
     border-radius: 4px;
+}
+.inventorySlot::before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #988474;
+    border-radius: 3px;
 }
 .inventoryRow {
     position: relative;
@@ -583,15 +690,6 @@ canvas {
     position: relative;
     left: 2px;
     top: 2px;
-    width: 36px;
-    height: 36px;
-    cursor: pointer;
-    image-rendering: pixelated;
-}
-.itemImageLarge {
-    position: relative;
-    left: 2px;
-    top: 2px;
     width: 48px;
     height: 48px;
     cursor: pointer;
@@ -601,8 +699,8 @@ canvas {
     position: relative;
     left: 0px;
     top: 0px;
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     image-rendering: pixelated;
 }
 .itemMenu {
@@ -613,35 +711,35 @@ canvas {
 #inventorySlothelmet {
     position: absolute;
     left: 40%;
-    top: -148px;
+    top: -184px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
 #inventorySlotchestplate {
     position: absolute;
     left: 40%;
-    top: -102px;
+    top: -126px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
 #inventorySlotboots {
     position: absolute;
     left: 40%;
-    top: -56px;
+    top: -68px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
 #inventorySlotring {
     position: absolute;
     left: 60%;
-    top: -148px;
+    top: -184px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
 #inventorySlotshield {
     position: absolute;
     left: 60%;
-    top: -102px;
+    top: -126px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
@@ -680,7 +778,7 @@ canvas {
 }
 #craftItems {
     position: absolute;
-    top: 20px;
+    top: 22px;
     left: 0px;
     height: 20px;
     width: 520px;
@@ -692,41 +790,75 @@ canvas {
     color: #ffffff;
 }
 
+#settingBackground {
+    position: absolute;
+    left: 8px;
+    top: 40%;
+    width: 400px;
+    height: 340px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    transform: translate(0%, -50%);
+}
+#settingDiv {
+    position: absolute;
+    left: 8px;
+    top: 40%;
+    width: 400px;
+    height: 340px;
+    margin: 0px;
+    padding: 0px;
+    font-size: small;
+    transform: translate(0%, -50%);
+}
+#settingPlayerDiv {
+    position: absolute;
+    left: 16px;
+    top: 48px;
+    margin: 0px;
+    padding: 0px;
+}
+.settingDropdown {
+    position: relative;
+}
+
 #selfDisplay {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 160px;
-    height: 80px;
-    background-color: #362a1e;
-    border: 1px solid #000000;
+    width: 164px;
+    height: 84px;
+    padding: 0px;
 }
 #healthBar {
     position: absolute;
     left: 5px;
     top: 5px;
-    width: 150px;
-    height: 20px;
-    font-family: "pixel";
+    width: 152px;
+    height: 22px;
     text-align: center;
     color: #ffffff;
     background-color: #000000;
+    padding: 0px;
 }
 #healthBarValue {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 1px;
+    top: 1px;
     width: 150px;
     height: 20px;
     background-color: #0069AA;
 }
 #healthBarText {
     position: absolute;
-    left: 0px;
-    top: -2px;
+    left: 1px;
+    top: 0px;
     width: 150px;
     height: 20px;
-    font-family: "pixel";
     text-align: center;
     color: #ffffff;
 }
@@ -734,28 +866,27 @@ canvas {
     position: absolute;
     left: 5px;
     top: 30px;
-    width: 150px;
-    height: 20px;
-    font-family: "pixel";
+    width: 152px;
+    height: 22px;
     text-align: center;
     color: #ffffff;
     background-color: #000000;
+    padding: 0px;
 }
 #xpBarValue {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 1px;
+    top: 1px;
     width: 150px;
     height: 20px;
     background-color: #cccc00;
 }
 #xpBarText {
     position: absolute;
-    left: 0px;
-    top: -2px;
+    left: 1px;
+    top: 0px;
     width: 150px;
     height: 20px;
-    font-family: "pixel";
     text-align: center;
     color: #ffffff;
 }
@@ -763,28 +894,27 @@ canvas {
     position: absolute;
     left: 5px;
     top: 55px;
-    width: 150px;
-    height: 20px;
-    font-family: "pixel";
+    width: 152px;
+    height: 22px;
     text-align: center;
     color: #ffffff;
     background-color: #000000;
+    padding: 0px;
 }
 #manaBarValue {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 1px;
+    top: 1px;
     width: 150px;
     height: 20px;
     background-color: #9900ff;
 }
 #manaBarText {
     position: absolute;
-    left: 0px;
-    top: -2px;
+    left: 1px;
+    top: 0px;
     width: 150px;
     height: 20px;
-    font-family: "pixel";
     text-align: center;
     color: #ffffff;
 }

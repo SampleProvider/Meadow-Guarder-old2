@@ -1,9 +1,9 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 3;
+var totalMaps = 1;
 var tileset = new Image();
-tileset.src = '/client/maps/tileset1 - No Shadows.png';
+tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
 tileset.onload = function(){
     tilesetLoaded = true;
@@ -62,7 +62,7 @@ var renderWorld = function(json,name){
                             }
                             // s_x += json.layers[j].chunks[k].x * 64;
                             // s_y += json.layers[j].chunks[k].y * 64;
-                            if(json.layers[j].name.includes('Above')){
+                            if(json.layers[j].name.includes('Roof') || json.layers[j].name.includes('Top')){
                                 glUpper.drawImage(tileset,Math.round(img_x),Math.round(img_y),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
                             }
                             else{
@@ -140,7 +140,8 @@ var loadMap = function(name){
 var loadAllMaps = function(){
     numLoaded = 0;
     signError.innerHTML = '<div id="mapLoading"></div>' + signError.innerHTML;
+    var mapLoading = document.getElementById('mapLoading');
+    mapLoading.innerHTML = '<span style="color: #55ff55">Loading maps... (0%)</span>';
     loadMap('World');
-    loadMap('Cave of Light Floor 0');
-    loadMap('Cave of Light Floor 1');
+    loadingComplete = true;
 }

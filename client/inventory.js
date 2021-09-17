@@ -130,24 +130,22 @@ Inventory = function(socket,server){
                     var hotbarSlots = document.getElementsByClassName('hotbarSlot');
                     for(var i = 0;i < hotbarSlots.length;i++){
                         hotbarSlots[i].style.border = '1px solid #000000';
+                        hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
                     }
                     hotbarSlot.style.border = '1px solid #ffff00';
+                    hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
                 }
                 hotbarSlot.onclick = function(){
                     var hotbarSlots = document.getElementsByClassName('hotbarSlot');
                     for(var i = 0;i < hotbarSlots.length;i++){
                         hotbarSlots[i].style.border = '1px solid #000000';
+                        hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
                     }
                     hotbarSlot.style.border = '1px solid #ffff00';
+                    hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
                     self.hotbarSelectedItem = index;
                     socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
                 }
-            }
-            if(index >= 0){
-
-            }
-            else{
-                self.updateStats = true;
             }
             if(self.items[index].id){
                 var item = Item.list[self.items[index].id];
@@ -203,31 +201,33 @@ Inventory = function(socket,server){
                     self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div>';
                 }
                 if(index >= 0 && index <= 9){
-                    hotbarSlot.innerHTML = "<image id='hotbarItemImage" + index + "' class='itemImageLarge hotbarItemImage' src='/client/img/items/" + self.items[index].id + ".png'></image>";
+                    hotbarSlot.innerHTML = "<image id='hotbarItemImage" + index + "' class='itemImage hotbarItemImage' src='/client/img/items/" + self.items[index].id + ".png'></image>";
                     var hotbarItemImage = document.getElementById('hotbarItemImage' + index);
                     hotbarItemImage.draggable = false;
                     hotbarItemImage.onclick = function(){
                         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
                         for(var i = 0;i < hotbarSlots.length;i++){
                             hotbarSlots[i].style.border = '1px solid #000000';
+                            hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
                         }
                         hotbarSlot.style.border = '1px solid #ffff00';
+                        hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
                         self.hotbarSelectedItem = index;
                         socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
                     }
                 }
                 image.draggable = false;
-                slot.onmousedown = function(e){
+                slot.onclick = function(e){
                     if(e.button === 0){
                         self.draggingItem = index;
                         var rect = image.getBoundingClientRect();
                         self.draggingX = rawMouseX - rect.left;
                         self.draggingY = rawMouseY - rect.top;
-                        document.getElementById('itemMenu').style.display = 'none';
+                        itemMenu.style.display = 'none';
                         slot.innerHTML = "";
-                        document.getElementById('draggingItem').innerHTML = "<image class='itemImage' draggable=false src='/client/img/items/" + self.items[index].id + ".png'></image>";
-                        document.getElementById('draggingItem').style.left = rect.left + 'px';
-                        document.getElementById('draggingItem').style.top = rect.top + 'px';
+                        draggingItem.innerHTML = "<image class='itemImage' draggable=false src='/client/img/items/" + self.items[index].id + ".png'></image>";
+                        draggingItem.style.left = rect.left + 'px';
+                        draggingItem.style.top = rect.top + 'px';
                     }
                     else if(e.button === 2){
                         if(item.equip === 'consume'){
@@ -238,8 +238,10 @@ Inventory = function(socket,server){
                                 index1:index,
                                 index2:item.equip,
                             });
-                            var itemMenu = document.getElementById('itemMenu');
                             itemMenu.style.display = 'none';
+                        }
+                        else{
+                            
                         }
                     }
                 }
@@ -453,8 +455,15 @@ Inventory = function(socket,server){
                 }
                 var div = document.createElement('div');
                 div.id = 'hotbarSlot' + i;
-                div.className = 'hotbarSlot';
+                div.className = 'hotbarSlot hotbarSlotNormal';
                 row.appendChild(div);
+            }
+            try{
+                var draggingItem = document.getElementById('draggingItem');
+                draggingItem.remove();
+            }
+            catch(err){
+
             }
             var div = document.createElement('div');
             div.id = 'draggingItem';

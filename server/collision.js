@@ -3,105 +3,185 @@ Collision = function(param){
     self.map = param.map;
     self.x = param.x;
     self.y = param.y;
-    self.id = "" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":";
     self.width = param.width;
     self.height = param.height;
     self.info = param.info;
-    self.type = 'Collision';
-    if(Collision.list[self.id]){
-        Collision.list[self.id].push(self);
+    if(Collision.list[self.map]){
+        if(Collision.list[self.map][param.zindex]){
+            if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)]){
+                if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)]){
+                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)].push(self);
+                }
+                else{
+                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+                }
+            }
+            else{
+                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+            }
+        }
+        else{
+            Collision.list[self.map][param.zindex] = [];
+            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+        }
     }
     else{
-        Collision.list[self.id] = [self];
+        Collision.list[self.map] = [];
+        Collision.list[self.map][param.zindex] = [];
+        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
     }
     return self;
 }
 Collision.list = {};
 
-Spawner = function(param){
-    var self = Entity(param);
-    self.id = "" + self.map + ":" + (Math.floor(self.x / 64) * 64) + ":" + (Math.floor(self.y / 64) * 64) + ":";
-    self.spawned = false;
-    self.toRemove = false;
-    self.spawnId = param.spawnId;
-    self.type = 'Spawner';
-    var super_update = self.update;
-    self.update = function(){
-        super_update();
+Slope = function(param){
+    var self = {};
+    self.map = param.map;
+    self.x = param.x;
+    self.y = param.y;
+    self.slopeIncrease = param.slopeIncrease;
+    if(Slope.list[self.map]){
+        if(Slope.list[self.map][param.zindex]){
+            if(Slope.list[self.map][param.zindex][Math.floor(self.x / 64)]){
+                Slope.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+            }
+            else{
+                Slope.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+                Slope.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+            }
+        }
+        else{
+            Slope.list[self.map][param.zindex] = [];
+            Slope.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+            Slope.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
     }
-    Spawner.list[self.id] = self;
+    else{
+        Slope.list[self.map] = [];
+        Slope.list[self.map][param.zindex] = [];
+        Slope.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
+        Slope.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+    }
     return self;
 }
-Spawner.list = {};
+Slope.list = {};
+
+Spawner = function(param){
+    var self = {};
+    self.x = param.x;
+    self.y = param.y;
+    self.map = param.map;
+    self.spawned = false;
+    self.spawnId = param.spawnId;
+    Spawner.list.push(self);
+    return self;
+}
+Spawner.list = [];
 
 Transporter = function(param){
-    var self = Entity(param);
-    self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
+    var self = {};
+    self.x = param.x;
+    self.y = param.y;
+    self.map = param.map;
     self.teleport = param.teleport;
     self.teleportx = parseInt(param.teleportx,10) * 64 + 32;
     self.teleporty = parseInt(param.teleporty,10) * 64 + 32;
     self.teleportdirection = param.teleportdirection;
-    self.toRemove = false;
-    self.type = 'Transporter';
-    self.width = param.width;
-    self.height = param.height;
-    var super_update = self.update;
-    self.update = function(){
-        super_update();
+    if(Transporter.list[self.map]){
+        if(Transporter.list[self.map][Math.floor(self.x / 64)]){
+            Transporter.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
+        else{
+            Transporter.list[self.map][Math.floor(self.x / 64)] = [];
+            Transporter.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
     }
-    Transporter.list[self.id] = self;
+    else{
+        Transporter.list[self.map] = [];
+        Transporter.list[self.map][Math.floor(self.x / 64)] = [];
+        Transporter.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+    }
     return self;
 }
 Transporter.list = {};
 
 RegionChanger = function(param){
-    var self = Entity(param);
-    self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
-    self.region = param.region;
-    self.toRemove = false;
-    self.type = 'RegionChanger';
-    self.width = param.width;
-    self.height = param.height;
-    var super_update = self.update;
-    self.update = function(){
-        super_update();
+    var self = {}
+    self.x = param.x;
+    self.y = param.y;
+    self.map = param.map;
+    self.region = {
+        region:param.region,
+        noAttack:param.noAttack,
+        noMonster:param.noMonster,
+    };
+    self.mapName = param.mapName;
+    if(RegionChanger.list[self.map]){
+        if(RegionChanger.list[self.map][Math.floor(self.x / 64)]){
+            RegionChanger.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
+        else{
+            RegionChanger.list[self.map][Math.floor(self.x / 64)] = [];
+            RegionChanger.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
     }
-    RegionChanger.list[self.id] = self;
+    else{
+        RegionChanger.list[self.map] = [];
+        RegionChanger.list[self.map][Math.floor(self.x / 64)] = [];
+        RegionChanger.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+    }
     return self;
 }
 RegionChanger.list = {};
 
 QuestInfo = function(param){
-    var self = Entity(param);
-    self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
+    var self = {};
+    self.x = param.x;
+    self.y = param.y;
+    self.map = param.map;
     self.info = param.info;
     self.quest = param.quest;
-    self.width = param.width;
-    self.height = param.height;
-    self.toRemove = false;
-    self.type = 'QuestInfo';
-    var super_update = self.update;
-    self.update = function(){
-        super_update();
+    if(QuestInfo.list[self.map]){
+        if(QuestInfo.list[self.map][Math.floor(self.x / 64)]){
+            QuestInfo.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
+        else{
+            QuestInfo.list[self.map][Math.floor(self.x / 64)] = [];
+            QuestInfo.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
     }
-    QuestInfo.list[self.id] = self;
+    else{
+        QuestInfo.list[self.map] = [];
+        QuestInfo.list[self.map][Math.floor(self.x / 64)] = [];
+        QuestInfo.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+    }
     return self;
 }
 QuestInfo.list = {};
 
 WayPoint = function(param){
-    var self = Entity(param);
-    self.id = "" + self.map + ":" + Math.floor(self.x / 64) * 64 + ":" + Math.floor(self.y / 64) * 64 + ":";
+    var self = {};
+    self.x = param.x;
+    self.y = param.y;
+    self.map = param.map;
     self.info = param.info;
-    self.width = param.width;
-    self.height = param.height;
-    self.toRemove = false;
-    self.type = 'WayPoint';
-    var super_update = self.update;
-    self.update = function(){
-        super_update();
+    if(WayPoint.list[self.map]){
+        if(WayPoint.list[self.map][Math.floor(self.x / 64)]){
+            WayPoint.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
+        else{
+            WayPoint.list[self.map][Math.floor(self.x / 64)] = [];
+            WayPoint.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+        }
     }
-    WayPoint.list[self.id] = self;
+    else{
+        WayPoint.list[self.map] = [];
+        WayPoint.list[self.map][Math.floor(self.x / 64)] = [];
+        WayPoint.list[self.map][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = self;
+    }
     return self;
 }
 WayPoint.list = {};

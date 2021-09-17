@@ -1,73 +1,98 @@
 var settings = {
     inventoryOpen:false,
     craftOpen:false,
+    settingOpen:false,
 };
 
-document.getElementById('inventoryButton').onclick = function(){
+inventoryButton.onclick = function(){
     toggleInventory();
 }
-document.getElementById('craftButton').onclick = function(){
+craftButton.onclick = function(){
     toggleCraft();
+}
+settingButton.onclick = function(){
+    toggleSetting();
 }
 openInventory = function(){
     settings.inventoryOpen = true;
-    document.getElementById('inventoryBackground').style.display = 'inline-block';
-    document.getElementById('inventoryDiv').style.display = 'inline-block';
+    inventoryBackground.style.display = 'inline-block';
+    inventoryDiv.style.display = 'inline-block';
 }
 closeInventory = function(){
     settings.inventoryOpen = false;
-    document.getElementById('inventoryBackground').style.display = 'none';
-    document.getElementById('inventoryDiv').style.display = 'none';
-    var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
+    inventoryBackground.style.display = 'none';
+    inventoryDiv.style.display = 'none';
+    var rect = inventoryBackground.getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-        var itemMenu = document.getElementById('itemMenu');
+        var itemMenu = itemMenu;
         itemMenu.style.display = 'none';
     }
 }
 toggleInventory = function(){
     settings.inventoryOpen = !settings.inventoryOpen;
     if(settings.inventoryOpen){
-        document.getElementById('inventoryBackground').style.display = 'inline-block';
-        document.getElementById('inventoryDiv').style.display = 'inline-block';
+        inventoryBackground.style.display = 'inline-block';
+        inventoryDiv.style.display = 'inline-block';
     }
     else{
-        document.getElementById('inventoryBackground').style.display = 'none';
-        document.getElementById('inventoryDiv').style.display = 'none';
-        var rect = document.getElementById('inventoryBackground').getBoundingClientRect();
+        inventoryBackground.style.display = 'none';
+        inventoryDiv.style.display = 'none';
+        var rect = inventoryBackground.getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-            var itemMenu = document.getElementById('itemMenu');
+            var itemMenu = itemMenu;
             itemMenu.style.display = 'none';
         }
     }
 }
 openCraft = function(){
     settings.craftOpen = true;
-    document.getElementById('craftBackground').style.display = 'inline-block';
-    document.getElementById('craftDiv').style.display = 'inline-block';
+    craftBackground.style.display = 'inline-block';
+    craftDiv.style.display = 'inline-block';
 }
 closeCraft = function(){
     settings.craftOpen = false;
-    document.getElementById('craftBackground').style.display = 'none';
-    document.getElementById('craftDiv').style.display = 'none';
-    var rect = document.getElementById('craftBackground').getBoundingClientRect();
+    craftBackground.style.display = 'none';
+    craftDiv.style.display = 'none';
+    var rect = craftBackground.getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-        var itemMenu = document.getElementById('itemMenu');
+        var itemMenu = itemMenu;
         itemMenu.style.display = 'none';
     }
 }
 toggleCraft = function(){
     settings.craftOpen = !settings.craftOpen;
     if(settings.craftOpen){
-        document.getElementById('craftBackground').style.display = 'inline-block';
-        document.getElementById('craftDiv').style.display = 'inline-block';
+        craftBackground.style.display = 'inline-block';
+        craftDiv.style.display = 'inline-block';
     }
     else{
-        document.getElementById('craftBackground').style.display = 'none';
-        document.getElementById('craftDiv').style.display = 'none';
-        var rect = document.getElementById('craftBackground').getBoundingClientRect();
+        craftBackground.style.display = 'none';
+        craftDiv.style.display = 'none';
+        var rect = craftBackground.getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-            var itemMenu = document.getElementById('itemMenu');
+            var itemMenu = itemMenu;
             itemMenu.style.display = 'none';
         }
+    }
+}
+openSetting = function(){
+    settings.settingOpen = true;
+    settingBackground.style.display = 'inline-block';
+    settingDiv.style.display = 'inline-block';
+}
+closeSetting = function(){
+    settings.settingOpen = false;
+    settingBackground.style.display = 'none';
+    settingDiv.style.display = 'none';
+}
+toggleSetting = function(){
+    settings.settingOpen = !settings.settingOpen;
+    if(settings.settingOpen){
+        settingBackground.style.display = 'inline-block';
+        settingDiv.style.display = 'inline-block';
+    }
+    else{
+        settingBackground.style.display = 'none';
+        settingDiv.style.display = 'none';
     }
 }

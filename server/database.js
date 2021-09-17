@@ -23,7 +23,7 @@ storeDatabase = function(players){
 		return;
 	}
 	for(var i in players){
-		client.query('UPDATE progress SET username=\'' + players[i].username + '\', progress=\'' + JSON.stringify({items:players[i].inventory.items,xp:players[i].xp,level:players[i].level}) + '\' WHERE username=\'' + players[i].username + '\';', (err, res) => {
+		client.query('UPDATE progress SET username=\'' + players[i].username + '\', progress=\'' + JSON.stringify({items:players[i].inventory.items,xp:players[i].xp,level:players[i].level,img:players[i].img}) + '\' WHERE username=\'' + players[i].username + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}

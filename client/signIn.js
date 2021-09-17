@@ -4,6 +4,7 @@ var signErrorText = '';
 var deletePasswordState = 0;
 var changePasswordState = 0;
 var canSignIn = true;
+var loadingComplete = false;
 
 var loadJSON = function(json,cb){
     var request = new XMLHttpRequest();
@@ -23,6 +24,213 @@ var loadJSON = function(json,cb){
     request.send();
 }
 
+setTimeout(function(){
+    loadJSON('playerImg',function(json){
+        signError.innerHTML = '<div id="playerImgLoading"></div>' + signError.innerHTML;
+        var playerImgLoading = document.getElementById('playerImgLoading');
+        playerImgLoading.innerHTML = '<span style="color: #55ff55">Loading players... (0%)</span>';
+        var amount = 0;
+        for(var i in json){
+            for(var j in json[i].types){
+                amount += json[i].colors.length;
+            }
+        }
+        var currentAmount = 0;
+        for(var i in json){
+            var name = '';
+            for(var j = 0;j < i.length;j++){
+                if(i[j] === '/'){
+                    name = i.substr(0,j);
+                }
+            }
+            if(!document.getElementById(name + 'SettingPlayer')){
+                settingPlayerDiv.innerHTML += '<div style="margin-top: 8px;"></div><label for="' + name + '" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseOut(event);">Player ' + name.charAt(0).toUpperCase() + name.slice(1) + ':</label><select id="' + name + 'SettingPlayer" name="' + name + '" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseOut(event);" onmousedown="socket.emit("keyPress",{inputId:"releaseAll",state:true});"><option value="none">None</option></select>';
+            }
+            var select = document.getElementById(name + 'SettingPlayer');
+            for(var j in json[i].types){
+                var type = '';
+                for(var k = 0;k < i.length;k++){
+                    if(i[k] === '/'){
+                        type = i.substring(k + 1);
+                    }
+                }
+                if(!document.getElementById(type + name.charAt(0).toUpperCase() + name.slice(1))){
+                    select.innerHTML += '<optgroup id="' + type + name.charAt(0).toUpperCase() + name.slice(1) + '" label="' + type + '"></optgroup>';
+                }
+                var optgroup = document.getElementById(type + name.charAt(0).toUpperCase() + name.slice(1));
+                for(var k in json[i].colors){
+                    var imageId = '';
+                    for(var l = 0;l < i.length;l++){
+                        if(i[l] === '/'){
+                            imageId = i.substring(l + 1) + json[i].types[j] + ' ' + json[i].colors[k];
+                        }
+                    }
+                    optgroup.innerHTML += '<option value="' + imageId + '">' + imageId.replace('_',' ') + '</option>';
+                    Img[imageId] = new Image();
+                    Img[imageId].src = '/client/img/player/' + i + json[i].types[j] + ' ' + json[i].colors[k] + '.png';
+                    Img[imageId].onload = function(){
+                        currentAmount += 1;
+                        var playerImgLoading = document.getElementById('playerImgLoading');
+                        playerImgLoading.innerHTML = '<span style="color: #55ff55">Loading players... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                        if(currentAmount === amount){
+                            loadJSON('projectiles',function(json){
+                                signError.innerHTML = '<div id="projectileLoading"></div>' + signError.innerHTML;
+                                var projectileLoading = document.getElementById('projectileLoading');
+                                projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (0%)</span>';
+                                var amount = 0;
+                                for(var i in json){
+                                    amount += 1;
+                                }
+                                var currentAmount = 0;
+                                for(var i in json){
+                                    Img[i] = new Image();
+                                    Img[i].src = '/client/img/projectiles/' + i + '.png';
+                                    Img[i].onload = function(){
+                                        currentAmount += 1;
+                                        var projectileLoading = document.getElementById('projectileLoading');
+                                        projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                        if(currentAmount === amount){
+                                            loadJSON('monsters',function(json){
+                                                signError.innerHTML = '<div id="monsterLoading"></div>' + signError.innerHTML;
+                                                var monsterLoading = document.getElementById('monsterLoading');
+                                                monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (0%)</span>';
+                                                var amount = 0;
+                                                for(var i in json){
+                                                    amount += 1;
+                                                }
+                                                var currentAmount = 0;
+                                                for(var i in json){
+                                                    Img[i] = new Image();
+                                                    Img[i].src = '/client/img/monsters/' + i + '.png';
+                                                    Img[i].onload = function(){
+                                                        currentAmount += 1;
+                                                        var monsterLoading = document.getElementById('monsterLoading');
+                                                        monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                        if(currentAmount === amount){
+                                                            loadJSON('item',function(json){
+                                                                signError.innerHTML = '<div id="itemLoading"></div>' + signError.innerHTML;
+                                                                var itemLoading = document.getElementById('itemLoading');
+                                                                itemLoading.innerHTML = '<span style="color: #55ff55">Loading items... (0%)</span>';
+                                                                var amount = 0;
+                                                                for(var i in json){
+                                                                    amount += 2;
+                                                                }
+                                                                var currentAmount = 0;
+                                                                for(var i in json){
+                                                                    Img[i] = new Image();
+                                                                    Img[i].src = '/client/img/items/' + i + '.png';
+                                                                    Img[i + 'select'] = new Image();
+                                                                    Img[i + 'select'].src = '/client/img/items/' + i + 'select.png';
+                                                                    Img[i].onload = function(){
+                                                                        currentAmount += 1;
+                                                                        var itemLoading = document.getElementById('itemLoading');
+                                                                        itemLoading.innerHTML = '<span style="color: #55ff55">Loading items... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                        if(currentAmount === amount){
+                                                                            loadJSON('harvestableNpcs',function(json){
+                                                                                signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
+                                                                                var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (0%)</span>';
+                                                                                var amount = 0;
+                                                                                for(var i in json){
+                                                                                    amount += 2;
+                                                                                }
+                                                                                var currentAmount = 0;
+                                                                                for(var i in json){
+                                                                                    Img[i + '0'] = new Image();
+                                                                                    Img[i + '0'].src = '/client/img/harvestableNpcs/' + i + '0.png';
+                                                                                    Img[i + '1'] = new Image();
+                                                                                    Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
+                                                                                    Img[i + '0'].onload = function(){
+                                                                                        currentAmount += 1;
+                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                                        if(currentAmount === amount){
+                                                                                            loadAllMaps();
+                                                                                        }
+                                                                                    }
+                                                                                    Img[i + '1'].onload = function(){
+                                                                                        currentAmount += 1;
+                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                                        if(currentAmount === amount){
+                                                                                            loadAllMaps();
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                    Img[i + 'select'].onload = function(){
+                                                                        currentAmount += 1;
+                                                                        var itemLoading = document.getElementById('itemLoading');
+                                                                        itemLoading.innerHTML = '<span style="color: #55ff55">Loading items... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                        if(currentAmount === amount){
+                                                                            loadJSON('harvestableNpcs',function(json){
+                                                                                signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
+                                                                                var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (0%)</span>';
+                                                                                var amount = 0;
+                                                                                for(var i in json){
+                                                                                    amount += 2;
+                                                                                }
+                                                                                var currentAmount = 0;
+                                                                                for(var i in json){
+                                                                                    Img[i + '0'] = new Image();
+                                                                                    Img[i + '0'].src = '/client/img/harvestableNpcs/' + i + '0.png';
+                                                                                    Img[i + '1'] = new Image();
+                                                                                    Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
+                                                                                    Img[i + '0'].onload = function(){
+                                                                                        currentAmount += 1;
+                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                                        if(currentAmount === amount){
+                                                                                            loadAllMaps();
+                                                                                        }
+                                                                                    }
+                                                                                    Img[i + '1'].onload = function(){
+                                                                                        currentAmount += 1;
+                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                                                                        if(currentAmount === amount){
+                                                                                            loadAllMaps();
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        var settingPlayers = document.getElementsByClassName('settingDropdown');
+        for(var i = 0;i < settingPlayers.length;i++){
+            let j = i;
+            settingPlayers[j].oninput = function(){
+                if(settingPlayers[j].options[settingPlayers[j].selectedIndex].value !== undefined){
+                    socket.emit('changePlayer',{id:settingPlayers[j].name,type:settingPlayers[j].options[settingPlayers[j].selectedIndex].value});
+                }
+            }
+        }
+        document.querySelectorAll("select").forEach(function(item){
+            item.addEventListener('focus',function(){
+                this.blur();
+            });
+        });
+    });
+},100);
+
 document.getElementById('signIn').onclick = function(){
     if(canSignIn === false){
         return;
@@ -30,77 +238,16 @@ document.getElementById('signIn').onclick = function(){
     if(document.getElementById('username').value === ''){
         return;
     }
+    if(loadingComplete === false){
+        signError.innerHTML = '<span style="color: #ff0000">Error: Loading is not complete yet.</span><br>' + signError.innerHTML;
+        return;
+    }
     canSignIn = false;
-    signError.innerHTML = '<span style="color: #55ff55">Sent packet to server.</span>';
+    signError.innerHTML = '<span style="color: #55ff55">Sent packet to server.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         signError.innerHTML = '<span style="color: #55ff55">Waiting for server response...</span><br>' + signError.innerHTML;
         socket.emit('signIn',{username:document.getElementById('username').value,password:document.getElementById('password').value});
-    },1000);
-    loadJSON('projectiles',function(json){
-        signError.innerHTML = '<div id="projectileLoading"></div>' + signError.innerHTML;
-        var projectileLoading = document.getElementById('projectileLoading');
-        var amount = 0;
-        for(var i in json){
-            amount += 1;
-        }
-        var currentAmount = 0;
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/projectiles/' + i + '.png';
-            currentAmount += 1;
-            projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + currentAmount / amount * 100 + '%)</span>';
-        }
-    });
-    loadJSON('monsters',function(json){
-        signError.innerHTML = '<div id="monsterLoading"></div>' + signError.innerHTML;
-        var monsterLoading = document.getElementById('monsterLoading');
-        var amount = 0;
-        for(var i in json){
-            amount += 1;
-        }
-        var currentAmount = 0;
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/monsters/' + i + '.png';
-            currentAmount += 1;
-            monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + currentAmount / amount * 100 + '%)</span>';
-        }
-    });
-    loadJSON('item',function(json){
-        signError.innerHTML = '<div id="itemLoading"></div>' + signError.innerHTML;
-        var itemLoading = document.getElementById('itemLoading');
-        var amount = 0;
-        for(var i in json){
-            amount += 1;
-        }
-        var currentAmount = 0;
-        for(var i in json){
-            Img[i] = new Image();
-            Img[i].src = '/client/img/items/' + i + '.png';
-            Img[i + 'select'] = new Image();
-            Img[i + 'select'].src = '/client/img/items/' + i + 'select.png';
-            currentAmount += 1;
-            itemLoading.innerHTML = '<span style="color: #55ff55">Loading items... (' + currentAmount / amount * 100 + '%)</span>';
-        }
-    });
-    loadJSON('harvestableNpcs',function(json){
-        signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
-        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
-        var amount = 0;
-        for(var i in json){
-            amount += 1;
-        }
-        var currentAmount = 0;
-        for(var i in json){
-            Img[i + '0'] = new Image();
-            Img[i + '0'].src = '/client/img/harvestableNpcs/' + i + '0.png';
-            Img[i + '1'] = new Image();
-            Img[i + '1'].src = '/client/img/harvestableNpcs/' + i + '1.png';
-            currentAmount += 1;
-            harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (' + currentAmount / amount * 100 + '%)</span>';
-        }
-    });
-    loadAllMaps();
+    },750);
 }
 document.getElementById('createAccount').onclick = function(){
     if(document.getElementById('username').value === ''){
@@ -144,6 +291,7 @@ socket.on('signInResponse',function(data){
         deathDiv.style.display = 'none';
     }
     else if(data.success === 2){
+        canSignIn = true;
         signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is already currently in game. The other account will be disconnected shortly. Please try to sign again.</span><br>' + signErrorText;
         pageDiv.style.display = 'inline-block';
@@ -152,6 +300,7 @@ socket.on('signInResponse',function(data){
         gameDiv.style.display = 'none';
     }
     else if(data.success === 1){
+        canSignIn = true;
         signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: Incorrect Password.</span><br>' + signErrorText;
         pageDiv.style.display = 'inline-block';
@@ -160,6 +309,7 @@ socket.on('signInResponse',function(data){
         gameDiv.style.display = 'none';
     }
     else{
+        canSignIn = true;
         signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: There is no account with username \'' + data.username + '\'.</span><br>' + signErrorText;
         pageDiv.style.display = 'inline-block';

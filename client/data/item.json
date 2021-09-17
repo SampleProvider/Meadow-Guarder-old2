@@ -96,7 +96,7 @@
                     "projectilePattern":"waraxe",
                     "speed":30,
                     "spin":30,
-                    "canCollide":false,
+                    "canCollide":1,
                     "timer":80
                 }
             }]
@@ -186,7 +186,7 @@
                     "projectilePattern":"waraxe",
                     "speed":30,
                     "spin":30,
-                    "canCollide":false,
+                    "canCollide":1,
                     "timer":80
                 }
             }]

@@ -1,0 +1,70 @@
+{
+    "boots/Boots":{
+        "types":["_1"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "gloves/Gloves":{
+        "types":["_1"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "hair/FHair":{
+        "types":["_1","_2","_3","_4","_5"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "hair/MHair":{
+        "types":["_1","_2","_3","_4","_5","_6"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Bandana":{
+        "types":["_1","_2"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Crown":{
+        "types":["_1","_2","_3","_4","_5","_6"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/GasMask":{
+        "types":["_1"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Hat":{
+        "types":["_1","_1 A","_2","_3","_3 A"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Helmet":{
+        "types":["_1","_2","_3","_3 A","_4","_5","_6","_7","_8"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Hood":{
+        "types":["_1","_1 A"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "headwear/Mask":{
+        "types":["_1"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "pants/Pants":{
+        "types":["_1"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "shirt/Armor":{
+        "types":["_1","_2","_3"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","Yellow"]
+    },
+    "shirt/Jumpsuit":{
+        "types":[""],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "shirt/Robe":{
+        "types":["_1","_2","_2F"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    },
+    "shirt/Shirt":{
+        "types":["_1","_2","_3","_4","_5"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","Yellow"]
+    },
+    "waist/Belt":{
+        "types":["_1","_2","_2 A","_3","_3 A"],
+        "colors":["Black","Blue","Brown","Green","Pink","Purple","Red","White","Yellow"]
+    }
+}

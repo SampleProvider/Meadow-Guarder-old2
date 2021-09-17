@@ -9,6 +9,7 @@
         },
         "maxSpeed":5,
         "drawSize":"medium",
+        "team":"undead",
         "itemDrops":{
             
         },
@@ -30,6 +31,7 @@
         },
         "maxSpeed":7,
         "drawSize":"small",
+        "team":"harmful",
         "itemDrops":{
 
         },
@@ -51,6 +53,7 @@
         },
         "maxSpeed":3,
         "drawSize":"small",
+        "team":"harmful",
         "itemDrops":{
             "oldhat":{
                 "chance":0.5,
@@ -68,7 +71,8 @@
             "heal":0
         },
         "maxSpeed":5,
-        "drawSize":"big",
+        "drawSize":"large",
+        "team":"harmful",
         "itemDrops":{
 
         },

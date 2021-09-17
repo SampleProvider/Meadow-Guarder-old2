@@ -61,6 +61,18 @@
 				<div class="pageStackOuter UI-display-light">
 					<div class="pageStackInner">
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							9/17/2021
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added Player Customization.
+							<br>
+							Switched Tilesets.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display-light">
+					<div class="pageStackInner">
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							8/29/2021
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -173,7 +185,9 @@
 	<div id="gameDiv" style="display:none;">
     	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></div>
-		<div id="regionDisplay" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+		<div id="regionDisplay" class="UI-display-light UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">
+			<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">lol</div>
+		</div>
 		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
 
 		</div>
@@ -187,16 +201,19 @@
 		</div>
 		<div id="bottomRightBar" class="UI-display-light" onmouseover="mouseUp(event);">
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
-				<image id="craftButton" src="/client/websiteAssets/craft.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
+				<image id="craftButton" src="/client/websiteAssets/craft.png" class="itemImage" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
-				<image id="bookButton" src="/client/websiteAssets/book.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
+				<image id="settingButton" src="/client/websiteAssets/setting.png" class="itemImage" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
-				<image id="inventoryButton" src="/client/websiteAssets/item.png" class="itemImageLarge" draggable="false" onmouseover="mouseUp(event);"></image>
+				<image id="bookButton" src="/client/websiteAssets/book.png" class="itemImage" draggable="false" onmouseover="mouseUp(event);"></image>
+			</div>
+			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);">
+				<image id="inventoryButton" src="/client/websiteAssets/item.png" class="itemImage" draggable="false" onmouseover="mouseUp(event);"></image>
 			</div>
 			<div class="UI-text-light bottomRightButton" onmouseover="mouseUp(event);" onclick="location.reload()">
-				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImageLarge" draggable="false" onclick="location.reload()" onmouseover="mouseUp(event);"></image>
+				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImage" draggable="false" onclick="location.reload()" onmouseover="mouseUp(event);"></image>
 			</div>
 		</div>
 		<div id="inventoryBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
@@ -208,7 +225,7 @@
 
 			</div>
 		</div>
-		<div id="hotbarDiv" class="UI-display-light">
+		<div id="hotbarDiv" class="UI-display-light" onmouseover="mouseUp(event);">
 			<div id="hotbarItems" onmouseover="mouseUp(event);">
 
 			</div>
@@ -222,16 +239,36 @@
 
 			</div>
 		</div>
-		<div id="selfDisplay" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
-			<div id="healthBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+		<div id="settingBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			
+		</div>
+		<div id="settingDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="settingHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Settings [B]</div>
+			<div id="settingPlayerDiv" onmouseover="mouseUp(event);mouseOut(event);">
+				<label for="body" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseOut(event);">Player Body:</label>
+				<select name="body" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseOut(event);">
+					<optgroup label="Human">
+						<option value="Human">Human</option>
+						<option value="Avian">Avian</option>
+						<option value="Panda">Panda</option>
+					</optgroup>
+					<optgroup label="Undead">
+						<option value="Undead">Undead</option>
+						<option value="Orc">Orc</option>
+					</optgroup>
+				</select>
+			</div>
+		</div>
+		<div id="selfDisplay" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+			<div id="healthBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
 				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
-			<div id="xpBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+			<div id="xpBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
 				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>
-			<div id="manaBar" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
+			<div id="manaBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
 				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
 			</div>

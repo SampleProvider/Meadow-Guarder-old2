@@ -37,6 +37,11 @@ var Actor = function(initPack){
     self.fade = 0;
     self.fadeState = 0;
     self.stats = initPack.stats;
+    self.team = initPack.team;
+    self.showHealthBar = initPack.showHealthBar;
+
+    self.render = renderPlayer(self.img);
+
     self.drawName = function(){
         ctx.font = "15px pixel";
         ctx.fillStyle = '#ff7700';
@@ -60,17 +65,26 @@ var Actor = function(initPack){
             ctx.globalAlpha = self.fade;
         }
         self.drawName();
+        if(self.showHealthBar === false){
+            return;
+        }
         if(self.drawSize === 'small'){
             var yDistance = 8;
         }
         else if(self.drawSize === 'medium'){
-            var yDistance = 17;
+            var yDistance = 16;
         }
         else{
             var yDistance = 16;
         }
-        ctx.drawImage(Img.greenHealthBar,0,0,42,5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,126,15);
-        ctx.drawImage(Img.greenHealthBar,0,6,Math.round(42 * self.hp / self.hpMax),5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,Math.round(126 * self.hp / self.hpMax),15);
+        if(self.team === Player.list[selfId].team){
+            ctx.drawImage(Img.healthbar,0,4,16,4,Math.round(self.x) - 32,Math.round(self.y) - yDistance * 4 - 20,64,16);
+            ctx.drawImage(Img.healthbar,0,0,Math.round(14 * self.hp / self.hpMax) + 1,4,Math.round(self.x) - 32,Math.round(self.y) - yDistance * 4 - 20,Math.round(56 * self.hp / self.hpMax) + 4,16);
+        }
+        else{
+            ctx.drawImage(Img.healthbar,0,20,16,4,Math.round(self.x) - 32,Math.round(self.y) - yDistance * 4 - 20,64,16);
+            ctx.drawImage(Img.healthbar,0,16,Math.round(14 * self.hp / self.hpMax) + 1,4,Math.round(self.x) - 32,Math.round(self.y) - yDistance * 4 - 20,Math.round(56 * self.hp / self.hpMax) + 4,16);
+        }
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -80,20 +94,6 @@ var Actor = function(initPack){
 
 var Player = function(initPack){
     var self = Actor(initPack);
-    // self.renderedImg = {
-    //     body:renderPlayer(Img.playerBody,self.img.body),
-    //     shirt:renderPlayer(Img.playerShirt,self.img.shirt),
-    //     pants:renderPlayer(Img.playerPants,self.img.pants),
-    //     hair:renderPlayer(Img.playerHair[self.img.hairType],self.img.hair),
-    // }
-    // self.render = document.createElement('canvas');
-    // var renderCtx = self.render.getContext('2d');
-    // renderCtx.canvas.width = 72 * 4;
-    // renderCtx.canvas.height = 152 * 4;
-    // renderCtx.drawImage(self.renderedImg.body,0,0);
-    // renderCtx.drawImage(self.renderedImg.shirt,0,0);
-    // renderCtx.drawImage(self.renderedImg.pants,0,0);
-    // renderCtx.drawImage(self.renderedImg.hair,0,0);
     self.level = initPack.level;
     self.currentItem = initPack.currentItem;
     self.debuffs = initPack.debuffs;
@@ -126,8 +126,7 @@ var Player = function(initPack){
             ctx.restore();
         }
         self.animation = Math.floor(self.animation);
-        drawPlayer(Img.player,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
-        //drawPlayer(Img.sword,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,'large');
+        drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -226,29 +225,6 @@ var Monster = function(initPack){
             ctx.globalAlpha = 1;
         }
     }
-    self.drawHp = function(){
-        if(self.fadeState !== 1){
-            if(self.fade <= 0){
-                return;
-            }
-            ctx.globalAlpha = self.fade;
-        }
-        self.drawName();
-        if(self.drawSize === 'small'){
-            var yDistance = 8;
-        }
-        else if(self.drawSize === 'medium'){
-            var yDistance = 17;
-        }
-        else{
-            var yDistance = 16;
-        }
-        ctx.drawImage(Img.redHealthBar,0,0,42,5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,126,15);
-        ctx.drawImage(Img.redHealthBar,0,6,Math.round(42 * self.hp / self.hpMax),5,Math.round(self.x) - 63,Math.round(self.y) - yDistance * 4 - 24,Math.round(126 * self.hp / self.hpMax),15);
-        if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
-        }
-    }
     Monster.list[self.id] = self;
     return self;
 }
@@ -292,6 +268,8 @@ var HarvestableNpc = function(initPack){
     self.img = initPack.img;
     self.fade = 0;
     self.fadeState = 0;
+    self.harvestHp = 0;
+    self.harvestHpMax = 0;
     self.drawLayer0 = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
@@ -337,6 +315,8 @@ var HarvestableNpc = function(initPack){
                 ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2 - self.height,self.width,self.height);
             }
         }
+        ctx.drawImage(Img.healthbar,0,12,16,4,Math.round(self.x) - 32,Math.round(self.y) - self.height / 2 - self.height - 4,64,16);
+        ctx.drawImage(Img.healthbar,0,8,Math.round(14 * self.harvestHp / self.harvestHpMax) + 1,4,Math.round(self.x) - 32,Math.round(self.y) - self.height / 2 - self.height - 4,Math.round(56 * self.harvestHp / self.harvestHpMax) + 4,16);
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }

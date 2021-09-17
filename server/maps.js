@@ -1,3 +1,16 @@
+var parseName = function(name){
+    var array = [];
+    var lastIndex = 0;
+    for(var i = 0;i < name.length;i++){
+        if(name[i] === ':'){
+            array.push(name.substring(lastIndex,i));
+            lastIndex = i + 1;
+        }
+    }
+    return array;
+}
+
+
 var renderWorld = function(json,name){
     playerMap[name] = 0;
     for(var i = 0;i < json.layers.length;i++){
@@ -15,7 +28,7 @@ var renderWorld = function(json,name){
                         s_y += json.layers[i].chunks[j].y * 64;
                         for(var l in json.tilesets[0].tiles){
                             if(json.tilesets[0].tiles[l].id === tile_idx){
-                                if(json.tilesets[0].tiles[l].objectgroup && json.layers[i].name !== 'NoCollisions'){
+                                if(json.tilesets[0].tiles[l].objectgroup && json.layers[i].name.includes('NoCollisions') === false){
                                     for(var m in json.tilesets[0].tiles[l].objectgroup.objects){
                                         new Collision({
                                             x:s_x + json.tilesets[0].tiles[l].objectgroup.objects[m].x * 4 + json.tilesets[0].tiles[l].objectgroup.objects[m].width * 2,
@@ -24,6 +37,7 @@ var renderWorld = function(json,name){
                                             height:json.tilesets[0].tiles[l].objectgroup.objects[m].height * 4,
                                             map:name,
                                             info:json.tilesets[0].tiles[l].type,
+                                            zindex:0,
                                         });
                                     }
                                 }
@@ -40,56 +54,64 @@ var renderWorld = function(json,name){
                             }
                         }
                         if(tile_idx + 1 === json.tilesets[1].firstgid){
-                            spawnId = json.layers[i].name.substr(8,json.layers[i].name.length - 9);
+                            var array = parseName(json.layers[i].name);
+                            var collision = new Collision({
+                                x:s_x + 32,
+                                y:s_y + 32,
+                                width:64,
+                                height:64,
+                                map:name,
+                                zindex:array[1],
+                            });
+                        }
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 1){
+                            var array = parseName(json.layers[i].name);
+                            var collision = new Collision({
+                                x:s_x + 40,
+                                y:s_y + 32,
+                                width:48,
+                                height:64,
+                                map:name,
+                                zindex:array[1],
+                            });
+                        }
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 2){
+                            var array = parseName(json.layers[i].name);
+                            var collision = new Collision({
+                                x:s_x + 24,
+                                y:s_y + 32,
+                                width:48,
+                                height:64,
+                                map:name,
+                                zindex:array[1],
+                            });
+                        }
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 3){
+                            var array = parseName(json.layers[i].name);
                             var spawner = new Spawner({
                                 x:s_x + 32,
                                 y:s_y + 32,
                                 width:64,
                                 height:64,
-                                spawnId:spawnId,
+                                spawnId:array[1],
                                 map:name,
                             });
                         }
-                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 1){
-                            var teleport = "";
-                            var teleportj = 0;
-                            var teleportx = "";
-                            var teleportxj = 0;
-                            var teleporty = "";
-                            var teleportyj = 0;
-                            var teleportdirection = "";
-                            for(var l = 0;l < json.layers[i].name.length;l++){
-                                if(json.layers[i].name[l] === ':'){
-                                    if(teleport === ""){
-                                        teleport = json.layers[i].name.substr(0,l);
-                                        teleportj = l;
-                                    }
-                                    else if(teleportx === ""){
-                                        teleportx = json.layers[i].name.substr(teleportj + 1,l - teleportj - 1);
-                                        teleportxj = l;
-                                    }
-                                    else if(teleporty === ""){
-                                        teleporty = json.layers[i].name.substr(teleportxj + 1,l - teleportxj - 1);
-                                        teleportyj = l;
-                                    }
-                                    else if(teleportdirection === ""){
-                                        teleportdirection = json.layers[i].name.substr(teleportyj + 1,l - teleportyj - 1);
-                                    }
-                                }
-                            }
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 4){
+                            var array = parseName(json.layers[i].name);
                             var transporter = new Transporter({
                                 x:s_x + 32,
                                 y:s_y + 32,
                                 width:64,
                                 height:64,
-                                teleport:teleport,
-                                teleportx:teleportx,
-                                teleporty:teleporty,
-                                teleportdirection:teleportdirection,
+                                teleport:array[0],
+                                teleportx:array[1],
+                                teleporty:array[2],
+                                teleportdirection:array[3],
                                 map:name,
                             });
                         }
-                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 2){
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 5){
                             npcName = json.layers[i].name.substr(4,json.layers[i].name.length - 5);
                             var npc = new Npc({
                                 x:s_x + 32,
@@ -98,13 +120,21 @@ var renderWorld = function(json,name){
                                 name:npcName,
                             });
                         }
-                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 3){
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 6){
+                            var array = parseName(json.layers[i].name);
                             var regionChanger = new RegionChanger({
                                 x:s_x + 32,
                                 y:s_y + 32,
                                 map:name,
-                                region:json.layers[i].name,
+                                region:array[0],
+                                mapName:array[1],
+                                noAttack:array[2],
+                                noMonster:array[3],
                             });
+                        }
+                        else if(tile_idx + 1 === json.tilesets[1].firstgid + 7){
+                            ENV.spawnpoint.x = s_x + 32;
+                            ENV.spawnpoint.y = s_y + 32;
                         }
                     }
                 }
@@ -116,5 +146,3 @@ var loadMap = function(name){
     renderWorld(require('./../client/maps/' + name + '.json'),name);
 }
 loadMap('World');
-loadMap('Cave of Light Floor 0');
-loadMap('Cave of Light Floor 1');
