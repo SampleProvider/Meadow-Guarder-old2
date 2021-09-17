@@ -269,7 +269,7 @@ Actor = function(param){
 
     self.justCollided = false;
 
-    self.team = 'Human';
+    self.team = 'human';
 
     self.canMove = true;
     self.canCollide = true;
@@ -829,6 +829,12 @@ Player = function(param,socket){
         for(var i in param.database.img){
             self.img[i] = param.database.img[i];
         }
+    }
+    if(self.img.body === 'Undead' || self.img.body === 'Orc'){
+        self.team = 'undead';
+    }
+    else{
+        self.team = 'human';
     }
     self.xpMax = xpLevels[self.level];
     self.inventory.refreshInventory();
