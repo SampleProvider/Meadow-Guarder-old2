@@ -575,7 +575,7 @@ socket.on('death',function(data){
     healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
     healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
 });
-var respawn = function(){
+var runRespawn = function(){
     socket.emit('respawn');
     gameDiv.style.display = 'inline-block';
     disconnectedDiv.style.display = 'none';
