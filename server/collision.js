@@ -10,30 +10,86 @@ Collision = function(param){
         if(Collision.list[self.map][param.zindex]){
             if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)]){
                 if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)]){
-                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)].push(self);
+                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
                 }
                 else{
-                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
+                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
                 }
             }
             else{
                 Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
+                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
             }
         }
         else{
             Collision.list[self.map][param.zindex] = [];
             Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
+            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
         }
     }
     else{
         Collision.list[self.map] = [];
         Collision.list[self.map][param.zindex] = [];
         Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [self];
+        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
+        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
     }
     return self;
+}
+Collision.add = function(collision,id){
+    if(Collision.list[collision.map]){
+        if(Collision.list[collision.map][collision.zindex]){
+            if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)]){
+                if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)]){
+                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+                }
+                else{
+                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
+                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+                }
+            }
+            else{
+                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
+                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
+                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+            }
+        }
+        else{
+            Collision.list[collision.map][collision.zindex] = [];
+            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
+            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
+            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+        }
+    }
+    else{
+        Collision.list[collision.map] = [];
+        Collision.list[collision.map][collision.zindex] = [];
+        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
+        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
+        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+    }
+    for(var i in Player.list){
+        if(Player.list[i].isColliding(collision)){
+            Player.list[i].x = ENV.spawnpoint.x;
+            Player.list[i].y = ENV.spawnpoint.y;
+        }
+    }
+}
+Collision.remove = function(collision,id){
+    if(Collision.list[collision.map]){
+        if(Collision.list[collision.map][collision.zindex]){
+            if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)]){
+                if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)]){
+                    if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id]){
+                        delete Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id];
+                    }
+                }
+            }
+        }
+    }
 }
 Collision.list = {};
 
@@ -113,11 +169,19 @@ RegionChanger = function(param){
     self.x = param.x;
     self.y = param.y;
     self.map = param.map;
-    self.region = {
-        region:param.region,
-        noAttack:param.noAttack,
-        noMonster:param.noMonster,
-    };
+    self.region = param.region;
+    if(param.noAttack === 'true'){
+        self.noAttack = true;
+    }
+    else{
+        self.noAttack = false;
+    }
+    if(param.noMonster === 'true'){
+        self.noMonster = true;
+    }
+    else{
+        self.noMonster = false;
+    }
     self.mapName = param.mapName;
     if(RegionChanger.list[self.map]){
         if(RegionChanger.list[self.map][Math.floor(self.x / 64)]){

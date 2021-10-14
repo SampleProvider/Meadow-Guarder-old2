@@ -1,6 +1,6 @@
 {
     "skeleton":{
-        "name":"Skeleton",
+        "name":"",
         "hpMax":"50",
         "stats":{
             "damage":5,
@@ -9,9 +9,19 @@
         },
         "maxSpeed":5,
         "drawSize":"medium",
-        "team":"undead",
+        "team":"Undead",
         "itemDrops":{
-            
+            "rustyaxe":{
+                "chance":0.5,
+                "amount":1
+            },
+            "rustypickaxe":{
+                "chance":0.5,
+                "amount":1
+            }
+        },
+        "img":{
+            "body":"Undead"
         },
         "weaponData":{
             "20":[{
@@ -22,7 +32,7 @@
         }
     },
     "snake":{
-        "name":"Snake",
+        "name":"",
         "hpMax":"25",
         "stats":{
             "damage":5,
@@ -31,11 +41,32 @@
         },
         "maxSpeed":7,
         "drawSize":"small",
-        "team":"harmful",
+        "team":"Harmful",
         "itemDrops":{
-
+            "copperbow":{
+                "chance":0.5,
+                "amount":1
+            },
+            "oldhat":{
+                "chance":0.5,
+                "amount":1
+            }
+        },
+        "img":{
+            "body":"Snake"
         },
         "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"coppershiv",
+                "param":{
+                    "sameId":true,
+                    "projectilePattern":"shiv",
+                    "relativeToParent":true,
+                    "pierce":-1,
+                    "timer":1
+                }
+            }],
             "10":[{
                 "id":"projectile",
                 "projectileType":"snakeSpit",
@@ -44,7 +75,7 @@
         }
     },
     "slime":{
-        "name":"Slime",
+        "name":"",
         "hpMax":"75",
         "stats":{
             "damage":8,
@@ -53,7 +84,7 @@
         },
         "maxSpeed":3,
         "drawSize":"small",
-        "team":"harmful",
+        "team":"Harmful",
         "itemDrops":{
             "oldhat":{
                 "chance":0.5,
@@ -63,7 +94,7 @@
         "weaponData":{}
     },
     "jellyeye":{
-        "name":"Jelly Eye",
+        "name":"",
         "hpMax":"300",
         "stats":{
             "damage":11,
@@ -72,7 +103,7 @@
         },
         "maxSpeed":5,
         "drawSize":"large",
-        "team":"harmful",
+        "team":"Harmful",
         "itemDrops":{
 
         },

@@ -1,43 +1,39 @@
 {
     "arrow":{
         "width":33,
-        "height":7
+        "height":7,
+        "collisionType":"sticky"
     },
     "bone":{
         "width":14,
-        "height":7
+        "height":7,
+        "collisionType":"sticky"
     },
     "snakeSpit":{
         "width":7,
-        "height":3
+        "height":3,
+        "collisionType":"sticky"
     },
     "eye":{
         "width":7,
-        "height":7
+        "height":7,
+        "collisionType":"sticky"
     },
     "fireball":{
         "width":13,
         "height":8,
-        "animations":2
+        "animations":2,
+        "collisionType":"remove"
     },
-    "coppershivprojectile":{
+    "iceball":{
+        "width":13,
+        "height":8,
+        "animations":2,
+        "collisionType":"remove"
+    },
+    "coppershiv":{
         "width":14,
-        "height":14
-    },
-    "copperswordprojectile":{
-        "width":24,
-        "height":24
-    },
-    "copperwaraxeprojectile":{
-        "width":24,
-        "height":24
-    },
-    "ironswordprojectile":{
-        "width":24,
-        "height":24
-    },
-    "ironwaraxeprojectile":{
-        "width":24,
-        "height":24
+        "height":14,
+        "collisionType":"none"
     }
 }

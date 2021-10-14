@@ -137,14 +137,14 @@ io.sockets.on('connection',function(socket){
 		}
 	});
 	socket.on('disconnect',function(){
-		socket.emit('disconnected');
-		Player.onDisconnect(socket);
-		delete SOCKET_LIST[socket.id];
+		if(Player.list[socket.id]){
+			Player.list[socket.id].toRemove = true;
+		}
 	});
 	socket.on('timeout',function(){
-		socket.emit('disconnected');
-		Player.onDisconnect(socket);
-		delete SOCKET_LIST[socket.id];
+		if(Player.list[socket.id]){
+			Player.list[socket.id].toRemove = true;
+		}
 	});
 	socket.on('chatMessage',function(data){
 		if(Player.list[socket.id]){
@@ -188,38 +188,70 @@ setInterval(function(){
     for(var i in Player.list){
         if(Player.list[i]){
             Player.list[i].update();
+            if(pack[Player.list[i].map]){
+				if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)]){
+					if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
+					pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[Player.list[i].map] = {};
+				pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
+				pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = Player.list[i].getInitPack();
+            pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)].player.push(updatePack);
 			if(Player.list[i].toRemove){
 				SOCKET_LIST[i].emit('disconnected');
 				Player.onDisconnect(SOCKET_LIST[i]);
 				delete SOCKET_LIST[i];
 				continue;
 			}
-            if(!pack[Player.list[i].map]){
-                pack[Player.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            }
-            var updatePack = Player.list[i].getInitPack();
-            pack[Player.list[i].map].player.push(updatePack);
         }
     }
     for(var i in Projectile.list){
         if(Projectile.list[i]){
             Projectile.list[i].update();
+            if(pack[Projectile.list[i].map]){
+				if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)]){
+					if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
+					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[Projectile.list[i].map] = {};
+				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
+				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = Projectile.list[i].getInitPack();
+            pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)].projectile.push(updatePack);
 			if(Projectile.list[i].toRemove){
 				delete Projectile.list[i];
 				continue;
 			}
-            if(!pack[Projectile.list[i].map]){
-                pack[Projectile.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            }
-            var updatePack = Projectile.list[i].getInitPack();
-            pack[Projectile.list[i].map].projectile.push(updatePack);
         }
     }
     for(var i in Monster.list){
         if(Monster.list[i]){
 			var update = false;
 			for(var j in Player.list){
-				if(Monster.list[i].getDistance(Player.list[j]) < 1024 * 2){
+				if(Monster.list[i].getSquareDistance(Player.list[j]) < 32 && Monster.list[i].map === Player.list[j].map){
 					update = true;
 				}
 			}
@@ -227,77 +259,151 @@ setInterval(function(){
 				continue;
 			}
             Monster.list[i].update();
+            if(pack[Monster.list[i].map]){
+				if(pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)]){
+					if(pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)][Math.floor(Monster.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)][Math.floor(Monster.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)] = {};
+					pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)][Math.floor(Monster.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[Monster.list[i].map] = {};
+				pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)] = {};
+				pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)][Math.floor(Monster.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = Monster.list[i].getInitPack();
+            pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)][Math.floor(Monster.list[i].y / 1024)].monster.push(updatePack);
 			if(Monster.list[i].toRemove){
 				delete Monster.list[i];
 				continue;
 			}
-            if(!pack[Monster.list[i].map]){
-                pack[Monster.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            }
-            var updatePack = Monster.list[i].getInitPack();
-            pack[Monster.list[i].map].monster.push(updatePack);
         }
     }
     for(var i in DroppedItem.list){
         if(DroppedItem.list[i]){
             DroppedItem.list[i].update();
+            if(pack[DroppedItem.list[i].map]){
+				if(pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)]){
+					if(pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)][Math.floor(DroppedItem.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)][Math.floor(DroppedItem.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)] = {};
+					pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)][Math.floor(DroppedItem.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[DroppedItem.list[i].map] = {};
+				pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)] = {};
+				pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)][Math.floor(DroppedItem.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = DroppedItem.list[i].getInitPack();
+            pack[DroppedItem.list[i].map][Math.floor(DroppedItem.list[i].x / 1024)][Math.floor(DroppedItem.list[i].y / 1024)].droppedItem.push(updatePack);
 			if(DroppedItem.list[i].toRemove){
 				delete DroppedItem.list[i];
 				continue;
 			}
-            if(!pack[DroppedItem.list[i].map]){
-                pack[DroppedItem.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            }
-            var updatePack = DroppedItem.list[i].getInitPack();
-            pack[DroppedItem.list[i].map].droppedItem.push(updatePack);
         }
     }
     for(var i in HarvestableNpc.list){
         if(HarvestableNpc.list[i]){
             HarvestableNpc.list[i].update();
 			if(HarvestableNpc.list[i].img === 'none'){
-				continue;
+				if(HarvestableNpc.list[i].toRemove){
+					HarvestableNpc.list[i].toRemove = false;
+				}
+				else{
+					continue;
+				}
 			}
-            if(!pack[HarvestableNpc.list[i].map]){
-                pack[HarvestableNpc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+            if(pack[HarvestableNpc.list[i].map]){
+				if(pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)]){
+					if(pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)][Math.floor(HarvestableNpc.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)][Math.floor(HarvestableNpc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)] = {};
+					pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)][Math.floor(HarvestableNpc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
             }
+			else{
+                pack[HarvestableNpc.list[i].map] = {};
+				pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)] = {};
+				pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)][Math.floor(HarvestableNpc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
             var updatePack = HarvestableNpc.list[i].getInitPack();
-            pack[HarvestableNpc.list[i].map].harvestableNpc.push(updatePack);
+            pack[HarvestableNpc.list[i].map][Math.floor(HarvestableNpc.list[i].x / 1024)][Math.floor(HarvestableNpc.list[i].y / 1024)].harvestableNpc.push(updatePack);
         }
     }
     for(var i in Npc.list){
         if(Npc.list[i]){
             Npc.list[i].update();
+            if(pack[Npc.list[i].map]){
+				if(pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)]){
+					if(pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)][Math.floor(Npc.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)][Math.floor(Npc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)] = {};
+					pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)][Math.floor(Npc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[Npc.list[i].map] = {};
+				pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)] = {};
+				pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)][Math.floor(Npc.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = Npc.list[i].getInitPack();
+            pack[Npc.list[i].map][Math.floor(Npc.list[i].x / 1024)][Math.floor(Npc.list[i].y / 1024)].npc.push(updatePack);
 			if(Npc.list[i].toRemove){
 				delete Npc.list[i];
 				continue;
 			}
-            if(!pack[Npc.list[i].map]){
-                pack[Npc.list[i].map] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            }
-            var updatePack = Npc.list[i].getInitPack();
-            pack[Npc.list[i].map].npc.push(updatePack);
         }
     }
 	for(var i in Player.list){
 		for(var j in Projectile.list){
 			if(Projectile.list[j].isColliding(Player.list[i]) && i + '' !== Projectile.list[j].parent + ''){
-				Player.list[i].onDamage(Projectile.list[j]);
+				if(Player.list[i].team !== Projectile.list[j].team){
+					Player.list[i].onDamage(Projectile.list[j]);
+				}
 			}
 		}
 		for(var j in Monster.list){
 			if(Player.list[i].isColliding(Monster.list[j])){
-				Player.list[i].onDamage(Monster.list[j]);
+				if(Player.list[i].team !== Monster.list[j].team){
+					Player.list[i].onDamage(Monster.list[j]);
+				}
 			}
 		}
 	}
 	for(var i in Monster.list){
 		for(var j in Projectile.list){
 			if(Projectile.list[j].isColliding(Monster.list[i]) && i + '' !== Projectile.list[j].parent + ''){
-				Monster.list[i].onDamage(Projectile.list[j]);
-				if(Monster.list[i].toRemove){
-					delete Monster.list[i];
-					break;
+				if(Monster.list[i].team !== Projectile.list[j].team){
+					Monster.list[i].onDamage(Projectile.list[j]);
+					if(Monster.list[i].toRemove){
+						break;
+					}
 				}
 			}
 		}
@@ -306,7 +412,23 @@ setInterval(function(){
 		var socket = SOCKET_LIST[i];
 		if(Player.list[socket.id]){
 			var map = Player.list[socket.id].map;
-			socket.emit('update',pack[map]);
+			var x = Math.floor(Player.list[socket.id].x / 1024);
+			var y = Math.floor(Player.list[socket.id].y / 1024);
+			var data = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			for(var j = -1;j < 2;j++){
+				for(var k = -1;k < 2;k++){
+					if(pack[map][x + j]){
+						if(pack[map][x + j][y + k]){
+							for(var l in pack[map][x + j][y + k]){
+								for(var m in pack[map][x + j][y + k][l]){
+									data[l].push(pack[map][x + j][y + k][l][m]);
+								}
+							}
+						}
+					}
+				}
+			}
+			socket.emit('update',data);
 		}
 	}
 	for(var i in Spawner.list){

@@ -47,6 +47,7 @@
 							<button id="createAccount" class="UI-button-light">Create Account</button>
 							<button id="deleteAccount" class="UI-button-light">Delete Account</button>
 							<button id="changePassword" class="UI-button-light">Change Password</button>
+							<br>
 							<div id="signError"></div>
 						</div>
 					</div>
@@ -55,6 +56,26 @@
 					<div class="pageStackInner">
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
 							Do you want to contribute to this game? Then click <a class="UI-link-light" href="https://forms.gle/ScdgYv1CqezcGb1r9" target="_blank">here</a>!
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display-light">
+					<div class="pageStackInner">
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							10/13/2021
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Improved Inventory.
+							<br>
+							Revamped Items.
+							<br>
+							Reduced Lag.
+							<br>
+							Added Better Chunk Loading.
+							<br>
+							Fixed Bugs.
+							<br>
+							Released 0.0.3.
 						</div>
 					</div>
 				</div>
@@ -143,10 +164,10 @@
 							Announcements:
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 20px">
-							8/21/2021
+							10/13/2021
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
-							Template
+							We are now seeing more advanced items, like the Old Hat, which gives you the ability to shoot a ring of ice. Also, the inventory has also been revamped.
 						</div>
 					</div>
 				</div>
@@ -156,15 +177,11 @@
 							Credits
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
-							Player Sprites: Small Fantasy | <a href="https://www.ascensiongamedev.com/topic/740-small-fantasy-resources/" class="UI-link-light" target="_blank">Link</a>
+							Player Sprites and Tileset: Small Fantasy | <a href="https://www.ascensiongamedev.com/topic/740-small-fantasy-resources/" class="UI-link-light" target="_blank">Link</a>
 							<br>
-							Tileset: Magiscarf | <a href="https://www.deviantart.com/magiscarf/art/Revamped-Tiles-829482346" class="UI-link-light" target="_blank">Link</a>
-							<br>
-							Window Code: Columbia.edu | <a href="https://www.columbia.edu/~njn2118/journal/2019/4/26.html" class="UI-link-light" target="_blank">Link</a>
+							Tileset: Flurmimon | <a href="https://www.deviantart.com/flurmimon" class="UI-link-light" target="_blank">Link</a>
 							<br>
 							Item Images: Free Icon Library | <a href="https://icon-library.com/png/107953.html" class="UI-link-light" target="_blank">Link</a>
-							<br>
-							Extra Item Images (currently unused): Vx Resource | <a href="https://vxresource.wordpress.com/2010/07/05/biggest-iconset-ever/" class="UI-link-light" target="_blank">Link</a>
 							<br>
 							Fire Projectiles: Bongwater Bandit | <a href="https://www.deviantart.com/bongwater-bandit/art/8-Bit-Fx-2-647815669" class="UI-link-light" target="_blank">Link</a>
 						</div>
@@ -173,7 +190,7 @@
 				<div class="pageStackOuter UI-display-light">
 					<div class="pageStackInner">
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
-							This version is currently in development, check out the more finished version here.
+							If you want, check out the old style of Meadow Guarder here!
 							<br>
 							<a class="UI-link-light" href="http://meadowguarderold.herokuapp.com" target="_blank">Meadow Guarder Old</a>
 						</div>
@@ -183,10 +200,10 @@
 		</div>
 	</div>
 	<div id="gameDiv" style="display:none;">
-    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></canvas>
-		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);"></div>
-		<div id="regionDisplay" class="UI-display-light UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">
-			<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">lol</div>
+    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="regionDisplay" class="UI-display-light UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+			<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
 		</div>
 		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
 
@@ -224,6 +241,9 @@
 			<div id="inventoryItems" onmouseover="mouseUp(event);mouseOut(event);">
 
 			</div>
+			<button id="inventoryExit" class="UI-button-light">
+				<div id="inventoryExitText">X</div>
+			</button>
 		</div>
 		<div id="hotbarDiv" class="UI-display-light" onmouseover="mouseUp(event);">
 			<div id="hotbarItems" onmouseover="mouseUp(event);">
@@ -238,6 +258,9 @@
 			<div id="craftItems" onmouseover="mouseUp(event);mouseOut(event);">
 
 			</div>
+			<button id="craftExit" class="UI-button-light">
+				<div id="craftExitText">X</div>
+			</button>
 		</div>
 		<div id="settingBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
 			
@@ -258,26 +281,29 @@
 					</optgroup>
 				</select>
 			</div>
+			<button id="settingExit" class="UI-button-light">
+				<div id="settingExitText">X</div>
+			</button>
 		</div>
-		<div id="selfDisplay" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
-			<div id="healthBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
-				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
-				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+		<div id="selfDisplay" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+			<div id="healthBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
-			<div id="xpBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
-				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
-				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+			<div id="xpBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
-			<div id="manaBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);">
-				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
-				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);"></div>
+			<div id="manaBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display-light" style="display: none;"></div>
 	</div>
 	<div id="deathDiv" style="display: none;">
 		<div id="deathScreen"></div>
-		<div id="respawnTimer"></div>
+		<div id="respawnTimerDiv"></div>
 		<button id="respawn" onclick="runRespawn()" style="display: none;">Respawn</button>
 	</div>
 	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);" onclick="location.reload()">

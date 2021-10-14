@@ -3,7 +3,7 @@ if(isFirefox === true) {
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
 
-var VERSION = '0.0.2';
+var VERSION = '0.0.3';
 
 var socket = io({
     reconnection:false,
@@ -62,8 +62,14 @@ Img.Panda = new Image();
 Img.Panda.src = '/client/img/player/bodies/Panda.png';
 Img.Avian = new Image();
 Img.Avian.src = '/client/img/player/bodies/Avian.png';
+Img.Snake = new Image();
+Img.Snake.src = '/client/img/monsters/Snake.png';
 Img.select = new Image();
 Img.select.src = '/client/img/select.png';
+Img.items2 = new Image();
+Img.items2.src = '/client/img/items2.png';
+Img.items2select = new Image();
+Img.items2select.src = '/client/img/items2select.png';
 
 
 var inventory = new Inventory(socket,false);
@@ -92,20 +98,29 @@ socket.on('updateCraft',function(pack){
 Img.healthbar = new Image();
 Img.healthbar.src = '/client/img/healthbar.png';
 
-var renderPlayer = function(img){
-    if(isFirefox){
-        var temp = document.createElement('canvas');
-        temp.canvas.width = 128;
-        temp.canvas.height = 128;
+var renderPlayer = function(img,drawSize){
+    if(drawSize === 'small'){
+        var size = 16;
+    }
+    else if(drawSize === 'medium'){
+        var size = 32;
     }
     else{
-        var temp = new OffscreenCanvas(128,128);
+        var size = 32;
+    }
+    if(isFirefox){
+        var temp = document.createElement('canvas');
+        temp.canvas.width = size * 4;
+        temp.canvas.height = size * 4;
+    }
+    else{
+        var temp = new OffscreenCanvas(size * 4,size * 4);
     }
     var gl = temp.getContext('2d');
     resetCanvas(gl);
     for(var i in img){
         if(img[i] !== "none"){
-            gl.drawImage(Img[img[i]],0,0,128,128);
+            gl.drawImage(Img[img[i]],0,0,size * 4,size * 4);
         }
     }
     return temp;
@@ -202,20 +217,10 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!player.x){
-                                player.x = data.player[i].x;
-                            }
-                            else{
-                                player.spdX = (data.player[i].x - player.x) / 4;
-                            }
+                            player.spdX = (data.player[i].x - player.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!player.y){
-                                player.y = data.player[i].y;
-                            }
-                            else{
-                                player.spdY = (data.player[i].y - player.y) / 4;
-                            }
+                            player.spdY = (data.player[i].y - player.y) / 4;
                         }
                         else if(j === 'hp'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
@@ -263,6 +268,11 @@ socket.on('update',function(data){
                             player[j] = data.player[i][j];
                             player.render = renderPlayer(player[j]);
                         }
+                        else if(j === 'toRemove'){
+                            player[j] = data.player[i][j];
+                            player.fadeState = 2;
+                            player.fade -= 0.05;
+                        }
                         else{
                             player[j] = data.player[i][j];
                         }
@@ -286,20 +296,15 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!projectile.x){
-                                projectile.x = data.projectile[i].x;
-                            }
-                            else{
-                                projectile.spdX = (data.projectile[i].x - projectile.x) / 4;
-                            }
+                            projectile.spdX = (data.projectile[i].x - projectile.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!projectile.y){
-                                projectile.y = data.projectile[i].y;
-                            }
-                            else{
-                                projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
-                            }
+                            projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
+                        }
+                        else if(j === 'toRemove'){
+                            projectile[j] = data.projectile[i][j];
+                            projectile.fadeState = 2;
+                            projectile.fade -= 0.05;
                         }
                         else{
                             projectile[j] = data.projectile[i][j];
@@ -324,20 +329,15 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!monster.x){
-                                monster.x = data.monster[i].x;
-                            }
-                            else{
-                                monster.spdX = (data.monster[i].x - monster.x) / 4;
-                            }
+                            monster.spdX = (data.monster[i].x - monster.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!monster.y){
-                                monster.y = data.monster[i].y;
-                            }
-                            else{
-                                monster.spdY = (data.monster[i].y - monster.y) / 4;
-                            }
+                            monster.spdY = (data.monster[i].y - monster.y) / 4;
+                        }
+                        else if(j === 'toRemove'){
+                            monster[j] = data.monster[i][j];
+                            monster.fadeState = 2;
+                            monster.fade -= 0.05;
                         }
                         else{
                             monster[j] = data.monster[i][j];
@@ -362,20 +362,15 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!npc.x){
-                                npc.x = data.npc[i].x;
-                            }
-                            else{
-                                npc.spdX = (data.npc[i].x - npc.x) / 4;
-                            }
+                            npc.spdX = (data.npc[i].x - npc.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!npc.y){
-                                npc.y = data.npc[i].y;
-                            }
-                            else{
-                                npc.spdY = (data.npc[i].y - npc.y) / 4;
-                            }
+                            npc.spdY = (data.npc[i].y - npc.y) / 4;
+                        }
+                        else if(j === 'toRemove'){
+                            npc[j] = data.npc[i][j];
+                            npc.fadeState = 2;
+                            npc.fade -= 0.05;
                         }
                         else{
                             npc[j] = data.npc[i][j];
@@ -400,19 +395,22 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!harvestableNpc.x){
-                                harvestableNpc.x = data.harvestableNpc[i].x;
-                            }
-                            else{
-                                harvestableNpc.spdX = (data.harvestableNpc[i].x - harvestableNpc.x) / 4;
-                            }
+                            harvestableNpc.spdX = (data.harvestableNpc[i].x - harvestableNpc.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!harvestableNpc.y){
-                                harvestableNpc.y = data.harvestableNpc[i].y;
-                            }
-                            else{
-                                harvestableNpc.spdY = (data.harvestableNpc[i].y - harvestableNpc.y) / 4;
+                            harvestableNpc.spdY = (data.harvestableNpc[i].y - harvestableNpc.y) / 4;
+                        }
+                        else if(j === 'toRemove'){
+                            harvestableNpc[j] = data.harvestableNpc[i][j];
+                            harvestableNpc.fadeState = 2;
+                            harvestableNpc.fade -= 0.05;
+                        }
+                        else if(j === 'img'){
+                            harvestableNpc[j] = data.harvestableNpc[i][j];
+                            if(harvestableNpc.img === "none" && harvestableNpc.fadeState === 1){
+                                harvestableNpc.fadeState = 2;
+                                harvestableNpc.fade -= 0.05;
+                                harvestableNpc.harvestHp = 0;
                             }
                         }
                         else{
@@ -438,20 +436,10 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            if(!droppedItem.x){
-                                droppedItem.x = data.droppedItem[i].x;
-                            }
-                            else{
-                                droppedItem.spdX = (data.droppedItem[i].x - droppedItem.x) / 4;
-                            }
+                            droppedItem.spdX = (data.droppedItem[i].x - droppedItem.x) / 4;
                         }
                         else if(j === 'y'){
-                            if(!droppedItem.y){
-                                droppedItem.y = data.droppedItem[i].y;
-                            }
-                            else{
-                                droppedItem.spdY = (data.droppedItem[i].y - droppedItem.y) / 4;
-                            }
+                            droppedItem.spdY = (data.droppedItem[i].y - droppedItem.y) / 4;
                         }
                         else{
                             droppedItem[j] = data.droppedItem[i][j];
@@ -466,46 +454,36 @@ socket.on('update',function(data){
     }
     for(var i in Player.list){
         if(Player.list[i].updated === false){
-            if(Player.list[i].fadeState === 1){
-                Player.list[i].fadeState = 2;
-                Player.list[i].fade = 0.99;
+            if(Player.list[i].toRemove === false){
+                delete Player.list[i];
             }
         }
     }
     for(var i in Projectile.list){
         if(Projectile.list[i].updated === false){
-            if(Projectile.list[i].relativeToParent === false){
-                if(Projectile.list[i].fadeState === 1){
-                    Projectile.list[i].fadeState = 2;
-                    Projectile.list[i].fade = 0.99;
-                }
-            }
-            else{
+            if(!Projectile.list[i].toRemove || Projectile.list[i].relativeToParent === true){
                 delete Projectile.list[i];
             }
         }
     }
     for(var i in Monster.list){
         if(Monster.list[i].updated === false){
-            if(Monster.list[i].fadeState === 1){
-                Monster.list[i].fadeState = 2;
-                Monster.list[i].fade = 0.99;
+            if(!Monster.list[i].toRemove){
+                delete Monster.list[i];
             }
         }
     }
     for(var i in Npc.list){
         if(Npc.list[i].updated === false){
-            if(Npc.list[i].fadeState === 1){
-                Npc.list[i].fadeState = 2;
-                Npc.list[i].fade = 0.99;
+            if(Npc.list[i].toRemove === false){
+                delete Npc.list[i];
             }
         }
     }
     for(var i in HarvestableNpc.list){
         if(HarvestableNpc.list[i].updated === false){
-            if(HarvestableNpc.list[i].fadeState === 1){
-                HarvestableNpc.list[i].fadeState = 2;
-                HarvestableNpc.list[i].fade = 0.99;
+            if(HarvestableNpc.list[i].toRemove === false){
+                delete HarvestableNpc.list[i];
             }
         }
     }
@@ -551,6 +529,13 @@ socket.on('initEntities',function(data){
         new DroppedItem(data.droppedItem[i]);
     }
 });
+socket.on('removePlayer',function(data){
+    if(Player.list[data]){
+        Player.list[data].toRemove = true;
+        Player.list[data].fadeState = 2;
+        Player.list[data].fade -= 0.05;
+    }
+});
 socket.on('disconnected',function(data){
     gameDiv.style.display = 'inline-block';
     disconnectedDiv.style.display = 'inline-block';
@@ -569,7 +554,7 @@ socket.on('death',function(data){
     deathDiv.style.display = 'inline-block';
     pageDiv.style.display = 'none';
     respawnTimer = 5;
-    respawnTimer.innerHTML = respawnTimer;
+    respawnTimerDiv.innerHTML = respawnTimer;
     respawn.style.display = 'none';
     setTimeout(updateRespawn,1500);
     healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
@@ -593,14 +578,13 @@ var updateRespawn = function(){
         return;
     }
     respawnTimer = Math.max(respawnTimer - 1,0);
-    respawnTimer.innerHTML = respawnTimer;
+    respawnTimerDiv.innerHTML = respawnTimer;
     if(respawnTimer === 0){
         respawn.style.display = 'inline-block';
     }
     setTimeout(updateRespawn,1000);
 }
 socket.on('changeMap',function(data){
-    regionDisplay.innerHTML = data.teleport;
     if(shadeAmount < 0){
         shadeAmount = 0;
     }
@@ -613,40 +597,35 @@ socket.on('regionChange',function(data){
     mapShadeSpeed = 0.08;
 });
 
-var findChunk = function(pt,x,y){
-    if(x !== undefined){
-        return pt.map + ':' + Math.floor(pt.x / 1024 + x) * 16 + ':' + Math.floor(pt.y / 1024 + y) * 16 + ':';
-    }
-    else{
-        return pt.map + ':' + Math.floor(pt.x / 1024) * 16 + ':' + Math.floor(pt.y / 1024) * 16 + ':';
-    }
-}
-
 var increaseProjectileByParent = function(projectile){
-    if(projectile.parentType === 'Player'){
-        if(Player.list[projectile.relativeToParent]){
-            projectile.x += Player.list[projectile.relativeToParent].x;
-            projectile.y += Player.list[projectile.relativeToParent].y;
+    if(projectile.relativeToParent){
+        if(projectile.parentType === 'Player'){
+            if(Player.list[projectile.parent]){
+                projectile.x += Player.list[projectile.parent].x;
+                projectile.y += Player.list[projectile.parent].y;
+            }
         }
-    }
-    else if(projectile.parentType === 'Monster'){
-        if(Monster.list[projectile.relativeToParent]){
-            projectile.x += Monster.list[projectile.relativeToParent].x;
-            projectile.y += Monster.list[projectile.relativeToParent].y;
+        else if(projectile.parentType === 'Monster'){
+            if(Monster.list[projectile.parent]){
+                projectile.x += Monster.list[projectile.parent].x;
+                projectile.y += Monster.list[projectile.parent].y;
+            }
         }
     }
 }
 var decreaseProjectileByParent = function(projectile){
-    if(projectile.parentType === 'Player'){
-        if(Player.list[projectile.relativeToParent]){
-            projectile.x -= Player.list[projectile.relativeToParent].x;
-            projectile.y -= Player.list[projectile.relativeToParent].y;
+    if(projectile.relativeToParent){
+        if(projectile.parentType === 'Player'){
+            if(Player.list[projectile.parent]){
+                projectile.x -= Player.list[projectile.parent].x;
+                projectile.y -= Player.list[projectile.parent].y;
+            }
         }
-    }
-    else if(projectile.parentType === 'Monster'){
-        if(Monster.list[projectile.relativeToParent]){
-            projectile.x -= Monster.list[projectile.relativeToParent].x;
-            projectile.y -= Monster.list[projectile.relativeToParent].y;
+        else if(projectile.parentType === 'Monster'){
+            if(Monster.list[projectile.parent]){
+                projectile.x -= Monster.list[projectile.parent].x;
+                projectile.y -= Monster.list[projectile.parent].y;
+            }
         }
     }
 }
@@ -670,31 +649,15 @@ var loop = function(){
     ctx.fillStyle = '#000000';
     ctx.fillRect(0,0,WIDTH,HEIGHT);
     for(var i in Player.list){
-        if(Player.list[i].toRemove){
-            delete Player.list[i];
-            continue;
-        }
         Player.list[i].update();
     }
     for(var i in Monster.list){
-        if(Monster.list[i].toRemove){
-            delete Monster.list[i];
-            continue;
-        }
         Monster.list[i].update();
     }
     for(var i in Projectile.list){
-        if(Projectile.list[i].toRemove){
-            delete Projectile.list[i];
-            continue;
-        }
         Projectile.list[i].update();
     }
     for(var i in Npc.list){
-        if(Npc.list[i].toRemove){
-            delete Npc.list[i];
-            continue;
-        }
         Npc.list[i].update();
     }
     for(var i in DroppedItem.list){
@@ -719,17 +682,29 @@ var loop = function(){
     if(mapData[Player.list[selfId].map].width > window.innerWidth){
         if(cameraX > -mapData[Player.list[selfId].map].x1){
             cameraX = -mapData[Player.list[selfId].map].x1;
+            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
         if(cameraX < window.innerWidth - mapData[Player.list[selfId].map].x2){
             cameraX = window.innerWidth - mapData[Player.list[selfId].map].x2;
+            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
     }
     if(mapData[Player.list[selfId].map].height > window.innerHeight){
         if(cameraY > -mapData[Player.list[selfId].map].y1){
             cameraY = -mapData[Player.list[selfId].map].y1;
+            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
         if(cameraY < window.innerHeight - mapData[Player.list[selfId].map].y2){
             cameraY = window.innerHeight - mapData[Player.list[selfId].map].y2;
+            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
     }
     // cameraX -= mouseCameraX;
@@ -740,70 +715,33 @@ var loop = function(){
     ctx.translate(cameraX,cameraY);
     for(var i = -1;i < 2;i++){
         for(var j = -1;j < 2;j++){
-            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':']){
-                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':'].lower,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
+            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
+                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].lower,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
             }
         }
     }
     for(var i in HarvestableNpc.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    HarvestableNpc.list[i].drawLayer0();
-        //         }
-        //     }
-        // }
+        HarvestableNpc.list[i].drawLayer0();
     }
 
     selected = false;
 
     var entities = [];
     for(var i in Player.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    entities.push(Player.list[i]);
-        //         }
-        //     }
-        // }
+        entities.push(Player.list[i]);
     }
     for(var i in Projectile.list){
-        // increaseProjectileByParent(Projectile.list[i]);
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Projectile.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    entities.push(Projectile.list[i]);
-        //         }
-        //     }
-        // }
-        // decreaseProjectileByParent(Projectile.list[i]);
+        increaseProjectileByParent(Projectile.list[i]);
+        entities.push(Projectile.list[i]);
     }
     for(var i in Monster.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    entities.push(Monster.list[i]);
-        //         }
-        //     }
-        // }
+        entities.push(Monster.list[i]);
     }
     for(var i in Npc.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Npc.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    entities.push(Npc.list[i]);
-        //         }
-        //     }
-        // }
+        entities.push(Npc.list[i]);
     }
     for(var i in DroppedItem.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(DroppedItem.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    entities.push(DroppedItem.list[i]);
-        //         }
-        //     }
-        // }
+        entities.push(DroppedItem.list[i]);
     }
     function compare(a,b){
         var ay = a.y;
@@ -820,26 +758,19 @@ var loop = function(){
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
     }
+    for(var i in Projectile.list){
+        decreaseProjectileByParent(Projectile.list[i]);
+    }
 
     for(var i = -1;i < 2;i++){
         for(var j = -1;j < 2;j++){
-            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':']){
-                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':' + Math.floor(tileAnimation) + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
+            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
+                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
             }
         }
     }
     for(var i in HarvestableNpc.list){
-        if(HarvestableNpc.list[i].toRemove){
-            delete HarvestableNpc.list[i];
-            continue;
-        }
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(HarvestableNpc.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    HarvestableNpc.list[i].drawLayer1();
-        //         }
-        //     }
-        // }
+        HarvestableNpc.list[i].drawLayer1();
     }
 
     ctx.globalAlpha = 0.5;
@@ -847,22 +778,13 @@ var loop = function(){
     ctx.globalAlpha = 1;
 
     for(var i in Player.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Player.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    Player.list[i].drawHp();
-        //         }
-        //     }
-        // }
+        Player.list[i].drawHp();
     }
     for(var i in Monster.list){
-        // for(var j = -1;j < 2;j++){
-        //     for(var k = -1;k < 2;k++){
-        //         if(findChunk(Monster.list[i]) === findChunk(Player.list[selfId],j,k)){
-                    Monster.list[i].drawHp();
-        //         }
-        //     }
-        // }
+        Monster.list[i].drawHp();
+    }
+    for(var i in HarvestableNpc.list){
+        HarvestableNpc.list[i].drawHp();
     }
     ctx.restore();
 
@@ -872,11 +794,6 @@ var loop = function(){
     if(Player.list[selfId].map === currentMap && shadeAmount > 1.5){
         shadeSpeed = -3 / 40;
     }
-    if(shadeAmount < 0.25 && mapShadeSpeed !== 0.08 && currentMap !== '' && shadeSpeed === -3 / 40){
-        currentMap = '';
-        mapShadeAmount = 0;
-        mapShadeSpeed = 0.08;
-    }
     shadeAmount += shadeSpeed;
     mapShadeAmount += mapShadeSpeed;
     if(shadeAmount >= -1){
@@ -885,129 +802,68 @@ var loop = function(){
     if(mapShadeAmount >= -1){
         regionDisplay.style.opacity = mapShadeAmount;
     }
-
-    tileAnimation += 0.1;
-    if(tileAnimation >= 8){
-        tileAnimation = 0;
-    }
     window.requestAnimationFrame(loop);
 }
 
-var updateInventoryPopupMenu = function(scroll){
-    var inSlot = -1;
-    var slotType = '';
-    var hotbar = false;
-    var inventorySlots = document.getElementsByClassName('inventorySlot');
-    for(var i = 0;i < inventorySlots.length;i++){
-        if(inventorySlots[i].className.includes('inventoryMenuSlot') && inventoryDiv.style.display === 'inline-block'){
-            var rect = inventorySlots[i].getBoundingClientRect();
-            if(rawMouseX > rect.left){
-                if(rawMouseX < rect.right){
-                    if(rawMouseY > rect.top){
-                        if(rawMouseY < rect.bottom){
-                            inSlot = inventorySlots[i].id.substring(13);
-                            slotType = 'itemDescriptions';
-                        }
-                    }
-                }
-            }
-        }
-        if(inventorySlots[i].className.includes('craftMenuSlot') && craftDiv.style.display === 'inline-block'){
-            var rect = inventorySlots[i].getBoundingClientRect();
-            if(rawMouseX > rect.left){
-                if(rawMouseX < rect.right){
-                    if(rawMouseY > rect.top){
-                        if(rawMouseY < rect.bottom){
-                            inSlot = inventorySlots[i].id.substring(9);
-                            slotType = 'craftDescriptions';
-                        }
-                    }
-                }
-            }
-        }
+updateInventoryPopupMenu = function(slotType,index){
+    if(index === -1){
+        itemMenu.style.display = 'none';
+        return;
     }
-    var hotbarSlots = document.getElementsByClassName('hotbarSlot');
-    for(var i = 0;i < hotbarSlots.length;i++){
-        var rect = hotbarSlots[i].getBoundingClientRect();
-        if(rawMouseX > rect.left){
-            if(rawMouseX < rect.right){
-                if(rawMouseY > rect.top){
-                    if(rawMouseY < rect.bottom){
-                        inSlot = hotbarSlots[i].id.substring(10);
-                        slotType = 'itemDescriptions';
-                        hotbar = true;
-                    }
-                }
-            }
-        }
+    if(inventory[slotType][index] === undefined){
+        return;
     }
-    if(inSlot === -1 || inventory.draggingItem !== -1){
-        if(itemMenu.style.display === 'inline-block'){
-            itemMenu.style.display = 'none';
-        }
+    itemMenu.style.display = 'inline-block';
+    itemMenu.innerHTML = inventory[slotType][index];
+    var rect = itemMenu.getBoundingClientRect();
+    itemMenu.style.left = '';
+    itemMenu.style.right = '';
+    itemMenu.style.top = '';
+    itemMenu.style.bottom = '';
+    if(rawMouseX + rect.right - rect.left > window.innerWidth){
+        itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
     }
     else{
-        if(itemMenu.style.display === 'none' || scroll){
-            if(slotType === 'craftDescriptions'){
-                var rect = craftBackground.getBoundingClientRect();
-                if(rawMouseX > rect.left){
-                    if(rawMouseX < rect.right){
-                        if(rawMouseY > rect.top){
-                            if(rawMouseY < rect.bottom){
-                                itemMenu.style.display = 'inline-block';
-                                itemMenu.innerHTML = inventory[slotType][inSlot];
-                            }
-                        }
-                    }
-                }
-
-            }
-            else if(inventory.items[inSlot].id && hotbar === false){
-                var rect = inventoryBackground.getBoundingClientRect();
-                if(rawMouseX > rect.left){
-                    if(rawMouseX < rect.right){
-                        if(rawMouseY > rect.top){
-                            if(rawMouseY < rect.bottom){
-                                itemMenu.style.display = 'inline-block';
-                                itemMenu.innerHTML = inventory[slotType][inSlot];
-                            }
-                        }
-                    }
-                }
-            }
-            else if(inventory.items[inSlot].id && hotbar === true){
-                itemMenu.style.display = 'inline-block';
-                itemMenu.innerHTML = inventory[slotType][inSlot];
-            }
-        }
-        var rect = itemMenu.getBoundingClientRect();
-        itemMenu.style.left = '';
-        itemMenu.style.right = '';
-        itemMenu.style.top = '';
-        itemMenu.style.bottom = '';
-        if(event.clientX + 3 + rect.right - rect.left > window.innerWidth){
-            itemMenu.style.right = window.innerWidth - (event.clientX - 3) + 'px';
-        }
-        else{
-            itemMenu.style.left = (event.clientX + 3) + 'px';
-        }
-        if(event.clientY + 3 + rect.bottom - rect.top > window.innerHeight){
-            itemMenu.style.bottom = window.innerHeight - (event.clientY - 3) + 'px';
-        }
-        else{
-            itemMenu.style.top = (event.clientY + 3) + 'px';
-        }
+        itemMenu.style.left = rawMouseX + 'px';
     }
-    if(inventory.draggingItem !== -1){
-        draggingItem.style.left = (event.clientX - inventory.draggingX) + 'px';
-        draggingItem.style.top = (event.clientY - inventory.draggingY) + 'px';
+    if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+        itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
     }
     else{
-        draggingItem.style.left = '-100px';
-        draggingItem.style.top = '-100px';
+        itemMenu.style.top = rawMouseY + 'px';
     }
 }
-
+dropItem = function(click){
+    socket.emit('dragItem',{
+        index1:-1,
+        index2:"drop",
+        click:click,
+    });
+    inventory.runDraggingItem({
+        index1:-1,
+        index2:"drop",
+        click:click,
+    });
+    itemMenu.style.display = 'none';
+    if(inventory.draggingItem.id){
+        draggingItem.style.display = 'inline-block';
+        draggingItem.innerHTML = "<image class='itemImageLarge' draggable=false src='/client/img/items/" + inventory.draggingItem.id + ".png'></image>";
+        draggingItem.style.left = (rawMouseX - 32) + 'px';
+        draggingItem.style.top = (rawMouseY - 32) + 'px';
+        if(inventory.draggingItem.amount !== 1){
+            var itemAmount = document.createElement('div');
+            itemAmount.innerHTML = inventory.draggingItem.amount;
+            itemAmount.className = 'UI-text-light itemAmount';
+            var itemAmountDiv = document.createElement('div');
+            itemAmountDiv.className = 'itemAmountLargeDiv';
+            itemAmountDiv.appendChild(itemAmount);
+            draggingItem.appendChild(itemAmountDiv);
+        }
+    }
+    else{
+        draggingItem.style.display = 'none';
+    }
+}
 
 document.onkeydown = function(event){
     if(chatPress){
@@ -1048,42 +904,31 @@ document.onmousemove = function(event){
         rawMouseX = event.clientX;
         rawMouseY = event.clientY;
         socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
-        // if(!talking){
-        //     socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
-        // }
-        updateInventoryPopupMenu(false);
-    }
-}
-document.onmouseup = function(event){
-    if(inventory.draggingItem !== -1){
-        itemMenu.style.display = 'none';
-        var rect = inventoryDiv.getBoundingClientRect();
-        if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-            var draggedItem = false;
-            var inventorySlots = document.getElementsByClassName('inventorySlot');
-            for(var i = 0;i < inventorySlots.length;i++){
-                var rect = inventorySlots[i].getBoundingClientRect();
-                if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-                    socket.emit('dragItem',{
-                        index1:inventory.draggingItem,
-                        index2:inventorySlots[i].id.substring(13),
-                    });
-                    inventory.draggingItem = -1;
-                    draggedItem = true;
-                }
-            }
-            if(draggedItem === false){
-                inventory.refreshItem(inventory.draggingItem);
-                inventory.draggingItem = -1;
-            }
+        if(inventory.draggingItem.id){
+            draggingItem.style.left = (rawMouseX - 32) + 'px';
+            draggingItem.style.top = (rawMouseY - 32) + 'px';
         }
         else{
-            if(inventory.draggingItem !== -1){
-                socket.emit('dragItem',{
-                    index1:inventory.draggingItem,
-                    index2:'drop',
-                });
-                inventory.draggingItem = -1;
+            draggingItem.style.left = '-100px';
+            draggingItem.style.top = '-100px';
+        }
+        if(itemMenu.style.display === 'inline-block'){
+            var rect = itemMenu.getBoundingClientRect();
+            itemMenu.style.left = '';
+            itemMenu.style.right = '';
+            itemMenu.style.top = '';
+            itemMenu.style.bottom = '';
+            if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
+            }
+            else{
+                itemMenu.style.left = rawMouseX + 'px';
+            }
+            if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+            }
+            else{
+                itemMenu.style.top = rawMouseY + 'px';
             }
         }
     }
@@ -1131,7 +976,6 @@ document.oncontextmenu = function(event){
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){
-    updateInventoryPopupMenu(true);
     if(scrollAllowed === false){
         return;
     }

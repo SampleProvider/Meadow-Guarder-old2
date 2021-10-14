@@ -100,6 +100,7 @@ canvas {
     right: 0px;
     bottom: 0px;
     border: 1px solid #725640;
+    pointer-events: none;
 }
 .UI-button-light {
     position: absolute;
@@ -126,6 +127,7 @@ canvas {
     right: 0px;
     bottom: 0px;
     border: 1px solid #725640;
+    pointer-events: none;
 }
 .UI-dropdown-light {
     position: absolute;
@@ -152,6 +154,7 @@ canvas {
     right: 0px;
     bottom: 0px;
     border: 1px solid #725640;
+    pointer-events: none;
 }
 .UI-input-light {
     position: absolute;
@@ -253,6 +256,7 @@ canvas {
     right: 0px;
     bottom: 0px;
     border: 1px solid #725640;
+    pointer-events: none;
 }
 .pageStackOuter {
     position: relative;
@@ -278,11 +282,11 @@ canvas {
     width: auto;
 }
 #signBottom {
-    position: static;
-    top: 52px;
-    left: 8px;
+    position: relative;
+    top: 0px;
+    left: 0px;
     float: left;
-    width: auto;
+    width: 100%;
     margin-bottom: 12px;
 }
 #username {
@@ -390,7 +394,7 @@ canvas {
     opacity: 1;
     user-select: none;
 }
-#respawnTimer {
+#respawnTimerDiv {
     top: 35%;
     left: 50%;
     position: absolute;
@@ -501,7 +505,7 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 8px;
-    width: 234px;
+    width: 291px;
     height: 60px;
     padding: 0px;
     padding-left: 4px;
@@ -516,6 +520,7 @@ canvas {
     bottom: 0px;
     border: 1px solid #725640;
     border-radius: 4px;
+    pointer-events: none;
 }
 .bottomRightButton {
     position: relative;
@@ -537,7 +542,7 @@ canvas {
 .bottomRightButton:hover {
     background-color: #5c4634;
 }
-.bottomRightButton::before {
+.bottomRightButton:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -546,14 +551,24 @@ canvas {
     bottom: 0px;
     border: 1px solid #988474;
     border-radius: 3px;
+    pointer-events: none;
+}
+.itemImage {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    image-rendering: pixelated;
 }
 
 #inventoryBackground {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 630px;
-    height: 270px;
+    width: 650px;
+    height: 340px;
     margin: 0px;
     padding: 0px;
     background-color: #ffffff;
@@ -565,8 +580,8 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 76px;
-    width: 630px;
-    height: 270px;
+    width: 650px;
+    height: 340px;
     margin: 0px;
     padding: 0px;
     overflow-y: scroll;
@@ -579,7 +594,41 @@ canvas {
     top: 200px;
     left: 0px;
     height: 20px;
-    width: 620px;
+    width: 640px;
+}
+#inventoryExit {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    color: #000000;
+    background-color: #ff0000;
+    border: 1px solid #5b0000;
+}
+#inventoryExit:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #ff5b5b;
+    pointer-events: none;
+}
+#inventoryExit:hover {
+    background-color: #ff3b3b;
+}
+#inventoryExitText {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 12px;
+    height: 16px;
+    font-size: 8px;
+    text-align: center;
 }
 #hotbarDiv {
     position: absolute;
@@ -602,6 +651,7 @@ canvas {
     bottom: 0px;
     border: 1px solid #725640;
     border-radius: 4px;
+    pointer-events: none;
 }
 #hotbarItems {
     position: absolute;
@@ -628,7 +678,7 @@ canvas {
     float: left;
     cursor: pointer;
 }
-.hotbarSlotNormal::before {
+.hotbarSlotNormal:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -637,8 +687,9 @@ canvas {
     bottom: 0px;
     border: 1px solid #988474;
     border-radius: 3px;
+    pointer-events: none;
 }
-.hotbarSlotSelected::before {
+.hotbarSlotSelected:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -647,6 +698,7 @@ canvas {
     bottom: 0px;
     border: none;
     border-radius: 3px;
+    pointer-events: none;
 }
 .hotbarRow {
     position: relative;
@@ -669,7 +721,7 @@ canvas {
     margin: 4px;
     border-radius: 4px;
 }
-.inventorySlot::before {
+.inventorySlot:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -678,6 +730,7 @@ canvas {
     bottom: 0px;
     border: 1px solid #988474;
     border-radius: 3px;
+    pointer-events: none;
 }
 .inventoryRow {
     position: relative;
@@ -686,7 +739,7 @@ canvas {
     color: #ffffff;
     margin: 8px;
 }
-.itemImage {
+.slotCanvas {
     position: relative;
     left: 2px;
     top: 2px;
@@ -694,6 +747,33 @@ canvas {
     height: 48px;
     cursor: pointer;
     image-rendering: pixelated;
+}
+.slotCanvasLarge {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    width: 60px;
+    height: 60px;
+    image-rendering: pixelated;
+}
+.itemAmount {
+    position: relative;
+    float: right;
+    color: #ffffff;
+}
+.itemAmountDiv {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 2px;
+    font-size: 13px;
+}
+.itemAmountLargeDiv {
+    position: absolute;
+    left: 0px;
+    bottom: -3px;
+    right: -1px;
+    font-size: 15px;
 }
 .outlineImage {
     position: relative;
@@ -707,6 +787,7 @@ canvas {
     display: none;
     position: absolute;
     z-index: 10;
+    pointer-events: none;
 }
 #inventorySlothelmet {
     position: absolute;
@@ -743,12 +824,19 @@ canvas {
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
+#inventorySlottrash {
+    position: absolute;
+    right: 16px;
+    top: -184px;
+    image-rendering: pixelated;
+}
 #draggingItem {
     position: absolute;
     width: 64px;
     height: 64px;
     z-index: 10;
     image-rendering: pixelated;
+    pointer-events: none;
 }
 
 
@@ -789,6 +877,40 @@ canvas {
     left: 4px;
     color: #ffffff;
 }
+#craftExit {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    color: #000000;
+    background-color: #ff0000;
+    border: 1px solid #5b0000;
+}
+#craftExit:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #ff5b5b;
+    pointer-events: none;
+}
+#craftExit:hover {
+    background-color: #ff3b3b;
+}
+#craftExitText {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 12px;
+    height: 16px;
+    font-size: 8px;
+    text-align: center;
+}
 
 #settingBackground {
     position: absolute;
@@ -824,6 +946,40 @@ canvas {
 }
 .settingDropdown {
     position: relative;
+}
+#settingExit {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    color: #000000;
+    background-color: #ff0000;
+    border: 1px solid #5b0000;
+}
+#settingExit:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #ff5b5b;
+    pointer-events: none;
+}
+#settingExit:hover {
+    background-color: #ff3b3b;
+}
+#settingExitText {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 12px;
+    height: 16px;
+    font-size: 8px;
+    text-align: center;
 }
 
 #selfDisplay {

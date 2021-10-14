@@ -7,11 +7,20 @@ var settings = {
 inventoryButton.onclick = function(){
     toggleInventory();
 }
+inventoryExit.onclick = function(){
+    closeInventory();
+}
 craftButton.onclick = function(){
     toggleCraft();
 }
+craftExit.onclick = function(){
+    closeCraft();
+}
 settingButton.onclick = function(){
     toggleSetting();
+}
+settingExit.onclick = function(){
+    closeSetting();
 }
 openInventory = function(){
     settings.inventoryOpen = true;
@@ -24,7 +33,6 @@ closeInventory = function(){
     inventoryDiv.style.display = 'none';
     var rect = inventoryBackground.getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-        var itemMenu = itemMenu;
         itemMenu.style.display = 'none';
     }
 }
@@ -39,7 +47,6 @@ toggleInventory = function(){
         inventoryDiv.style.display = 'none';
         var rect = inventoryBackground.getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-            var itemMenu = itemMenu;
             itemMenu.style.display = 'none';
         }
     }
@@ -55,7 +62,6 @@ closeCraft = function(){
     craftDiv.style.display = 'none';
     var rect = craftBackground.getBoundingClientRect();
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-        var itemMenu = itemMenu;
         itemMenu.style.display = 'none';
     }
 }
@@ -70,7 +76,6 @@ toggleCraft = function(){
         craftDiv.style.display = 'none';
         var rect = craftBackground.getBoundingClientRect();
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
-            var itemMenu = itemMenu;
             itemMenu.style.display = 'none';
         }
     }
