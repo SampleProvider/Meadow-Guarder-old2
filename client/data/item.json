@@ -75,7 +75,7 @@
                 "param":{
                     "direction":10,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             },{
@@ -84,7 +84,7 @@
                 "param":{
                     "direction":30,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             },{
@@ -93,7 +93,7 @@
                 "param":{
                     "direction":50,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             },{
@@ -102,7 +102,7 @@
                 "param":{
                     "direction":-10,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             },{
@@ -111,7 +111,7 @@
                 "param":{
                     "direction":-30,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             },{
@@ -120,7 +120,7 @@
                 "param":{
                     "direction":-50,
                     "stats":{
-                        "attack":0.3
+                        "damage":0.7
                     }
                 }
             }]

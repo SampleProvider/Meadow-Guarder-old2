@@ -653,11 +653,10 @@ Inventory = function(socket,server){
                 for(var i in self.craftItems.materials[index]){
                     if(!self.hasItem(self.craftItems.materials[index][i].id,parseInt(self.craftItems.materials[index][i].amount,10))){
                         canCraft = false;
-                        // self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
-                        craftMaterials += " <span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + '</span>';
+                        craftMaterials += "<br><span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + ' ' + Item.list[self.craftItems.materials[index][i].id].name + '</span>';
                     }
                     else{
-                        craftMaterials += " " + self.craftItems.materials[index][i].amount;
+                        craftMaterials += "<br>" + self.craftItems.materials[index][i].amount + ' ' + Item.list[self.craftItems.materials[index][i].id].name;
                     }
                 }
                 if(canCraft === false){
@@ -670,7 +669,7 @@ Inventory = function(socket,server){
                     self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div><br>Craft for ' + craftMaterials + '.';
                 }
                 else if(description !== ''){
-                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for ' + craftMaterials + '.';
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for:' + craftMaterials + '.';
                 }
                 else{
                     self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Craft for ' + craftMaterials + '.';
@@ -770,10 +769,10 @@ Inventory = function(socket,server){
                 for(var i in self.craftItems.materials[index]){
                     if(!self.hasItem(self.craftItems.materials[index][i].id,parseInt(self.craftItems.materials[index][i].amount,10))){
                         canCraft = false;
-                        craftMaterials += " <span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + '</span>';
+                        craftMaterials += "<br><span style='color: #ff5555'>" + self.craftItems.materials[index][i].amount + ' ' + Item.list[self.craftItems.materials[index][i].id].name + '</span>';
                     }
                     else{
-                        craftMaterials += " " + self.craftItems.materials[index][i].amount;
+                        craftMaterials += "<br>" + self.craftItems.materials[index][i].amount + ' ' + Item.list[self.craftItems.materials[index][i].id].name;
                     }
                 }
                 if(canCraft === false){

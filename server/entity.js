@@ -873,12 +873,14 @@ Player = function(param,socket){
     if(param.database.items){
         for(var i in param.database.items){
             if(param.database.items[i]){
-                self.inventory.items[i] = param.database.items[i];
+                if(Item.list[param.database.items[i].id]){
+                    self.inventory.items[i] = param.database.items[i];
+                }
             }
         }
     }
     else{
-        self.inventory.addItem('wood',1);
+        self.inventory.addItem('coppershiv',1);
     }
     if(param.database.xp){
         self.xp = param.database.xp;
