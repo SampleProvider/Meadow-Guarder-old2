@@ -2154,6 +2154,7 @@ HarvestableNpc = function(param){
     self.update = function(){
         if(self.timer === 0){
             self.img = param.img;
+            self.new = true;
             self.harvestHp = self.harvestHpMax;
             for(var i in self.collisions){
                 Collision.add({

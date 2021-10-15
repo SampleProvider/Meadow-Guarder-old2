@@ -12,7 +12,6 @@ var Entity = function(initPack){
     self.interpolationStage = 3;
     self.fade = 0;
     self.fadeState = 0;
-    self.toRemove = false;
     if(!initPack.new){
         self.fade = 1;
         self.fadeState = 1;
@@ -21,6 +20,7 @@ var Entity = function(initPack){
         self.fade = 0;
         self.fadeState = 2;
     }
+    self.toRemove = false;
     self.updated = true;
     self.update = function(){
         if(self.interpolationStage > 0){

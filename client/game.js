@@ -402,6 +402,7 @@ socket.on('update',function(data){
                             harvestableNpc[j] = data.harvestableNpc[i][j];
                             harvestableNpc.fadeState = 2;
                             harvestableNpc.fade -= 0.05;
+                            harvestableNpc.harvestHp = 0;
                         }
                         else if(j === 'img'){
                             harvestableNpc[j] = data.harvestableNpc[i][j];
@@ -409,6 +410,7 @@ socket.on('update',function(data){
                                 harvestableNpc.fadeState = 2;
                                 harvestableNpc.fade -= 0.05;
                                 harvestableNpc.harvestHp = 0;
+                                harvestableNpc.toRemove = true;
                             }
                         }
                         else{
