@@ -31,6 +31,12 @@
         "animations":2,
         "collisionType":"remove"
     },
+    "blueiceball":{
+        "width":13,
+        "height":8,
+        "animations":2,
+        "collisionType":"none"
+    },
     "coppershiv":{
         "width":14,
         "height":14,

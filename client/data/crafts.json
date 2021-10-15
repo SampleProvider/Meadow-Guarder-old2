@@ -3,6 +3,10 @@
         {
             "id":"copperstaff",
             "amount":1
+        },
+        {
+            "id":"thewand",
+            "amount":1
         }
     ],
     "materials":[
@@ -12,6 +16,15 @@
                 "amount":3
             },{
                 "id":"copperbow",
+                "amount":1
+            }
+        ],
+        [
+            {
+                "id":"goldore",
+                "amount":3
+            },{
+                "id":"copperstaff",
                 "amount":1
             }
         ]

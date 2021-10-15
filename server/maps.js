@@ -177,3 +177,4 @@ var loadMap = function(name){
 loadMap('World');
 loadMap('Sleeping Boar Inn');
 loadMap('Altoris Forge');
+loadMap('Altoris General Store');

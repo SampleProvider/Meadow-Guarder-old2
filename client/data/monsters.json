@@ -1,6 +1,6 @@
 {
     "skeleton":{
-        "name":"",
+        "name":"Skeleton",
         "hpMax":"50",
         "stats":{
             "damage":5,
@@ -32,7 +32,7 @@
         }
     },
     "snake":{
-        "name":"",
+        "name":"Snake",
         "hpMax":"25",
         "stats":{
             "damage":5,
@@ -71,49 +71,6 @@
                 "id":"projectile",
                 "projectileType":"snakeSpit",
                 "param":{}
-            }]
-        }
-    },
-    "slime":{
-        "name":"",
-        "hpMax":"75",
-        "stats":{
-            "damage":8,
-            "defense":0,
-            "heal":5
-        },
-        "maxSpeed":3,
-        "drawSize":"small",
-        "team":"Harmful",
-        "itemDrops":{
-            "oldhat":{
-                "chance":0.5,
-                "amount":1
-            }
-        },
-        "weaponData":{}
-    },
-    "jellyeye":{
-        "name":"",
-        "hpMax":"300",
-        "stats":{
-            "damage":11,
-            "defense":3,
-            "heal":0
-        },
-        "maxSpeed":5,
-        "drawSize":"large",
-        "team":"Harmful",
-        "itemDrops":{
-
-        },
-        "weaponData":{
-            "1":[{
-                "id":"projectile",
-                "projectileType":"eye",
-                "param":{
-                    "directionDeviation":20
-                }
             }]
         }
     }

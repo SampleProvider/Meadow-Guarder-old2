@@ -689,10 +689,11 @@ Actor = function(param){
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
             parent:param.id !== undefined ? param.id : self.id,
-            x:param.x !== undefined ? param.x : param.distance !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].height * 2) : self.x + Math.cos(direction) * projectileData[projectileType].height * 2,
+            x:param.x !== undefined ? param.x : param.distance !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * projectileData[projectileType].width * 2,
             y:param.y !== undefined ? param.y : param.distance !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * projectileData[projectileType].width * 2,
             spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 15,
             spdY:param.speed !== undefined ? Math.sin(direction) * param.speed : Math.sin(direction) * 15,
+            speed:param.speed !== undefined ? param.speed : 15,
             direction:direction * 180 / Math.PI,
             spin:param.spin !== undefined ? param.spin : 0,
             map:self.map,
@@ -1838,20 +1839,49 @@ Projectile = function(param){
             self.spdY = Math.sin(entity.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
         }
         if(self.projectilePattern === 'waraxe'){
-            if(Player.list[self.parent].x > self.x){
+            if(entity.x > self.x){
                 self.spdX += 1;
             }
-            else if(Player.list[self.parent].x < self.x){
+            else if(entity.x < self.x){
                 self.spdX -= 1;
             }
-            if(Player.list[self.parent].y > self.y){
+            if(entity.y > self.y){
                 self.spdY += 1;
             }
-            else if(Player.list[self.parent].y < self.y){
+            else if(entity.y < self.y){
                 self.spdY -= 1;
             }
-            if(self.getDistance(Player.list[self.parent]) < 64 && self.timer < 40){
+            if(self.getDistance(entity) < 64 && self.timer < 40){
                 self.toRemove = true;
+            }
+        }
+        if(self.projectilePattern === 'homing'){
+            var nearestEntity = null;
+            for(var i in Player.list){
+                if(Player.list[i].team !== self.team && Player.list[i].map === self.map){
+                    if(nearestEntity === null){
+                        nearestEntity = Player.list[i];
+                    }
+                    else if(self.getDistance(Player.list[i]) < self.getDistance(nearestEntity)){
+                        nearestEntity = Player.list[i];
+                    }
+                }
+            }
+            for(var i in Monster.list){
+                if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map){
+                    if(nearestEntity === null){
+                        nearestEntity = Monster.list[i];
+                    }
+                    else if(self.getDistance(Monster.list[i]) < self.getDistance(nearestEntity)){
+                        nearestEntity = Monster.list[i];
+                    }
+                }
+            }
+            if(nearestEntity){
+                var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x);
+                self.direction += ((direction / Math.PI * 180) % 360 - self.direction % 360) / 10;
+                self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
+                self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
             }
         }
     }

@@ -185,6 +185,36 @@ io.sockets.on('connection',function(socket){
 
 setInterval(function(){
     var pack = {};
+    for(var i in Projectile.list){
+        if(Projectile.list[i]){
+            Projectile.list[i].update();
+            if(pack[Projectile.list[i].map]){
+				if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)]){
+					if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)]){
+
+					}
+					else{
+						pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
+					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+            }
+			else{
+                pack[Projectile.list[i].map] = {};
+				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
+				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+			}
+            var updatePack = Projectile.list[i].getInitPack();
+            pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)].projectile.push(updatePack);
+			if(Projectile.list[i].toRemove){
+				delete Projectile.list[i];
+				continue;
+			}
+        }
+    }
     for(var i in Player.list){
         if(Player.list[i]){
             Player.list[i].update();
@@ -213,36 +243,6 @@ setInterval(function(){
 				SOCKET_LIST[i].emit('disconnected');
 				Player.onDisconnect(SOCKET_LIST[i]);
 				delete SOCKET_LIST[i];
-				continue;
-			}
-        }
-    }
-    for(var i in Projectile.list){
-        if(Projectile.list[i]){
-            Projectile.list[i].update();
-            if(pack[Projectile.list[i].map]){
-				if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)]){
-					if(pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)]){
-
-					}
-					else{
-						pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-					}
-				}
-				else{
-					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
-					pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-				}
-            }
-			else{
-                pack[Projectile.list[i].map] = {};
-				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)] = {};
-				pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-			}
-            var updatePack = Projectile.list[i].getInitPack();
-            pack[Projectile.list[i].map][Math.floor(Projectile.list[i].x / 1024)][Math.floor(Projectile.list[i].y / 1024)].projectile.push(updatePack);
-			if(Projectile.list[i].toRemove){
-				delete Projectile.list[i];
 				continue;
 			}
         }

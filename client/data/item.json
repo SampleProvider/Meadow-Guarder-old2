@@ -37,6 +37,30 @@
             }]
         }
     },
+    "thewand":{
+        "drawId":143,
+        "name":"The Wand",
+        "rarity":2,
+        "maxStack":1,
+        "displayItem":true,
+        "equip":"hotbar",
+        "damage":69420,
+        "damageType":"magic",
+        "critChance":0.04,
+        "manaCost":1,
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "manaCost":1,
+                "projectileType":"blueiceball",
+                "param":{
+                    "speed":20,
+                    "timer":1000,
+                    "projectilePattern":"homing"
+                }
+            }]
+        }
+    },
     "coppershiv":{
         "drawId":157,
         "name":"Copper Shiv",
@@ -52,10 +76,10 @@
                 "projectileType":"coppershiv",
                 "param":{
                     "sameId":true,
-                    "projectilePattern":"shiv",
-                    "relativeToParent":true,
                     "pierce":-1,
-                    "timer":1
+                    "timer":1,
+                    "relativeToParent":true,
+                    "projectilePattern":"shiv"
                 }
             }]
         }
