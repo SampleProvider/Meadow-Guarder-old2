@@ -1,6 +1,10 @@
 {
     "items":[
         {
+            "id":"goldore",
+            "amount":1
+        },
+        {
             "id":"copperstaff",
             "amount":1
         },
@@ -10,6 +14,12 @@
         }
     ],
     "materials":[
+        [
+            {
+                "id":"wood",
+                "amount":5
+            }
+        ],
         [
             {
                 "id":"goldore",

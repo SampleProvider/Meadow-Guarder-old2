@@ -1858,7 +1858,7 @@ Projectile = function(param){
         if(self.projectilePattern === 'homing'){
             var nearestEntity = null;
             for(var i in Player.list){
-                if(Player.list[i].team !== self.team && Player.list[i].map === self.map){
+                if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
                     if(nearestEntity === null){
                         nearestEntity = Player.list[i];
                     }
@@ -1868,7 +1868,7 @@ Projectile = function(param){
                 }
             }
             for(var i in Monster.list){
-                if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map){
+                if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map && Monster.list[i].hp > 0){
                     if(nearestEntity === null){
                         nearestEntity = Monster.list[i];
                     }
