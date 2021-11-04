@@ -643,6 +643,9 @@ var decreaseProjectileByParent = function(projectile){
     }
 }
 
+var MGHC = function(){};
+var MGHC1 = function(){};
+
 var loop = function(){
     if(!selfId){
         return;
@@ -724,6 +727,7 @@ var loop = function(){
     // cameraY -= mouseCameraY;
     cameraX = Math.round(cameraX);
     cameraY = Math.round(cameraY);
+    MGHC1();
     ctx.save();
     ctx.translate(cameraX,cameraY);
     for(var i = -1;i < 2;i++){
@@ -815,6 +819,8 @@ var loop = function(){
     if(mapShadeAmount >= -1){
         regionDisplay.style.opacity = mapShadeAmount;
     }
+    MGHC();
+
     window.requestAnimationFrame(loop);
 }
 

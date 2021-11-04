@@ -40,10 +40,10 @@ azuritebow,Azurite Bow,3.0,1.02,116,true,1,hotbar,Weapon,0,0,53,0,0.05,0.00,0,20
 emeralditebow,Emeraldite Bow,3.5,1.01,117,true,1,hotbar,Weapon,0,0,66,0,0.05,0.00,0,20,0.20,55.44,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditebow,none,none,none,0.00,
 rubybow,Ruby Bow,4.0,1.01,118,true,1,hotbar,Weapon,0,0,82,0,0.05,0.00,0,20,0.20,68.88,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubybow,none,none,none,0.00,
 diamondbow,Diamond Bow,5.0,1.01,119,true,1,hotbar,Weapon,0,0,118,0,0.05,0.00,0,20,0.20,99.12,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondbow,none,none,none,0.00,
-azuritegun,Azurite Gun,3.0,1.07,124,true,1,hotbar,Weapon,0,0,13,0,0.05,0.00,0,5,0.15,46.41,1.07,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritegun,none,none,none,0.00,
-emeralditegun,Emeraldite Gun,3.5,1.04,125,true,1,hotbar,Weapon,0,0,16,0,0.05,0.00,0,5,0.15,57.12,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditegun,none,none,none,0.00,
-rubygun,Ruby Gun,4.0,0.99,126,true,1,hotbar,Weapon,0,0,19,0,0.05,0.00,0,5,0.15,67.83,0.99,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubygun,none,none,none,0.00,
-diamondgun,Diamond Gun,5.0,1.01,127,true,1,hotbar,Weapon,0,0,28,0,0.05,0.00,0,5,0.15,99.96,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondgun,none,none,none,0.00,
+azuritegun,Azurite Gun,3.0,1.03,124,true,1,hotbar,Weapon,0,0,5,0,0.05,0.00,0,2,0.15,44.63,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritegun,none,none,none,0.00,
+emeralditegun,Emeraldite Gun,3.5,0.97,125,true,1,hotbar,Weapon,0,0,6,0,0.05,0.00,0,2,0.15,53.55,0.97,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditegun,none,none,none,0.00,
+rubygun,Ruby Gun,4.0,1.05,126,true,1,hotbar,Weapon,0,0,8,0,0.05,0.00,0,2,0.15,71.40,1.05,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubygun,none,none,none,0.00,
+diamondgun,Diamond Gun,5.0,1.00,127,true,1,hotbar,Weapon,0,0,11,0,0.05,0.00,0,2,0.15,98.18,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondgun,none,none,none,0.00,
 coppershiv,Copper Shiv,0.0,1.11,156,false,1,hotbar,Weapon,0,5,0,0,0.00,0.00,0,15,0.50,3.33,1.11,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppershiv,none,none,none,0.00,
 flowerhat,Flower Hat,2.0,1.00,175,false,1,helmet,Helmet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,10,0.00,0,0.85,0,0,0,0,none,none,none,+0.2 Luck,0.15,A luck charm.
 foresthat,Forest Hat,2.0,1.00,176,false,1,helmet,Helmet,0,0,3,0,0.15,0.20,0,0,0.00,4.34,0.18,3,18,0.30,0,0.00,0,0.82,0,0,0,0,none,none,none,none,0.00,Nature is on your side.
@@ -142,4 +142,8 @@ amethystscythe,Amethyst Scythe,0.0,0.00,389,false,1,hotbar,Tool,0,0,0,0,0.00,0.0
 azuritescythe,Azurite Scythe,0.0,0.00,390,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,60,azuritescythe,none,none,none,0.00,
 emeralditescythe,Emeraldite Scythe,0.0,0.00,391,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,70,emeralditescythe,none,none,none,0.00,
 rubyscythe,Ruby Scythe,0.0,0.00,392,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,80,rubyscythe,none,none,none,0.00,
-diamondscythe,Diamond Scythe,0.0,0.00,393,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,90,diamondscythe,none,n
+diamondscythe,Diamond Scythe,0.0,0.00,393,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,90,diamondscythe,none,none,none,0.00,
+cotton,Cotton,0.0,0.00,664,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
+yarn,Yarn,0.0,0.00,665,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
+wood,Wood,0.0,0.00,677,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
+woodstick,Wood Stick,0.0,0.00,678,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
