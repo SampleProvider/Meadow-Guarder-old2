@@ -69,5 +69,47 @@
                 "param":{}
             }]
         }
+    },
+    "skeletonking":{
+        "name":"Skeleton King",
+        "hpMax":5000,
+        "stats":{
+            "damage":50,
+            "defense":10,
+            "hpRegen":20,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":25,
+        "drawSize":"medium",
+        "team":"Undead",
+        "itemDrops":{
+            "diamondgun":{
+                "chance":1,
+                "amount":1
+            },
+            "redfedora":{
+                "chance":1,
+                "amount":1
+            },
+            "skyrobe":{
+                "chance":1,
+                "amount":1
+            }
+        },
+        "img":{
+            "body":"Undead",
+            "headwear":"Crown_1 Yellow"
+        },
+        "weaponData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"bone",
+                "param":{
+                    "direction":0,
+                    "directionDeviation":360
+                }
+            }]
+        }
     }
 }

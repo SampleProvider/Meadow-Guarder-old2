@@ -95,10 +95,7 @@ Inventory = function(socket,server){
                 }
             }
         }
-        if(hasSpace === 0){
-            return;
-        }
-        else if(hasSpace === 1){
+        if(hasSpace === 1){
             if(amount > Item.list[id].maxStack){
                 self.items[index] = {id:id,amount:Item.list[id].maxStack || 1};
                 self.addItem(id,amount - Item.list[id].maxStack,enchantments);
@@ -125,15 +122,6 @@ Inventory = function(socket,server){
             socket.emit('updateCraft');
             return index;
         }
-        new DroppedItem({
-            id:socket.id,
-            item:id,
-            amount:amount,
-            x:Player.list[socket.id].x,
-            y:Player.list[socket.id].y,
-            map:Player.list[socket.id].map,
-            allPlayers:true,
-        });
         return false;
     }
     self.removeItem = function(item,amount){
