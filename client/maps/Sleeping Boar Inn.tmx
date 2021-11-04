@@ -495,7 +495,7 @@
 </chunk>
   </data>
  </layer>
- <layer id="10" name="Sleeping Boar Inn:Altoris Island:true:true:" width="1" height="1" visible="0">
+ <layer id="10" name="Sleeping Boar Inn:Altoris Island:false:true:" width="1" height="1" visible="0">
   <data encoding="csv">
    <chunk x="0" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -51,6 +51,7 @@ playerMap = {};
 
 tiles = [];
 
+attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
 harvestableNpcData = require('./../client/data/harvestableNpcs.json');
@@ -148,7 +149,7 @@ Entity = function(param){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
     }
 	self.getSquareDistance = function(pt){
-		return Math.max(Math.abs(Math.floor(self.x - pt.x) / 64),Math.abs(Math.floor(self.y - pt.y) / 64));
+		return Math.max(Math.abs(Math.floor(self.x - pt.x)),Math.abs(Math.floor(self.y - pt.y))) / 64;
     }
     self.isColliding = function(pt){
         if(pt.map !== self.map){
@@ -238,6 +239,7 @@ Actor = function(param){
         hpRegen:0,
         manaRegen:0,
         critChance:0,
+        critPower:0,
     };
 
     self.animate = true;
@@ -246,7 +248,7 @@ Actor = function(param){
 
     self.invincible = false;
     self.mapChange = 11;
-    self.transporter = null;
+    self.transporter = {};
 
     self.trackingEntity = null;
     self.trackingPos = {x:null,y:null};
@@ -567,11 +569,6 @@ Actor = function(param){
         }
     }
     self.updateMap = function(){
-        if(self.mapChange === 0){
-            self.canMove = false;
-            self.canAttack = false;
-            self.invincible = true;
-        }
         if(self.mapChange === 5){
             self.map = self.transporter.teleport;
             if(self.transporter.teleportx !== -1){
@@ -587,7 +584,7 @@ Actor = function(param){
         }
         if(self.mapChange === 10){
             self.canMove = true;
-            self.canAttack = true;
+            self.canAttack = self.transporter.canAttack;
             self.invincible = false;
         }
     }
@@ -596,15 +593,16 @@ Actor = function(param){
             return;
         }
         if(self.mapChange > 10){
-            self.canMove = false;
-            self.canAttack = false;
-            self.invincible = true;
             self.mapChange = -1;
             self.transporter = {
                 teleport:map,
                 teleportx:x,
                 teleporty:y,
+                canAttack:self.canAttack,
             };
+            self.canMove = false;
+            self.canAttack = false;
+            self.invincible = true;
         }
     }
     self.doTransport = function(transporter){
@@ -620,12 +618,13 @@ Actor = function(param){
     }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
-        if(regionChanger.noAttack){
+        if(regionChanger.canAttack === false){
             self.canAttack = false;
         }
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
+        self.transporter.canAttack = self.canAttack;
     }
     self.onHit = function(pt){
 
@@ -636,18 +635,45 @@ Actor = function(param){
         }
         for(var i in self.itemDrops){
             if(Math.random() < self.itemDrops[i].chance * Player.list[pt].luck){
-                var amount = Math.ceil(self.itemDrops[i].amount * (Math.random() + 0.5) * Player.list[pt].luck);
-                while(amount > 0){
-                    amount -= 1;
-                    new DroppedItem({
-                        x:self.x,
-                        y:self.y,
-                        map:self.map,
-                        item:i,
-                        amount:1,
-                        parent:pt,
-                        allPlayers:false,
-                    });
+                var amount = Math.round(self.itemDrops[i].amount * (Math.random() + 0.5) * Player.list[pt].luck);
+                if(i === 'random'){
+                    var numItems = 0;
+                    for(var j in Item.list){
+                        numItems += 1;
+                    }
+                    var randomItem = Math.floor(Math.random() * numItems);
+                    numItems = 0;
+                    for(var j in Item.list){
+                        if(numItems === randomItem){
+                            while(amount > 0){
+                                amount -= 1;
+                                new DroppedItem({
+                                    x:self.x,
+                                    y:self.y,
+                                    map:self.map,
+                                    item:j,
+                                    amount:1,
+                                    parent:pt,
+                                    allPlayers:false,
+                                });
+                            }
+                        }
+                        numItems += 1;
+                    }
+                }
+                else{
+                    while(amount > 0){
+                        amount -= 1;
+                        new DroppedItem({
+                            x:self.x,
+                            y:self.y,
+                            map:self.map,
+                            item:i,
+                            amount:1,
+                            parent:pt,
+                            allPlayers:false,
+                        });
+                    }
                 }
             }
         }
@@ -655,7 +681,12 @@ Actor = function(param){
     }
     self.onDamage = function(pt){
         var hp = self.hp;
-        self.hp -= Math.max(Math.floor(pt.stats.damage - self.stats.defense),0);
+        if(Math.random() < pt.stats.critChance){
+            self.hp -= Math.max(Math.floor(pt.stats.damage * (1 + pt.stats.critPower) - self.stats.defense),0);
+        }
+        else{
+            self.hp -= Math.max(Math.floor(pt.stats.damage - self.stats.defense),0);
+        }
         self.hp = Math.round(self.hp);
         if(self.hp < 1 && hp > 0){
             self.onDeath(self);
@@ -689,11 +720,11 @@ Actor = function(param){
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
             parent:param.id !== undefined ? param.id : self.id,
-            x:param.x !== undefined ? param.x : param.distance !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * projectileData[projectileType].width * 2,
-            y:param.y !== undefined ? param.y : param.distance !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * projectileData[projectileType].width * 2,
-            spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 15,
-            spdY:param.speed !== undefined ? Math.sin(direction) * param.speed : Math.sin(direction) * 15,
-            speed:param.speed !== undefined ? param.speed : 15,
+            x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
+            y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
+            spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 20,
+            spdY:param.speed !== undefined ? Math.sin(direction) * param.speed : Math.sin(direction) * 20,
+            speed:param.speed !== undefined ? param.speed : 20,
             direction:direction * 180 / Math.PI,
             spin:param.spin !== undefined ? param.spin : 0,
             map:self.map,
@@ -704,6 +735,7 @@ Actor = function(param){
             relativeToParent:param.relativeToParent !== undefined ? param.relativeToParent : false,
             parentType:param.parentType !== undefined ? param.parentType : self.type,
             projectilePattern:param.projectilePattern !== undefined ? param.projectilePattern : false,
+            collisionType:param.collisionType !== undefined ? param.collisionType : 'remove',
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
             team:param.team !== undefined ? param.team : self.team,
         };
@@ -729,6 +761,9 @@ Actor = function(param){
                         switch(self.weaponData[i][j].id){
                             case "projectile":
                                 self.shootProjectile(self.weaponData[i][j].projectileType,self.weaponData[i][j].param);
+                                break;
+                            case "harvest":
+                                self.updateHarvest();
                                 break;
                         }
                     }
@@ -854,6 +889,7 @@ Player = function(param,socket){
         hpRegen:2,
         manaRegen:1,
         critChance:0,
+        critPower:0,
     }
     self.luck = 1;
 
@@ -865,6 +901,7 @@ Player = function(param,socket){
 
     self.reload = 0;
     self.weaponData = {};
+    self.useTime = 0;
 
     self.lastChat = 0;
     self.chatWarnings = 0;
@@ -941,9 +978,6 @@ Player = function(param,socket){
         self.updateMana();
         self.updateAnimation();
         if(self.mapChange === 0){
-            self.canMove = false;
-            self.canAttack = false;
-            self.invincible = true;
             socket.emit('changeMap',self.transporter);
         }
         if(self.mapChange === 5){
@@ -968,14 +1002,10 @@ Player = function(param,socket){
                     }
                 }
             }
-            self.keyPress.up = false;
-            self.keyPress.down = false;
-            self.keyPress.left = false;
-            self.keyPress.right = false;
         }
         if(self.mapChange === 10){
             self.canMove = true;
-            self.canAttack = true;
+            self.canAttack = self.transporter.canAttack;
             self.invincible = false;
         }
         self.lastChat -= 1;
@@ -1006,6 +1036,11 @@ Player = function(param,socket){
         self.reload += 1;
         if(self.keyPress.attack){
             self.doAttack();
+        }
+        else{
+            if(self.reload % self.useTime === 0){
+                self.reload -= 1;
+            }
         }
     }
     self.updateQuest = function(){
@@ -1364,6 +1399,7 @@ Player = function(param,socket){
                 hpRegen:2,
                 manaRegen:1,
                 critChance:0,
+                critPower:0,
             }
             self.luck = 1;
 
@@ -1376,9 +1412,12 @@ Player = function(param,socket){
             self.maxSpeed = 10;
 
             self.weaponData = {};
+            self.useTime = 0;
 
             var maxSlots = self.inventory.maxSlots;
             self.inventory.maxSlots = 20;
+
+            var damageType = '';
 
             for(var i in self.inventory.items){
                 if(i >= 0){
@@ -1389,38 +1428,49 @@ Player = function(param,socket){
                                 continue;
                             }
                             self.currentItem = self.inventory.items[i].id;
-                            if(item.damage){
+                            if(item.damage !== undefined){
                                 self.stats.damage += item.damage;
+                            }
+                            if(item.meleeDamage !== undefined){
+                                self.stats.damage += item.meleeDamage;
+                                damageType = 'melee';
+                            }
+                            if(item.rangedDamage !== undefined){
+                                self.stats.damage += item.rangedDamage;
+                                damageType = 'ranged';
+                            }
+                            if(item.magicDamage !== undefined){
+                                self.stats.damage += item.magicDamage;
+                                damageType = 'magic';
                             }
                             if(item.critChance !== undefined){
                                 self.stats.critChance += item.critChance;
                             }
-                            if(item.pickaxePower){
+                            if(item.pickaxePower !== undefined){
                                 self.pickaxePower = item.pickaxePower;
                             }
-                            if(item.axePower){
+                            if(item.axePower !== undefined){
                                 self.axePower = item.axePower;
                             }
-                            if(item.scythePower){
+                            if(item.scythePower !== undefined){
                                 self.scythePower = item.scythePower;
                             }
-                            if(item.weaponData){
-                                for(var j in item.weaponData){
-                                    if(self.weaponData[j]){
-                                        for(var k in item.weaponData[j]){
-                                            self.weaponData[j].push(item.weaponData[j][k]);
+                            if(item.useTime !== undefined){
+                                self.useTime = item.useTime;
+                            }
+                            if(item.attacks !== undefined){
+                                if(attackData[item.attacks]){
+                                    for(var j in attackData[item.attacks]){
+                                        if(self.weaponData[j]){
+                                            for(var k in attackData[item.attacks][j]){
+                                                self.weaponData[j].push(attackData[item.attacks][j][k]);
+                                            }
+                                        }
+                                        else{
+                                            self.weaponData[j] = attackData[item.attacks][j];
                                         }
                                     }
-                                    else{
-                                        self.weaponData[j] = item.weaponData[j];
-                                    }
                                 }
-                            }
-                            try{
-                                eval(item.event);
-                            }
-                            catch(err){
-                                console.log(err);
                             }
                         }
                     }
@@ -1431,44 +1481,49 @@ Player = function(param,socket){
                         if(item.defense !== undefined){
                             self.stats.defense += item.defense;
                         }
-                        if(item.extraHp !== undefined){
-                            self.hpMax += item.extraHp;
+                        if(item.hp !== undefined){
+                            self.hpMax += item.hp;
                         }
-                        if(item.extraMana !== undefined){
-                            self.manaMax += item.extraMana;
+                        if(item.hpRegen !== undefined){
+                            self.stats.hpRegen += item.hpRegen;
                         }
-                        if(item.extraHpRegen !== undefined){
-                            self.stats.hpRegen += item.extraHpRegen;
+                        if(item.mana !== undefined){
+                            self.manaMax += item.mana;
                         }
-                        if(item.extraManaRegen !== undefined){
-                            self.stats.manaRegen += item.extraManaRegen;
+                        if(item.manaRegen !== undefined){
+                            self.stats.manaRegen += item.manaRegen;
                         }
-                        if(item.extraMovementSpeed !== undefined){
-                            self.maxSpeed += item.extraMovementSpeed;
+                        if(item.movementSpeed !== undefined){
+                            self.maxSpeed += item.movementSpeed;
                         }
-                        if(item.extraDamage !== undefined){
-                            self.damage += item.extraDamage;
+                        if(item.damage !== undefined){
+                            self.damage += item.damage;
                         }
-                        if(item.extraSlots !== undefined){
-                            self.inventory.maxSlots += item.extraSlots;
+                        if(item.meleeDamage !== undefined && damageType === 'melee'){
+                            self.stats.damage += item.meleeDamage;
                         }
-                        if(item.weaponData){
-                            for(var j in item.weaponData){
-                                if(self.weaponData[j]){
-                                    for(var k in item.weaponData[j]){
-                                        self.weaponData[j].push(item.weaponData[j][k]);
+                        if(item.rangedDamage !== undefined && damageType === 'ranged'){
+                            self.stats.damage += item.rangedDamage;
+                        }
+                        if(item.magicDamage !== undefined && damageType === 'magic'){
+                            self.stats.damage += item.magicDamage;
+                        }
+                        if(item.slots !== undefined){
+                            self.inventory.maxSlots += item.slots;
+                        }
+                        if(item.attacks !== undefined){
+                            if(attackData[item.attacks]){
+                                for(var j in attackData[item.attacks]){
+                                    if(self.weaponData[j]){
+                                        for(var k in attackData[item.attacks][j]){
+                                            self.weaponData[j].push(attackData[item.attacks][j][k]);
+                                        }
+                                    }
+                                    else{
+                                        self.weaponData[j] = attackData[item.attacks][j];
                                     }
                                 }
-                                else{
-                                    self.weaponData[j] = item.weaponData[j];
-                                }
                             }
-                        }
-                        try{
-                            eval(item.event);
-                        }
-                        catch(err){
-                            console.log(err);
                         }
                     }
                 }
@@ -1492,7 +1547,7 @@ Player = function(param,socket){
             if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
                 for(var i in HarvestableNpc.list){
                     if(HarvestableNpc.list[i].img !== 'none'){
-                        if(self.getSquareDistance(HarvestableNpc.list[i]) < 32){
+                        if(self.getSquareDistance({x:self.mouseX,y:self.mouseY}) <= 1.5){
                             if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && self.pickaxePower >= HarvestableNpc.list[i].harvestPower){
                                 if(HarvestableNpc.list[i].map === self.map){
                                     var npc = HarvestableNpc.list[i];
@@ -1500,7 +1555,6 @@ Player = function(param,socket){
                                         npc.harvestHp -= self.pickaxePower;
                                         if(npc.harvestHp <= 0){
                                             npc.dropItems(self.id);
-                                            self.keyPress.attack = false;
                                         }
                                     }
                                 }
@@ -1512,7 +1566,6 @@ Player = function(param,socket){
                                         npc.harvestHp -= self.axePower;
                                         if(npc.harvestHp <= 0){
                                             npc.dropItems(self.id);
-                                            self.keyPress.attack = false;
                                         }
                                     }
                                 }
@@ -1524,7 +1577,6 @@ Player = function(param,socket){
                                         npc.harvestHp -= self.scythePower;
                                         if(npc.harvestHp <= 0){
                                             npc.dropItems(self.id);
-                                            self.keyPress.attack = false;
                                         }
                                     }
                                 }
@@ -1540,7 +1592,7 @@ Player = function(param,socket){
             if(xpLevels[self.level]){
                 self.level += 1;
                 self.xpMax = xpLevels[self.level];
-                addToChat('#00ff00',self.displayName + ' is now level ' + self.level + '.');
+                addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
                 self.xp = 0;
             }
             else{
@@ -1554,12 +1606,13 @@ Player = function(param,socket){
     }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
-        if(regionChanger.noAttack){
+        if(regionChanger.canAttack === false){
             self.canAttack = false;
         }
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
+        self.transporter.canAttack = self.canAttack;
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
     }
     var getInitPack = self.getInitPack;
@@ -1639,7 +1692,6 @@ Player.onConnect = function(socket,username){
                             }
                         }
                     }
-                    player.updateHarvest();
                 }
             }
             if(data.inputId === player.keyMap.second || data.inputId === player.secondKeyMap.second || data.inputId === player.thirdKeyMap.second){
@@ -1777,9 +1829,17 @@ Projectile = function(param){
     self.type = 'Projectile';
     self.animations = 1;
     self.animation = 0;
-    for(var i in projectileData[self.projectileType]){
-        self[i] = projectileData[self.projectileType][i];
+    if(projectileData[self.projectileType]){
+        for(var i in projectileData[self.projectileType]){
+            self[i] = projectileData[self.projectileType][i];
+        }
     }
+    else{
+        self.width = 24;
+        self.height = 24;
+        self.collisionType = 'sticky';
+    }
+    self.collisionType = param.collisionType;
     self.width *= 4;
     self.height *= 4;
     self.zindex = param.zindex;
@@ -1808,35 +1868,54 @@ Projectile = function(param){
         self.timer -= 1;
     }
     self.updatePattern = function(){
-        if(self.relativeToParent){
-            if(self.parentType === 'Player'){
-                if(!Player.list[self.parent]){
-                    self.toRemove = true;
-                    return;
-                }
-                var entity = Player.list[self.parent];
+        if(self.parentType === 'Player'){
+            if(!Player.list[self.parent] && self.relativeToParent){
+                self.toRemove = true;
+                return;
             }
-            else if(self.parentType === 'Monster'){
-                if(!Monster.list[self.parent]){
-                    self.toRemove = true;
-                    return;
-                }
-                var entity = Monster.list[self.parent];
+            var entity = Player.list[self.parent];
+        }
+        else if(self.parentType === 'Monster'){
+            if(!Monster.list[self.parent] && self.relativeToParent){
+                self.toRemove = true;
+                return;
             }
+            var entity = Monster.list[self.parent];
         }
         if(self.projectilePattern === 'shiv'){
             self.x = entity.x;
             self.y = entity.y;
-            self.direction = entity.direction + 135;
-            self.spdX = Math.cos(entity.direction / 180 * Math.PI) * 28 * Math.sqrt(2);
-            self.spdY = Math.sin(entity.direction / 180 * Math.PI) * 28 * Math.sqrt(2);
+            self.direction = param.direction;
+            self.spdX = Math.cos(self.direction / 180 * Math.PI) * (48 - Math.pow(self.timer - 5,2)) * Math.sqrt(2);
+            self.spdY = Math.sin(self.direction / 180 * Math.PI) * (48 - Math.pow(self.timer - 5,2)) * Math.sqrt(2);
+            self.direction += 135;
         }
         if(self.projectilePattern === 'sword'){
             self.x = entity.x;
             self.y = entity.y;
-            self.direction = entity.direction + 135;
-            self.spdX = Math.cos(entity.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
-            self.spdY = Math.sin(entity.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.direction = param.direction - 90 + (self.timer - 1) * 45;
+            self.spdX = Math.cos(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.spdY = Math.sin(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.direction += 135;
+        }
+        if(self.projectilePattern === 'harvest'){
+            self.x = entity.x;
+            self.y = entity.y;
+            self.direction = param.direction - 90 + (self.timer - 1) * 45;
+            self.spdX = Math.cos(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.spdY = Math.sin(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.direction += 135;
+            if(self.timer === 3){
+                entity.updateHarvest();
+            }
+        }
+        if(self.projectilePattern === 'claw'){
+            self.x = entity.x;
+            self.y = entity.y;
+            self.direction = param.direction - 45 + (self.timer - 1) * 45;
+            self.spdX = Math.cos(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.spdY = Math.sin(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.direction += 135;
         }
         if(self.projectilePattern === 'waraxe'){
             if(entity.x > self.x){

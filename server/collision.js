@@ -77,6 +77,11 @@ Collision.add = function(collision,id){
             Player.list[i].y = ENV.spawnpoint.y;
         }
     }
+    for(var i in Monster.list){
+        if(Monster.list[i].isColliding(collision)){
+            Monster.list[i].toRemove = true;
+        }
+    }
 }
 Collision.remove = function(collision,id){
     if(Collision.list[collision.map]){
@@ -170,11 +175,11 @@ RegionChanger = function(param){
     self.y = param.y;
     self.map = param.map;
     self.region = param.region;
-    if(param.noAttack === 'true'){
-        self.noAttack = true;
+    if(param.canAttack === 'true'){
+        self.canAttack = true;
     }
     else{
-        self.noAttack = false;
+        self.canAttack = false;
     }
     if(param.noMonster === 'true'){
         self.noMonster = true;

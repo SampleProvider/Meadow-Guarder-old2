@@ -1,0 +1,145 @@
+id,name,rarity,PPR,drawId,displayItem,maxStack,equip,type,damage,meleeDamage,rangedDamage,magicDamage,critChance,critPower,manaCost,useTime,missChance,DPS,DPR,defense,hp,hpRegen,mana,manaRegen,movementSpeed,BPR,slots,axePower,pickaxePower,scythePower,attacks,buffs,debuffs,effects,EPR,description
+death,Death,6.0,1000416.94,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,0,0.00,134421160.00,1000157.44,1000,1000,1000.00,1000,1000.00,0,259.50,1000,0,0,0,death,all,all,none,0.00,
+coppersword,Copper Sword,0.5,1.01,80,false,1,hotbar,Weapon,0,6,0,0,0.05,0.00,0,10,0.50,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppersword,none,none,none,0.00,
+ironsword,Iron Sword,1.0,1.06,81,false,1,hotbar,Weapon,0,11,0,0,0.05,0.00,0,10,0.50,11.55,1.06,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironsword,none,none,none,0.00,
+goldsword,Gold Sword,2.0,1.03,82,false,1,hotbar,Weapon,0,24,0,0,0.05,0.00,0,10,0.50,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldsword,none,none,none,0.00,
+amethystsword,Amethyst Sword,2.5,1.01,83,false,1,hotbar,Weapon,0,32,0,0,0.05,0.00,0,10,0.50,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystsword,none,none,none,0.00,
+azuritesword,Azurite Sword,3.0,1.01,84,false,1,hotbar,Weapon,0,42,0,0,0.05,0.00,0,10,0.50,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritesword,none,none,none,0.00,
+emeralditesword,Emeraldite Sword,3.5,1.01,85,false,1,hotbar,Weapon,0,53,0,0,0.05,0.00,0,10,0.50,55.65,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditesword,none,none,none,0.00,
+rubysword,Ruby Sword,4.0,1.02,86,false,1,hotbar,Weapon,0,66,0,0,0.05,0.00,0,10,0.50,69.30,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubysword,none,none,none,0.00,
+diamondsword,Diamond Sword,5.0,1.01,87,false,1,hotbar,Weapon,0,95,0,0,0.05,0.00,0,10,0.50,99.75,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondsword,none,none,none,0.00,
+copperstaff,Copper Staff,0.5,1.08,88,true,1,hotbar,Weapon,0,0,0,7,0.05,0.00,5,15,0.20,6.74,1.08,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperstaff,none,none,none,0.00,
+ironstaff,Iron Staff,1.0,1.05,89,true,1,hotbar,Weapon,0,0,0,13,0.05,0.00,10,15,0.20,11.49,1.05,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironstaff,none,none,none,0.00,
+goldstaff,Gold Staff,2.0,1.01,90,true,1,hotbar,Weapon,0,0,0,28,0.05,0.00,16,15,0.20,24.67,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldstaff,none,none,none,0.00,
+amethyststaff,Amethyst Staff,2.5,1.00,91,true,1,hotbar,Weapon,0,0,0,37,0.05,0.00,18,15,0.20,33.21,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethyststaff,none,none,none,0.00,
+azuritestaff,Azurite Staff,3.0,1.02,92,true,1,hotbar,Weapon,0,0,0,49,0.05,0.00,21,15,0.20,44.16,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritestaff,none,none,none,0.00,
+emeralditestaff,Emeraldite Staff,3.5,1.01,93,true,1,hotbar,Weapon,0,0,0,62,0.05,0.00,25,15,0.20,55.62,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditestaff,none,none,none,0.00,
+rubystaff,Ruby Staff,4.0,1.01,94,true,1,hotbar,Weapon,0,0,0,77,0.05,0.00,29,15,0.20,68.99,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubystaff,none,none,none,0.00,
+diamondstaff,Diamond Staff,5.0,1.01,95,true,1,hotbar,Weapon,0,0,0,111,0.05,0.00,38,15,0.20,99.12,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondstaff,none,none,none,0.00,
+copperwaraxe,Copper Waraxe,0.5,1.01,96,true,1,hotbar,Weapon,0,0,5,0,0.05,0.00,0,15,0.10,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperwaraxe,none,none,none,0.00,
+ironwaraxe,Iron Waraxe,1.0,1.04,97,true,1,hotbar,Weapon,0,0,9,0,0.05,0.00,0,15,0.10,11.34,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironwaraxe,none,none,none,0.00,
+goldwaraxe,Gold Waraxe,2.0,1.03,98,true,1,hotbar,Weapon,0,0,20,0,0.05,0.00,0,15,0.10,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldwaraxe,none,none,none,0.00,
+amethystwaraxe,Amethyst Waraxe,2.5,1.02,99,true,1,hotbar,Weapon,0,0,27,0,0.05,0.00,0,15,0.10,34.02,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystwaraxe,none,none,none,0.00,
+azuritewaraxe,Azuite Waraxe,3.0,1.01,100,true,1,hotbar,Weapon,0,0,35,0,0.05,0.00,0,15,0.10,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritewaraxe,none,none,none,0.00,
+emeralditewaraxe,Emeraldite Waraxe,3.5,1.01,101,true,1,hotbar,Weapon,0,0,44,0,0.05,0.00,0,15,0.10,55.44,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditewaraxe,none,none,none,0.00,
+rubywaraxe,Ruby Waraxe,4.0,1.02,102,true,1,hotbar,Weapon,0,0,55,0,0.05,0.00,0,15,0.10,69.30,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubywaraxe,none,none,none,0.00,
+diamondwaraxe,Diamond Waraxe,5.0,1.01,103,true,1,hotbar,Weapon,0,0,79,0,0.05,0.00,0,15,0.10,99.54,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondwaraxe,none,none,none,0.00,
+copperclaw,Copper Claw,0.5,1.01,104,false,1,hotbar,Weapon,0,9,0,0,0.05,0.00,0,3,0.90,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperclaw,none,none,none,0.00,
+ironclaw,Iron Claw,1.0,1.03,105,false,1,hotbar,Weapon,0,16,0,0,0.05,0.00,0,3,0.90,11.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironclaw,none,none,none,0.00,
+goldclaw,Gold Claw,2.0,1.00,106,false,1,hotbar,Weapon,0,35,0,0,0.05,0.00,0,3,0.90,24.50,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldclaw,none,none,none,0.00,
+amethystclaw,Amethsyt Claw,2.5,1.01,107,false,1,hotbar,Weapon,0,48,0,0,0.05,0.00,0,3,0.90,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystclaw,none,none,none,0.00,
+azuriteclaw,Azurite Claw,3.0,1.01,108,false,1,hotbar,Weapon,0,63,0,0,0.05,0.00,0,3,0.90,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuriteclaw,none,none,none,0.00,
+emeralditeclaw,Emeraldite Claw,3.5,1.02,109,false,1,hotbar,Weapon,0,80,0,0,0.05,0.00,0,3,0.90,56.00,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditeclaw,none,none,none,0.00,
+rubyclaw,Ruby Claw,4.0,1.01,110,false,1,hotbar,Weapon,0,98,0,0,0.05,0.00,0,3,0.90,68.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubyclaw,none,none,none,0.00,
+diamondclaw,Diamond Claw,5.0,1.01,111,false,1,hotbar,Weapon,0,142,0,0,0.05,0.00,0,3,0.90,99.40,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondclaw,none,none,none,0.00,
+copperbow,Copper Bow,0.5,1.08,112,true,1,hotbar,Weapon,0,0,8,0,0.05,0.00,0,20,0.20,6.72,1.08,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperbow,none,none,none,0.00,
+ironbow,Iron Bow,1.0,1.00,113,true,1,hotbar,Weapon,0,0,13,0,0.05,0.00,0,20,0.20,10.92,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironbow,none,none,none,0.00,
+goldbow,Gold Bow,2.0,1.00,114,true,1,hotbar,Weapon,0,0,29,0,0.05,0.00,0,20,0.20,24.36,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldbow,none,none,none,0.00,
+amethystbow,Amethyst Bow,2.5,1.01,115,true,1,hotbar,Weapon,0,0,40,0,0.05,0.00,0,20,0.20,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystbow,none,none,none,0.00,
+azuritebow,Azurite Bow,3.0,1.02,116,true,1,hotbar,Weapon,0,0,53,0,0.05,0.00,0,20,0.20,44.52,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritebow,none,none,none,0.00,
+emeralditebow,Emeraldite Bow,3.5,1.01,117,true,1,hotbar,Weapon,0,0,66,0,0.05,0.00,0,20,0.20,55.44,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditebow,none,none,none,0.00,
+rubybow,Ruby Bow,4.0,1.01,118,true,1,hotbar,Weapon,0,0,82,0,0.05,0.00,0,20,0.20,68.88,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubybow,none,none,none,0.00,
+diamondbow,Diamond Bow,5.0,1.01,119,true,1,hotbar,Weapon,0,0,118,0,0.05,0.00,0,20,0.20,99.12,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondbow,none,none,none,0.00,
+azuritegun,Azurite Gun,3.0,1.07,124,true,1,hotbar,Weapon,0,0,13,0,0.05,0.00,0,5,0.15,46.41,1.07,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritegun,none,none,none,0.00,
+emeralditegun,Emeraldite Gun,3.5,1.04,125,true,1,hotbar,Weapon,0,0,16,0,0.05,0.00,0,5,0.15,57.12,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditegun,none,none,none,0.00,
+rubygun,Ruby Gun,4.0,0.99,126,true,1,hotbar,Weapon,0,0,19,0,0.05,0.00,0,5,0.15,67.83,0.99,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubygun,none,none,none,0.00,
+diamondgun,Diamond Gun,5.0,1.01,127,true,1,hotbar,Weapon,0,0,28,0,0.05,0.00,0,5,0.15,99.96,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondgun,none,none,none,0.00,
+coppershiv,Copper Shiv,0.0,1.11,156,false,1,hotbar,Weapon,0,5,0,0,0.00,0.00,0,15,0.50,3.33,1.11,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppershiv,none,none,none,0.00,
+flowerhat,Flower Hat,2.0,1.00,175,false,1,helmet,Helmet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,10,0.00,0,0.85,0,0,0,0,none,none,none,+0.2 Luck,0.15,A luck charm.
+foresthat,Forest Hat,2.0,1.00,176,false,1,helmet,Helmet,0,0,3,0,0.15,0.20,0,0,0.00,4.34,0.18,3,18,0.30,0,0.00,0,0.82,0,0,0,0,none,none,none,none,0.00,Nature is on your side.
+darkhat,Dark Hat,3.0,1.00,177,false,1,helmet,Helmet,0,0,0,5,0.00,0.25,0,0,0.00,5.54,0.13,4,21,0.00,28,0.20,0,0.87,0,0,0,0,none,none,darkNebula,none,0.00,Dark energy is flowing out of this hat.
+oldhat,Old Hat,0.0,1.00,178,false,1,helmet,Helmet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,5,0.20,0,0.00,0,1.00,0,0,0,0,none,none,none,none,0.00,A worn down old hat.
+redfedora,Red Fedora,4.0,1.01,179,false,1,helmet,Helmet,4,0,0,0,0.00,0.00,0,0,0.00,4.00,0.06,5,0,0.00,0,0.00,7,0.95,0,0,0,0,none,none,none,none,0.00,Fiery red from the depths of hell.
+yellowfedora,Yellow Fedora,3.0,1.00,180,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.07,4,0,0.00,0,0.00,4,0.94,0,0,0,0,none,none,none,none,0.00,Is this made from Straw?
+greenfedora,Green Fedora,2.0,1.01,181,false,1,helmet,Helmet,2,0,0,0,0.00,0.00,0,0,0.00,2.00,0.08,3,0,0.00,0,0.00,2,0.93,0,0,0,0,none,none,none,none,0.00,The bright green reminds you of Emeraldite.
+bluefedora,Blue Fedora,1.0,1.09,182,false,1,helmet,Helmet,1,0,0,0,0.00,0.00,0,0,0.00,1.00,0.09,2,0,0.00,0,0.00,1,1.00,0,0,0,0,none,none,none,none,0.00,SPEED!
+redarchercap,Red Archer Cap,4.0,1.03,183,false,1,helmet,Helmet,0,0,13,0,0.25,0.85,0,0,0.00,32.10,0.47,7,0,0.60,0,0.00,0,0.56,0,0,0,0,none,none,none,none,0.00,Clearly made for the best rangers.
+yellowarchercap,Yellow Archer Cap,3.0,1.01,184,false,1,helmet,Helmet,0,0,9,0,0.20,0.70,0,0,0.00,17.48,0.40,5,0,0.50,0,0.00,0,0.61,0,0,0,0,none,none,none,none,0.00,
+greenarchercap,Green Archer Cap,2.0,1.00,185,false,1,helmet,Helmet,0,0,6,0,0.15,0.55,0,0,0.00,9.05,0.37,3,0,0.40,0,0.00,0,0.63,0,0,0,0,none,none,none,none,0.00,
+bluearchercap,Blue Archer Cap,1.0,0.99,186,false,1,helmet,Helmet,0,0,2,0,0.10,0.30,0,0,0.00,2.60,0.24,2,0,0.30,0,0.00,0,0.75,0,0,0,0,none,none,none,none,0.00,
+redbowtie,Red Bow Tie,4.0,0.99,187,false,1,helmet,Helmet,8,0,0,0,0.00,0.00,0,0,0.00,8.00,0.12,8,0,1.80,0,0.00,0,0.88,0,0,0,0,none,none,none,none,0.00,The bright red makes it really pretty.
+orangebowtie,Orange Bow Tie,3.0,1.01,188,false,1,helmet,Helmet,5,0,0,0,0.00,0.00,0,0,0.00,5.00,0.11,5,0,1.40,0,0.00,0,0.89,0,0,0,0,none,none,none,none,0.00,Is it orange? Is it yellow? Or is it blue?
+greenbowtie,Green Bow Tie,2.0,1.00,189,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.12,3,0,0.90,0,0.00,0,0.88,0,0,0,0,none,none,none,none,0.00,Made in China.
+bluebowtie,Blue Bow Tie,1.0,1.02,190,false,1,helmet,Helmet,2,0,0,0,0.00,0.00,0,0,0.00,2.00,0.18,2,0,0.40,0,0.00,0,0.83,0,0,0,0,none,none,none,none,0.00,Beautiful.
+mysticwizardhat,Mystic Wizard Hat,5.0,0.98,191,false,1,helmet,Helmet,0,0,0,25,0.00,0.00,0,0,0.00,25.00,0.25,6,25,0.00,47,0.70,0,0.73,0,0,0,0,mysticFlames,none,none,none,0.00,You feel a magical force in this hat.
+darksteelwizardhat,Dark Steel Wizard Hat,3.0,1.02,192,false,1,helmet,Helmet,0,0,0,11,0.00,0.00,0,0,0.00,11.00,0.25,3,11,0.00,33,0.30,0,0.76,0,0,0,0,none,none,darkNebula,none,0.00,Dark energy is flowing out of this hat.
+steelwizardhat,Steel Wizard Hat,2.0,1.00,193,false,1,helmet,Helmet,0,0,0,6,0.00,0.00,0,0,0.00,6.00,0.25,2,8,0.00,21,0.15,0,0.75,0,0,0,0,none,none,none,none,0.00,
+beginnerwizardhat,Beginner Wizard Hat,1.0,1.00,194,false,1,helmet,Helmet,0,0,0,3,0.00,0.00,0,0,0.00,3.00,0.28,1,4,0.00,13,0.10,0,0.73,0,0,0,0,none,none,none,none,0.00,A basic hat for beginner Wizards.
+firesteelhelmet,Fire Steel Helmet,4.0,1.00,195,false,1,helmet,Helmet,0,17,0,0,0.00,0.00,0,0,0.00,17.00,0.25,9,0,0.90,0,0.00,0,0.75,0,0,0,0,none,none,fiery,none,0.00,I think the steel is beginning to melt.
+darksteelhelmet,Dark Steel Helmet,3.0,0.99,196,false,1,helmet,Helmet,0,11,0,0,0.00,0.00,0,0,0.00,11.00,0.25,6,0,0.60,0,0.00,0,0.73,0,0,0,0,none,none,darkNebula,none,0.00,
+icyhelmet,Icy Helmet,2.0,1.01,197,false,1,helmet,Helmet,0,4,0,0,0.00,0.00,0,0,0.00,4.00,0.16,4,0,0.55,0,0.00,0,0.85,0,0,0,0,frozenFlames,none,none,none,0.00,Hope you don't get frostbite.
+steelhelmet,Steel Helmet,1.0,1.02,198,false,1,helmet,Helmet,0,2,0,0,0.00,0.00,0,0,0.00,2.00,0.18,2,0,0.40,0,0.00,0,0.83,0,0,0,0,none,none,none,none,0.00,
+firevikinghelmet,Fire Viking Helmet,4.0,1.00,199,false,1,helmet,Helmet,21,0,0,0,0.00,0.00,0,0,0.00,21.00,0.31,11,0,0.00,0,0.00,0,0.69,0,0,0,0,none,none,fiery,none,0.00,
+darkvikinghelmet,Dark Viking Helmet,3.0,1.03,200,false,1,helmet,Helmet,13,0,0,0,0.00,0.00,0,0,0.00,13.00,0.30,8,0,0.00,0,0.00,0,0.73,0,0,0,0,none,none,darkNebula,none,0.00,
+bronzevikinghelmet,Bronze Viking Helmet,2.0,1.00,201,false,1,helmet,Helmet,7,0,0,0,0.00,0.00,0,0,0.00,7.00,0.29,5,0,0.00,0,0.00,0,0.71,0,0,0,0,none,none,none,none,0.00,
+steelvikinghelmet,Steel Viking Helmet,1.0,1.03,202,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,0.00,
+mysticknighthelmet,Mystic Knight Helmet,5.0,1.06,203,false,1,helmet,Helmet,7,0,0,0,0.40,0.45,0,0,0.00,30.89,0.31,7,30,0.45,30,0.45,0,0.74,0,0,0,0,none,none,none,none,0.00,
+fieryknighthelmet,Fiery Knight Helmet,4.0,1.00,204,false,1,helmet,Helmet,5,0,0,0,0.35,0.40,0,0,0.00,18.30,0.27,5,21,0.35,21,0.35,0,0.73,0,0,0,0,none,none,none,none,0.00,
+greenknighthelmet,Green Knight Helmet,2.0,1.02,205,false,1,helmet,Helmet,3,0,0,0,0.25,0.30,0,0,0.00,5.81,0.24,2,11,0.20,11,0.20,0,0.78,0,0,0,0,none,none,none,none,0.00,
+blueknighthelmet,Blue Knight Helmet,1.0,1.01,206,false,1,helmet,Helmet,2,0,0,0,0.10,0.20,0,0,0.00,2.44,0.22,1,8,0.10,8,0.10,0,0.79,0,0,0,0,none,none,none,none,0.00,
+firebandedrobe,Fire Banded Robe,4.0,1.01,207,false,1,chestplate,Chestplate,0,0,0,12,0.00,0.00,0,0,0.00,12.00,0.18,4,34,0.20,34,0.50,0,0.84,0,0,0,0,none,none,fiery,none,0.00,Is this safe to wear?
+foresttravelerrobe,Forest Traveler Robe,2.0,1.00,208,false,1,chestplate,Chestplate,0,0,0,3,0.10,0.00,0,0,0.00,3.24,0.13,2,15,0.00,15,0.35,0,0.87,0,0,0,0,none,none,none,none,0.00,It seems to be made from twigs.
+leafrobe,Leaf Robe,2.0,1.00,209,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.25,1,0.80,0,0,0,0,leaves,none,none,none,0.20,
+woodenrobe,Wooden Robe,1.0,1.00,210,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.15,11,0.20,0,0.80,0,0,0,0,none,none,splinters,none,0.20,Hard and extremely uncomfortable.
+robeoffortunes,Robe of Fortunes,4.0,1.00,211,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,1.30,0,0.40,0,0,0,0,none,none,none,+0.8 Luck,0.60,Expensive. Don't break it.
+robeofwisdom,Robe of Wisdom,5.0,1.00,212,false,1,chestplate,Chestplate,0,0,0,0,0.40,1.30,0,0,0.00,61.56,0.63,3,0,0.00,28,0.70,0,0.38,0,0,0,0,none,none,none,none,0.00,
+brownrobe,Brown Robe,1.0,1.01,213,false,1,chestplate,Chestplate,0,0,0,2,0.10,0.00,0,0,0.00,2.11,0.19,2,3,0.00,7,0.10,0,0.81,0,0,0,0,none,none,none,none,0.00,A plain brown robe.
+greenrobe,Green Robe,2.0,1.01,214,false,1,chestplate,Chestplate,0,0,0,3,0.00,0.20,0,0,0.00,3.24,0.13,3,0,0.00,18,0.40,0,0.87,0,0,0,0,none,none,none,none,0.00,A nice shiny green robe.
+skyrobe,Sky Robe,4.0,1.00,215,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,20,0.50,5,1.00,0,0,0,0,none,none,none,none,0.00,Lighter than feathers.
+angelrobe,Angel Robe,3.0,1.00,216,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,30,0.20,0,0.70,0,0,0,0,none,none,none,Rebirth.,0.30,Made with wings from an angel.
+mysticrobe,Mystic Robe,5.0,1.00,217,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.30,0,0,0.00,24.33,0.25,7,16,0.00,56,0.60,0,0.76,0,0,0,0,none,none,magical,none,0.00,
+crimsonrobe,Crimson Robe,3.0,1.00,218,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.70,0,0,0.00,1.52,0.04,5,16,0.20,0,0.00,0,0.66,0,0,0,0,none,none,none,Lifesteal.,0.30,Bloodshed.
+magentarobe,Magenta Robe,3.0,1.00,219,false,1,chestplate,Chestplate,0,0,0,5,0.10,0.00,0,0,0.00,5.44,0.12,5,14,0.00,26,0.20,0,0.88,0,0,0,0,none,none,none,none,0.00,
+azurerobe,Azure Robe,2.0,1.00,220,false,1,chestplate,Chestplate,0,0,0,2,0.00,0.30,0,0,0.00,2.37,0.10,4,0,0.10,21,0.00,0,0.91,0,0,0,0,none,none,none,none,0.00,
+thornrobe,Thorn Robe,4.0,1.00,221,false,1,chestplate,Chestplate,0,0,0,9,0.00,4.80,0,0,0.00,25.37,0.37,9,0,0.30,0,0.00,0,0.63,0,0,0,0,thorn,none,none,none,0.00,Prickly.
+dustycoalrobe,Dusty Coal Robe,0.0,1.00,222,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,5,0.20,0,1.00,0,0,0,0,none,none,none,none,0.00,It's definitely not clean.
+redwintercoat,Red Winter Coat,4.0,1.00,223,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,12,0,0.00,0,0.00,0,0.75,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+orangewintercoat,Orange Winter Coat,3.0,0.98,224,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0.73,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+greenwintercoat,Green Winter Coat,2.0,0.96,225,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,0,0.00,0,0.71,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+bluewintercoat,Blue Winter Coat,1.0,1.00,226,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+redfurcoat,Red Fur Coat,4.0,1.00,227,false,1,chestplate,Chestplate,17,0,0,0,0.00,0.00,0,0,0.00,17.00,0.25,8,0,0.00,0,0.00,0,0.50,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+orangefurcoat,Orange Fur Coat,3.0,1.00,228,false,1,chestplate,Chestplate,13,0,0,0,0.00,0.00,0,0,0.00,13.00,0.30,5,0,0.00,0,0.00,0,0.45,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+greenfurcoat,Green Fur Coat,2.0,1.01,229,false,1,chestplate,Chestplate,8,0,0,0,0.00,0.00,0,0,0.00,8.00,0.33,3,0,0.00,0,0.00,0,0.43,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+bluefurcoat,Blue Fur Coat,1.0,1.03,230,false,1,chestplate,Chestplate,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,2,0,0.00,0,0.00,0,0.50,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+pinkstripedcoat,Pink Striped Coat,5.0,0.99,231,false,1,chestplate,Chestplate,0,0,0,0,0.75,0.20,0,0,0.00,23.15,0.24,11,0,0.00,0,0.00,0,0.50,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+brownstripedcoat,Brown Striped Coat,0.0,1.08,232,false,1,chestplate,Chestplate,1,0,0,0,0.00,0.00,0,0,0.00,1.00,0.33,1,0,0.00,0,0.00,0,0.50,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+orangestripedcoat,Orange Striped Coat,3.0,0.98,233,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0.73,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+bluestripedcoat,Blue Striped Coat,1.0,1.00,234,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+snowyredfurcoat,Snowy Red Fur Coat,4.0,1.00,235,false,1,chestplate,Chestplate,0,0,0,0,0.00,10.00,0,0,0.00,34.10,0.50,4,0,0.00,0,0.00,0,0.25,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+snowyyellowfurcoat,Snowy Yellow Fur Coat,3.0,1.02,236,false,1,chestplate,Chestplate,0,0,0,0,0.00,10.00,0,0,0.00,21.75,0.50,3,0,0.00,0,0.00,0,0.27,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+snowygreenfurcoat,Snowy Green Fur Coat,2.0,1.04,237,false,1,chestplate,Chestplate,0,0,0,0,0.00,10.00,0,0,0.00,12.20,0.50,2,0,0.00,0,0.00,0,0.29,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+snowybluefurcoat,Snowy Blue Fur Coat,1.0,1.00,238,false,1,chestplate,Chestplate,0,0,0,0,0.00,10.00,0,0,0.00,5.45,0.50,1,0,0.00,0,0.00,0,0.25,0,0,0,0,none,coldProtection,none,none,0.25,Protects you from the cold.
+greentunic,Green Tunic,2.0,1.00,239,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,7,0,0.00,0,0.00,0,1.00,0,0,0,0,none,none,none,none,0.00,A plain green tunic.
+graytunic,Gray Tunic,0.0,1.00,240,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,1.00,0,0,0,0,none,none,none,none,0.00,A plain gray tunic.
+jadetunic,Jade Tunic,2.0,1.00,241,false,1,chestplate,Chestplate,0,0,0,0,0.10,0.00,0,0,0.00,0.24,0.01,3,15,0.30,15,0.00,0,0.99,0,0,0,0,none,none,none,none,0.00,Did you just use some green opal?
+topaztunic,Topaz Tunic,3.0,1.00,242,false,1,chestplate,Chestplate,6,0,0,0,0.00,0.30,0,0,0.00,6.65,0.15,5,26,0.50,0,0.00,0,0.85,0,0,0,0,none,none,none,none,0.00,Bright oran- Wait! This isn't Topaz!
+orangefarmershirt,Orange Farmer Shirt,3.0,1.00,243,false,1,chestplate,Chestplate,13,0,0,0,0.00,0.00,0,0,0.00,13.00,0.30,3,0,0.00,0,0.00,3,0.70,0,0,0,0,none,none,none,none,0.00,
+yellowfarmershirt,Yellow Farmer Shirt,3.0,1.00,244,false,1,chestplate,Chestplate,0,0,0,0,0.05,1.50,0,0,0.00,6.74,0.16,6,26,0.20,0,0.00,0,0.84,0,0,0,0,none,none,none,none,0.00,
+greenfarmershirt,Green Farmer Shirt,2.0,1.00,245,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,14,0.20,0,0.00,0,1.00,0,0,0,0,none,none,none,none,0.00,
+wornaxe,Worn Axe,0.0,0.00,367,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,10,0,0,wornaxe,none,none,none,0.00,
+copperaxe,Copper Axe,0.0,0.00,368,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,20,0,0,copperaxe,none,none,none,0.00,
+ironaxe,Iron Axe,0.0,0.00,369,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,30,0,0,ironaxe,none,none,none,0.00,
+goldaxe,Gold Axe,0.0,0.00,370,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,40,0,0,goldaxe,none,none,none,0.00,
+amethystaxe,Amethyst Axe,0.0,0.00,371,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,50,0,0,amethystaxe,none,none,none,0.00,
+azuriteaxe,Azurite Axe,0.0,0.00,372,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,60,0,0,azuriteaxe,none,none,none,0.00,
+emeralditeaxe,Emeraldite Axe,0.0,0.00,373,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,70,0,0,emeralditeaxe,none,none,none,0.00,
+rubyaxe,Ruby Axe,0.0,0.00,374,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,80,0,0,rubyaxe,none,none,none,0.00,
+diamondaxe,Diamond Axe,0.0,0.00,375,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,90,0,0,diamondaxe,none,none,none,0.00,
+wornpickaxe,Worn Pickaxe,0.0,0.00,376,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,10,0,wornpickaxe,none,none,none,0.00,
+copperpickaxe,Copper Pickaxe,0.0,0.00,377,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,20,0,copperpickaxe,none,none,none,0.00,
+ironpickaxe,Iron Pickaxe,0.0,0.00,378,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,30,0,ironpickaxe,none,none,none,0.00,
+goldpickaxe,Gold Pickaxe,0.0,0.00,379,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,40,0,goldpickaxe,none,none,none,0.00,
+amethystpickaxe,Amethyst Pickaxe,0.0,0.00,380,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,50,0,amethystpickaxe,none,none,none,0.00,
+azuritepickaxe,Azurite Pickaxe,0.0,0.00,381,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,60,0,azuritepickaxe,none,none,none,0.00,
+emeralditepickaxe,Emeraldite Pickaxe,0.0,0.00,382,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,70,0,emeralditepickaxe,none,none,none,0.00,
+rubypickaxe,Ruby Pickaxe,0.0,0.00,383,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,80,0,rubypickaxe,none,none,none,0.00,
+diamondpickaxe,Diamond Pickaxe,0.0,0.00,384,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,90,0,diamondpickaxe,none,none,none,0.00,
+wornscythe,Worn Scythe,0.0,0.00,385,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,10,wornscythe,none,none,none,0.00,
+copperscythe,Copper Scythe,0.0,0.00,386,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,20,copperscythe,none,none,none,0.00,
+ironscythe,Iron Scythe,0.0,0.00,387,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,30,ironscythe,none,none,none,0.00,
+goldscythe,Gold Scythe,0.0,0.00,388,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,40,goldscythe,none,none,none,0.00,
+amethystscythe,Amethyst Scythe,0.0,0.00,389,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,50,amethystscythe,none,none,none,0.00,
+azuritescythe,Azurite Scythe,0.0,0.00,390,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,60,azuritescythe,none,none,none,0.00,
+emeralditescythe,Emeraldite Scythe,0.0,0.00,391,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,70,emeralditescythe,none,none,none,0.00,
+rubyscythe,Ruby Scythe,0.0,0.00,392,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,80,rubyscythe,none,none,none,0.00,
+diamondscythe,Diamond Scythe,0.0,0.00,393,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,10,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,90,diamondscythe,none,n

@@ -3,7 +3,7 @@ if(isFirefox === true) {
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
 
-var VERSION = '0.0.3';
+var VERSION = '0.0.4';
 
 var socket = io({
     reconnection:false,
@@ -299,6 +299,17 @@ socket.on('update',function(data){
                         else if(j === 'y'){
                             projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
                         }
+                        else if(j === 'direction'){
+                            if(data.projectile[i].direction % 360 - projectile.direction % 360 > 180){
+                                projectile.spdDirection = ((data.projectile[i].direction % 360 - projectile.direction % 360) - 360) / 4;
+                            }
+                            else if(data.projectile[i].direction % 360 - projectile.direction % 360 < -180){
+                                projectile.spdDirection = ((data.projectile[i].direction % 360 - projectile.direction % 360) + 360) / 4;
+                            }
+                            else{
+                                projectile.spdDirection = (data.projectile[i].direction % 360 - projectile.direction % 360) / 4;
+                            }
+                        }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];
                             projectile.fadeState = 2;
@@ -405,12 +416,14 @@ socket.on('update',function(data){
                             harvestableNpc.harvestHp = 0;
                         }
                         else if(j === 'img'){
-                            harvestableNpc[j] = data.harvestableNpc[i][j];
-                            if(harvestableNpc.img === "none" && harvestableNpc.fadeState === 1){
+                            if(data.harvestableNpc[i][j] === "none" && harvestableNpc.fadeState === 1){
                                 harvestableNpc.fadeState = 2;
                                 harvestableNpc.fade -= 0.05;
                                 harvestableNpc.harvestHp = 0;
                                 harvestableNpc.toRemove = true;
+                            }
+                            else{
+                                harvestableNpc[j] = data.harvestableNpc[i][j];
                             }
                         }
                         else{

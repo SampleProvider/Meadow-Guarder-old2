@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 4;
+var totalMaps = 5;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -11,7 +11,7 @@ tileset.onload = function(){
 var renderWorld = function(json,name){
     var tile = json.tilesets[0];
     for(var i = 0;i < json.layers.length;i++){
-        if(json.layers[i].type === "tilelayer" && json.layers[i].visible){
+        if(json.layers[i].type === "tilelayer" && json.layers[i].visible && json.layers[i].name !== "HarvestableNpc:"){
             var size = json.tilewidth;
             for(var j = 0;j < json.layers[i].chunks.length;j++){
                 if(loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':']){
@@ -136,5 +136,6 @@ var loadAllMaps = function(){
     loadMap('Sleeping Boar Inn');
     loadMap('Altoris Forge');
     loadMap('Altoris General Store');
+    loadMap('Altoris General Store Upstairs');
     loadingComplete = true;
 }

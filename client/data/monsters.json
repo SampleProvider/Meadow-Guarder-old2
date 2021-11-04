@@ -1,22 +1,20 @@
 {
     "skeleton":{
         "name":"Skeleton",
-        "hpMax":"50",
+        "hpMax":50,
         "stats":{
             "damage":5,
-            "defense":2,
-            "heal":0
+            "defense":0,
+            "hpRegen":2,
+            "critChance":0,
+            "critPower":0
         },
         "maxSpeed":5,
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
-            "rustyaxe":{
-                "chance":0.5,
-                "amount":1
-            },
-            "rustypickaxe":{
-                "chance":0.5,
+            "random":{
+                "chance":1,
                 "amount":1
             }
         },
@@ -33,22 +31,20 @@
     },
     "snake":{
         "name":"Snake",
-        "hpMax":"25",
+        "hpMax":25,
         "stats":{
             "damage":5,
             "defense":0,
-            "heal":0
+            "hpRegen":2,
+            "critChance":0,
+            "critPower":0
         },
         "maxSpeed":7,
         "drawSize":"small",
         "team":"Harmful",
         "itemDrops":{
-            "copperbow":{
-                "chance":0.5,
-                "amount":1
-            },
-            "oldhat":{
-                "chance":0.5,
+            "random":{
+                "chance":1,
                 "amount":1
             }
         },

@@ -35,7 +35,12 @@
         "width":13,
         "height":8,
         "animations":2,
-        "collisionType":"none"
+        "collisionType":"remove"
+    },
+    "bullet":{
+        "width":7,
+        "height":1,
+        "collisionType":"remove"
     },
     "coppershiv":{
         "width":14,

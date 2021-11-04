@@ -810,17 +810,45 @@ canvas {
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
-#inventorySlotring {
+#inventorySlotgloves {
     position: absolute;
-    left: 60%;
+    left: 50%;
     top: -184px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }
 #inventorySlotshield {
     position: absolute;
+    left: 50%;
+    top: -126px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotbundle {
+    position: absolute;
+    left: 50%;
+    top: -68px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotaccessory1 {
+    position: absolute;
+    left: 60%;
+    top: -184px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotaccessory2 {
+    position: absolute;
     left: 60%;
     top: -126px;
+    image-rendering: pixelated;
+    transform: translate(-50%, 0%);
+}
+#inventorySlotaccessory3 {
+    position: absolute;
+    left: 60%;
+    top: -68px;
     image-rendering: pixelated;
     transform: translate(-50%, 0%);
 }

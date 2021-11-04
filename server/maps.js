@@ -156,7 +156,7 @@ var renderWorld = function(json,name){
                                 map:name,
                                 region:array[0],
                                 mapName:array[1],
-                                noAttack:array[2],
+                                canAttack:array[2],
                                 noMonster:array[3],
                             });
                         }
@@ -178,3 +178,4 @@ loadMap('World');
 loadMap('Sleeping Boar Inn');
 loadMap('Altoris Forge');
 loadMap('Altoris General Store');
+loadMap('Altoris General Store Upstairs');

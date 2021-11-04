@@ -5,6 +5,7 @@ var Entity = function(initPack){
     self.y = initPack.y;
     self.spdX = 0;
     self.spdY = 0;
+    self.direction = initPack.direction;
     self.width = initPack.width;
     self.height = initPack.height;
     self.type = initPack.type;
@@ -38,7 +39,6 @@ var Actor = function(initPack){
     var self = Entity(initPack);
     self.img = initPack.img;
     self.name = initPack.name;
-    self.direction = initPack.direction;
     self.hp = initPack.hp;
     self.hpMax = initPack.hpMax;
     self.drawSize = initPack.drawSize;
@@ -110,7 +110,7 @@ var Player = function(initPack){
     self.draw = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
-            self.fade += 0.05;
+            self.fade += 0.1;
             if(self.fade >= 1){
                 self.fade = 1;
                 self.fadeState = 1;
@@ -129,7 +129,7 @@ var Player = function(initPack){
             }
         }
         if(Item.list[self.currentItem]){
-            if(Item.list[self.currentItem].displayItem){
+            if(Item.list[self.currentItem].displayItem === true){
                 ctx.save();
                 ctx.translate(self.x,self.y);
                 ctx.rotate((self.direction - 225) / 180 * Math.PI);
@@ -152,7 +152,7 @@ var Player = function(initPack){
 Player.list = {};
 var Projectile = function(initPack){
     var self = Entity(initPack);
-    self.direction = initPack.direction;
+    self.spdDirection = 0;
     self.projectileType = initPack.projectileType;
     self.canCollide = initPack.canCollide;
     self.parent = initPack.parent;
@@ -164,17 +164,29 @@ var Projectile = function(initPack){
         self.fade = 1;
         self.fadeState = 1;
     }
+
+    if(Item.list[self.projectileType]){
+        self.render = new OffscreenCanvas(24,24);
+        var renderCtx = self.render.getContext("2d");
+        resetCanvas(renderCtx);
+        var drawId = Item.list[self.projectileType].drawId;
+        var img_x = ((drawId - 1) % 26) * 24;
+        var img_y = ~~((drawId - 1) / 26) * 24;
+        renderCtx.drawImage(Img.items2,img_x,img_y,24,24,0,0,24,24);
+    }
+
     self.update = function(){
         if(self.interpolationStage > 0){
             self.x += self.spdX;
             self.y += self.spdY;
+            self.direction += self.spdDirection;
         }
         self.interpolationStage -= 1;
     }
     self.draw = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
-            self.fade += 0.05;
+            self.fade += 0.1;
             if(self.fade >= 1){
                 self.fade = 1;
                 self.fadeState = 1;
@@ -197,11 +209,20 @@ var Projectile = function(initPack){
             }
         }
         self.animation = Math.floor(self.animation);
-        ctx.save();
-        ctx.translate(Math.round(self.x),Math.round(self.y));
-        ctx.rotate(self.direction * Math.PI / 180);
-        ctx.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
-        ctx.restore();
+        if(Img[self.projectileType]){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.rotate(self.direction * Math.PI / 180);
+            ctx.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
+            ctx.restore();
+        }
+        else if(Item.list[self.projectileType]){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.rotate(self.direction * Math.PI / 180);
+            ctx.drawImage(self.render,self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
+            ctx.restore();
+        }
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -216,7 +237,7 @@ var Monster = function(initPack){
     self.draw = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
-            self.fade += 0.05;
+            self.fade += 0.1;
             if(self.fade >= 1){
                 self.fade = 1;
                 self.fadeState = 1;
@@ -250,7 +271,7 @@ var Npc = function(initPack){
     self.draw = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
-            self.fade += 0.05;
+            self.fade += 0.1;
             if(self.fade >= 1){
                 self.fade = 1;
                 self.fadeState = 1;
@@ -284,14 +305,10 @@ var HarvestableNpc = function(initPack){
     self.img = initPack.img;
     self.harvestHp = 0;
     self.harvestHpMax = 0;
-    if(self.img === 'none'){
-        self.fade = 0;
-        self.fadeState = 2;
-    }
     self.drawLayer0 = function(){
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
-            self.fade += 0.05;
+            self.fade += 0.1;
             if(self.fade >= 1){
                 self.fade = 1;
                 self.fadeState = 1;
@@ -309,8 +326,11 @@ var HarvestableNpc = function(initPack){
                 return;
             }
         }
-        if(self.img !== 'none'){
-            if(Img[self.img + '0']){
+        if(Img[self.img + '0']){
+            if(self.height === 64){
+                ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height);
+            }
+            else{
                 ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y,self.width,self.height / 2);
             }
         }
@@ -319,6 +339,9 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawLayer1 = function(){
+        if(self.height === 64){
+            return;
+        }
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
         }
@@ -328,10 +351,8 @@ var HarvestableNpc = function(initPack){
         else{
             ctx.globalAlpha = self.fade;
         }
-        if(self.img !== 'none'){
-            if(Img[self.img + '1']){
-                ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height / 2);
-            }
+        if(Img[self.img + '1']){
+            ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height / 2);
         }
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
@@ -353,7 +374,9 @@ var HarvestableNpc = function(initPack){
             ctx.globalAlpha = 1;
         }
     }
-    HarvestableNpc.list[self.id] = self;
+    if(self.img !== 'none'){
+        HarvestableNpc.list[self.id] = self;
+    }
     return self;
 }
 HarvestableNpc.list = {};

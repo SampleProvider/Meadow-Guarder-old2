@@ -1,41 +1,15 @@
 {
     "items":[
         {
-            "id":"goldore",
-            "amount":1
-        },
-        {
-            "id":"copperstaff",
-            "amount":1
-        },
-        {
-            "id":"thewand",
+            "id":"yarn",
             "amount":1
         }
     ],
     "materials":[
         [
             {
-                "id":"wood",
-                "amount":5
-            }
-        ],
-        [
-            {
-                "id":"goldore",
+                "id":"cotton",
                 "amount":3
-            },{
-                "id":"copperbow",
-                "amount":1
-            }
-        ],
-        [
-            {
-                "id":"goldore",
-                "amount":3
-            },{
-                "id":"copperstaff",
-                "amount":1
             }
         ]
     ]

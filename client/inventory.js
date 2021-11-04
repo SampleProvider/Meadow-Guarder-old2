@@ -14,17 +14,64 @@ Inventory = function(socket,server){
         updateStats:true,
     }
     self.getRarityColor = function(rarity){
-        if(rarity === 0){
-            return '#ffffff';
+        if(Math.floor(rarity) === 0){
+            return '#dddddd';
         }
-        if(rarity === 1){
-            return '#55ff55';
+        if(Math.floor(rarity) === 1){
+            return '#4082bf';
         }
-        if(rarity === 2){
-            return '#5555ff';
+        if(Math.floor(rarity) === 2){
+            return '#99c247';
         }
-        if(rarity === 3){
-            return '#ff9900';
+        if(Math.floor(rarity) === 3){
+            return '#e08e28';
+        }
+        if(Math.floor(rarity) === 4){
+            return '#c24747';
+        }
+        if(Math.floor(rarity) === 5){
+            return '#823295';
+        }
+        if(Math.floor(rarity) === 6){
+            return '#ff0000';
+        }
+    }
+    self.getTypeColor = function(type){
+        if(type === 'Weapon'){
+            return '#dd3333';
+        }
+        if(type === 'Helmet'){
+            return '#dddd00';
+        }
+        if(type === 'Chestplate'){
+            return '#dddd00';
+        }
+        if(type === 'Boots'){
+            return '#dddd00';
+        }
+        if(type === 'Gloves'){
+            return '#dddd00';
+        }
+        if(type === 'Shield'){
+            return '#dddddd';
+        }
+        if(type === 'Bundle'){
+            return '#77dd33';
+        }
+        if(type === 'Ring'){
+            return '#dd00dd';
+        }
+        if(type === 'Necklace'){
+            return '#dd00dd';
+        }
+        if(type === 'Amulet'){
+            return '#dd00dd';
+        }
+        if(type === 'Material'){
+            return '#33dddd';
+        }
+        if(type === 'Tool'){
+            return '#33dd33';
         }
     }
     self.addItem = function(id,amount){
@@ -48,7 +95,10 @@ Inventory = function(socket,server){
                 }
             }
         }
-        if(hasSpace === 1){
+        if(hasSpace === 0){
+            return;
+        }
+        else if(hasSpace === 1){
             if(amount > Item.list[id].maxStack){
                 self.items[index] = {id:id,amount:Item.list[id].maxStack || 1};
                 self.addItem(id,amount - Item.list[id].maxStack,enchantments);
@@ -292,7 +342,7 @@ Inventory = function(socket,server){
                         self.refreshItem(index2);
                     }
                     else{
-                        if(Item.list[self.draggingItem.id].equip === index2){
+                        if(Item.list[self.draggingItem.id].equip === index2 || (Item.list[self.draggingItem.id].equip === "accessory" && (index2 === "accessory1" || index2 === "accessory2" || index2 === "accessory3"))){
                             var item = {
                                 id:self.draggingItem.id,
                                 amount:self.draggingItem.amount,
@@ -461,6 +511,61 @@ Inventory = function(socket,server){
             }
         }
     }
+    self.getDescription = function(item){
+        var description = '';
+        if(item.type){
+            description += '<span style="color: ' + self.getTypeColor(item.type) + '">' + item.type + '</span><br>';
+        }
+        if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== 'none' && item.equip !== undefined){
+            description += 'When Equipped:<br>';
+        }
+        if(item.defense){
+            description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
+        }
+        if(item.manaCost){
+            description += 'Uses ' + item.manaCost + ' mana.<br>';
+        }
+        if(item.hp){
+            description += '<span style="color: #33ee33">+' + item.hp + ' max health.</span><br>';
+        }
+        if(item.hpRegen){
+            description += '<span style="color: #33ee33">+' + item.hpRegen + ' health regeneration.</span><br>';
+        }
+        if(item.mana){
+            description += '<span style="color: #33ee33">+' + item.mana + ' max mana.</span><br>';
+        }
+        if(item.manaRegen){
+            description += '<span style="color: #33ee33">+' + item.manaRegen + ' mana regeneration.</span><br>';
+        }
+        if(item.damage){
+            description += '<span style="color: #33ee33">+' + item.damage + ' damage.</span><br>';
+        }
+        if(item.meleeDamage){
+            description += '<span style="color: #33ee33">+' + item.meleeDamage + ' melee damage.</span><br>';
+        }
+        if(item.rangedDamage){
+            description += '<span style="color: #33ee33">+' + item.rangedDamage + ' ranged damage.</span><br>';
+        }
+        if(item.magicDamage){
+            description += '<span style="color: #33ee33">+' + item.magicDamage + ' magic damage.</span><br>';
+        }
+        if(item.critChance){
+            description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+        }
+        if(item.critPower){
+            description += '<span style="color: #33ee33">+' + item.critPower * 100 + '% critical strike power.</span><br>';
+        }
+        if(item.movementSpeed){
+            description += '<span style="color: #33ee33">+' + item.movementSpeed + ' movement speed.</span><br>';
+        }
+        if(item.equip === 'consume'){
+            description += 'Right click to use.<br>';
+        }
+        if(item.description){
+            description += item.description;
+        }
+        return description;
+    }
     self.addItemClient = function(index){
         var slot = document.getElementById("inventorySlot" + index);
         if(slot){
@@ -469,6 +574,7 @@ Inventory = function(socket,server){
             slot.className += ' inventoryMenuSlot';
             slot.onmouseover = function(){};
             slot.onmouseout = function(){};
+            self.itemDescriptions[index] = '';
             if(index >= 0 && index <= 9){
                 var hotbarSlot = document.getElementById("hotbarSlot" + index);
                 hotbarSlot.innerHTML = "";
@@ -481,66 +587,12 @@ Inventory = function(socket,server){
                     hotbarSlot.style.border = '1px solid #ffff00';
                     hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
                 }
-                hotbarSlot.onclick = function(){
-                    var hotbarSlots = document.getElementsByClassName('hotbarSlot');
-                    for(var i = 0;i < hotbarSlots.length;i++){
-                        hotbarSlots[i].style.border = '1px solid #000000';
-                        hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
-                    }
-                    hotbarSlot.style.border = '1px solid #ffff00';
-                    hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
-                    self.hotbarSelectedItem = index;
-                    socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
-                }
-                hotbarSlot.onmouseover = function(){
-                    updateInventoryPopupMenu('itemDescriptions',index);
-                }
-                hotbarSlot.onmouseout = function(){
-                    updateInventoryPopupMenu('itemDescriptions',-1);
-                }
+                hotbarSlot.onmouseover = function(){};
+                hotbarSlot.onmouseout = function(){};
             }
             if(self.isItem(index)){
                 var item = Item.list[self.items[index].id];
                 self.drawItem(slot,item.drawId,false);
-                var description = '';
-                if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
-                    description += 'When Equipped:<br>';
-                }
-                if(item.damage){
-                    if(item.damageType){
-                        description += '<span style="color: #33ee33">+' + item.damage + ' ' + item.damageType + ' damage.</span><br>';
-                    }
-                    if(item.critChance){
-                        description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
-                    }
-                }
-                if(item.defense){
-                    description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
-                }
-                if(item.manaCost){
-                    description += 'Uses ' + item.manaCost + ' mana.<br>';
-                }
-                if(item.extraHp){
-                    description += '<span style="color: #33ee33">+' + item.extraHp + ' max health.</span><br>';
-                }
-                if(item.extraMana){
-                    description += '<span style="color: #33ee33">+' + item.extraMana + ' max mana.</span><br>';
-                }
-                if(item.extraHpRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraHpRegen + ' health regeneration.</span><br>';
-                }
-                if(item.extraManaRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraManaRegen + ' mana regeneration.</span><br>';
-                }
-                if(item.extraDamage){
-                    description += '<span style="color: #33ee33">+' + item.extraDamage + ' damage.</span><br>';
-                }
-                if(item.extraMovementSpeed){
-                    description += '<span style="color: #33ee33">+' + item.extraMovementSpeed + ' movement speed.</span><br>';
-                }
-                if(item.equip === 'consume'){
-                    description += 'Right click to use.<br>';
-                }
                 var itemName = item.name;
                 if(self.items[index].amount !== 1){
                     itemName += ' (' + self.items[index].amount + ')';
@@ -552,14 +604,18 @@ Inventory = function(socket,server){
                     itemAmountDiv.appendChild(itemAmount);
                     slot.appendChild(itemAmountDiv);
                 }
-                if(item.description){
-                    self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div>';
-                }
-                else{
-                    self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div>';
-                }
+                self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + self.getDescription(item) + '</div>';
                 if(index >= 0 && index <= 9){
                     self.drawItem(hotbarSlot,item.drawId,false);
+                    if(self.items[index].amount !== 1){
+                        var itemAmount = document.createElement('div');
+                        itemAmount.innerHTML = self.items[index].amount;
+                        itemAmount.className = 'itemAmount';
+                        var itemAmountDiv = document.createElement('div');
+                        itemAmountDiv.className = 'itemAmountDiv';
+                        itemAmountDiv.appendChild(itemAmount);
+                        hotbarSlot.appendChild(itemAmountDiv);
+                    }
                     hotbarSlot.onclick = function(){
                         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
                         for(var i = 0;i < hotbarSlots.length;i++){
@@ -571,14 +627,11 @@ Inventory = function(socket,server){
                         self.hotbarSelectedItem = index;
                         socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
                     }
-                    if(self.items[index].amount !== 1){
-                        var itemAmount = document.createElement('div');
-                        itemAmount.innerHTML = self.items[index].amount;
-                        itemAmount.className = 'itemAmount';
-                        var itemAmountDiv = document.createElement('div');
-                        itemAmountDiv.className = 'itemAmountDiv';
-                        itemAmountDiv.appendChild(itemAmount);
-                        hotbarSlot.appendChild(itemAmountDiv);
+                    hotbarSlot.onmouseover = function(){
+                        updateInventoryPopupMenu('itemDescriptions',index);
+                    }
+                    hotbarSlot.onmouseout = function(){
+                        updateInventoryPopupMenu('itemDescriptions',-1);
                     }
                 }
                 slot.onmouseover = function(){
@@ -586,6 +639,13 @@ Inventory = function(socket,server){
                 }
                 slot.onmouseout = function(){
                     updateInventoryPopupMenu('itemDescriptions',-1);
+                }
+            }
+            else{
+                if(index >= 0){
+                }
+                else{
+                    slot.innerHTML = '<image class="itemImage" src="/client/img/' + index + 'outline.png"</image>'
                 }
             }
             slot.onclick = function(){
@@ -608,42 +668,6 @@ Inventory = function(socket,server){
             if(self.isCraft(index)){
                 var item = Item.list[self.craftItems.items[index].id];
                 self.drawItem(slot,item.drawId,false);
-                var description = '';
-                if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
-                    description += 'When Equipped:<br>';
-                }
-                if(item.damage){
-                    if(item.damageType){
-                        description += '<span style="color: #33ee33">+' + item.damage + ' ' + item.damageType + ' damage.</span><br>';
-                    }
-                    if(item.critChance){
-                        description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
-                    }
-                }
-                if(item.defense){
-                    description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
-                }
-                if(item.manaCost){
-                    description += 'Uses ' + item.manaCost + ' mana.<br>';
-                }
-                if(item.extraHp){
-                    description += '<span style="color: #33ee33">+' + item.extraHp + ' max health.</span><br>';
-                }
-                if(item.extraMana){
-                    description += '<span style="color: #33ee33">+' + item.extraMana + ' max mana.</span><br>';
-                }
-                if(item.extraHpRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraHpRegen + ' health regeneration.</span><br>';
-                }
-                if(item.extraManaRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraManaRegen + ' mana regeneration.</span><br>';
-                }
-                if(item.extraDamage){
-                    description += '<span style="color: #33ee33">+' + item.extraDamage + ' damage.</span><br>';
-                }
-                if(item.extraMovementSpeed){
-                    description += '<span style="color: #33ee33">+' + item.extraMovementSpeed + ' movement speed.</span><br>';
-                }
                 var itemName = item.name;
                 if(self.craftItems.items[index].amount !== 1){
                     itemName += ' (' + self.craftItems.items[index].amount + ')';
@@ -665,10 +689,8 @@ Inventory = function(socket,server){
                 else{
                     slot.style.backgroundColor = "#725640";
                 }
-                if(item.description){
-                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div><br>Craft for ' + craftMaterials + '.';
-                }
-                else if(description !== ''){
+                var description = self.getDescription(item);
+                if(description !== ''){
                     self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for:' + craftMaterials + '.';
                 }
                 else{
@@ -682,38 +704,46 @@ Inventory = function(socket,server){
                 }
                 slot.onclick = function(){
                     socket.emit('craftItem',index);
-                    if(self.draggingItem.id){
-                        if(self.draggingItem.id === self.craftItems.items[index].id){
-                            if(self.draggingItem.amount + self.craftItems.items[index].amount <= Item.list[self.draggingItem.id].maxStack){
-                                self.draggingItem.amount += self.craftItems.items[index].amount;
+                    var canCraft = true;
+                    for(var i in self.craftItems.materials[index]){
+                        if(!self.hasItem(self.craftItems.materials[index][i].id,parseInt(self.craftItems.materials[index][i].amount,10))){
+                            canCraft = false;
+                        }
+                    }
+                    if(canCraft){
+                        if(self.draggingItem.id){
+                            if(self.draggingItem.id === self.craftItems.items[index].id){
+                                if(self.draggingItem.amount + self.craftItems.items[index].amount <= Item.list[self.draggingItem.id].maxStack){
+                                    self.draggingItem.amount += self.craftItems.items[index].amount;
+                                }
                             }
                         }
-                    }
-                    else{
-                        self.draggingItem = {
-                            id:self.craftItems.items[index].id,
-                            amount:self.craftItems.items[index].amount,
+                        else{
+                            self.draggingItem = {
+                                id:self.craftItems.items[index].id,
+                                amount:self.craftItems.items[index].amount,
+                            }
                         }
-                    }
-                    itemMenu.style.display = 'none';
-                    if(self.draggingItem.id){
-                        draggingItem.style.display = 'inline-block';
-                        draggingItem.innerHTML = '';
-                        self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
-                        draggingItem.style.left = (rawMouseX - 32) + 'px';
-                        draggingItem.style.top = (rawMouseY - 32) + 'px';
-                        if(self.draggingItem.amount !== 1){
-                            var itemAmount = document.createElement('div');
-                            itemAmount.innerHTML = self.draggingItem.amount;
-                            itemAmount.className = 'UI-text-light itemAmount';
-                            var itemAmountDiv = document.createElement('div');
-                            itemAmountDiv.className = 'itemAmountLargeDiv';
-                            itemAmountDiv.appendChild(itemAmount);
-                            draggingItem.appendChild(itemAmountDiv);
+                        itemMenu.style.display = 'none';
+                        if(self.draggingItem.id){
+                            draggingItem.style.display = 'inline-block';
+                            draggingItem.innerHTML = '';
+                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                            draggingItem.style.left = (rawMouseX - 32) + 'px';
+                            draggingItem.style.top = (rawMouseY - 32) + 'px';
+                            if(self.draggingItem.amount !== 1){
+                                var itemAmount = document.createElement('div');
+                                itemAmount.innerHTML = self.draggingItem.amount;
+                                itemAmount.className = 'UI-text-light itemAmount';
+                                var itemAmountDiv = document.createElement('div');
+                                itemAmountDiv.className = 'itemAmountLargeDiv';
+                                itemAmountDiv.appendChild(itemAmount);
+                                draggingItem.appendChild(itemAmountDiv);
+                            }
                         }
-                    }
-                    else{
-                        draggingItem.style.display = 'none';
+                        else{
+                            draggingItem.style.display = 'none';
+                        }
                     }
                 }
             }
@@ -724,42 +754,6 @@ Inventory = function(socket,server){
         if(slot){
             if(self.craftItems.items[index].id){
                 var item = Item.list[self.craftItems.items[index].id];
-                var description = '';
-                if(item.equip !== 'consume' && item.equip !== 'hotbar' && item.equip !== undefined){
-                    description += 'When Equipped:<br>';
-                }
-                if(item.damage){
-                    if(item.damageType){
-                        description += '<span style="color: #33ee33">+' + item.damage + ' ' + item.damageType + ' damage.</span><br>';
-                    }
-                    if(item.critChance){
-                        description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
-                    }
-                }
-                if(item.defense){
-                    description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
-                }
-                if(item.manaCost){
-                    description += 'Uses ' + item.manaCost + ' mana.<br>';
-                }
-                if(item.extraHp){
-                    description += '<span style="color: #33ee33">+' + item.extraHp + ' max health.</span><br>';
-                }
-                if(item.extraMana){
-                    description += '<span style="color: #33ee33">+' + item.extraMana + ' max mana.</span><br>';
-                }
-                if(item.extraHpRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraHpRegen + ' health regeneration.</span><br>';
-                }
-                if(item.extraManaRegen){
-                    description += '<span style="color: #33ee33">+' + item.extraManaRegen + ' mana regeneration.</span><br>';
-                }
-                if(item.extraDamage){
-                    description += '<span style="color: #33ee33">+' + item.extraDamage + ' damage.</span><br>';
-                }
-                if(item.extraMovementSpeed){
-                    description += '<span style="color: #33ee33">+' + item.extraMovementSpeed + ' movement speed.</span><br>';
-                }
                 var itemName = item.name;
                 if(self.craftItems.items[index].amount !== 1){
                     itemName += ' (' + self.craftItems.items[index].amount + ')';
@@ -781,11 +775,9 @@ Inventory = function(socket,server){
                 else{
                     slot.style.backgroundColor = "#725640";
                 }
-                if(item.description){
-                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + item.description + '</div><br>Craft for ' + craftMaterials + '.';
-                }
-                else if(description !== ''){
-                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for ' + craftMaterials + '.';
+                var description = self.getDescription(item);
+                if(description !== ''){
+                    self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Craft for:' + craftMaterials + '.';
                 }
                 else{
                     self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Craft for ' + craftMaterials + '.';
@@ -864,8 +856,12 @@ Inventory = function(socket,server){
             addSlot('helmet');
             addSlot('chestplate');
             addSlot('boots');
-            addSlot('ring');
+            addSlot('gloves');
             addSlot('shield');
+            addSlot('bundle');
+            addSlot('accessory1');
+            addSlot('accessory2');
+            addSlot('accessory3');
             addSlot('trash');
             inventorySlottrash.innerHTML = "<image class='itemImage' src='/client/websiteAssets/trash.png'></image>";
             inventorySlottrash.onclick = function(){
@@ -891,12 +887,25 @@ Inventory = function(socket,server){
             if(self.items['boots'] === undefined){
                 self.items['boots'] = {};
             }
-            if(self.items['ring'] === undefined){
-                self.items['ring'] = {};
+            if(self.items['gloves'] === undefined){
+                self.items['gloves'] = {};
             }
             if(self.items['shield'] === undefined){
                 self.items['shield'] = {};
             }
+            if(self.items['bundle'] === undefined){
+                self.items['bundle'] = {};
+            }
+            if(self.items['accessory1'] === undefined){
+                self.items['accessory1'] = {};
+            }
+            if(self.items['accessory2'] === undefined){
+                self.items['accessory2'] = {};
+            }
+            if(self.items['accessory3'] === undefined){
+                self.items['accessory3'] = {};
+            }
+            delete self.items["ring"];
             self.refreshInventory();
         }
     }
@@ -927,8 +936,6 @@ Inventory = function(socket,server){
     if(self.server){
         self.craftItems = require('./data/crafts.json');
         self.refreshCraft();
-    }
-    if(self.server){
         socket.on("dragItem",function(data){
             try{
                 self.runDraggingItem(data);
@@ -997,12 +1004,15 @@ Inventory = function(socket,server){
     return self;
 }
 
-Item = function(id,param){
-	var self = {
-		id:id,
-    }
+Item = function(param){
+	var self = {};
     for(var i in param){
-        self[i] = param[i];
+        var parsedInput = param[i];
+        parsedInput = parsedInput === '\r' ? '' : parsedInput;
+        parsedInput = isNaN(parsedInput) === false && parsedInput !== '' ? parseFloat(parsedInput) : parsedInput;
+        parsedInput = parsedInput === 'true' ? true : parsedInput;
+        parsedInput = parsedInput === 'false' ? false : parsedInput;
+        self[i] = parsedInput;
     }
 	Item.list[self.id] = self;
 	return self;
@@ -1010,11 +1020,79 @@ Item = function(id,param){
 Item.list = {};
 
 try{
-    var items = require('./data/item.json');
-    for(var i in items){
-        Item(i,items[i]);
-    }
+    var csv = require('csv-parser');
+    var fs = require('fs');
+    var items = [];
+    fs.createReadStream('./client/data/items.csv').pipe(csv()).on('data', (data) => items.push(data)).on('end', () => {
+        for(var i in items){
+            Item(items[i]);
+        }
+    });
 }
 catch(err){
-    
+    var getCSV = function(name,cb){
+        var request = new XMLHttpRequest();
+        request.open('GET',"/client/data/" + name + ".csv",true);
+        request.onload = function(){
+            if(this.status >= 200 && this.status < 400){
+                parseCSV(this.response,cb);
+            }
+            else{
+        
+            }
+        };
+        request.onerror = function(){
+            
+        };
+        request.send();
+    }
+    var parseCSV = function(string,cb){
+        var array = [];
+        var labels = [''];
+        var inQuote = false;
+        var row = -1;
+        var col = 0; 
+        for(var index = 0;index < string.length;index += 1){
+            var currentCharacter = string[index];
+            
+            if(currentCharacter === '"'){
+                inQuote = !inQuote;
+                continue;
+            }
+
+            if(currentCharacter === ',' && inQuote === false){
+                col += 1;
+                if(row === -1){
+                    labels.push('');
+                }
+                else{
+                    array[row][labels[col]] = '';
+                }
+                continue;
+            }
+
+            if(currentCharacter === '\n'){
+                row += 1;
+                col = 0;
+                array.push({});
+                array[row][labels[col]] = '';
+                continue;
+            }
+
+            if(row === -1){
+                if(currentCharacter !== '\r'){
+                    labels[col] += currentCharacter;
+                }
+            }
+            else{
+                array[row][labels[col]] += currentCharacter;
+            }
+        }
+        cb(array);
+    }
+    getCSV('items',function(array){
+        for(var i in array){
+            new Item(array[i]);
+        }
+    });
 }
