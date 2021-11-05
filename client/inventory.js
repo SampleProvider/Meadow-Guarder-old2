@@ -409,7 +409,7 @@ Inventory = function(socket,server){
                     return;
                 }
                 else{
-                    if(Item.list[self.draggingItem.id].equip === index2){
+                    if(Item.list[self.draggingItem.id].equip === index2 || (Item.list[self.draggingItem.id].equip === "accessory" && (index2 === "accessory1" || index2 === "accessory2" || index2 === "accessory3"))){
                         if(data.click === 0){
                             self.items[index2] = self.draggingItem;
                             self.draggingItem = {};
@@ -508,43 +508,103 @@ Inventory = function(socket,server){
             description += 'When Equipped:<br>';
         }
         if(item.defense){
-            description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
+            if(item.defense > 0){
+                description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.defense + ' defense.</span><br>';
+            }
         }
         if(item.manaCost){
             description += 'Uses ' + item.manaCost + ' mana.<br>';
         }
         if(item.hp){
-            description += '<span style="color: #33ee33">+' + item.hp + ' max health.</span><br>';
+            if(item.hp > 0){
+                description += '<span style="color: #33ee33">+' + item.hp + ' max health.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.hp + ' max health.</span><br>';
+            }
         }
         if(item.hpRegen){
-            description += '<span style="color: #33ee33">+' + item.hpRegen + ' health regeneration.</span><br>';
+            if(item.hpRegen > 0){
+                description += '<span style="color: #33ee33">+' + item.hpRegen + ' health regeneration.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.hpRegen + ' health regeneration.</span><br>';
+            }
         }
         if(item.mana){
-            description += '<span style="color: #33ee33">+' + item.mana + ' max mana.</span><br>';
+            if(item.mana > 0){
+                description += '<span style="color: #33ee33">+' + item.mana + ' max mana.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.mana + ' max mana.</span><br>';
+            }
         }
         if(item.manaRegen){
-            description += '<span style="color: #33ee33">+' + item.manaRegen + ' mana regeneration.</span><br>';
+            if(item.manaRegen > 0){
+                description += '<span style="color: #33ee33">+' + item.manaRegen + ' mana regeneration.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.manaRegen + ' mana regeneration.</span><br>';
+            }
         }
         if(item.damage){
-            description += '<span style="color: #33ee33">+' + item.damage + ' damage.</span><br>';
+            if(item.damage > 0){
+                description += '<span style="color: #33ee33">+' + item.damage + ' damage.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.damage + ' damage.</span><br>';
+            }
         }
         if(item.meleeDamage){
-            description += '<span style="color: #33ee33">+' + item.meleeDamage + ' melee damage.</span><br>';
+            if(item.meleeDamage > 0){
+                description += '<span style="color: #33ee33">+' + item.meleeDamage + ' melee damage.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.meleeDamage + ' melee damage.</span><br>';
+            }
         }
         if(item.rangedDamage){
-            description += '<span style="color: #33ee33">+' + item.rangedDamage + ' ranged damage.</span><br>';
+            if(item.rangedDamage > 0){
+                description += '<span style="color: #33ee33">+' + item.rangedDamage + ' ranged damage.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.rangedDamage + ' ranged damage.</span><br>';
+            }
         }
         if(item.magicDamage){
-            description += '<span style="color: #33ee33">+' + item.magicDamage + ' magic damage.</span><br>';
+            if(item.magicDamage > 0){
+                description += '<span style="color: #33ee33">+' + item.magicDamage + ' magic damage.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.magicDamage + ' magic damage.</span><br>';
+            }
         }
         if(item.critChance){
-            description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+            if(item.critChance > 0){
+                description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.critChance * 100 + '% critical strike chance.</span><br>';
+            }
         }
         if(item.critPower){
-            description += '<span style="color: #33ee33">+' + item.critPower * 100 + '% critical strike power.</span><br>';
+            if(item.critPower > 0){
+                description += '<span style="color: #33ee33">+' + item.critPower * 100 + '% critical strike power.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.critPower * 100 + '% critical strike power.</span><br>';
+            }
         }
         if(item.movementSpeed){
-            description += '<span style="color: #33ee33">+' + item.movementSpeed + ' movement speed.</span><br>';
+            if(item.movementSpeed > 0){
+                description += '<span style="color: #33ee33">+' + item.movementSpeed + ' movement speed.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.movementSpeed + ' movement speed.</span><br>';
+            }
         }
         if(item.equip === 'consume'){
             description += 'Right click to use.<br>';

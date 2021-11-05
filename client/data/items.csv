@@ -152,7 +152,7 @@ diamondshield,Diamond Shield,5.0,1.00,277,false,1,shield,Shield,0,0,0,0,0.00,0.0
 woodenshield,Wooden Shield,0.0,1.00,278,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.20,0,0.00,0,0.50,0,0,0,0,none,none,none,none,0.50,
 nightmareshield,Nightmare Shield,5.0,1.00,279,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,15,2.00,0,0.50,0,0,0,0,mysticFlames,none,none,none,0.50,
 alienshield,Alien Shield,2.0,1.01,280,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.45,0,0.51,0,0,0,0,alienFlames,none,none,none,0.50,
-goldenshield,Golden Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0.51,0,0,0,0,none,none,none,none,0.50,
+royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0.51,0,0,0,0,none,none,none,none,0.50,
 warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,0.50,
 goldtoken,Gold Token,3.0,0.00,283,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
 ashtoken,Ash Token,1.0,0.00,284,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
@@ -186,6 +186,36 @@ jellyboots,Jelly Boots,2.0,1.00,311,false,1,boots,Boots,0,0,0,0,0.00,4.25,0,0,0.
 santaboots,Santa Boots,3.0,1.01,312,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.75,0,0.51,0,0,0,0,none,none,none,none,0.50,
 muddyboots,Muddy Boots,1.0,1.01,313,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,44,0.00,0,0.00,-2,0.51,0,0,0,0,none,none,none,none,0.50,
 midnightboots,Midnight Boots,4.0,1.01,314,false,1,boots,Boots,0,0,0,0,0.50,0.50,0,0,0.00,22.17,0.33,3,0,0.00,0,0.00,0,0.19,0,0,0,0,darkFlames,none,none,none,0.50,
+farminggloves,Farming Gloves,0.0,1.00,315,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,0.75,
+fireproofgloves,Fireproof Gloves,4.0,1.00,316,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,10,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,0.75,
+frozengloves,Frozen Gloves,2.0,0.99,317,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.20,0,0.24,0,0,0,0,frozenFlames,none,none,none,0.75,
+snowgloves,Snow Gloves,1.0,1.00,318,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,0.75,
+azuregloves,Azure Gloves,3.0,1.01,319,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.25,0,0.00,0,0.26,0,0,0,0,none,none,none,none,0.75,
+mysticgloves,Mystic Gloves,5.0,1.00,320,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,18,0.50,0,0.25,0,0,0,0,none,none,none,none,0.75,
+copperring,Copper Ring,0.5,1.39,339,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,0,1.39,0,0,0,0,none,none,none,none,0.00,Ring of Protection.
+ironring,Iron Ring,1.0,0.19,340,false,1,accessory,Ring,0,0,0,0,0.30,0.45,0,0,0.00,2.04,0.19,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,Ring of Luck.
+goldring,Gold Ring,2.0,0.68,341,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,1.35,0,0.68,0,0,0,0,none,none,none,none,0.00,Ring of Mana Regen.
+amethystring,Amethyst Ring,2.5,0.53,342,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,1.35,0,0.00,0,0.53,0,0,0,0,none,none,none,none,0.00,Ring of Health Regen.
+azuritering,Azurite Ring,3.0,0.38,343,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,42,0.00,0,0.38,0,0,0,0,none,none,none,none,0.00,Ring of Mana.
+emeralditering,Emeraldite Ring,3.5,0.32,344,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,42,0.00,0,0.00,0,0.32,0,0,0,0,none,none,none,none,0.00,Ring of Health.
+rubyring,Ruby Ring,4.0,0.27,345,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,3,0.27,0,0,0,0,none,none,none,none,0.00,Ring of Swiftness.
+diamondring,Diamond Ring,5.0,0.20,346,false,1,accessory,Ring,20,0,0,0,0.00,0.00,0,0,0.00,20.00,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,Ring of Strength.
+coppernecklace,Copper Necklace,0.5,1.43,347,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.70,0,0.00,0,1.43,0,0,0,0,none,none,none,none,0.00,Necklace of Resilience.
+ironnecklace,Iron Necklace,1.0,0.56,348,false,1,accessory,Necklace,0,0,0,0,0.20,0.30,0,0,0.00,1.04,0.10,0,20,0.00,0,0.00,0,0.46,0,0,0,0,none,none,none,none,0.00,Necklace of Ninja.
+goldnecklace,Gold Necklace,2.0,0.62,349,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,20,0.70,0,0.62,0,0,0,0,none,none,none,none,0.00,Necklace of Magic.
+amethystnecklace,Amethyst Necklace,2.5,0.58,350,false,1,accessory,Necklace,10,0,0,0,0.00,0.00,0,0,0.00,10.00,0.30,0,0,0.70,0,0.00,0,0.27,0,0,0,0,none,none,none,none,0.00,Necklace of Escape.
+azuritenecklace,Azurite Necklace,3.0,0.43,351,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,16,0.00,2,0.43,0,0,0,0,none,none,none,none,0.00,Necklace of Sorcery.
+emeralditenecklace,Emeraldite Necklace,3.5,0.32,352,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,23,0.00,0,0.00,0,0.32,0,0,0,0,none,none,none,none,0.00,Necklace of Unbreaking.
+rubynecklace,Ruby Necklace,4.0,0.29,353,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.50,2,0.29,0,0,0,0,none,none,none,none,0.00,Necklace of Wizardry.
+diamondnecklace,Diamond Necklace,5.0,0.20,354,false,1,accessory,Necklace,10,0,0,0,0.20,0.30,0,0,0.00,19.36,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,Necklace of Power.
+amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,4.00,0,0,0.00,19.70,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
+amuletoffire,Amulet of Fire,5.0,0.20,356,false,1,accessory,Amulet,14,0,0,0,0.00,0.00,0,0,0.00,14.00,0.14,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,0.00,
+amuletofblood,Amulet of Blood,5.0,0.20,357,false,1,accessory,Amulet,5,0,0,0,0.30,0.35,0,0,0.00,20.02,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,0.00,
+amuletofwater,Amulet of Water,5.0,0.20,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.50,0,0.00,2,0.20,0,0,0,0,none,none,none,none,0.00,
+amuletofice,Amulet of Ice,5.0,0.20,359,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.40,0,0.20,0,0,0,0,none,none,none,none,0.00,
+amuletofnature,Amulet of Nature,5.0,0.20,360,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.60,23,0.00,0,0.20,0,0,0,0,none,none,none,none,0.00,
+amuletofriches,Amulet of Riches,5.0,0.20,361,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,1.05,0,0.20,0,0,0,0,none,none,none,none,0.00,
+amuletofspirits,Amulet of Spirits,5.0,0.20,362,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,16,0.00,16,0.00,0,0.20,0,0,0,0,none,none,none,none,0.00,
 wornaxe,Worn Axe,0.0,0.97,363,false,1,hotbar,Tool,0,1,0,0,0.00,0.00,0,10,0.00,2.00,0.67,0,0,0.00,0,0.00,0,0.00,0,10,0,0,wornaxe,none,none,none,0.30,
 copperaxe,Copper Axe,0.5,0.94,364,false,1,hotbar,Tool,0,2,0,0,0.00,0.00,0,10,0.00,4.00,0.64,0,0,0.00,0,0.00,0,0.00,0,20,0,0,copperaxe,none,none,none,0.30,
 ironaxe,Iron Axe,1.0,1.03,365,false,1,hotbar,Tool,0,4,0,0,0.00,0.00,0,10,0.00,8.00,0.73,0,0,0.00,0,0.00,0,0.00,0,30,0,0,ironaxe,none,none,none,0.30,
