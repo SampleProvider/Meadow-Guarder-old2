@@ -74,7 +74,7 @@
         "name":"Skeleton King",
         "hpMax":5000,
         "stats":{
-            "damage":50,
+            "damage":30,
             "defense":10,
             "hpRegen":20,
             "critChance":0,
