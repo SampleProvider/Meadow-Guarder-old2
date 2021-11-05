@@ -15,7 +15,7 @@ Inventory = function(socket,server){
     }
     self.getRarityColor = function(rarity){
         if(Math.floor(rarity) === 0){
-            return '#dddddd';
+            return '#666666';
         }
         if(Math.floor(rarity) === 1){
             return '#4082bf';
@@ -53,7 +53,7 @@ Inventory = function(socket,server){
             return '#dddd00';
         }
         if(type === 'Shield'){
-            return '#dddddd';
+            return '#666666';
         }
         if(type === 'Bundle'){
             return '#77dd33';
@@ -575,6 +575,17 @@ Inventory = function(socket,server){
                     hotbarSlot.style.border = '1px solid #ffff00';
                     hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
                 }
+                hotbarSlot.onclick = function(){
+                    var hotbarSlots = document.getElementsByClassName('hotbarSlot');
+                    for(var i = 0;i < hotbarSlots.length;i++){
+                        hotbarSlots[i].style.border = '1px solid #000000';
+                        hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
+                    }
+                    hotbarSlot.style.border = '1px solid #ffff00';
+                    hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
+                    self.hotbarSelectedItem = parseInt(index);
+                    socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
+                }
                 hotbarSlot.onmouseover = function(){};
                 hotbarSlot.onmouseout = function(){};
             }
@@ -603,17 +614,6 @@ Inventory = function(socket,server){
                         itemAmountDiv.className = 'itemAmountDiv';
                         itemAmountDiv.appendChild(itemAmount);
                         hotbarSlot.appendChild(itemAmountDiv);
-                    }
-                    hotbarSlot.onclick = function(){
-                        var hotbarSlots = document.getElementsByClassName('hotbarSlot');
-                        for(var i = 0;i < hotbarSlots.length;i++){
-                            hotbarSlots[i].style.border = '1px solid #000000';
-                            hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
-                        }
-                        hotbarSlot.style.border = '1px solid #ffff00';
-                        hotbarSlot.className = 'hotbarSlot hotbarSlotSelected';
-                        self.hotbarSelectedItem = index;
-                        socket.emit('hotbarSelectedItem',self.hotbarSelectedItem);
                     }
                     hotbarSlot.onmouseover = function(){
                         updateInventoryPopupMenu('itemDescriptions',index);

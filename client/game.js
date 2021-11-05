@@ -885,6 +885,9 @@ dropItem = function(click){
 }
 
 document.onkeydown = function(event){
+    if(!selfId){
+        return;
+    }
     if(chatPress){
         return;
     }
@@ -995,6 +998,9 @@ document.oncontextmenu = function(event){
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){
+    if(!selfId){
+        return;
+    }
     if(scrollAllowed === false){
         return;
     }
