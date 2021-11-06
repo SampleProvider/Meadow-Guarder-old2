@@ -806,7 +806,7 @@ Player = function(param,socket){
         damage:0,
         defense:0,
         hpRegen:2,
-        manaRegen:1,
+        manaRegen:2,
         critChance:0,
         critPower:0,
     }
@@ -1316,7 +1316,7 @@ Player = function(param,socket){
                 damage:0,
                 defense:0,
                 hpRegen:2,
-                manaRegen:1,
+                manaRegen:2,
                 critChance:0,
                 critPower:0,
             }
@@ -1386,7 +1386,7 @@ Player = function(param,socket){
                                             }
                                         }
                                         else{
-                                            self.weaponData[j] = attackData[item.attacks][j];
+                                            self.weaponData[j] = Object.create(attackData[item.attacks][j]);
                                         }
                                     }
                                 }
@@ -1439,7 +1439,7 @@ Player = function(param,socket){
                                         }
                                     }
                                     else{
-                                        self.weaponData[j] = attackData[item.attacks][j];
+                                        self.weaponData[j] = Object.create(attackData[item.attacks][j]);
                                     }
                                 }
                             }

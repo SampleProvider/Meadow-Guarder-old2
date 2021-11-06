@@ -25,13 +25,31 @@
         "animations":2,
         "collisionType":"remove"
     },
-    "iceball":{
+    "frozenflames":{
         "width":13,
         "height":8,
         "animations":2,
         "collisionType":"remove"
     },
-    "blueiceball":{
+    "bluefrozenflames":{
+        "width":13,
+        "height":8,
+        "animations":2,
+        "collisionType":"remove"
+    },
+    "mysticflames":{
+        "width":13,
+        "height":8,
+        "animations":2,
+        "collisionType":"remove"
+    },
+    "alienflames":{
+        "width":13,
+        "height":8,
+        "animations":2,
+        "collisionType":"remove"
+    },
+    "darkflames":{
         "width":13,
         "height":8,
         "animations":2,
