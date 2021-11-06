@@ -775,6 +775,15 @@ canvas {
     right: -1px;
     font-size: 15px;
 }
+.cooldownDiv {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    height: 0%;
+    opacity: 0.5;
+    background-color: #ff0000;
+}
 .outlineImage {
     position: relative;
     left: 0px;

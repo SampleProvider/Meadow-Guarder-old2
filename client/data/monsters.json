@@ -132,9 +132,21 @@
                 "chance":0.5,
                 "amount":1
             },
+            "healthpotion":{
+                "chance":1,
+                "amount":10
+            },
+            "greaterhealthpotion":{
+                "chance":1,
+                "amount":3
+            },
             "manapotion":{
                 "chance":1,
                 "amount":10
+            },
+            "greatermanapotion":{
+                "chance":1,
+                "amount":3
             }
         },
         "img":{

@@ -13,7 +13,7 @@
         }]
     },
     "coppersword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"coppersword",
             "param":{
@@ -27,7 +27,7 @@
         }]
     },
     "ironsword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironsword",
             "param":{
@@ -41,7 +41,7 @@
         }]
     },
     "goldsword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldsword",
             "param":{
@@ -55,7 +55,7 @@
         }]
     },
     "amethystsword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystsword",
             "param":{
@@ -69,7 +69,7 @@
         }]
     },
     "azuritesword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuritesword",
             "param":{
@@ -83,7 +83,7 @@
         }]
     },
     "emeralditesword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditesword",
             "param":{
@@ -97,7 +97,7 @@
         }]
     },
     "rubysword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubysword",
             "param":{
@@ -111,7 +111,7 @@
         }]
     },
     "diamondsword":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondsword",
             "param":{
@@ -125,7 +125,7 @@
         }]
     },
     "copperstaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":3,
             "projectileType":"fireball",
@@ -133,7 +133,7 @@
         }]
     },
     "ironstaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":5,
             "projectileType":"fireball",
@@ -141,7 +141,7 @@
         }]
     },
     "goldstaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":9,
             "projectileType":"fireball",
@@ -149,7 +149,7 @@
         }]
     },
     "amethyststaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":12,
             "projectileType":"fireball",
@@ -157,7 +157,7 @@
         }]
     },
     "azuritestaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":13,
             "projectileType":"fireball",
@@ -165,7 +165,7 @@
         }]
     },
     "emeralditestaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":16,
             "projectileType":"fireball",
@@ -173,7 +173,7 @@
         }]
     },
     "rubystaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":19,
             "projectileType":"fireball",
@@ -181,7 +181,7 @@
         }]
     },
     "diamondstaff":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "manaCost":24,
             "projectileType":"fireball",
@@ -189,7 +189,7 @@
         }]
     },
     "copperwaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"copperwaraxe",
             "param":{
@@ -203,7 +203,7 @@
         }]
     },
     "ironwaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironwaraxe",
             "param":{
@@ -217,7 +217,7 @@
         }]
     },
     "goldwaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldwaraxe",
             "param":{
@@ -231,7 +231,7 @@
         }]
     },
     "amethystwaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystwaraxe",
             "param":{
@@ -245,7 +245,7 @@
         }]
     },
     "azuritewaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuritewaraxe",
             "param":{
@@ -259,7 +259,7 @@
         }]
     },
     "emeralditewaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditewaraxe",
             "param":{
@@ -273,7 +273,7 @@
         }]
     },
     "rubywaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubywaraxe",
             "param":{
@@ -287,7 +287,7 @@
         }]
     },
     "diamondwaraxe":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondwaraxe",
             "param":{
@@ -301,7 +301,7 @@
         }]
     },
     "copperclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"copperclaw",
             "param":{
@@ -315,7 +315,7 @@
         }]
     },
     "ironclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironclaw",
             "param":{
@@ -329,7 +329,7 @@
         }]
     },
     "goldclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldclaw",
             "param":{
@@ -343,7 +343,7 @@
         }]
     },
     "amethystclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystclaw",
             "param":{
@@ -357,7 +357,7 @@
         }]
     },
     "azuriteclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuriteclaw",
             "param":{
@@ -371,7 +371,7 @@
         }]
     },
     "emeralditeclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditeclaw",
             "param":{
@@ -385,7 +385,7 @@
         }]
     },
     "rubyclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubyclaw",
             "param":{
@@ -399,7 +399,7 @@
         }]
     },
     "diamondclaw":{
-        "3":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondclaw",
             "param":{
@@ -485,7 +485,7 @@
         }]
     },
     "azuritegun":{
-        "2":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"bullet",
             "param":{
@@ -495,7 +495,7 @@
         }]
     },
     "emeralditegun":{
-        "2":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"bullet",
             "param":{
@@ -505,7 +505,7 @@
         }]
     },
     "rubygun":{
-        "2":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"bullet",
             "param":{
@@ -515,7 +515,7 @@
         }]
     },
     "diamondgun":{
-        "2":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"bullet",
             "param":{
@@ -525,7 +525,7 @@
         }]
     },
     "coppershiv":{
-        "15":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"coppershiv",
             "param":{
@@ -540,7 +540,6 @@
     "mysticflames":{
         "20":[{
             "id":"projectile",
-            "manaCost":10,
             "projectileType":"mysticflames",
             "param":{
                 "speed":35,
@@ -585,7 +584,7 @@
         }]
     },
     "wornaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"wornaxe",
             "param":{
@@ -599,7 +598,7 @@
         }]
     },
     "copperaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"copperaxe",
             "param":{
@@ -613,7 +612,7 @@
         }]
     },
     "ironaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironaxe",
             "param":{
@@ -627,7 +626,7 @@
         }]
     },
     "goldaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldaxe",
             "param":{
@@ -641,7 +640,7 @@
         }]
     },
     "amethystaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystaxe",
             "param":{
@@ -655,7 +654,7 @@
         }]
     },
     "azuriteaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuriteaxe",
             "param":{
@@ -669,7 +668,7 @@
         }]
     },
     "emeralditeaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditeaxe",
             "param":{
@@ -683,7 +682,7 @@
         }]
     },
     "rubyaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubyaxe",
             "param":{
@@ -697,7 +696,7 @@
         }]
     },
     "diamondaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondaxe",
             "param":{
@@ -711,7 +710,7 @@
         }]
     },
     "wornpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"wornpickaxe",
             "param":{
@@ -725,7 +724,7 @@
         }]
     },
     "copperpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"copperpickaxe",
             "param":{
@@ -739,7 +738,7 @@
         }]
     },
     "ironpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironpickaxe",
             "param":{
@@ -753,7 +752,7 @@
         }]
     },
     "goldpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldpickaxe",
             "param":{
@@ -767,7 +766,7 @@
         }]
     },
     "amethystpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystpickaxe",
             "param":{
@@ -781,7 +780,7 @@
         }]
     },
     "azuritepickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuritepickaxe",
             "param":{
@@ -795,7 +794,7 @@
         }]
     },
     "emeralditepickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditepickaxe",
             "param":{
@@ -809,7 +808,7 @@
         }]
     },
     "rubypickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubypickaxe",
             "param":{
@@ -823,7 +822,7 @@
         }]
     },
     "diamondpickaxe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondpickaxe",
             "param":{
@@ -837,7 +836,7 @@
         }]
     },
     "wornscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"wornscythe",
             "param":{
@@ -851,7 +850,7 @@
         }]
     },
     "copperscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"copperscythe",
             "param":{
@@ -865,7 +864,7 @@
         }]
     },
     "ironscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"ironscythe",
             "param":{
@@ -879,7 +878,7 @@
         }]
     },
     "goldscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"goldscythe",
             "param":{
@@ -893,7 +892,7 @@
         }]
     },
     "amethystscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"amethystscythe",
             "param":{
@@ -907,7 +906,7 @@
         }]
     },
     "azuritescythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"azuritescythe",
             "param":{
@@ -921,7 +920,7 @@
         }]
     },
     "emeralditescythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"emeralditescythe",
             "param":{
@@ -935,7 +934,7 @@
         }]
     },
     "rubyscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"rubyscythe",
             "param":{
@@ -949,7 +948,7 @@
         }]
     },
     "diamondscythe":{
-        "10":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"diamondscythe",
             "param":{
@@ -962,10 +961,28 @@
             }
         }]
     },
+    "healthpotion":{
+        "1":[{
+            "id":"none",
+            "hpCost":-50
+        }]
+    },
+    "greaterhealthpotion":{
+        "1":[{
+            "id":"none",
+            "hpCost":-150
+        }]
+    },
     "manapotion":{
         "1":[{
             "id":"none",
             "manaCost":-100
+        }]
+    },
+    "greatermanapotion":{
+        "1":[{
+            "id":"none",
+            "manaCost":-200
         }]
     }
 }

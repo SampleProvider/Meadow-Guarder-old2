@@ -38,6 +38,8 @@ var currentMap = '';
 
 var respawnTimer = 0;
 
+var attacking = false;
+
 var resetCanvas = function(ctx){
     ctx.webkitImageSmoothingEnabled = false;
     ctx.filter = 'url(#remove-alpha)';
@@ -72,11 +74,30 @@ Img.items2select.src = '/client/img/items2select.png';
 
 var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
-    inventory.items = pack.items;
+    var items = pack.items;
+    for(var i in inventory.items){
+        if(inventory.items[i].cooldown){
+            items[i].cooldown = inventory.items[i].cooldown;
+        }
+        else{
+            items[i].cooldown = 0;
+        }
+    }
+    inventory.items = items;
     inventory.refreshInventory();
 });
 socket.on('updateItem',function(pack){
-    inventory.items = pack.items;
+    var items = pack.items;
+    for(var i in inventory.items){
+        console.log(i,inventory.items[i].cooldown)
+        if(inventory.items[i].cooldown){
+            items[i].cooldown = inventory.items[i].cooldown;
+        }
+        else{
+            items[i].cooldown = 0;
+        }
+    }
+    inventory.items = items;
     inventory.refreshItem(pack.index);
 });
 socket.on('refreshMenu',function(pack){
@@ -824,6 +845,48 @@ var loop = function(){
     window.requestAnimationFrame(loop);
 }
 
+setInterval(function(){
+    if(attacking){
+        if(inventory.items[inventory.hotbarSelectedItem]){
+            if(inventory.items[inventory.hotbarSelectedItem].id){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
+                    if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
+                        socket.emit('attack');
+                        for(var i in inventory.items){
+                            if(inventory.items[i]){
+                                if(inventory.items[i].id){
+                                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
+                                        inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
+                                        document.getElementById('cooldownDiv' + i).style.height = '100%';
+                                        if(i >= 0 && i <= 9){
+                                            document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    for(var i in inventory.items){
+        if(inventory.items[i]){
+            if(inventory.items[i].id){
+                if(inventory.items[i].cooldown > 0){
+                    inventory.items[i].cooldown -= 1;
+                    document.getElementById('cooldownDiv' + i).style.height = 100 * inventory.items[i].cooldown / Item.list[inventory.items[i].id].useTime + '%';
+                    if(i >= 0 && i <= 9){
+                        document.getElementById('hotbarCooldownDiv' + i).style.height = 100 * inventory.items[i].cooldown / Item.list[inventory.items[i].id].useTime + '%';
+                    }
+                }
+            }
+        }
+    }
+    socket.emit('nextReload');
+},50);
+
 updateInventoryPopupMenu = function(slotType,index){
     if(index === -1){
         itemMenu.style.display = 'none';
@@ -964,18 +1027,42 @@ mouseDown = function(event){
         socket.emit('timeout');
     }
     if(event.button === 0){
-        socket.emit('keyPress',{inputId:'attack',state:true});
+        socket.emit('keyPress',{inputId:'leftClick',state:true});
+        if(inventory.items[inventory.hotbarSelectedItem]){
+            if(inventory.items[inventory.hotbarSelectedItem].id){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
+                    if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
+                        socket.emit('attack');
+                        attacking = true;
+                        for(var i in inventory.items){
+                            if(inventory.items[i]){
+                                if(inventory.items[i].id){
+                                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
+                                        inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
+                                        document.getElementById('cooldownDiv' + i).style.height = '100%';
+                                        if(i >= 0 && i <= 9){
+                                            document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     if(event.button === 2){
-        socket.emit('keyPress',{inputId:'second',state:true});
+        socket.emit('keyPress',{inputId:'rightClick',state:true});
     }
 }
 mouseUp = function(event){
     if(event.button === 0){
-        socket.emit('keyPress',{inputId:'attack',state:false});
+        socket.emit('keyPress',{inputId:'leftClick',state:false});
+        attacking = false;
     }
     if(event.button === 2){
-        socket.emit('keyPress',{inputId:'second',state:false});
+        socket.emit('keyPress',{inputId:'rightClick',state:false});
     }
 }
 mouseOut = function(event){

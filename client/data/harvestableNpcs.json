@@ -47,12 +47,7 @@
         "harvestOffsetY":0
     },
     "giantgoldcrystal":{
-        "itemDrops":{
-            "goldore":{
-                "chance":1,
-                "amount":2
-            }
-        },
+        "itemDrops":{},
         "harvestPower":10,
         "harvestTool":"pickaxe",
         "harvestHp":250,

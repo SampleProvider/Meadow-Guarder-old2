@@ -661,28 +661,33 @@ Actor = function(param){
         var projectile = new Projectile(properties);
         return projectile;
     }
-    self.doAttack = function(){
+    self.doAttack = function(data,reload){
         if(self.canAttack === false){
             return;
         }
-        for(var i in self.weaponData){
-            if(self.reload % parseInt(i) === 0){
-                for(var j = 0;j < self.weaponData[i].length;j++){
-                    if(self.weaponData[i][j]){
-                        if(self.weaponData[i][j].manaCost){
-                            if(self.mana >= self.weaponData[i][j].manaCost){
-                                self.mana -= self.weaponData[i][j].manaCost;
+        for(var i in data){
+            if(reload % parseInt(i) === 0){
+                for(var j = 0;j < data[i].length;j++){
+                    if(data[i][j]){
+                        if(data[i][j].manaCost){
+                            if(self.mana >= data[i][j].manaCost){
+                                self.mana -= data[i][j].manaCost;
                             }
                             else{
                                 continue;
                             }
                         }
-                        switch(self.weaponData[i][j].id){
+                        if(data[i][j].hpCost){
+                            if(self.hp >= data[i][j].hpCost){
+                                self.hp -= data[i][j].hpCost;
+                            }
+                            else{
+                                continue;
+                            }
+                        }
+                        switch(data[i][j].id){
                             case "projectile":
-                                self.shootProjectile(self.weaponData[i][j].projectileType,self.weaponData[i][j].param);
-                                break;
-                            case "harvest":
-                                self.updateHarvest();
+                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
                                 break;
                         }
                     }
@@ -736,8 +741,8 @@ Player = function(param,socket){
         right:false,
         up:false,
         down:false,
-        attack:false,
-        second:false,
+        leftClick:false,
+        rightClick:false,
         heal:false,
     };
     self.keyMap = {
@@ -745,8 +750,8 @@ Player = function(param,socket){
         down:'s',
         left:'a',
         right:'d',
-        attack:'attack',
-        second:'second',
+        leftClick:'leftClick',
+        rightClick:'rightClick',
         heal:' ',
     };
     self.secondKeyMap = {
@@ -754,8 +759,8 @@ Player = function(param,socket){
         down:'ArrowDown',
         left:'ArrowLeft',
         right:'ArrowRight',
-        attack:'attack',
-        second:'second',
+        leftClick:'leftClick',
+        rightClick:'rightClick',
         heal:'Shift',
     };
     self.thirdKeyMap = {
@@ -763,8 +768,8 @@ Player = function(param,socket){
         down:'S',
         left:'A',
         right:'D',
-        attack:'attack',
-        second:'second',
+        leftClick:'leftClick',
+        rightClick:'rightClick',
         heal:' ',
     };
 
@@ -818,8 +823,10 @@ Player = function(param,socket){
 
     self.currentItem = '';
 
-    self.reload = 0;
-    self.weaponData = {};
+    self.mainReload = 0;
+    self.passiveReload = 0;
+    self.mainAttackData = {};
+    self.passiveAttackData = {};
     self.useTime = 0;
 
     self.lastChat = 0;
@@ -872,8 +879,8 @@ Player = function(param,socket){
             right:false,
             up:false,
             down:false,
-            attack:false,
-            second:false,
+            leftClick:false,
+            rightClick:false,
             heal:false,
         }
     }
@@ -891,10 +898,7 @@ Player = function(param,socket){
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
         self.updateStats();
-        self.updateAttack();
-        self.updateHp();
         self.updateXp();
-        self.updateMana();
         self.updateAnimation();
         if(self.mapChange === 0){
             socket.emit('changeMap',self.transporter);
@@ -952,38 +956,17 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
-        self.reload += 1;
-        if(self.keyPress.attack){
-            self.doAttack();
-            if(self.canAttack){
-                if(self.inventory.items[self.inventory.hotbarSelectedItem]){
-                    if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                        if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
-                            self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
-                            if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
-                                self.inventory.items[self.inventory.hotbarSelectedItem] = {};
-                            }
-                            self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
-                            self.keyPress.attack = false;
-                        }
-                    }
-                }
-            }
-        }
-        else{
-            if(self.reload % self.useTime === 0){
-                self.reload -= 1;
-            }
-        }
+        self.passiveReload += 1;
+        self.doAttack(self.passiveAttackData,self.passiveReload);
     }
     self.updateQuest = function(){
-        if(self.keyPress.second === true){
+        if(self.keyPress.rightClick === true){
             for(var i in Npc.list){
                 if(Npc.list[i].map === self.map){
                     var npc = Npc.list[i];
                     if(npc.x - npc.width / 2 <= self.mouseX && npc.x + npc.width / 2 >= self.mouseX && npc.y - npc.height / 2 <= self.mouseY && npc.y + npc.height / 2 >= self.mouseY){
                         if(self.getDistance(npc) > 128){
-                            self.keyPress.second = false;
+                            self.keyPress.rightClick = false;
                             continue;
                         }
                         var response1 = undefined;
@@ -1313,7 +1296,7 @@ Player = function(param,socket){
                         else{
                             self.startDialogue('',response1,response2,response3,response4);
                         }
-                        self.keyPress.second = false;
+                        self.keyPress.rightClick = false;
                     }
                 }
             }
@@ -1344,7 +1327,8 @@ Player = function(param,socket){
 
             self.maxSpeed = 10;
 
-            self.weaponData = {};
+            self.mainAttackData = {};
+            self.passiveAttackData = {};
             self.useTime = 0;
 
             var maxSlots = self.inventory.maxSlots;
@@ -1394,13 +1378,27 @@ Player = function(param,socket){
                             if(item.attacks !== undefined){
                                 if(attackData[item.attacks]){
                                     for(var j in attackData[item.attacks]){
-                                        if(self.weaponData[j]){
+                                        if(self.mainAttackData[j]){
                                             for(var k in attackData[item.attacks][j]){
-                                                self.weaponData[j].push(attackData[item.attacks][j][k]);
+                                                self.mainAttackData[j].push(attackData[item.attacks][j][k]);
                                             }
                                         }
                                         else{
-                                            self.weaponData[j] = Object.create(attackData[item.attacks][j]);
+                                            self.mainAttackData[j] = Object.create(attackData[item.attacks][j]);
+                                        }
+                                    }
+                                }
+                            }
+                            if(item.passives !== undefined){
+                                if(attackData[item.passives]){
+                                    for(var j in attackData[item.passives]){
+                                        if(self.passiveAttackData[j]){
+                                            for(var k in attackData[item.passives][j]){
+                                                self.passiveAttackData[j].push(attackData[item.passives][j][k]);
+                                            }
+                                        }
+                                        else{
+                                            self.passiveAttackData[j] = Object.create(attackData[item.passives][j]);
                                         }
                                     }
                                 }
@@ -1447,13 +1445,27 @@ Player = function(param,socket){
                         if(item.attacks !== undefined){
                             if(attackData[item.attacks]){
                                 for(var j in attackData[item.attacks]){
-                                    if(self.weaponData[j]){
+                                    if(self.mainAttackData[j]){
                                         for(var k in attackData[item.attacks][j]){
-                                            self.weaponData[j].push(attackData[item.attacks][j][k]);
+                                            self.mainAttackData[j].push(attackData[item.attacks][j][k]);
                                         }
                                     }
                                     else{
-                                        self.weaponData[j] = Object.create(attackData[item.attacks][j]);
+                                        self.mainAttackData[j] = Object.create(attackData[item.attacks][j]);
+                                    }
+                                }
+                            }
+                        }
+                        if(item.passives !== undefined){
+                            if(attackData[item.passives]){
+                                for(var j in attackData[item.passives]){
+                                    if(self.passiveAttackData[j]){
+                                        for(var k in attackData[item.passives][j]){
+                                            self.passiveAttackData[j].push(attackData[item.passives][j][k]);
+                                        }
+                                    }
+                                    else{
+                                        self.passiveAttackData[j] = Object.create(attackData[item.passives][j]);
                                     }
                                 }
                             }
@@ -1476,7 +1488,7 @@ Player = function(param,socket){
         }
     }
     self.updateHarvest = function(){
-        if(self.keyPress.attack === true){
+        if(self.keyPress.leftClick === true){
             if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
                 for(var i in HarvestableNpc.list){
                     if(HarvestableNpc.list[i].img !== 'none'){
@@ -1589,8 +1601,8 @@ Player.onConnect = function(socket,username){
                     down:false,
                     left:false,
                     right:false,
-                    attack:false,
-                    second:false,
+                    leftClick:false,
+                    rightClick:false,
                     heal:false,
                 };
             }
@@ -1609,15 +1621,15 @@ Player.onConnect = function(socket,username){
             if(data.inputId === player.keyMap.down || data.inputId === player.secondKeyMap.down || data.inputId === player.thirdKeyMap.down){
                 player.keyPress.down = data.state;
             }
-            if(data.inputId === player.keyMap.attack || data.inputId === player.secondKeyMap.attack || data.inputId === player.thirdKeyMap.attack){
-                player.keyPress.attack = data.state;
+            if(data.inputId === player.keyMap.leftClick || data.inputId === player.secondKeyMap.leftClick || data.inputId === player.thirdKeyMap.leftClick){
+                player.keyPress.leftClick = data.state;
                 if(data.state === true){
                     for(var i in DroppedItem.list){
                         if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
                             if(player.getSquareDistance(DroppedItem.list[i]) < 32){
                                 if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
                                     if(player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount) !== false){
-                                        player.keyPress.attack = false;
+                                        player.keyPress.leftClick = false;
                                         delete DroppedItem.list[i];
                                         break;
                                     }
@@ -1627,8 +1639,8 @@ Player.onConnect = function(socket,username){
                     }
                 }
             }
-            if(data.inputId === player.keyMap.second || data.inputId === player.secondKeyMap.second || data.inputId === player.thirdKeyMap.second){
-                player.keyPress.second = data.state;
+            if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
+                player.keyPress.rightClick = data.state;
             }
             if(data.inputId === player.keyMap.heal || data.inputId === player.secondKeyMap.heal || data.inputId === player.thirdKeyMap.heal){
                 player.keyPress.heal = data.state;
@@ -1637,6 +1649,24 @@ Player.onConnect = function(socket,username){
                 player.direction = (Math.atan2(data.state.y,data.state.x) / Math.PI * 180);
                 player.mouseX = data.state.x + player.x;
                 player.mouseY = data.state.y + player.y;
+            }
+        });
+
+        socket.on('attack',function(data){
+            player.mainReload += 1;
+            player.doAttack(player.mainAttackData,player.mainReload);
+            if(player.canAttack){
+                if(player.inventory.items[player.inventory.hotbarSelectedItem]){
+                    if(player.inventory.items[player.inventory.hotbarSelectedItem].id){
+                        if(Item.list[player.inventory.items[player.inventory.hotbarSelectedItem].id].equip === 'consume'){
+                            player.inventory.items[player.inventory.hotbarSelectedItem].amount -= 1;
+                            if(player.inventory.items[player.inventory.hotbarSelectedItem].amount <= 0){
+                                player.inventory.items[player.inventory.hotbarSelectedItem] = {};
+                            }
+                            player.inventory.refreshItem(player.inventory.hotbarSelectedItem);
+                        }
+                    }
+                }
             }
         });
 
@@ -1668,6 +1698,12 @@ Player.onConnect = function(socket,username){
 
         socket.on('init',function(data){
             Player.getAllInitPack(socket);
+        });
+
+        socket.on('nextReload',function(data){
+            player.updateAttack();
+            player.updateHp();
+            player.updateMana();
         });
 
         socket.on('signInFinished',function(data){
@@ -2021,7 +2057,8 @@ Monster = function(param){
         waitTimeY:60,
     };
 
-    self.reload = 0;
+    self.mainReload = 0;
+    self.passiveReload = 0;
     
     self.randomWalk(true);
     self.onHit = function(pt){
@@ -2184,12 +2221,15 @@ Monster = function(param){
     }
     self.updateAttack = function(){
         if(!self.target){
-            self.reload = 0;
+            self.mainReload = 0;
+            self.passiveReload = 0;
             return;
         }
-        self.reload += 1;
+        self.mainReload += 1;
+        self.passiveReload += 1;
         self.direction = Math.atan2(Player.list[self.target].y - self.y,Player.list[self.target].x - self.x) / Math.PI * 180;
-        self.doAttack();
+        self.doAttack(self.mainAttackData,self.mainReload);
+        self.doAttack(self.passiveAttackData,self.passiveReload);
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){

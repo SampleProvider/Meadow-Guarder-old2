@@ -261,6 +261,7 @@ Inventory = function(socket,server){
                         self.draggingItem = {
                             id:item1.id,
                             amount:item1.amount,
+                            cooldown:item1.cooldown,
                         };
                         self.items[index1] = {};
                         self.refreshItem(index1);
@@ -269,6 +270,7 @@ Inventory = function(socket,server){
                         self.draggingItem = {
                             id:item1.id,
                             amount:1,
+                            cooldown:item1.cooldown,
                         };
                         self.items[index1].amount -= 1;
                         if(self.items[index1].amount === 0){
@@ -314,6 +316,7 @@ Inventory = function(socket,server){
                             var item = {
                                 id:self.draggingItem.id,
                                 amount:self.draggingItem.amount,
+                                cooldown:self.draggingItem.cooldown,
                             };
                             self.draggingItem = item2;
                             self.items[index2] = item;
@@ -327,6 +330,7 @@ Inventory = function(socket,server){
                         var item = {
                             id:self.draggingItem.id,
                             amount:self.draggingItem.amount,
+                            cooldown:self.draggingItem.cooldown,
                         };
                         self.draggingItem = item2;
                         self.items[index2] = item;
@@ -337,6 +341,7 @@ Inventory = function(socket,server){
                             var item = {
                                 id:self.draggingItem.id,
                                 amount:self.draggingItem.amount,
+                                cooldown:self.draggingItem.cooldown,
                             };
                             self.draggingItem = item2;
                             self.items[index2] = item;
@@ -394,6 +399,7 @@ Inventory = function(socket,server){
                         self.items[index2] = {
                             id:self.draggingItem.id,
                             amount:self.draggingItem.amount,
+                            cooldown:self.draggingItem.cooldown,
                         };
                         self.draggingItem = {};
                         self.refreshItem(index2);
@@ -402,6 +408,7 @@ Inventory = function(socket,server){
                         self.items[index2] = {
                             id:self.draggingItem.id,
                             amount:1,
+                            cooldown:self.draggingItem.cooldown,
                         };
                         self.draggingItem.amount -= 1;
                         if(self.draggingItem.amount === 0){
@@ -422,6 +429,7 @@ Inventory = function(socket,server){
                             self.items[index2] = {
                                 id:self.draggingItem.id,
                                 amount:1,
+                                cooldown:self.draggingItem.cooldown,
                             };
                             self.draggingItem.amount -= 1;
                             if(self.draggingItem.amount === 0){
@@ -448,26 +456,6 @@ Inventory = function(socket,server){
                 index2:index,
                 click:click,
             });
-            itemMenu.style.display = 'none';
-            if(self.draggingItem.id){
-                draggingItem.style.display = 'inline-block';
-                draggingItem.innerHTML = '';
-                self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
-                draggingItem.style.left = (rawMouseX - 32) + 'px';
-                draggingItem.style.top = (rawMouseY - 32) + 'px';
-                if(self.draggingItem.amount !== 1){
-                    var itemAmount = document.createElement('div');
-                    itemAmount.innerHTML = self.draggingItem.amount;
-                    itemAmount.className = 'UI-text-light itemAmount';
-                    var itemAmountDiv = document.createElement('div');
-                    itemAmountDiv.className = 'itemAmountLargeDiv';
-                    itemAmountDiv.appendChild(itemAmount);
-                    draggingItem.appendChild(itemAmountDiv);
-                }
-            }
-            else{
-                draggingItem.style.display = 'none';
-            }
         }
         else{
             socket.emit('dragItem',{
@@ -480,26 +468,32 @@ Inventory = function(socket,server){
                 index2:-1,
                 click:click,
             });
-            itemMenu.style.display = 'none';
-            if(self.draggingItem.id){
-                draggingItem.style.display = 'inline-block';
-                draggingItem.innerHTML = '';
-                self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
-                draggingItem.style.left = (rawMouseX - 32) + 'px';
-                draggingItem.style.top = (rawMouseY - 32) + 'px';
-                if(self.draggingItem.amount !== 1){
-                    var itemAmount = document.createElement('div');
-                    itemAmount.innerHTML = self.draggingItem.amount;
-                    itemAmount.className = 'UI-text-light itemAmount';
-                    var itemAmountDiv = document.createElement('div');
-                    itemAmountDiv.className = 'itemAmountLargeDiv';
-                    itemAmountDiv.appendChild(itemAmount);
-                    draggingItem.appendChild(itemAmountDiv);
-                }
+        }
+        console.log(self.draggingItem.cooldown)
+        itemMenu.style.display = 'none';
+        if(self.draggingItem.id){
+            draggingItem.style.display = 'inline-block';
+            draggingItem.innerHTML = '';
+            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+            draggingItem.style.left = (rawMouseX - 32) + 'px';
+            draggingItem.style.top = (rawMouseY - 32) + 'px';
+            if(self.draggingItem.amount !== 1){
+                var itemAmount = document.createElement('div');
+                itemAmount.innerHTML = self.draggingItem.amount;
+                itemAmount.className = 'UI-text-light itemAmount';
+                var itemAmountDiv = document.createElement('div');
+                itemAmountDiv.className = 'itemAmountLargeDiv';
+                itemAmountDiv.appendChild(itemAmount);
+                draggingItem.appendChild(itemAmountDiv);
             }
-            else{
-                draggingItem.style.display = 'none';
-            }
+            var cooldownDiv = document.createElement('div');
+            cooldownDiv.className = 'cooldownDiv';
+            cooldownDiv.id = 'cooldownDiv' + index;
+            cooldownDiv.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id] + "%";
+            draggingItem.appendChild(cooldownDiv);
+        }
+        else{
+            draggingItem.style.display = 'none';
         }
     }
     self.getDescription = function(item){
@@ -626,6 +620,10 @@ Inventory = function(socket,server){
             slot.onmouseover = function(){};
             slot.onmouseout = function(){};
             self.itemDescriptions[index] = '';
+            var cooldownDiv = document.createElement('div');
+            cooldownDiv.className = 'cooldownDiv';
+            cooldownDiv.id = 'cooldownDiv' + index;
+            slot.appendChild(cooldownDiv);
             if(index >= 0 && index <= 9){
                 var hotbarSlot = document.getElementById("hotbarSlot" + index);
                 hotbarSlot.innerHTML = "";
@@ -651,6 +649,10 @@ Inventory = function(socket,server){
                 }
                 hotbarSlot.onmouseover = function(){};
                 hotbarSlot.onmouseout = function(){};
+                var hotbarCooldownDiv = document.createElement('div');
+                hotbarCooldownDiv.className = 'cooldownDiv';
+                hotbarCooldownDiv.id = 'hotbarCooldownDiv' + index;
+                hotbarSlot.appendChild(hotbarCooldownDiv);
             }
             if(self.isItem(index)){
                 var item = Item.list[self.items[index].id];
@@ -666,6 +668,7 @@ Inventory = function(socket,server){
                     itemAmountDiv.appendChild(itemAmount);
                     slot.appendChild(itemAmountDiv);
                 }
+                cooldownDiv.style.height = 100 * self.items[index].cooldown / item.useTime + '%';
                 self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + self.getDescription(item) + '</div>';
                 if(index >= 0 && index <= 9){
                     self.drawItem(hotbarSlot,item.drawId,false);
@@ -678,6 +681,7 @@ Inventory = function(socket,server){
                         itemAmountDiv.appendChild(itemAmount);
                         hotbarSlot.appendChild(itemAmountDiv);
                     }
+                    hotbarCooldownDiv.style.height = 100 * self.items[index].cooldown / item.useTime + '%';
                     hotbarSlot.onmouseover = function(){
                         updateInventoryPopupMenu('itemDescriptions',index);
                     }
@@ -956,7 +960,6 @@ Inventory = function(socket,server){
             if(self.items['accessory3'] === undefined){
                 self.items['accessory3'] = {};
             }
-            delete self.items["ring"];
             self.refreshInventory();
         }
     }
