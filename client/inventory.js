@@ -469,7 +469,6 @@ Inventory = function(socket,server){
                 click:click,
             });
         }
-        console.log(self.draggingItem.cooldown)
         itemMenu.style.display = 'none';
         if(self.draggingItem.id){
             draggingItem.style.display = 'inline-block';
@@ -488,8 +487,7 @@ Inventory = function(socket,server){
             }
             var cooldownDiv = document.createElement('div');
             cooldownDiv.className = 'cooldownDiv';
-            cooldownDiv.id = 'cooldownDiv' + index;
-            cooldownDiv.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id] + "%";
+            cooldownDiv.style.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id].useTime + "%";
             draggingItem.appendChild(cooldownDiv);
         }
         else{
@@ -601,6 +599,14 @@ Inventory = function(socket,server){
             }
             else{
                 description += '<span style="color: #33ee33">' + item.movementSpeed + ' movement speed.</span><br>';
+            }
+        }
+        if(item.slots){
+            if(item.slots > 0){
+                description += '<span style="color: #33ee33">+' + item.slots + ' slots.</span><br>';
+            }
+            else{
+                description += '<span style="color: #33ee33">' + item.slots + ' slots.</span><br>';
             }
         }
         if(item.equip === 'consume'){
@@ -863,71 +869,61 @@ Inventory = function(socket,server){
             self.updateCraftClient(i);
         }
     }
-    self.refreshMenu = function(){
+    self.refreshMenu = function(oldMaxSlots){
         if(server === false){
-            var inventoryItems = document.getElementById("inventoryItems");
-            inventoryItems.innerHTML = "";
-            for(var i = 0;i < self.maxSlots;i++){
-                if(i % 10 === 0){
-                    var row = document.createElement('div');
-                    row.className = 'inventoryRow';
-                    inventoryItems.appendChild(row);
+            if(oldMaxSlots < self.maxSlots){
+                for(var i = oldMaxSlots;i < self.maxSlots;i++){
+                    if(i % 10 === 0){
+                        var row = document.createElement('div');
+                        row.id = 'inventoryRow' + Math.floor(i / 10);
+                        row.className = 'inventoryRow';
+                        inventoryItems.appendChild(row);
+                    }
+                    var div = document.createElement('div');
+                    div.id = 'inventorySlot' + i;
+                    div.className = 'inventorySlot';
+                    var row = document.getElementById('inventoryRow' + Math.floor(i / 10));
+                    row.appendChild(div);
                 }
-                var div = document.createElement('div');
-                div.id = 'inventorySlot' + i;
-                div.className = 'inventorySlot';
-                row.appendChild(div);
             }
-            var hotbarItems = document.getElementById("hotbarItems");
-            hotbarItems.innerHTML = "";
-            for(var i = 0;i < 10;i++){
-                if(i % 10 === 0){
-                    var row = document.createElement('div');
-                    row.className = 'hotbarRow';
-                    hotbarItems.appendChild(row);
+            else{
+                for(var i = oldMaxSlots - 1;i >= self.maxSlots;i--){
+                    if(i % 10 === 0){
+                        var row = document.getElementById('inventoryRow' + Math.floor(i / 10));
+                        row.remove();
+                    }
+                    else{
+                        var div = document.getElementById('inventorySlot' + i);
+                        div.remove();
+                    }
                 }
-                var div = document.createElement('div');
-                div.id = 'hotbarSlot' + i;
-                div.className = 'hotbarSlot hotbarSlotNormal';
-                row.appendChild(div);
             }
-            try{
-                var draggingItem = document.getElementById('draggingItem');
-                draggingItem.remove();
+            if(self.draggingItem.id){
+                draggingItem.style.display = 'inline-block';
+                draggingItem.innerHTML = '';
+                self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                draggingItem.style.left = (rawMouseX - 32) + 'px';
+                draggingItem.style.top = (rawMouseY - 32) + 'px';
+                if(self.draggingItem.amount !== 1){
+                    var itemAmount = document.createElement('div');
+                    itemAmount.innerHTML = self.draggingItem.amount;
+                    itemAmount.className = 'UI-text-light itemAmount';
+                    var itemAmountDiv = document.createElement('div');
+                    itemAmountDiv.className = 'itemAmountLargeDiv';
+                    itemAmountDiv.appendChild(itemAmount);
+                    draggingItem.appendChild(itemAmountDiv);
+                }
+                var cooldownDiv = document.createElement('div');
+                cooldownDiv.className = 'cooldownDiv';
+                cooldownDiv.style.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id].useTime + "%";
+                draggingItem.appendChild(cooldownDiv);
             }
-            catch(err){
-
-            }
-            var div = document.createElement('div');
-            div.id = 'draggingItem';
-            div.draggable = false;
-            gameDiv.appendChild(div);
-            var addSlot = function(i){
-                var div = document.createElement('div');
-                div.id = 'inventorySlot' + i;
-                div.className = 'inventorySlot';
-                inventoryItems.appendChild(div);
-            }
-            addSlot('helmet');
-            addSlot('chestplate');
-            addSlot('boots');
-            addSlot('gloves');
-            addSlot('shield');
-            addSlot('bundle');
-            addSlot('accessory1');
-            addSlot('accessory2');
-            addSlot('accessory3');
-            addSlot('trash');
-            inventorySlottrash.innerHTML = "<image class='itemImage' src='/client/websiteAssets/trash.png'></image>";
-            inventorySlottrash.onclick = function(){
-                self.runDraggingItemClient('trash',0);
-            }
-            inventorySlottrash.oncontextmenu = function(){
-                self.runDraggingItemClient('trash',2);
+            else{
+                draggingItem.style.display = 'none';
             }
         }
         else{
-            socket.emit('refreshMenu',self.maxSlots);
+            socket.emit('refreshMenu',{oldMaxSlots:oldMaxSlots,maxSlots:self.maxSlots});
             for(var i = 0;i < self.maxSlots;i++){
                 if(!self.items[i]){
                     self.items[i] = {};
@@ -986,10 +982,10 @@ Inventory = function(socket,server){
             self.addCraftClient(i);
         }
     }
-    self.refreshMenu();
     if(self.server){
         self.craftItems = require('./data/crafts.json');
         self.refreshCraft();
+        self.refreshMenu(0);
         socket.on("dragItem",function(data){
             try{
                 self.runDraggingItem(data);
@@ -1001,7 +997,7 @@ Inventory = function(socket,server){
         socket.on("hotbarSelectedItem",function(data){
             self.hotbarSelectedItem = data;
             self.updateStats = true;
-            Player.list[socket.id].keyPress.attack = false;
+            Player.list[socket.id].keyPress.leftClick = false;
         });
         socket.on("useItem",function(data){
             try{
@@ -1055,6 +1051,42 @@ Inventory = function(socket,server){
                 console.error(err);
             }
         });
+    }
+    else{
+        for(var i = 0;i < 10;i++){
+            if(i % 10 === 0){
+                var row = document.createElement('div');
+                row.className = 'hotbarRow';
+                hotbarItems.appendChild(row);
+            }
+            var div = document.createElement('div');
+            div.id = 'hotbarSlot' + i;
+            div.className = 'hotbarSlot hotbarSlotNormal';
+            row.appendChild(div);
+        }
+        var addSlot = function(i){
+            var div = document.createElement('div');
+            div.id = 'inventorySlot' + i;
+            div.className = 'inventorySlot';
+            inventoryItems.appendChild(div);
+        }
+        addSlot('helmet');
+        addSlot('chestplate');
+        addSlot('boots');
+        addSlot('gloves');
+        addSlot('shield');
+        addSlot('bundle');
+        addSlot('accessory1');
+        addSlot('accessory2');
+        addSlot('accessory3');
+        addSlot('trash');
+        inventorySlottrash.innerHTML = "<image class='itemImage' src='/client/websiteAssets/trash.png'></image>";
+        inventorySlottrash.onclick = function(){
+            self.runDraggingItemClient('trash',0);
+        }
+        inventorySlottrash.oncontextmenu = function(){
+            self.runDraggingItemClient('trash',2);
+        }
     }
     return self;
 }

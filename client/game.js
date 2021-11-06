@@ -71,7 +71,6 @@ Img.items2.src = '/client/img/items2.png';
 Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
 
-
 var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
     var items = pack.items;
@@ -89,7 +88,6 @@ socket.on('updateInventory',function(pack){
 socket.on('updateItem',function(pack){
     var items = pack.items;
     for(var i in inventory.items){
-        console.log(i,inventory.items[i].cooldown)
         if(inventory.items[i].cooldown){
             items[i].cooldown = inventory.items[i].cooldown;
         }
@@ -101,8 +99,8 @@ socket.on('updateItem',function(pack){
     inventory.refreshItem(pack.index);
 });
 socket.on('refreshMenu',function(pack){
-    inventory.maxSlots = pack;
-    inventory.refreshMenu();
+    inventory.maxSlots = pack.maxSlots;
+    inventory.refreshMenu(pack.oldMaxSlots);
 });
 socket.on('refreshCraft',function(pack){
     inventory.craftItems = pack;
@@ -593,6 +591,8 @@ socket.on('death',function(data){
     setTimeout(updateRespawn,1500);
     healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
     healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
+    socket.emit('keyPress',{inputId:'releaseAll'});
+    attacking = false;
 });
 var runRespawn = function(){
     socket.emit('respawn');
@@ -969,6 +969,7 @@ document.onkeydown = function(event){
     }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
+        attacking = false;
     }
     socket.emit('keyPress',{inputId:key,state:true});
 }
@@ -983,6 +984,7 @@ document.onmousemove = function(event){
         var y = -cameraY - Player.list[selfId].y + event.clientY;
         if(event.clientY > window.innerHeight){
             socket.emit('keyPress',{inputId:'releaseAll'});
+            attacking = false;
         }
         mouseX = x;
         mouseY = y;
@@ -1021,6 +1023,7 @@ document.onmousemove = function(event){
 document.addEventListener("visibilitychange",function(){
     socket.emit('init');
     socket.emit('keyPress',{inputId:"releaseAll",state:true});
+    attacking = false;
 });
 mouseDown = function(event){
     if(!event.isTrusted){

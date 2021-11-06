@@ -1,5 +1,5 @@
 id,name,rarity,PPR,drawId,displayItem,maxStack,equip,type,damage,meleeDamage,rangedDamage,magicDamage,critChance,critPower,manaCost,useTime,missChance,DPS,DPR,defense,hp,hpRegen,mana,manaRegen,movementSpeed,BPR,slots,axePower,pickaxePower,scythePower,attacks,passives,buffs,debuffs,effects,EPR,description
-death,Death,6.0,148958741.64,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,1,0.00,20020020000.00,148958482.14,1000,1000,1000.00,1000,1000.00,0,259.50,1000,0,0,0,death,none,all,all,none,0.00,
+death,Death,6.0,148958741.64,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,1,0.00,20020020000.00,148958482.14,1000,1000,1000.00,1000,1000.00,0,259.50,1000,0,0,0,death,none,all,all,none,0.00,How did you get this? sp made an oopsie.
 coppersword,Copper Sword,0.5,1.01,80,false,1,hotbar,Weapon,0,6,0,0,0.05,0.00,0,10,0.50,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppersword,none,none,none,none,0.00,
 ironsword,Iron Sword,1.0,1.06,81,false,1,hotbar,Weapon,0,11,0,0,0.05,0.00,0,10,0.50,11.55,1.06,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironsword,none,none,none,none,0.00,
 goldsword,Gold Sword,2.0,1.03,82,false,1,hotbar,Weapon,0,24,0,0,0.05,0.00,0,10,0.50,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldsword,none,none,none,none,0.00,
@@ -63,23 +63,23 @@ greenbowtie,Green Bow Tie,2.0,1.00,188,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0
 bluebowtie,Blue Bow Tie,1.0,1.02,189,false,1,helmet,Helmet,2,0,0,0,0.00,0.00,0,0,0.00,2.00,0.18,2,0,0.40,0,0.00,0,0.83,0,0,0,0,none,none,none,none,none,0.00,Beautiful.
 mysticwizardhat,Mystic Wizard Hat,5.0,1.00,190,false,1,helmet,Helmet,0,0,0,25,0.00,0.00,0,0,0.00,25.00,0.25,6,25,0.00,47,0.80,0,0.74,0,0,0,0,none,mysticflames,none,none,none,0.00,You feel a magical force in this hat.
 darksteelwizardhat,Dark Steel Wizard Hat,3.0,1.02,191,false,1,helmet,Helmet,0,0,0,11,0.00,0.00,0,0,0.00,11.00,0.25,3,11,0.00,33,0.30,0,0.76,0,0,0,0,none,none,none,darkNebula,none,0.00,Dark energy is flowing out of this hat.
-steelwizardhat,Steel Wizard Hat,2.0,1.00,192,false,1,helmet,Helmet,0,0,0,6,0.00,0.00,0,0,0.00,6.00,0.25,2,8,0.00,21,0.15,0,0.75,0,0,0,0,none,none,none,none,none,0.00,
+steelwizardhat,Steel Wizard Hat,2.0,1.00,192,false,1,helmet,Helmet,0,0,0,6,0.00,0.00,0,0,0.00,6.00,0.25,2,8,0.00,21,0.15,0,0.75,0,0,0,0,none,none,none,none,none,0.00,Feels kinda rough.
 beginnerwizardhat,Beginner Wizard Hat,1.0,1.00,193,false,1,helmet,Helmet,0,0,0,3,0.00,0.00,0,0,0.00,3.00,0.28,1,4,0.00,13,0.10,0,0.73,0,0,0,0,none,none,none,none,none,0.00,A basic hat for beginner Wizards.
 firesteelhelmet,Fire Steel Helmet,4.0,1.00,194,false,1,helmet,Helmet,0,17,0,0,0.00,0.00,0,0,0.00,17.00,0.25,9,0,0.90,0,0.00,0,0.75,0,0,0,0,none,none,none,fiery,none,0.00,I think the steel is beginning to melt.
-darksteelhelmet,Dark Steel Helmet,3.0,0.99,195,false,1,helmet,Helmet,0,11,0,0,0.00,0.00,0,0,0.00,11.00,0.25,6,0,0.60,0,0.00,0,0.73,0,0,0,0,none,none,none,darkNebula,none,0.00,
+darksteelhelmet,Dark Steel Helmet,3.0,0.99,195,false,1,helmet,Helmet,0,11,0,0,0.00,0.00,0,0,0.00,11.00,0.25,6,0,0.60,0,0.00,0,0.73,0,0,0,0,none,none,none,darkNebula,none,0.00,Black as the night sky.
 icyhelmet,Icy Helmet,2.0,1.01,196,false,1,helmet,Helmet,0,4,0,0,0.00,0.00,0,0,0.00,4.00,0.16,4,0,0.55,0,0.00,0,0.85,0,0,0,0,none,frozenflames,none,none,none,0.00,Hope you don't get frostbite.
-steelhelmet,Steel Helmet,1.0,1.02,197,false,1,helmet,Helmet,0,2,0,0,0.00,0.00,0,0,0.00,2.00,0.18,2,0,0.40,0,0.00,0,0.83,0,0,0,0,none,none,none,none,none,0.00,
-firevikinghelmet,Fire Viking Helmet,4.0,1.00,198,false,1,helmet,Helmet,21,0,0,0,0.00,0.00,0,0,0.00,21.00,0.31,11,0,0.00,0,0.00,0,0.69,0,0,0,0,none,none,none,fiery,none,0.00,
+steelhelmet,Steel Helmet,1.0,1.02,197,false,1,helmet,Helmet,0,2,0,0,0.00,0.00,0,0,0.00,2.00,0.18,2,0,0.40,0,0.00,0,0.83,0,0,0,0,none,none,none,none,none,0.00,A sturdy basic helmet.
+firevikinghelmet,Fire Viking Helmet,4.0,1.00,198,false,1,helmet,Helmet,21,0,0,0,0.00,0.00,0,0,0.00,21.00,0.31,11,0,0.00,0,0.00,0,0.69,0,0,0,0,none,none,none,fiery,none,0.00,It's really hot.
 darkvikinghelmet,Dark Viking Helmet,3.0,1.03,199,false,1,helmet,Helmet,13,0,0,0,0.00,0.00,0,0,0.00,13.00,0.30,8,0,0.00,0,0.00,0,0.73,0,0,0,0,none,none,none,darkNebula,none,0.00,
 bronzevikinghelmet,Bronze Viking Helmet,2.0,1.00,200,false,1,helmet,Helmet,7,0,0,0,0.00,0.00,0,0,0.00,7.00,0.29,5,0,0.00,0,0.00,0,0.71,0,0,0,0,none,none,none,none,none,0.00,
-steelvikinghelmet,Steel Viking Helmet,1.0,1.03,201,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,
+steelvikinghelmet,Steel Viking Helmet,1.0,1.03,201,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,The weakest viking helmet.
 mysticknighthelmet,Mystic Knight Helmet,5.0,1.06,202,false,1,helmet,Helmet,7,0,0,0,0.40,0.45,0,0,0.00,30.89,0.31,7,30,0.45,30,0.45,0,0.74,0,0,0,0,none,none,none,none,none,0.00,
 fieryknighthelmet,Fiery Knight Helmet,4.0,1.00,203,false,1,helmet,Helmet,5,0,0,0,0.35,0.40,0,0,0.00,18.30,0.27,5,21,0.35,21,0.35,0,0.73,0,0,0,0,none,none,none,none,none,0.00,
 greenknighthelmet,Green Knight Helmet,2.0,1.02,204,false,1,helmet,Helmet,3,0,0,0,0.25,0.30,0,0,0.00,5.81,0.24,2,11,0.20,11,0.20,0,0.78,0,0,0,0,none,none,none,none,none,0.00,
 blueknighthelmet,Blue Knight Helmet,1.0,1.01,205,false,1,helmet,Helmet,2,0,0,0,0.10,0.20,0,0,0.00,2.44,0.22,1,8,0.10,8,0.10,0,0.79,0,0,0,0,none,none,none,none,none,0.00,
 firebandedrobe,Fire Banded Robe,4.0,1.01,206,false,1,chestplate,Chestplate,0,0,0,12,0.00,0.00,0,0,0.00,12.00,0.18,4,34,0.20,34,0.50,0,0.84,0,0,0,0,none,none,none,fiery,none,0.00,Is this safe to wear?
 foresttravelerrobe,Forest Traveler Robe,2.0,1.00,207,false,1,chestplate,Chestplate,0,0,0,3,0.10,0.00,0,0,0.00,3.24,0.13,2,15,0.00,15,0.35,0,0.87,0,0,0,0,none,none,none,none,none,0.00,It seems to be made from twigs.
-leafrobe,Leaf Robe,2.0,1.00,208,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.25,1,0.80,0,0,0,0,leaves,none,none,none,none,0.20,
+leafrobe,Leaf Robe,2.0,1.00,208,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.25,1,0.80,0,0,0,0,leaves,none,none,none,none,0.20,Woven with leaves.
 woodenrobe,Wooden Robe,1.0,1.00,209,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.15,11,0.20,0,0.80,0,0,0,0,none,none,none,splinters,none,0.20,Hard and extremely uncomfortable.
 robeoffortunes,Robe of Fortunes,4.0,1.00,210,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,1.30,0,0.40,0,0,0,0,none,none,none,none,+0.8 Luck,0.60,Expensive. Don't break it.
 robeofwisdom,Robe of Wisdom,5.0,1.00,211,false,1,chestplate,Chestplate,0,0,0,0,0.40,1.30,0,0,0.00,61.56,0.63,3,0,0.00,28,0.70,0,0.38,0,0,0,0,none,none,none,none,none,0.00,
@@ -123,8 +123,8 @@ redsailorvest,Red Sailor Vest,4.0,1.00,248,false,1,chestplate,Chestplate,0,0,0,0
 graysailorvest,Gray Sailor Vest,0.0,1.00,249,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.40,0,1.00,0,0,0,0,none,none,none,none,none,0.00,
 reddress,Red Dress,4.0,1.00,250,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,2.40,0,0.00,0,1.00,0,0,0,0,none,none,none,none,none,0.00,
 blackdress,Black Dress,0.0,1.00,251,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.40,0,0.00,0,1.00,0,0,0,0,none,none,none,none,none,0.00,
-redcommanderuniform,Red Commander Uniform,4.0,1.03,252,false,1,chestplate,Chestplate,19,0,0,0,0.00,0.00,0,0,0.00,19.00,0.28,12,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,
-bluecommanderuniform,Blue Commander Uniform,1.0,1.03,253,false,1,chestplate,Chestplate,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,
+redcommanderuniform,Red Commander Uniform,4.0,1.03,252,false,1,chestplate,Chestplate,19,0,0,0,0.00,0.00,0,0,0.00,19.00,0.28,12,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,A quite nice commander uniform.
+bluecommanderuniform,Blue Commander Uniform,1.0,1.03,253,false,1,chestplate,Chestplate,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,Is this thing clean?
 redbuccaneerchestplate,Red Buccaneer Chestplate,4.0,1.00,254,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,116,0.00,0,0.00,0,1.00,0,0,0,0,none,none,none,none,none,0.00,
 bluebuccaneerchestplate,Blue Buccaneer Chestplate,1.0,1.01,255,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,33,0.00,0,0.00,0,1.01,0,0,0,0,none,none,none,none,none,0.00,
 copperchestplate,Copper Chestplate,0.5,1.04,256,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.00,0,1.04,0,0,0,0,none,none,none,none,none,0.00,
@@ -150,48 +150,48 @@ emeralditeshield,Emeraldite Shield,3.5,1.02,275,false,1,shield,Shield,0,0,0,0,0.
 rubyshield,Ruby Shield,4.0,1.00,276,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
 diamondshield,Diamond Shield,5.0,1.00,277,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,11,0,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
 woodenshield,Wooden Shield,0.0,1.00,278,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.20,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-nightmareshield,Nightmare Shield,5.0,1.00,279,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,15,2.00,0,0.50,0,0,0,0,none,mysticflames,none,none,none,0.50,
-alienshield,Alien Shield,2.0,1.01,280,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.45,0,0.51,0,0,0,0,none,alienflames,none,none,none,0.50,
-royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0.51,0,0,0,0,none,none,none,none,none,0.50,
-warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
+nightmareshield,Nightmare Shield,5.0,1.00,279,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,15,2.00,0,0.50,0,0,0,0,none,mysticflames,none,none,none,0.50,Hopefully you don't get a nightmare from this.
+alienshield,Alien Shield,2.0,1.01,280,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.45,0,0.51,0,0,0,0,none,alienflames,none,none,none,0.50,Aliens created this.
+royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0.51,0,0,0,0,none,none,none,none,none,0.50,"A royal shield for a royal warri- Hey wait, you're not a royal warrior!"
+warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,A true warrior shield.
 goldtoken,Gold Token,3.0,0.00,283,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 ashtoken,Ash Token,1.0,0.00,284,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0.20,0,0,0,0,none,none,none,none,Lifesteal.,0.80,OG Item.
-frozenboots,Frozen Boots,2.0,1.00,286,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,5,0.00,0,0.00,0,0.50,0,0,0,0,none,frozenflames,none,none,none,0.50,
-hikingboots,Hiking Boots,3.0,1.00,287,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,4,0.00,0,0.00,2,0.50,0,0,0,0,none,none,none,none,none,0.50,
-woolenboots,Woolen Boots,3.0,1.00,288,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,8,0.20,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-leatherboots,Leather Boots,2.0,0.99,289,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.40,0,0.00,0,0.49,0,0,0,0,none,none,none,none,none,0.50,
-metalfootwear,Metal Footwear,1.0,1.00,290,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,11,0.00,0,0.00,-1,0.50,0,0,0,0,none,none,none,none,none,0.50,
-ironboots,Iron Boots,2.0,0.96,291,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,0,0.00,-1,0.46,0,0,0,0,none,none,none,none,none,0.50,
+frozenboots,Frozen Boots,2.0,1.00,286,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,5,0.00,0,0.00,0,0.50,0,0,0,0,none,frozenflames,none,none,none,0.50,I think your feet are already getting frostbite.
+hikingboots,Hiking Boots,3.0,1.00,287,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,4,0.00,0,0.00,2,0.50,0,0,0,0,none,none,none,none,none,0.50,A pair of excellent hiking boots.
+woolenboots,Woolen Boots,3.0,1.00,288,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,8,0.20,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,Nice and warm.
+leatherboots,Leather Boots,2.0,0.99,289,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.40,0,0.00,0,0.49,0,0,0,0,none,none,none,none,none,0.50,The leather is very supplemental.
+metalfootwear,Metal Footwear,1.0,1.00,290,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,11,0.00,0,0.00,-1,0.50,0,0,0,0,none,none,none,none,none,0.50,It's too heavy!
+ironboots,Iron Boots,2.0,0.96,291,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,0,0.00,-1,0.46,0,0,0,0,none,none,none,none,none,0.50,Why did I think it was a good idea to wear metal shoes!
 leatherslippers,Leather Slippers,1.0,1.00,292,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
 pinkshoes,Pink Shoes,0.0,1.00,293,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-sangriaboots,Sangria Boots,0.0,1.00,294,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,10,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-cactusboots,Cactus Boots,1.0,0.99,295,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,-22,0.60,0,0.00,0,0.49,0,0,0,0,none,none,none,none,none,0.50,
-angelboots,Angel Boots,4.0,1.02,296,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,5,0.52,0,0,0,0,none,none,none,none,none,0.50,
+sangriaboots,Sangria Boots,0.0,1.00,294,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,10,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,"Even though Sangria sounds cool, it's just a fancy word for purple."
+cactusboots,Cactus Boots,1.0,0.99,295,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,-22,0.60,0,0.00,0,0.49,0,0,0,0,none,none,none,none,none,0.50,AAAAAAAAAAAAA!!!
+angelboots,Angel Boots,4.0,1.02,296,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,5,0.52,0,0,0,0,none,none,none,none,none,0.50,Fly like an angel!
 slimeslippers,Slime Slippers,2.0,1.00,297,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,25,0.75,-2,0.50,0,0,0,0,none,none,none,slimed,none,0.50,
-fluffyboots,Fluffy Boots,4.0,0.99,298,false,1,boots,Boots,0,0,0,0,0.15,0.40,0,0,0.00,6.48,0.10,3,0,0.00,0,1.00,0,0.40,0,0,0,0,none,none,none,none,none,0.50,
+fluffyboots,Fluffy Boots,4.0,0.99,298,false,1,boots,Boots,0,0,0,0,0.15,0.40,0,0,0.00,6.48,0.10,3,0,0.00,0,1.00,0,0.40,0,0,0,0,none,none,none,none,none,0.50,The fluff is soooo nice.
 maroonboots,Maroon Boots,2.0,1.00,299,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,16,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-soldierboots,Soldier Boots,3.0,1.01,300,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,1,0.51,0,0,0,0,none,none,none,none,none,0.50,
-forestboots,Forest Boots,1.0,1.00,301,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
+soldierboots,Soldier Boots,3.0,1.01,300,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,1,0.51,0,0,0,0,none,none,none,none,none,0.50,The boots of a true soldier.
+forestboots,Forest Boots,1.0,1.00,301,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,"Made with traditional forest materials, such as leaves, twigs, and grass."
 velvetboots,Velvet Boots,2.0,1.04,302,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,1,0.54,0,0,0,0,none,none,none,none,none,0.50,
 flowerboots,Flower Boots,1.0,1.00,303,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,+0.4 Luck,0.75,
 warriorboots,Warrior Boots,2.0,1.07,304,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,0,0.57,0,0,0,0,none,none,none,none,none,0.50,
 ironcladboots,Ironclad Boots,4.0,1.00,305,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
 bambooslippers,Bamboo Slippers,2.0,0.99,306,false,1,boots,Boots,5,0,0,0,0.00,0.00,0,0,0.00,5.00,0.20,2,0,0.00,0,0.00,0,0.29,0,0,0,0,none,none,none,none,none,0.50,
-runningshoes,Running Shoes,1.0,1.00,307,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,1,0.50,0,0,0,0,none,none,none,none,none,0.50,
-guardianboots,Guardian Boots,3.0,0.99,308,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.70,0,0.00,0,0.49,0,0,0,0,none,alienflames,none,none,none,0.50,
+runningshoes,Running Shoes,1.0,1.00,307,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,1,0.50,0,0,0,0,none,none,none,none,none,0.50,Use these in a marathon.
+guardianboots,Guardian Boots,3.0,0.99,308,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.70,0,0.00,0,0.49,0,0,0,0,none,alienflames,none,none,none,0.50,"Wait, you stole these off an alien ship?"
 roseboots,Rose Boots,1.0,1.00,309,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,11,0.00,0,0.50,0,0,0,0,none,none,none,none,none,0.50,
-batwingboots,Bat Wing Boots,3.0,1.02,310,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,3,0.52,0,0,0,0,none,none,none,none,none,0.50,
+batwingboots,Bat Wing Boots,3.0,1.02,310,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,3,0.52,0,0,0,0,none,none,none,none,none,0.50,Fly like the night bat.
 jellyboots,Jelly Boots,2.0,1.00,311,false,1,boots,Boots,0,0,0,0,0.00,4.25,0,0,0.00,5.19,0.21,2,0,0.00,0,0.00,0,0.29,0,0,0,0,none,none,none,none,none,0.50,
-santaboots,Santa Boots,3.0,1.01,312,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.75,0,0.51,0,0,0,0,none,none,none,none,none,0.50,
-muddyboots,Muddy Boots,1.0,1.01,313,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,44,0.00,0,0.00,-2,0.51,0,0,0,0,none,none,none,none,none,0.50,
-midnightboots,Midnight Boots,4.0,1.01,314,false,1,boots,Boots,0,0,0,0,0.50,0.50,0,0,0.00,22.17,0.33,3,0,0.00,0,0.00,0,0.19,0,0,0,0,none,darkflames,none,none,none,0.50,
-farminggloves,Farming Gloves,0.0,1.00,315,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.75,
-fireproofgloves,Fireproof Gloves,4.0,1.00,316,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,10,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.75,
-frozengloves,Frozen Gloves,2.0,0.99,317,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.20,0,0.24,0,0,0,0,none,frozenflames,none,none,none,0.75,
-snowgloves,Snow Gloves,1.0,1.00,318,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.75,
-azuregloves,Azure Gloves,3.0,1.01,319,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.25,0,0.00,0,0.26,0,0,0,0,none,none,none,none,none,0.75,
-mysticgloves,Mystic Gloves,5.0,1.00,320,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,18,0.50,0,0.25,0,0,0,0,none,none,none,none,none,0.75,
+santaboots,Santa Boots,3.0,1.01,312,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.75,0,0.51,0,0,0,0,none,none,none,none,none,0.50,Santa's real!
+muddyboots,Muddy Boots,1.0,1.01,313,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,44,0.00,0,0.00,-2,0.51,0,0,0,0,none,none,none,none,none,0.50,They're so muddy and disgusting.
+midnightboots,Midnight Boots,4.0,1.01,314,false,1,boots,Boots,0,0,0,0,0.50,0.50,0,0,0.00,22.17,0.33,3,0,0.00,0,0.00,0,0.19,0,0,0,0,none,darkflames,none,none,none,0.50,The color reminds you of the night sky.
+farminggloves,Farming Gloves,0.0,1.00,315,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.75,Use these for farmin- Wait theres no farming in Meadow Guarder ye- Wait I just broke the fourth wall.
+fireproofgloves,Fireproof Gloves,4.0,1.00,316,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,10,0.00,0,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.75,"I thought these were to protect you from fire, not light fire!"
+frozengloves,Frozen Gloves,2.0,0.99,317,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.20,0,0.24,0,0,0,0,none,frozenflames,none,none,none,0.75,"Keep these in a Ultra-SampleFreezer 3000! Wait, what do you mean, you don't have one?"
+snowgloves,Snow Gloves,1.0,1.00,318,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0.25,0,0,0,0,none,none,coldProtection,none,none,0.75,Wear in cold conditions.
+azuregloves,Azure Gloves,3.0,1.01,319,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.25,0,0.00,0,0.26,0,0,0,0,none,none,none,none,none,0.75,Azurite is surprising strong.
+mysticgloves,Mystic Gloves,5.0,1.00,320,false,1,gloves,Gloves,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,18,0.50,0,0.25,0,0,0,0,none,none,none,none,none,0.75,Mystic energy flows out of these gloves.
 copperring,Copper Ring,0.5,1.39,339,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,0,1.39,0,0,0,0,none,none,none,none,none,0.00,Ring of Protection.
 ironring,Iron Ring,1.0,0.19,340,false,1,accessory,Ring,0,0,0,0,0.30,0.45,0,0,0.00,2.04,0.19,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Ring of Luck.
 goldring,Gold Ring,2.0,0.68,341,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,1.35,0,0.68,0,0,0,0,none,none,none,none,none,0.00,Ring of Mana Regen.
@@ -208,14 +208,14 @@ azuritenecklace,Azurite Necklace,3.0,0.43,351,false,1,accessory,Necklace,0,0,0,0
 emeralditenecklace,Emeraldite Necklace,3.5,0.32,352,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,23,0.00,0,0.00,0,0.32,0,0,0,0,none,none,none,none,none,0.00,Necklace of Unbreaking.
 rubynecklace,Ruby Necklace,4.0,0.29,353,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.50,2,0.29,0,0,0,0,none,none,none,none,none,0.00,Necklace of Wizardry.
 diamondnecklace,Diamond Necklace,5.0,0.20,354,false,1,accessory,Necklace,10,0,0,0,0.20,0.30,0,0,0.00,19.36,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Necklace of Power.
-amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,4.00,0,0,0.00,19.70,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
-amuletoffire,Amulet of Fire,5.0,0.20,356,false,1,accessory,Amulet,14,0,0,0,0.00,0.00,0,0,0.00,14.00,0.14,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,none,0.00,
-amuletofblood,Amulet of Blood,5.0,0.20,357,false,1,accessory,Amulet,5,0,0,0,0.30,0.35,0,0,0.00,20.02,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
-amuletofwater,Amulet of Water,5.0,0.20,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.50,0,0.00,2,0.20,0,0,0,0,none,none,none,none,none,0.00,
-amuletofice,Amulet of Ice,5.0,0.20,359,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.40,0,0.20,0,0,0,0,none,none,none,none,none,0.00,
-amuletofnature,Amulet of Nature,5.0,0.20,360,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.60,23,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,
-amuletofriches,Amulet of Riches,5.0,0.20,361,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,1.05,0,0.20,0,0,0,0,none,none,none,none,none,0.00,
-amuletofspirits,Amulet of Spirits,5.0,0.20,362,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,16,0.00,16,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,
+amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,4.00,0,0,0.00,19.70,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,"Like the Skull of Death, but better."
+amuletoffire,Amulet of Fire,5.0,0.20,356,false,1,accessory,Amulet,14,0,0,0,0.00,0.00,0,0,0.00,14.00,0.14,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,none,0.00,Burn! BURN!!!
+amuletofblood,Amulet of Blood,5.0,0.20,357,false,1,accessory,Amulet,5,0,0,0,0.30,0.35,0,0,0.00,20.02,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Bloodlust.
+amuletofwater,Amulet of Water,5.0,0.20,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.50,0,0.00,2,0.20,0,0,0,0,none,none,none,none,none,0.00,Flowing water never freezes.
+amuletofice,Amulet of Ice,5.0,0.20,359,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.40,0,0.20,0,0,0,0,none,none,none,none,none,0.00,A cold wisp washes over you.
+amuletofnature,Amulet of Nature,5.0,0.20,360,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.60,23,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,You feel connected to the trees around you.
+amuletofriches,Amulet of Riches,5.0,0.20,361,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,1.05,0,0.20,0,0,0,0,none,none,none,none,none,0.00,Legends say this amulet increases your wealth.
+amuletofspirits,Amulet of Spirits,5.0,0.20,362,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,16,0.00,16,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,The Lost Spirits possess this amulet. You remember the Ghastly Omelette.
 wornaxe,Worn Axe,0.0,0.97,363,false,1,hotbar,Tool,0,1,0,0,0.00,0.00,0,10,0.00,2.00,0.67,0,0,0.00,0,0.00,0,0.00,0,10,0,0,wornaxe,none,none,none,none,0.30,
 copperaxe,Copper Axe,0.5,0.94,364,false,1,hotbar,Tool,0,2,0,0,0.00,0.00,0,10,0.00,4.00,0.64,0,0,0.00,0,0.00,0,0.00,0,20,0,0,copperaxe,none,none,none,none,0.30,
 ironaxe,Iron Axe,1.0,1.03,365,false,1,hotbar,Tool,0,4,0,0,0.00,0.00,0,10,0.00,8.00,0.73,0,0,0.00,0,0.00,0,0.00,0,30,0,0,ironaxe,none,none,none,none,0.30,
@@ -243,11 +243,19 @@ azuritescythe,Azurite Scythe,3.0,0.99,386,false,1,hotbar,Tool,0,15,0,0,0.00,0.00
 emeralditescythe,Emeraldite Scythe,3.5,0.99,387,false,1,hotbar,Tool,0,19,0,0,0.00,0.00,0,10,0.00,38.00,0.69,0,0,0.00,0,0.00,0,0.00,0,0,0,70,emeralditescythe,none,none,none,none,0.30,
 rubyscythe,Ruby Scythe,4.0,1.00,388,false,1,hotbar,Tool,0,24,0,0,0.00,0.00,0,10,0.00,48.00,0.70,0,0,0.00,0,0.00,0,0.00,0,0,0,80,rubyscythe,none,none,none,none,0.30,
 diamondscythe,Diamond Scythe,5.0,1.01,389,false,1,hotbar,Tool,0,35,0,0,0.00,0.00,0,10,0.00,70.00,0.71,0,0,0.00,0,0.00,0,0.00,0,0,0,90,diamondscythe,none,none,none,none,0.30,
-healthpotion,Health Potion,1.0,0.00,405,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,healthpotion,none,none,none,none,0.00,
-greaterhealthpotion,Greater Health Potion,5.0,0.00,406,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greaterhealthpotion,none,none,none,none,0.00,
-manapotion,Mana Potion,1.0,0.00,407,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,manapotion,none,none,none,none,0.00,
-greatermanapotion,Greater Mana Potion,5.0,0.00,408,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greatermanapotion,none,none,none,none,0.00,
+healthpotion,Health Potion,1.0,0.00,405,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,healthpotion,none,none,none,none,0.00,A standard brewed health potion.
+greaterhealthpotion,Greater Health Potion,5.0,0.00,406,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greaterhealthpotion,none,none,none,none,0.00,A more concentrated version of the health potion.
+manapotion,Mana Potion,1.0,0.00,407,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,manapotion,none,none,none,none,0.00,A standard brewed mana potion.
+greatermanapotion,Greater Mana Potion,5.0,0.00,408,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greatermanapotion,none,none,none,none,0.00,A more concentrated version of the mana potion.
+fierybundle,Fiery Bundle,4.0,0.00,544,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,15,0,0,0,none,none,none,fiery,none,0.00,The cloth is beginning to burn.
+grassybundle,Grassy Bundle,2.0,0.29,545,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0.29,6,0,0,0,none,none,none,none,none,0.00,Woven with grass.
+brownsaddlebag,Brown Saddlebag,0.0,0.00,546,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,2,0,0,0,none,none,none,none,none,0.00,A dusty old saddlebag.
+rosemarybag,Rosemary Bag,3.0,0.00,547,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,10,0,0,0,none,none,none,none,none,0.00,The thin strands of Rosemary hold this bag in place.
+mailmanbag,Mailman Bag,3.0,0.29,550,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,2,0.29,8,0,0,0,none,none,none,none,none,0.00,Standard Mailman's bag.
+forestpouch,Forest Pouch,2.0,0.00,551,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,7,0,0,0,none,none,none,none,none,0.00,There's twigs sticking out of this.
+bluepurse,Blue Purse,1.0,0.00,552,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,4,0,0,0,none,none,none,none,none,0.00,A ordinary blue purse.
+heavypurse,Heavy Purse,2.0,-0.50,553,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,-2,-0.50,9,0,0,0,none,none,none,none,none,0.00,Who stuffed black holes in this?
 cotton,Cotton,0.0,0.00,660,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 yarn,Yarn,0.0,0.00,661,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
-wood,Wood,0.0,0.00,673,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+wood,Wood,0.0,0.00,673,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Regular wood.
 woodstick,Wood Stick,0.0,0.00,674,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,

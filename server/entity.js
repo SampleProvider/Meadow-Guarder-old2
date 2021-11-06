@@ -280,6 +280,7 @@ Actor = function(param){
                     Projectile.list[i].toRemove = true;
                 }
             }
+            pt.canAttack = false;
         }
     }
     self.updateMove = function(){
@@ -375,6 +376,9 @@ Actor = function(param){
         }
         else{
             self.animation = -1;
+        }
+        if(self.canMove === false){
+            self.animation = 0;
         }
         if(self.animation === -1){
             self.animation = 0;
@@ -956,351 +960,11 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
+        if(self.hp < 1){
+            return;
+        }
         self.passiveReload += 1;
         self.doAttack(self.passiveAttackData,self.passiveReload);
-    }
-    self.updateQuest = function(){
-        if(self.keyPress.rightClick === true){
-            for(var i in Npc.list){
-                if(Npc.list[i].map === self.map){
-                    var npc = Npc.list[i];
-                    if(npc.x - npc.width / 2 <= self.mouseX && npc.x + npc.width / 2 >= self.mouseX && npc.y - npc.height / 2 <= self.mouseY && npc.y + npc.height / 2 >= self.mouseY){
-                        if(self.getDistance(npc) > 128){
-                            self.keyPress.rightClick = false;
-                            continue;
-                        }
-                        var response1 = undefined;
-                        var response2 = undefined;
-                        var response3 = undefined;
-                        var response4 = undefined;
-                        self.questInfo.response1 = undefined;
-                        self.questInfo.response2 = undefined;
-                        self.questInfo.response3 = undefined;
-                        self.questInfo.response4 = undefined;
-                        for(var j in questData){
-                            if(questData[j].startNpc === i){
-                                if(self.checkQuestRequirements(j)){
-                                    if(self.quest === false){
-                                        if(response1 === undefined){
-                                            response1 = '*Start the quest ' + j + '*';
-                                            self.questInfo.response1 = j;
-                                        }
-                                        else if(response2 === undefined){
-                                            response2 = '*Start the quest ' + j + '*';
-                                            self.questInfo.response2 = j;
-                                        }
-                                        else if(response3 === undefined){
-                                            response3 = '*Start the quest ' + j + '*';
-                                            self.questInfo.response3 = j;
-                                        }
-                                        else if(response4 === undefined){
-                                            response4 = '*Start the quest ' + j + '*';
-                                            self.questInfo.response4 = j;
-                                        }
-                                    }
-                                    else{
-                                        if(response1 === undefined){
-                                            response1 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                            self.questInfo.response1 = 'None';
-                                        }
-                                        else if(response2 === undefined){
-                                            response2 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                            self.questInfo.response2 = 'None';
-                                        }
-                                        else if(response3 === undefined){
-                                            response3 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                            self.questInfo.response3 = 'None';
-                                        }
-                                        else if(response4 === undefined){
-                                            response4 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                            self.questInfo.response4 = 'None';
-                                        }
-                                    }
-                                }
-                                else{
-                                    var requirements = 'Requires ';
-                                    for(var k in questData[j].requirements){
-                                        if(self.questStats[questData[j].requirements[k]] === false){
-                                            if(requirements === 'Requires '){
-                                                requirements += questData[j].requirements[k];
-                                            }
-                                            else{
-                                                requirements += ' and ' + questData[j].requirements[k];
-                                            }
-                                        }
-                                        else if(questData[j].requirements[k].slice(0,4) === 'Lvl '){
-                                            if(parseInt(questData[j].requirements[k].slice(4,questData[j].requirements[k].length),10) > self.level){
-                                                if(requirements === 'Requires '){
-                                                    requirements += 'Level ' + questData[j].requirements[k].slice(4,questData[j].requirements[k].length);
-                                                }
-                                                else{
-                                                    requirements += ' and Level ' + questData[j].requirements[k].slice(4,questData[j].requirements[k].length);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if(response1 === undefined){
-                                        response1 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                        self.questInfo.response1 = 'None';
-                                    }
-                                    else if(response2 === undefined){
-                                        response2 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                        self.questInfo.response2 = 'None';
-                                    }
-                                    else if(response3 === undefined){
-                                        response3 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                        self.questInfo.response3 = 'None';
-                                    }
-                                    else if(response4 === undefined){
-                                        response4 = '<span style="color:#aaaaaa">*Start the quest ' + j + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                        self.questInfo.response4 = 'None';
-                                    }
-                                }
-                            }
-                        }
-                        if(npc.mainItem){
-                            if(self.checkNpcRequirements(i)){
-                                if(response1 === undefined){
-                                    response1 = '*Buy ' + npc.mainItem + '*';
-                                    self.questInfo.response1 = npc.mainItem;
-                                }
-                                else if(response2 === undefined){
-                                    response2 = '*Buy ' + npc.mainItem + '*';
-                                    self.questInfo.response2 = npc.mainItem;
-                                }
-                                else if(response3 === undefined){
-                                    response3 = '*Buy ' + npc.mainItem + '*';
-                                    self.questInfo.response3 = npc.mainItem;
-                                }
-                                else if(response4 === undefined){
-                                    response4 = '*Buy ' + npc.mainItem + '*';
-                                    self.questInfo.response4 = npc.mainItem;
-                                }
-                            }
-                            else{
-                                var requirements = 'Requires ';
-                                for(var j in npcData[i].requirements){
-                                    if(self.questStats[npcData[i].requirements[j]] === false){
-                                        if(requirements === 'Requires '){
-                                            requirements += npcData[i].requirements[j];
-                                        }
-                                        else{
-                                            requirements += ' and ' + npcData[i].requirements[j];
-                                        }
-                                    }
-                                    else if(npcData[i].requirements[j].slice(0,4) === 'Lvl '){
-                                        if(parseInt(npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length),10) > self.level){
-                                            if(requirements === 'Requires '){
-                                                requirements += 'Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                            else{
-                                                requirements += ' and Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                        }
-                                    }
-                                }
-                                if(response1 === undefined){
-                                    response1 = '<span style="color:#aaaaaa">*Buy ' + npc.mainItem + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response1 = 'None';
-                                }
-                                else if(response2 === undefined){
-                                    response2 = '<span style="color:#aaaaaa">*Buy ' + npc.mainItem + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response2 = 'None';
-                                }
-                                else if(response3 === undefined){
-                                    response3 = '<span style="color:#aaaaaa">*Buy ' + npc.mainItem + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response3 = 'None';
-                                }
-                                else if(response4 === undefined){
-                                    response4 = '<span style="color:#aaaaaa">*Buy ' + npc.mainItem + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response4 = 'None';
-                                }
-                            }
-                        }
-                        if(npc.mainCraft){
-                            if(self.checkNpcRequirements(i)){
-                                if(response1 === undefined){
-                                    response1 = '*Craft ' + npc.mainCraft + '*';
-                                    self.questInfo.response1 = npc.mainCraft;
-                                }
-                                else if(response2 === undefined){
-                                    response2 = '*Craft ' + npc.mainCraft + '*';
-                                    self.questInfo.response2 = npc.mainCraft;
-                                }
-                                else if(response3 === undefined){
-                                    response3 = '*Craft ' + npc.mainCraft + '*';
-                                    self.questInfo.response3 = npc.mainCraft;
-                                }
-                                else if(response4 === undefined){
-                                    response4 = '*Craft ' + npc.mainCraft + '*';
-                                    self.questInfo.response4 = npc.mainCraft;
-                                }
-                            }
-                            else{
-                                var requirements = 'Requires ';
-                                for(var j in npcData[i].requirements){
-                                    if(self.questStats[npcData[i].requirements[j]] === false){
-                                        if(requirements === 'Requires '){
-                                            requirements += npcData[i].requirements[j];
-                                        }
-                                        else{
-                                            requirements += ' and ' + npcData[i].requirements[j];
-                                        }
-                                    }
-                                    else if(npcData[i].requirements[j].slice(0,4) === 'Lvl '){
-                                        if(parseInt(npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length),10) > self.level){
-                                            if(requirements === 'Requires '){
-                                                requirements += 'Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                            else{
-                                                requirements += ' and Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                        }
-                                    }
-                                }
-                                if(response1 === undefined){
-                                    response1 = '<span style="color:#aaaaaa">*Craft ' + npc.mainCraft + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response1 = 'None';
-                                }
-                                else if(response2 === undefined){
-                                    response2 = '<span style="color:#aaaaaa">*Craft ' + npc.mainCraft + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response2 = 'None';
-                                }
-                                else if(response3 === undefined){
-                                    response3 = '<span style="color:#aaaaaa">*Craft ' + npc.mainCraft + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response3 = 'None';
-                                }
-                                else if(response4 === undefined){
-                                    response4 = '<span style="color:#aaaaaa">*Craft ' + npc.mainCraft + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response4 = 'None';
-                                }
-                            }
-                        }
-                        if(npc.dungeon){
-                            if(self.checkNpcRequirements(i)){
-                                if(self.quest === false){
-                                    if(response1 === undefined){
-                                        response1 = '*Enter ' + npc.name + '*';
-                                        self.questInfo.response1 = npc.name;
-                                    }
-                                    else if(response2 === undefined){
-                                        response2 = '*Enter ' + npc.name + '*';
-                                        self.questInfo.response2 = npc.name;
-                                    }
-                                    else if(response3 === undefined){
-                                        response3 = '*Enter ' + npc.name + '*';
-                                        self.questInfo.response3 = npc.name;
-                                    }
-                                    else if(response4 === undefined){
-                                        response4 = '*Enter ' + npc.name + '*';
-                                        self.questInfo.response4 = npc.name;
-                                    }
-                                }
-                                else{
-                                    if(response1 === undefined){
-                                        response1 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                        self.questInfo.response1 = 'None';
-                                    }
-                                    else if(response2 === undefined){
-                                        response2 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                        self.questInfo.response2 = 'None';
-                                    }
-                                    else if(response3 === undefined){
-                                        response3 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                        self.questInfo.response3 = 'None';
-                                    }
-                                    else if(response4 === undefined){
-                                        response4 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">Finish the quest ' + self.quest + '.</span>';
-                                        self.questInfo.response4 = 'None';
-                                    } 
-                                }
-                            }
-                            else{
-                                var requirements = 'Requires ';
-                                for(var j in npcData[i].requirements){
-                                    if(self.questStats[npcData[i].requirements[j]] === false){
-                                        if(requirements === 'Requires '){
-                                            requirements += npcData[i].requirements[j];
-                                        }
-                                        else{
-                                            requirements += ' and ' + npcData[i].requirements[j];
-                                        }
-                                    }
-                                    else if(npcData[i].requirements[j].slice(0,4) === 'Lvl '){
-                                        if(parseInt(npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length),10) > self.level){
-                                            if(requirements === 'Requires '){
-                                                requirements += 'Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                            else{
-                                                requirements += ' and Level ' + npcData[i].requirements[j].slice(4,npcData[i].requirements[j].length);
-                                            }
-                                        }
-                                    }
-                                }
-                                if(response1 === undefined){
-                                    response1 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response1 = 'None';
-                                }
-                                else if(response2 === undefined){
-                                    response2 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response2 = 'None';
-                                }
-                                else if(response3 === undefined){
-                                    response3 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response3 = 'None';
-                                }
-                                else if(response4 === undefined){
-                                    response4 = '<span style="color:#aaaaaa">*Enter ' + npc.name + '*</span> <span style="font-size:13px; float:right; color:#aaaaaa">' + requirements + '.</span>';
-                                    self.questInfo.response4 = 'None';
-                                }
-                            }
-                        }
-                        if(i === 'petmaster'){
-                            if(response1 === undefined){
-                                response1 = '*Upgrade your Pet*';
-                                self.questInfo.response1 = 'Pet Upgrade';
-                            }
-                            else if(response2 === undefined){
-                                response2 = '*Upgrade your Pet*';
-                                self.questInfo.response2 = 'Pet Upgrade';
-                            }
-                            else if(response3 === undefined){
-                                response3 = '*Upgrade your Pet*';
-                                self.questInfo.response3 = 'Pet Upgrade';
-                            }
-                            else if(response4 === undefined){
-                                response4 = '*Upgrade your Pet*';
-                                self.questInfo.response4 = 'Pet Upgrade';
-                            }
-                        }
-                        if(response1 === undefined){
-                            response1 = '*End conversation*';
-                            self.questInfo.response1 = 'End';
-                        }
-                        else if(response2 === undefined){
-                            response2 = '*End conversation*';
-                            self.questInfo.response2 = 'End';
-                        }
-                        else if(response3 === undefined){
-                            response3 = '*End conversation*';
-                            self.questInfo.response3 = 'End';
-                        }
-                        else if(response4 === undefined){
-                            response4 = '*End conversation*';
-                            self.questInfo.response4 = 'End';
-                        }
-                        if(npc.dialogues !== undefined){
-                            var dialogue = Math.floor(Math.random() * npc.dialogues.length);
-                            self.startDialogue(npc.dialogues[dialogue],response1,response2,response3,response4);
-                        }
-                        else{
-                            self.startDialogue('',response1,response2,response3,response4);
-                        }
-                        self.keyPress.rightClick = false;
-                    }
-                }
-            }
-        }
     }
     self.updateStats = function(){
         if(self.inventory.updateStats){
@@ -1478,12 +1142,23 @@ Player = function(param,socket){
                     for(var i in self.inventory.items){
                         if(i >= 0){
                             if(i >= self.inventory.maxSlots){
-
+                                if(self.inventory.items[i].id){
+                                    new DroppedItem({
+                                        x:self.x,
+                                        y:self.y,
+                                        map:self.map,
+                                        item:self.inventory.items[i].id,
+                                        amount:self.inventory.items[i].amount,
+                                        parent:self.id,
+                                        allPlayers:false,
+                                    });
+                                }
+                                self.inventory.items[i] = undefined;
                             }
                         }
                     }
                 }
-                self.inventory.refreshMenu();
+                self.inventory.refreshMenu(maxSlots);
             }
         }
     }
