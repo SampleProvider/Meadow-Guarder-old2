@@ -87,7 +87,7 @@ brownrobe,Brown Robe,1.0,1.01,212,false,1,chestplate,Chestplate,0,0,0,2,0.10,0.0
 greenrobe,Green Robe,2.0,1.01,213,false,1,chestplate,Chestplate,0,0,0,3,0.00,0.20,0,0,0.00,3.24,0.13,3,0,0.00,18,0.40,0,0.87,0,0,0,0,none,none,none,none,none,0.00,A nice shiny green robe.
 skyrobe,Sky Robe,4.0,1.00,214,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,20,0.50,5,1.00,0,0,0,0,none,none,none,none,none,0.00,Lighter than feathers.
 angelrobe,Angel Robe,3.0,1.00,215,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,30,0.20,0,0.70,0,0,0,0,none,none,none,none,Rebirth.,0.30,Made with wings from an angel.
-mysticrobe,Mystic Robe,5.0,1.00,216,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.30,0,0,0.00,24.33,0.25,7,16,0.00,56,0.60,0,0.76,0,0,0,0,none,none,none,magical,none,0.00,
+mysticrobe,Mystic Robe,5.0,1.00,216,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.30,0,0,0.00,24.33,0.25,7,16,0.00,56,0.60,0,0.76,0,0,0,0,none,mysticflames,none,magical,none,0.00,
 crimsonrobe,Crimson Robe,3.0,1.00,217,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.70,0,0,0.00,1.52,0.04,5,16,0.20,0,0.00,0,0.66,0,0,0,0,none,none,none,none,Lifesteal.,0.30,Bloodshed.
 magentarobe,Magenta Robe,3.0,1.00,218,false,1,chestplate,Chestplate,0,0,0,5,0.10,0.00,0,0,0.00,5.44,0.12,5,14,0.00,26,0.20,0,0.88,0,0,0,0,none,none,none,none,none,0.00,
 azurerobe,Azure Robe,2.0,1.00,219,false,1,chestplate,Chestplate,0,0,0,2,0.00,0.30,0,0,0.00,2.37,0.10,4,0,0.10,21,0.00,0,0.91,0,0,0,0,none,none,none,none,none,0.00,
