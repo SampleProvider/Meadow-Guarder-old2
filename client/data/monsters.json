@@ -131,6 +131,10 @@
             "diamondshield":{
                 "chance":0.5,
                 "amount":1
+            },
+            "manapotion":{
+                "chance":1,
+                "amount":10
             }
         },
         "img":{

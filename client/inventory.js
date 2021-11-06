@@ -73,6 +73,9 @@ Inventory = function(socket,server){
         if(type === 'Tool'){
             return '#33dd33';
         }
+        if(type === 'Potion'){
+            return '#dd99dd';
+        }
     }
     self.addItem = function(id,amount){
         if(!Item.list[id]){
@@ -607,7 +610,7 @@ Inventory = function(socket,server){
             }
         }
         if(item.equip === 'consume'){
-            description += 'Right click to use.<br>';
+            description += 'Left click to use.<br>';
         }
         if(item.description){
             description += item.description;
@@ -995,6 +998,7 @@ Inventory = function(socket,server){
         socket.on("hotbarSelectedItem",function(data){
             self.hotbarSelectedItem = data;
             self.updateStats = true;
+            Player.list[socket.id].keyPress.attack = false;
         });
         socket.on("useItem",function(data){
             try{

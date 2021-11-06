@@ -5,6 +5,7 @@
             "projectileType":"bluefrozenflames",
             "param":{
                 "speed":20,
+                "timer":80,
                 "directionDeviation":60,
                 "projectilePattern":"homing",
                 "collisionType":"none"
@@ -543,8 +544,10 @@
             "projectileType":"mysticflames",
             "param":{
                 "speed":35,
+                "timer":80,
                 "directionDeviation":20,
-                "projectilePattern":"homing"
+                "projectilePattern":"homing",
+                "collisionType":"none"
             }
         }]
     },
@@ -574,8 +577,10 @@
             "projectileType":"darkflames",
             "param":{
                 "speed":5,
+                "timer":80,
                 "directionDeviation":60,
-                "projectilePattern":"homing"
+                "projectilePattern":"homing",
+                "collisionType":"none"
             }
         }]
     },
@@ -955,6 +960,12 @@
                 "projectilePattern":"harvest",
                 "collisionType":"none"
             }
+        }]
+    },
+    "manapotion":{
+        "1":[{
+            "id":"none",
+            "manaCost":-100
         }]
     }
 }

@@ -955,6 +955,20 @@ Player = function(param,socket){
         self.reload += 1;
         if(self.keyPress.attack){
             self.doAttack();
+            if(self.canAttack){
+                if(self.inventory.items[self.inventory.hotbarSelectedItem]){
+                    if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
+                        if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
+                            self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
+                            if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
+                                self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                            }
+                            self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
+                            self.keyPress.attack = false;
+                        }
+                    }
+                }
+            }
         }
         else{
             if(self.reload % self.useTime === 0){
@@ -1343,7 +1357,7 @@ Player = function(param,socket){
                     if(i + '' === self.inventory.hotbarSelectedItem + ''){
                         if(self.inventory.items[i].id){
                             var item = Item.list[self.inventory.items[i].id];
-                            if(item.equip !== 'hotbar'){
+                            if(item.equip !== 'hotbar' && item.equip !== 'consume'){
                                 continue;
                             }
                             self.currentItem = self.inventory.items[i].id;
@@ -1876,8 +1890,17 @@ Projectile = function(param){
                 }
             }
             if(nearestEntity){
-                var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x);
-                self.direction += ((direction / Math.PI * 180) % 360 - self.direction % 360) / 10;
+                var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x) / Math.PI * 180;
+                self.direction = self.direction % 360;
+                if(direction - self.direction > 180){
+                    self.direction += (direction - self.direction - 360) / 10;
+                }
+                else if(direction - self.direction < -180){
+                    self.direction += (direction - self.direction - 360) / 10;
+                }
+                else{
+                    self.direction += (direction - self.direction) / 10;
+                }
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
             }
