@@ -3,7 +3,7 @@ if(isFirefox === true) {
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
 
-var VERSION = '0.0.4';
+var VERSION = '0.0.5';
 
 var socket = io({
     reconnection:false,
