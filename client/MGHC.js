@@ -71,12 +71,10 @@ attackMonsters.onclick = function(){
     if(attackMonstersState){
         attackMonsters.style.color = '#000000';
         attackMonsters.style.backgroundColor = '#ffffff';
-        socket.emit('keyPress',{inputId:'attack',state:false});
     }
     else{
         attackMonsters.style.color = '#ffffff';
         attackMonsters.style.backgroundColor = '#000000';
-        socket.emit('keyPress',{inputId:'attack',state:false});
     }
 };
 
@@ -119,12 +117,10 @@ attackPlayers.onclick = function(){
     if(attackPlayersState){
         attackPlayers.style.color = '#000000';
         attackPlayers.style.backgroundColor = '#ffffff';
-        socket.emit('keyPress',{inputId:'attack',state:false});
     }
     else{
         attackPlayers.style.color = '#ffffff';
         attackPlayers.style.backgroundColor = '#000000';
-        socket.emit('keyPress',{inputId:'attack',state:false});
     }
 };
 
@@ -224,6 +220,29 @@ tickIncrease.onclick = function(){
     else{
         tickIncrease.style.color = '#ffffff';
         tickIncrease.style.backgroundColor = '#000000';
+    }
+};
+
+var attackIncrease = document.createElement('button');
+attackIncrease.className = 'UI-button-light';
+attackIncrease.style.position = 'static';
+attackIncrease.style.top = '8px';
+attackIncrease.innerHTML = 'Attack Increase';
+hackedCollumn4.appendChild(attackIncrease);
+
+attackIncrease.style.color = '#ffffff';
+attackIncrease.style.backgroundColor = '#000000';
+
+var attackIncreaseState = false;
+attackIncrease.onclick = function(){
+    attackIncreaseState = !attackIncreaseState;
+    if(attackIncreaseState){
+        attackIncrease.style.color = '#000000';
+        attackIncrease.style.backgroundColor = '#ffffff';
+    }
+    else{
+        attackIncrease.style.color = '#ffffff';
+        attackIncrease.style.backgroundColor = '#000000';
     }
 };
 
@@ -330,11 +349,14 @@ MGHC = function(){
             }
         }
         if(closestMonster !== undefined){
-            socket.emit('keyPress',{inputId:'attack',state:true});
+            if(inventory.items[inventory.hotbarSelectedItem]){
+                if(inventory.items[inventory.hotbarSelectedItem].id){
+                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                        socket.emit('attack');
+                    }
+                }
+            }
             socket.emit('keyPress',{inputId:'direction',state:{x:closestMonster.x - Player.list[selfId].x,y:closestMonster.y - Player.list[selfId].y}});
-        }
-        else{
-            socket.emit('keyPress',{inputId:'attack',state:false});
         }
     }
     if(attackPlayersState){
@@ -358,15 +380,27 @@ MGHC = function(){
             }
         }
         if(closestPlayer !== undefined){
-            socket.emit('keyPress',{inputId:'attack',state:true});
+            if(inventory.items[inventory.hotbarSelectedItem]){
+                if(inventory.items[inventory.hotbarSelectedItem].id){
+                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                        socket.emit('attack');
+                    }
+                }
+            }
             socket.emit('keyPress',{inputId:'direction',state:{x:closestPlayer.x - Player.list[selfId].x,y:closestPlayer.y - Player.list[selfId].y}});
-        }
-        else{
-            socket.emit('keyPress',{inputId:'attack',state:false});
         }
     }
     if(tickIncreaseState){
         socket.emit('nextReload');
+    }
+    if(attackIncreaseState){
+        if(inventory.items[inventory.hotbarSelectedItem]){
+            if(inventory.items[inventory.hotbarSelectedItem].id){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                    socket.emit('attack');
+                }
+            }
+        }
     }
 };
 MGHC1 = function(){
