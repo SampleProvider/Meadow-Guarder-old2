@@ -597,9 +597,9 @@ canvas {
     width: 640px;
 }
 #inventoryExit {
-    position: absolute;
-    right: 2px;
-    top: 2px;
+    position: fixed;
+    right: 20px;
+    bottom: 400px;
     width: 14px;
     height: 14px;
     color: #000000;
