@@ -413,7 +413,7 @@
         }]
     },
     "copperbow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -422,7 +422,7 @@
         }]
     },
     "ironbow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -431,7 +431,7 @@
         }]
     },
     "goldbow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -440,7 +440,7 @@
         }]
     },
     "amethystbow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -449,7 +449,7 @@
         }]
     },
     "azuritebow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -458,7 +458,7 @@
         }]
     },
     "emeralditebow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -467,7 +467,7 @@
         }]
     },
     "rubybow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -476,7 +476,7 @@
         }]
     },
     "diamondbow":{
-        "20":[{
+        "1":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
