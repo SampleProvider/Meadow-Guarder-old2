@@ -566,13 +566,14 @@ Actor = function(param){
                     for(var j in Item.list){
                         if(numItems === randomItem){
                             while(amount > 0){
-                                amount -= 1;
+                                var amountRemoved = Math.ceil(Math.random() * amount);
+                                amount -= amountRemoved;
                                 new DroppedItem({
                                     x:self.x,
                                     y:self.y,
                                     map:self.map,
                                     item:j,
-                                    amount:1,
+                                    amount:amountRemoved,
                                     parent:pt,
                                     allPlayers:false,
                                 });
@@ -583,13 +584,14 @@ Actor = function(param){
                 }
                 else{
                     while(amount > 0){
-                        amount -= 1;
+                        var amountRemoved = Math.ceil(Math.random() * amount);
+                        amount -= amountRemoved;
                         new DroppedItem({
                             x:self.x,
                             y:self.y,
                             map:self.map,
                             item:i,
-                            amount:1,
+                            amount:amountRemoved,
                             parent:pt,
                             allPlayers:false,
                         });
@@ -1366,6 +1368,7 @@ Player.onConnect = function(socket,username){
                 return;
             }
             player.canMove = true;
+            player.canAttack = false;
             player.hp = Math.round(player.hpMax / 2);
             player.teleport(ENV.spawnpoint.x,ENV.spawnpoint.y,ENV.spawnpoint.map);
             addToChat('#00ff00',player.name + ' respawned.');
@@ -2077,6 +2080,9 @@ DroppedItem = function(param){
         super_update();
         self.timer -= 1;
         if(self.timer <= 0){
+            self.toRemove = true;
+        }
+        if(!Player.list[self.parent] && self.allPlayers === false){
             self.toRemove = true;
         }
     }
