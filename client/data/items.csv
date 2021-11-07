@@ -54,7 +54,7 @@ yellowfedora,Yellow Fedora,3.0,1.00,179,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,
 greenfedora,Green Fedora,2.0,1.01,180,false,1,helmet,Helmet,2,0,0,0,0.00,0.00,0,0,0.00,2.00,0.08,3,0,0.00,0,0.00,2,0.93,0,0,0,0,none,none,none,none,none,0.00,The bright green reminds you of Emeraldite.
 bluefedora,Blue Fedora,1.0,1.09,181,false,1,helmet,Helmet,1,0,0,0,0.00,0.00,0,0,0.00,1.00,0.09,2,0,0.00,0,0.00,1,1.00,0,0,0,0,none,none,none,none,none,0.00,SPEED!
 redarchercap,Red Archer Cap,4.0,1.03,182,false,1,helmet,Helmet,0,0,13,0,0.25,0.85,0,0,0.00,32.10,0.47,7,0,0.60,0,0.00,0,0.56,0,0,0,0,none,none,none,none,none,0.00,Clearly made for the best rangers.
-yellowarchercap,Yellow Archer Cap,3.0,1.01,183,false,1,helmet,Helmet,0,0,9,0,0.20,0.70,0,0,0.00,17.48,0.40,5,0,0.50,0,0.00,0,0.61,0,0,0,0,none,none,none,none,none,0.00,
+yellowarchercap,Yellow Archer Cap,3.0,1.01,183,false,1,helmet,Helmet,0,0,9,0,0.20,0.70,0,0,0.00,17.48,0.40,5,0,0.50,0,0.00,0,0.61,0,0,0,0,none,none,none,none,none,0.00,Can I have a sniper scope on this?
 greenarchercap,Green Archer Cap,2.0,1.00,184,false,1,helmet,Helmet,0,0,6,0,0.15,0.55,0,0,0.00,9.05,0.37,3,0,0.40,0,0.00,0,0.63,0,0,0,0,none,none,none,none,none,0.00,
 bluearchercap,Blue Archer Cap,1.0,0.99,185,false,1,helmet,Helmet,0,0,2,0,0.10,0.30,0,0,0.00,2.60,0.24,2,0,0.30,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,
 redbowtie,Red Bow Tie,4.0,0.99,186,false,1,helmet,Helmet,8,0,0,0,0.00,0.00,0,0,0.00,8.00,0.12,8,0,1.80,0,0.00,0,0.88,0,0,0,0,none,none,none,none,none,0.00,The bright red makes it really pretty.
@@ -73,8 +73,8 @@ firevikinghelmet,Fire Viking Helmet,4.0,1.00,198,false,1,helmet,Helmet,21,0,0,0,
 darkvikinghelmet,Dark Viking Helmet,3.0,1.03,199,false,1,helmet,Helmet,13,0,0,0,0.00,0.00,0,0,0.00,13.00,0.30,8,0,0.00,0,0.00,0,0.73,0,0,0,0,none,none,none,darkNebula,none,0.00,
 bronzevikinghelmet,Bronze Viking Helmet,2.0,1.00,200,false,1,helmet,Helmet,7,0,0,0,0.00,0.00,0,0,0.00,7.00,0.29,5,0,0.00,0,0.00,0,0.71,0,0,0,0,none,none,none,none,none,0.00,
 steelvikinghelmet,Steel Viking Helmet,1.0,1.03,201,false,1,helmet,Helmet,3,0,0,0,0.00,0.00,0,0,0.00,3.00,0.28,3,0,0.00,0,0.00,0,0.75,0,0,0,0,none,none,none,none,none,0.00,The weakest viking helmet.
-mysticknighthelmet,Mystic Knight Helmet,5.0,1.06,202,false,1,helmet,Helmet,7,0,0,0,0.40,0.45,0,0,0.00,30.89,0.31,7,30,0.45,30,0.45,0,0.74,0,0,0,0,none,none,none,none,none,0.00,
-fieryknighthelmet,Fiery Knight Helmet,4.0,1.00,203,false,1,helmet,Helmet,5,0,0,0,0.35,0.40,0,0,0.00,18.30,0.27,5,21,0.35,21,0.35,0,0.73,0,0,0,0,none,none,none,none,none,0.00,
+mysticknighthelmet,Mystic Knight Helmet,5.0,1.06,202,false,1,helmet,Helmet,7,0,0,0,0.40,0.45,0,0,0.00,30.89,0.31,7,30,0.45,30,0.45,0,0.74,0,0,0,0,none,none,none,none,none,0.00,The helmet of a knight-mage.
+fieryknighthelmet,Fiery Knight Helmet,4.0,1.00,203,false,1,helmet,Helmet,5,0,0,0,0.35,0.40,0,0,0.00,18.30,0.27,5,21,0.35,21,0.35,0,0.73,0,0,0,0,none,none,none,none,none,0.00,YOUR BRAIN IS MELTING!!!
 greenknighthelmet,Green Knight Helmet,2.0,1.02,204,false,1,helmet,Helmet,3,0,0,0,0.25,0.30,0,0,0.00,5.81,0.24,2,11,0.20,11,0.20,0,0.78,0,0,0,0,none,none,none,none,none,0.00,
 blueknighthelmet,Blue Knight Helmet,1.0,1.01,205,false,1,helmet,Helmet,2,0,0,0,0.10,0.20,0,0,0.00,2.44,0.22,1,8,0.10,8,0.10,0,0.79,0,0,0,0,none,none,none,none,none,0.00,
 firebandedrobe,Fire Banded Robe,4.0,1.01,206,false,1,chestplate,Chestplate,0,0,0,12,0.00,0.00,0,0,0.00,12.00,0.18,4,34,0.20,34,0.50,0,0.84,0,0,0,0,none,none,none,fiery,none,0.00,Is this safe to wear?
@@ -87,7 +87,7 @@ brownrobe,Brown Robe,1.0,1.01,212,false,1,chestplate,Chestplate,0,0,0,2,0.10,0.0
 greenrobe,Green Robe,2.0,1.01,213,false,1,chestplate,Chestplate,0,0,0,3,0.00,0.20,0,0,0.00,3.24,0.13,3,0,0.00,18,0.40,0,0.87,0,0,0,0,none,none,none,none,none,0.00,A nice shiny green robe.
 skyrobe,Sky Robe,4.0,1.00,214,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,20,0.50,5,1.00,0,0,0,0,none,none,none,none,none,0.00,Lighter than feathers.
 angelrobe,Angel Robe,3.0,1.00,215,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,30,0.20,0,0.70,0,0,0,0,none,none,none,none,Rebirth.,0.30,Made with wings from an angel.
-mysticrobe,Mystic Robe,5.0,1.00,216,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.30,0,0,0.00,24.33,0.25,7,16,0.00,56,0.60,0,0.76,0,0,0,0,none,mysticflames,none,magical,none,0.00,
+mysticrobe,Mystic Robe,5.0,1.00,216,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.30,0,0,0.00,24.33,0.25,7,16,0.00,56,0.60,0,0.76,0,0,0,0,none,mysticflames,none,magical,none,0.00,A robe for the best of mages.
 crimsonrobe,Crimson Robe,3.0,1.00,217,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.70,0,0,0.00,1.52,0.04,5,16,0.20,0,0.00,0,0.66,0,0,0,0,none,none,none,none,Lifesteal.,0.30,Bloodshed.
 magentarobe,Magenta Robe,3.0,1.00,218,false,1,chestplate,Chestplate,0,0,0,5,0.10,0.00,0,0,0.00,5.44,0.12,5,14,0.00,26,0.20,0,0.88,0,0,0,0,none,none,none,none,none,0.00,
 azurerobe,Azure Robe,2.0,1.00,219,false,1,chestplate,Chestplate,0,0,0,2,0.00,0.30,0,0,0.00,2.37,0.10,4,0,0.10,21,0.00,0,0.91,0,0,0,0,none,none,none,none,none,0.00,
