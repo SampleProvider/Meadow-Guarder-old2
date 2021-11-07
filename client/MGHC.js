@@ -369,7 +369,7 @@ MGHC = function(){
         };
         var closestPlayer = undefined;
         for(var i in Player.list){
-            if(i === selfId){
+            if(i + '' === selfId + ''){
 
             }
             else if(closestPlayer === undefined){
