@@ -26,7 +26,7 @@ addToChat = function(color,message,debug){
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
     if(SERVER !== 'localhost'){
-        h -= 4;
+        h -= 5;
     }
     h = h % 24;
     h = '' + h;
@@ -48,8 +48,6 @@ addToChat = function(color,message,debug){
 }
 
 playerMap = {};
-
-tiles = [];
 
 attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
@@ -212,6 +210,8 @@ Entity = function(param){
         pack.id = self.id;
         pack.x = self.x;
         pack.y = self.y;
+        pack.width = self.width;
+        pack.height = self.height;
         pack.map = self.map;
         pack.direction = self.direction;
         pack.zindex = self.zindex;
@@ -251,6 +251,10 @@ Actor = function(param){
     self.transporter = {};
 
     self.trackingPath = [];
+
+    self.tradingEntity = null;
+    self.acceptedTrade = false;
+    self.finalAcceptedTrade = false;
 
     self.drawSize = 'medium';
 
@@ -803,6 +807,7 @@ Player = function(param,socket){
 
     self.canMove = false;
     self.invincible = true;
+    self.canAttack = false;
 
     self.hp = 100;
     self.hpMax = 100;
@@ -1072,7 +1077,7 @@ Player = function(param,socket){
                         }
                     }
                 }
-                else{
+                else if(i.slice(0,5) !== 'trade'){
                     if(self.inventory.items[i].id){
                         var item = Item.list[self.inventory.items[i].id];
                         if(item.defense !== undefined){
@@ -1242,6 +1247,7 @@ Player = function(param,socket){
         var pack = getInitPack();
         pack.xp = self.xp;
         pack.xpMax = self.xpMax;
+        pack.level = self.level;
         pack.mana = self.mana;
         pack.manaMax = self.manaMax;
         pack.currentItem = self.currentItem;
@@ -1318,6 +1324,47 @@ Player.onConnect = function(socket,username){
             }
             if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
                 player.keyPress.rightClick = data.state;
+                if(data.state === true){
+                    var entities = [];
+                    for(var i in Player.list){
+                        entities.push(Player.list[i]);
+                    }
+                    for(var i in Npc.list){
+                        entities.push(Npc.list[i]);
+                    }
+                    function compare(a,b){
+                        var ay = a.y;
+                        var by = b.y;
+                        if(ay < by){
+                            return -1;
+                        }
+                        if(ay > by){
+                            return 1;
+                        }
+                        return 0;
+                    }
+                    entities.sort(compare);
+                    var tradingEntity = null;
+                    for(var i in entities){
+                        if(entities[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'}) && entities[i].id !== player.id){
+                            tradingEntity = entities[i];
+                        }
+                    }
+                    if(tradingEntity){
+                        if(tradingEntity.tradingEntity === null && player.tradingEntity === null){
+                            tradingEntity.tradingEntity = player.id;
+                            tradingEntity.acceptedTrade = false;
+                            tradingEntity.finalAcceptedTrade = false;
+                            player.tradingEntity = tradingEntity.id;
+                            player.acceptedTrade = false;
+                            player.finalAcceptedTrade = false;
+                            socket.emit('openTrade',tradingEntity.name);
+                            if(tradingEntity.type === 'Player'){
+                                SOCKET_LIST[tradingEntity.id].emit('openTrade',player.name);
+                            }
+                        }
+                    }
+                }
             }
             if(data.inputId === player.keyMap.heal || data.inputId === player.secondKeyMap.heal || data.inputId === player.thirdKeyMap.heal){
                 player.keyPress.heal = data.state;
@@ -1342,6 +1389,82 @@ Player.onConnect = function(socket,username){
                             }
                             player.inventory.refreshItem(player.inventory.hotbarSelectedItem);
                         }
+                    }
+                }
+            }
+        });
+
+        socket.on('updateTrade',function(data){
+            if(player.tradingEntity){
+                if(Player.list[player.tradingEntity]){
+                    SOCKET_LIST[player.tradingEntity].emit('updateTrade',data);
+                }
+            }
+        });
+
+        socket.on('acceptTrade',function(data){
+            if(player.tradingEntity){
+                if(Player.list[player.tradingEntity]){
+                    if(player.acceptedTrade){
+                        player.finalAcceptedTrade = true;
+                        SOCKET_LIST[player.tradingEntity].emit('traderAccepted',{final:true});
+                        if(player.finalAcceptedTrade && Player.list[player.tradingEntity].finalAcceptedTrade){
+                            for(var i in Player.list[player.tradingEntity].inventory.items){
+                                if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                                    player.inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount,true);
+                                }
+                            }
+                            SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                            for(var i in player.inventory.items){
+                                if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                                    Player.list[player.tradingEntity].inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
+                                }
+                            }
+                            socket.emit('closeTrade');
+                            SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                        }
+                    }
+                    else{
+                        player.acceptedTrade = true;
+                        SOCKET_LIST[player.tradingEntity].emit('traderAccepted',{final:false});
+                        if(player.acceptedTrade && Player.list[player.tradingEntity].acceptedTrade){
+                            socket.emit('finalAccept');
+                            SOCKET_LIST[player.tradingEntity].emit('finalAccept');
+                        }
+                    }
+                }
+            }
+        });
+
+        socket.on('declineTrade',function(data){
+            if(player.tradingEntity){
+                if(Player.list[player.tradingEntity]){
+                    for(var i in Player.list[player.tradingEntity].inventory.items){
+                        if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                            new DroppedItem({
+                                x:Player.list[player.tradingEntity].x,
+                                y:Player.list[player.tradingEntity].y,
+                                map:Player.list[player.tradingEntity].map,
+                                item:Player.list[player.tradingEntity].inventory.items[i].id,
+                                amount:Player.list[player.tradingEntity].inventory.items[i].amount,
+                                parent:player.tradingEntity,
+                                allPlayers:false,
+                            });
+                        }
+                    }
+                    SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                }
+                for(var i in player.inventory.items){
+                    if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                        new DroppedItem({
+                            x:player.x,
+                            y:player.y,
+                            map:player.map,
+                            item:player.inventory.items[i].id,
+                            amount:player.inventory.items[i].amount,
+                            parent:player.id,
+                            allPlayers:false,
+                        });
                     }
                 }
             }
@@ -1403,6 +1526,37 @@ Player.onDisconnect = function(socket){
     }
     storeDatabase(Player.list);
     if(Player.list[socket.id]){
+        if(Player.list[socket.id].tradingEntity){
+            if(Player.list[Player.list[socket.id].tradingEntity]){
+                for(var i in Player.list[Player.list[socket.id].tradingEntity].inventory.items){
+                    if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                        new DroppedItem({
+                            x:Player.list[Player.list[socket.id].tradingEntity].x,
+                            y:Player.list[Player.list[socket.id].tradingEntity].y,
+                            map:Player.list[Player.list[socket.id].tradingEntity].map,
+                            item:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,
+                            amount:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount,
+                            parent:Player.list[socket.id].tradingEntity,
+                            allPlayers:false,
+                        });
+                    }
+                }
+                SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
+            }
+            for(var i in Player.list[socket.id].inventory.items){
+                if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                    new DroppedItem({
+                        x:Player.list[Player.list[socket.id].tradingEntity].x,
+                        y:Player.list[Player.list[socket.id].tradingEntity].y,
+                        map:Player.list[Player.list[socket.id].tradingEntity].map,
+                        item:Player.list[socket.id].inventory.items[i].id,
+                        amount:Player.list[socket.id].inventory.items[i].amount,
+                        parent:Player.list[socket.id].tradingEntity,
+                        allPlayers:false,
+                    });
+                }
+            }
+        }
         playerMap[Player.list[socket.id].map] -= 1;
         addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
         delete Player.list[socket.id];

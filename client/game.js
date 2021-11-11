@@ -40,6 +40,31 @@ var respawnTimer = 0;
 
 var attacking = false;
 
+var getEntityDescription = function(entity){
+    var description = '';
+    description += entity.name;
+    description += '<br><div style="font-size: 11px">';
+    if(entity.hp !== undefined){
+        description += '<span style="color: #5ac54f">Health: ' + entity.hp + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
+    }
+    if(entity.harvestHp !== undefined){
+        description += '<span style="color: #5ac54f">Health: ' + entity.harvestHp + ' / ' + entity.harvestHpMax + ' (' + Math.ceil(entity.harvestHp / entity.harvestHpMax * 100) + '%)</span><br>';
+    }
+    if(entity.xp !== undefined){
+        description += '<span style="color: #cccc00">Xp: Level ' + entity.level + ' ' + entity.xp + ' / ' + entity.xpMax + ' (' + Math.ceil(entity.xp / entity.xpMax * 100) + '%)</span><br>';
+    }
+    if(entity.mana !== undefined){
+        description += '<span style="color: #ff55ff">Mana: ' + entity.mana + ' / ' + entity.manaMax + ' (' + Math.ceil(entity.mana / entity.manaMax * 100) + '%)</span><br>';
+    }
+    if(entity.type === 'Player' || entity.type === 'Npc'){
+        if(entity.id !== selfId){
+            description += 'Right click to initiate trade.';
+        }
+    }
+    description += '</div>';
+    return description;
+}
+
 var resetCanvas = function(ctx){
     ctx.webkitImageSmoothingEnabled = false;
     ctx.filter = 'url(#remove-alpha)';
@@ -75,11 +100,13 @@ var inventory = new Inventory(socket,false);
 socket.on('updateInventory',function(pack){
     var items = pack.items;
     for(var i in inventory.items){
-        if(inventory.items[i].cooldown){
-            items[i].cooldown = inventory.items[i].cooldown;
-        }
-        else{
-            items[i].cooldown = 0;
+        if(items[i]){
+            if(inventory.items[i].cooldown){
+                items[i].cooldown = inventory.items[i].cooldown;
+            }
+            else{
+                items[i].cooldown = 0;
+            }
         }
     }
     inventory.items = items;
@@ -88,11 +115,13 @@ socket.on('updateInventory',function(pack){
 socket.on('updateItem',function(pack){
     var items = pack.items;
     for(var i in inventory.items){
-        if(inventory.items[i].cooldown){
-            items[i].cooldown = inventory.items[i].cooldown;
-        }
-        else{
-            items[i].cooldown = 0;
+        if(items[i]){
+            if(inventory.items[i].cooldown){
+                items[i].cooldown = inventory.items[i].cooldown;
+            }
+            else{
+                items[i].cooldown = 0;
+            }
         }
     }
     inventory.items = items;
@@ -111,6 +140,62 @@ socket.on('updateCraft',function(pack){
         inventory.updateCraftClient(i);
     }
 });
+
+socket.on('openTrade',function(pack){
+    openTrade();
+    openInventory();
+    canDragTradeItems = true;
+    traderAccepted.innerHTML = 'Pending Accept';
+    traderAccepted.style.color = '#eeee33';
+    acceptTrade.style.display = 'inline-block';
+    acceptTrade.innerHTML = 'Accept Trade';
+    declineTrade.style.display = 'inline-block';
+});
+socket.on('updateTrade',function(pack){
+    if(pack.index >= 0 && pack.index <= 8){
+        inventory.items['trade' + (9 + pack.index)] = {
+            id:pack.id,
+            amount:pack.amount,
+        };
+        inventory.refreshItem('trade' + (9 + pack.index));
+    }
+});
+socket.on('closeTrade',function(pack){
+    closeTrade();
+});
+socket.on('traderAccepted',function(pack){
+    if(pack.final === false){
+        traderAccepted.innerHTML = 'Trader Accepted';
+        traderAccepted.style.color = '#33ee33';
+    }
+    else{
+        traderAccepted.innerHTML = 'Trader Final Accepted';
+        traderAccepted.style.color = '#33ee33';
+    }
+});
+socket.on('finalAccept',function(data){
+    traderAccepted.innerHTML = 'Pending Final Accept';
+    traderAccepted.style.color = '#eeee33';
+    acceptTrade.style.display = 'inline-block';
+    acceptTrade.innerHTML = 'Final Accept';
+    declineTrade.style.display = 'inline-block';
+});
+
+var canDragTradeItems = true;
+
+acceptTrade.onclick = function(){
+    acceptTrade.style.display = 'none';
+    declineTrade.style.display = 'none';
+    socket.emit('acceptTrade');
+    canDragTradeItems = false;
+}
+
+declineTrade.onclick = function(){
+    acceptTrade.style.display = 'none';
+    declineTrade.style.display = 'none';
+    socket.emit('declineTrade');
+    canDragTradeItems = false;
+}
 
 Img.healthbar = new Image();
 Img.healthbar.src = '/client/img/healthbar.png';
@@ -591,6 +676,7 @@ socket.on('death',function(data){
     setTimeout(updateRespawn,1500);
     healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
     healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
+    itemMenu.style.display = 'none';
     socket.emit('keyPress',{inputId:'releaseAll'});
     attacking = false;
 });
@@ -793,8 +879,34 @@ var loop = function(){
         return 0;
     }
     entities.sort(compare);
+    if(scrollAllowed){
+        itemMenu.style.display = 'none';
+    }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
+        if(scrollAllowed && entities[i].name){
+            if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
+                itemMenu.innerHTML = getEntityDescription(entities[i]);
+                itemMenu.style.display = 'inline-block';
+                var rect = itemMenu.getBoundingClientRect();
+                itemMenu.style.left = '';
+                itemMenu.style.right = '';
+                itemMenu.style.top = '';
+                itemMenu.style.bottom = '';
+                if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                    itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
+                }
+                else{
+                    itemMenu.style.left = rawMouseX + 'px';
+                }
+                if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                    itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+                }
+                else{
+                    itemMenu.style.top = rawMouseY + 'px';
+                }
+            }
+        }
     }
     for(var i in Projectile.list){
         decreaseProjectileByParent(Projectile.list[i]);
@@ -998,6 +1110,15 @@ document.onmousemove = function(event){
         else{
             draggingItem.style.left = '-100px';
             draggingItem.style.top = '-100px';
+        }
+        if(scrollAllowed){
+            itemMenu.style.display = 'none';
+            for(var i in Player.list){
+                if(Player.list[i].isColliding({x:mouseX + Player.list[i].x,y:mouseY + Player.list[i].y,width:0,height:0})){
+                    itemMenu.innerHTML = getEntityDescription(Player.list[i]);
+                    itemMenu.style.display = 'inline-block';
+                }
+            }
         }
         if(itemMenu.style.display === 'inline-block'){
             var rect = itemMenu.getBoundingClientRect();

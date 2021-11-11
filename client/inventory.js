@@ -77,7 +77,7 @@ Inventory = function(socket,server){
             return '#dd99dd';
         }
     }
-    self.addItem = function(id,amount){
+    self.addItem = function(id,amount,dropItem){
         if(!Item.list[id]){
             return false;
         }
@@ -124,6 +124,17 @@ Inventory = function(socket,server){
             self.refreshItem(index);
             socket.emit('updateCraft');
             return index;
+        }
+        if(dropItem){
+            new DroppedItem({
+                x:Player.list[socket.id].x,
+                y:Player.list[socket.id].y,
+                map:Player.list[socket.id].map,
+                item:id,
+                amount:amount,
+                parent:socket.id,
+                allPlayers:false,
+            });
         }
         return false;
     }
@@ -257,6 +268,21 @@ Inventory = function(socket,server){
             }
             else{
                 if(!self.draggingItem.id){
+                    if(index1.slice(0,5) === 'trade'){
+                        if(parseInt(index1.substring(5)) >= 9){
+                            return;
+                        }
+                        else if(server === false){
+                            if(canDragTradeItems === false){
+                                return;
+                            }
+                        }
+                        else{
+                            if(Player.list[socket.id].acceptedTrade){
+                                return;
+                            }
+                        }
+                    }
                     if(data.click === 0){
                         self.draggingItem = {
                             id:item1.id,
@@ -288,6 +314,21 @@ Inventory = function(socket,server){
         else{
             if(!self.draggingItem.id){
                 return;
+            }
+            if(index2.slice(0,5) === 'trade'){
+                if(parseInt(index2.substring(5)) >= 9){
+                    return;
+                }
+                else if(server === false){
+                    if(canDragTradeItems === false){
+                        return;
+                    }
+                }
+                else{
+                    if(Player.list[socket.id].acceptedTrade){
+                        return;
+                    }
+                }
             }
             if(self.isItem(index2)){
                 if(self.draggingItem.id === item2.id){
@@ -326,7 +367,8 @@ Inventory = function(socket,server){
                     }
                 }
                 else{
-                    if(index2 >= 0){
+                    if(index2 >= 0 || (index2.slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
+                        
                         var item = {
                             id:self.draggingItem.id,
                             amount:self.draggingItem.amount,
@@ -356,12 +398,11 @@ Inventory = function(socket,server){
                     if(data.click === 0){
                         if(server){
                             new DroppedItem({
-                                id:socket.id,
-                                item:self.draggingItem.id,
-                                amount:self.draggingItem.amount,
                                 x:Player.list[socket.id].x,
                                 y:Player.list[socket.id].y,
                                 map:Player.list[socket.id].map,
+                                item:self.draggingItem.id,
+                                amount:self.draggingItem.amount,
                                 allPlayers:true,
                             });
                         }
@@ -371,12 +412,11 @@ Inventory = function(socket,server){
                     else if(data.click === 2){
                         if(server){
                             new DroppedItem({
-                                id:socket.id,
-                                item:self.draggingItem.id,
-                                amount:1,
                                 x:Player.list[socket.id].x,
                                 y:Player.list[socket.id].y,
                                 map:Player.list[socket.id].map,
+                                item:self.draggingItem.id,
+                                amount:1,
                                 allPlayers:true,
                             });
                         }
@@ -394,7 +434,7 @@ Inventory = function(socket,server){
                 return;
             }
             else{
-                if(index2 >= 0){
+                if(index2 >= 0 || (index2.slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
                     if(data.click === 0){
                         self.items[index2] = {
                             id:self.draggingItem.id,
@@ -469,7 +509,12 @@ Inventory = function(socket,server){
                 click:click,
             });
         }
-        itemMenu.style.display = 'none';
+        if(index.slice(0,5) === 'trade' && parseInt(index.substring(5)) >= 9){
+
+        }
+        else{
+            itemMenu.style.display = 'none';
+        }
         if(self.draggingItem.id){
             draggingItem.style.display = 'inline-block';
             draggingItem.innerHTML = '';
@@ -507,7 +552,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.defense + ' defense.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.defense + ' defense.</span><br>';
+                description += '<span style="color: #ee3333">' + item.defense + ' defense.</span><br>';
             }
         }
         if(item.manaCost){
@@ -518,7 +563,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.hp + ' max health.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.hp + ' max health.</span><br>';
+                description += '<span style="color: #ee3333">' + item.hp + ' max health.</span><br>';
             }
         }
         if(item.hpRegen){
@@ -526,7 +571,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.hpRegen + ' health regeneration.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.hpRegen + ' health regeneration.</span><br>';
+                description += '<span style="color: #ee3333">' + item.hpRegen + ' health regeneration.</span><br>';
             }
         }
         if(item.mana){
@@ -534,7 +579,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.mana + ' max mana.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.mana + ' max mana.</span><br>';
+                description += '<span style="color: #ee3333">' + item.mana + ' max mana.</span><br>';
             }
         }
         if(item.manaRegen){
@@ -542,7 +587,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.manaRegen + ' mana regeneration.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.manaRegen + ' mana regeneration.</span><br>';
+                description += '<span style="color: #ee3333">' + item.manaRegen + ' mana regeneration.</span><br>';
             }
         }
         if(item.damage){
@@ -550,7 +595,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.damage + ' damage.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.damage + ' damage.</span><br>';
+                description += '<span style="color: #ee3333">' + item.damage + ' damage.</span><br>';
             }
         }
         if(item.meleeDamage){
@@ -558,7 +603,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.meleeDamage + ' melee damage.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.meleeDamage + ' melee damage.</span><br>';
+                description += '<span style="color: #ee3333">' + item.meleeDamage + ' melee damage.</span><br>';
             }
         }
         if(item.rangedDamage){
@@ -566,7 +611,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.rangedDamage + ' ranged damage.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.rangedDamage + ' ranged damage.</span><br>';
+                description += '<span style="color: #ee3333">' + item.rangedDamage + ' ranged damage.</span><br>';
             }
         }
         if(item.magicDamage){
@@ -574,7 +619,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.magicDamage + ' magic damage.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.magicDamage + ' magic damage.</span><br>';
+                description += '<span style="color: #ee3333">' + item.magicDamage + ' magic damage.</span><br>';
             }
         }
         if(item.critChance){
@@ -582,7 +627,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.critChance * 100 + '% critical strike chance.</span><br>';
+                description += '<span style="color: #ee3333">' + item.critChance * 100 + '% critical strike chance.</span><br>';
             }
         }
         if(item.critPower){
@@ -590,7 +635,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.critPower * 100 + '% critical strike power.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.critPower * 100 + '% critical strike power.</span><br>';
+                description += '<span style="color: #ee3333">' + item.critPower * 100 + '% critical strike power.</span><br>';
             }
         }
         if(item.movementSpeed){
@@ -606,7 +651,7 @@ Inventory = function(socket,server){
                 description += '<span style="color: #33ee33">+' + item.slots + ' slots.</span><br>';
             }
             else{
-                description += '<span style="color: #33ee33">' + item.slots + ' slots.</span><br>';
+                description += '<span style="color: #ee3333">' + item.slots + ' slots.</span><br>';
             }
         }
         if(item.equip === 'consume'){
@@ -703,7 +748,8 @@ Inventory = function(socket,server){
                 }
             }
             else{
-                if(index >= 0){
+                if(index >= 0 || index.slice(0,5) === 'trade'){
+
                 }
                 else{
                     slot.innerHTML = '<image class="itemImage" src="/client/img/' + index + 'outline.png"</image>'
@@ -854,6 +900,13 @@ Inventory = function(socket,server){
             socket.emit('updateItem',{items:self.items,index:index});
             return;
         }
+        if(index.slice(0,5) === 'trade' && parseInt(index.substring(5)) <= 8){
+            socket.emit('updateTrade',{
+                index:parseInt(index.substring(5)),
+                id:self.items[index].id,
+                amount:self.items[index].amount,
+            });
+        }
         self.addItemClient(index);
     }
     self.refreshInventory = function(){
@@ -921,6 +974,9 @@ Inventory = function(socket,server){
             else{
                 draggingItem.style.display = 'none';
             }
+            for(var i = 0;i < 9;i++){
+                self.items['trade' + i] = {};
+            }
         }
         else{
             socket.emit('refreshMenu',{oldMaxSlots:oldMaxSlots,maxSlots:self.maxSlots});
@@ -955,6 +1011,9 @@ Inventory = function(socket,server){
             }
             if(self.items['accessory3'] === undefined){
                 self.items['accessory3'] = {};
+            }
+            for(var i = 0;i < 9;i++){
+                self.items['trade' + i] = {};
             }
             self.refreshInventory();
         }
@@ -1086,6 +1145,28 @@ Inventory = function(socket,server){
         }
         inventorySlottrash.oncontextmenu = function(){
             self.runDraggingItemClient('trash',2);
+        }
+        for(var i = 9;i < 18;i++){
+            if(i % 3 === 0){
+                var row = document.createElement('div');
+                row.className = 'inventoryRow';
+                tradeItems1.appendChild(row);
+            }
+            var div = document.createElement('div');
+            div.id = 'inventorySlottrade' + i;
+            div.className = 'inventorySlot';
+            row.appendChild(div);
+        }
+        for(var i = 0;i < 9;i++){
+            if(i % 3 === 0){
+                var row = document.createElement('div');
+                row.className = 'inventoryRow';
+                tradeItems2.appendChild(row);
+            }
+            var div = document.createElement('div');
+            div.id = 'inventorySlottrade' + i;
+            div.className = 'inventorySlot';
+            row.appendChild(div);
         }
     }
     return self;

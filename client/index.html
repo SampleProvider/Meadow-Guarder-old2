@@ -62,6 +62,18 @@
 				<div class="pageStackOuter UI-display-light">
 					<div class="pageStackInner">
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							11/11/2021
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added Trading.
+							<br>
+							<span style="color: #ee3333;font-size: large;">If you have previously filled out the contribution form, you need to fill the form out again.</span>
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display-light">
+					<div class="pageStackInner">
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							11/6/2021
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -210,6 +222,12 @@
 							Announcements:
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 20px">
+							11/11/2021
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							<span style="color: #ee3333;font-size: large;">If you have previously filled out the contribution form, you need to fill the form out again.</span>
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 20px">
 							10/13/2021
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -308,6 +326,24 @@
 				<div id="craftExitText">X</div>
 			</button>
 		</div>
+		<div id="tradeBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			
+		</div>
+		<div id="tradeDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+			<div class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Trader's Items</div>
+			<div class="UI-text-light" style="right: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Your Items</div>
+			<div id="tradeItems1" onmouseover="mouseUp(event);mouseOut(event);">
+
+			</div>
+			<div id="tradeItems2" onmouseover="mouseUp(event);mouseOut(event);">
+
+			</div>
+			<div id="traderAccepted" class="UI-text-light" style="position: absolute;left: 25%;top: 218px;font-size: large;transform: translate(-50%, 0%);" onmouseover="mouseUp(event);mouseOut(event);">Pending Accept</div>
+			<div id="tradeButtons">
+				<button id="acceptTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseOut(event);">Accept Trade</button>
+				<button id="declineTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseOut(event);">Decline Trade</button>
+			</div>
+		</div>
 		<div id="settingBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
 			
 		</div>
@@ -348,8 +384,8 @@
 		<div id="itemMenu" class="itemMenu UI-display-light" style="display: none;"></div>
 		<div id="draggingItem" draggable="false"></div>
 	</div>
-	<div id="deathDiv" style="display: none;">
-		<div id="deathScreen"></div>
+	<div id="deathDiv" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="deathScreen" onmouseover="mouseUp(event);mouseOut(event);"></div>
 		<div id="respawnTimerDiv"></div>
 		<button id="respawn" onclick="runRespawn()" style="display: none;">Respawn</button>
 	</div>

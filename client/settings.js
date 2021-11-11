@@ -1,6 +1,7 @@
 var settings = {
     inventoryOpen:false,
     craftOpen:false,
+    tradeOpen:false,
     settingOpen:false,
 };
 
@@ -78,6 +79,20 @@ toggleCraft = function(){
         if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
             itemMenu.style.display = 'none';
         }
+    }
+}
+openTrade = function(){
+    settings.tradeOpen = true;
+    tradeBackground.style.display = 'inline-block';
+    tradeDiv.style.display = 'inline-block';
+}
+closeTrade = function(){
+    settings.tradeOpen = false;
+    tradeBackground.style.display = 'none';
+    tradeDiv.style.display = 'none';
+    var rect = tradeBackground.getBoundingClientRect();
+    if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
+        itemMenu.style.display = 'none';
     }
 }
 openSetting = function(){

@@ -949,6 +949,98 @@ canvas {
     text-align: center;
 }
 
+#tradeBackground {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 410px;
+    height: 288px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    transform: translate(-50%, 0%);
+}
+#tradeDiv {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 410px;
+    height: 288px;
+    margin: 0px;
+    padding: 0px;
+    font-size: small;
+    transform: translate(-50%, 0%);
+}
+#tradeItems1 {
+    position: absolute;
+    top: 22px;
+    left: 0px;
+    height: 202px;
+    width: 202px;
+}
+#tradeItems2 {
+    position: absolute;
+    top: 22px;
+    left: 208px;
+    height: 202px;
+    width: 202px;
+}
+#tradeButtons {
+    position: absolute;
+    top: 220px;
+    left: 208px;
+    height: 200px;
+    width: 202px;
+}
+#acceptTrade {
+    left: 50%;
+    width: 160px;
+    height: 32px;
+    font-size: large;
+    transform: translate(-50%, 0%);
+    background-color: #00aa00;
+    border: 1px solid #005b00;
+}
+#acceptTrade:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #3baa3b;
+    pointer-events: none;
+}
+#acceptTrade:hover {
+    background-color: #3bcc3b;
+}
+#declineTrade {
+    top: 36px;
+    left: 50%;
+    width: 160px;
+    height: 32px;
+    font-size: large;
+    transform: translate(-50%, 0%);
+    background-color: #ff0000;
+    border: 1px solid #5b0000;
+}
+#declineTrade:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #ff5b5b;
+    pointer-events: none;
+}
+#declineTrade:hover {
+    background-color: #ff3b3b;
+}
+
 #settingBackground {
     position: absolute;
     left: 8px;
@@ -1044,7 +1136,7 @@ canvas {
     top: 1px;
     width: 150px;
     height: 20px;
-    background-color: #0069AA;
+    background-color: #5ac54f;
 }
 #healthBarText {
     position: absolute;

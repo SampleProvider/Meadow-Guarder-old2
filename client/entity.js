@@ -32,6 +32,21 @@ var Entity = function(initPack){
         }
         self.interpolationStage -= 1;
     }
+    self.isColliding = function(pt){
+        if(pt.x + pt.width / 2 <= self.x - self.width / 2){
+            return false;
+        }
+        if(pt.x - pt.width / 2 >= self.x + self.width / 2){
+            return false;
+        }
+        if(pt.y + pt.height / 2 <= self.y - self.height / 2){
+            return false;
+        }
+        if(pt.y - pt.height / 2 >= self.y + self.height / 2){
+            return false;
+        }
+        return true;
+    }
     return self;
 }
 
