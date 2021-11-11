@@ -268,7 +268,7 @@ Inventory = function(socket,server){
             }
             else{
                 if(!self.draggingItem.id){
-                    if(index1.slice(0,5) === 'trade'){
+                    if(index1.toString().slice(0,5) === 'trade'){
                         if(parseInt(index1.substring(5)) >= 9){
                             return;
                         }
@@ -315,7 +315,7 @@ Inventory = function(socket,server){
             if(!self.draggingItem.id){
                 return;
             }
-            if(index2.slice(0,5) === 'trade'){
+            if(index2.toString().slice(0,5) === 'trade'){
                 if(parseInt(index2.substring(5)) >= 9){
                     return;
                 }
@@ -367,7 +367,7 @@ Inventory = function(socket,server){
                     }
                 }
                 else{
-                    if(index2 >= 0 || (index2.slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
+                    if(index2 >= 0 || (index2.toString().slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
                         
                         var item = {
                             id:self.draggingItem.id,
@@ -434,7 +434,7 @@ Inventory = function(socket,server){
                 return;
             }
             else{
-                if(index2 >= 0 || (index2.slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
+                if(index2 >= 0 || (index2.toString().slice(0,5) === 'trade' && parseInt(index2.substring(5)) <= 8)){
                     if(data.click === 0){
                         self.items[index2] = {
                             id:self.draggingItem.id,
@@ -509,7 +509,7 @@ Inventory = function(socket,server){
                 click:click,
             });
         }
-        if(index.slice(0,5) === 'trade' && parseInt(index.substring(5)) >= 9){
+        if(index.toString().slice(0,5) === 'trade' && parseInt(index.substring(5)) >= 9){
 
         }
         else{
@@ -748,7 +748,7 @@ Inventory = function(socket,server){
                 }
             }
             else{
-                if(index >= 0 || index.slice(0,5) === 'trade'){
+                if(index >= 0 || index.toString().slice(0,5) === 'trade'){
 
                 }
                 else{
@@ -900,7 +900,7 @@ Inventory = function(socket,server){
             socket.emit('updateItem',{items:self.items,index:index});
             return;
         }
-        if(index.slice(0,5) === 'trade' && parseInt(index.substring(5)) <= 8){
+        if(index.toString().slice(0,5) === 'trade' && parseInt(index.substring(5)) <= 8){
             socket.emit('updateTrade',{
                 index:parseInt(index.substring(5)),
                 id:self.items[index].id,

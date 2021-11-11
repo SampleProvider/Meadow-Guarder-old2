@@ -1534,18 +1534,18 @@ Player.onDisconnect = function(socket){
                     }
                 }
                 SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
-            }
-            for(var i in Player.list[socket.id].inventory.items){
-                if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                    new DroppedItem({
-                        x:Player.list[Player.list[socket.id].tradingEntity].x,
-                        y:Player.list[Player.list[socket.id].tradingEntity].y,
-                        map:Player.list[Player.list[socket.id].tradingEntity].map,
-                        item:Player.list[socket.id].inventory.items[i].id,
-                        amount:Player.list[socket.id].inventory.items[i].amount,
-                        parent:Player.list[socket.id].tradingEntity,
-                        allPlayers:false,
-                    });
+                for(var i in Player.list[socket.id].inventory.items){
+                    if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                        new DroppedItem({
+                            x:Player.list[Player.list[socket.id].tradingEntity].x,
+                            y:Player.list[Player.list[socket.id].tradingEntity].y,
+                            map:Player.list[Player.list[socket.id].tradingEntity].map,
+                            item:Player.list[socket.id].inventory.items[i].id,
+                            amount:Player.list[socket.id].inventory.items[i].amount,
+                            parent:Player.list[socket.id].tradingEntity,
+                            allPlayers:false,
+                        });
+                    }
                 }
             }
         }
