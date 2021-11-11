@@ -1422,6 +1422,8 @@ Player.onConnect = function(socket,username){
                             }
                             socket.emit('closeTrade');
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                            Player.list[player.tradingEntity].tradingEntity = null;
+                            player.tradingEntity = null;
                         }
                     }
                     else{
