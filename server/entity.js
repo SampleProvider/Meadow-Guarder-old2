@@ -1358,6 +1358,12 @@ Player.onConnect = function(socket,username){
                             player.tradingEntity = tradingEntity.id;
                             player.acceptedTrade = false;
                             player.finalAcceptedTrade = false;
+                            for(var i = 0;i < 18;i++){
+                                player.inventory.items['trade' + i] = {};
+                            }
+                            for(var i = 0;i < 18;i++){
+                                tradingEntity.inventory.items['trade' + i] = {};
+                            }
                             socket.emit('openTrade',tradingEntity.name);
                             if(tradingEntity.type === 'Player'){
                                 SOCKET_LIST[tradingEntity.id].emit('openTrade',player.name);
@@ -1443,30 +1449,14 @@ Player.onConnect = function(socket,username){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            new DroppedItem({
-                                x:Player.list[player.tradingEntity].x,
-                                y:Player.list[player.tradingEntity].y,
-                                map:Player.list[player.tradingEntity].map,
-                                item:Player.list[player.tradingEntity].inventory.items[i].id,
-                                amount:Player.list[player.tradingEntity].inventory.items[i].amount,
-                                parent:player.tradingEntity,
-                                allPlayers:false,
-                            });
+                            Player.list[player.tradingEntity].inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount,true);
                         }
                     }
                     SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                 }
                 for(var i in player.inventory.items){
                     if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                        new DroppedItem({
-                            x:player.x,
-                            y:player.y,
-                            map:player.map,
-                            item:player.inventory.items[i].id,
-                            amount:player.inventory.items[i].amount,
-                            parent:player.id,
-                            allPlayers:false,
-                        });
+                        player.inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
                     }
                 }
             }
