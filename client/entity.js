@@ -420,6 +420,25 @@ var DroppedItem = function(initPack){
             if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
                 ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
                 selected = true;
+                itemMenu.innerHTML = getEntityDescription(self);
+                itemMenu.style.display = 'inline-block';
+                var rect = itemMenu.getBoundingClientRect();
+                itemMenu.style.left = '';
+                itemMenu.style.right = '';
+                itemMenu.style.top = '';
+                itemMenu.style.bottom = '';
+                if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                    itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
+                }
+                else{
+                    itemMenu.style.left = rawMouseX + 'px';
+                }
+                if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                    itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+                }
+                else{
+                    itemMenu.style.top = rawMouseY + 'px';
+                }
             }
             else{
                 ctx.drawImage(self.render,self.x - 24,self.y - 24);

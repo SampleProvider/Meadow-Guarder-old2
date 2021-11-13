@@ -892,7 +892,7 @@ var loop = function(){
     }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
-        if(inGame && (entities[i].name || entities[i].item)){
+        if(inGame && entities[i].name){
             if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
                 itemMenu.innerHTML = getEntityDescription(entities[i]);
                 itemMenu.style.display = 'inline-block';

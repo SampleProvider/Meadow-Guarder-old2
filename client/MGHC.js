@@ -263,6 +263,14 @@ MGHC = function(){
                 ctx.strokeStyle = '#cccc55';
                 ctx.lineWidth = 4;
             }
+            if(Monster.list[i].monsterType === 'radioactiveskeleton'){
+                ctx.strokeStyle = '#ff0000';
+                ctx.lineWidth = 6;
+            }
+            if(Monster.list[i].monsterType === 'karateskeleton'){
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 6;
+            }
             if(Monster.list[i].monsterType === 'skeletonking'){
                 ctx.strokeStyle = '#ffff00';
                 ctx.lineWidth = 8;
@@ -397,7 +405,9 @@ MGHC = function(){
         if(inventory.items[inventory.hotbarSelectedItem]){
             if(inventory.items[inventory.hotbarSelectedItem].id){
                 if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
-                    socket.emit('attack');
+                    if(attacking){
+                        socket.emit('attack');
+                    }
                 }
             }
         }

@@ -2737,7 +2737,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1114,
@@ -2763,7 +2764,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1115,
@@ -2789,7 +2791,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1116,
@@ -2815,7 +2818,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1117,
@@ -2841,7 +2845,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1219,
@@ -2867,7 +2872,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1221,
@@ -2893,7 +2899,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1326,
@@ -2919,7 +2926,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1328,
@@ -2945,7 +2953,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1403,
@@ -3179,7 +3188,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1437,
@@ -3205,7 +3215,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1438,
@@ -3231,7 +3242,8 @@
                      "visible":true,
                      "x":0,
                      "y":0
-                    }
+                    },
+                 "type":"noProjectileCollisions"
                 }, 
                 {
                  "id":1503,

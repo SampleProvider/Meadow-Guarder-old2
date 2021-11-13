@@ -175,47 +175,47 @@
   </objectgroup>
  </tile>
  <tile id="1045" type="giantgoldcrystal"/>
- <tile id="1112">
+ <tile id="1112" type="noProjectileCollisions">
   <objectgroup draworder="index" id="3">
    <object id="3" x="0" y="1" width="6" height="15"/>
   </objectgroup>
  </tile>
- <tile id="1114">
+ <tile id="1114" type="noProjectileCollisions">
   <objectgroup draworder="index" id="4">
    <object id="3" x="10" y="1" width="6" height="15"/>
   </objectgroup>
  </tile>
- <tile id="1115">
+ <tile id="1115" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="2" x="1" y="0" width="15" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1116">
+ <tile id="1116" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="0" width="15" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1117">
+ <tile id="1117" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="0" width="15" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1219">
+ <tile id="1219" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="6" height="16"/>
   </objectgroup>
  </tile>
- <tile id="1221">
+ <tile id="1221" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="10" y="0" width="6" height="16"/>
   </objectgroup>
  </tile>
- <tile id="1326">
+ <tile id="1326" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="6" height="16"/>
   </objectgroup>
  </tile>
- <tile id="1328">
+ <tile id="1328" type="noProjectileCollisions">
   <objectgroup draworder="index" id="3">
    <object id="2" x="10" y="0" width="6" height="16"/>
   </objectgroup>
@@ -260,17 +260,17 @@
    <object id="2" x="10" y="0" width="6" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1436">
+ <tile id="1436" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="0" width="15" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1437">
+ <tile id="1437" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="4"/>
   </objectgroup>
  </tile>
- <tile id="1438">
+ <tile id="1438" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="4"/>
   </objectgroup>
