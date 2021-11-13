@@ -1459,6 +1459,7 @@ Player.onConnect = function(socket,username){
                         player.inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
                     }
                 }
+                socket.emit('closeTrade');
             }
         });
 
