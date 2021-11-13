@@ -417,7 +417,7 @@ var DroppedItem = function(initPack){
     renderSelectCtx.drawImage(Img.items2select,img_x,img_y,24,24,0,0,48,48);
     self.draw = function(){
         if(self.parent === selfId || self.allPlayers){
-            if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false){
+            if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
                 ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
                 selected = true;
             }

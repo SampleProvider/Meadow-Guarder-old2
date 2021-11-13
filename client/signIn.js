@@ -216,9 +216,6 @@ document.getElementById('signIn').onclick = function(){
     if(document.getElementById('username').value === ''){
         return;
     }
-    if(document.getElementById('username').value === 'Sampleprovider(sp)'){
-        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    }
     if(loadingComplete === false){
         signError.innerHTML = '<span style="color: #ff0000">Error: Loading is not complete yet.</span><br>' + signError.innerHTML;
         return;

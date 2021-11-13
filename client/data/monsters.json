@@ -21,7 +21,7 @@
         "img":{
             "body":"Undead"
         },
-        "weaponData":{
+        "mainAttackData":{
             "20":[{
                 "id":"projectile",
                 "projectileType":"bone",
@@ -51,22 +51,82 @@
         "img":{
             "body":"Snake"
         },
-        "weaponData":{
-            "1":[{
-                "id":"projectile",
-                "projectileType":"coppershiv",
-                "param":{
-                    "sameId":true,
-                    "projectilePattern":"shiv",
-                    "relativeToParent":true,
-                    "pierce":-1,
-                    "timer":1
-                }
-            }],
+        "mainAttackData":{
             "10":[{
                 "id":"projectile",
                 "projectileType":"snakeSpit",
                 "param":{}
+            }]
+        }
+    },
+    "radioactiveskeleton":{
+        "name":"Radioactive Skeleton",
+        "hpMax":500,
+        "stats":{
+            "damage":25,
+            "defense":50,
+            "hpRegen":50,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":15,
+        "drawSize":"medium",
+        "team":"Undead",
+        "itemDrops":{
+            "skyrobe":{
+                "chance":0.5,
+                "amount":1
+            },
+            "rubyring":{
+                "chance":0.5,
+                "amount":1
+            }
+        },
+        "img":{
+            "body":"Undead",
+            "headwear":"GasMask_1 Red"
+        },
+        "mainAttackData":{
+            "8":[{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "directionDeviation":25
+                }
+            }]
+        }
+    },
+    "karateskeleton":{
+        "name":"Karate Skeleton",
+        "hpMax":1500,
+        "stats":{
+            "damage":15,
+            "defense":5,
+            "hpRegen":1,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":5,
+        "drawSize":"medium",
+        "team":"Undead",
+        "itemDrops":{
+            "random":{
+                "chance":1,
+                "amount":3
+            }
+        },
+        "img":{
+            "body":"Undead",
+            "shirt":"Shirt_2 Brown",
+            "pants":"Pants_1 Blue",
+            "waist":"Belt_2 Blue"
+        },
+        "mainAttackData":{
+            "20":[{
+                "id":"dash",
+                "param":{
+                    "directionDeviation":15
+                }
             }]
         }
     },
@@ -153,7 +213,7 @@
             "body":"Undead",
             "headwear":"Crown_1 Yellow"
         },
-        "weaponData":{
+        "mainAttackData":{
             "1":[{
                 "id":"projectile",
                 "projectileType":"bone",

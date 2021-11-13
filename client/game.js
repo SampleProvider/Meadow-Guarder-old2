@@ -39,10 +39,11 @@ var currentMap = '';
 var respawnTimer = 0;
 
 var attacking = false;
+var inGame = false;
 
 var getEntityDescription = function(entity){
     var description = '';
-    description += entity.name;
+    description += entity.name !== undefined ? entity.name : '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + '</span>';
     description += '<br><div style="font-size: 11px">';
     if(entity.hp !== undefined){
         description += '<span style="color: #5ac54f">Health: ' + entity.hp + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
@@ -55,6 +56,9 @@ var getEntityDescription = function(entity){
     }
     if(entity.mana !== undefined){
         description += '<span style="color: #ff55ff">Mana: ' + entity.mana + ' / ' + entity.manaMax + ' (' + Math.ceil(entity.mana / entity.manaMax * 100) + '%)</span><br>';
+    }
+    if(entity.item !== undefined){
+        description += inventory.getDescription(Item.list[entity.item]);
     }
     if(entity.type === 'Player' || entity.type === 'Npc'){
         if(entity.id !== selfId){
@@ -715,7 +719,7 @@ socket.on('changeMap',function(data){
     shadeSpeed = 3 / 40;
 });
 socket.on('regionChange',function(data){
-    regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);">' + data.mapName + '</div>';
+    regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
     mapShadeAmount = 0;
     mapShadeSpeed = 0.08;
 });
@@ -882,12 +886,12 @@ var loop = function(){
         return 0;
     }
     entities.sort(compare);
-    if(scrollAllowed){
+    if(inGame){
         itemMenu.style.display = 'none';
     }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
-        if(scrollAllowed && entities[i].name){
+        if(inGame && (entities[i].name || entities[i].item)){
             if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
                 itemMenu.innerHTML = getEntityDescription(entities[i]);
                 itemMenu.style.display = 'inline-block';
@@ -1114,15 +1118,6 @@ document.onmousemove = function(event){
             draggingItem.style.left = '-100px';
             draggingItem.style.top = '-100px';
         }
-        if(scrollAllowed){
-            itemMenu.style.display = 'none';
-            for(var i in Player.list){
-                if(Player.list[i].isColliding({x:mouseX + Player.list[i].x,y:mouseY + Player.list[i].y,width:0,height:0})){
-                    itemMenu.innerHTML = getEntityDescription(Player.list[i]);
-                    itemMenu.style.display = 'inline-block';
-                }
-            }
-        }
         if(itemMenu.style.display === 'inline-block'){
             var rect = itemMenu.getBoundingClientRect();
             itemMenu.style.left = '';
@@ -1192,11 +1187,23 @@ mouseUp = function(event){
         socket.emit('keyPress',{inputId:'rightClick',state:false});
     }
 }
-mouseOut = function(event){
-    scrollAllowed = false;
-}
-mouseIn = function(event){
+mouseInGame = function(event){
     scrollAllowed = true;
+    inGame = true;
+}
+mouseInMenu = function(event){
+    if(inGame === true){
+        itemMenu.style.display = 'none';
+    }
+    scrollAllowed = false;
+    inGame = false;
+}
+mouseInHotbar = function(event){
+    if(inGame === true){
+        itemMenu.style.display = 'none';
+    }
+    scrollAllowed = true;
+    inGame = false;
 }
 document.querySelectorAll("button").forEach(function(item){
     item.addEventListener('focus',function(){

@@ -274,6 +274,11 @@ Actor = function(param){
     self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
     self.showHealthBar = true;
 
+    self.dashing = false;
+    self.dashTime = 0;
+    self.dashX = 0;
+    self.dashY = 0;
+
     if(param.onDeath){
         self.onDeath = param.onDeath;
     }
@@ -288,7 +293,17 @@ Actor = function(param){
         }
     }
     self.updateMove = function(){
-        if(self.trackingPath[0]){
+        if(self.dashing){
+            if(self.dashTime <= 0){
+                self.dashing = false;
+            }
+            else{
+                self.spdX = self.dashX;
+                self.spdY = self.dashY;
+                self.dashTime -= 1;
+            }
+        }
+        else if(self.trackingPath[0]){
             if(self.x / 64 < self.trackingPath[0][0] + 0.5){
                 self.spdX = 1;
             }
@@ -637,7 +652,7 @@ Actor = function(param){
     }
     self.shootProjectile = function(projectileType,param){
         var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
-        direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0
+        direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
         var stats = Object.create(self.stats);
         if(param.stats){
             for(var i in param.stats){
@@ -671,6 +686,20 @@ Actor = function(param){
         var projectile = new Projectile(properties);
         return projectile;
     }
+    self.dash = function(param){
+        if(self.dashing === true){
+            return;
+        }
+        self.dashing = true;
+        self.dashTime = param.time !== undefined ? param.time : 10;
+        var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
+        direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
+        var dashX = Math.cos(direction);
+        var dashY = Math.sin(direction);
+        var dashDistance = param.dashDistance !== undefined ? param.dashDistance * 64 : 256;
+        self.dashX = dashDistance / self.dashTime * dashX;
+        self.dashY = dashDistance / self.dashTime * dashY;
+    }
     self.doAttack = function(data,reload){
         if(self.canAttack === false){
             return;
@@ -699,6 +728,8 @@ Actor = function(param){
                             case "projectile":
                                 self.shootProjectile(data[i][j].projectileType,data[i][j].param);
                                 break;
+                            case "dash":
+                                self.dash(data[i][j].param);
                         }
                     }
                 }
@@ -1910,116 +1941,69 @@ Monster = function(param){
         self.updateAttack();
     }
     self.updateTarget = function(){
-        if(self.target){
-            if(Player.list[self.target]){
-                if(Player.list[self.target].hp < 1){
-                    self.target = null;
-                    self.spdX = 0;
-                    self.spdY = 0;
-                }
-                else if(Player.list[self.target].team === self.team){
-                    self.target = null;
-                    self.spdX = 0;
-                    self.spdY = 0;
-                }
-                else if(Player.list[self.target].map !== self.map){
-                    self.target = null;
-                    self.spdX = 0;
-                    self.spdY = 0;
-                }
-                else{
-                    if(self.getSquareDistance(Player.list[self.target]) > self.aggro * 2 && self.damaged === false){
-                        self.target = null;
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                }
-            }
-            else{
-                self.target = null;
-                self.spdX = 0;
-                self.spdY = 0;
-            }
-            if(self.getSquareDistance(self.randomPos) > 16){
-                self.target = null;
-                self.trackPos(self.randomPos.x,self.randomPos.y);
-            }
-        }
-        else{
+        if(self.attackState === 'passive'){
             for(var i in Player.list){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
                             if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
-                                if(Player.list[i])
-                                self.target = i;
-                                self.damaged = false;
+                                if(Player.list[i]){
+                                    self.target = i;
+                                    self.attackState = 'attack';
+                                    self.damaged = false;
+                                }
                             }
                         }
                     }
+                }
+            }
+        }
+        else if(self.attackState === 'attack'){
+            if(self.target){
+                if(Player.list[self.target]){
+                    if(Player.list[self.target].hp < 1){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else if(Player.list[self.target].team === self.team){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else if(Player.list[self.target].map !== self.map){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else{
+                        if(self.getSquareDistance(Player.list[self.target]) > self.aggro * 2 && self.damaged === false){
+                            self.target = null;
+                            self.attackState = 'retreat';
+                            self.trackPos(self.randomPos.x,self.randomPos.y);
+                            self.spdX = 0;
+                            self.spdY = 0;
+                        }
+                    }
+                }
+                else{
+                    self.target = null;
+                    self.attackState = 'retreat';
+                    self.trackPos(self.randomPos.x,self.randomPos.y);
+                    self.spdX = 0;
+                    self.spdY = 0;
                 }
             }
         }
     }
     self.trackTarget = function(){
-        if(self.target){
-            if(Player.list[self.target]){
-                self.spdX = 0;
-                self.spdY = 0;
-                var size = 33;
-                var dx = self.gridX - size / 2 + 0.5;
-                var dy = self.gridY - size / 2 + 0.5;
-                var tx = Player.list[self.target].gridX - dx;
-                var ty = Player.list[self.target].gridY - dy;
-                self.trackTime += 1;
-                if(self.trackTime > 50 + 50 * Math.random()){
-                    self.trackTime = 0;
-                    var finder = new PF.BiAStarFinder({
-                        allowDiagonal:true,
-                        dontCrossCorners:true,
-                    });
-                    var grid = new PF.Grid(size,size);
-                    for(var i = 0;i < size;i++){
-                        for(var j = 0;j < size;j++){
-                            var x = dx + i;
-                            var y = dy + j;
-                            if(Collision.list[self.map]){
-                                if(Collision.list[self.map][self.zindex]){
-                                    if(Collision.list[self.map][self.zindex][x]){
-                                        if(Collision.list[self.map][self.zindex][x][y]){
-                                            grid.setWalkableAt(i,j,false);
-                                        }
-                                    }
-                                }
-                            }
-                            if(RegionChanger.list[self.map]){
-                                if(RegionChanger.list[self.map][x]){
-                                    if(RegionChanger.list[self.map][x][y]){
-                                        if(RegionChanger.list[self.map][x][y].noMonster){
-                                            grid.setWalkableAt(i,j,false);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    var nx = self.gridX - dx;
-                    var ny = self.gridY - dy;
-                    if(tx < size && tx > 0 && ty < size && ty > 0){
-                        var path = finder.findPath(nx,ny,tx,ty,grid);
-                        if(path[0]){
-                            self.trackingPath = PF.Util.compressPath(path);
-                            for(var i in self.trackingPath){
-                                self.trackingPath[i][0] += dx;
-                                self.trackingPath[i][1] += dy;
-                            }
-                            self.trackingPath.shift();
-                        }
-                    }
-                }
-            }
-        }
-        else{
+        if(self.attackState === 'passive'){
             if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
                 self.spdX = Math.round(Math.random() * 2 - 1);
                 self.randomPos.timeX = 0;
@@ -2042,10 +2026,87 @@ Monster = function(param){
             }
             self.randomPos.timeX += 1;
             self.randomPos.timeY += 1;
+            if(self.getSquareDistance(self.randomPos) > 8){
+                self.trackPos(self.randomPos.x,self.randomPos.y);
+            }
+        }
+        else if(self.attackState === 'attack'){
+            if(self.target){
+                if(Player.list[self.target]){
+                    self.spdX = 0;
+                    self.spdY = 0;
+                    var size = 33;
+                    var dx = self.gridX - size / 2 + 0.5;
+                    var dy = self.gridY - size / 2 + 0.5;
+                    var tx = Player.list[self.target].gridX - dx;
+                    var ty = Player.list[self.target].gridY - dy;
+                    self.trackTime += 1;
+                    if(self.trackTime > 50 + 50 * Math.random()){
+                        self.trackTime = 0;
+                        var finder = new PF.BiAStarFinder({
+                            allowDiagonal:true,
+                            dontCrossCorners:true,
+                        });
+                        var grid = new PF.Grid(size,size);
+                        for(var i = 0;i < size;i++){
+                            for(var j = 0;j < size;j++){
+                                var x = dx + i;
+                                var y = dy + j;
+                                if(Collision.list[self.map]){
+                                    if(Collision.list[self.map][self.zindex]){
+                                        if(Collision.list[self.map][self.zindex][x]){
+                                            if(Collision.list[self.map][self.zindex][x][y]){
+                                                grid.setWalkableAt(i,j,false);
+                                            }
+                                        }
+                                    }
+                                }
+                                if(RegionChanger.list[self.map]){
+                                    if(RegionChanger.list[self.map][x]){
+                                        if(RegionChanger.list[self.map][x][y]){
+                                            if(RegionChanger.list[self.map][x][y].noMonster){
+                                                grid.setWalkableAt(i,j,false);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        var nx = self.gridX - dx;
+                        var ny = self.gridY - dy;
+                        if(tx < size && tx > 0 && ty < size && ty > 0){
+                            var path = finder.findPath(nx,ny,tx,ty,grid);
+                            if(path[0]){
+                                self.trackingPath = PF.Util.compressPath(path);
+                                for(var i in self.trackingPath){
+                                    self.trackingPath[i][0] += dx;
+                                    self.trackingPath[i][1] += dy;
+                                }
+                                self.trackingPath.shift();
+                            }
+                        }
+                    }
+                    if(self.getSquareDistance(self.randomPos) > 16){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                    }
+                }
+            }
+        }
+        else if(self.attackState === 'retreat'){
+            if(self.getSquareDistance(self.randomPos) <= 2){
+                self.attackState = 'passive';
+            }
         }
     }
     self.updateAttack = function(){
         if(!self.target){
+            self.mainReload = 0;
+            self.passiveReload = 0;
+            return;
+        }
+        if(!Player.list[self.target]){
             self.mainReload = 0;
             self.passiveReload = 0;
             return;

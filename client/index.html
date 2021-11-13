@@ -278,19 +278,19 @@
 		</div>
 	</div>
 	<div id="gameDiv" style="display:none;">
-    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
-		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-		<div id="regionDisplay" class="UI-display-light UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-			<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
+    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="regionDisplay" class="UI-display-light UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+			<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
 		</div>
-		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="chatBackground" class="UI-text-light" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 		</div>
-		<div id="chatDiv" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
-			<div id="chatText" class="UI-text-light" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="chatDiv" class="UI-text-light" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div id="chatText" class="UI-text-light" onmouseover="mouseUp(event);mouseInMenu(event);">
 					
 			</div>
-			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);mouseOut(event);">
+			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);mouseInMenu(event);">
 				<input id="chatInput" class="UI-input-light" type="text"></input>
 			</form>
 		</div>
@@ -311,61 +311,61 @@
 				<image id="exitButton" src="/client/websiteAssets/exit.png" class="itemImage" draggable="false" onclick="location.reload()" onmouseover="mouseUp(event);"></image>
 			</div>
 		</div>
-		<div id="inventoryBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="inventoryBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
-		<div id="inventoryDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
-			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Inventory [I]</div>
-			<div id="inventoryItems" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="inventoryDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div id="inventoryHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Inventory [I]</div>
+			<div id="inventoryItems" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 			</div>
 			<button id="inventoryExit" class="UI-button-light">
 				<div id="inventoryExitText">X</div>
 			</button>
 		</div>
-		<div id="hotbarDiv" class="UI-display-light" onmouseover="mouseUp(event);">
+		<div id="hotbarDiv" class="UI-display-light" onmouseover="mouseUp(event);mouseInHotbar(event);">
 			<div id="hotbarItems" onmouseover="mouseUp(event);">
 
 			</div>
 		</div>
-		<div id="craftBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="craftBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
-		<div id="craftDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
-			<div id="craftHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Crafting [C]</div>
-			<div id="craftItems" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="craftDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div id="craftHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Crafting [C]</div>
+			<div id="craftItems" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 			</div>
 			<button id="craftExit" class="UI-button-light">
 				<div id="craftExitText">X</div>
 			</button>
 		</div>
-		<div id="tradeBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="tradeBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
-		<div id="tradeDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
-			<div class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Trader's Items</div>
-			<div class="UI-text-light" style="right: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Your Items</div>
-			<div id="tradeItems1" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="tradeDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Trader's Items</div>
+			<div class="UI-text-light" style="right: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Your Items</div>
+			<div id="tradeItems1" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 			</div>
-			<div id="tradeItems2" onmouseover="mouseUp(event);mouseOut(event);">
+			<div id="tradeItems2" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 			</div>
-			<div id="traderAccepted" class="UI-text-light" style="position: absolute;left: 25%;top: 218px;font-size: large;transform: translate(-50%, 0%);" onmouseover="mouseUp(event);mouseOut(event);">Pending Accept</div>
+			<div id="traderAccepted" class="UI-text-light" style="position: absolute;left: 25%;top: 218px;font-size: large;transform: translate(-50%, 0%);" onmouseover="mouseUp(event);mouseInMenu(event);">Pending Accept</div>
 			<div id="tradeButtons">
-				<button id="acceptTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseOut(event);">Accept Trade</button>
-				<button id="declineTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseOut(event);">Decline Trade</button>
+				<button id="acceptTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseInMenu(event);">Accept Trade</button>
+				<button id="declineTrade" class="UI-button-light" onmouseover="mouseUp(event);mouseInMenu(event);">Decline Trade</button>
 			</div>
 		</div>
-		<div id="settingBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="settingBackground" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
-		<div id="settingDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
-			<div id="settingHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseOut(event);">Settings [B]</div>
-			<div id="settingPlayerDiv" onmouseover="mouseUp(event);mouseOut(event);">
-				<label for="body" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseOut(event);">Player Body:</label>
-				<select name="body" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseOut(event);">
+		<div id="settingDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div id="settingHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Settings [B]</div>
+			<div id="settingPlayerDiv" onmouseover="mouseUp(event);mouseInMenu(event);">
+				<label for="body" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseInMenu(event);">Player Body:</label>
+				<select name="body" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseInMenu(event);">
 					<optgroup label="Human">
 						<option value="Human">Human</option>
 						<option value="Avian">Avian</option>
@@ -381,29 +381,29 @@
 				<div id="settingExitText">X</div>
 			</button>
 		</div>
-		<div id="selfDisplay" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-			<div id="healthBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="selfDisplay" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseInGameGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+			<div id="healthBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseInGameGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInGameGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseInGameGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
-			<div id="xpBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+			<div id="xpBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
-			<div id="manaBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseIn(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+			<div id="manaBar" class="UI-display-light" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
+				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			</div>
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display-light" style="display: none;"></div>
 		<div id="draggingItem" draggable="false"></div>
 	</div>
-	<div id="deathDiv" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);">
-		<div id="deathScreen" onmouseover="mouseUp(event);mouseOut(event);"></div>
+	<div id="deathDiv" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
+		<div id="deathScreen" onmouseover="mouseUp(event);mouseInMenu(event);"></div>
 		<div id="respawnTimerDiv"></div>
 		<button id="respawn" onclick="runRespawn()" style="display: none;">Respawn</button>
 	</div>
-	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseOut(event);" onclick="location.reload()">
+	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);" onclick="location.reload()">
 		<button class="disconnectedDiv">Disconnected</button>
 	</div>
 	<script src="/client/inventory.js" defer></script>
