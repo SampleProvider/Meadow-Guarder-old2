@@ -1465,11 +1465,17 @@ Player.onConnect = function(socket,username){
                                     player.inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount,true);
                                 }
                             }
+                            for(var i = 0;i < 18;i++){
+                                Player.list[player.tradingEntity].inventory.items['trade' + i] = {};
+                            }
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                             for(var i in player.inventory.items){
                                 if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
                                     Player.list[player.tradingEntity].inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
                                 }
+                            }
+                            for(var i = 0;i < 18;i++){
+                                player.inventory.items['trade' + i] = {};
                             }
                             socket.emit('closeTrade');
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');

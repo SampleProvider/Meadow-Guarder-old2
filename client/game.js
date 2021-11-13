@@ -157,6 +157,7 @@ socket.on('openTrade',function(pack){
     for(var i = 0;i < 18;i++){
         inventory.items['trade' + i] = {};
     }
+    inventory.refreshInventory();
 });
 socket.on('updateTrade',function(pack){
     if(pack.index >= 0 && pack.index <= 8){
