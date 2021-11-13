@@ -1,4 +1,6 @@
 
+VERSION = '0.0.6';
+
 if(process.env.PORT){
 	SERVER = 'heroku';
 }
@@ -25,6 +27,7 @@ else{
 }
 
 console.log('Server Started on port ' + port.address().port);
+console.log('This server is running Meadow Guarder ' + VERSION + '.');
 
 SOCKET_LIST = {};
 io = require('socket.io')(serv,{upgradeTimeout:36000000});
