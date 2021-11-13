@@ -101,7 +101,7 @@ Inventory = function(socket,server){
         if(hasSpace === 1){
             if(amount > Item.list[id].maxStack){
                 self.items[index] = {id:id,amount:Item.list[id].maxStack || 1};
-                self.addItem(id,amount - Item.list[id].maxStack,enchantments);
+                self.addItem(id,amount - Item.list[id].maxStack,true);
             }
             else{
                 self.items[index] = {id:id,amount:amount || 1};
@@ -1066,20 +1066,6 @@ Inventory = function(socket,server){
                 console.error(err);
             }
         });
-        socket.on("buyItem",function(data){
-            try{
-                if(self.shopItems.prices[data] > Player.list[socket.id].coins){
-                    Player.list[socket.id].sendNotification('[!] You do not have enough money to buy ' + Item.list[self.shopItems.items[data].id].name + ' x' + self.shopItems.items[data].amount + '.');
-                    return;
-                }
-                self.addItem(self.shopItems.items[data].id,self.shopItems.items[data].amount,JSON.parse(JSON.stringify(self.shopItems.items[data].enchantments)));
-                Player.list[socket.id].coins -= self.shopItems.prices[data];
-                Player.list[socket.id].sendNotification('You successfully bought ' + Item.list[self.shopItems.items[data].id].name + ' x' + self.shopItems.items[data].amount + '.');
-            }
-            catch(err){
-                console.error(err);
-            }
-        });
         socket.on("craftItem",function(data){
             try{
                 for(var i in self.craftItems.materials[data]){
@@ -1177,7 +1163,7 @@ Item = function(param){
     for(var i in param){
         var parsedInput = param[i];
         parsedInput = parsedInput === '\r' ? '' : parsedInput;
-        parsedInput = isNaN(parsedInput) === false && parsedInput !== '' ? parseFloat(parsedInput) : parsedInput;
+        parsedInput = isNaN(parsedInput) === false && parsedInput !== '' ? Math.round(parseFloat(parsedInput) * 100) / 100 : parsedInput;
         parsedInput = parsedInput === 'true' ? true : parsedInput;
         parsedInput = parsedInput === 'false' ? false : parsedInput;
         self[i] = parsedInput;

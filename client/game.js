@@ -43,19 +43,19 @@ var inGame = false;
 
 var getEntityDescription = function(entity){
     var description = '';
-    description += entity.name !== undefined ? entity.name : '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + '</span>';
+    description += entity.name !== undefined ? entity.name : entity.amount === 1 ? '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + '</span>' : '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + ' (' + entity.amount + ')</span>';
     description += '<br><div style="font-size: 11px">';
     if(entity.hp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + entity.hp + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.round(entity.hp) + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
     }
     if(entity.harvestHp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + entity.harvestHp + ' / ' + entity.harvestHpMax + ' (' + Math.ceil(entity.harvestHp / entity.harvestHpMax * 100) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.round(entity.harvestHp) + ' / ' + entity.harvestHpMax + ' (' + Math.ceil(entity.harvestHp / entity.harvestHpMax * 100) + '%)</span><br>';
     }
     if(entity.xp !== undefined){
         description += '<span style="color: #cccc00">Xp: Level ' + entity.level + ' ' + entity.xp + ' / ' + entity.xpMax + ' (' + Math.ceil(entity.xp / entity.xpMax * 100) + '%)</span><br>';
     }
     if(entity.mana !== undefined){
-        description += '<span style="color: #ff55ff">Mana: ' + entity.mana + ' / ' + entity.manaMax + ' (' + Math.ceil(entity.mana / entity.manaMax * 100) + '%)</span><br>';
+        description += '<span style="color: #ff55ff">Mana: ' + Math.round(entity.mana) + ' / ' + entity.manaMax + ' (' + Math.ceil(entity.mana / entity.manaMax * 100) + '%)</span><br>';
     }
     if(entity.item !== undefined){
         description += inventory.getDescription(Item.list[entity.item]);

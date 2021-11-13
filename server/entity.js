@@ -1001,12 +1001,17 @@ Player = function(param,socket){
         if(self.hp < 1){
             return;
         }
-        self.passiveReload += 1;
-        self.doAttack(self.passiveAttackData,self.passiveReload);
+        if(self.keyPress.leftClick === true){
+            self.passiveReload += 1;
+            self.doAttack(self.passiveAttackData,self.passiveReload);
+        }
     }
     self.updateStats = function(){
         if(self.inventory.updateStats){
             self.inventory.updateStats = false;
+
+            var hpMax = self.hpMax;
+            var manaMax = self.manaMax;
 
             self.hpMax = 100;
             self.manaMax = 100;
@@ -1198,6 +1203,9 @@ Player = function(param,socket){
                 }
                 self.inventory.refreshMenu(maxSlots);
             }
+
+            self.hp += self.hpMax - hpMax;
+            self.mana += self.manaMax - manaMax;
         }
     }
     self.updateHarvest = function(){
@@ -1413,6 +1421,12 @@ Player.onConnect = function(socket,username){
             }
         });
 
+        socket.on('nextReload',function(data){
+            player.updateAttack();
+            player.updateHp();
+            player.updateMana();
+        });
+
         socket.on('attack',function(data){
             player.mainReload += 1;
             player.doAttack(player.mainAttackData,player.mainReload);
@@ -1523,12 +1537,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('init',function(data){
             Player.getAllInitPack(socket);
-        });
-
-        socket.on('nextReload',function(data){
-            player.updateAttack();
-            player.updateHp();
-            player.updateMana();
         });
 
         socket.on('signInFinished',function(data){
@@ -1921,6 +1929,7 @@ Monster = function(param){
         if(self.target === null){
             self.target = pt.parent;
             self.damaged = true;
+            self.attackState = 'attack';
         }
     }
     self.update = function(){

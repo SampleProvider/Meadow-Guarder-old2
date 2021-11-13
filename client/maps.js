@@ -73,18 +73,20 @@ var renderWorld = function(json,name){
     var x2 = 0;
     var y2 = 0;
     for(var i in json.layers){
-        for(var j in json.layers[i].chunks){
-            if(json.layers[i].chunks[j].x * 64 < x1){
-                x1 = json.layers[i].chunks[j].x * 64;
-            }
-            if(json.layers[i].chunks[j].y * 64 < y1){
-                y1 = json.layers[i].chunks[j].y * 64;
-            }
-            if(json.layers[i].chunks[j].x * 64 + 16 * 64 > x2){
-                x2 = json.layers[i].chunks[j].x * 64 + 16 * 64;
-            }
-            if(json.layers[i].chunks[j].y * 64 + 16 * 64 > y2){
-                y2 = json.layers[i].chunks[j].y * 64 + 16 * 64;
+        if(json.layers[i].type === "tilelayer" && json.layers[i].visible && json.layers[i].name !== "HarvestableNpc:"){
+            for(var j in json.layers[i].chunks){
+                if(json.layers[i].chunks[j].x * 64 < x1){
+                    x1 = json.layers[i].chunks[j].x * 64;
+                }
+                if(json.layers[i].chunks[j].y * 64 < y1){
+                    y1 = json.layers[i].chunks[j].y * 64;
+                }
+                if(json.layers[i].chunks[j].x * 64 + 16 * 64 > x2){
+                    x2 = json.layers[i].chunks[j].x * 64 + 16 * 64;
+                }
+                if(json.layers[i].chunks[j].y * 64 + 16 * 64 > y2){
+                    y2 = json.layers[i].chunks[j].y * 64 + 16 * 64;
+                }
             }
         }
     }
