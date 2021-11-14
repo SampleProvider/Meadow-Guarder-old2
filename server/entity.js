@@ -314,16 +314,16 @@ Actor = function(param){
             }
         }
         else if(self.trackingPath[0]){
-            if(self.x / 64 < self.trackingPath[0][0] + 0.5){
+            if(self.x / 64 < self.trackingPath[0][0] + 0.5 - self.moveSpeed / 64){
                 self.spdX = 1;
             }
-            if(self.x / 64 > self.trackingPath[0][0] + 0.5){
+            if(self.x / 64 > self.trackingPath[0][0] + 0.5 + self.moveSpeed / 64){
                 self.spdX = -1;
             }
-            if(self.y / 64 < self.trackingPath[0][1] + 0.5){
+            if(self.y / 64 < self.trackingPath[0][1] + 0.5 - self.moveSpeed / 64){
                 self.spdY = 1;
             }
-            if(self.y / 64 > self.trackingPath[0][1] + 0.5){
+            if(self.y / 64 > self.trackingPath[0][1] + 0.5 + self.moveSpeed / 64){
                 self.spdY = -1;
             }
             if(64 * Math.abs(self.x / 64 - self.trackingPath[0][0] - 0.5) < 2 && 64 * Math.abs(self.y / 64 - self.trackingPath[0][1] - 0.5) < 2){
