@@ -174,10 +174,10 @@ var Projectile = function(initPack){
     var self = Entity(initPack);
     self.spdDirection = 0;
     self.projectileType = initPack.projectileType;
-    self.canCollide = initPack.canCollide;
     self.parent = initPack.parent;
     self.parentType = initPack.parentType;
     self.relativeToParent = initPack.relativeToParent;
+    self.collisionType = initPack.collisionType;
     self.animations = initPack.animations;
     self.animation = initPack.animation;
     if(self.relativeToParent){

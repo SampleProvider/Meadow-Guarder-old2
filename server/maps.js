@@ -55,6 +55,7 @@ var renderWorld = function(json,name){
                                         height:64,
                                         map:name,
                                         img:json.tilesets[0].tiles[l].type,
+                                        zindex:0,
                                     });
                                 }
                             }

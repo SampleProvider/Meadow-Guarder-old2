@@ -255,11 +255,9 @@ Actor = function(param){
     self.mapChange = 11;
     self.transporter = {};
 
-    self.trackingPath = [];
+    self.collided = {x:false,y:false};
 
-    self.tradingEntity = null;
-    self.acceptedTrade = false;
-    self.finalAcceptedTrade = false;
+    self.trackingPath = [];
 
     self.drawSize = 'medium';
 
@@ -464,7 +462,7 @@ Actor = function(param){
         if(Slope.list[self.map]){
             if(Slope.list[self.map][self.gridX]){
                 if(Slope.list[self.map][self.gridX][self.gridY]){
-                    self.zindex +=  Slope.list[self.map][self.gridX][self.gridY];
+                    self.zindex += Slope.list[self.map][self.gridX][self.gridY];
                 }
             }
         }
@@ -514,9 +512,19 @@ Actor = function(param){
                     }
                     if(colliding){
                         self.x = self.lastX;
+                        self.collided = {x:true,y:true};
+                    }
+                    else{
+                        self.collided = {x:false,y:true};
                     }
                 }
+                else{
+                    self.collided = {x:true,y:false};
+                }
             }
+        }
+        else{
+            self.collided = {x:false,y:false};
         }
     }
     self.updateMap = function(){
@@ -691,7 +699,7 @@ Actor = function(param){
             relativeToParent:param.relativeToParent !== undefined ? param.relativeToParent : false,
             parentType:param.parentType !== undefined ? param.parentType : self.type,
             projectilePattern:param.projectilePattern !== undefined ? param.projectilePattern : false,
-            collisionType:param.collisionType !== undefined ? param.collisionType : 'remove',
+            collisionType:param.collisionType !== undefined ? param.collisionType : false,
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
             team:param.team !== undefined ? param.team : self.team,
         };
@@ -882,6 +890,10 @@ Player = function(param,socket){
     self.mainAttackData = {};
     self.passiveAttackData = {};
     self.useTime = 0;
+
+    self.tradingEntity = null;
+    self.acceptedTrade = false;
+    self.finalAcceptedTrade = false;
 
     self.lastChat = 0;
     self.chatWarnings = 0;
@@ -1724,7 +1736,7 @@ Projectile = function(param){
         self.height = 24;
         self.collisionType = 'sticky';
     }
-    self.collisionType = param.collisionType;
+    self.collisionType = param.collisionType === false ? self.collisionType : param.collisionType;
     self.collided = false;
     self.width *= 4;
     self.height *= 4;
@@ -1926,6 +1938,7 @@ Projectile = function(param){
         pack.parent = self.parent;
         pack.parentType = self.parentType;
         pack.relativeToParent = self.relativeToParent;
+        pack.collisionType = self.collisionType;
         pack.animations = self.animations;
         pack.animation = self.animation;
         pack.type = self.type;
@@ -2095,6 +2108,12 @@ Monster = function(param){
             self.randomPos.timeY += 1;
             if(self.getSquareDistance(self.randomPos) > 8){
                 self.trackPos(self.randomPos.x,self.randomPos.y);
+            }
+            if(self.collided.x){
+                self.spdX = self.spdX * -1;
+            }
+            if(self.collided.y){
+                self.spdY = self.spdY * -1;
             }
         }
         else if(self.attackState === 'attack'){
@@ -2271,7 +2290,7 @@ HarvestableNpc = function(param){
             height:self.collisions[i].height,
             info:'',
             type:'Collision',
-            zindex:0,
+            zindex:self.zindex,
         },self.collisionId);
     }
     self.timer = 0;
@@ -2289,7 +2308,7 @@ HarvestableNpc = function(param){
                     height:self.collisions[i].height,
                     info:'',
                     type:'Collision',
-                    zindex:0,
+                    zindex:self.zindex,
                 },self.collisionId);
             }
         }
@@ -2327,7 +2346,7 @@ HarvestableNpc = function(param){
                 height:self.collisions[i].height,
                 info:'',
                 type:'Collision',
-                zindex:0,
+                zindex:self.zindex,
             },self.collisionId);
         }
         self.timer = Math.floor(2400 + 1200 * Math.random());
