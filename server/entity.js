@@ -1239,41 +1239,39 @@ Player = function(param,socket){
         }
     }
     self.updateHarvest = function(){
-        if(self.keyPress.leftClick === true){
-            if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
-                for(var i in HarvestableNpc.list){
-                    if(HarvestableNpc.list[i].img !== 'none'){
-                        if(self.getSquareDistance({x:self.mouseX,y:self.mouseY}) <= 2){
-                            if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && self.pickaxePower >= HarvestableNpc.list[i].harvestPower){
-                                if(HarvestableNpc.list[i].map === self.map){
-                                    var npc = HarvestableNpc.list[i];
-                                    if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
-                                        npc.harvestHp -= self.pickaxePower;
-                                        if(npc.harvestHp <= 0){
-                                            npc.dropItems(self.id);
-                                        }
+        if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
+            for(var i in HarvestableNpc.list){
+                if(HarvestableNpc.list[i].img !== 'none'){
+                    if(self.getSquareDistance({x:self.mouseX,y:self.mouseY}) <= 2){
+                        if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && self.pickaxePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
+                                    npc.harvestHp -= self.pickaxePower;
+                                    if(npc.harvestHp <= 0){
+                                        npc.dropItems(self.id);
                                     }
                                 }
                             }
-                            else if(HarvestableNpc.list[i].harvestTool === 'axe' && self.axePower >= HarvestableNpc.list[i].harvestPower){
-                                if(HarvestableNpc.list[i].map === self.map){
-                                    var npc = HarvestableNpc.list[i];
-                                    if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
-                                        npc.harvestHp -= self.axePower;
-                                        if(npc.harvestHp <= 0){
-                                            npc.dropItems(self.id);
-                                        }
+                        }
+                        else if(HarvestableNpc.list[i].harvestTool === 'axe' && self.axePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
+                                    npc.harvestHp -= self.axePower;
+                                    if(npc.harvestHp <= 0){
+                                        npc.dropItems(self.id);
                                     }
                                 }
                             }
-                            else if(HarvestableNpc.list[i].harvestTool === 'scythe' && self.scythePower >= HarvestableNpc.list[i].harvestPower){
-                                if(HarvestableNpc.list[i].map === self.map){
-                                    var npc = HarvestableNpc.list[i];
-                                    if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
-                                        npc.harvestHp -= self.scythePower;
-                                        if(npc.harvestHp <= 0){
-                                            npc.dropItems(self.id);
-                                        }
+                        }
+                        else if(HarvestableNpc.list[i].harvestTool === 'scythe' && self.scythePower >= HarvestableNpc.list[i].harvestPower){
+                            if(HarvestableNpc.list[i].map === self.map){
+                                var npc = HarvestableNpc.list[i];
+                                if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.mouseX && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.mouseX && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.mouseY && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.mouseY){
+                                    npc.harvestHp -= self.scythePower;
+                                    if(npc.harvestHp <= 0){
+                                        npc.dropItems(self.id);
                                     }
                                 }
                             }
