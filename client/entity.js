@@ -67,7 +67,7 @@ var Actor = function(initPack){
 
     self.drawName = function(){
         ctx.font = "15px pixel";
-        ctx.fillStyle = '#ff7700';
+        ctx.fillStyle = '#00ff90';
         ctx.textAlign = "center";
         if(self.drawSize === 'small'){
             var yDistance = 8;
@@ -78,7 +78,12 @@ var Actor = function(initPack){
         else{
             var yDistance = 16;
         }
-        ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 32));
+        if(self.showHealthBar === false){
+            ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 4));
+        }
+        else{
+            ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 32));
+        }
     }
     self.drawHp = function(){
         if(self.fadeState !== 1){
@@ -305,7 +310,7 @@ var Npc = function(initPack){
             }
         }
         self.animation = Math.floor(self.animation);
-        drawPlayer(Img.player,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -401,6 +406,9 @@ var selected = false;
 var DroppedItem = function(initPack){
     var self = Entity(initPack);
     self.item = initPack.item;
+    if(!Item.list[self.item]){
+        return;
+    }
     self.amount = initPack.amount;
     self.parent = initPack.parent;
     self.allPlayers = initPack.allPlayers;

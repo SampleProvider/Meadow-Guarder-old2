@@ -4,6 +4,26 @@
         "height":7,
         "collisionType":"sticky"
     },
+    "firearrow":{
+        "width":33,
+        "height":7,
+        "collisionType":"sticky"
+    },
+    "alienarrow":{
+        "width":33,
+        "height":7,
+        "collisionType":"sticky"
+    },
+    "frozenarrow":{
+        "width":33,
+        "height":7,
+        "collisionType":"sticky"
+    },
+    "bluefrozenarrow":{
+        "width":33,
+        "height":7,
+        "collisionType":"sticky"
+    },
     "bone":{
         "width":14,
         "height":7,

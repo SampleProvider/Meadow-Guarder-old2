@@ -8,6 +8,10 @@ var xpLevels = [
     8000,
     13000,
     20000,
+    30000,
+    50000,
+    75000,
+    100000,
 ];
 
 
@@ -49,6 +53,7 @@ addToChat = function(color,message,debug){
 
 playerMap = {};
 
+npcData = require('./../client/data/npcs.json');
 attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
@@ -264,8 +269,15 @@ Actor = function(param){
     self.moveSpeed = 10;
 
     self.img = {
-        body:'Undead',
-    }
+        body:"Human",
+        shirt:"none",
+        pants:"none",
+        boots:"none",
+        hair:"none",
+        headwear:"none",
+        gloves:"none",
+        waist:"none",
+    };
 
     self.team = 'Human';
 
@@ -899,6 +911,12 @@ Player = function(param,socket){
             self.img[i] = param.database.img[i];
         }
     }
+    self.advancements = {};
+    if(param.database.advancements){
+        for(var i in param.database.advancements){
+            self.advancements[i] = param.database.advancements[i];
+        }
+    }
     if(self.img.body === 'Undead' || self.img.body === 'Orc'){
         self.team = 'Undead';
     }
@@ -1213,7 +1231,7 @@ Player = function(param,socket){
             if(self.pickaxePower > 0 || self.axePower > 0 || self.scythePower > 0){
                 for(var i in HarvestableNpc.list){
                     if(HarvestableNpc.list[i].img !== 'none'){
-                        if(self.getSquareDistance({x:self.mouseX,y:self.mouseY}) <= 1.5){
+                        if(self.getSquareDistance({x:self.mouseX,y:self.mouseY}) <= 2){
                             if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && self.pickaxePower >= HarvestableNpc.list[i].harvestPower){
                                 if(HarvestableNpc.list[i].map === self.map){
                                     var npc = HarvestableNpc.list[i];
@@ -1383,30 +1401,52 @@ Player.onConnect = function(socket,username){
                         return 0;
                     }
                     entities.sort(compare);
-                    var tradingEntity = null;
+                    var interactingEntity = null;
                     for(var i in entities){
                         if(entities[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'}) && entities[i].id !== player.id){
-                            tradingEntity = entities[i];
+                            interactingEntity = entities[i];
                         }
                     }
-                    if(tradingEntity){
-                        if(tradingEntity.tradingEntity === null && player.tradingEntity === null){
-                            tradingEntity.tradingEntity = player.id;
-                            tradingEntity.acceptedTrade = false;
-                            tradingEntity.finalAcceptedTrade = false;
-                            player.tradingEntity = tradingEntity.id;
-                            player.acceptedTrade = false;
-                            player.finalAcceptedTrade = false;
-                            for(var i = 0;i < 18;i++){
-                                player.inventory.items['trade' + i] = {};
+                    if(interactingEntity){
+                        if(interactingEntity.type === 'Player'){
+                            if(interactingEntity.tradingEntity === null && player.tradingEntity === null){
+                                interactingEntity.tradingEntity = player.id;
+                                interactingEntity.acceptedTrade = false;
+                                interactingEntity.finalAcceptedTrade = false;
+                                player.tradingEntity = interactingEntity.id;
+                                player.acceptedTrade = false;
+                                player.finalAcceptedTrade = false;
+                                for(var i = 0;i < 18;i++){
+                                    player.inventory.items['trade' + i] = {};
+                                }
+                                for(var i = 0;i < 18;i++){
+                                    interactingEntity.inventory.items['trade' + i] = {};
+                                }
+                                socket.emit('openTrade',interactingEntity.name);
+                                SOCKET_LIST[interactingEntity.id].emit('openTrade',player.name);
                             }
-                            for(var i = 0;i < 18;i++){
-                                tradingEntity.inventory.items['trade' + i] = {};
+                        }
+                        else{
+                            var messages = [];
+                            for(var i in interactingEntity.messages){
+                                var requirementMet = true;
+                                if(interactingEntity.messages[i].requirements){
+                                    for(var j in interactingEntity.messages[i].requirements){
+                                        if(!player.advancements[interactingEntity.messages[i].requirements[j]]){
+                                            requirementMet = false;
+                                        }
+                                    }
+                                }
+                                if(requirementMet === false){
+                                    continue;
+                                }
+                                messages.push(interactingEntity.messages[i].message);
                             }
-                            socket.emit('openTrade',tradingEntity.name);
-                            if(tradingEntity.type === 'Player'){
-                                SOCKET_LIST[tradingEntity.id].emit('openTrade',player.name);
-                            }
+                            var message = messages[Math.floor(Math.random() * messages.length)];
+                            socket.emit('dialogue',{
+                                message:message,
+                                option1:"*End conversation*",
+                            });
                         }
                     }
                 }
@@ -1504,6 +1544,7 @@ Player.onConnect = function(socket,username){
                         }
                     }
                     SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                    Player.list[player.tradingEntity].tradingEntity = null;
                 }
                 for(var i in player.inventory.items){
                     if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
@@ -1511,7 +1552,12 @@ Player.onConnect = function(socket,username){
                     }
                 }
                 socket.emit('closeTrade');
+                player.tradingEntity = null;
             }
+        });
+
+        socket.on('dialogueResponse',function(data){
+            socket.emit("dialogue",{});
         });
 
         socket.on('changePlayer',function(data){
@@ -1679,6 +1725,7 @@ Projectile = function(param){
         self.collisionType = 'sticky';
     }
     self.collisionType = param.collisionType;
+    self.collided = false;
     self.width *= 4;
     self.height *= 4;
     self.zindex = param.zindex;
@@ -1707,6 +1754,9 @@ Projectile = function(param){
         self.timer -= 1;
     }
     self.updatePattern = function(){
+        if(self.collided){
+            return;
+        }
         if(self.parentType === 'Player'){
             if(!Player.list[self.parent] && self.relativeToParent){
                 self.toRemove = true;
@@ -1844,6 +1894,8 @@ Projectile = function(param){
                 self.spdY = 0;
                 self.x = self.lastX;
                 self.y = self.lastY;
+                self.spin = 0;
+                self.collided = true;
             }
         }
     }
@@ -2146,8 +2198,20 @@ Monster.list = {};
 
 Npc = function(param){
     var self = Actor(param);
+    self.hp = 100;
+    self.hpMax = 100;
+    self.type = 'Npc';
+    for(var i in npcData[self.name]){
+        if(i === 'img'){
+            for(var j in npcData[self.name].img){
+                self.img[j] = npcData[self.name].img[j];
+            }
+        }
+        else{
+            self[i] = npcData[self.name][i];
+        }
+    }
     self.changeSize();
-    self.randomWalk(true);
     self.update = function(){
         self.mapChange += 1;
         self.moveSpeed = self.maxSpeed;

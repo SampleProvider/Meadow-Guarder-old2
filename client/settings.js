@@ -2,6 +2,7 @@ var settings = {
     inventoryOpen:false,
     craftOpen:false,
     tradeOpen:false,
+    dialogueOpen:false,
     settingOpen:false,
 };
 
@@ -94,6 +95,16 @@ closeTrade = function(){
     if(rawMouseX > rect.left && rawMouseX < rect.right && rawMouseY > rect.top && rawMouseY < rect.bottom){
         itemMenu.style.display = 'none';
     }
+}
+openDialogue = function(){
+    settings.dialogueOpen = true;
+    dialogueBackground.style.display = 'inline-block';
+    dialogueDiv.style.display = 'inline-block';
+}
+closeDialogue = function(){
+    settings.dialogueOpen = false;
+    dialogueBackground.style.display = 'none';
+    dialogueDiv.style.display = 'none';
 }
 openSetting = function(){
     settings.settingOpen = true;

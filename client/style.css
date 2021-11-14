@@ -1041,6 +1041,49 @@ canvas {
     background-color: #ff3b3b;
 }
 
+#dialogueBackground {
+    position: absolute;
+    left: 50%;
+    bottom: 76px;
+    width: 584px;
+    height: 152px;
+    padding: 8px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    transform: translate(-50%, 0%);
+}
+#dialogueDiv {
+    position: absolute;
+    left: 50%;
+    bottom: 76px;
+    width: 584px;
+    height: 152px;
+    padding: 8px;
+    font-size: small;
+    transform: translate(-50%, 0%);
+}
+#dialogueMessage {
+    position: relative;
+    background-color: #ffffff;
+    opacity: 0.7;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+.dialogueOption {
+    position: relative;
+    background-color: #ffffff;
+    opacity: 0.7;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition-duration: 0.4s;
+}
+.dialogueOption:hover {
+    opacity: 0.9;
+}
+
 #settingBackground {
     position: absolute;
     left: 8px;

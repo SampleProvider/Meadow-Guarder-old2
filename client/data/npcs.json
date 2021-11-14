@@ -1,0 +1,26 @@
+{
+    "Bob":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_5 Blue",
+            "pants":"Pants_1 White",
+            "boots":"Boots_1 Black",
+            "hair":"none",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"Hello. I am your server today. Will you like anything to eat?"
+            },
+            {
+                "requirements":[
+                    "tutorial"
+                ],
+                "message":"I do hope you find that <span style='color: #33ff33'>Shield of Life</span>, because otherwise we are doomed. I might even have to use the emergency <span style='color: #3333ff'>Whirlwind</span>!"
+            }
+        ]
+    }
+}

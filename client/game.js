@@ -60,10 +60,13 @@ var getEntityDescription = function(entity){
     if(entity.item !== undefined){
         description += inventory.getDescription(Item.list[entity.item]);
     }
-    if(entity.type === 'Player' || entity.type === 'Npc'){
+    if(entity.type === 'Player'){
         if(entity.id !== selfId){
             description += 'Right click to initiate trade.';
         }
+    }
+    if(entity.type === 'Npc'){
+        description += 'Right click to interact with ' + entity.name + '.';
     }
     description += '</div>';
     return description;
@@ -203,6 +206,48 @@ declineTrade.onclick = function(){
     declineTrade.style.display = 'none';
     socket.emit('declineTrade');
     canDragTradeItems = false;
+}
+
+socket.on('dialogue',function(data){
+    if(data.message){
+        openDialogue();
+        dialogueMessage.innerHTML = data.message;
+        if(data.option1){
+            dialogueOption1.innerHTML = data.option1;
+            dialogueOption1.style.display = 'inline-block';
+        }
+        else{
+            dialogueOption1.style.display = 'none';
+        }
+        if(data.option2){
+            dialogueOption2.innerHTML = data.option2;
+            dialogueOption2.style.display = 'inline-block';
+        }
+        else{
+            dialogueOption2.style.display = 'none';
+        }
+        if(data.option3){
+            dialogueOption3.innerHTML = data.option3;
+            dialogueOption3.style.display = 'inline-block';
+        }
+        else{
+            dialogueOption3.style.display = 'none';
+        }
+        if(data.option4){
+            dialogueOption4.innerHTML = data.option4;
+            dialogueOption4.style.display = 'inline-block';
+        }
+        else{
+            dialogueOption4.style.display = 'none';
+        }
+    }
+    else{
+        closeDialogue();
+    }
+});
+
+var dialogueResponse = function(response){
+    socket.emit("dialogueResponse",response);
 }
 
 Img.healthbar = new Image();
@@ -777,7 +822,7 @@ var loop = function(){
         WIDTH = window.innerWidth;
         HEIGHT = window.innerHeight;
     }
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#020203';
     ctx.fillRect(0,0,WIDTH,HEIGHT);
     for(var i in Player.list){
         Player.list[i].update();
@@ -940,6 +985,9 @@ var loop = function(){
     }
     for(var i in Monster.list){
         Monster.list[i].drawHp();
+    }
+    for(var i in Npc.list){
+        Npc.list[i].drawHp();
     }
     for(var i in HarvestableNpc.list){
         HarvestableNpc.list[i].drawHp();
@@ -1146,6 +1194,13 @@ document.addEventListener("visibilitychange",function(){
     attacking = false;
 });
 mouseDown = function(event){
+    if(inventory.draggingItem.id){
+        return;
+    }
+    if(selected){
+        socket.emit('keyPress',{inputId:'leftClick',state:true});
+        return;
+    }
     if(!event.isTrusted){
         socket.emit('timeout');
     }
