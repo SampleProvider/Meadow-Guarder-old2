@@ -692,7 +692,6 @@ Actor = function(param){
             direction:direction * 180 / Math.PI,
             spin:param.spin !== undefined ? param.spin : 0,
             map:self.map,
-            stats:stats,
             projectileType:projectileType,
             pierce:param.pierce !== undefined ? param.pierce : 1,
             timer:param.timer !== undefined ? param.timer : 40,
@@ -702,6 +701,7 @@ Actor = function(param){
             collisionType:param.collisionType !== undefined ? param.collisionType : false,
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
             team:param.team !== undefined ? param.team : self.team,
+            stats:stats,
         };
         var projectile = new Projectile(properties);
         return projectile;

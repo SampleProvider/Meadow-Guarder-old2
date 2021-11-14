@@ -417,7 +417,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -426,7 +426,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -435,7 +435,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -444,7 +444,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -453,7 +453,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -462,7 +462,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -471,7 +471,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -480,7 +480,7 @@
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
-                "speed":80
+                "speed":60
             }
         }]
     },
@@ -584,11 +584,14 @@
         }]
     },
     "firearrow":{
-        "20":[{
+        "35":[{
             "id":"projectile",
             "projectileType":"firearrow",
             "param":{
-                "speed":80
+                "speed":60,
+                "stats":{
+                    "attack":1.5
+                }
             }
         }]
     },
@@ -597,28 +600,29 @@
             "id":"projectile",
             "projectileType":"alienarrow",
             "param":{
-                "speed":80,
+                "speed":60,
                 "directionDeviation":15
             }
         }]
     },
     "frozenarrow":{
-        "10":[{
+        "3":[{
             "id":"projectile",
             "projectileType":"frozenarrow",
             "param":{
-                "speed":50,
+                "speed":20,
                 "directionDeviation":10
             }
         }]
     },
     "bluefrozenarrow":{
-        "80":[{
+        "15":[{
             "id":"projectile",
             "projectileType":"bluefrozenarrow",
             "param":{
                 "speed":100,
                 "timer":80,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         }]
