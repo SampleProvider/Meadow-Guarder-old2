@@ -22,5 +22,23 @@
                 "message":"I do hope you find that <span style='color: #33ff33'>Shield of Life</span>, because otherwise we are doomed. I might even have to use the emergency <span style='color: #3333ff'>Whirlwind</span>!"
             }
         ]
+    },
+    "Fleita":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_2 Yellow",
+            "pants":"Pants_1 Red",
+            "boots":"Boots_1 Yellow",
+            "hair":"none",
+            "headwear":"Hat_1 Brown",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home."
+            }
+        ]
     }
 }

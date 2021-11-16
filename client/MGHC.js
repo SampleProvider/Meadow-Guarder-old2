@@ -477,3 +477,47 @@ document.onkeyup = function(event){
     socket.emit('keyPress',{inputId:key,state:false});
     keys[key] = false;
 };
+document.onmousemove = function(event){
+    if(selfId){
+        var x = -cameraX - Player.list[selfId].x + event.clientX;
+        var y = -cameraY - Player.list[selfId].y + event.clientY;
+        if(event.clientY > window.innerHeight){
+            socket.emit('keyPress',{inputId:'releaseAll'});
+            attacking = false;
+        }
+        mouseX = x;
+        mouseY = y;
+        rawMouseX = event.clientX;
+        rawMouseY = event.clientY;
+        if(!attackMonstersState && !attackPlayersState){
+            socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
+        }
+        if(inventory.draggingItem.id){
+            draggingItem.style.left = (rawMouseX - 32) + 'px';
+            draggingItem.style.top = (rawMouseY - 32) + 'px';
+        }
+        else{
+            draggingItem.style.left = '-100px';
+            draggingItem.style.top = '-100px';
+        }
+        if(itemMenu.style.display === 'inline-block'){
+            var rect = itemMenu.getBoundingClientRect();
+            itemMenu.style.left = '';
+            itemMenu.style.right = '';
+            itemMenu.style.top = '';
+            itemMenu.style.bottom = '';
+            if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
+            }
+            else{
+                itemMenu.style.left = rawMouseX + 'px';
+            }
+            if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+            }
+            else{
+                itemMenu.style.top = rawMouseY + 'px';
+            }
+        }
+    }
+}
