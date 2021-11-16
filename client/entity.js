@@ -196,7 +196,7 @@ var Projectile = function(initPack){
     }
 
     self.update = function(){
-        if(self.interpolationStage > 0){
+        if(self.interpolationStage > 0 || self.fadeState === 2){
             self.x += self.spdX;
             self.y += self.spdY;
             self.direction += self.spdDirection;

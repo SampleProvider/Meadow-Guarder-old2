@@ -314,16 +314,16 @@ Actor = function(param){
             }
         }
         else if(self.trackingPath[0]){
-            if(self.x / 64 < self.trackingPath[0][0] + 0.5 - self.moveSpeed / 64){
+            if(self.x / 64 < self.trackingPath[0][0] + 0.5 - 1 / 64){
                 self.spdX = 1;
             }
-            if(self.x / 64 > self.trackingPath[0][0] + 0.5 + self.moveSpeed / 64){
+            if(self.x / 64 > self.trackingPath[0][0] + 0.5 + 1 / 64){
                 self.spdX = -1;
             }
-            if(self.y / 64 < self.trackingPath[0][1] + 0.5 - self.moveSpeed / 64){
+            if(self.y / 64 < self.trackingPath[0][1] + 0.5 - 1 / 64){
                 self.spdY = 1;
             }
-            if(self.y / 64 > self.trackingPath[0][1] + 0.5 + self.moveSpeed / 64){
+            if(self.y / 64 > self.trackingPath[0][1] + 0.5 + 1 / 64){
                 self.spdY = -1;
             }
             if(64 * Math.abs(self.x / 64 - self.trackingPath[0][0] - 0.5) < 2 && 64 * Math.abs(self.y / 64 - self.trackingPath[0][1] - 0.5) < 2){
@@ -557,7 +557,6 @@ Actor = function(param){
                 teleport:map,
                 teleportx:x,
                 teleporty:y,
-                canAttack:self.canAttack,
             };
             self.canMove = false;
             self.canAttack = false;
@@ -583,7 +582,6 @@ Actor = function(param){
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
-        self.transporter.canAttack = self.canAttack;
     }
     self.onHit = function(pt){
 
@@ -1000,7 +998,6 @@ Player = function(param,socket){
         }
         if(self.mapChange === 10){
             self.canMove = true;
-            self.canAttack = self.transporter.canAttack;
             self.invincible = false;
         }
         self.lastChat -= 1;
@@ -1306,7 +1303,6 @@ Player = function(param,socket){
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
-        self.transporter.canAttack = self.canAttack;
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
     }
     var getInitPack = self.getInitPack;
@@ -1995,7 +1991,7 @@ Monster = function(param){
     
     self.randomWalk(true);
     self.onHit = function(pt){
-        if(self.target === null){
+        if(self.attackState === 'passive'){
             self.target = pt.parent;
             self.damaged = true;
             self.attackState = 'attack';
@@ -2020,6 +2016,7 @@ Monster = function(param){
     }
     self.updateTarget = function(){
         if(self.attackState === 'passive'){
+            self.target = null;
             for(var i in Player.list){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){

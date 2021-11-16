@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 5;
+var totalMaps = 7;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -137,7 +137,9 @@ var loadAllMaps = function(){
     loadMap('World');
     loadMap('Sleeping Boar Inn');
     loadMap('Altoris Forge');
+    loadMap('Altoris Forge Basement');
     loadMap('Altoris General Store');
     loadMap('Altoris General Store Upstairs');
+    loadMap('Altoris Mapmakers Lodge');
     loadingComplete = true;
 }
