@@ -654,7 +654,18 @@ Actor = function(param){
             self.onDeath(self);
             if(self.type === 'Player'){
                 SOCKET_LIST[self.id].emit('death');
-                addToChat('#ff0000',self.name + ' died.');
+                if(pt.name){
+                    addToChat('#ff0000',self.name + ' was killed by ' + pt.name + '.');
+                }
+                else if(Player.list[pt.parent]){
+                    addToChat('#ff0000',self.name + ' was killed by ' + Player.list[pt.parent].name + '.');
+                }
+                else if(Monster.list[pt.parent]){
+                    addToChat('#ff0000',self.name + ' was killed by ' + Monster.list[pt.parent].name + '.');
+                }
+                else{
+                    addToChat('#ff0000',self.name + ' died.');
+                }
             }
             else{
                 if(self.type === 'Monster'){
@@ -739,7 +750,18 @@ Actor = function(param){
                                 self.hp -= data[i][j].hpCost;
                             }
                             else{
-                                continue;
+                                self.hp = 0;
+                                self.onDeath(self);
+                                if(self.type === 'Player'){
+                                    SOCKET_LIST[self.id].emit('death');
+                                    addToChat('#ff0000',self.name + ' committed suicide.');
+                                }
+                                else{
+                                    if(self.type === 'Monster'){
+                                        self.dropItems(pt.parent);
+                                    }
+                                    self.toRemove = true;
+                                }
                             }
                         }
                         switch(data[i][j].id){
@@ -938,11 +960,6 @@ Player = function(param,socket){
 
     playerMap[self.map] += 1;
     self.onDeath = function(pt){
-        for(var i in Projectile.list){
-            if(Projectile.list[i].parent === pt.id){
-                Projectile.list[i].toRemove = true;
-            }
-        }
         pt.canMove = false;
         pt.keyPress = {
             left:false,

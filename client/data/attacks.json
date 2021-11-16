@@ -3,6 +3,7 @@
         "1":[{
             "id":"projectile",
             "projectileType":"bluefrozenflames",
+            "hpCost":100,
             "param":{
                 "speed":20,
                 "timer":80,
