@@ -762,6 +762,7 @@ Actor = function(param){
                                     }
                                     self.toRemove = true;
                                 }
+                                continue;
                             }
                         }
                         switch(data[i][j].id){
