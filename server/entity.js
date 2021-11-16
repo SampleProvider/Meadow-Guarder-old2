@@ -745,6 +745,13 @@ Actor = function(param){
                                 continue;
                             }
                         }
+                        switch(data[i][j].id){
+                            case "projectile":
+                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
+                                break;
+                            case "dash":
+                                self.dash(data[i][j].param);
+                        }
                         if(data[i][j].hpCost){
                             if(self.hp >= data[i][j].hpCost){
                                 self.hp -= data[i][j].hpCost;
@@ -764,13 +771,6 @@ Actor = function(param){
                                 }
                                 continue;
                             }
-                        }
-                        switch(data[i][j].id){
-                            case "projectile":
-                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
-                                break;
-                            case "dash":
-                                self.dash(data[i][j].param);
                         }
                     }
                 }
