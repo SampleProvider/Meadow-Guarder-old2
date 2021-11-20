@@ -758,6 +758,11 @@ Actor = function(param){
                             case "dash":
                                 self.dash(data[i][j].param);
                         }
+                        if(data[i][j].xpGain){
+                            if(self.type === 'Player'){
+                                self.xp += data[i][j].xpGain;
+                            }
+                        }
                         if(data[i][j].hpCost){
                             if(self.hp > data[i][j].hpCost){
                                 self.hp -= data[i][j].hpCost;
@@ -778,11 +783,6 @@ Actor = function(param){
                                     }
                                     continue;
                                 }
-                            }
-                        }
-                        if(data[i][j].xpGain){
-                            if(self.type === 'Player'){
-                                self.xp += data[i][j].xpGain;
                             }
                         }
                     }
@@ -1317,7 +1317,7 @@ Player = function(param,socket){
                 self.level += 1;
                 self.xpMax = xpLevels[self.level];
                 addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
-                self.xp = 0;
+                self.xp -= xpLevels[self.level - 1];
             }
             else{
                 self.xpMax = self.xp;
