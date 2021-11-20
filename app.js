@@ -243,9 +243,11 @@ setInterval(function(){
             var updatePack = Player.list[i].getInitPack();
             pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)].player.push(updatePack);
 			if(Player.list[i].toRemove){
-				SOCKET_LIST[i].emit('disconnected');
-				Player.onDisconnect(SOCKET_LIST[i]);
-				delete SOCKET_LIST[i];
+				if(SOCKET_LIST[i]){
+					SOCKET_LIST[i].emit('disconnected');
+					Player.onDisconnect(SOCKET_LIST[i]);
+					delete SOCKET_LIST[i];
+				}
 				continue;
 			}
         }
