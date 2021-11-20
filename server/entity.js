@@ -780,6 +780,11 @@ Actor = function(param){
                                 }
                             }
                         }
+                        if(data[i][j].xpGain){
+                            if(self.type === 'Player'){
+                                self.xp += data[i][j].xpGain;
+                            }
+                        }
                     }
                 }
             }

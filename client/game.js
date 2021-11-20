@@ -157,6 +157,7 @@ socket.on('openTrade',function(pack){
     acceptTrade.style.display = 'inline-block';
     acceptTrade.innerHTML = 'Accept Trade';
     declineTrade.style.display = 'inline-block';
+    traderLabel.innerHTML = pack + '\'s Items';
     for(var i = 0;i < 18;i++){
         inventory.items['trade' + i] = {};
     }

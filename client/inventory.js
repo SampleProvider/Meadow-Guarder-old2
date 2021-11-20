@@ -76,6 +76,9 @@ Inventory = function(socket,server){
         if(type === 'Potion'){
             return '#dd99dd';
         }
+        if(type === 'Book'){
+            return '#dd99dd';
+        }
     }
     self.addItem = function(id,amount,dropItem){
         if(!Item.list[id]){
@@ -788,6 +791,13 @@ Inventory = function(socket,server){
                 var itemName = item.name;
                 if(self.craftItems[index].amount !== 1){
                     itemName += ' (' + self.craftItems[index].amount + ')';
+                    var itemAmount = document.createElement('div');
+                    itemAmount.innerHTML = self.craftItems[index].amount;
+                    itemAmount.className = 'itemAmount';
+                    var itemAmountDiv = document.createElement('div');
+                    itemAmountDiv.className = 'itemAmountDiv';
+                    itemAmountDiv.appendChild(itemAmount);
+                    slot.appendChild(itemAmountDiv);
                 }
                 var craftMaterials = '';
                 var canCraft = true;
@@ -1107,10 +1117,18 @@ Inventory = function(socket,server){
         });
         socket.on("craftItem",function(data){
             try{
+                for(var i in self.craftItems[data].materials){
+                    if(!self.hasItem(self.craftItems[data].materials[i].id,self.craftItems[data].materials[i].amount)){
+                        return;
+                    }
+                }
                 if(self.draggingItem.id){
                     if(self.draggingItem.id === self.craftItems[data].id){
                         if(self.draggingItem.amount + self.craftItems[data].amount <= Item.list[self.draggingItem.id].maxStack){
                             self.draggingItem.amount += self.craftItems[data].amount;
+                        }
+                        else{
+                            return;
                         }
                     }
                 }

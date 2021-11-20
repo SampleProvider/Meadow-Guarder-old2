@@ -337,3 +337,13 @@ paper,Paper,0.0,0.00,683,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.0
 icecube,Ice Cube,1.0,0.00,684,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Not to be confused with Cubie.
 sand,Sand,0.0,0.00,685,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 sugar,Sugar,1.0,0.00,686,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+redbook,Red Book,4.0,0.00,429,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,redbook,none,none,none,none,0.00,
+orangebook,Orange Book,3.5,0.00,430,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,orangebook,none,none,none,none,0.00,
+yellowbook,Yellow Book,3.0,0.00,431,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,yellowbook,none,none,none,none,0.00,
+limebook,Lime Book,2.0,0.00,432,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,limebook,none,none,none,none,0.00,
+cyanbook,Cyan Book,1.5,0.00,433,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,cyanbook,none,none,none,none,0.00,
+bluebook,Blue Book,1.0,0.00,434,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,bluebook,none,none,none,none,0.00,
+mysticbook,Mystic Book,5.0,0.00,435,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,mysticbook,none,none,none,none,0.00,
+pinkbook,Pink Book,4.5,0.00,436,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,pinkbook,none,none,none,none,0.00,
+book,Book,0.0,0.00,437,false,1000,none,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+blackbook,Black Book,0.0,0.00,438,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,blackbook,none,none,none,none,0.00,

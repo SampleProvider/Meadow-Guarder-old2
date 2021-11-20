@@ -1029,5 +1029,60 @@
             "id":"none",
             "manaCost":-200
         }]
+    },
+    "redbook":{
+        "1":[{
+            "id":"none",
+            "xpGain":400
+        }]
+    },
+    "orangebook":{
+        "1":[{
+            "id":"none",
+            "xpGain":350
+        }]
+    },
+    "yellowbook":{
+        "1":[{
+            "id":"none",
+            "xpGain":300
+        }]
+    },
+    "limebook":{
+        "1":[{
+            "id":"none",
+            "xpGain":200
+        }]
+    },
+    "cyanbook":{
+        "1":[{
+            "id":"none",
+            "xpGain":150
+        }]
+    },
+    "bluebook":{
+        "1":[{
+            "id":"none",
+            "xpGain":100
+        }]
+    },
+    "mysticbook":{
+        "1":[{
+            "id":"none",
+            "xpGain":500
+        }]
+    },
+    "pinkbook":{
+        "1":[{
+            "id":"none",
+            "xpGain":450
+        }]
+    },
+    "blackbook":{
+        "1":[{
+            "id":"none",
+            "hpCost":1000,
+            "xpGain":550
+        }]
     }
 }
