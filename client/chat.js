@@ -40,3 +40,11 @@ chatInput.onmousedown = function(e){
     inChat = true;
     socket.emit('keyPress',{state:'releaseAll'});
 }
+
+craftInput.onkeydown = function(e){
+    chatPress = true;
+}
+craftInput.onmousedown = function(e){
+    inChat = true;
+    socket.emit('keyPress',{state:'releaseAll'});
+}

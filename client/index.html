@@ -63,6 +63,20 @@
 				<div class="pageStackOuter UI-display-light">
 					<div class="pageStackInner">
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							11/20/2021
+						</div>
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Fixed Bugs.
+							<br>
+							Added Better Crafting.
+							<br>
+							Released 0.0.7.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display-light">
+					<div class="pageStackInner">
+						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							11/14/2021
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -266,13 +280,17 @@
 							Contributers
 						</div>
 						<div class="UI-text-light" style="position: static;top: 8px;left: 8px;color: #ffffff">
-							sp: Main Developer
+							sp: Main Developer (Discord: maitian#2887, Gmail: maitiansha@gmail.com)
 							<br>
-							suvanth: Bug Finder and Beta Tester
+							suvanth: Bug Finder and Beta Tester (Discord: Suvanth#1799, Gmail: suvanth.erranki@gmail.com)
 							<br>
-							Sampleprovider(sp): Get RICKROLLEd lol
+							Sampleprovider(sp): Bug Finder (Discord: Radioactive64#0461)
 							<br>
-							the-real-tianmu: Mapper and Bug Finder
+							the-real-tianmu: Mapper and Bug Finder (Gmail: tianmu.tim.sha@gmail.com)
+							<br>
+							marcusanator: Bug Finder (Discord: d o o m#2198, Gmail: mm404292@g.risd.org)
+							<br>
+							ashyboi2: Bug Finder (Gmail: ah394535@g.risd.org)
 						</div>
 					</div>
 				</div>
@@ -360,6 +378,9 @@
 		</div>
 		<div id="craftDiv" class="UI-text-light" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			<div id="craftHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Crafting [C]</div>
+			<form id="craftForm" autocomplete="off" onmouseover="mouseUp(event);mouseInMenu(event);">
+				<input id="craftInput" placeholder="Search..." class="UI-input-light" type="text"></input>
+			</form>
 			<div id="craftItems" onmouseover="mouseUp(event);mouseInMenu(event);">
 
 			</div>
@@ -406,7 +427,7 @@
 			<div id="settingHeader" class="UI-text-light" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseUp(event);mouseInMenu(event);">Settings [B]</div>
 			<div id="settingPlayerDiv" onmouseover="mouseUp(event);mouseInMenu(event);">
 				<label for="body" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseInMenu(event);">Player Body:</label>
-				<select name="body" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseInMenu(event);">
+				<select name="body" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseInMenu(event);" onmousedown="releaseAll();">
 					<optgroup label="Human">
 						<option value="Human">Human</option>
 						<option value="Avian">Avian</option>

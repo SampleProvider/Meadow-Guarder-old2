@@ -208,7 +208,7 @@ azuritenecklace,Azurite Necklace,3.0,0.43,351,false,1,accessory,Necklace,0,0,0,0
 emeralditenecklace,Emeraldite Necklace,3.5,0.32,352,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,23,0.00,0,0.00,0,0.32,0,0,0,0,none,none,none,none,none,0.00,Necklace of Unbreaking.
 rubynecklace,Ruby Necklace,4.0,0.29,353,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.50,2,0.29,0,0,0,0,none,none,none,none,none,0.00,Necklace of Wizardry.
 diamondnecklace,Diamond Necklace,5.0,0.20,354,false,1,accessory,Necklace,10,0,0,0,0.20,0.30,0,0,0.00,19.36,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Necklace of Power.
-amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,4.00,0,0,0.00,19.70,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,"Like the Skull of Death, but better."
+amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,7.00,0,0,0.00,34.48,0.35,0,-22,-0.30,0,0.00,0,-0.15,0,0,0,0,none,none,none,none,none,0.00,"Like the Skull of Death, but better."
 amuletoffire,Amulet of Fire,5.0,0.20,356,false,1,accessory,Amulet,14,0,0,0,0.00,0.00,0,0,0.00,14.00,0.14,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,none,0.00,Burn! BURN!!!
 amuletofblood,Amulet of Blood,5.0,0.20,357,false,1,accessory,Amulet,5,0,0,0,0.30,0.35,0,0,0.00,20.02,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Bloodlust.
 amuletofwater,Amulet of Water,5.0,0.20,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.50,0,0.00,2,0.20,0,0,0,0,none,none,none,none,none,0.00,Flowing water never freezes.
@@ -247,15 +247,93 @@ healthpotion,Health Potion,1.0,0.00,405,false,1000,consume,Potion,0,0,0,0,0.00,0
 greaterhealthpotion,Greater Health Potion,5.0,0.00,406,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greaterhealthpotion,none,none,none,none,0.00,A more concentrated version of the health potion.
 manapotion,Mana Potion,1.0,0.00,407,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,manapotion,none,none,none,none,0.00,A standard brewed mana potion.
 greatermanapotion,Greater Mana Potion,5.0,0.00,408,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greatermanapotion,none,none,none,none,0.00,A more concentrated version of the mana potion.
-fierybundle,Fiery Bundle,4.0,0.00,544,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,15,0,0,0,none,none,none,fiery,none,0.00,The cloth is beginning to burn.
-grassybundle,Grassy Bundle,2.0,0.29,545,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0.29,6,0,0,0,none,none,none,none,none,0.00,Woven with grass.
-brownsaddlebag,Brown Saddlebag,0.0,0.00,546,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,2,0,0,0,none,none,none,none,none,0.00,A dusty old saddlebag.
-rosemarybag,Rosemary Bag,3.0,0.00,547,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,10,0,0,0,none,none,none,none,none,0.00,The thin strands of Rosemary hold this bag in place.
-mailmanbag,Mailman Bag,3.0,0.29,550,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,2,0.29,8,0,0,0,none,none,none,none,none,0.00,Standard Mailman's bag.
-forestpouch,Forest Pouch,2.0,0.00,551,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,7,0,0,0,none,none,none,none,none,0.00,There's twigs sticking out of this.
-bluepurse,Blue Purse,1.0,0.00,552,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,4,0,0,0,none,none,none,none,none,0.00,A ordinary blue purse.
-heavypurse,Heavy Purse,2.0,-0.50,553,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,-2,-0.50,9,0,0,0,none,none,none,none,none,0.00,Who stuffed black holes in this?
-cotton,Cotton,0.0,0.00,660,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+coal,Coal,0.0,0.00,442,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+copperore,Copper Ore,0.5,0.00,443,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+ironore,Iron Ore,1.0,0.00,444,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+goldore,Gold Ore,2.0,0.00,445,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+amethystore,Amethyst Ore,2.5,0.00,446,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+azuriteore,Azurite Ore,3.0,0.00,447,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+emeraldite,Emeraldite,3.5,0.00,448,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+ruby,Ruby,4.0,0.00,449,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+diamond,Diamond,5.0,0.00,450,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+redopal,Red Opal,4.0,0.00,451,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+orangeopal,Orange Opal,3.5,0.00,452,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+yellowopal,Yellow Opal,3.0,0.00,453,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+limeopal,Lime Opal,2.0,0.00,454,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+cyanopal,Cyan Opal,1.5,0.00,455,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+blueopal,Blue Opal,1.0,0.00,456,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+mysticopal,Mystic Opal,5.0,0.00,457,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+bloodyglobe,Bloody Globe,4.0,0.00,458,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+moneyglobe,Money Globe,4.0,0.00,459,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+waterglobe,Water Globe,4.0,0.00,460,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+fieryglobe,Fiery Globe,4.0,0.00,461,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+mysticglobe,Mystic Globe,5.0,0.00,462,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+natureglobe,Nature Globe,4.0,0.00,463,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+deathglobe,Death Globe,4.0,0.00,464,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+spiritsglobe,Spirits Globe,4.0,0.00,465,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+coppercoin,Copper Coin,1.0,0.00,466,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+silvercoin,Silver Coin,2.0,0.00,467,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+goldcoin,Gold Coin,3.0,0.00,468,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+meteoritecoin,Meteorite Coin,4.0,0.00,469,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+copperbar,Copper Bar,0.5,0.00,482,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+ironbar,Iron Bar,1.0,0.00,483,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+goldbar,Gold Bar,2.0,0.00,484,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+amethystbar,Amethyst Bar,2.5,0.00,485,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+azuritebar,Azurite Bar,3.0,0.00,486,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+emeralditebar,Emeraldite Bar,3.5,0.00,487,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+rubybar,Ruby Bar,4.0,0.00,488,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+diamondbar,Diamond Bar,5.0,0.00,489,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+fierybundle,Fiery Bundle,4.0,0.00,544,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,25,0,0,0,none,none,none,fiery,none,0.00,The cloth is beginning to burn.
+grassybundle,Grassy Bundle,2.0,0.29,545,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0.29,12,0,0,0,none,none,none,none,none,0.00,Woven with grass.
+brownsaddlebag,Brown Saddlebag,0.0,0.00,546,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,5,0,0,0,none,none,none,none,none,0.00,A dusty old saddlebag.
+rosemarybag,Rosemary Bag,3.0,0.00,547,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,18,0,0,0,none,none,none,none,none,0.00,The thin strands of Rosemary hold this bag in place.
+mailmanbag,Mailman Bag,3.0,0.29,550,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,2,0.29,15,0,0,0,none,none,none,none,none,0.00,Standard Mailman's bag.
+forestpouch,Forest Pouch,2.0,0.00,551,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,10,0,0,0,none,none,none,none,none,0.00,There's twigs sticking out of this.
+bluepurse,Blue Purse,1.0,0.00,552,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,8,0,0,0,none,none,none,none,none,0.00,A ordinary blue purse.
+heavypurse,Heavy Purse,2.0,-0.50,553,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,-2,-0.50,18,0,0,0,none,none,none,none,none,0.00,Who stuffed black holes in this?
+dripleaf,Dripleaf,1.0,0.00,641,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+alphina,Alphina,1.0,0.00,642,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+fourleafclover,Four Leaf Clover,2.0,0.00,643,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+rosemary,Rosemary,2.0,0.00,644,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+daisy,Daisy,0.0,0.00,645,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+rose,Rose,4.0,0.00,646,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+goldenglow,Golden Glow,3.0,0.00,647,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+peony,Peony,0.0,0.00,648,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+summerturnip,Summer Turnip,3.0,0.00,649,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+valerianroots,Valerian Roots,2.0,0.00,650,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+wildflax,Wild Flax,0.0,0.00,651,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+starofbethlehem,Star of Bethlehem,5.0,0.00,652,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+pyroweed,Pyroweed,4.0,0.00,653,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+goldendewdrop,Golden Dewdrop,3.0,0.00,654,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+snapdragon,Snapdragon,1.0,0.00,655,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+lovagevines,Lovage Vines,2.0,0.00,656,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Essence of slimes.
+lead,Lead,2.0,0.00,657,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Poisonous.
+malachite,Malachite,3.0,0.00,658,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Found deep in the ocean.
+galena,Galena,1.0,0.00,659,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+cotton,Cotton,0.0,0.00,660,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Soft and fluffy.
 yarn,Yarn,0.0,0.00,661,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+bloodorb,Blood Orb,4.0,0.00,662,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+fur,Fur,0.0,0.00,663,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+predatorhorn,Predator Horn,2.0,0.00,664,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+sharptooth,Sharp Tooth,3.0,0.00,665,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+sharpclaw,Sharp Claw,2.0,0.00,666,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+batwings,Bat Wings,3.0,0.00,667,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+angelwings,Angel Wings,4.0,0.00,668,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Wings from a mythical angel.
+mysticscales,Mystic Scales,5.0,0.00,669,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Mystic energy radiates from these scales.
+thickleather,Thick Leather,1.0,0.00,670,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+thornyhide,Thorny Hide,3.0,0.00,671,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+woodplank,Wood Plank,0.0,0.00,672,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 wood,Wood,0.0,0.00,673,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Regular wood.
 woodstick,Wood Stick,0.0,0.00,674,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+ivyvine,Ivy Vine,2.0,0.00,675,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+mistletoe,Mistletoe,1.0,0.00,676,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+burntmistletoe,Burnt Mistletoe,0.0,0.00,677,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+sandpaper,Sandpaper,1.0,0.00,678,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+iceorb,Ice Orb,2.0,0.00,679,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,A pretty glimmering gem.
+feather,Feather,0.0,0.00,680,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+firefeather,Fire Feather,4.0,0.00,681,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+parchmentpaper,Parchment Paper,0.0,0.00,682,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+paper,Paper,0.0,0.00,683,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+icecube,Ice Cube,1.0,0.00,684,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Not to be confused with Cubie.
+sand,Sand,0.0,0.00,685,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+sugar,Sugar,1.0,0.00,686,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,

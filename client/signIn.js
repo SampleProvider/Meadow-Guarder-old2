@@ -44,7 +44,7 @@ window.onload = function(){
                 }
             }
             if(!document.getElementById(name + 'SettingPlayer')){
-                settingPlayerDiv.innerHTML += '<div style="margin-top: 8px;"></div><label for="' + name + '" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseOut(event);">Player ' + name.charAt(0).toUpperCase() + name.slice(1) + ':</label><select id="' + name + 'SettingPlayer" name="' + name + '" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseOut(event);" onmousedown="socket.emit(\'keyPress\',{inputId:\'releaseAll\',state:true});"><option value="none">None</option></select>';
+                settingPlayerDiv.innerHTML += '<div style="margin-top: 8px;"></div><label for="' + name + '" class="UI-text-light" style="position: static;" onmouseover="mouseUp(event);mouseOut(event);">Player ' + name.charAt(0).toUpperCase() + name.slice(1) + ':</label><select id="' + name + 'SettingPlayer" name="' + name + '" class="settingDropdown UI-dropdown-light" style="position: relative;" onmouseover="mouseUp(event);mouseOut(event);" onmousedown="releaseAll();"><option value="none">None</option></select>';
             }
             var select = document.getElementById(name + 'SettingPlayer');
             for(var j in json[i].types){

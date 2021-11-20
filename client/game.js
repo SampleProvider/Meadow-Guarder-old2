@@ -3,7 +3,7 @@ if(isFirefox === true) {
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
 
-var VERSION = '0.0.6';
+var VERSION = '0.0.7';
 
 var socket = io({
     reconnection:false,
@@ -143,7 +143,7 @@ socket.on('refreshCraft',function(pack){
     inventory.refreshCraft();
 });
 socket.on('updateCraft',function(pack){
-    for(var i in inventory.craftItems.items){
+    for(var i in inventory.craftItems){
         inventory.updateCraftClient(i);
     }
 });
@@ -1097,7 +1097,8 @@ dropItem = function(click){
     itemMenu.style.display = 'none';
     if(inventory.draggingItem.id){
         draggingItem.style.display = 'inline-block';
-        draggingItem.innerHTML = "<image class='itemImageLarge' draggable=false src='/client/img/items/" + inventory.draggingItem.id + ".png'></image>";
+        draggingItem.innerHTML = '';
+        inventory.drawItem(draggingItem,Item.list[inventory.draggingItem.id].drawId,true);
         draggingItem.style.left = (rawMouseX - 32) + 'px';
         draggingItem.style.top = (rawMouseY - 32) + 'px';
         if(inventory.draggingItem.amount !== 1){
@@ -1109,10 +1110,18 @@ dropItem = function(click){
             itemAmountDiv.appendChild(itemAmount);
             draggingItem.appendChild(itemAmountDiv);
         }
+        var cooldownDiv = document.createElement('div');
+        cooldownDiv.className = 'cooldownDiv';
+        cooldownDiv.style.height = 100 * inventory.draggingItem.cooldown / Item.list[inventory.draggingItem.id].useTime + "%";
+        draggingItem.appendChild(cooldownDiv);
     }
     else{
         draggingItem.style.display = 'none';
     }
+}
+
+releaseAll = function(){
+    socket.emit('keyPress',{inputId:"releaseAll"});
 }
 
 document.onkeydown = function(event){
@@ -1134,6 +1143,9 @@ document.onkeydown = function(event){
     }
     if(key === 'b' || key === 'B'){
         toggleSetting();
+    }
+    if(key === 'Enter'){
+        chatInput.focus();
     }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
@@ -1195,6 +1207,9 @@ document.addEventListener("visibilitychange",function(){
 });
 mouseDown = function(event){
     if(inventory.draggingItem.id){
+        return;
+    }
+    if(document.activeElement === chatInput || document.activeElement === craftInput){
         return;
     }
     if(selected){

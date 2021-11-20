@@ -485,12 +485,12 @@ document.onmousemove = function(event){
             socket.emit('keyPress',{inputId:'releaseAll'});
             attacking = false;
         }
-        mouseX = x;
-        mouseY = y;
         rawMouseX = event.clientX;
         rawMouseY = event.clientY;
         if(!attackMonstersState && !attackPlayersState){
             socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
+            mouseX = x;
+            mouseY = y;
         }
         if(inventory.draggingItem.id){
             draggingItem.style.left = (rawMouseX - 32) + 'px';

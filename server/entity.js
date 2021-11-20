@@ -42,11 +42,13 @@ addToChat = function(color,message,debug){
     }
     console.error("[" + h + ":" + m + "] " + message);
     for(var i in Player.list){
-        if(SOCKET_LIST[i]){
-            SOCKET_LIST[i].emit('addToChat',{
-                color:color,
-                message:message,
-            });
+        if(Player.list[i].loggedOn){
+            if(SOCKET_LIST[i]){
+                SOCKET_LIST[i].emit('addToChat',{
+                    color:color,
+                    message:message,
+                });
+            }
         }
     }
 }
@@ -314,16 +316,16 @@ Actor = function(param){
             }
         }
         else if(self.trackingPath[0]){
-            if(self.x / 64 < self.trackingPath[0][0] + 0.5 - 1 / 64){
+            if(self.x / 64 < self.trackingPath[0][0] + 0.5){
                 self.spdX = 1;
             }
-            if(self.x / 64 > self.trackingPath[0][0] + 0.5 + 1 / 64){
+            if(self.x / 64 > self.trackingPath[0][0] + 0.5){
                 self.spdX = -1;
             }
-            if(self.y / 64 < self.trackingPath[0][1] + 0.5 - 1 / 64){
+            if(self.y / 64 < self.trackingPath[0][1] + 0.5){
                 self.spdY = 1;
             }
-            if(self.y / 64 > self.trackingPath[0][1] + 0.5 + 1 / 64){
+            if(self.y / 64 > self.trackingPath[0][1] + 0.5){
                 self.spdY = -1;
             }
             if(64 * Math.abs(self.x / 64 - self.trackingPath[0][0] - 0.5) < 2 && 64 * Math.abs(self.y / 64 - self.trackingPath[0][1] - 0.5) < 2){
@@ -596,27 +598,31 @@ Actor = function(param){
                 if(i === 'random'){
                     var numItems = 0;
                     for(var j in Item.list){
-                        numItems += 1;
+                        if(Item.list[j].type === 'Material'){
+                            numItems += 1;
+                        }
                     }
                     var randomItem = Math.floor(Math.random() * numItems);
                     numItems = 0;
                     for(var j in Item.list){
-                        if(numItems === randomItem){
-                            while(amount > 0){
-                                var amountRemoved = Math.ceil(Math.random() * amount);
-                                amount -= amountRemoved;
-                                new DroppedItem({
-                                    x:self.x,
-                                    y:self.y,
-                                    map:self.map,
-                                    item:j,
-                                    amount:amountRemoved,
-                                    parent:pt,
-                                    allPlayers:false,
-                                });
+                        if(Item.list[j].type === 'Material'){
+                            if(numItems === randomItem){
+                                while(amount > 0){
+                                    var amountRemoved = Math.ceil(Math.random() * amount);
+                                    amount -= amountRemoved;
+                                    new DroppedItem({
+                                        x:self.x,
+                                        y:self.y,
+                                        map:self.map,
+                                        item:j,
+                                        amount:amountRemoved,
+                                        parent:pt,
+                                        allPlayers:false,
+                                    });
+                                }
                             }
+                            numItems += 1;
                         }
-                        numItems += 1;
                     }
                 }
                 else{
@@ -753,23 +759,25 @@ Actor = function(param){
                                 self.dash(data[i][j].param);
                         }
                         if(data[i][j].hpCost){
-                            if(self.hp >= data[i][j].hpCost){
+                            if(self.hp > data[i][j].hpCost){
                                 self.hp -= data[i][j].hpCost;
                             }
                             else{
-                                self.hp = 0;
-                                self.onDeath(self);
-                                if(self.type === 'Player'){
-                                    SOCKET_LIST[self.id].emit('death');
-                                    addToChat('#ff0000',self.name + ' committed suicide.');
-                                }
-                                else{
-                                    if(self.type === 'Monster'){
-                                        self.dropItems(pt.parent);
+                                if(self.hp > 0){
+                                    self.hp = 0;
+                                    self.onDeath(self);
+                                    if(self.type === 'Player'){
+                                        SOCKET_LIST[self.id].emit('death');
+                                        addToChat('#ff0000',self.name + ' committed suicide.');
                                     }
-                                    self.toRemove = true;
+                                    else{
+                                        if(self.type === 'Monster'){
+                                            self.dropItems(pt.parent);
+                                        }
+                                        self.toRemove = true;
+                                    }
+                                    continue;
                                 }
-                                continue;
                             }
                         }
                     }
@@ -919,6 +927,8 @@ Player = function(param,socket){
     self.lastChat = 0;
     self.chatWarnings = 0;
     self.textColor = '#000000';
+
+    self.loggedOn = false;
 
     self.inventory = new Inventory(socket,true);
     if(param.database.items){
@@ -1616,10 +1626,13 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('signInFinished',function(data){
-            player.canMove = true;
-            player.invincible = false;
-            Player.getAllInitPack(socket);
-            addToChat('#00ff00',player.name + " just logged on.");
+            if(player.loggedOn === false){
+                player.loggedOn = true;
+                player.canMove = true;
+                player.invincible = false;
+                Player.getAllInitPack(socket);
+                addToChat('#00ff00',player.name + " just logged on.");
+            }
         });
     });
 }
@@ -1634,40 +1647,43 @@ Player.onDisconnect = function(socket){
     }
     storeDatabase(Player.list);
     if(Player.list[socket.id]){
-        if(Player.list[socket.id].tradingEntity){
-            if(Player.list[Player.list[socket.id].tradingEntity]){
-                for(var i in Player.list[Player.list[socket.id].tradingEntity].inventory.items){
-                    if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                        new DroppedItem({
-                            x:Player.list[Player.list[socket.id].tradingEntity].x,
-                            y:Player.list[Player.list[socket.id].tradingEntity].y,
-                            map:Player.list[Player.list[socket.id].tradingEntity].map,
-                            item:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,
-                            amount:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount,
-                            parent:Player.list[socket.id].tradingEntity,
-                            allPlayers:false,
-                        });
+        if(Player.list[socket.id].loggedOn){
+            Player.list[socket.id].loggedOn = null;
+            if(Player.list[socket.id].tradingEntity){
+                if(Player.list[Player.list[socket.id].tradingEntity]){
+                    for(var i in Player.list[Player.list[socket.id].tradingEntity].inventory.items){
+                        if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                            new DroppedItem({
+                                x:Player.list[Player.list[socket.id].tradingEntity].x,
+                                y:Player.list[Player.list[socket.id].tradingEntity].y,
+                                map:Player.list[Player.list[socket.id].tradingEntity].map,
+                                item:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,
+                                amount:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount,
+                                parent:Player.list[socket.id].tradingEntity,
+                                allPlayers:false,
+                            });
+                        }
                     }
-                }
-                SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
-                for(var i in Player.list[socket.id].inventory.items){
-                    if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                        new DroppedItem({
-                            x:Player.list[Player.list[socket.id].tradingEntity].x,
-                            y:Player.list[Player.list[socket.id].tradingEntity].y,
-                            map:Player.list[Player.list[socket.id].tradingEntity].map,
-                            item:Player.list[socket.id].inventory.items[i].id,
-                            amount:Player.list[socket.id].inventory.items[i].amount,
-                            parent:Player.list[socket.id].tradingEntity,
-                            allPlayers:false,
-                        });
+                    SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
+                    for(var i in Player.list[socket.id].inventory.items){
+                        if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
+                            new DroppedItem({
+                                x:Player.list[Player.list[socket.id].tradingEntity].x,
+                                y:Player.list[Player.list[socket.id].tradingEntity].y,
+                                map:Player.list[Player.list[socket.id].tradingEntity].map,
+                                item:Player.list[socket.id].inventory.items[i].id,
+                                amount:Player.list[socket.id].inventory.items[i].amount,
+                                parent:Player.list[socket.id].tradingEntity,
+                                allPlayers:false,
+                            });
+                        }
                     }
                 }
             }
+            playerMap[Player.list[socket.id].map] -= 1;
+            addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
+            delete Player.list[socket.id];
         }
-        playerMap[Player.list[socket.id].map] -= 1;
-        addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
-        delete Player.list[socket.id];
     }
 }
 Player.getAllInitPack = function(socket){
@@ -2083,6 +2099,13 @@ Monster = function(param){
                             self.spdX = 0;
                             self.spdY = 0;
                         }
+                        else if(self.getSquareDistance(self.randomPos) > 16){
+                            self.target = null;
+                            self.attackState = 'retreat';
+                            self.trackPos(self.randomPos.x,self.randomPos.y);
+                            self.spdX = 0;
+                            self.spdY = 0;
+                        }
                     }
                 }
                 else{
@@ -2386,8 +2409,34 @@ DroppedItem = function(param){
     self.parent = param.parent;
     self.width = 48;
     self.height = 48;
-    self.x += 128 * Math.random() - 64;
-    self.y += 128 * Math.random() - 64;
+    for(var i = 0;i < 100;i++){
+        self.x = param.x + 128 * Math.random() - 64;
+        self.y = param.y + 128 * Math.random() - 64;
+        self.gridX = Math.floor(self.x / 64);
+        self.gridY = Math.floor(self.y / 64);
+        var collisions = [];
+        for(var i = -1;i < 2;i++){
+            for(var j = -1;j < 2;j++){
+                if(Collision.list[self.map]){
+                    if(Collision.list[self.map][0]){
+                        if(Collision.list[self.map][0][self.gridX + i]){
+                            if(Collision.list[self.map][0][self.gridX + i][self.gridY + j]){
+                                var collision = Collision.list[self.map][0][self.gridX + i][self.gridY + j];
+                                for(var k in collision){
+                                    if(self.isColliding(collision[k])){
+                                        collisions.push(collision[k]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(!collisions[0]){
+            break;
+        }
+    }
     self.allPlayers = param.allPlayers;
     self.timer = 6000;
     self.item = param.item;

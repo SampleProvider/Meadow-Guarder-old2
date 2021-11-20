@@ -501,6 +501,10 @@ canvas {
     border-radius: 4px;
 }
 
+.text {
+    user-select: text;
+}
+
 #bottomRightBar {
     position: absolute;
     right: 8px;
@@ -903,10 +907,20 @@ canvas {
 }
 #craftItems {
     position: absolute;
-    top: 22px;
+    top: 50px;
     left: 0px;
     height: 20px;
     width: 520px;
+}
+#craftInput {
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    width: 500px;
+    height: 15px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 4px;
 }
 .divImage {
     position: relative;

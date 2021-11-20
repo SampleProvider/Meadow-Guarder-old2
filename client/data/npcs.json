@@ -23,6 +23,24 @@
             }
         ]
     },
+    "Macklel":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_2 Yellow",
+            "pants":"Pants_1 Red",
+            "boots":"Boots_1 Yellow",
+            "hair":"none",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home."
+            }
+        ]
+    },
     "Fleita":{
         "img":{
             "body":"Human",

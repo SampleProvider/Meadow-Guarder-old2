@@ -73,13 +73,9 @@
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
-            "skyrobe":{
-                "chance":0.5,
-                "amount":1
-            },
-            "rubyring":{
-                "chance":0.5,
-                "amount":1
+            "random":{
+                "chance":1,
+                "amount":3
             }
         },
         "img":{
@@ -144,54 +140,6 @@
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
-            "diamondsword":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondstaff":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondwaraxe":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondclaw":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondbow":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondgun":{
-                "chance":0.5,
-                "amount":1
-            },
-            "redfedora":{
-                "chance":0.5,
-                "amount":1
-            },
-            "mysticwizardhat":{
-                "chance":0.5,
-                "amount":1
-            },
-            "firevikinghelmet":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondchestplate":{
-                "chance":0.5,
-                "amount":1
-            },
-            "goldendiamondchestplate":{
-                "chance":0.5,
-                "amount":1
-            },
-            "diamondshield":{
-                "chance":0.5,
-                "amount":1
-            },
             "healthpotion":{
                 "chance":1,
                 "amount":10

@@ -184,6 +184,9 @@ var Projectile = function(initPack){
         self.fade = 1;
         self.fadeState = 1;
     }
+    else{
+        self.fade = 0.5;
+    }
 
     if(Item.list[self.projectileType]){
         self.render = new OffscreenCanvas(24,24);
@@ -196,10 +199,16 @@ var Projectile = function(initPack){
     }
 
     self.update = function(){
-        if(self.interpolationStage > 0 || self.fadeState === 2){
+        if(self.interpolationStage > 0){
             self.x += self.spdX;
             self.y += self.spdY;
             self.direction += self.spdDirection;
+        }
+        if(self.fadeState === 2){
+            self.x += self.spdX;
+            self.y += self.spdY;
+            self.spdX = self.spdX * 0.5;
+            self.spdY = self.spdY * 0.5;
         }
         self.interpolationStage -= 1;
     }
