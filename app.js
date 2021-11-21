@@ -265,7 +265,7 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							Player.list[i].inventory.addItem(id,parseInt(amount),true);
+							Player.list[i].inventory.addItem(id[0],parseInt(amount[0]),true);
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Gave <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' to ' + name + '.',
@@ -288,7 +288,7 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							Player.list[i].inventory.removeItem(id,parseInt(amount));
+							Player.list[i].inventory.removeItem(id[0],parseInt(amount[0]));
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Removed <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' from player ' + name + '.',
@@ -307,6 +307,7 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0] === 'debug' && Player.list[socket.id].name === 'sp'){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
+					var self = Player.list[socket.id];
 					try{
 						socket.emit('addToChat',{
 							color:'#ff0000',
