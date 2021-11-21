@@ -26,10 +26,31 @@
     "Macklel":{
         "img":{
             "body":"Human",
-            "shirt":"Shirt_2 Yellow",
-            "pants":"Pants_1 Red",
-            "boots":"Boots_1 Yellow",
-            "hair":"none",
+            "shirt":"Shirt_2 Brown",
+            "pants":"Pants_1 Brown",
+            "boots":"Boots_1 Brown",
+            "hair":"MHair_3 Brown",
+            "headwear":"none",
+            "gloves":"Gloves_1 Black",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"You need some metal tools and armor? I've got just what you need!"
+            },
+            {
+                "message":"I'm not as harsh on the inside as I might be on the outside. Who knows, maybe we'll become good friends!"
+            }
+        ]
+    },
+    "Wally":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_4 Red",
+            "pants":"Pants_1 Green",
+            "boots":"Boots_1 Green",
+            "hair":"FHair_1 Red",
             "headwear":"none",
             "gloves":"none",
             "waist":"none"
@@ -37,7 +58,31 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home."
+                "message":"Me and my sister Sally run this general store. It's quite small. We hope to expand in the future!"
+            },
+            {
+                "message":"Where our parents are? They left for a business trip to Seashell Village a month ago. I don't know when they'll come back..."
+            }
+        ]
+    },
+    "Sally":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_3 Purple",
+            "pants":"Pants_1 Blue",
+            "boots":"none",
+            "hair":"FHair_1 Yellow",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"Uggh. Wally always dresses so weirdly. I keep telling her to dress normally but she doesn't listen. I think it's affecting our sales..."
+            },
+            {
+                "message":"Do you want me to comb your hair?"
             }
         ]
     },

@@ -933,6 +933,8 @@ Player = function(param,socket){
     self.chatWarnings = 0;
     self.textColor = '#000000';
 
+    self.inDialogue = false;
+
     self.loggedOn = false;
 
     self.inventory = new Inventory(socket,true);
@@ -1466,6 +1468,9 @@ Player.onConnect = function(socket,username){
                             }
                         }
                         else{
+                            if(player.inDialogue){
+                                return;
+                            }
                             var messages = [];
                             for(var i in interactingEntity.messages){
                                 var requirementMet = true;
@@ -1486,6 +1491,7 @@ Player.onConnect = function(socket,username){
                                 message:message,
                                 option1:"*End conversation*",
                             });
+                            player.inDialogue = true;
                         }
                     }
                 }
@@ -1597,6 +1603,7 @@ Player.onConnect = function(socket,username){
 
         socket.on('dialogueResponse',function(data){
             socket.emit("dialogue",{});
+            player.inDialogue = false;
         });
 
         socket.on('changePlayer',function(data){
