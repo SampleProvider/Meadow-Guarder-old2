@@ -465,6 +465,12 @@ document.onkeydown = function(event){
     if(key === 'b' || key === 'B'){
         toggleSetting();
     }
+    if(key === 'p' || key === 'P'){
+        togglePlayerList();
+    }
+    if(key === 'Enter'){
+        chatInput.focus();
+    }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }

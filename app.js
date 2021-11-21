@@ -265,10 +265,11 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							data.addItem(id,amount);
+							Player.list[i].inventory.addItem(id,parseInt(amount),true);
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Gave <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' to ' + name + '.',
+								debug:true,
 							});
 						},function(name){
 							socket.emit('addToChat',{
@@ -291,6 +292,7 @@ io.sockets.on('connection',function(socket){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Removed <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' from player ' + name + '.',
+								debug:true,
 							});
 						},function(name){
 							socket.emit('addToChat',{
