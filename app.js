@@ -162,11 +162,21 @@ io.sockets.on('connection',function(socket){
 	socket.on('tick',function(){
 		var players = [];
 		for(var i in Player.list){
-			if(Player.list[i].hp < 1){
-				players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+			if(Player.list[i].region){
+				if(Player.list[i].hp < 1){
+					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+				}
+				else{
+					players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
+				}
 			}
 			else{
-				players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
+				if(Player.list[i].hp < 1){
+					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
+				}
+				else{
+					players.push(Player.list[i].name);
+				}
 			}
 		}
 		socket.emit('tick',players);
@@ -328,7 +338,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'seexp' && level >= 2){
+				if(commandList[0] === 'seexp' && level >= 0){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -354,7 +364,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'seeinv' && level >= 2){
+				if(commandList[0] === 'seeinv' && level >= 0){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -396,7 +406,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'help' && level >= 2){
+				if(commandList[0] === 'help' && level >= 0){
 					if(level === 0){
 						socket.emit('addToChat',{
 							color:'#ff0000',
