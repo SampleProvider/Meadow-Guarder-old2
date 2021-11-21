@@ -1442,7 +1442,7 @@ Player.onConnect = function(socket,username){
                     entities.sort(compare);
                     var interactingEntity = null;
                     for(var i in entities){
-                        if(entities[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'}) && entities[i].id !== player.id){
+                        if(entities[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'}) && entities[i].id !== player.id && entities[i].hp > 0){
                             interactingEntity = entities[i];
                         }
                     }

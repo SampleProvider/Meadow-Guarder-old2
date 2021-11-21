@@ -1,5 +1,5 @@
 
-VERSION = '0.0.6';
+VERSION = '0.0.7';
 
 if(process.env.PORT){
 	SERVER = 'heroku';
