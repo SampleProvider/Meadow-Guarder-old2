@@ -79,23 +79,6 @@ canvas {
     font-style: normal;
 }
 
-@keyframes playerListExpand {
-    from {
-        height: 0px;
-    }
-    to {
-        height: 200px;
-    }
-}
-@keyframes playerListContract {
-    from {
-        height: 200px;
-    }
-    to {
-        height: 0px;
-    }
-}
-
 .UI-display-light {
     position: absolute;
     font-family: 'pixel';

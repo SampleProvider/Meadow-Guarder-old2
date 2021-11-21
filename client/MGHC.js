@@ -1,59 +1,41 @@
 javascript:
 var hackedDiv = document.createElement('div');
-document.getElementById('gameDiv').appendChild(hackedDiv);
-hackedDiv.style.top = '140px';
+document.getElementById('settingDiv').appendChild(hackedDiv);
+hackedDiv.style.top = '20px';
+hackedDiv.style.right = '20px';
 hackedDiv.style.backgroundColor = 'rgba(0,0,0,0);';
 
 var hackedCollumn1 = document.createElement('div');
 hackedCollumn1.className = 'UI-display-light';
 hackedDiv.appendChild(hackedCollumn1);
-hackedCollumn1.style.top = '140px';
+hackedCollumn1.style.top = '20px';
+hackedCollumn1.style.right = '20px';
 hackedCollumn1.style.backgroundColor = 'rgb(0,0,0,125);';
 hackedCollumn1.style.opacity = 0.6;
 
 var hackedCollumn2 = document.createElement('div');
 hackedCollumn2.className = 'UI-display-light';
 hackedDiv.appendChild(hackedCollumn2);
-hackedCollumn2.style.top = '180px';
+hackedCollumn2.style.top = '60px';
+hackedCollumn2.style.right = '20px';
 hackedCollumn2.style.backgroundColor = 'rgb(0,0,0,125);';
 hackedCollumn2.style.opacity = 0.6;
 
 var hackedCollumn3 = document.createElement('div');
 hackedCollumn3.className = 'UI-display-light';
 hackedDiv.appendChild(hackedCollumn3);
-hackedCollumn3.style.top = '220px';
+hackedCollumn3.style.top = '100px';
+hackedCollumn3.style.right = '20px';
 hackedCollumn3.style.backgroundColor = 'rgb(0,0,0,125);';
 hackedCollumn3.style.opacity = 0.6;
 
 var hackedCollumn4 = document.createElement('div');
 hackedCollumn4.className = 'UI-display-light';
 hackedDiv.appendChild(hackedCollumn4);
-hackedCollumn4.style.top = '260px';
+hackedCollumn4.style.top = '140px';
+hackedCollumn4.style.right = '20px';
 hackedCollumn4.style.backgroundColor = 'rgb(0,0,0,125);';
 hackedCollumn4.style.opacity = 0.6;
-
-var monsterTracers = document.createElement('button');
-monsterTracers.className = 'UI-button-light';
-monsterTracers.style.position = 'static';
-monsterTracers.style.top = '8px';
-monsterTracers.innerHTML = 'Monster Tracers';
-hackedCollumn1.appendChild(monsterTracers);
-
-monsterTracers.style.color = '#ffffff';
-monsterTracers.style.backgroundColor = '#000000';
-
-var monsterTracersState = false;
-monsterTracers.onclick = function(){
-    monsterTracersState = !monsterTracersState;
-    if(monsterTracersState){
-        monsterTracers.style.color = '#000000';
-        monsterTracers.style.backgroundColor = '#ffffff';
-    }
-    else{
-        monsterTracers.style.color = '#ffffff';
-        monsterTracers.style.backgroundColor = '#000000';
-    }
-};
 
 var attackMonsters = document.createElement('button');
 attackMonsters.className = 'UI-button-light';
@@ -78,49 +60,26 @@ attackMonsters.onclick = function(){
     }
 };
 
-var playerTracers = document.createElement('button');
-playerTracers.className = 'UI-button-light';
-playerTracers.style.position = 'static';
-playerTracers.style.top = '8px';
-playerTracers.innerHTML = 'Player Tracers';
-hackedCollumn2.appendChild(playerTracers);
+var monsterTracers = document.createElement('button');
+monsterTracers.className = 'UI-button-light';
+monsterTracers.style.position = 'static';
+monsterTracers.style.top = '8px';
+monsterTracers.innerHTML = 'Monster Tracers';
+hackedCollumn1.appendChild(monsterTracers);
 
-playerTracers.style.color = '#ffffff';
-playerTracers.style.backgroundColor = '#000000';
+monsterTracers.style.color = '#ffffff';
+monsterTracers.style.backgroundColor = '#000000';
 
-var playerTracersState = false;
-playerTracers.onclick = function(){
-    playerTracersState = !playerTracersState;
-    if(playerTracersState){
-        playerTracers.style.color = '#000000';
-        playerTracers.style.backgroundColor = '#ffffff';
+var monsterTracersState = false;
+monsterTracers.onclick = function(){
+    monsterTracersState = !monsterTracersState;
+    if(monsterTracersState){
+        monsterTracers.style.color = '#000000';
+        monsterTracers.style.backgroundColor = '#ffffff';
     }
     else{
-        playerTracers.style.color = '#ffffff';
-        playerTracers.style.backgroundColor = '#000000';
-    }
-};
-
-var attackPlayers = document.createElement('button');
-attackPlayers.className = 'UI-button-light';
-attackPlayers.style.position = 'static';
-attackPlayers.style.top = '8px';
-attackPlayers.innerHTML = 'Attack Players';
-hackedCollumn2.appendChild(attackPlayers);
-
-attackPlayers.style.color = '#ffffff';
-attackPlayers.style.backgroundColor = '#000000';
-
-var attackPlayersState = false;
-attackPlayers.onclick = function(){
-    attackPlayersState = !attackPlayersState;
-    if(attackPlayersState){
-        attackPlayers.style.color = '#000000';
-        attackPlayers.style.backgroundColor = '#ffffff';
-    }
-    else{
-        attackPlayers.style.color = '#ffffff';
-        attackPlayers.style.backgroundColor = '#000000';
+        monsterTracers.style.color = '#ffffff';
+        monsterTracers.style.backgroundColor = '#000000';
     }
 };
 
@@ -148,6 +107,52 @@ autoRespawn.onclick = function(){
     }
 };
 
+var attackPlayers = document.createElement('button');
+attackPlayers.className = 'UI-button-light';
+attackPlayers.style.position = 'static';
+attackPlayers.style.top = '8px';
+attackPlayers.innerHTML = 'Attack Players';
+hackedCollumn2.appendChild(attackPlayers);
+
+attackPlayers.style.color = '#ffffff';
+attackPlayers.style.backgroundColor = '#000000';
+
+var attackPlayersState = false;
+attackPlayers.onclick = function(){
+    attackPlayersState = !attackPlayersState;
+    if(attackPlayersState){
+        attackPlayers.style.color = '#000000';
+        attackPlayers.style.backgroundColor = '#ffffff';
+    }
+    else{
+        attackPlayers.style.color = '#ffffff';
+        attackPlayers.style.backgroundColor = '#000000';
+    }
+};
+
+var playerTracers = document.createElement('button');
+playerTracers.className = 'UI-button-light';
+playerTracers.style.position = 'static';
+playerTracers.style.top = '8px';
+playerTracers.innerHTML = 'Player Tracers';
+hackedCollumn2.appendChild(playerTracers);
+
+playerTracers.style.color = '#ffffff';
+playerTracers.style.backgroundColor = '#000000';
+
+var playerTracersState = false;
+playerTracers.onclick = function(){
+    playerTracersState = !playerTracersState;
+    if(playerTracersState){
+        playerTracers.style.color = '#000000';
+        playerTracers.style.backgroundColor = '#ffffff';
+    }
+    else{
+        playerTracers.style.color = '#ffffff';
+        playerTracers.style.backgroundColor = '#000000';
+    }
+};
+
 var npcTracers = document.createElement('button');
 npcTracers.className = 'UI-button-light';
 npcTracers.style.position = 'static';
@@ -168,6 +173,52 @@ npcTracers.onclick = function(){
     else{
         npcTracers.style.color = '#ffffff';
         npcTracers.style.backgroundColor = '#000000';
+    }
+};
+
+var attackIncrease = document.createElement('button');
+attackIncrease.className = 'UI-button-light';
+attackIncrease.style.position = 'static';
+attackIncrease.style.top = '8px';
+attackIncrease.innerHTML = 'Attack Increase';
+hackedCollumn4.appendChild(attackIncrease);
+
+attackIncrease.style.color = '#ffffff';
+attackIncrease.style.backgroundColor = '#000000';
+
+var attackIncreaseState = false;
+attackIncrease.onclick = function(){
+    attackIncreaseState = !attackIncreaseState;
+    if(attackIncreaseState){
+        attackIncrease.style.color = '#000000';
+        attackIncrease.style.backgroundColor = '#ffffff';
+    }
+    else{
+        attackIncrease.style.color = '#ffffff';
+        attackIncrease.style.backgroundColor = '#000000';
+    }
+};
+
+var tickIncrease = document.createElement('button');
+tickIncrease.className = 'UI-button-light';
+tickIncrease.style.position = 'static';
+tickIncrease.style.top = '8px';
+tickIncrease.innerHTML = 'Tick Increase';
+hackedCollumn4.appendChild(tickIncrease);
+
+tickIncrease.style.color = '#ffffff';
+tickIncrease.style.backgroundColor = '#000000';
+
+var tickIncreaseState = false;
+tickIncrease.onclick = function(){
+    tickIncreaseState = !tickIncreaseState;
+    if(tickIncreaseState){
+        tickIncrease.style.color = '#000000';
+        tickIncrease.style.backgroundColor = '#ffffff';
+    }
+    else{
+        tickIncrease.style.color = '#ffffff';
+        tickIncrease.style.backgroundColor = '#000000';
     }
 };
 
@@ -197,52 +248,6 @@ freeCam.onclick = function(){
         freeCam.style.color = '#ffffff';
         freeCam.style.backgroundColor = '#000000';
         talking = false;
-    }
-};
-
-var tickIncrease = document.createElement('button');
-tickIncrease.className = 'UI-button-light';
-tickIncrease.style.position = 'static';
-tickIncrease.style.top = '8px';
-tickIncrease.innerHTML = 'Tick Increase';
-hackedCollumn4.appendChild(tickIncrease);
-
-tickIncrease.style.color = '#ffffff';
-tickIncrease.style.backgroundColor = '#000000';
-
-var tickIncreaseState = false;
-tickIncrease.onclick = function(){
-    tickIncreaseState = !tickIncreaseState;
-    if(tickIncreaseState){
-        tickIncrease.style.color = '#000000';
-        tickIncrease.style.backgroundColor = '#ffffff';
-    }
-    else{
-        tickIncrease.style.color = '#ffffff';
-        tickIncrease.style.backgroundColor = '#000000';
-    }
-};
-
-var attackIncrease = document.createElement('button');
-attackIncrease.className = 'UI-button-light';
-attackIncrease.style.position = 'static';
-attackIncrease.style.top = '8px';
-attackIncrease.innerHTML = 'Attack Increase';
-hackedCollumn4.appendChild(attackIncrease);
-
-attackIncrease.style.color = '#ffffff';
-attackIncrease.style.backgroundColor = '#000000';
-
-var attackIncreaseState = false;
-attackIncrease.onclick = function(){
-    attackIncreaseState = !attackIncreaseState;
-    if(attackIncreaseState){
-        attackIncrease.style.color = '#000000';
-        attackIncrease.style.backgroundColor = '#ffffff';
-    }
-    else{
-        attackIncrease.style.color = '#ffffff';
-        attackIncrease.style.backgroundColor = '#000000';
     }
 };
 
