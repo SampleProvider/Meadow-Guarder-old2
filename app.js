@@ -288,7 +288,7 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							Player.list[i].inventory.removeItem(id,amount);
+							Player.list[i].inventory.removeItem(id,parseInt(amount));
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Removed <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' from player ' + name + '.',
