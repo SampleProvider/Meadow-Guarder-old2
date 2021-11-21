@@ -338,6 +338,7 @@ socket.on('selfId',function(data){
         window.requestAnimationFrame(loop);
         socket.emit('signInFinished');
         canSignIn = true;
+        tickArray = [];
     },750);
 });
 socket.on('update',function(data){
@@ -708,16 +709,7 @@ socket.on('removePlayer',function(data){
     }
 });
 socket.on('disconnected',function(data){
-    gameDiv.style.display = 'inline-block';
-    disconnectedDiv.style.display = 'inline-block';
-    pageDiv.style.display = 'none';
-    Player.list[selfId].spdX = 0;
-    Player.list[selfId].spdY = 0;
-    setTimeout(function(){
-        location.reload();
-    },5000);
-    socket.emit('disconnect');
-    selfId = null;
+    disconnectClient();
 });
 socket.on('death',function(data){
     gameDiv.style.display = 'inline-block';
@@ -1056,6 +1048,39 @@ setInterval(function(){
     socket.emit('nextReload');
 },50);
 
+var tickArray = [];
+
+socket.on('tick',function(data){
+    var d = new Date();
+    tickArray.splice(0,1);
+    playerList.innerHTML = '';
+    for(var i in data){
+        playerList.innerHTML += data[i] + '<br>';
+    }
+});
+
+setInterval(function(){
+    if(tickArray.length > 10 && selfId){
+        disconnectClient();
+    }
+    var d = new Date();
+    tickArray.push(d.getMilliseconds());
+    socket.emit('tick');
+},100);
+
+disconnectClient = function(){
+    gameDiv.style.display = 'inline-block';
+    disconnectedDiv.style.display = 'inline-block';
+    pageDiv.style.display = 'none';
+    Player.list[selfId].spdX = 0;
+    Player.list[selfId].spdY = 0;
+    setTimeout(function(){
+        location.reload();
+    },5000);
+    socket.emit('disconnect');
+    selfId = null;
+}
+
 updateInventoryPopupMenu = function(slotType,index){
     if(index === -1){
         itemMenu.style.display = 'none';
@@ -1144,6 +1169,9 @@ document.onkeydown = function(event){
     }
     if(key === 'b' || key === 'B'){
         toggleSetting();
+    }
+    if(key === 'p' || key === 'P'){
+        togglePlayerList();
     }
     if(key === 'Enter'){
         chatInput.focus();

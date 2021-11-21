@@ -76,6 +76,14 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:3,username:data.username});
 			return;
 		}
+		if(data.username.includes('<') || data.password.includes('<')){
+			socket.emit('createAccountResponse',{success:3,username:data.username});
+			return;
+		}
+		if(data.username.includes('>') || data.password.includes('>')){
+			socket.emit('createAccountResponse',{success:3,username:data.username});
+			return;
+		}
 		if(data.username.length > 3 && data.username.length < 41 && data.password.length < 41){
 			Database.isUsernameTaken(data,function(res){
 				if(res === 0){
@@ -149,33 +157,272 @@ io.sockets.on('connection',function(socket){
 			Player.list[socket.id].toRemove = true;
 		}
 	});
+	socket.on('tick',function(){
+		var players = [];
+		for(var i in Player.list){
+			if(Player.list[i].hp < 1){
+				players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+			}
+			else{
+				players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
+			}
+		}
+		socket.emit('tick',players);
+	});
 	socket.on('chatMessage',function(data){
 		if(Player.list[socket.id]){
-			if(Player.list[socket.id].lastChat > 0){
-				Player.list[socket.id].chatWarnings += 1.5;
-				if(Player.list[socket.id].chatWarnings > 5){
+			if(data[0] === '/'){
+				if(data.length === 1){
+					return;
+				}
+				data = data.slice(1);
+				var commandList = [];
+				var command = '';
+				for(var i in data){
+					if(data[i] === ' '){
+						commandList.push(command);
+						command = '';
+					}
+					else{
+						command += data[i];
+					}
+				}
+				commandList.push(command);
+				console.log(Player.list[socket.id].name,commandList)
+				var recreateCommand = function(string){
+					var command = '';
+					for(var i in string){
+						command += string[i];
+						if(i !== (string.length - 1) + ''){
+							command += ' ';
+						}
+					}
+					return command;
+				}
+				var doCommand = function(name,successcb,failurecb){
+					if(name === '@a'){
+						for(var i in Player.list){
+							successcb(Player.list[i].name,i);
+						}
+						return;
+					}
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							successcb(name,i);
+							return;
+						}
+					}
+					failurecb(name);
+					return;
+				}
+				if(commandList[0] === 'kick' && Player.list[socket.id].name === 'sp'){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						if(SOCKET_LIST[i]){
+							SOCKET_LIST[i].emit('disconnected');
+							Player.onDisconnect(SOCKET_LIST[i]);
+							delete SOCKET_LIST[i];
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Kicked player ' + name + '.',
+							});
+						}
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+						});
+					});
+					return;
+				}
+				if(commandList[0] === 'kill' && Player.list[socket.id].name === 'sp'){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						Player.list[i].hp = 0;
+						Player.list[i].onDeath(Player.list[i]);
+						if(SOCKET_LIST[i]){
+							SOCKET_LIST[i].emit('death');
+						}
+						addToChat('#ff0000',Player.list[i].name + ' felt the wrath of ' + Player.list[socket.id].name + '.');
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] Killed player ' + name + '.',
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+						});
+					});
+					return;
+				}
+				if(commandList[0] === 'give' && Player.list[socket.id].name === 'sp'){
+					commandList.splice(0,1);
+					var amount = commandList.splice(commandList.length - 1,1);
+					var id = commandList.splice(commandList.length - 1,1);
+					var name = recreateCommand(commandList);
+					if(Item.list[id]){
+						doCommand(name,function(name,i){
+							data.addItem(id,amount);
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Gave <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' to ' + name + '.',
+							});
+						},function(name){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] No player found with name ' + name + '.',
+							});
+						});
+						return;
+					}
+					return;
+				}
+				if(commandList[0] === 'remove' && Player.list[socket.id].name === 'sp'){
+					commandList.splice(0,1);
+					var amount = commandList.splice(commandList.length - 1,1);
+					var id = commandList.splice(commandList.length - 1,1);
+					var name = recreateCommand(commandList);
+					if(Item.list[id]){
+						doCommand(name,function(name,i){
+							Player.list[i].inventory.removeItem(id,amount);
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Removed <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' from player ' + name + '.',
+							});
+						},function(name){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] No player found with name ' + name + '.',
+							});
+						});
+						return;
+					}
+					return;
+				}
+				if(commandList[0] === 'debug' && Player.list[socket.id].name === 'sp'){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					try{
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] ' + eval(name) + '.',
+						});
+					}
+					catch(err){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] ' + err + '.',
+						});
+					}
+					return;
+				}
+				if(commandList[0] === 'seexp'){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						socket.emit('addToChat',{
+							color:'#ffff00',
+							message:'[!] ' + name + ' is level ' + Player.list[i].level + ' and has ' + Player.list[i].xp + ' xp.',
+						});
+					},function(name){
+						getDatabase(name,function(data){
+							if(data.level !== undefined && data.xp !== undefined){
+								socket.emit('addToChat',{
+									color:'#ffff00',
+									message:'[!] ' + name + ' is level ' + data.level + ' and has ' + data.xp + ' xp.',
+								});
+							}
+							else{
+								socket.emit('addToChat',{
+									color:'#ff0000',
+									message:'[!] No player found with name ' + name + '.',
+								});
+							}
+						});
+					});
+					return;
+				}
+				if(commandList[0] === 'seeinv'){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						var items = '';
+						for(var j in Player.list[i].inventory.items){
+							if(Player.list[i].inventory.items[j].id){
+								items += '<span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[Player.list[i].inventory.items[j].id].rarity) + '">' + Item.list[Player.list[i].inventory.items[j].id].name + '</span> x' + Player.list[i].inventory.items[j].amount + '<br>';
+							}
+						}
+						items = items.substr(0,items.length - 4);
+						socket.emit('addToChat',{
+							color:'#ffff00',
+							message:'[!] ' + name + ' has ' + items + ' .',
+							debug:true,
+						});
+					},function(name){
+						getDatabase(name,function(data){
+							if(data.items){
+								var items = '';
+								for(var j in data.items){
+									if(data.items[j].id){
+										items += '<span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[data.items[j].id].rarity) + '">' + Item.list[data.items[j].id].name + '</span> x' + data.items[j].amount + '<br>';
+									}
+								}
+								items = items.substr(0,items.length - 4);
+								socket.emit('addToChat',{
+									color:'#ffff00',
+									message:'[!] ' + name + ' has ' + items + ' .',
+									debug:true,
+								});
+							}
+							else{
+								socket.emit('addToChat',{
+									color:'#ff0000',
+									message:'[!] No player found with name ' + name + '.',
+								});
+							}
+						});
+					});
+					return;
+				}
+				if(commandList[0] === 'help'){
 					socket.emit('addToChat',{
 						color:'#ff0000',
-						message:'[!] Spamming the chat has been detected on this account. Please lower your chat message rate.',
+						message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+						debug:true,
 					});
-				}
-				if(Player.list[socket.id].chatWarnings > 10){
-					socket.emit('disconnected');
-					Player.onDisconnect(socket);
-					delete SOCKET_LIST[socket.id];
 					return;
 				}
 			}
-			var notSpace = false;
-			for(var i = 0;i < data.length;i++){
-				if(data[i] !== ' '){
-					notSpace = true;
+			else{
+				if(Player.list[socket.id].lastChat > 0){
+					Player.list[socket.id].chatWarnings += 1.5;
+					if(Player.list[socket.id].chatWarnings > 5){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] Spamming the chat has been detected on this account. Please lower your chat message rate.',
+						});
+					}
+					if(Player.list[socket.id].chatWarnings > 10){
+						socket.emit('disconnected');
+						Player.onDisconnect(socket);
+						delete SOCKET_LIST[socket.id];
+						return;
+					}
 				}
-			}
-			if(notSpace){
-				addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + data);
-				Player.list[socket.id].lastChat = 20;
-				Player.list[socket.id].chatWarnings -= 0.5;
+				var notSpace = false;
+				for(var i = 0;i < data.length;i++){
+					if(data[i] !== ' '){
+						notSpace = true;
+					}
+				}
+				if(notSpace){
+					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + data);
+					Player.list[socket.id].lastChat = 20;
+					Player.list[socket.id].chatWarnings -= 0.5;
+				}
 			}
 		}
 		else{

@@ -20,8 +20,14 @@ socket.on('addToChat',function(data){
     if(m === '0'){
         m = '00';
     }
-    var message = data.message.replace(/</gi,'&lt;');
-    message = message.replace(/>/gi,'&gt;');
+    var message = data.message;
+    if(data.debug){
+
+    }
+    else{
+        message = message.replace(/</gi,'&lt;');
+        message = message.replace(/>/gi,'&gt;');
+    }
     chat += '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     chatText.innerHTML = chat;
     if(scroll){

@@ -4,6 +4,7 @@ var settings = {
     tradeOpen:false,
     dialogueOpen:false,
     settingOpen:false,
+    playerListOpen:false,
 };
 
 inventoryButton.onclick = function(){
@@ -23,6 +24,9 @@ settingButton.onclick = function(){
 }
 settingExit.onclick = function(){
     closeSetting();
+}
+playerListExit.onclick = function(){
+    closePlayerList();
 }
 openInventory = function(){
     settings.inventoryOpen = true;
@@ -125,5 +129,26 @@ toggleSetting = function(){
     else{
         settingBackground.style.display = 'none';
         settingDiv.style.display = 'none';
+    }
+}
+openPlayerList = function(){
+    settings.playerListOpen = true;
+    playerListBackground.style.display = 'inline-block';
+    playerListDiv.style.display = 'inline-block';
+}
+closePlayerList = function(){
+    settings.playerListOpen = false;
+    playerListBackground.style.display = 'none';
+    playerListDiv.style.display = 'none';
+}
+togglePlayerList = function(){
+    settings.playerListOpen = !settings.playerListOpen;
+    if(settings.playerListOpen){
+        playerListBackground.style.display = 'inline-block';
+        playerListDiv.style.display = 'inline-block';
+    }
+    else{
+        playerListBackground.style.display = 'none';
+        playerListDiv.style.display = 'none';
     }
 }
