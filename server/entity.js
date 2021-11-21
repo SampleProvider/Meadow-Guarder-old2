@@ -2104,6 +2104,13 @@ Monster = function(param){
                             self.spdX = 0;
                             self.spdY = 0;
                         }
+                        else if(self.getSquareDistance(Player.list[self.target]) > self.aggro * 3){
+                            self.target = null;
+                            self.attackState = 'retreat';
+                            self.trackPos(self.randomPos.x,self.randomPos.y);
+                            self.spdX = 0;
+                            self.spdY = 0;
+                        }
                         else if(self.getSquareDistance(self.randomPos) > 16){
                             self.target = null;
                             self.attackState = 'retreat';

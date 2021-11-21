@@ -15,6 +15,8 @@ var serv = require('http').Server(app);
 require('./server/entity');
 require('./server/database');
 
+var debugData = require('./server/debug.json');
+
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
 });
@@ -189,6 +191,10 @@ io.sockets.on('connection',function(socket){
 				}
 				commandList.push(command);
 				console.log(Player.list[socket.id].name,commandList)
+				var level = 0;
+				if(debugData[Player.list[socket.id].name]){
+					level = debugData[Player.list[socket.id].name].level;
+				}
 				var recreateCommand = function(string){
 					var command = '';
 					for(var i in string){
@@ -215,7 +221,7 @@ io.sockets.on('connection',function(socket){
 					failurecb(name);
 					return;
 				}
-				if(commandList[0] === 'kick' && Player.list[socket.id].name === 'sp'){
+				if(commandList[0] === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -236,7 +242,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'kill' && Player.list[socket.id].name === 'sp'){
+				if(commandList[0] === 'kill' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -258,7 +264,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'give' && Player.list[socket.id].name === 'sp'){
+				if(commandList[0] === 'give' && level >= 2){
 					commandList.splice(0,1);
 					var amount = commandList.splice(commandList.length - 1,1);
 					var id = commandList.splice(commandList.length - 1,1);
@@ -281,7 +287,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'remove' && Player.list[socket.id].name === 'sp'){
+				if(commandList[0] === 'remove' && level >= 2){
 					commandList.splice(0,1);
 					var amount = commandList.splice(commandList.length - 1,1);
 					var id = commandList.splice(commandList.length - 1,1);
@@ -304,7 +310,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'debug' && Player.list[socket.id].name === 'sp'){
+				if(commandList[0] === 'debug' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					var self = Player.list[socket.id];
@@ -322,7 +328,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'seexp'){
+				if(commandList[0] === 'seexp' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -348,7 +354,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'seeinv'){
+				if(commandList[0] === 'seeinv' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -390,12 +396,28 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'help'){
-					socket.emit('addToChat',{
-						color:'#ff0000',
-						message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
-						debug:true,
-					});
+				if(commandList[0] === 'help' && level >= 2){
+					if(level === 0){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							debug:true,
+						});
+					}
+					else if(level === 1){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							debug:true,
+						});
+					}
+					else if(level === 2){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/give - Give items.<br>/remove - Remove items.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							debug:true,
+						});
+					}
 					return;
 				}
 			}
