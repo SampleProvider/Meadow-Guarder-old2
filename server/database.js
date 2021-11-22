@@ -35,8 +35,13 @@ getDatabase = function(username,cb){
 		return cb({});
 	}
 	client.query('SELECT * FROM progress WHERE username=\'' + username + '\';', (err, res) => {
-		if(res.rows[0]){
-			return cb(JSON.parse(res.rows[0].progress));
+		if(res){
+			if(res.rows[0]){
+				return cb(JSON.parse(res.rows[0].progress));
+			}
+			else{
+				return cb({});
+			}
 		}
 		else{
 			return cb({});

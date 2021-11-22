@@ -1061,15 +1061,10 @@ Inventory = function(socket,server){
         craftItems.innerHTML = "";
         var row = document.createElement('div');
         for(var i = 0;i < self.craftItems.length;i++){
-            if(i % 10 === 0){
-                var row = document.createElement('div');
-                row.className = 'inventoryRow';
-                craftItems.appendChild(row);
-            }
             var div = document.createElement('div');
             div.id = 'craftSlot' + i;
             div.className = 'inventorySlot';
-            row.appendChild(div);
+            craftItems.appendChild(div);
         }
         for(var i in self.craftItems){
             self.addCraftClient(i);

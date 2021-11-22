@@ -750,7 +750,7 @@ canvas {
 }
 .slotCanvas {
     position: relative;
-    left: 0px;
+    left: 2px;
     top: 2px;
     width: 48px;
     height: 48px;
@@ -1176,8 +1176,8 @@ canvas {
     position: absolute;
     left: 172px;
     top: 8px;
-    width: 200px;
-    height: 300px;
+    width: 300px;
+    height: 200px;
     margin: 0px;
     padding: 0px;
     background-color: #ffffff;
@@ -1189,8 +1189,8 @@ canvas {
     position: absolute;
     left: 172px;
     top: 8px;
-    width: 200px;
-    height: 300px;
+    width: 300px;
+    height: 200px;
     margin: 0px;
     padding: 0px;
     font-size: small;

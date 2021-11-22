@@ -66,6 +66,9 @@ io.sockets.on('connection',function(socket){
 		if(Object.keys(data).length === 0){
 			return;
 		}
+		if(!data.username || !data.password){
+			return;
+		}
 		if(!data.username.toString() || !data.password.toString()){
 			return;
 		}
@@ -100,6 +103,9 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			return;
+		}
+		if(!data.username || !data.password){
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString()){
@@ -171,6 +177,9 @@ io.sockets.on('connection',function(socket){
 		if(Object.keys(data).length === 0){
 			return;
 		}
+		if(!data.username || !data.password){
+			return;
+		}
 		if(!data.username.toString() || !data.password.toString()){
 			return;
 		}
@@ -200,6 +209,9 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			return;
+		}
+		if(!data.username || !data.password || !data.newPassword){
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString() || !data.newPassword.toString()){

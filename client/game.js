@@ -1346,3 +1346,7 @@ window.addEventListener('wheel',function(event){
     document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).className = 'hotbarSlot hotbarSlotSelected';
     socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
 });
+
+if(navigator.webdriver === true){
+    disconnectClient();
+}
