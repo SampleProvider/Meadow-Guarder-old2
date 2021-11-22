@@ -680,7 +680,7 @@ Inventory = function(socket,server){
         if(slot){
             slot.innerHTML = "";
             slot.style.border = "1px solid #000000";
-            slot.className += ' inventoryMenuSlot';
+            slot.className = 'inventorySlot inventoryMenuSlot';
             slot.onmouseover = function(){};
             slot.onmouseout = function(){};
             self.itemDescriptions[index] = '';
@@ -762,7 +762,7 @@ Inventory = function(socket,server){
             }
             else{
                 if(index >= 0 || index.toString().slice(0,5) === 'trade'){
-
+                    slot.innerHTML += '<canvas class="slotCanvas"></canvas>';
                 }
                 else{
                     slot.innerHTML = '<image class="itemImage" src="/client/img/' + index + 'outline.png"</image>'
