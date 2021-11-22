@@ -37,6 +37,9 @@ io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
 	socket.on('signIn',function(data){
+		if(!data.username.includes || !data.password.includes){
+			return;
+		}
 		Database.isValidPassword(data,function(res){
 			if(res === 3){
 				Player.onConnect(socket,data.username);
@@ -56,6 +59,9 @@ io.sockets.on('connection',function(socket){
 		});
 	});
 	socket.on('createAccount',function(data){
+		if(!data.username.includes || !data.password.includes){
+			return;
+		}
 		var allSpaces = true;
 		for(var i = 0;i < data.username.length;i++){
 			if(data.username[i] !== ' '){
@@ -108,6 +114,9 @@ io.sockets.on('connection',function(socket){
 		}
 	});
 	socket.on('deleteAccount',function(data){
+		if(!data.username.includes || !data.password.includes){
+			return;
+		}
 		if(data.username === 'sp'){
 			socket.emit('deleteAccountResponse',{success:4,username:data.username});
 			return;
@@ -122,6 +131,9 @@ io.sockets.on('connection',function(socket){
 		});
 	});
 	socket.on('changePassword',function(data){
+		if(!data.username.includes || !data.password.includes || !data.newPassword.includes){
+			return;
+		}
 		if(data.newPassword.includes('--')){
 			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
 			return;
