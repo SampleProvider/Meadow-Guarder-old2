@@ -36,17 +36,50 @@ io = require('socket.io')(serv,{upgradeTimeout:36000000});
 io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
+	socket.spam = 0;
+	socket.disconnectUser = function(){
+		socket.emit('disconnected');
+		if(Player.list[socket.id]){
+			Player.onDisconnect(socket);
+		}
+		delete SOCKET_LIST[socket.id];
+	}
+	socket.detectSpam = function(type){
+		if(type === 'database'){
+			socket.spam += 0.5;
+		}
+		if(type === 'game'){
+			socket.spam += 0.01;
+		}
+		if(socket.spam > 1){
+			socket.disconnectUser();
+		}
+	}
 	socket.on('signIn',function(data){
-		if(!data.username.includes || !data.password.includes){
+		socket.detectSpam('database');
+		if(!data){
 			return;
 		}
-		Database.isValidPassword(data,function(res){
+		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			return;
+		}
+		if(Object.keys(data).length === 0){
+			return;
+		}
+		if(!data.username.toString() || !data.password.toString()){
+			return;
+		}
+		var stringData = {
+			username:data.username.toString(),
+			password:data.password.toString(),
+		}
+		Database.isValidPassword(stringData,function(res){
 			if(res === 3){
-				Player.onConnect(socket,data.username);
+				Player.onConnect(socket,stringData.username);
 			}
 			if(res === 2){
 				for(var i in Player.list){
-					if(Player.list[i].username === data.username){
+					if(Player.list[i].username === stringData.username){
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('disconnected');
 							Player.onDisconnect(SOCKET_LIST[i]);
@@ -55,109 +88,160 @@ io.sockets.on('connection',function(socket){
 					}
 				}
 			}
-			socket.emit('signInResponse',{success:res,username:data.username});
+			socket.emit('signInResponse',{success:res,username:stringData.username});
 		});
 	});
 	socket.on('createAccount',function(data){
-		if(!data.username.includes || !data.password.includes){
+		socket.detectSpam('database');
+		if(!data){
 			return;
 		}
+		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			return;
+		}
+		if(Object.keys(data).length === 0){
+			return;
+		}
+		if(!data.username.toString() || !data.password.toString()){
+			return;
+		}
+		var stringData = {
+			username:data.username.toString(),
+			password:data.password.toString(),
+		}
 		var allSpaces = true;
-		for(var i = 0;i < data.username.length;i++){
-			if(data.username[i] !== ' '){
+		for(var i = 0;i < stringData.username.length;i++){
+			if(stringData.username[i] !== ' '){
 				allSpaces = false;
 			}
 		}
 		if(allSpaces){
-			socket.emit('createAccountResponse',{success:5,username:data.username});
+			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 		}
-		if(data.username.includes('--') || data.password.includes('--')){
-			socket.emit('createAccountResponse',{success:3,username:data.username});
+		if(stringData.username.includes('--') || stringData.password.includes('--')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(data.username.includes(';') || data.password.includes(';')){
-			socket.emit('createAccountResponse',{success:3,username:data.username});
+		if(stringData.username.includes(';') || stringData.password.includes(';')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(data.username.includes('\'') || data.password.includes('\'')){
-			socket.emit('createAccountResponse',{success:3,username:data.username});
+		if(stringData.username.includes('\'') || stringData.password.includes('\'')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(data.username.includes('<') || data.password.includes('<')){
-			socket.emit('createAccountResponse',{success:3,username:data.username});
+		if(stringData.username.includes('<') || stringData.password.includes('<')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(data.username.includes('>') || data.password.includes('>')){
-			socket.emit('createAccountResponse',{success:3,username:data.username});
+		if(stringData.username.includes('>') || stringData.password.includes('>')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(data.username.length > 3 && data.username.length < 41 && data.password.length < 41){
-			Database.isUsernameTaken(data,function(res){
+		if(stringData.username.length > 3 && stringData.username.length < 41 && stringData.password.length < 41){
+			Database.isUsernameTaken(stringData,function(res){
 				if(res === 0){
-					socket.emit('createAccountResponse',{success:0,username:data.username});
+					socket.emit('createAccountResponse',{success:0,username:stringData.username});
 				}
 				else{
-					Database.addUser(data,function(){
-						socket.emit('createAccountResponse',{success:1,username:data.username});
+					Database.addUser(stringData,function(){
+						socket.emit('createAccountResponse',{success:1,username:stringData.username});
 					});
 				}
 			});
 		}
-		else if(data.username.length > 40 || data.password.length > 40){
-			socket.emit('createAccountResponse',{success:4,username:data.username});
+		else if(stringData.username.length > 40 || stringData.password.length > 40){
+			socket.emit('createAccountResponse',{success:4,username:stringData.username});
 			return;
 		}
 		else{
-			socket.emit('createAccountResponse',{success:2,username:data.username});
+			socket.emit('createAccountResponse',{success:2,username:stringData.username});
 			return;
 		}
 	});
 	socket.on('deleteAccount',function(data){
-		if(!data.username.includes || !data.password.includes){
+		socket.detectSpam('database');
+		if(!data){
 			return;
 		}
-		if(data.username === 'sp'){
-			socket.emit('deleteAccountResponse',{success:4,username:data.username});
+		if(typeof data !== 'object' || Array.isArray(data) || data === null){
 			return;
 		}
-		Database.isValidPassword(data,function(res){
+		if(Object.keys(data).length === 0){
+			return;
+		}
+		if(!data.username.toString() || !data.password.toString()){
+			return;
+		}
+		var stringData = {
+			username:data.username.toString(),
+			password:data.password.toString(),
+		}
+		if(stringData.username === 'sp'){
+			socket.emit('deleteAccountResponse',{success:4,username:stringData.username});
+			return;
+		}
+		Database.isValidPassword(stringData,function(res){
 			if(res === 3){
-				Database.removeUser(data,function(){
+				Database.removeUser(stringData,function(){
 
 				});
 			}
-			socket.emit('deleteAccountResponse',{success:res,username:data.username});
+			socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
 		});
 	});
 	socket.on('changePassword',function(data){
-		if(!data.username.includes || !data.password.includes || !data.newPassword.includes){
+		socket.detectSpam('database');
+		if(!data){
 			return;
 		}
-		if(data.newPassword.includes('--')){
-			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
+		if(typeof data !== 'object' || Array.isArray(data) || data === null){
 			return;
 		}
-		if(data.newPassword.includes(';')){
-			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
+		if(Object.keys(data).length === 0){
 			return;
 		}
-		if(data.newPassword.includes('\'')){
-			socket.emit('changePasswordResponse',{success:4,username:data.username,newPassword:data.newPassword});
+		if(!data.username.toString() || !data.password.toString() || !data.newPassword.toString()){
 			return;
 		}
-		if(data.newPassword.length > 40){
-			socket.emit('changePasswordResponse',{success:5,username:data.username,newPassword:data.newPassword});
+		var stringData = {
+			username:data.username.toString(),
+			password:data.password.toString(),
+			newPassword:data.newPassword.toString(),
+		}
+		if(stringData.newPassword.includes('--')){
+			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			return;
+		}
+		if(stringData.newPassword.includes(';')){
+			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			return;
+		}
+		if(stringData.newPassword.includes('<')){
+			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			return;
+		}
+		if(stringData.newPassword.includes('>')){
+			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			return;
+		}
+		if(stringData.newPassword.includes('\'')){
+			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			return;
+		}
+		if(stringData.newPassword.length > 40){
+			socket.emit('changePasswordResponse',{success:5,username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		else{
-			Database.isValidPassword(data,function(res){
+			Database.isValidPassword(stringData,function(res){
 				if(res === 3){
-					Database.changePassword(data,function(){
+					Database.changePassword(stringData,function(){
 
 					});
 				}
-				socket.emit('changePasswordResponse',{success:res,username:data.username,newPassword:data.newPassword});
+				socket.emit('changePasswordResponse',{success:res,username:stringData.username,newPassword:stringData.newPassword});
 			});
 		}
 	});
@@ -194,21 +278,28 @@ io.sockets.on('connection',function(socket){
 		socket.emit('tick',players);
 	});
 	socket.on('chatMessage',function(data){
+		if(!data){
+			return;
+		}
+		if(!data.toString){
+			return;
+		}
+		stringData = data.toString();
 		if(Player.list[socket.id]){
-			if(data[0] === '/'){
-				if(data.length === 1){
+			if(stringData[0] === '/'){
+				if(stringData.length === 1){
 					return;
 				}
-				data = data.slice(1);
+				stringData = stringData.slice(1);
 				var commandList = [];
 				var command = '';
-				for(var i in data){
-					if(data[i] === ' '){
+				for(var i in stringData){
+					if(stringData[i] === ' '){
 						commandList.push(command);
 						command = '';
 					}
 					else{
-						command += data[i];
+						command += stringData[i];
 					}
 				}
 				commandList.push(command);
@@ -254,12 +345,14 @@ io.sockets.on('connection',function(socket){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Kicked player ' + name + '.',
+								debug:true,
 							});
 						}
 					},function(name){
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:'[!] No player found with name ' + name + '.',
+							debug:true,
 						});
 					});
 					return;
@@ -277,23 +370,25 @@ io.sockets.on('connection',function(socket){
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:'[!] Killed player ' + name + '.',
+							debug:true,
 						});
 					},function(name){
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:'[!] No player found with name ' + name + '.',
+							debug:true,
 						});
 					});
 					return;
 				}
-				if(commandList[0] === 'give' && level >= 2){
+				if(commandList[0] === 'give' && level >= 2 && commandList.length > 3){
 					commandList.splice(0,1);
-					var amount = commandList.splice(commandList.length - 1,1);
-					var id = commandList.splice(commandList.length - 1,1);
+					var amount = commandList.splice(commandList.length - 1,1)[0];
+					var id = commandList.splice(commandList.length - 1,1)[0];
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							Player.list[i].inventory.addItem(id[0],parseInt(amount[0]),true);
+							Player.list[i].inventory.addItem(id,parseInt(amount),true);
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Gave <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' to ' + name + '.',
@@ -303,20 +398,21 @@ io.sockets.on('connection',function(socket){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] No player found with name ' + name + '.',
+								debug:true,
 							});
 						});
 						return;
 					}
 					return;
 				}
-				if(commandList[0] === 'remove' && level >= 2){
+				if(commandList[0] === 'remove' && level >= 2 && commandList.length > 3){
 					commandList.splice(0,1);
-					var amount = commandList.splice(commandList.length - 1,1);
-					var id = commandList.splice(commandList.length - 1,1);
+					var amount = commandList.splice(commandList.length - 1,1)[0];
+					var id = commandList.splice(commandList.length - 1,1)[0];
 					var name = recreateCommand(commandList);
 					if(Item.list[id]){
 						doCommand(name,function(name,i){
-							Player.list[i].inventory.removeItem(id[0],parseInt(amount[0]));
+							Player.list[i].inventory.removeItem(id,parseInt(amount));
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Removed <span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[id].rarity) + '">' + Item.list[id].name + '</span> x' + amount + ' from player ' + name + '.',
@@ -326,6 +422,7 @@ io.sockets.on('connection',function(socket){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] No player found with name ' + name + '.',
+								debug:true,
 							});
 						});
 						return;
@@ -340,12 +437,14 @@ io.sockets.on('connection',function(socket){
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:'[!] ' + eval(name) + '.',
+							debug:true,
 						});
 					}
 					catch(err){
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:'[!] ' + err + '.',
+							debug:true,
 						});
 					}
 					return;
@@ -357,19 +456,22 @@ io.sockets.on('connection',function(socket){
 						socket.emit('addToChat',{
 							color:'#ffff00',
 							message:'[!] ' + name + ' is level ' + Player.list[i].level + ' and has ' + Player.list[i].xp + ' xp.',
+							debug:true,
 						});
 					},function(name){
-						getDatabase(name,function(data){
-							if(data.level !== undefined && data.xp !== undefined){
+						getDatabase(name,function(stringData){
+							if(stringData.level !== undefined && stringData.xp !== undefined){
 								socket.emit('addToChat',{
 									color:'#ffff00',
-									message:'[!] ' + name + ' is level ' + data.level + ' and has ' + data.xp + ' xp.',
+									message:'[!] ' + name + ' is level ' + stringData.level + ' and has ' + stringData.xp + ' xp.',
+									debug:true,
 								});
 							}
 							else{
 								socket.emit('addToChat',{
 									color:'#ff0000',
 									message:'[!] No player found with name ' + name + '.',
+									debug:true,
 								});
 							}
 						});
@@ -393,12 +495,12 @@ io.sockets.on('connection',function(socket){
 							debug:true,
 						});
 					},function(name){
-						getDatabase(name,function(data){
-							if(data.items){
+						getDatabase(name,function(stringData){
+							if(stringData.items){
 								var items = '';
-								for(var j in data.items){
-									if(data.items[j].id){
-										items += '<span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[data.items[j].id].rarity) + '">' + Item.list[data.items[j].id].name + '</span> x' + data.items[j].amount + '<br>';
+								for(var j in stringData.items){
+									if(stringData.items[j].id){
+										items += '<span style="color:' + Player.list[socket.id].inventory.getRarityColor(Item.list[stringData.items[j].id].rarity) + '">' + Item.list[stringData.items[j].id].name + '</span> x' + stringData.items[j].amount + '<br>';
 									}
 								}
 								items = items.substr(0,items.length - 4);
@@ -412,8 +514,24 @@ io.sockets.on('connection',function(socket){
 								socket.emit('addToChat',{
 									color:'#ff0000',
 									message:'[!] No player found with name ' + name + '.',
+									debug:true,
 								});
 							}
+						});
+					});
+					return;
+				}
+				if(commandList[0] === 'leaderboard' && level >= 0){
+					commandList.splice(0,1);
+					getLeaderboard(function(leaderboard){
+						var leaderboardString = '[!] Leaderboard:';
+						for(var i = 0;i < Math.min(10,leaderboard.length);i++){
+							leaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (Level ' + leaderboard[i].level + ' ' + leaderboard[i].xp + ' Xp)';
+						}
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:leaderboardString,
+							debug:true,
 						});
 					});
 					return;
@@ -422,21 +540,21 @@ io.sockets.on('connection',function(socket){
 					if(level === 0){
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
 							debug:true,
 						});
 					}
 					else if(level === 1){
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
 							debug:true,
 						});
 					}
 					else if(level === 2){
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/give - Give items.<br>/remove - Remove items.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/help - Help.',
+							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/give - Give items.<br>/remove - Remove items.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
 							debug:true,
 						});
 					}
@@ -460,13 +578,13 @@ io.sockets.on('connection',function(socket){
 					}
 				}
 				var notSpace = false;
-				for(var i = 0;i < data.length;i++){
-					if(data[i] !== ' '){
+				for(var i = 0;i < stringData.length;i++){
+					if(stringData[i] !== ' '){
 						notSpace = true;
 					}
 				}
 				if(notSpace){
-					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + data);
+					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
 					Player.list[socket.id].lastChat = 20;
 					Player.list[socket.id].chatWarnings -= 0.5;
 				}
@@ -729,6 +847,7 @@ setInterval(function(){
 			}
 			socket.emit('update',data);
 		}
+		socket.spam -= 0.05;
 	}
 	for(var i in Spawner.list){
 		if(Math.random() < 0.003 && Spawner.list[i].spawned === false){

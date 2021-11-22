@@ -1069,15 +1069,15 @@ setInterval(function(){
 },100);
 
 disconnectClient = function(){
-    gameDiv.style.display = 'inline-block';
     disconnectedDiv.style.display = 'inline-block';
-    pageDiv.style.display = 'none';
-    Player.list[selfId].spdX = 0;
-    Player.list[selfId].spdY = 0;
+    if(selfId){
+        Player.list[selfId].spdX = 0;
+        Player.list[selfId].spdY = 0;
+    }
     setTimeout(function(){
         location.reload();
     },5000);
-    socket.emit('disconnect');
+    socket.emit('timeout');
     selfId = null;
 }
 

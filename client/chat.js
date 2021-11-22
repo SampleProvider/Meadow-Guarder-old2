@@ -22,13 +22,13 @@ socket.on('addToChat',function(data){
     }
     var message = data.message;
     if(data.debug){
-
+        chat += '<div class="text rainbow">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     else{
         message = message.replace(/</gi,'&lt;');
         message = message.replace(/>/gi,'&gt;');
+        chat += '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
-    chat += '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     chatText.innerHTML = chat;
     if(scroll){
         chatText.scrollTop = chatText.scrollHeight;

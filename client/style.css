@@ -504,6 +504,18 @@ canvas {
 .text {
     user-select: text;
 }
+@keyframes fieryred{
+    0%{color: red;}
+    16%{color: orangered;}
+    33%{color: orange;}
+    50%{color: yellow;}
+    66%{color: orange;}
+    84%{color: orangered;}
+    100%{color: red;}
+}
+.rainbow {
+    animation: fieryred 3s infinite; 
+}
 
 #bottomRightBar {
     position: absolute;
@@ -715,12 +727,12 @@ canvas {
 .inventorySlot {
     position: relative;
     font-family: 'pixel';
+    display: inline-block;
     font-size: 13px;
     color: #ffffff;
     border: 1px solid #000000;
     width: 52px;
     height: 52px;
-    float: left;
     background-color: #725640;
     margin: 4px;
     border-radius: 4px;
@@ -735,13 +747,6 @@ canvas {
     border: 1px solid #988474;
     border-radius: 3px;
     pointer-events: none;
-}
-.inventoryRow {
-    position: relative;
-    font-family: 'pixel';
-    font-size: 13px;
-    color: #ffffff;
-    margin: 8px;
 }
 .slotCanvas {
     position: relative;
@@ -1169,29 +1174,27 @@ canvas {
 
 #playerListBackground {
     position: absolute;
-    left: 8px;
-    top: 40%;
-    width: 300px;
-    height: 340px;
+    left: 172px;
+    top: 8px;
+    width: 200px;
+    height: 200px;
     margin: 0px;
     padding: 0px;
     background-color: #ffffff;
     opacity: 0.3;
     border: 1px solid #000000;
     border-radius: 8px;
-    transform: translate(0%, -50%);
 }
 #playerListDiv {
     position: absolute;
-    left: 8px;
-    top: 40%;
-    width: 300px;
-    height: 340px;
+    left: 172px;
+    top: 8px;
+    width: 200px;
+    height: 200px;
     margin: 0px;
     padding: 0px;
     font-size: small;
     overflow-y: scroll;
-    transform: translate(0%, -50%);
 }
 #playerListExit {
     position: absolute;
@@ -1217,6 +1220,67 @@ canvas {
     background-color: #ff3b3b;
 }
 #playerListExitText {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 12px;
+    height: 16px;
+    font-size: 8px;
+    text-align: center;
+}
+
+#shopBackground {
+    position: absolute;
+    left: 8px;
+    top: 40%;
+    width: 300px;
+    height: 340px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    opacity: 0.3;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    transform: translate(0%, -50%);
+}
+#shopDiv {
+    position: absolute;
+    left: 8px;
+    top: 40%;
+    width: 300px;
+    height: 340px;
+    margin: 0px;
+    padding: 0px;
+    font-size: small;
+    overflow-y: scroll;
+    transform: translate(0%, -50%);
+}
+#shopExit {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    color: #000000;
+    background-color: #ff0000;
+    border: 1px solid #5b0000;
+}
+#shopExit:before {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #ff5b5b;
+    pointer-events: none;
+}
+#shopExit:hover {
+    background-color: #ff3b3b;
+}
+#shopExitText {
     position: absolute;
     left: 0px;
     top: 0px;

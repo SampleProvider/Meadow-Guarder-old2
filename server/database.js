@@ -43,6 +43,48 @@ getDatabase = function(username,cb){
 		}
 	});
 }
+getLeaderboard = function(cb){
+    if(!USE_DB){
+		return cb([]);
+	}
+	client.query('SELECT * FROM progress;', (err, res) => {
+		if(res.rows[0]){
+			var leaderboard = [];
+			for(var i in res.rows){
+				var progress = JSON.parse(res.rows[i].progress);
+				if(progress.xp !== undefined && progress.level !== undefined){
+					leaderboard.push({
+						name:res.rows[i].username,
+						xp:progress.xp,
+						level:progress.level,
+					});
+				}
+			}
+			var compare = function(a,b){
+				if(a.level > b.level){
+					return -1;
+				}
+				else if(b.level > a.level){
+					return 1;
+				}
+				else{
+					if(a.xp > b.xp){
+						return -1;
+					}
+					else if(b.xp > a.xp){
+						return 1;
+					}
+					return 0;
+				}
+			}
+			leaderboard.sort(compare);
+			return cb(leaderboard);
+		}
+		else{
+			return cb([]);
+		}
+	});
+}
 
 Database = {};
 

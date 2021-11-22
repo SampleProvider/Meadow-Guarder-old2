@@ -973,29 +973,16 @@ Inventory = function(socket,server){
         if(server === false){
             if(oldMaxSlots < self.maxSlots){
                 for(var i = oldMaxSlots;i < self.maxSlots;i++){
-                    if(i % 10 === 0){
-                        var row = document.createElement('div');
-                        row.id = 'inventoryRow' + Math.floor(i / 10);
-                        row.className = 'inventoryRow';
-                        inventoryItems.appendChild(row);
-                    }
                     var div = document.createElement('div');
                     div.id = 'inventorySlot' + i;
                     div.className = 'inventorySlot';
-                    var row = document.getElementById('inventoryRow' + Math.floor(i / 10));
-                    row.appendChild(div);
+                    inventoryItems.appendChild(div);
                 }
             }
             else{
                 for(var i = oldMaxSlots - 1;i >= self.maxSlots;i--){
-                    if(i % 10 === 0){
-                        var row = document.getElementById('inventoryRow' + Math.floor(i / 10));
-                        row.remove();
-                    }
-                    else{
-                        var div = document.getElementById('inventorySlot' + i);
-                        div.remove();
-                    }
+                    var div = document.getElementById('inventorySlot' + i);
+                    div.remove();
                 }
             }
             if(self.draggingItem.id){

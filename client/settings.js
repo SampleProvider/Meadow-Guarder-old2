@@ -5,6 +5,7 @@ var settings = {
     dialogueOpen:false,
     settingOpen:false,
     playerListOpen:false,
+    shopOpen:false,
 };
 
 inventoryButton.onclick = function(){
@@ -104,6 +105,8 @@ openDialogue = function(){
     settings.dialogueOpen = true;
     dialogueBackground.style.display = 'inline-block';
     dialogueDiv.style.display = 'inline-block';
+    closeInventory();
+    closeCraft();
 }
 closeDialogue = function(){
     settings.dialogueOpen = false;
@@ -151,4 +154,15 @@ togglePlayerList = function(){
         playerListBackground.style.display = 'none';
         playerListDiv.style.display = 'none';
     }
+}
+openShop = function(){
+    openInventory();
+    settings.shopOpen = true;
+    shopBackground.style.display = 'inline-block';
+    shopDiv.style.display = 'inline-block';
+}
+closeShop = function(){
+    settings.shopOpen = false;
+    shopBackground.style.display = 'none';
+    shopDiv.style.display = 'none';
 }

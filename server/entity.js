@@ -1376,6 +1376,16 @@ Player.onConnect = function(socket,username){
         socket.emit('selfId',{id:socket.id,img:player.img});
 
         socket.on('keyPress',function(data){
+            socket.detectSpam('game');
+            if(!data){
+                return;
+            }
+            if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                return;
+            }
+            if(Object.keys(data).length === 0){
+                return;
+            }
             if(data.inputId === 'releaseAll'){
                 player.keyPress = {
                     up:false,
@@ -1496,9 +1506,6 @@ Player.onConnect = function(socket,username){
                     }
                 }
             }
-            if(data.inputId === player.keyMap.heal || data.inputId === player.secondKeyMap.heal || data.inputId === player.thirdKeyMap.heal){
-                player.keyPress.heal = data.state;
-            }
             if(data.inputId === 'direction'){
                 player.direction = (Math.atan2(data.state.y,data.state.x) / Math.PI * 180);
                 player.mouseX = data.state.x + player.x;
@@ -1507,12 +1514,14 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('nextReload',function(data){
+            socket.detectSpam('game');
             player.updateAttack();
             player.updateHp();
             player.updateMana();
         });
 
         socket.on('attack',function(data){
+            socket.detectSpam('game');
             player.mainReload += 1;
             player.doAttack(player.mainAttackData,player.mainReload);
             if(player.canAttack){
@@ -1531,6 +1540,16 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('updateTrade',function(data){
+            socket.detectSpam('game');
+            if(!data){
+                return;
+            }
+            if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                return;
+            }
+            if(Object.keys(data).length === 0){
+                return;
+            }
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     SOCKET_LIST[player.tradingEntity].emit('updateTrade',data);
@@ -1539,6 +1558,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('acceptTrade',function(data){
+            socket.detectSpam('game');
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     if(player.acceptedTrade){
@@ -1581,6 +1601,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('declineTrade',function(data){
+            socket.detectSpam('game');
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
@@ -1602,11 +1623,22 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('dialogueResponse',function(data){
+            socket.detectSpam('game');
             socket.emit("dialogue",{});
             player.inDialogue = false;
         });
 
         socket.on('changePlayer',function(data){
+            socket.detectSpam('game');
+            if(!data){
+                return;
+            }
+            if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                return;
+            }
+            if(Object.keys(data).length === 0){
+                return;
+            }
             if(player.img[data.id] !== undefined){
                 player.img[data.id] = data.type;
             }
@@ -1621,6 +1653,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('respawn',function(data){
+            socket.detectSpam('game');
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
@@ -1634,6 +1667,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('init',function(data){
+            socket.detectSpam('game');
             Player.getAllInitPack(socket);
         });
 
