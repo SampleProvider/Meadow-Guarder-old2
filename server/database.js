@@ -86,6 +86,53 @@ getLeaderboard = function(cb){
 	});
 }
 
+clearDatabase = function(){
+	if(!USE_DB){
+		return;
+	}
+	var realAccounts = {};
+	client.query('SELECT * FROM progress;', (err, res) => {
+		if(res.rows[0]){
+			for(var i in res.rows){
+				var progress = JSON.parse(res.rows[i].progress);
+				if(progress.version || progress.xp || progress.level){
+					realAccounts[res.rows[i].username] = true;
+				}
+				else{
+					var realAccount = false;
+					for(var j in progress.items){
+						if(progress.items[j].id){
+							if(progress.items[j].id !== 'coppershiv'){
+								realAccounts[res.rows[i].username] = true;
+								realAccount = true;
+							}
+						}
+					}
+					if(realAccount === false){
+						// console.log('Progress Delete',res.rows[i].username,progress)
+						// client.query('DELETE * FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\' LIMIT 1;', (err, res) => {});
+					}
+				}
+			}
+			client.query('SELECT * FROM account;', (err, res) => {
+				if(res.rows[0]){
+					for(var i in res.rows){
+						if(realAccounts[res.rows[i].username]){
+
+						}
+						else{
+							// console.log('Account Delete',res.rows[i].username)
+							// client.query('DELETE * FROM account WHERE username=\'' + res.rows[i].username + '\' AND password=\'' + res.rows[i].password + '\' LIMIT 1;', (err, res) => {});
+						}
+					}
+				}
+			});
+		}
+	});
+}
+
+// clearDatabase();
+
 Database = {};
 
 Database.isValidPassword = function(data,cb){
