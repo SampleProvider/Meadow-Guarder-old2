@@ -34,7 +34,6 @@ getDatabase = function(username,cb){
     if(!USE_DB){
 		return cb({});
 	}
-	console.log(1)
 	client.query('SELECT * FROM progress WHERE username=\'' + username + '\';', (err, res) => {
 		if(res){
 			if(res.rows[0]){
