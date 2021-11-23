@@ -37,11 +37,13 @@ io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
 	socket.spam = 0;
+	socket.usable = true;
 	socket.disconnectUser = function(){
 		socket.emit('disconnected');
 		if(Player.list[socket.id]){
 			Player.onDisconnect(socket);
 		}
+		socket.usable = false;
 		delete SOCKET_LIST[socket.id];
 	}
 	socket.detectSpam = function(type){
@@ -57,6 +59,9 @@ io.sockets.on('connection',function(socket){
 	}
 	socket.on('signIn',function(data){
 		socket.detectSpam('database');
+		if(!socket.usable){
+			return;
+		}
 		if(!data){
 			return;
 		}
@@ -96,6 +101,9 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('createAccount',function(data){
 		socket.detectSpam('database');
+		if(!socket.usable){
+			return;
+		}
 		if(!data){
 			return;
 		}
@@ -168,6 +176,9 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('deleteAccount',function(data){
 		socket.detectSpam('database');
+		if(!socket.usable){
+			return;
+		}
 		if(!data){
 			return;
 		}
@@ -202,6 +213,9 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('changePassword',function(data){
 		socket.detectSpam('database');
+		if(!socket.usable){
+			return;
+		}
 		if(!data){
 			return;
 		}
@@ -290,6 +304,9 @@ io.sockets.on('connection',function(socket){
 		socket.emit('tick',players);
 	});
 	socket.on('chatMessage',function(data){
+		if(!socket.usable){
+			return;
+		}
 		if(!data){
 			return;
 		}

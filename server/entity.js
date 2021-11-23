@@ -1377,6 +1377,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('keyPress',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(!data){
                 return;
             }
@@ -1515,6 +1518,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('nextReload',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             player.updateAttack();
             player.updateHp();
             player.updateMana();
@@ -1522,6 +1528,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('attack',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             player.mainReload += 1;
             player.doAttack(player.mainAttackData,player.mainReload);
             if(player.canAttack){
@@ -1541,6 +1550,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('updateTrade',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(!data){
                 return;
             }
@@ -1559,6 +1571,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('acceptTrade',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     if(player.acceptedTrade){
@@ -1602,6 +1617,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('declineTrade',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
@@ -1624,12 +1642,18 @@ Player.onConnect = function(socket,username){
 
         socket.on('dialogueResponse',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             socket.emit("dialogue",{});
             player.inDialogue = false;
         });
 
         socket.on('changePlayer',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(!data){
                 return;
             }
@@ -1654,6 +1678,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('respawn',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
@@ -1668,6 +1695,9 @@ Player.onConnect = function(socket,username){
 
         socket.on('init',function(data){
             socket.detectSpam('game');
+            if(!socket.usable){
+                return;
+            }
             Player.getAllInitPack(socket);
         });
 

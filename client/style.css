@@ -995,14 +995,14 @@ canvas {
 }
 #tradeItems1 {
     position: absolute;
-    top: 22px;
+    top: 32px;
     left: 0px;
     height: 202px;
     width: 202px;
 }
 #tradeItems2 {
     position: absolute;
-    top: 22px;
+    top: 32px;
     left: 208px;
     height: 202px;
     width: 202px;

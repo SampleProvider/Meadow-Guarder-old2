@@ -14,9 +14,7 @@ socket.on('connect_error',function(){
     },1000);
 });
 socket.on('disconnect',function(){
-    setTimeout(function(){
-        socket.connect();
-    },1000);
+    disconnectClient();
 });
 
 var WIDTH = window.innerWidth;
@@ -1059,15 +1057,6 @@ socket.on('tick',function(data){
     }
 });
 
-setInterval(function(){
-    if(tickArray.length > 10 && selfId){
-        disconnectClient();
-    }
-    var d = new Date();
-    tickArray.push(d.getMilliseconds());
-    socket.emit('tick');
-},100);
-
 disconnectClient = function(){
     disconnectedDiv.style.display = 'inline-block';
     if(selfId){
@@ -1080,6 +1069,28 @@ disconnectClient = function(){
     socket.emit('timeout');
     selfId = null;
 }
+
+setInterval(function(){
+    if(tickArray.length > 10 && selfId){
+        disconnectClient();
+    }
+    var d = new Date();
+    tickArray.push(d.getMilliseconds());
+    socket.emit('tick');
+    disconnectClient = function(){
+        disconnectedDiv.style.display = 'inline-block';
+        if(selfId){
+            Player.list[selfId].spdX = 0;
+            Player.list[selfId].spdY = 0;
+        }
+        setTimeout(function(){
+            location.reload();
+        },5000);
+        socket.emit('timeout');
+        selfId = null;
+    }
+},100);
+
 
 updateInventoryPopupMenu = function(slotType,index){
     if(index === -1){

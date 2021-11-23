@@ -34,6 +34,7 @@ getDatabase = function(username,cb){
     if(!USE_DB){
 		return cb({});
 	}
+	console.log(1)
 	client.query('SELECT * FROM progress WHERE username=\'' + username + '\';', (err, res) => {
 		if(res){
 			if(res.rows[0]){
@@ -114,20 +115,20 @@ clearDatabase = function(){
 						}
 					}
 					if(realAccount === false){
-						// console.log('Progress Delete',res.rows[i].username,progress)
-						// client.query('DELETE * FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\' LIMIT 1;', (err, res) => {});
+						console.log('Progress Delete',res.rows[i].username,progress)
+						client.query('DELETE FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\';', (err, res) => {console.log(1)});
 					}
 				}
 			}
 			client.query('SELECT * FROM account;', (err, res) => {
 				if(res.rows[0]){
 					for(var i in res.rows){
-						if(realAccounts[res.rows[i].username]){
+						if(realAccounts[res.rows[i].username] === true){
 
 						}
 						else{
-							// console.log('Account Delete',res.rows[i].username)
-							// client.query('DELETE * FROM account WHERE username=\'' + res.rows[i].username + '\' AND password=\'' + res.rows[i].password + '\' LIMIT 1;', (err, res) => {});
+							console.log('Account Delete',res.rows[i].username)
+							client.query('DELETE FROM account WHERE username=\'' + res.rows[i].username + '\' AND password=\'' + res.rows[i].password + '\';', (err, res) => {console.log(2)});
 						}
 					}
 				}
