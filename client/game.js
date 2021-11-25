@@ -1,9 +1,12 @@
 var isFirefox = typeof InstallTrigger !== 'undefined';
-if(isFirefox === true) {
+if(isFirefox === true){
     alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
 }
+if(window.requestAnimationFrame === undefined){
+    alert('This game uses RequestAnimationFrame, which is not supported in your browser.');
+}
 
-var VERSION = '0.0.7';
+var VERSION = '0.0.8';
 
 var socket = io({
     reconnection:false,
@@ -140,10 +143,16 @@ socket.on('refreshCraft',function(pack){
     inventory.craftItems = pack;
     inventory.refreshCraft();
 });
-socket.on('updateCraft',function(pack){
+socket.on('itemChange',function(pack){
     for(var i in inventory.craftItems){
         inventory.updateCraftClient(i);
     }
+    inventory.refreshShop();
+});
+socket.on('refreshShop',function(pack){
+    shopHeader.innerHTML = pack + '\'s Shop';
+    inventory.refreshShop(pack);
+    openShop();
 });
 
 socket.on('openTrade',function(pack){
@@ -1071,7 +1080,7 @@ disconnectClient = function(){
 }
 
 setInterval(function(){
-    if(tickArray.length > 10 && selfId){
+    if(tickArray.length > 20 && selfId){
         disconnectClient();
     }
     var d = new Date();

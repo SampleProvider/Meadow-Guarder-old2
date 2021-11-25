@@ -600,6 +600,7 @@ canvas {
     height: 340px;
     margin: 0px;
     padding: 0px;
+    overflow-x: hidden;
     overflow-y: scroll;
     font-size: small;
     background-color: transparent;
@@ -608,7 +609,7 @@ canvas {
 #inventoryItems {
     position: absolute;
     top: 200px;
-    left: 0px;
+    left: 8px;
     height: 20px;
     width: 640px;
 }
@@ -907,13 +908,14 @@ canvas {
     height: 270px;
     margin: 0px;
     padding: 0px;
+    overflow-x: hidden;
     overflow-y: scroll;
     font-size: small;
 }
 #craftItems {
     position: absolute;
     top: 50px;
-    left: 0px;
+    left: 8px;
     height: 20px;
     width: 520px;
 }
@@ -1235,7 +1237,7 @@ canvas {
     position: absolute;
     left: 8px;
     top: 40%;
-    width: 300px;
+    width: 340px;
     height: 340px;
     margin: 0px;
     padding: 0px;
@@ -1249,13 +1251,20 @@ canvas {
     position: absolute;
     left: 8px;
     top: 40%;
-    width: 300px;
+    width: 340px;
     height: 340px;
     margin: 0px;
     padding: 0px;
     font-size: small;
     overflow-y: scroll;
     transform: translate(0%, -50%);
+}
+#shopItems {
+    position: absolute;
+    top: 30px;
+    left: 8px;
+    height: 20px;
+    width: 320px;
 }
 #shopExit {
     position: absolute;

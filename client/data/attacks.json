@@ -194,7 +194,7 @@
             "id":"projectile",
             "projectileType":"copperwaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -208,7 +208,7 @@
             "id":"projectile",
             "projectileType":"ironwaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -222,7 +222,7 @@
             "id":"projectile",
             "projectileType":"goldwaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -236,7 +236,7 @@
             "id":"projectile",
             "projectileType":"amethystwaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -250,7 +250,7 @@
             "id":"projectile",
             "projectileType":"azuritewaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -264,7 +264,7 @@
             "id":"projectile",
             "projectileType":"emeralditewaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -278,7 +278,7 @@
             "id":"projectile",
             "projectileType":"rubywaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,
@@ -292,7 +292,7 @@
             "id":"projectile",
             "projectileType":"diamondwaraxe",
             "param":{
-                "speed":40,
+                "speed":80,
                 "spin":50,
                 "timer":80,
                 "relativeToParent":false,

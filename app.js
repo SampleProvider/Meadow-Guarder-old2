@@ -1,5 +1,5 @@
 
-VERSION = '0.0.7';
+VERSION = '0.0.8';
 
 if(process.env.PORT){
 	SERVER = 'heroku';
@@ -53,6 +53,9 @@ io.sockets.on('connection',function(socket){
 		if(type === 'game'){
 			socket.spam += 0.01;
 		}
+		if(type === 'gameclick'){
+			socket.spam += 0.01;
+		}
 		if(socket.spam > 1){
 			socket.disconnectUser();
 		}
@@ -88,6 +91,7 @@ io.sockets.on('connection',function(socket){
 			if(res === 2){
 				for(var i in Player.list){
 					if(Player.list[i].username === stringData.username){
+						Player.list[i].toRemove = true;
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('disconnected');
 							Player.onDisconnect(SOCKET_LIST[i]);

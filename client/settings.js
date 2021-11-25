@@ -26,6 +26,9 @@ settingButton.onclick = function(){
 settingExit.onclick = function(){
     closeSetting();
 }
+shopExit.onclick = function(){
+    closeShop();
+}
 playerListExit.onclick = function(){
     closePlayerList();
 }
@@ -134,6 +137,17 @@ toggleSetting = function(){
         settingDiv.style.display = 'none';
     }
 }
+openShop = function(){
+    openInventory();
+    settings.shopOpen = true;
+    shopBackground.style.display = 'inline-block';
+    shopDiv.style.display = 'inline-block';
+}
+closeShop = function(){
+    settings.shopOpen = false;
+    shopBackground.style.display = 'none';
+    shopDiv.style.display = 'none';
+}
 openPlayerList = function(){
     settings.playerListOpen = true;
     playerListBackground.style.display = 'inline-block';
@@ -154,15 +168,4 @@ togglePlayerList = function(){
         playerListBackground.style.display = 'none';
         playerListDiv.style.display = 'none';
     }
-}
-openShop = function(){
-    openInventory();
-    settings.shopOpen = true;
-    shopBackground.style.display = 'inline-block';
-    shopDiv.style.display = 'inline-block';
-}
-closeShop = function(){
-    settings.shopOpen = false;
-    shopBackground.style.display = 'none';
-    shopDiv.style.display = 'none';
 }

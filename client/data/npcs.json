@@ -13,13 +13,51 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Hello. I am your server today. Will you like anything to eat?"
+                "message":"Hello. I am your server today. Will you like anything to eat?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             },
             {
                 "requirements":[
                     "tutorial"
                 ],
-                "message":"I do hope you find that <span style='color: #33ff33'>Shield of Life</span>, because otherwise we are doomed. I might even have to use the emergency <span style='color: #3333ff'>Whirlwind</span>!"
+                "message":"I do hope you find that <span style='color: #33ff33'>Shield of Life</span>, because otherwise we are doomed. I might even have to use the emergency <span style='color: #3333ff'>Whirlwind</span>!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"healthpotion",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"goldcoin",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"manapotion",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"goldcoin",
+                        "amount":1
+                    }
+                ]
             }
         ]
     },
@@ -37,10 +75,48 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"You need some metal tools and armor? I've got just what you need!"
+                "message":"You need some metal tools and armor? I've got just what you need!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             },
             {
-                "message":"I'm not as harsh on the inside as I might be on the outside. Who knows, maybe we'll become good friends!"
+                "message":"I'm not as harsh on the inside as I might be on the outside. Who knows, maybe we'll become good friends!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"coal",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"ironbar",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
             }
         ]
     },
@@ -58,10 +134,78 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Me and my sister Sally run this general store. It's quite small. We hope to expand in the future!"
+                "message":"Me and my sister Sally run this general store. It's quite small. We hope to expand in the future!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             },
             {
-                "message":"Where our parents are? They left for a business trip to Seashell Village a month ago. I don't know when they'll come back..."
+                "message":"Where our parents are? They left for a business trip to Seashell Village a month ago. I don't know when they'll come back...",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"wood",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":10
+                    }
+                ]
+            },
+            {
+                "id":"thickleather",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"feather",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":10
+                    }
+                ]
+            },
+            {
+                "id":"fur",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"yarn",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":25
+                    }
+                ]
             }
         ]
     },
@@ -82,7 +226,15 @@
                 "message":"Uggh. Wally always dresses so weirdly. I keep telling her to dress normally but she doesn't listen. I think it's affecting our sales..."
             },
             {
-                "message":"Do you want me to comb your hair?"
+                "message":"Do you want me to comb your hair?",
+                "option1":{
+                    "message":"*Comb hair*",
+                    "triggers":"combHair"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             }
         ]
     },
@@ -100,7 +252,11 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home."
+                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home.",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             }
         ]
     }

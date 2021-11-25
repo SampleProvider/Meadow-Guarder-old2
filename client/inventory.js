@@ -6,6 +6,8 @@ Inventory = function(socket,server){
         itemDescriptions:{},
         craftItems:[],
         craftDescriptions:{},
+        shopDescriptions:{},
+        shopNpc:null,
         draggingItem:{},
         draggingX:-1,
         draggingY:-1,
@@ -80,10 +82,7 @@ Inventory = function(socket,server){
             return '#dd99dd';
         }
     }
-    self.addItem = function(id,amount,dropItem){
-        if(!Item.list[id]){
-            return false;
-        }
+    self.hasSpace = function(id,amount){
         var hasSpace = 0;
         var index = -1;
         for(var i in self.items){
@@ -101,45 +100,56 @@ Inventory = function(socket,server){
                 }
             }
         }
-        if(hasSpace === 1){
+        return {
+            hasSpace:hasSpace,
+            index:index,
+        }
+    }
+    self.addItem = function(id,amount){
+        if(!Item.list[id]){
+            return false;
+        }
+        if(amount <= 0){
+            return;
+        }
+        var hasSpace = self.hasSpace(id,amount);
+        if(hasSpace.hasSpace === 1){
             if(amount > Item.list[id].maxStack){
-                self.items[index] = {id:id,amount:Item.list[id].maxStack || 1};
-                self.addItem(id,amount - Item.list[id].maxStack,true);
+                self.items[hasSpace.index] = {id:id,amount:Item.list[id].maxStack || 1};
+                self.addItem(id,amount - Item.list[id].maxStack);
             }
             else{
-                self.items[index] = {id:id,amount:amount || 1};
+                self.items[hasSpace.index] = {id:id,amount:amount || 1};
             }
-            if(index + '' === self.hotbarSelectedItem + ''){
+            if(hasSpace.index + '' === self.hotbarSelectedItem + ''){
                 self.updateStats = true;
             }
-            self.refreshItem(index);
-            socket.emit('updateCraft');
-            return index;
+            self.refreshItem(hasSpace.index);
+            socket.emit('itemChange');
+            return hasSpace.index;
         }
-        else if(hasSpace === 2){
-            if(amount + self.items[index].amount > Item.list[id].maxStack){
-                self.items[index] = {id:id,amount:Item.list[id].maxStack};
-                self.addItem(id,amount + self.items[index].amount - Item.list[id].maxStack);
+        else if(hasSpace.hasSpace === 2){
+            if(amount + self.items[hasSpace.index].amount > Item.list[id].maxStack){
+                self.items[hasSpace.index] = {id:id,amount:Item.list[id].maxStack};
+                self.addItem(id,amount + self.items[hasSpace.index].amount - Item.list[id].maxStack);
             }
             else{
-                self.items[index] = {id:id,amount:amount + self.items[index].amount};
+                self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount};
             }
-            self.refreshItem(index);
-            socket.emit('updateCraft');
-            return index;
+            self.refreshItem(hasSpace.index);
+            socket.emit('itemChange');
+            return hasSpace.index;
         }
-        if(dropItem){
-            if(Player.list[socket.id]){
-                new DroppedItem({
-                    x:Player.list[socket.id].x,
-                    y:Player.list[socket.id].y,
-                    map:Player.list[socket.id].map,
-                    item:id,
-                    amount:amount,
-                    parent:socket.id,
-                    allPlayers:false,
-                });
-            }
+        if(Player.list[socket.id]){
+            new DroppedItem({
+                x:Player.list[socket.id].x,
+                y:Player.list[socket.id].y,
+                map:Player.list[socket.id].map,
+                item:id,
+                amount:amount,
+                parent:socket.id,
+                allPlayers:false,
+            });
         }
         return false;
     }
@@ -175,7 +185,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.refreshItem(itemsToRemove[i]);
-                        socket.emit('updateCraft');
+                        socket.emit('itemChange');
                         return true;
                     }
                     amountFound += self.draggingItem.amount;
@@ -195,7 +205,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.refreshItem(itemsToRemove[i]);
-                        socket.emit('updateCraft');
+                        socket.emit('itemChange');
                         return true;
                     }
                     amountFound += self.items[itemsToRemove[i]].amount;
@@ -216,18 +226,15 @@ Inventory = function(socket,server){
         for(var i in self.items){
             if(self.items[i].id === item){
                 amountFound += self.items[i].amount;
-                if(amountFound >= amount){
-                    return true;
-                }
             }
         }
         if(self.draggingItem.id === item){
             amountFound += self.draggingItem.amount;
-            if(amountFound >= amount){
-                return true;
-            }
         }
-        return false;
+        if(amountFound >= amount){
+            return amountFound;
+        }
+        return 0;
     }
     self.isItem = function(index){
         if(self.items[index]){
@@ -240,6 +247,14 @@ Inventory = function(socket,server){
     self.isCraft = function(index){
         if(self.craftItems[index]){
             return true;
+        }
+        return false;
+    }
+    self.isShop = function(index){
+        if(npcData[self.shopNpc].shop){
+            if(npcData[self.shopNpc].shop[index]){
+                return true;
+            }
         }
         return false;
     }
@@ -418,7 +433,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.draggingItem = {};
-                        socket.emit('updateCraft');
+                        socket.emit('itemChange');
                     }
                     else if(data.click === 2){
                         if(server){
@@ -437,7 +452,7 @@ Inventory = function(socket,server){
                         if(self.draggingItem.amount === 0){
                             self.draggingItem = {};
                         }
-                        socket.emit('updateCraft');
+                        socket.emit('itemChange');
                     }
                     return;
                 }
@@ -784,7 +799,7 @@ Inventory = function(socket,server){
             slot.onclick = function(){};
             slot.onmouseover = function(){};
             slot.onmouseout = function(){};
-            slot.className += ' craftMenuSlot';
+            slot.className = 'inventorySlot craftMenuSlot';
             if(self.isCraft(index)){
                 var item = Item.list[self.craftItems[index].id];
                 self.drawItem(slot,item.drawId,false);
@@ -879,7 +894,7 @@ Inventory = function(socket,server){
     self.updateCraftClient = function(index){
         var slot = document.getElementById("craftSlot" + index);
         if(slot){
-            if(index){
+            if(self.isCraft(index)){
                 var item = Item.list[self.craftItems[index].id];
                 var itemName = item.name;
                 if(self.craftItems[index].amount !== 1){
@@ -908,6 +923,269 @@ Inventory = function(socket,server){
                 }
                 else{
                     self.craftDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Craft for ' + craftMaterials + '.';
+                }
+            }
+        }
+    }
+    self.addShopClient = function(index){
+        var slot = document.getElementById("shopSlot" + index);
+        if(slot){
+            slot.innerHTML = "";
+            slot.style.border = "1px solid #000000";
+            slot.onclick = function(){};
+            slot.onmouseover = function(){};
+            slot.onmouseout = function(){};
+            slot.className = 'inventorySlot shopMenuSlot';
+            if(self.isShop(index)){
+                var item = Item.list[npcData[self.shopNpc].shop[index].id];
+                self.drawItem(slot,item.drawId,false);
+                var itemName = item.name;
+                if(npcData[self.shopNpc].shop[index].amount !== 1){
+                    itemName += ' (' + npcData[self.shopNpc].shop[index].amount + ')';
+                    var itemAmount = document.createElement('div');
+                    itemAmount.innerHTML = npcData[self.shopNpc].shop[index].amount;
+                    itemAmount.className = 'itemAmount';
+                    var itemAmountDiv = document.createElement('div');
+                    itemAmountDiv.className = 'itemAmountDiv';
+                    itemAmountDiv.appendChild(itemAmount);
+                    slot.appendChild(itemAmountDiv);
+                }
+                var buyMaterials = '';
+                var coins = 0;
+                coins += self.hasItem('coppercoin',1);
+                coins += self.hasItem('silvercoin',1) * 100;
+                coins += self.hasItem('goldcoin',1) * 10000;
+                coins += self.hasItem('meteoritecoin',1) * 1000000;
+                var canBuy = true;
+                for(var i in npcData[self.shopNpc].shop[index].materials){
+                    if(npcData[self.shopNpc].shop[index].materials[i].id === 'coppercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'silvercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 100){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 100;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'goldcoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 10000){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 10000;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'meteoritecoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(!self.hasItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount)){
+                        canBuy = false;
+                        buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                    }
+                    else{
+                        buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                    }
+                }
+                if(canBuy === false){
+                    slot.style.backgroundColor = "#ff5555";
+                }
+                else{
+                    slot.style.backgroundColor = "#725640";
+                }
+                var description = self.getDescription(item);
+                if(description !== ''){
+                    self.shopDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Buy for:' + buyMaterials + '.';
+                }
+                else{
+                    self.shopDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Buy for ' + buyMaterials + '.';
+                }
+                slot.onmouseover = function(){
+                    updateInventoryPopupMenu('shopDescriptions',index);
+                }
+                slot.onmouseout = function(){
+                    updateInventoryPopupMenu('shopDescriptions',-1);
+                }
+                slot.onclick = function(){
+                    socket.emit('buyItem',index);
+                    var coins = 0;
+                    coins += self.hasItem('coppercoin',1);
+                    coins += self.hasItem('silvercoin',1) * 100;
+                    coins += self.hasItem('goldcoin',1) * 10000;
+                    coins += self.hasItem('meteoritecoin',1) * 1000000;
+                    var canBuy = true;
+                    for(var i in npcData[self.shopNpc].shop[index].materials){
+                        if(npcData[self.shopNpc].shop[index].materials[i].id === 'coppercoin'){
+                            if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount){
+                                coins -= npcData[self.shopNpc].shop[index].materials[i].amount;
+                            }
+                            else{
+                                canBuy = false;
+                            }
+                        }
+                        else if(npcData[self.shopNpc].shop[index].materials[i].id === 'silvercoin'){
+                            if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 100){
+                                coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 100;
+                            }
+                            else{
+                                canBuy = false;
+                            }
+                        }
+                        else if(npcData[self.shopNpc].shop[index].materials[i].id === 'goldcoin'){
+                            if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 10000){
+                                coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 10000;
+                            }
+                            else{
+                                canBuy = false;
+                            }
+                        }
+                        else if(npcData[self.shopNpc].shop[index].materials[i].id === 'meteoritecoin'){
+                            if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000){
+                                coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000;
+                            }
+                            else{
+                                canBuy = false;
+                            }
+                        }
+                        else if(!self.hasItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount)){
+                            canBuy = false;
+                        }
+                    }
+                    if(canBuy){
+                        if(self.draggingItem.id){
+                            if(self.draggingItem.id === npcData[self.shopNpc].shop[index].id){
+                                if(self.draggingItem.amount + npcData[self.shopNpc].shop[index].amount <= Item.list[self.draggingItem.id].maxStack){
+                                    self.draggingItem.amount += npcData[self.shopNpc].shop[index].amount;
+                                }
+                            }
+                        }
+                        else{
+                            self.draggingItem = {
+                                id:npcData[self.shopNpc].shop[index].id,
+                                amount:npcData[self.shopNpc].shop[index].amount,
+                            }
+                        }
+                        itemMenu.style.display = 'none';
+                        if(self.draggingItem.id){
+                            draggingItem.style.display = 'inline-block';
+                            draggingItem.innerHTML = '';
+                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                            draggingItem.style.left = (rawMouseX - 32) + 'px';
+                            draggingItem.style.top = (rawMouseY - 32) + 'px';
+                            if(self.draggingItem.amount !== 1){
+                                var itemAmount = document.createElement('div');
+                                itemAmount.innerHTML = self.draggingItem.amount;
+                                itemAmount.className = 'UI-text-light itemAmount';
+                                var itemAmountDiv = document.createElement('div');
+                                itemAmountDiv.className = 'itemAmountLargeDiv';
+                                itemAmountDiv.appendChild(itemAmount);
+                                draggingItem.appendChild(itemAmountDiv);
+                            }
+                        }
+                        else{
+                            draggingItem.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        }
+    }
+    self.updateShopClient = function(index){
+        var slot = document.getElementById("craftSlot" + index);
+        if(slot){
+            if(self.isShop(index)){
+                var item = Item.list[npcData[self.shopNpc].shop[index].id];
+                var itemName = item.name;
+                if(npcData[self.shopNpc].shop[index].amount !== 1){
+                    itemName += ' (' + npcData[self.shopNpc].shop[index].amount + ')';
+                }
+                var buyMaterials = '';
+                var coins = 0;
+                coins += self.hasItem('coppercoin',1);
+                coins += self.hasItem('silvercoin',1) * 100;
+                coins += self.hasItem('goldcoin',1) * 10000;
+                coins += self.hasItem('meteoritecoin',1) * 1000000;
+                var canBuy = true;
+                for(var i in npcData[self.shopNpc].shop[index].materials){
+                    if(npcData[self.shopNpc].shop[index].materials[i].id === 'coppercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'silvercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 100){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 100;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'goldcoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 10000){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 10000;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[index].materials[i].id === 'meteoritecoin'){
+                        if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000){
+                            coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000;
+                            buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                        }
+                        else{
+                            canBuy = false;
+                            buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                        }
+                    }
+                    else if(!self.hasItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount)){
+                        canBuy = false;
+                        buyMaterials += "<br><span style='color: #ff5555'>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name + '</span>';
+                    }
+                    else{
+                        buyMaterials += "<br>" + npcData[self.shopNpc].shop[index].materials[i].amount + ' ' + Item.list[npcData[self.shopNpc].shop[index].materials[i].id].name;
+                    }
+                }
+                if(canBuy === false){
+                    slot.style.backgroundColor = "#ff5555";
+                }
+                else{
+                    slot.style.backgroundColor = "#725640";
+                }
+                var description = self.getDescription(item);
+                if(description !== ''){
+                    self.shopDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + description + '</div><br>Buy for:' + buyMaterials + '.';
+                }
+                else{
+                    self.shopDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br>Buy for ' + buyMaterials + '.';
                 }
             }
         }
@@ -1057,9 +1335,7 @@ Inventory = function(socket,server){
             socket.emit('refreshCraft',self.craftItems);
             return;
         }
-        var craftItems = document.getElementById("craftItems");
         craftItems.innerHTML = "";
-        var row = document.createElement('div');
         for(var i = 0;i < self.craftItems.length;i++){
             var div = document.createElement('div');
             div.id = 'craftSlot' + i;
@@ -1068,6 +1344,26 @@ Inventory = function(socket,server){
         }
         for(var i in self.craftItems){
             self.addCraftClient(i);
+        }
+    }
+    self.refreshShop = function(npc){
+        if(self.server){
+            self.shopNpc = npc;
+            socket.emit('refreshShop',npc);
+            return;
+        }
+        if(npc){
+            self.shopNpc = npc;
+        }
+        shopItems.innerHTML = "";
+        for(var i in npcData[self.shopNpc].shop){
+            var div = document.createElement('div');
+            div.id = 'shopSlot' + i;
+            div.className = 'inventorySlot';
+            shopItems.appendChild(div);
+        }
+        for(var i in npcData[self.shopNpc].shop){
+            self.addShopClient(i);
         }
     }
     if(self.server){
@@ -1122,6 +1418,129 @@ Inventory = function(socket,server){
                 }
                 for(var i in self.craftItems[data].materials){
                     self.removeItem(self.craftItems[data].materials[i].id,self.craftItems[data].materials[i].amount);
+                }
+            }
+            catch(err){
+                console.error(err);
+            }
+        });
+        socket.on("buyItem",function(data){
+            try{
+                var coins = 0;
+                coins += self.hasItem('coppercoin',1);
+                coins += self.hasItem('silvercoin',1) * 100;
+                coins += self.hasItem('goldcoin',1) * 10000;
+                coins += self.hasItem('meteoritecoin',1) * 1000000;
+                var startCoins = coins;
+                for(var i in npcData[self.shopNpc].shop[data].materials){
+                    if(npcData[self.shopNpc].shop[data].materials[i].id === 'coppercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount){
+                            coins -= npcData[self.shopNpc].shop[data].materials[i].amount;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[data].materials[i].id === 'silvercoin'){
+                        if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 100){
+                            coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 100;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[data].materials[i].id === 'goldcoin'){
+                        if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 10000){
+                            coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 10000;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else if(npcData[self.shopNpc].shop[data].materials[i].id === 'meteoritecoin'){
+                        if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 1000000){
+                            coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 1000000;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else if(!self.hasItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount)){
+                        return;
+                    }
+                }
+                var removeCoins = function(id,amount){
+                    if(amount === 0){
+                        return;
+                    }
+                    var coinRarity = ['coppercoin','silvercoin','goldcoin','meteoritecoin'];
+                    var coinIndex = 0;
+                    for(var i in coinRarity){
+                        if(coinRarity[i] === id){
+                            coinIndex = i;
+                        }
+                    }
+                    if(self.hasItem(id,1) >= amount){
+                        self.removeItem(id,amount);
+                        return;
+                    }
+                    else{
+                        var amountToRemove = amount;
+                        amountToRemove -= self.hasItem(id,1);
+                        self.removeItem(id,self.hasItem(id,1));
+                        for(var i in coinRarity){
+                            if(i < coinIndex){
+                                if(self.hasItem(coinRarity[i],1) / Math.pow(100,(coinIndex - i)) >= amountToRemove){
+                                    self.removeItem(coinRarity[i],amountToRemove * Math.pow(100,(coinIndex - i)));
+                                    return;
+                                }
+                                else{
+                                    self.removeItem(coinIndex[i],Math.floor(self.hasItem(coinIndex[i],1) / Math.pow(100,(i - coinIndex))) * Math.pow(100,(i - coinIndex)));
+                                    self.addItem(id,Math.floor(self.hasItem(coinIndex[i],1) / Math.pow(100,(i - coinIndex))));
+                                    amountToRemove -= Math.floor(self.hasItem(coinIndex[i],1) / Math.pow(100,(i - coinIndex)));
+                                }
+                            }
+                            else if(i > coinIndex){
+                                if(self.hasItem(coinRarity[i],1)){
+                                    self.removeItem(coinRarity[i],1);
+                                    for(var j = 0;j < i - coinIndex - 1;j++){
+                                        self.addItem(coinRarity[i - j - 1],99);
+                                    }
+                                    self.addItem(id,100 - amountToRemove);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                coins = startCoins - coins;
+                removeCoins('coppercoin',coins % 100);
+                coins = Math.floor(coins / 100);
+                removeCoins('silvercoin',coins % 100);
+                coins = Math.floor(coins / 100);
+                removeCoins('goldcoin',coins % 100);
+                coins = Math.floor(coins / 100);
+                removeCoins('meteoritecoin',coins);
+                if(self.draggingItem.id){
+                    if(self.draggingItem.id === npcData[self.shopNpc].shop[data].id){
+                        if(self.draggingItem.amount + npcData[self.shopNpc].shop[data].amount <= Item.list[self.draggingItem.id].maxStack){
+                            self.draggingItem.amount += npcData[self.shopNpc].shop[data].amount;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                }
+                else{
+                    self.draggingItem = {
+                        id:npcData[self.shopNpc].shop[data].id,
+                        amount:npcData[self.shopNpc].shop[data].amount,
+                    }
+                }
+                for(var i in npcData[self.shopNpc].shop[data].materials){
+                    if(npcData[self.shopNpc].shop[data].materials[i] !== 'coppercoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'silvercoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'goldcoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'meteoritecoin'){
+                        self.removeItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount);
+                    }
                 }
             }
             catch(err){

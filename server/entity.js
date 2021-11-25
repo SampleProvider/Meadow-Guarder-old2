@@ -176,6 +176,18 @@ Entity = function(param){
             return true;
         }
         else{
+            if(pt.x + pt.width / 2 + pt.height / 2 <= self.x - self.width / 2 - self.height / 2){
+                return false;
+            }
+            if(pt.x - pt.width / 2 - pt.height / 2 >= self.x + self.width / 2 + self.height / 2){
+                return false;
+            }
+            if(pt.y + pt.width / 2 + pt.height / 2 <= self.y - self.width / 2 - self.height / 2){
+                return false;
+            }
+            if(pt.y - pt.width / 2 - pt.height / 2 >= self.y + self.width / 2 + self.height / 2){
+                return false;
+            }
             var vertices = [
                 {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
                 {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (-self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (-self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
@@ -934,6 +946,7 @@ Player = function(param,socket){
     self.textColor = '#000000';
 
     self.inDialogue = false;
+    self.dialogueMessage = {};
 
     self.loggedOn = false;
 
@@ -1416,13 +1429,15 @@ Player.onConnect = function(socket,username){
                 player.keyPress.down = data.state;
             }
             if(data.inputId === player.keyMap.leftClick || data.inputId === player.secondKeyMap.leftClick || data.inputId === player.thirdKeyMap.leftClick){
+                socket.detectSpam('gameClick');
                 player.keyPress.leftClick = data.state;
                 if(data.state === true){
                     for(var i in DroppedItem.list){
                         if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
                             if(player.getSquareDistance(DroppedItem.list[i]) < 32){
                                 if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
-                                    if(player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount) !== false){
+                                    if(player.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
+                                        player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
                                         player.keyPress.leftClick = false;
                                         delete DroppedItem.list[i];
                                         break;
@@ -1434,6 +1449,7 @@ Player.onConnect = function(socket,username){
                 }
             }
             if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
+                socket.detectSpam('gameClick');
                 player.keyPress.rightClick = data.state;
                 if(data.state === true){
                     var entities = [];
@@ -1497,12 +1513,49 @@ Player.onConnect = function(socket,username){
                                 if(requirementMet === false){
                                     continue;
                                 }
-                                messages.push(interactingEntity.messages[i].message);
+                                messages.push(interactingEntity.messages[i]);
                             }
                             var message = messages[Math.floor(Math.random() * messages.length)];
+                            player.dialogueMessage = message;
+                            player.dialogueMessage.npc = interactingEntity.id;
+                            if(message.option1){
+                                if(message.option1.message){
+                                    var option1 = message.option1.message;
+                                }
+                                else{
+                                    var option1 = message.option1;
+                                }
+                            }
+                            if(message.option2){
+                                if(message.option2.message){
+                                    var option2 = message.option2.message;
+                                }
+                                else{
+                                    var option2 = message.option2;
+                                }
+                            }
+                            if(message.option3){
+                                if(message.option3.message){
+                                    var option3 = message.option3.message;
+                                }
+                                else{
+                                    var option3 = message.option3;
+                                }
+                            }
+                            if(message.option4){
+                                if(message.option4.message){
+                                    var option4 = message.option4.message;
+                                }
+                                else{
+                                    var option4 = message.option4;
+                                }
+                            }
                             socket.emit('dialogue',{
-                                message:message,
-                                option1:"*End conversation*",
+                                message:message.message,
+                                option1:option1,
+                                option2:option2,
+                                option3:option3,
+                                option4:option4,
                             });
                             player.inDialogue = true;
                         }
@@ -1527,7 +1580,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('attack',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('gameClick');
             if(!socket.usable){
                 return;
             }
@@ -1582,7 +1635,7 @@ Player.onConnect = function(socket,username){
                         if(player.finalAcceptedTrade && Player.list[player.tradingEntity].finalAcceptedTrade){
                             for(var i in Player.list[player.tradingEntity].inventory.items){
                                 if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                                    player.inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount,true);
+                                    player.inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount);
                                 }
                             }
                             for(var i = 0;i < 18;i++){
@@ -1591,7 +1644,7 @@ Player.onConnect = function(socket,username){
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                             for(var i in player.inventory.items){
                                 if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                                    Player.list[player.tradingEntity].inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
+                                    Player.list[player.tradingEntity].inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount);
                                 }
                             }
                             for(var i = 0;i < 18;i++){
@@ -1624,7 +1677,7 @@ Player.onConnect = function(socket,username){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            Player.list[player.tradingEntity].inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount,true);
+                            Player.list[player.tradingEntity].inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount);
                         }
                     }
                     SOCKET_LIST[player.tradingEntity].emit('closeTrade');
@@ -1632,7 +1685,7 @@ Player.onConnect = function(socket,username){
                 }
                 for(var i in player.inventory.items){
                     if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                        player.inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount,true);
+                        player.inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount);
                     }
                 }
                 socket.emit('closeTrade');
@@ -1645,8 +1698,31 @@ Player.onConnect = function(socket,username){
             if(!socket.usable){
                 return;
             }
-            socket.emit("dialogue",{});
-            player.inDialogue = false;
+            if(data !== 'option1' && data !== 'option2' && data !== 'option3' && data !== 'option4'){
+                return;
+            }
+            if(player.dialogueMessage[data]){
+                if(player.dialogueMessage[data].message){
+                    var message = player.dialogueMessage[data].message;
+                }
+                else{
+                    var message = player.dialogueMessage[data];
+                }
+                if(player.dialogueMessage[data].triggers){
+                    var triggers = player.dialogueMessage[data].triggers;
+                }
+                if(triggers){
+                    if(triggers === 'endConversation'){
+                        socket.emit("dialogue",{});
+                        player.inDialogue = false;
+                    }
+                    else if(triggers === 'shopOpen'){
+                        socket.emit("dialogue",{});
+                        player.inDialogue = false;
+                        player.inventory.refreshShop(Npc.list[player.dialogueMessage.npc].name);
+                    }
+                }
+            }
         });
 
         socket.on('changePlayer',function(data){
@@ -1924,16 +2000,16 @@ Projectile = function(param){
         }
         if(self.projectilePattern === 'waraxe'){
             if(entity.x > self.x){
-                self.spdX += 1;
+                self.spdX += 2;
             }
             else if(entity.x < self.x){
-                self.spdX -= 1;
+                self.spdX -= 2;
             }
             if(entity.y > self.y){
-                self.spdY += 1;
+                self.spdY += 2;
             }
             else if(entity.y < self.y){
-                self.spdY -= 1;
+                self.spdY -= 2;
             }
             if(self.getDistance(entity) < 64 && self.timer < 40){
                 self.toRemove = true;
