@@ -6,7 +6,7 @@ if(window.requestAnimationFrame === undefined){
     alert('This game uses RequestAnimationFrame, which is not supported in your browser.');
 }
 
-var VERSION = '0.0.8';
+var VERSION = '0.0.9';
 
 var socket = io({
     reconnection:false,
@@ -216,38 +216,61 @@ declineTrade.onclick = function(){
     canDragTradeItems = false;
 }
 
+var text = '';
+var textIndex = 0;
+var typeWriter = function(element,cb){
+    if(textIndex < text.length){
+        element.innerHTML += text.charAt(textIndex);
+        textIndex += 1;
+        setTimeout(function(){
+            typeWriter(element,cb);
+        },50);
+    }
+    else{
+        cb();
+    }
+}
+
 socket.on('dialogue',function(data){
     if(data.message){
         openDialogue();
-        dialogueMessage.innerHTML = data.message;
-        if(data.option1){
-            dialogueOption1.innerHTML = data.option1;
-            dialogueOption1.style.display = 'inline-block';
-        }
-        else{
-            dialogueOption1.style.display = 'none';
-        }
-        if(data.option2){
-            dialogueOption2.innerHTML = data.option2;
-            dialogueOption2.style.display = 'inline-block';
-        }
-        else{
-            dialogueOption2.style.display = 'none';
-        }
-        if(data.option3){
-            dialogueOption3.innerHTML = data.option3;
-            dialogueOption3.style.display = 'inline-block';
-        }
-        else{
-            dialogueOption3.style.display = 'none';
-        }
-        if(data.option4){
-            dialogueOption4.innerHTML = data.option4;
-            dialogueOption4.style.display = 'inline-block';
-        }
-        else{
-            dialogueOption4.style.display = 'none';
-        }
+        dialogueMessage.innerHTML = '';
+        text = data.message;
+        textIndex = 0;
+        dialogueOption1.style.display = 'none';
+        dialogueOption2.style.display = 'none';
+        dialogueOption3.style.display = 'none';
+        dialogueOption4.style.display = 'none';
+        dialogueOption1.style.animationName = 'none';
+        dialogueOption2.style.animationName = 'none';
+        dialogueOption3.style.animationName = 'none';
+        dialogueOption4.style.animationName = 'none';
+        typeWriter(dialogueMessage,function(){
+            if(data.option1){
+                dialogueOption1.innerHTML = data.option1;
+                dialogueOption1.style.display = 'inline-block';
+                dialogueOption1.style.opacity = 0.7;
+                dialogueOption1.style.animationName = 'fadeIn';
+            }
+            if(data.option2){
+                dialogueOption2.innerHTML = data.option2;
+                dialogueOption2.style.display = 'inline-block';
+                dialogueOption2.style.opacity = 0.7;
+                dialogueOption2.style.animationName = 'fadeIn';
+            }
+            if(data.option3){
+                dialogueOption3.innerHTML = data.option3;
+                dialogueOption3.style.display = 'inline-block';
+                dialogueOption3.style.opacity = 0.7;
+                dialogueOption3.style.animationName = 'fadeIn';
+            }
+            if(data.option4){
+                dialogueOption4.innerHTML = data.option4;
+                dialogueOption4.style.display = 'inline-block';
+                dialogueOption4.style.opacity = 0.7;
+                dialogueOption4.style.animationName = 'fadeIn';
+            }
+        });
     }
     else{
         closeDialogue();
@@ -763,6 +786,7 @@ socket.on('changeMap',function(data){
     }
     currentMap = data.teleport;
     shadeSpeed = 3 / 40;
+    closeShop();
 });
 socket.on('regionChange',function(data){
     regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
@@ -855,33 +879,27 @@ var loop = function(){
     if(mouseCameraY < -128){
         mouseCameraY = -128;
     }
+    var cameraChanged = false;
     if(mapData[Player.list[selfId].map].width > window.innerWidth){
         if(cameraX > -mapData[Player.list[selfId].map].x1){
             cameraX = -mapData[Player.list[selfId].map].x1;
-            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
-            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
         if(cameraX < window.innerWidth - mapData[Player.list[selfId].map].x2){
             cameraX = window.innerWidth - mapData[Player.list[selfId].map].x2;
-            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
-            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
     }
     if(mapData[Player.list[selfId].map].height > window.innerHeight){
         if(cameraY > -mapData[Player.list[selfId].map].y1){
             cameraY = -mapData[Player.list[selfId].map].y1;
-            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
-            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
         if(cameraY < window.innerHeight - mapData[Player.list[selfId].map].y2){
             cameraY = window.innerHeight - mapData[Player.list[selfId].map].y2;
-            mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
-            mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
         }
+    }
+    if(cameraChanged){
+        mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+        mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+        socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
     }
     // cameraX -= mouseCameraX;
     // cameraY -= mouseCameraY;
@@ -1080,7 +1098,7 @@ disconnectClient = function(){
 }
 
 setInterval(function(){
-    if(tickArray.length > 20 && selfId){
+    if(tickArray.length > 100 && selfId){
         disconnectClient();
     }
     var d = new Date();
@@ -1175,6 +1193,21 @@ document.onkeydown = function(event){
         return;
     }
     if(chatPress){
+        var key = event.key || event.keyCode;
+        if(key === 'ArrowUp'){
+            commandIndex = Math.max(commandIndex - 1,0);
+            if(commandIndex >= 0 && commandIndex < commandList.length){
+                chatInput.value = commandList[commandIndex];
+            }
+            event.preventDefault();
+        }
+        if(key === 'ArrowDown'){
+            commandIndex = Math.min(commandIndex + 1,commandList.length - 1);
+            if(commandIndex >= 0 && commandIndex < commandList.length){
+                chatInput.value = commandList[commandIndex];
+            }
+            event.preventDefault();
+        }
         return;
     }
     if(!event.isTrusted){
@@ -1270,20 +1303,22 @@ mouseDown = function(event){
     }
     if(event.button === 0){
         socket.emit('keyPress',{inputId:'leftClick',state:true});
-        if(inventory.items[inventory.hotbarSelectedItem]){
-            if(inventory.items[inventory.hotbarSelectedItem].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
-                    if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
-                        socket.emit('attack');
-                        attacking = true;
-                        for(var i in inventory.items){
-                            if(inventory.items[i]){
-                                if(inventory.items[i].id){
-                                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
-                                        inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
-                                        document.getElementById('cooldownDiv' + i).style.height = '100%';
-                                        if(i >= 0 && i <= 9){
-                                            document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
+        if(Player.list[selfId].canAttack){
+            if(inventory.items[inventory.hotbarSelectedItem]){
+                if(inventory.items[inventory.hotbarSelectedItem].id){
+                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
+                        if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
+                            socket.emit('attack');
+                            attacking = true;
+                            for(var i in inventory.items){
+                                if(inventory.items[i]){
+                                    if(inventory.items[i].id){
+                                        if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
+                                            inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
+                                            document.getElementById('cooldownDiv' + i).style.height = '100%';
+                                            if(i >= 0 && i <= 9){
+                                                document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
+                                            }
                                         }
                                     }
                                 }

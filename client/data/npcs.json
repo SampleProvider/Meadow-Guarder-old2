@@ -1,5 +1,5 @@
 {
-    "Bob":{
+    "Adecus":{
         "img":{
             "body":"Human",
             "shirt":"Shirt_5 Blue",
@@ -13,6 +13,69 @@
         "showHealthBar":false,
         "messages":[
             {
+                "requirements":{
+                    "Tutorial":false
+                },
+                "message":"Hello. I am your server today. Will you like anything to eat?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Tutorial*",
+                    "triggers":"startQuest",
+                    "quest":"Tutorial"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":false
+                },
+                "message":"Hello. I am your server today. Will you like anything to eat?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Gearing Up*",
+                    "triggers":"startQuest",
+                    "quest":"Gearing Up"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":false
+                },
+                "message":"I do hope you find that Shield of Life, because otherwise we are all doomed. I might even have to use the emergency Whirlwind!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Gearing Up*",
+                    "triggers":"startQuest",
+                    "quest":"Gearing Up"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":1
+                },
                 "message":"Hello. I am your server today. Will you like anything to eat?",
                 "option1":{
                     "message":"*Open shop*",
@@ -24,10 +87,11 @@
                 }
             },
             {
-                "requirements":[
-                    "tutorial"
-                ],
-                "message":"I do hope you find that <span style='color: #33ff33'>Shield of Life</span>, because otherwise we are doomed. I might even have to use the emergency <span style='color: #3333ff'>Whirlwind</span>!",
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":1
+                },
+                "message":"I do hope you find that Shield of Life, because otherwise we are all doomed. I might even have to use the emergency Whirlwind!",
                 "option1":{
                     "message":"*Open shop*",
                     "triggers":"shopOpen"

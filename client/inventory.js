@@ -1521,6 +1521,11 @@ Inventory = function(socket,server){
                 removeCoins('goldcoin',coins % 100);
                 coins = Math.floor(coins / 100);
                 removeCoins('meteoritecoin',coins);
+                for(var i in npcData[self.shopNpc].shop[data].materials){
+                    if(npcData[self.shopNpc].shop[data].materials[i].id !== 'coppercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'silvercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'goldcoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'meteoritecoin'){
+                        self.removeItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount);
+                    }
+                }
                 if(self.draggingItem.id){
                     if(self.draggingItem.id === npcData[self.shopNpc].shop[data].id){
                         if(self.draggingItem.amount + npcData[self.shopNpc].shop[data].amount <= Item.list[self.draggingItem.id].maxStack){
@@ -1535,11 +1540,6 @@ Inventory = function(socket,server){
                     self.draggingItem = {
                         id:npcData[self.shopNpc].shop[data].id,
                         amount:npcData[self.shopNpc].shop[data].amount,
-                    }
-                }
-                for(var i in npcData[self.shopNpc].shop[data].materials){
-                    if(npcData[self.shopNpc].shop[data].materials[i] !== 'coppercoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'silvercoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'goldcoin' && npcData[self.shopNpc].shop[data].materials[i] !== 'meteoritecoin'){
-                        self.removeItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount);
                     }
                 }
             }

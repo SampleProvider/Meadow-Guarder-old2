@@ -1,5 +1,5 @@
 
-VERSION = '0.0.8';
+VERSION = '0.0.9';
 
 if(process.env.PORT){
 	SERVER = 'heroku';
@@ -53,7 +53,10 @@ io.sockets.on('connection',function(socket){
 		if(type === 'game'){
 			socket.spam += 0.01;
 		}
-		if(type === 'gameclick'){
+		if(type === 'keyPress'){
+			socket.spam += 0.005;
+		}
+		if(type === 'gameClick'){
 			socket.spam += 0.01;
 		}
 		if(socket.spam > 1){
@@ -466,20 +469,21 @@ io.sockets.on('connection',function(socket){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					var self = Player.list[socket.id];
+					var result = '';
 					try{
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] ' + eval(name) + '.',
-							debug:true,
-						});
+						result = eval(name);
+						if(typeof result === 'object'){
+							result = JSON.stringify(result);
+						}
 					}
 					catch(err){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] ' + err + '.',
-							debug:true,
-						});
+						result = err;
 					}
+					socket.emit('addToChat',{
+						color:'#ff0000',
+						message:'[!] ' + result + '.',
+						debug:true,
+					});
 					return;
 				}
 				if(commandList[0] === 'seexp' && level >= 0){

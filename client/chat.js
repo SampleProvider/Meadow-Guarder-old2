@@ -7,6 +7,9 @@ chatText.innerHTML = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
 var chatPress = false;
 var inChat = false;
 
+var commandList = [];
+var commandIndex = 0;
+
 socket.on('addToChat',function(data){
     var scroll = false;
     if(chatText.scrollTop + chatText.clientHeight >= chatText.scrollHeight - 5){
@@ -37,6 +40,10 @@ socket.on('addToChat',function(data){
 chatForm.onsubmit = function(e){
     e.preventDefault();
     socket.emit('chatMessage',chatInput.value);
+    if(commandList[commandList.length - 1] !== chatInput.value){
+        commandList.push(chatInput.value);
+        commandIndex = commandList.length;
+    }
     chatInput.value = '';
 }
 chatInput.onkeydown = function(e){

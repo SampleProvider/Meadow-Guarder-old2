@@ -59,6 +59,7 @@ var Actor = function(initPack){
     self.drawSize = initPack.drawSize;
     self.animation = initPack.animation;
     self.animationDirection = initPack.animationDirection;
+    self.canAttack = initPack.canAttack;
     self.stats = initPack.stats;
     self.team = initPack.team;
     self.showHealthBar = initPack.showHealthBar;

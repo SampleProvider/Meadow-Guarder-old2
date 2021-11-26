@@ -65,12 +65,15 @@ canvas {
 }
 ::-webkit-scrollbar {
     width: 10px;
+    border-radius: 4;
 }
 ::-webkit-scrollbar-track {
     background: rgba(30,30,30,0.5);
+    border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb {
     background: rgba(20,20,20,0.5);
+    border-radius: 4px;
 }
 @font-face {
     font-family: 'pixel';
@@ -594,10 +597,10 @@ canvas {
 }
 #inventoryDiv {
     position: absolute;
-    right: 8px;
-    bottom: 76px;
-    width: 650px;
-    height: 340px;
+    right: 10px;
+    bottom: 78px;
+    width: 648px;
+    height: 336px;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
@@ -615,7 +618,7 @@ canvas {
 }
 #inventoryExit {
     position: fixed;
-    right: 20px;
+    right: 22px;
     bottom: 400px;
     width: 14px;
     height: 14px;
@@ -902,10 +905,10 @@ canvas {
 }
 #craftDiv {
     position: absolute;
-    right: 8px;
-    top: 8px;
-    width: 530px;
-    height: 270px;
+    right: 10px;
+    top: 10px;
+    width: 538px;
+    height: 266px;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
@@ -1062,6 +1065,10 @@ canvas {
     background-color: #ff3b3b;
 }
 
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 0.7;}
+}
 #dialogueBackground {
     position: absolute;
     left: 50%;
@@ -1100,11 +1107,11 @@ canvas {
     border-radius: 8px;
     margin-bottom: 4px;
     transition-duration: 0.4s;
+    animation-duration: 0.4s;
 }
 .dialogueOption:hover {
-    opacity: 0.9;
+    background-color: #00ff90;
 }
-
 
 #settingBackground {
     position: absolute;
@@ -1190,9 +1197,9 @@ canvas {
 #playerListDiv {
     position: absolute;
     left: 172px;
-    top: 8px;
+    top: 10px;
     width: 300px;
-    height: 200px;
+    height: 198px;
     margin: 0px;
     padding: 0px;
     font-size: small;
@@ -1251,8 +1258,8 @@ canvas {
     position: absolute;
     left: 8px;
     top: 40%;
-    width: 340px;
-    height: 340px;
+    width: 338px;
+    height: 338px;
     margin: 0px;
     padding: 0px;
     font-size: small;

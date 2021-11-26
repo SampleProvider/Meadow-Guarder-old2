@@ -1,0 +1,76 @@
+{
+    "0":{
+        "dialogue":{
+            "message":"Do you want a guide on how to play Meadow Guarder?",
+            "option1":{
+                "message":"Yes",
+                "questStage":1
+            },
+            "option2":{
+                "message":"No",
+                "triggers":"abandonQuest"
+            }
+        }
+    },
+    "1":{
+        "dialogue":{
+            "message":"Use the [WASD] Keys to move. Left-click to use items, and right click to interact.",
+            "option1":{
+                "message":"Next ->",
+                "questStage":1
+            }
+        }
+    },
+    "2":{
+        "dialogue":{
+            "message":"There is a menu in the bottom right corner, where you can open your settings, inventory, and crafting menu.",
+            "option1":{
+                "message":"Next ->",
+                "questStage":1
+            },
+            "option2":{
+                "message":"Back <-",
+                "questStage":-1
+            }
+        }
+    },
+    "3":{
+        "dialogue":{
+            "message":"Get better gear to defeat monsters and level up. Materials are used in crafting to craft better items.",
+            "option1":{
+                "message":"Next ->",
+                "questStage":1
+            },
+            "option2":{
+                "message":"Back <-",
+                "questStage":-1
+            }
+        }
+    },
+    "4":{
+        "dialogue":{
+            "message":"Your goal is to kill Ten-Eyed One, and obtain the Shield of Life.",
+            "option1":{
+                "message":"Next ->",
+                "questStage":1
+            },
+            "option2":{
+                "message":"Back <-",
+                "questStage":-1
+            }
+        }
+    },
+    "5":{
+        "dialogue":{
+            "message":"Do you understand?",
+            "option1":{
+                "message":"Yes, let's get started.",
+                "questStage":1
+            },
+            "option2":{
+                "message":"Back <-",
+                "questStage":-1
+            }
+        }
+    }
+}

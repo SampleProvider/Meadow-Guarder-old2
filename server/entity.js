@@ -176,6 +176,9 @@ Entity = function(param){
             return true;
         }
         else{
+            if(self.getSquareDistance(pt) / 2 >= self.width + self.height + pt.width + pt.height){
+                return false;
+            }
             if(pt.x + pt.width / 2 + pt.height / 2 <= self.x - self.width / 2 - self.height / 2){
                 return false;
             }
@@ -833,6 +836,7 @@ Actor = function(param){
         pack.drawSize = self.drawSize;
         pack.hp = self.hp;
         pack.hpMax = self.hpMax;
+        pack.canAttack = self.canAttack;
         pack.team = self.team;
         pack.showHealthBar = self.showHealthBar;
         return pack;
@@ -960,9 +964,6 @@ Player = function(param,socket){
             }
         }
     }
-    else{
-        self.inventory.addItem('coppershiv',1);
-    }
     if(param.database.xp){
         self.xp = param.database.xp;
     }
@@ -974,6 +975,12 @@ Player = function(param,socket){
             self.img[i] = param.database.img[i];
         }
     }
+
+    self.quest = false;
+    self.questStage = 0;
+    self.questNpcs = [];
+    self.questTriggers = {};
+
     self.advancements = {};
     if(param.database.advancements){
         for(var i in param.database.advancements){
@@ -1343,6 +1350,139 @@ Player = function(param,socket){
         self.mana += self.stats.manaRegen / 20;
         self.mana = Math.min(self.manaMax,self.mana);
     }
+    self.pickUpItems = function(){
+        for(var i in DroppedItem.list){
+            if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
+                if(player.getSquareDistance(DroppedItem.list[i]) < 32){
+                    if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
+                        if(player.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
+                            player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
+                            player.keyPress.leftClick = false;
+                            delete DroppedItem.list[i];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    self.startDialogue = function(message){
+        if(message.message === undefined){
+            self.endDialogue();
+            return;
+        }
+        var differentMessage = false;
+        for(var i in self.dialogueMessage){
+            if(message[i] !== undefined && message[i] !== self.dialogueMessage[i]){
+                differentMessage = true;
+            }
+        }
+        if(self.dialogueMessage.message === undefined){
+            differentMessage = true;
+        }
+        if(differentMessage){
+            self.dialogueMessage = message;
+            var option1 = '';
+            var option2 = '';
+            var option3 = '';
+            var option4 = '';
+            if(message.option1){
+                if(message.option1.message){
+                    option1 = message.option1.message;
+                }
+                else{
+                    option1 = message.option1;
+                }
+            }
+            if(message.option2){
+                if(message.option2.message){
+                    option2 = message.option2.message;
+                }
+                else{
+                    option2 = message.option2;
+                }
+            }
+            if(message.option3){
+                if(message.option3.message){
+                    option3 = message.option3.message;
+                }
+                else{
+                    option3 = message.option3;
+                }
+            }
+            if(message.option4){
+                if(message.option4.message){
+                    option4 = message.option4.message;
+                }
+                else{
+                    option4 = message.option4;
+                }
+            }
+            socket.emit('dialogue',{
+                message:message.message.replace('<name>',self.name),
+                option1:option1.replace('<name>',self.name),
+                option2:option2.replace('<name>',self.name),
+                option3:option3.replace('<name>',self.name),
+                option4:option4.replace('<name>',self.name),
+            });
+            self.inDialogue = true;
+            return;
+        }
+    }
+    self.endDialogue = function(){
+        self.dialogueMessage = {};
+        socket.emit('dialogue',{});
+        self.inDialogue = false;
+    }
+    self.setQuestTriggers = function(triggers){
+        self.questTriggers = triggers;
+    }
+    self.runDialogueTriggers = function(option){
+        self.runTrigger(self.dialogueMessage[option]);
+    }
+    self.runQuestTriggers = function(){
+        self.runTrigger(self.questTriggers);
+    }
+    self.runTrigger = function(triggers){
+        if(triggers.questStage){
+            self.questStage += triggers.questStage;
+        }
+        if(triggers.triggers){
+            if(triggers.triggers === 'completeQuest'){
+                self.completeQuest();
+            }
+            else if(triggers.triggers === 'abandonQuest'){
+                self.abandonQuest();
+            }
+            else if(triggers.triggers === 'endConversation'){
+                self.endDialogue();
+            }
+            else if(triggers.triggers === 'shopOpen'){
+                self.inventory.refreshShop(Npc.list[self.dialogueMessage.npc].name);
+                self.endDialogue();
+            }
+            else if(triggers.triggers === 'startQuest'){
+                self.startQuest(triggers.quest);
+                self.endDialogue();
+            }
+        }
+        self.updateQuest();
+    }
+    self.updateQuest = function(){}
+    self.startQuest = function(quest){
+        if(self.quest === false){
+            self.quest = quest;
+            self.questStage = 0;
+            player = self;
+            require('./../client/data/quests/' + self.quest + '.js');
+        }
+    }
+    self.completeQuest = function(){
+
+    }
+    self.abandonQuest = function(){
+
+    }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
         if(regionChanger.canAttack === false){
@@ -1389,7 +1529,6 @@ Player.onConnect = function(socket,username){
         socket.emit('selfId',{id:socket.id,img:player.img});
 
         socket.on('keyPress',function(data){
-            socket.detectSpam('game');
             if(!socket.usable){
                 return;
             }
@@ -1417,35 +1556,26 @@ Player.onConnect = function(socket,username){
                 return;
             }
             if(data.inputId === player.keyMap.left || data.inputId === player.secondKeyMap.left || data.inputId === player.thirdKeyMap.left){
+                socket.detectSpam('keyPress');
                 player.keyPress.left = data.state;
             }
             if(data.inputId === player.keyMap.right || data.inputId === player.secondKeyMap.right || data.inputId === player.thirdKeyMap.right){
+                socket.detectSpam('keyPress');
                 player.keyPress.right = data.state;
             }
             if(data.inputId === player.keyMap.up || data.inputId === player.secondKeyMap.up || data.inputId === player.thirdKeyMap.up){
+                socket.detectSpam('keyPress');
                 player.keyPress.up = data.state;
             }
             if(data.inputId === player.keyMap.down || data.inputId === player.secondKeyMap.down || data.inputId === player.thirdKeyMap.down){
+                socket.detectSpam('keyPress');
                 player.keyPress.down = data.state;
             }
             if(data.inputId === player.keyMap.leftClick || data.inputId === player.secondKeyMap.leftClick || data.inputId === player.thirdKeyMap.leftClick){
                 socket.detectSpam('gameClick');
                 player.keyPress.leftClick = data.state;
                 if(data.state === true){
-                    for(var i in DroppedItem.list){
-                        if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
-                            if(player.getSquareDistance(DroppedItem.list[i]) < 32){
-                                if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
-                                    if(player.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
-                                        player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
-                                        player.keyPress.leftClick = false;
-                                        delete DroppedItem.list[i];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    player.pickUpItems();
                 }
             }
             if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
@@ -1500,13 +1630,35 @@ Player.onConnect = function(socket,username){
                             if(player.inDialogue){
                                 return;
                             }
+                            for(var i in player.questNpcs){
+                                if(player.questNpcs[i] === interactingEntity.name){
+                                    player.runQuestTriggers();
+                                    return;
+                                }
+                            }
                             var messages = [];
                             for(var i in interactingEntity.messages){
                                 var requirementMet = true;
                                 if(interactingEntity.messages[i].requirements){
                                     for(var j in interactingEntity.messages[i].requirements){
-                                        if(!player.advancements[interactingEntity.messages[i].requirements[j]]){
-                                            requirementMet = false;
+                                        if(interactingEntity.messages[i].requirements[j] === false){
+                                            if(!player.advancements[j]){
+
+                                            }
+                                            else if(player.advancements[j] <= 0){
+
+                                            }
+                                            else{
+                                                requirementMet = false;
+                                            }
+                                        }
+                                        else{
+                                            if(!player.advancements[j]){
+                                                requirementMet = false;
+                                            }
+                                            else if(player.advancements[j] < interactingEntity.messages[i].requirements[j]){
+                                                requirementMet = false;
+                                            }
                                         }
                                     }
                                 }
@@ -1516,48 +1668,8 @@ Player.onConnect = function(socket,username){
                                 messages.push(interactingEntity.messages[i]);
                             }
                             var message = messages[Math.floor(Math.random() * messages.length)];
-                            player.dialogueMessage = message;
+                            player.startDialogue(message);
                             player.dialogueMessage.npc = interactingEntity.id;
-                            if(message.option1){
-                                if(message.option1.message){
-                                    var option1 = message.option1.message;
-                                }
-                                else{
-                                    var option1 = message.option1;
-                                }
-                            }
-                            if(message.option2){
-                                if(message.option2.message){
-                                    var option2 = message.option2.message;
-                                }
-                                else{
-                                    var option2 = message.option2;
-                                }
-                            }
-                            if(message.option3){
-                                if(message.option3.message){
-                                    var option3 = message.option3.message;
-                                }
-                                else{
-                                    var option3 = message.option3;
-                                }
-                            }
-                            if(message.option4){
-                                if(message.option4.message){
-                                    var option4 = message.option4.message;
-                                }
-                                else{
-                                    var option4 = message.option4;
-                                }
-                            }
-                            socket.emit('dialogue',{
-                                message:message.message,
-                                option1:option1,
-                                option2:option2,
-                                option3:option3,
-                                option4:option4,
-                            });
-                            player.inDialogue = true;
                         }
                     }
                 }
@@ -1702,26 +1814,7 @@ Player.onConnect = function(socket,username){
                 return;
             }
             if(player.dialogueMessage[data]){
-                if(player.dialogueMessage[data].message){
-                    var message = player.dialogueMessage[data].message;
-                }
-                else{
-                    var message = player.dialogueMessage[data];
-                }
-                if(player.dialogueMessage[data].triggers){
-                    var triggers = player.dialogueMessage[data].triggers;
-                }
-                if(triggers){
-                    if(triggers === 'endConversation'){
-                        socket.emit("dialogue",{});
-                        player.inDialogue = false;
-                    }
-                    else if(triggers === 'shopOpen'){
-                        socket.emit("dialogue",{});
-                        player.inDialogue = false;
-                        player.inventory.refreshShop(Npc.list[player.dialogueMessage.npc].name);
-                    }
-                }
+                player.runDialogueTriggers(data);
             }
         });
 
