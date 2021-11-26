@@ -1352,12 +1352,12 @@ Player = function(param,socket){
     }
     self.pickUpItems = function(){
         for(var i in DroppedItem.list){
-            if(DroppedItem.list[i].parent + '' === player.id + '' || DroppedItem.list[i].allPlayers){
-                if(player.getSquareDistance(DroppedItem.list[i]) < 32){
-                    if(DroppedItem.list[i].isColliding({x:player.mouseX,y:player.mouseY,width:0,height:0,map:player.map,type:'Player'})){
-                        if(player.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
-                            player.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
-                            player.keyPress.leftClick = false;
+            if(DroppedItem.list[i].parent + '' === self.id + '' || DroppedItem.list[i].allPlayers){
+                if(self.getSquareDistance(DroppedItem.list[i]) < 32){
+                    if(DroppedItem.list[i].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
+                        if(self.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
+                            self.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
+                            self.keyPress.leftClick = false;
                             delete DroppedItem.list[i];
                             break;
                         }
