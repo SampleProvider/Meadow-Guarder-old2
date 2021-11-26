@@ -35,7 +35,8 @@ var shadeSpeed = -0.01;
 var shadeAmount = 1;
 var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
-var currentMap = '';
+var teleportingMap = '';
+var lastMap = '';
 
 var respawnTimer = 0;
 
@@ -784,7 +785,8 @@ socket.on('changeMap',function(data){
     if(shadeAmount < 0){
         shadeAmount = 0;
     }
-    currentMap = data.teleport;
+    teleportingMap = data.teleport;
+    lastMap = Player.list[selfId].map;
     shadeSpeed = 3 / 40;
     closeShop();
 });
@@ -1015,8 +1017,14 @@ var loop = function(){
     if(mapShadeAmount >= 8.5){
         mapShadeSpeed = -0.12;
     }
-    if(Player.list[selfId].map === currentMap && shadeAmount > 1.5){
+    if(Player.list[selfId].map === teleportingMap && shadeAmount < 1){
+        if(lastMap !== ''){
+            Player.list[selfId].map = lastMap;
+        }
+    }
+    if(Player.list[selfId].map === teleportingMap && shadeAmount > 1.5){
         shadeSpeed = -3 / 40;
+        lastMap = '';
     }
     shadeAmount += shadeSpeed;
     mapShadeAmount += mapShadeSpeed;
