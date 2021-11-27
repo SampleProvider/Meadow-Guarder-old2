@@ -179,7 +179,7 @@
             "damage":1,
             "defense":0,
             "hpRegen":20,
-            "critChance":0.05,
+            "critChance":0.01,
             "critPower":10000
         },
         "maxSpeed":5,
