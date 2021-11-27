@@ -474,3 +474,88 @@ var DroppedItem = function(initPack){
     return self;
 }
 DroppedItem.list = {};
+
+var Particle = function(initPack){
+    var self = Entity(initPack);
+    self.id = Math.random();
+    self.x = initPack.x += 16 * (Math.random() * 2 - 1);
+    self.y = initPack.y += 16 * (Math.random() * 2 - 1);
+    self.spdX = Math.random() * 6 - 3;
+    self.spdY = Math.random() * -4;
+    self.direction = Math.random() * 360;
+    self.spdDirection = Math.random() * 2;
+    self.opacity = 0.9;
+    self.update = function(){
+        self.x += self.spdX;
+        self.y += self.spdY;
+        self.x = Math.round(self.x);
+        self.y = Math.round(self.y);
+        self.spdY += 0.1;
+        self.spdX *= 0.99;
+        self.direction += self.spdDirection;
+        self.direction = Math.round(self.direction);
+        self.opacity -= 0.01;
+        if(self.map !== Player.list[selfId].map){
+            self.toRemove = true;
+        }
+        if(self.opacity <= 0){
+            self.toRemove = true;
+        }
+    }
+    self.draw = function(){
+        if(initPack.particleType === 'death'){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.rotate(self.direction * Math.PI / 180);
+            ctx.fillStyle = 'rgba(234,50,60,' + self.opacity + ')';
+            ctx.fillRect(-8,-8,16,16);
+            ctx.restore();
+        }
+        if(initPack.particleType === 'damage'){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "35px pixel";
+            if(initPack.value >= 0){
+                ctx.fillStyle = 'rgba(234,50,60,' + self.opacity + ')';
+                ctx.fillText('-' + initPack.value,0,0);
+            }
+            else{
+                ctx.fillStyle = 'rgba(90,197,79,' + self.opacity + ')';
+                ctx.fillText('+' + initPack.value,0,0);
+            }
+            ctx.restore();
+        }
+        if(initPack.particleType === 'critDamage'){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "55px pixel";
+            if(initPack.value >= 0){
+                ctx.fillStyle = 'rgba(234,50,60,' + self.opacity * 2 + ')';
+                ctx.fillText('-' + initPack.value,0,0);
+            }
+            else{
+                ctx.fillStyle = 'rgba(90,197,79,' + self.opacity * 2 + ')';
+                ctx.fillText('+' + initPack.value,0,0);
+            }
+            ctx.restore();
+        }
+    }
+    Particle.list[self.id] = self;
+}
+Particle.list = {};
+
+Particle.create = function(x,y,map,particleType,number,value){
+    for(var i = 0;i < number;i++){
+        new Particle({
+            x:x,
+            y:y,
+            map:map,
+            value:value,
+            particleType:particleType,
+        });
+    }
+}

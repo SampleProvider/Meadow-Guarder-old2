@@ -370,6 +370,7 @@ socket.on('selfId',function(data){
         socket.emit('signInFinished');
         canSignIn = true;
         tickArray = [];
+        itemMenu.style.display = 'none';
     },750);
 });
 socket.on('update',function(data){
@@ -415,6 +416,9 @@ socket.on('update',function(data){
                             if(data.player[i].id === selfId){
                                 healthBarText.innerHTML = player.hp + " / " + player.hpMax;
                                 healthBarValue.style.width = "" + 150 * player.hp / player.hpMax + "px";
+                            }
+                            if(player[j] === 0){
+                                Particle.create(player.x,player.y,player.map,'death',40);
                             }
                         }
                         else if(j === 'hpMax'){
@@ -537,6 +541,7 @@ socket.on('update',function(data){
                             monster[j] = data.monster[i][j];
                             monster.fadeState = 2;
                             monster.fade -= 0.05;
+                            Particle.create(monster.x,monster.y,monster.map,'death',40);
                         }
                         else{
                             monster[j] = data.monster[i][j];
@@ -570,6 +575,7 @@ socket.on('update',function(data){
                             npc[j] = data.npc[i][j];
                             npc.fadeState = 2;
                             npc.fade -= 0.05;
+                            Particle.create(npc.x,npc.y,npc.map,'death',40);
                         }
                         else{
                             npc[j] = data.npc[i][j];
@@ -739,6 +745,9 @@ socket.on('removePlayer',function(data){
         Player.list[data].fade -= 0.05;
     }
 });
+socket.on('createParticle',function(data){
+    Particle.create(data.x,data.y,data.map,data.particleType,data.number,data.value);
+});
 socket.on('disconnected',function(data){
     disconnectClient();
 });
@@ -865,6 +874,12 @@ var loop = function(){
     for(var i in DroppedItem.list){
         DroppedItem.list[i].update();
     }
+    for(var i in Particle.list){
+        Particle.list[i].update();
+        if(Particle.list[i].toRemove === true){
+            delete Particle.list[i];
+        }
+    }
     cameraX = WIDTH / 2 - Player.list[selfId].x;
     cameraY = HEIGHT / 2 - Player.list[selfId].y;
     var mouseCameraX = mouseX / 8;
@@ -954,6 +969,9 @@ var loop = function(){
     entities.sort(compare);
     if(inGame){
         itemMenu.style.display = 'none';
+    }
+    for(var i in Particle.list){
+        Particle.list[i].draw();
     }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();

@@ -191,13 +191,19 @@ Entity = function(param){
             if(pt.y - pt.width / 2 - pt.height / 2 >= self.y + self.width / 2 + self.height / 2){
                 return false;
             }
-            var vertices = [
-                {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
-                {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (-self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (-self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
-                {x:(-self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (-self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(-self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (-self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
-                {x:(-self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(-self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
-                {x:self.x,y:self.y},
-            ];
+            if(self.vertices.length){
+                var vertices = self.vertices;
+            }
+            else{
+                var vertices = [
+                    {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
+                    {x:(self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (-self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (-self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
+                    {x:(-self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (-self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(-self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (-self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
+                    {x:(-self.width / 2) * Math.cos(self.direction / 180 * Math.PI) - (self.height / 2) * Math.sin(self.direction / 180 * Math.PI) + self.x,y:(-self.width / 2) * Math.sin(self.direction / 180 * Math.PI) + (self.height / 2) * Math.cos(self.direction / 180 * Math.PI) + self.y},
+                    {x:self.x,y:self.y},
+                ];
+                self.vertices = vertices;
+            }
             var vertices2 = [
                 {x:pt.x + pt.width / 2,y:pt.y + pt.height / 2},
                 {x:pt.x + pt.width / 2,y:pt.y - pt.height / 2},
@@ -664,11 +670,13 @@ Actor = function(param){
             return;
         }
         var hp = self.hp;
+        var crit = false;
         if(Math.random() < pt.stats.critChance){
-            self.hp -= Math.max(Math.floor(pt.stats.damage * (1 + pt.stats.critPower) - self.stats.defense),0);
+            crit = true;
+            self.hp -= Math.max(Math.floor(pt.stats.damage * (1 + pt.stats.critPower) * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
         }
         else{
-            self.hp -= Math.max(Math.floor(pt.stats.damage - self.stats.defense),0);
+            self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
         }
         self.hp = Math.round(self.hp);
         if(self.hp < 1 && hp > 0){
@@ -693,6 +701,20 @@ Actor = function(param){
                     self.dropItems(pt.parent);
                 }
                 self.toRemove = true;
+            }
+        }
+        for(var i in SOCKET_LIST){
+            if(Player.list[i]){
+                if(Player.list[i].map === self.map){
+                    SOCKET_LIST[i].emit('createParticle',{
+                        x:self.x,
+                        y:self.y,
+                        map:self.map,
+                        particleType:crit === true ? 'critDamage' : 'damage',
+                        number:1,
+                        value:Math.round(hp - self.hp),
+                    });
+                }
             }
         }
         self.onHit(pt);
@@ -1015,7 +1037,7 @@ Player = function(param,socket){
         for(var i = 0;i < self.moveSpeed;i++){
             self.updateSpd();
             self.updateMove();
-            if(self.canMove){
+            if(self.canMove && self.inDialogue === false){
                 self.updatePosition();
             }
             self.updateCollisions();
@@ -2016,6 +2038,7 @@ Projectile = function(param){
     self.zindex = param.zindex;
     self.stats = param.stats;
     self.pierce = param.pierce;
+    self.vertices = [];
     self.onHit = function(pt){
         self.pierce -= 1;
         if(self.pierce === 0){
@@ -2023,6 +2046,7 @@ Projectile = function(param){
         }
     }
     self.update = function(){
+        self.vertices = [];
         self.updatePattern();
         self.updatePosition();
         self.x = Math.round(self.x);

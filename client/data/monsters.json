@@ -171,5 +171,50 @@
                 }
             }]
         }
+    },
+    "teneyedone":{
+        "name":"Ten Eyed One",
+        "hpMax":250000,
+        "stats":{
+            "damage":1,
+            "defense":0,
+            "hpRegen":20,
+            "critChance":0.05,
+            "critPower":10000
+        },
+        "maxSpeed":5,
+        "drawSize":"large",
+        "team":"Harmful",
+        "itemDrops":{
+            "greaterhealthpotion":{
+                "chance":1,
+                "amount":30
+            },
+            "greatermanapotion":{
+                "chance":1,
+                "amount":30
+            },
+            "paper":{
+                "chance":1,
+                "amount":10
+            }
+        },
+        "img":{
+            "body":"Ten Eyed One"
+        },
+        "mainAttackData":{
+            "1":[{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":35,
+                    "timer":80,
+                    "direction":0,
+                    "directionDeviation":360,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            }]
+        }
     }
 }

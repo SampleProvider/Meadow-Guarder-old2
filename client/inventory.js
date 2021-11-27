@@ -1355,6 +1355,9 @@ Inventory = function(socket,server){
         if(npc){
             self.shopNpc = npc;
         }
+        if(!npcData[self.shopNpc]){
+            return;
+        }
         shopItems.innerHTML = "";
         for(var i in npcData[self.shopNpc].shop){
             var div = document.createElement('div');

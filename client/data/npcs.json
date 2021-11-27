@@ -287,7 +287,11 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Uggh. Wally always dresses so weirdly. I keep telling her to dress normally but she doesn't listen. I think it's affecting our sales..."
+                "message":"Uggh. Wally always dresses so weirdly. I keep telling her to dress normally but she doesn't listen. I think it's affecting our sales...",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
             },
             {
                 "message":"Do you want me to comb your hair?",
