@@ -417,9 +417,6 @@ socket.on('update',function(data){
                                 healthBarText.innerHTML = player.hp + " / " + player.hpMax;
                                 healthBarValue.style.width = "" + 150 * player.hp / player.hpMax + "px";
                             }
-                            if(player[j] === 0){
-                                Particle.create(player.x,player.y,player.map,'death',40);
-                            }
                         }
                         else if(j === 'hpMax'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);

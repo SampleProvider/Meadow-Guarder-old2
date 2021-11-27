@@ -702,9 +702,8 @@ Actor = function(param){
                                 x:self.x,
                                 y:self.y,
                                 map:self.map,
-                                particleType:crit === true ? 'critDamage' : 'damage',
-                                number:1,
-                                value:Math.round(hp - self.hp),
+                                particleType:'death',
+                                number:40,
                             });
                         }
                     }
@@ -715,6 +714,20 @@ Actor = function(param){
                     self.dropItems(pt.parent);
                 }
                 self.toRemove = true;
+            }
+        }
+        for(var i in SOCKET_LIST){
+            if(Player.list[i]){
+                if(Player.list[i].map === self.map){
+                    SOCKET_LIST[i].emit('createParticle',{
+                        x:self.x,
+                        y:self.y,
+                        map:self.map,
+                        particleType:crit === true ? 'critDamage' : 'damage',
+                        number:1,
+                        value:Math.round(hp - self.hp),
+                    });
+                }
             }
         }
         self.onHit(pt);
