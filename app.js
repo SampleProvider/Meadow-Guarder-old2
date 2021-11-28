@@ -375,13 +375,15 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name].level > level){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] You do not have permission to kick ' + name + '.',
-							debug:true,
-						});
-						return;
+					if(debugData[name]){
+						if(debugData[name].level > level){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] You do not have permission to kick ' + name + '.',
+								debug:true,
+							});
+							return;
+						}
 					}
 					doCommand(name,function(name,i){
 						if(SOCKET_LIST[i]){
@@ -406,13 +408,15 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'kill' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name].level > level){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] You do not have permission to kill ' + name + '.',
-							debug:true,
-						});
-						return;
+					if(debugData[name]){
+						if(debugData[name].level > level){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] You do not have permission to kill ' + name + '.',
+								debug:true,
+							});
+							return;
+						}
 					}
 					doCommand(name,function(name,i){
 						Player.list[i].hp = 0;
@@ -438,13 +442,15 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name].level > level){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] You do not have permission to rickroll ' + name + '.',
-							debug:true,
-						});
-						return;
+					if(debugData[name]){
+						if(debugData[name].level > level){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] You do not have permission to rickroll ' + name + '.',
+								debug:true,
+							});
+							return;
+						}
 					}
 					doCommand(name,function(name,i){
 						if(SOCKET_LIST[i]){
@@ -467,13 +473,15 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'trap' && level >= 2){
 					commandList.splice(0,1);
-					if(debugData[name].level > level){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] You do not have permission to trap ' + name + '.',
-							debug:true,
-						});
-						return;
+					if(debugData[name]){
+						if(debugData[name].level > level){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] You do not have permission to trap ' + name + '.',
+								debug:true,
+							});
+							return;
+						}
 					}
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
