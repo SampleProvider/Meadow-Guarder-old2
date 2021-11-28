@@ -291,20 +291,22 @@ io.sockets.on('connection',function(socket){
 	socket.on('tick',function(){
 		var players = [];
 		for(var i in Player.list){
-			if(Player.list[i].region){
-				if(Player.list[i].hp < 1){
-					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+			if(Player.list[i].invisible === false){
+				if(Player.list[i].region){
+					if(Player.list[i].hp < 1){
+						players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+					}
+					else{
+						players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
+					}
 				}
 				else{
-					players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
-				}
-			}
-			else{
-				if(Player.list[i].hp < 1){
-					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
-				}
-				else{
-					players.push(Player.list[i].name);
+					if(Player.list[i].hp < 1){
+						players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
+					}
+					else{
+						players.push(Player.list[i].name);
+					}
 				}
 			}
 		}
@@ -370,9 +372,17 @@ io.sockets.on('connection',function(socket){
 					failurecb(name);
 					return;
 				}
-				if(commandList[0] === 'kick' && level >= 1){
+				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
+					if(debugData[name].level > level){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You do not have permission to kick ' + name + '.',
+							debug:true,
+						});
+						return;
+					}
 					doCommand(name,function(name,i){
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('disconnected');
@@ -393,9 +403,17 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'kill' && level >= 1){
+				if(commandList[0].toLowerCase() === 'kill' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
+					if(debugData[name].level > level){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You do not have permission to kill ' + name + '.',
+							debug:true,
+						});
+						return;
+					}
 					doCommand(name,function(name,i){
 						Player.list[i].hp = 0;
 						Player.list[i].onDeath(Player.list[i]);
@@ -417,7 +435,122 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'give' && level >= 2 && commandList.length > 3){
+				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(debugData[name].level > level){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You do not have permission to rickroll ' + name + '.',
+							debug:true,
+						});
+						return;
+					}
+					doCommand(name,function(name,i){
+						if(SOCKET_LIST[i]){
+							SOCKET_LIST[i].emit('rickroll');
+						}
+						addToChat('#ff0000',Player.list[i].name + ' just got rickrolled.');
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] Rickrolled player ' + name + '.',
+							debug:true,
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'trap' && level >= 2){
+					commandList.splice(0,1);
+					if(debugData[name].level > level){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You do not have permission to trap ' + name + '.',
+							debug:true,
+						});
+						return;
+					}
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						Player.list[i].canMove = !Player.list[i].canMove;
+						if(!Player.list[i].canMove){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] ' + name + ' is now trapped.',
+								debug:true,
+							});
+						}
+						else{
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] ' + name + ' is not trapped anymore.',
+								debug:true,
+							});
+						}
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
+					commandList.splice(0,1);
+					Player.list[socket.id].invisible = !Player.list[socket.id].invisible;
+					if(Player.list[socket.id].invisible){
+						addToChat('#ff0000',Player.list[socket.id].name + ' logged off.');
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You are now invisible.',
+							debug:true,
+						});
+					}
+					else{
+						addToChat('#00ff00',Player.list[socket.id].name + ' logged on.');
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] You are not invisible anymore.',
+							debug:true,
+						});
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						Player.list[i].invincible = !Player.list[i].invincible;
+						if(Player.list[i].invincible){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] ' + name + ' is now invincible.',
+								debug:true,
+							});
+						}
+						else{
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] ' + name + ' is not invincible anymore.',
+								debug:true,
+							});
+						}
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'give' && level >= 3 && commandList.length > 3){
 					commandList.splice(0,1);
 					var amount = commandList.splice(commandList.length - 1,1)[0];
 					var id = commandList.splice(commandList.length - 1,1)[0];
@@ -441,7 +574,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'remove' && level >= 2 && commandList.length > 3){
+				if(commandList[0].toLowerCase() === 'remove' && level >= 3 && commandList.length > 3){
 					commandList.splice(0,1);
 					var amount = commandList.splice(commandList.length - 1,1)[0];
 					var id = commandList.splice(commandList.length - 1,1)[0];
@@ -465,7 +598,27 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0] === 'debug' && level >= 2){
+				if(commandList[0].toLowerCase() === 'givexp' && level >= 3 && commandList.length > 2){
+					commandList.splice(0,1);
+					var amount = commandList.splice(commandList.length - 1,1)[0];
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						Player.list[i].xp += parseInt(amount);
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] Gave ' + amount + ' xp to ' + name + '.',
+							debug:true,
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					var self = Player.list[socket.id];
@@ -486,7 +639,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'seexp' && level >= 0){
+				if(commandList[0].toLowerCase() === 'seexp' && level >= 0){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -515,7 +668,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'seeinv' && level >= 0){
+				if(commandList[0].toLowerCase() === 'seeinv' && level >= 0){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -558,7 +711,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'leaderboard' && level >= 0){
+				if(commandList[0].toLowerCase() === 'leaderboard' && level >= 0){
 					commandList.splice(0,1);
 					getLeaderboard(function(leaderboard){
 						var leaderboardString = '[!] Leaderboard:';
@@ -573,25 +726,92 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0] === 'help' && level >= 0){
-					if(level === 0){
+				if(commandList[0].toLowerCase() === 'trade' && level >= 0){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						Player.list[socket.id].startTrade(Player.list[i]);
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
+							message:'[!] Started trade with ' + name + '.',
+							debug:true,
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'help' && level >= 0){
+					if(level === 0){
+						var message = 'Commands:';
+						message += '<br>/seexp [player name] - See someone\'s xp.';
+						message += '<br>/seeinv [player name] - See someone\'s inventory.';
+						message += '<br>/leaderboard - Leaderboards.';
+						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/help - Help.';
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:message,
 							debug:true,
 						});
 					}
 					else if(level === 1){
+						var message = 'Commands:';
+						message += '<br>/kick [player name] - Kick someone.';
+						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/seexp [player name] - See someone\'s xp.';
+						message += '<br>/seeinv [player name] - See someone\'s inventory.';
+						message += '<br>/leaderboard - Leaderboards.';
+						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
+							message:message,
 							debug:true,
 						});
 					}
 					else if(level === 2){
+						var message = 'Commands:';
+						message += '<br>/kick [player name] - Kick someone.';
+						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/rickroll [player name] - Rickroll someone.';
+						message += '<br>/trap [player name] - Trap someone.';
+						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/seexp [player name] - See someone\'s xp.';
+						message += '<br>/seeinv [player name] - See someone\'s inventory.';
+						message += '<br>/leaderboard - Leaderboards.';
+						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'Commands:<br>/kick - Kick someone.<br>/kill - Kill someone.<br>/give - Give items.<br>/remove - Remove items.<br>/seexp - See someone\'s xp.<br>/seeinv - See someone\'s inventory.<br>/leaderboard - Leaderboards.<br>/help - Help.',
+							message:message,
+							debug:true,
+						});
+					}
+					else if(level === 3){
+						var message = 'Commands:';
+						message += '<br>/kick [player name] - Kick someone.';
+						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/rickroll [player name] - Rickroll someone.';
+						message += '<br>/trap [player name] - Trap someone.';
+						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/invincible [player name] - Toggle invincibility for someone.';
+						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
+						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
+						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
+						message += '<br>/debug [javascript] - Run javascript.';
+						message += '<br>/seexp [player name] - See someone\'s xp.';
+						message += '<br>/seeinv [player name] - See someone\'s inventory.';
+						message += '<br>/leaderboard - Leaderboards.';
+						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/help - Help.';
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:message,
 							debug:true,
 						});
 					}
@@ -637,6 +857,7 @@ io.sockets.on('connection',function(socket){
 
 setInterval(function(){
     var pack = {};
+	var invisPack = {};
     for(var i in Projectile.list){
         if(Projectile.list[i]){
             Projectile.list[i].update();
@@ -670,27 +891,51 @@ setInterval(function(){
     for(var i in Player.list){
         if(Player.list[i]){
             Player.list[i].update();
-            if(pack[Player.list[i].map]){
-				if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)]){
-					if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)]){
-
+            var updatePack = Player.list[i].getInitPack();
+			if(Player.list[i].invisible === false){
+				if(pack[Player.list[i].map]){
+					if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)]){
+						if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)]){
+	
+						}
+						else{
+							pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+						}
 					}
 					else{
+						pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
 						pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
 					}
 				}
 				else{
+					pack[Player.list[i].map] = {};
 					pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
 					pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
 				}
-            }
-			else{
-                pack[Player.list[i].map] = {};
-				pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
-				pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)].player.push(updatePack);
 			}
-            var updatePack = Player.list[i].getInitPack();
-            pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)].player.push(updatePack);
+			else{
+				if(invisPack[Player.list[i].map]){
+					if(invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)]){
+						if(invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)]){
+	
+						}
+						else{
+							invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+						}
+					}
+					else{
+						invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
+						invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+					}
+				}
+				else{
+					invisPack[Player.list[i].map] = {};
+					invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)] = {};
+					invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)] = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+				}
+				invisPack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)].player.push(updatePack);
+			}
 			if(Player.list[i].toRemove){
 				if(SOCKET_LIST[i]){
 					SOCKET_LIST[i].emit('disconnected');
@@ -871,11 +1116,30 @@ setInterval(function(){
 			var data = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
 			for(var j = -1;j < 2;j++){
 				for(var k = -1;k < 2;k++){
-					if(pack[map][x + j]){
-						if(pack[map][x + j][y + k]){
-							for(var l in pack[map][x + j][y + k]){
-								for(var m in pack[map][x + j][y + k][l]){
-									data[l].push(pack[map][x + j][y + k][l][m]);
+					if(pack[map]){
+						if(pack[map][x + j]){
+							if(pack[map][x + j][y + k]){
+								for(var l in pack[map][x + j][y + k]){
+									for(var m in pack[map][x + j][y + k][l]){
+										data[l].push(pack[map][x + j][y + k][l][m]);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			for(var j = -1;j < 2;j++){
+				for(var k = -1;k < 2;k++){
+					if(invisPack[map]){
+						if(invisPack[map][x + j]){
+							if(invisPack[map][x + j][y + k]){
+								for(var l in invisPack[map][x + j][y + k]){
+									for(var m in invisPack[map][x + j][y + k][l]){
+										if(invisPack[map][x + j][y + k][l][m].id === socket.id){
+											data[l].push(invisPack[map][x + j][y + k][l][m]);
+										}
+									}
 								}
 							}
 						}

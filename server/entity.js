@@ -429,7 +429,7 @@ Actor = function(param){
         else{
             self.animation = -1;
         }
-        if(self.canMove === false){
+        if(self.canMove === false || self.inDialogue === true){
             self.animation = 0;
         }
         if(self.animation === -1){
@@ -991,6 +991,8 @@ Player = function(param,socket){
 
     self.loggedOn = false;
 
+    self.invisible = false;
+
     self.inventory = new Inventory(socket,true);
     if(param.database.items){
         for(var i in param.database.items){
@@ -1530,6 +1532,24 @@ Player = function(param,socket){
         }
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
     }
+    self.startTrade = function(tradingEntity){
+        if(tradingEntity.tradingEntity === null && self.tradingEntity === null){
+            tradingEntity.tradingEntity = self.id;
+            tradingEntity.acceptedTrade = false;
+            tradingEntity.finalAcceptedTrade = false;
+            self.tradingEntity = tradingEntity.id;
+            self.acceptedTrade = false;
+            self.finalAcceptedTrade = false;
+            for(var i = 0;i < 18;i++){
+                self.inventory.items['trade' + i] = {};
+            }
+            for(var i = 0;i < 18;i++){
+                tradingEntity.inventory.items['trade' + i] = {};
+            }
+            socket.emit('openTrade',tradingEntity.name);
+            SOCKET_LIST[tradingEntity.id].emit('openTrade',self.name);
+        }
+    }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
         var pack = getInitPack();
@@ -1646,22 +1666,7 @@ Player.onConnect = function(socket,username){
                     }
                     if(interactingEntity){
                         if(interactingEntity.type === 'Player'){
-                            if(interactingEntity.tradingEntity === null && player.tradingEntity === null){
-                                interactingEntity.tradingEntity = player.id;
-                                interactingEntity.acceptedTrade = false;
-                                interactingEntity.finalAcceptedTrade = false;
-                                player.tradingEntity = interactingEntity.id;
-                                player.acceptedTrade = false;
-                                player.finalAcceptedTrade = false;
-                                for(var i = 0;i < 18;i++){
-                                    player.inventory.items['trade' + i] = {};
-                                }
-                                for(var i = 0;i < 18;i++){
-                                    interactingEntity.inventory.items['trade' + i] = {};
-                                }
-                                socket.emit('openTrade',interactingEntity.name);
-                                SOCKET_LIST[interactingEntity.id].emit('openTrade',player.name);
-                            }
+                            player.startTrade(interactingEntity);
                         }
                         else{
                             if(player.inDialogue){
@@ -1975,8 +1980,10 @@ Player.getAllInitPack = function(socket){
             var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             for(var i in Player.list){
                 if(Player.list[i].map === player.map){
-                    if(player.getSquareDistance(Player.list[i]) < 32){
-                        pack.player.push(Player.list[i].getInitPack());
+                    if(Player.list[i].invisible === false || i + '' === socket.id + ''){
+                        if(player.getSquareDistance(Player.list[i]) < 32){
+                            pack.player.push(Player.list[i].getInitPack());
+                        }
                     }
                 }
             }

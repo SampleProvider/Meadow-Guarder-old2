@@ -769,12 +769,7 @@ var runRespawn = function(){
     disconnectedDiv.style.display = 'none';
     deathDiv.style.display = 'none';
     pageDiv.style.display = 'none';
-    setTimeout(function(){
-        gameDiv.style.display = 'inline-block';
-        disconnectedDiv.style.display = 'none';
-        deathDiv.style.display = 'none';
-        pageDiv.style.display = 'none';
-    },50);
+    itemMenu.style.display = 'none';
 }
 var updateRespawn = function(){
     if(deathDiv.style.display === 'none'){
@@ -897,17 +892,21 @@ var loop = function(){
     if(mapData[Player.list[selfId].map].width > window.innerWidth){
         if(cameraX > -mapData[Player.list[selfId].map].x1){
             cameraX = -mapData[Player.list[selfId].map].x1;
+            cameraChanged = true;
         }
         if(cameraX < window.innerWidth - mapData[Player.list[selfId].map].x2){
             cameraX = window.innerWidth - mapData[Player.list[selfId].map].x2;
+            cameraChanged = true;
         }
     }
     if(mapData[Player.list[selfId].map].height > window.innerHeight){
         if(cameraY > -mapData[Player.list[selfId].map].y1){
             cameraY = -mapData[Player.list[selfId].map].y1;
+            cameraChanged = true;
         }
         if(cameraY < window.innerHeight - mapData[Player.list[selfId].map].y2){
             cameraY = window.innerHeight - mapData[Player.list[selfId].map].y2;
+            cameraChanged = true;
         }
     }
     if(cameraChanged){
@@ -1099,7 +1098,6 @@ setInterval(function(){
 var tickArray = [];
 
 socket.on('tick',function(data){
-    var d = new Date();
     tickArray.splice(0,1);
     playerList.innerHTML = '';
     for(var i in data){
@@ -1121,7 +1119,7 @@ disconnectClient = function(){
 }
 
 setInterval(function(){
-    if(tickArray.length > 100 && selfId){
+    if(tickArray.length > 200 && selfId){
         disconnectClient();
     }
     var d = new Date();
@@ -1140,6 +1138,12 @@ setInterval(function(){
         selfId = null;
     }
 },100);
+
+setInterval(function(){
+    socket.on('rickroll',function(){
+        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    });
+});
 
 
 updateInventoryPopupMenu = function(slotType,index){
@@ -1303,6 +1307,12 @@ document.onmousemove = function(event){
                 itemMenu.style.top = rawMouseY + 'px';
             }
         }
+    }
+    else{
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        rawMouseX = event.clientX;
+        rawMouseY = event.clientY;
     }
 }
 var tabVisible = true;
