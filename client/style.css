@@ -1180,6 +1180,29 @@ canvas {
     font-size: 8px;
     text-align: center;
 }
+#settingLine {
+    position: relative;
+    display: inline-block;
+    left: 350px;
+    width: 1px;
+    height: 100%;
+    background-color: #000000;
+}
+#particleSlider {
+    position: absolute;
+    top: 45px;
+    left: 358px;
+}
+#entityFadeOutButton {
+    position: absolute;
+    top: 65px;
+    left: 358px;
+}
+#textSpeedSlider {
+    position: absolute;
+    top: 105px;
+    left: 358px;
+}
 
 #playerListBackground {
     position: absolute;

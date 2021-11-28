@@ -6,6 +6,9 @@ var settings = {
     settingOpen:false,
     playerListOpen:false,
     shopOpen:false,
+    particlesPercentage:100,
+    entityFadeOut:true,
+    textSpeed:2,
 };
 
 inventoryButton.onclick = function(){
@@ -31,6 +34,23 @@ shopExit.onclick = function(){
 }
 playerListExit.onclick = function(){
     closePlayerList();
+}
+particleSlider.oninput = function(){
+    settings.particlesPercentage = this.value;
+    particleHeader.innerHTML = 'Particles: ' + this.value + '%';
+}
+entityFadeOutButton.onclick = function(){
+    settings.entityFadeOut = !settings.entityFadeOut;
+    if(settings.entityFadeOut === true){
+        entityFadeOutButton.innerHTML = 'Entities Fade Out';
+    }
+    else{
+        entityFadeOutButton.innerHTML = 'Entities Don\'t Fade Out';
+    }
+}
+textSpeedSlider.oninput = function(){
+    settings.textSpeed = this.value;
+    textSpeedHeader.innerHTML = 'Text Speed: ' + this.value;
 }
 openInventory = function(){
     settings.inventoryOpen = true;

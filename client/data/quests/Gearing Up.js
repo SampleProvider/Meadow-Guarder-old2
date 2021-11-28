@@ -13,9 +13,7 @@ player.updateQuest = function(){
             break;
         case 4:
             player.startDialogue(json[player.questStage].dialogue);
-            setTimeout(function(){
-                player.inventory.addItem('coppershiv',1);
-            },8000);
+            player.inventory.addItem('coppershiv',1);
             break;
         case 6:
             player.completeQuest();

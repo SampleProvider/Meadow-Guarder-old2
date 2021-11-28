@@ -225,7 +225,7 @@ var typeWriter = function(element,cb){
         textIndex += 1;
         setTimeout(function(){
             typeWriter(element,cb);
-        },50);
+        },100 / settings.textSpeed);
     }
     else{
         cb();
@@ -1305,7 +1305,9 @@ document.onmousemove = function(event){
         }
     }
 }
+var tabVisible = true;
 document.addEventListener("visibilitychange",function(){
+    tabVisible = !tabVisible;
     socket.emit('init');
     socket.emit('keyPress',{inputId:"releaseAll",state:true});
     attacking = false;

@@ -443,31 +443,6 @@ Actor = function(param){
         }
     }
     self.updateCollisions = function(){
-        if(self.canMove && self.type !== 'Monster'){
-            for(var i = -1;i < 2;i++){
-                for(var j = -1;j < 2;j++){
-                    if(Transporter.list[self.map]){
-                        if(Transporter.list[self.map][self.gridX + i]){
-                            if(Transporter.list[self.map][self.gridX + i][self.gridY + j]){
-                                var transporter = Transporter.list[self.map][self.gridX + i][self.gridY + j];
-                                if(transporter.teleportdirection === "up" && self.spdY < 0){
-                                    self.doTransport(transporter);
-                                }
-                                if(transporter.teleportdirection === "down" && self.spdY > 0){
-                                    self.doTransport(transporter);
-                                }
-                                if(transporter.teleportdirection === "left" && self.spdX < 0){
-                                    self.doTransport(transporter);
-                                }
-                                if(transporter.teleportdirection === "right" && self.spdX > 0){
-                                    self.doTransport(transporter);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
         if(RegionChanger.list[self.map]){
             if(RegionChanger.list[self.map][self.gridX]){
                 if(RegionChanger.list[self.map][self.gridX][self.gridY]){
@@ -548,6 +523,33 @@ Actor = function(param){
         }
         else{
             self.collided = {x:false,y:false};
+        }
+        if(self.canMove && self.type !== 'Monster'){
+            for(var i = -1;i < 2;i++){
+                for(var j = -1;j < 2;j++){
+                    if(Transporter.list[self.map]){
+                        if(Transporter.list[self.map][self.gridX + i]){
+                            if(Transporter.list[self.map][self.gridX + i][self.gridY + j]){
+                                var transporter = Transporter.list[self.map][self.gridX + i][self.gridY + j];
+                                if(self.isColliding(transporter)){
+                                    if(transporter.teleportdirection === "up" && self.spdY < 0){
+                                        self.doTransport(transporter);
+                                    }
+                                    if(transporter.teleportdirection === "down" && self.spdY > 0){
+                                        self.doTransport(transporter);
+                                    }
+                                    if(transporter.teleportdirection === "left" && self.spdX < 0){
+                                        self.doTransport(transporter);
+                                    }
+                                    if(transporter.teleportdirection === "right" && self.spdX > 0){
+                                        self.doTransport(transporter);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     self.updateMap = function(){

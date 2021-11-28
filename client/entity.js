@@ -130,23 +130,34 @@ var Player = function(initPack){
     self.debuffs = initPack.debuffs;
     self.draw = function(){
         if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-            self.fade += 0.1;
-            if(self.fade >= 1){
-                self.fade = 1;
+            if(settings.entityFadeOut === false){
                 self.fadeState = 1;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade += 0.1;
+                if(self.fade >= 1){
+                    self.fade = 1;
+                    self.fadeState = 1;
+                }
             }
         }
         else if(self.fadeState === 1){
 
         }
         else{
-            ctx.globalAlpha = self.fade;
-            self.fade -= 0.05;
-            if(self.fade <= 0){
-                ctx.globalAlpha = 1;
+            if(settings.entityFadeOut === false){
                 delete Player.list[self.id];
                 return;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade -= 0.05;
+                if(self.fade <= 0){
+                    ctx.globalAlpha = 1;
+                    delete Player.list[self.id];
+                    return;
+                }
             }
         }
         if(Item.list[self.currentItem]){
@@ -215,27 +226,34 @@ var Projectile = function(initPack){
     }
     self.draw = function(){
         if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-            self.fade += 0.1;
-            if(self.fade >= 1){
-                self.fade = 1;
+            if(settings.entityFadeOut === false){
                 self.fadeState = 1;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade += 0.1;
+                if(self.fade >= 1){
+                    self.fade = 1;
+                    self.fadeState = 1;
+                }
             }
         }
         else if(self.fadeState === 1){
 
         }
         else{
-            if(self.relativeToParent){
+            if(settings.entityFadeOut === false){
                 delete Projectile.list[self.id];
                 return;
             }
-            ctx.globalAlpha = self.fade;
-            self.fade -= 0.05;
-            if(self.fade <= 0){
-                ctx.globalAlpha = 1;
-                delete Projectile.list[self.id];
-                return;
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade -= 0.05;
+                if(self.fade <= 0){
+                    ctx.globalAlpha = 1;
+                    delete Projectile.list[self.id];
+                    return;
+                }
             }
         }
         self.animation = Math.floor(self.animation);
@@ -266,24 +284,34 @@ var Monster = function(initPack){
     self.monsterType = initPack.monsterType;
     self.draw = function(){
         if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-            self.fade += 0.1;
-            if(self.fade >= 1){
-                self.fade = 1;
+            if(settings.entityFadeOut === false){
                 self.fadeState = 1;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade += 0.1;
+                if(self.fade >= 1){
+                    self.fade = 1;
+                    self.fadeState = 1;
+                }
             }
         }
         else if(self.fadeState === 1){
 
         }
         else{
-            ctx.globalAlpha = self.fade;
-            self.hp = 0;
-            self.fade -= 0.05;
-            if(self.fade <= 0){
-                ctx.globalAlpha = 1;
+            if(settings.entityFadeOut === false){
                 delete Monster.list[self.id];
                 return;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade -= 0.05;
+                if(self.fade <= 0){
+                    ctx.globalAlpha = 1;
+                    delete Monster.list[self.id];
+                    return;
+                }
             }
         }
         self.animation = Math.floor(self.animation);
@@ -300,23 +328,34 @@ var Npc = function(initPack){
     var self = Actor(initPack);
     self.draw = function(){
         if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-            self.fade += 0.1;
-            if(self.fade >= 1){
-                self.fade = 1;
+            if(settings.entityFadeOut === false){
                 self.fadeState = 1;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade += 0.1;
+                if(self.fade >= 1){
+                    self.fade = 1;
+                    self.fadeState = 1;
+                }
             }
         }
         else if(self.fadeState === 1){
 
         }
         else{
-            ctx.globalAlpha = self.fade;
-            self.fade -= 0.05;
-            if(self.fade <= 0){
-                ctx.globalAlpha = 1;
-                delete Projectile.list[self.id];
+            if(settings.entityFadeOut === false){
+                delete Npc.list[self.id];
                 return;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade -= 0.05;
+                if(self.fade <= 0){
+                    ctx.globalAlpha = 1;
+                    delete Npc.list[self.id];
+                    return;
+                }
             }
         }
         self.animation = Math.floor(self.animation);
@@ -337,23 +376,34 @@ var HarvestableNpc = function(initPack){
     self.harvestHpMax = 0;
     self.drawLayer0 = function(){
         if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-            self.fade += 0.1;
-            if(self.fade >= 1){
-                self.fade = 1;
+            if(settings.entityFadeOut === false){
                 self.fadeState = 1;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade += 0.1;
+                if(self.fade >= 1){
+                    self.fade = 1;
+                    self.fadeState = 1;
+                }
             }
         }
         else if(self.fadeState === 1){
 
         }
         else{
-            ctx.globalAlpha = self.fade;
-            self.fade -= 0.05;
-            if(self.fade <= 0){
-                ctx.globalAlpha = 1;
+            if(settings.entityFadeOut === false){
                 delete HarvestableNpc.list[self.id];
                 return;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+                self.fade -= 0.05;
+                if(self.fade <= 0){
+                    ctx.globalAlpha = 1;
+                    delete HarvestableNpc.list[self.id];
+                    return;
+                }
             }
         }
         if(Img[self.img + '0']){
@@ -372,14 +422,16 @@ var HarvestableNpc = function(initPack){
         if(self.height === 64){
             return;
         }
-        if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-        }
-        else if(self.fadeState === 1){
+        if(settings.entityFadeOut === true){
+            if(self.fadeState === 0){
+                ctx.globalAlpha = self.fade;
+            }
+            else if(self.fadeState === 1){
 
-        }
-        else{
-            ctx.globalAlpha = self.fade;
+            }
+            else{
+                ctx.globalAlpha = self.fade;
+            }
         }
         if(Img[self.img + '1']){
             ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height / 2);
@@ -549,7 +601,11 @@ var Particle = function(initPack){
 Particle.list = {};
 
 Particle.create = function(x,y,map,particleType,number,value){
-    for(var i = 0;i < number;i++){
+    if(!tabVisible){
+        return;
+    }
+    var newNumber = Math.ceil(number * settings.particlesPercentage / 100);
+    for(var i = 0;i < newNumber;i++){
         new Particle({
             x:x,
             y:y,
