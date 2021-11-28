@@ -341,7 +341,7 @@ MGHC = function(){
                 }
                 autoRespawning = false;
             },500);
-        },500);
+        },1000);
     }
     if(attackMonstersState){
         if(Monster.list === {}){

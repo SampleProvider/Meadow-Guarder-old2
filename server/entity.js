@@ -1968,7 +1968,9 @@ Player.onDisconnect = function(socket){
                 }
             }
             playerMap[Player.list[socket.id].map] -= 1;
-            addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
+            if(Player.list[socket.id].invisible === false){
+                addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
+            }
             delete Player.list[socket.id];
         }
     }
