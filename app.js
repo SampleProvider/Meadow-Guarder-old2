@@ -47,13 +47,12 @@ io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
 	socket.spam = 0;
-	socket.usable = true;
 	socket.disconnectUser = function(){
 		socket.emit('disconnected');
 		if(Player.list[socket.id]){
 			Player.onDisconnect(socket);
 		}
-		socket.usable = false;
+		socket.disconnect();
 		delete SOCKET_LIST[socket.id];
 	}
 	socket.detectSpam = function(type){
@@ -67,7 +66,10 @@ io.sockets.on('connection',function(socket){
 			socket.spam += 0.005;
 		}
 		if(type === 'gameClick'){
-			socket.spam += 0.01;
+			socket.spam += 0.03;
+		}
+		if(type === 'gameAttack'){
+			socket.spam += 0.03;
 		}
 		if(socket.spam > 1){
 			socket.disconnectUser();
@@ -75,9 +77,6 @@ io.sockets.on('connection',function(socket){
 	}
 	socket.on('signIn',function(data){
 		socket.detectSpam('database');
-		if(!socket.usable){
-			return;
-		}
 		if(!data){
 			return;
 		}
@@ -118,9 +117,6 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('createAccount',function(data){
 		socket.detectSpam('database');
-		if(!socket.usable){
-			return;
-		}
 		if(!data){
 			return;
 		}
@@ -193,9 +189,6 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('deleteAccount',function(data){
 		socket.detectSpam('database');
-		if(!socket.usable){
-			return;
-		}
 		if(!data){
 			return;
 		}
@@ -230,9 +223,6 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('changePassword',function(data){
 		socket.detectSpam('database');
-		if(!socket.usable){
-			return;
-		}
 		if(!data){
 			return;
 		}
@@ -301,7 +291,7 @@ io.sockets.on('connection',function(socket){
 	socket.on('tick',function(){
 		var players = [];
 		for(var i in Player.list){
-			if(Player.list[i].invisible === false){
+			if(Player.list[i].debug.invisible === false){
 				if(Player.list[i].region){
 					if(Player.list[i].hp < 1){
 						players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
@@ -323,9 +313,6 @@ io.sockets.on('connection',function(socket){
 		socket.emit('tick',players);
 	});
 	socket.on('chatMessage',function(data){
-		if(!socket.usable){
-			return;
-		}
 		if(!data){
 			return;
 		}
@@ -495,8 +482,8 @@ io.sockets.on('connection',function(socket){
 					}
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
-						Player.list[i].canMove = !Player.list[i].canMove;
-						if(!Player.list[i].canMove){
+						Player.list[i].debug.trapped = !Player.list[i].debug.trapped;
+						if(!Player.list[i].debug.trapped){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] ' + name + ' is now trapped.',
@@ -521,8 +508,8 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
 					commandList.splice(0,1);
-					Player.list[socket.id].invisible = !Player.list[socket.id].invisible;
-					if(Player.list[socket.id].invisible){
+					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
+					if(Player.list[socket.id].debug.invisible){
 						addToChat('#ff0000',Player.list[socket.id].name + ' logged off.');
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -542,30 +529,21 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
 					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						Player.list[i].invincible = !Player.list[i].invincible;
-						if(Player.list[i].invincible){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] ' + name + ' is now invincible.',
-								debug:true,
-							});
-						}
-						else{
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] ' + name + ' is not invincible anymore.',
-								debug:true,
-							});
-						}
-					},function(name){
+					Player.list[socket.id].debug.invincible = !Player.list[socket.id].debug.invincible;
+					if(Player.list[socket.id].debug.invincible){
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
+							message:'[!] ' + Player.list[socket.id].name + ' is now invincible.',
 							debug:true,
 						});
-					});
+					}
+					else{
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] ' + Player.list[socket.id].name + ' is not invincible anymore.',
+							debug:true,
+						});
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'give' && level >= 3 && commandList.length > 3){
@@ -910,7 +888,7 @@ setInterval(function(){
         if(Player.list[i]){
             Player.list[i].update();
             var updatePack = Player.list[i].getInitPack();
-			if(Player.list[i].invisible === false){
+			if(Player.list[i].debug.invisible === false){
 				if(pack[Player.list[i].map]){
 					if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)]){
 						if(pack[Player.list[i].map][Math.floor(Player.list[i].x / 1024)][Math.floor(Player.list[i].y / 1024)]){

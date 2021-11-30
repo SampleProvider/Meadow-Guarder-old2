@@ -237,11 +237,14 @@ autoRing.onclick = function(){
     }
 };
 
+var t = 0;
+
 var getDistance = function(pt1,pt2){
     return (pt1.x - pt2.x)**2 + (pt1.y - pt2.y)**2;
 };
 
 MGHC = function(){
+    t += 1;
     if(monsterTracersState){
         ctx.save();
         ctx.translate(cameraX,cameraY);
@@ -388,19 +391,23 @@ MGHC = function(){
         socket.emit('nextReload');
     }
     if(autoRingState){
-        for(var i = 0;i < 8;i++){
-            socket.emit('keyPress',{inputId:"direction",state:{x:Math.cos(autoRingDirection / 180 * Math.PI),y:Math.sin(autoRingDirection / 180 * Math.PI)}});
-            socket.emit('attack');
-            autoRingDirection += 45;
+        if(t % 25 === 0){
+            for(var i = 0;i < 8;i++){
+                socket.emit('keyPress',{inputId:"direction",state:{x:Math.cos(autoRingDirection / 180 * Math.PI),y:Math.sin(autoRingDirection / 180 * Math.PI)}});
+                socket.emit('attack');
+                autoRingDirection += 45;
+            }
         }
         autoRingDirection += 2;
     }
     else if(attackIncreaseState){
-        if(inventory.items[inventory.hotbarSelectedItem]){
-            if(inventory.items[inventory.hotbarSelectedItem].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
-                    if(attacking){
-                        socket.emit('attack');
+        if(t % 4 === 0){
+            if(inventory.items[inventory.hotbarSelectedItem]){
+                if(inventory.items[inventory.hotbarSelectedItem].id){
+                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                        if(attacking || attackMonstersState || attackPlayersState){
+                            socket.emit('attack');
+                        }
                     }
                 }
             }

@@ -1001,7 +1001,11 @@ Player = function(param,socket){
 
     self.loggedOn = false;
 
-    self.invisible = false;
+    self.debug = {
+        invisible:false,
+        invincible:false,
+        trapped:false,
+    }
 
     self.inventory = new Inventory(socket,true);
     if(param.database.items){
@@ -1059,6 +1063,7 @@ Player = function(param,socket){
         }
     }
     self.update = function(){
+        self.updateDebug();
         self.mapChange += 1;
         self.moveSpeed = self.maxSpeed;
         for(var i = 0;i < self.moveSpeed;i++){
@@ -1399,6 +1404,14 @@ Player = function(param,socket){
         self.mana += self.stats.manaRegen / 20;
         self.mana = Math.min(self.manaMax,self.mana);
     }
+    self.updateDebug = function(){
+        if(self.debug.invincible){
+            self.invincible = true;
+        }
+        if(self.debug.trapped){
+            self.canMove = false;
+        }
+    }
     self.pickUpItems = function(){
         for(var i in DroppedItem.list){
             if(DroppedItem.list[i].parent + '' === self.id + '' || DroppedItem.list[i].allPlayers){
@@ -1524,6 +1537,7 @@ Player = function(param,socket){
             self.questStage = 0;
             player = self;
             require('./../client/data/quests/' + self.quest + '.js');
+            self.updateQuest();
         }
     }
     self.completeQuest = function(){
@@ -1596,9 +1610,6 @@ Player.onConnect = function(socket,username){
         socket.emit('selfId',{id:socket.id,img:player.img});
 
         socket.on('keyPress',function(data){
-            if(!socket.usable){
-                return;
-            }
             if(!data){
                 return;
             }
@@ -1735,19 +1746,13 @@ Player.onConnect = function(socket,username){
 
         socket.on('nextReload',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             player.updateAttack();
             player.updateHp();
             player.updateMana();
         });
 
         socket.on('attack',function(data){
-            socket.detectSpam('gameClick');
-            if(!socket.usable){
-                return;
-            }
+            socket.detectSpam('gameAttack');
             player.mainReload += 1;
             player.doAttack(player.mainAttackData,player.mainReload);
             if(player.canAttack){
@@ -1767,9 +1772,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('updateTrade',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(!data){
                 return;
             }
@@ -1788,9 +1790,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('acceptTrade',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     if(player.acceptedTrade){
@@ -1834,9 +1833,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('declineTrade',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
@@ -1859,9 +1855,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('dialogueResponse',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(data !== 'option1' && data !== 'option2' && data !== 'option3' && data !== 'option4'){
                 return;
             }
@@ -1872,9 +1865,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('changePlayer',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(!data){
                 return;
             }
@@ -1899,9 +1889,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('respawn',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
@@ -1916,9 +1903,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('init',function(data){
             socket.detectSpam('game');
-            if(!socket.usable){
-                return;
-            }
             Player.getAllInitPack(socket);
         });
 
@@ -1975,10 +1959,11 @@ Player.onDisconnect = function(socket){
                             });
                         }
                     }
+                    Player.list[Player.list[socket.id].tradingEntity] = null;
                 }
             }
             playerMap[Player.list[socket.id].map] -= 1;
-            if(Player.list[socket.id].invisible === false){
+            if(Player.list[socket.id].debug.invisible === false){
                 addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
             }
             delete Player.list[socket.id];
@@ -1992,7 +1977,7 @@ Player.getAllInitPack = function(socket){
             var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
             for(var i in Player.list){
                 if(Player.list[i].map === player.map){
-                    if(Player.list[i].invisible === false || i + '' === socket.id + ''){
+                    if(Player.list[i].debug.invisible === false || i + '' === socket.id + ''){
                         if(player.getSquareDistance(Player.list[i]) < 32){
                             pack.player.push(Player.list[i].getInitPack());
                         }

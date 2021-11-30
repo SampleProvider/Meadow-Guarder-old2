@@ -11,6 +11,54 @@ var settings = {
     textSpeed:2,
 };
 
+var setCookie = function(){
+    for(var i in settings){
+        if(i.includes('Open') === false){
+            document.cookie = i + "=" + settings[i] + ";path=/";
+        }
+    }
+}
+
+var getCookie = function(){
+    for(var i in settings){
+        if(i.includes('Open') === false){
+            var name = i + "=";
+            var ca = document.cookie.split(';');
+            for(var j = 0;j < ca.length;j++){
+                var c = ca[j];
+                while(c.charAt(0) === ' '){
+                    c = c.substring(1);
+                }
+                if(c.indexOf(name) === 0){
+                    settings[i] = c.substring(name.length,c.length);
+                    if(i === 'particlesPercentage'){
+                        settings[i] = parseInt(settings[i]);
+                        particleSlider.value = settings[i];
+                        particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
+                    }
+                    if(i === 'entityFadeOut'){
+                        if(settings[i] === 'true'){
+                            settings[i] = true;
+                            entityFadeOutButton.innerHTML = 'Entities Fade Out';
+                        }
+                        else{
+                            settings[i] = false;
+                            entityFadeOutButton.innerHTML = 'Entities Don\'t Fade Out';
+                        }
+                    }
+                    if(i === 'particlesPercentage'){
+                        settings[i] = parseInt(settings[i]);
+                        textSpeedSlider.value = settings[i];
+                        textSpeedHeader.innerHTML = 'Text Speed: ' + textSpeedSlider.value;
+                    }
+                }
+            }
+        }
+    }
+}
+
+getCookie();
+
 inventoryButton.onclick = function(){
     toggleInventory();
 }
@@ -36,8 +84,9 @@ playerListExit.onclick = function(){
     closePlayerList();
 }
 particleSlider.oninput = function(){
-    settings.particlesPercentage = this.value;
-    particleHeader.innerHTML = 'Particles: ' + this.value + '%';
+    settings.particlesPercentage = particleSlider.value;
+    particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
+    setCookie();
 }
 entityFadeOutButton.onclick = function(){
     settings.entityFadeOut = !settings.entityFadeOut;
@@ -47,10 +96,12 @@ entityFadeOutButton.onclick = function(){
     else{
         entityFadeOutButton.innerHTML = 'Entities Don\'t Fade Out';
     }
+    setCookie();
 }
 textSpeedSlider.oninput = function(){
-    settings.textSpeed = this.value;
-    textSpeedHeader.innerHTML = 'Text Speed: ' + this.value;
+    settings.textSpeed = textSpeedSlider.value;
+    textSpeedHeader.innerHTML = 'Text Speed: ' + textSpeedSlider.value;
+    setCookie();
 }
 openInventory = function(){
     settings.inventoryOpen = true;
