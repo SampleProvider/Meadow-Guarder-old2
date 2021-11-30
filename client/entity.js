@@ -25,8 +25,28 @@ var Entity = function(initPack){
     self.updated = true;
     self.update = function(){
         if(self.interpolationStage > 0){
-            self.x += self.spdX;
-            self.y += self.spdY;
+            if(self.spdX >= 0.25 && self.spdX <= 0.5){
+                self.x += 0.5;
+                self.spdX = 0;
+            }
+            else if(self.spdX <= -0.25 && self.spdX >= -0.5){
+                self.x -= 0.5;
+                self.spdX = 0;
+            }
+            else{
+                self.x += self.spdX;
+            }
+            if(self.spdY >= 0.25 && self.spdY <= 0.5){
+                self.y += 0.5;
+                self.spdY = 0;
+            }
+            else if(self.spdY <= -0.25 && self.spdY >= -0.5){
+                self.y -= 0.5;
+                self.spdY = 0;
+            }
+            else{
+                self.y += self.spdY;
+            }
             self.x = Math.round(self.x);
             self.y = Math.round(self.y);
         }

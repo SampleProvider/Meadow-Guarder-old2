@@ -31,6 +31,16 @@ else{
 console.log('Server Started on port ' + port.address().port);
 console.log('This server is running Meadow Guarder ' + VERSION + '.');
 
+s = {
+	findPlayer:function(name){
+		for(var i in Player.list){
+			if(Player.list[i].name === name){
+				return Player.list[i];
+			}
+		}
+	}
+}
+
 SOCKET_LIST = {};
 io = require('socket.io')(serv,{upgradeTimeout:36000000});
 io.sockets.on('connection',function(socket){

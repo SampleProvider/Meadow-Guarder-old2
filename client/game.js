@@ -48,10 +48,10 @@ var getEntityDescription = function(entity){
     description += entity.name !== undefined ? entity.name : entity.amount === 1 ? '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + '</span>' : '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + ' (' + entity.amount + ')</span>';
     description += '<br><div style="font-size: 11px">';
     if(entity.hp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + Math.round(entity.hp) + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.hp),0) + ' / ' + entity.hpMax + ' (' + Math.ceil(entity.hp / entity.hpMax * 100) + '%)</span><br>';
     }
     if(entity.harvestHp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + Math.round(entity.harvestHp) + ' / ' + entity.harvestHpMax + ' (' + Math.ceil(entity.harvestHp / entity.harvestHpMax * 100) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.harvestHp),0) + ' / ' + entity.harvestHpMax + ' (' + Math.ceil(entity.harvestHp / entity.harvestHpMax * 100) + '%)</span><br>';
     }
     if(entity.xp !== undefined){
         description += '<span style="color: #cccc00">Xp: Level ' + entity.level + ' ' + entity.xp + ' / ' + entity.xpMax + ' (' + Math.ceil(entity.xp / entity.xpMax * 100) + '%)</span><br>';
@@ -371,6 +371,7 @@ socket.on('selfId',function(data){
         canSignIn = true;
         tickArray = [];
         itemMenu.style.display = 'none';
+        playSong('theMeadow');
     },750);
 });
 socket.on('update',function(data){
@@ -1437,6 +1438,6 @@ window.addEventListener('wheel',function(event){
     socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
 });
 
-if(navigator.webdriver === true){
-    disconnectClient();
-}
+// if(navigator.webdriver === true){
+//     disconnectClient();
+// }

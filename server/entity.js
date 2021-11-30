@@ -12,6 +12,12 @@ var xpLevels = [
     50000,
     75000,
     100000,
+    150000,
+    230000,
+    370000,
+    550000,
+    780000,
+    1000000,
 ];
 
 
@@ -718,17 +724,21 @@ Actor = function(param){
                 self.toRemove = true;
             }
         }
-        for(var i in SOCKET_LIST){
-            if(Player.list[i]){
-                if(Player.list[i].map === self.map){
-                    SOCKET_LIST[i].emit('createParticle',{
-                        x:self.x,
-                        y:self.y,
-                        map:self.map,
-                        particleType:crit === true ? 'critDamage' : 'damage',
-                        number:1,
-                        value:Math.round(hp - self.hp),
-                    });
+        if(hp > 0){
+            if(Math.round(hp - self.hp) !== 0){
+                for(var i in SOCKET_LIST){
+                    if(Player.list[i]){
+                        if(Player.list[i].map === self.map){
+                            SOCKET_LIST[i].emit('createParticle',{
+                                x:self.x,
+                                y:self.y,
+                                map:self.map,
+                                particleType:crit === true ? 'critDamage' : 'damage',
+                                number:1,
+                                value:Math.round(hp - self.hp),
+                            });
+                        }
+                    }
                 }
             }
         }
