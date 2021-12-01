@@ -1099,7 +1099,9 @@ setInterval(function(){
 var tickArray = [];
 
 socket.on('tick',function(data){
-    tickArray.splice(0,1);
+    if(tickArray.length > 0){
+        tickArray.splice(0,1);
+    }
     playerList.innerHTML = '';
     for(var i in data){
         playerList.innerHTML += data[i] + '<br>';
@@ -1139,6 +1141,10 @@ setInterval(function(){
         selfId = null;
     }
 },100);
+
+setInterval(function(){
+    tickArray = [];
+},10000);
 
 setInterval(function(){
     socket.on('rickroll',function(){
