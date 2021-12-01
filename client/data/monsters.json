@@ -174,7 +174,7 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":250000,
+        "hpMax":25000,
         "stats":{
             "damage":1,
             "defense":0,
