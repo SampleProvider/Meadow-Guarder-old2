@@ -838,6 +838,19 @@ Actor = function(param){
                                     if(self.type === 'Player'){
                                         SOCKET_LIST[self.id].emit('death');
                                         addToChat('#ff0000',self.name + ' committed suicide.');
+                                        for(var i in SOCKET_LIST){
+                                            if(Player.list[i]){
+                                                if(Player.list[i].map === self.map){
+                                                    SOCKET_LIST[i].emit('createParticle',{
+                                                        x:self.x,
+                                                        y:self.y,
+                                                        map:self.map,
+                                                        particleType:'death',
+                                                        number:40,
+                                                    });
+                                                }
+                                            }
+                                        }
                                     }
                                     else{
                                         if(self.type === 'Monster'){
@@ -1061,7 +1074,6 @@ Player = function(param,socket){
             down:false,
             leftClick:false,
             rightClick:false,
-            heal:false,
         }
     }
     self.update = function(){
@@ -1613,12 +1625,23 @@ Player.onConnect = function(socket,username){
 
         socket.on('keyPress',function(data){
             if(!data){
+                socket.disconnectUser();
                 return;
             }
             if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                socket.disconnectUser();
                 return;
             }
             if(Object.keys(data).length === 0){
+                socket.disconnectUser();
+                return;
+            }
+            if(!data.inputId){
+                socket.disconnectUser();
+                return;
+            }
+            if(!data.state && data.state !== false && data.inputId !== 'releaseAll'){
+                socket.disconnectUser();
                 return;
             }
             if(data.inputId === 'releaseAll'){
@@ -1629,7 +1652,6 @@ Player.onConnect = function(socket,username){
                     right:false,
                     leftClick:false,
                     rightClick:false,
-                    heal:false,
                 };
             }
             if(player.hp < 1){
@@ -1740,6 +1762,18 @@ Player.onConnect = function(socket,username){
                 }
             }
             if(data.inputId === 'direction'){
+                if(!data.state){
+                    socket.disconnectUser();
+                    return;
+                }
+                if(!data.state.x && data.state.x !== 0){
+                    socket.disconnectUser();
+                    return;
+                }
+                if(!data.state.y && data.state.y !== 0){
+                    socket.disconnectUser();
+                    return;
+                }
                 player.direction = (Math.atan2(data.state.y,data.state.x) / Math.PI * 180);
                 player.mouseX = data.state.x + player.x;
                 player.mouseY = data.state.y + player.y;
@@ -1754,6 +1788,9 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('attack',function(data){
+            if(player.hp < 1){
+                return;
+            }
             socket.detectSpam('gameAttack');
             player.mainReload += 1;
             player.doAttack(player.mainAttackData,player.mainReload);
@@ -1775,12 +1812,15 @@ Player.onConnect = function(socket,username){
         socket.on('updateTrade',function(data){
             socket.detectSpam('game');
             if(!data){
+                socket.disconnectUser();
                 return;
             }
             if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                socket.disconnectUser();
                 return;
             }
             if(Object.keys(data).length === 0){
+                socket.disconnectUser();
                 return;
             }
             if(player.tradingEntity){
@@ -1858,6 +1898,7 @@ Player.onConnect = function(socket,username){
         socket.on('dialogueResponse',function(data){
             socket.detectSpam('game');
             if(data !== 'option1' && data !== 'option2' && data !== 'option3' && data !== 'option4'){
+                socket.disconnectUser();
                 return;
             }
             if(player.dialogueMessage[data]){
@@ -1868,12 +1909,15 @@ Player.onConnect = function(socket,username){
         socket.on('changePlayer',function(data){
             socket.detectSpam('game');
             if(!data){
+                socket.disconnectUser();
                 return;
             }
             if(typeof data !== 'object' || Array.isArray(data) || data === null){
+                socket.disconnectUser();
                 return;
             }
             if(Object.keys(data).length === 0){
+                socket.disconnectUser();
                 return;
             }
             if(player.img[data.id] !== undefined){

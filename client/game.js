@@ -1122,12 +1122,14 @@ disconnectClient = function(){
 }
 
 setInterval(function(){
-    if(tickArray.length > 200 && selfId){
+    if(tickArray.length > 200 && selfId && tabVisible){
         disconnectClient();
     }
-    var d = new Date();
-    tickArray.push(d.getMilliseconds());
-    socket.emit('tick');
+    if(tabVisible === true){
+        var d = new Date();
+        tickArray.push(d.getMilliseconds());
+        socket.emit('tick');
+    }
     disconnectClient = function(){
         disconnectedDiv.style.display = 'inline-block';
         if(selfId){

@@ -78,18 +78,23 @@ io.sockets.on('connection',function(socket){
 	socket.on('signIn',function(data){
 		socket.detectSpam('database');
 		if(!data){
+			socket.disconnectUser();
 			return;
 		}
 		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			socket.disconnectUser();
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username || !data.password){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString()){
+			socket.disconnectUser();
 			return;
 		}
 		var stringData = {
@@ -118,18 +123,23 @@ io.sockets.on('connection',function(socket){
 	socket.on('createAccount',function(data){
 		socket.detectSpam('database');
 		if(!data){
+			socket.disconnectUser();
 			return;
 		}
 		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			socket.disconnectUser();
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username || !data.password){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString()){
+			socket.disconnectUser();
 			return;
 		}
 		var stringData = {
@@ -190,18 +200,23 @@ io.sockets.on('connection',function(socket){
 	socket.on('deleteAccount',function(data){
 		socket.detectSpam('database');
 		if(!data){
+			socket.disconnectUser();
 			return;
 		}
 		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			socket.disconnectUser();
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username || !data.password){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString()){
+			socket.disconnectUser();
 			return;
 		}
 		var stringData = {
@@ -224,18 +239,23 @@ io.sockets.on('connection',function(socket){
 	socket.on('changePassword',function(data){
 		socket.detectSpam('database');
 		if(!data){
+			socket.disconnectUser();
 			return;
 		}
 		if(typeof data !== 'object' || Array.isArray(data) || data === null){
+			socket.disconnectUser();
 			return;
 		}
 		if(Object.keys(data).length === 0){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username || !data.password || !data.newPassword){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.username.toString() || !data.password.toString() || !data.newPassword.toString()){
+			socket.disconnectUser();
 			return;
 		}
 		var stringData = {
@@ -314,9 +334,11 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('chatMessage',function(data){
 		if(!data){
+			socket.disconnectUser();
 			return;
 		}
 		if(!data.toString){
+			socket.disconnectUser();
 			return;
 		}
 		stringData = data.toString();
@@ -937,6 +959,9 @@ setInterval(function(){
 					SOCKET_LIST[i].emit('disconnected');
 					Player.onDisconnect(SOCKET_LIST[i]);
 					delete SOCKET_LIST[i];
+				}
+				else{
+					delete Player.list[i];
 				}
 				continue;
 			}
