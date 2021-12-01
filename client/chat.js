@@ -40,7 +40,7 @@ socket.on('addToChat',function(data){
 chatForm.onsubmit = function(e){
     e.preventDefault();
     socket.emit('chatMessage',chatInput.value);
-    if(commandList[commandList.length - 1] !== chatInput.value){
+    if(commandList[commandList.length - 1] !== chatInput.value && chatInput.value !== ''){
         commandList.push(chatInput.value);
         commandIndex = commandList.length;
     }
@@ -51,7 +51,7 @@ chatInput.onkeydown = function(e){
 }
 chatInput.onmousedown = function(e){
     inChat = true;
-    socket.emit('keyPress',{state:'releaseAll'});
+    socket.emit('keyPress',{inputId:'releaseAll'});
 }
 
 craftInput.onkeydown = function(e){
@@ -59,5 +59,5 @@ craftInput.onkeydown = function(e){
 }
 craftInput.onmousedown = function(e){
     inChat = true;
-    socket.emit('keyPress',{state:'releaseAll'});
+    socket.emit('keyPress',{inputId:'releaseAll'});
 }
