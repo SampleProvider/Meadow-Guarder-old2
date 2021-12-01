@@ -320,7 +320,7 @@
         "showHealthBar":false,
         "messages":[
             {
-                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the confort of your home.",
+                "message":"Maps are always so exciting to explore. You get to explore a whole new land in the comfort of your home.",
                 "option1":{
                     "message":"*End conversation*",
                     "triggers":"endConversation"

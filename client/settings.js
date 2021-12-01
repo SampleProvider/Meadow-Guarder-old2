@@ -84,7 +84,7 @@ playerListExit.onclick = function(){
     closePlayerList();
 }
 particleSlider.oninput = function(){
-    settings.particlesPercentage = particleSlider.value;
+    settings.particlesPercentage = parseInt(particleSlider.value);
     particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
     setCookie();
 }
@@ -99,7 +99,7 @@ entityFadeOutButton.onclick = function(){
     setCookie();
 }
 textSpeedSlider.oninput = function(){
-    settings.textSpeed = textSpeedSlider.value;
+    settings.textSpeed = parseInt(textSpeedSlider.value);
     textSpeedHeader.innerHTML = 'Text Speed: ' + textSpeedSlider.value;
     setCookie();
 }

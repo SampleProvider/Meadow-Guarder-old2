@@ -48,12 +48,14 @@ addToChat = function(color,message,debug){
     }
     console.error("[" + h + ":" + m + "] " + message);
     for(var i in Player.list){
-        if(Player.list[i].loggedOn){
-            if(SOCKET_LIST[i]){
-                SOCKET_LIST[i].emit('addToChat',{
-                    color:color,
-                    message:message,
-                });
+        if(Player.list[i]){
+            if(Player.list[i].loggedOn){
+                if(SOCKET_LIST[i]){
+                    SOCKET_LIST[i].emit('addToChat',{
+                        color:color,
+                        message:message,
+                    });
+                }
             }
         }
     }
