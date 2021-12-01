@@ -49,10 +49,7 @@ io.sockets.on('connection',function(socket){
 	socket.spam = 0;
 	socket.disconnectUser = function(){
 		socket.emit('disconnected');
-		if(Player.list[socket.id]){
-			Player.onDisconnect(socket);
-		}
-		socket.disconnect();
+		Player.onDisconnect(socket);
 		delete SOCKET_LIST[socket.id];
 	}
 	socket.detectSpam = function(type){
@@ -308,37 +305,11 @@ io.sockets.on('connection',function(socket){
 			Player.list[socket.id].toRemove = true;
 		}
 	});
-	socket.on('tick',function(){
-		var players = [];
-		for(var i in Player.list){
-			if(Player.list[i].debug.invisible === false){
-				if(Player.list[i].region){
-					if(Player.list[i].hp < 1){
-						players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
-					}
-					else{
-						players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
-					}
-				}
-				else{
-					if(Player.list[i].hp < 1){
-						players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
-					}
-					else{
-						players.push(Player.list[i].name);
-					}
-				}
-			}
-		}
-		socket.emit('tick',players);
-	});
 	socket.on('chatMessage',function(data){
 		if(!data){
-			socket.disconnectUser();
 			return;
 		}
 		if(!data.toString){
-			socket.disconnectUser();
 			return;
 		}
 		stringData = data.toString();
@@ -845,10 +816,8 @@ io.sockets.on('connection',function(socket){
 							message:'[!] Spamming the chat has been detected on this account. Please lower your chat message rate.',
 						});
 					}
-					if(Player.list[socket.id].chatWarnings > 10){
-						socket.emit('disconnected');
-						Player.onDisconnect(socket);
-						delete SOCKET_LIST[socket.id];
+					if(Player.list[socket.id].chatWarnings > 7){
+						socket.disconnectUser();
 						return;
 					}
 				}
@@ -866,9 +835,7 @@ io.sockets.on('connection',function(socket){
 			}
 		}
 		else{
-			socket.emit('disconnected');
-			Player.onDisconnect(socket);
-			delete SOCKET_LIST[socket.id];
+			socket.disconnectUser();
 		}
 	});
 });
@@ -956,9 +923,7 @@ setInterval(function(){
 			}
 			if(Player.list[i].toRemove){
 				if(SOCKET_LIST[i]){
-					SOCKET_LIST[i].emit('disconnected');
-					Player.onDisconnect(SOCKET_LIST[i]);
-					delete SOCKET_LIST[i];
+					SOCKET_LIST[i].disconnectUser();
 				}
 				else{
 					delete Player.list[i];
@@ -1128,6 +1093,27 @@ setInterval(function(){
 			}
 		}
 	}
+	var players = [];
+	for(var i in Player.list){
+		if(Player.list[i].debug.invisible === false){
+			if(Player.list[i].region){
+				if(Player.list[i].hp < 1){
+					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
+				}
+				else{
+					players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
+				}
+			}
+			else{
+				if(Player.list[i].hp < 1){
+					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
+				}
+				else{
+					players.push(Player.list[i].name);
+				}
+			}
+		}
+	}
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
 		if(Player.list[socket.id]){
@@ -1168,6 +1154,7 @@ setInterval(function(){
 				}
 			}
 			socket.emit('update',data);
+			socket.emit('playerList',players);
 		}
 		socket.spam -= 0.05;
 	}

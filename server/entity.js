@@ -805,60 +805,62 @@ Actor = function(param){
         }
         for(var i in data){
             if(reload % parseInt(i) === 0){
-                for(var j = 0;j < data[i].length;j++){
-                    if(data[i][j]){
-                        if(data[i][j].manaCost){
-                            if(self.mana >= data[i][j].manaCost){
-                                self.mana -= data[i][j].manaCost;
+                if(data[i]){
+                    for(var j = 0;j < data[i].length;j++){
+                        if(data[i][j]){
+                            if(data[i][j].manaCost){
+                                if(self.mana >= data[i][j].manaCost){
+                                    self.mana -= data[i][j].manaCost;
+                                }
+                                else{
+                                    continue;
+                                }
                             }
-                            else{
-                                continue;
+                            switch(data[i][j].id){
+                                case "projectile":
+                                    self.shootProjectile(data[i][j].projectileType,data[i][j].param);
+                                    break;
+                                case "dash":
+                                    self.dash(data[i][j].param);
                             }
-                        }
-                        switch(data[i][j].id){
-                            case "projectile":
-                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
-                                break;
-                            case "dash":
-                                self.dash(data[i][j].param);
-                        }
-                        if(data[i][j].xpGain){
-                            if(self.type === 'Player'){
-                                self.xp += data[i][j].xpGain;
+                            if(data[i][j].xpGain){
+                                if(self.type === 'Player'){
+                                    self.xp += data[i][j].xpGain;
+                                }
                             }
-                        }
-                        if(data[i][j].hpCost){
-                            if(self.hp > data[i][j].hpCost){
-                                self.hp -= data[i][j].hpCost;
-                            }
-                            else{
-                                if(self.hp > 0){
-                                    self.hp = 0;
-                                    self.onDeath(self);
-                                    if(self.type === 'Player'){
-                                        SOCKET_LIST[self.id].emit('death');
-                                        addToChat('#ff0000',self.name + ' committed suicide.');
-                                        for(var i in SOCKET_LIST){
-                                            if(Player.list[i]){
-                                                if(Player.list[i].map === self.map){
-                                                    SOCKET_LIST[i].emit('createParticle',{
-                                                        x:self.x,
-                                                        y:self.y,
-                                                        map:self.map,
-                                                        particleType:'death',
-                                                        number:40,
-                                                    });
+                            if(data[i][j].hpCost){
+                                if(self.hp > data[i][j].hpCost){
+                                    self.hp -= data[i][j].hpCost;
+                                }
+                                else{
+                                    if(self.hp > 0){
+                                        self.hp = 0;
+                                        self.onDeath(self);
+                                        if(self.type === 'Player'){
+                                            SOCKET_LIST[self.id].emit('death');
+                                            addToChat('#ff0000',self.name + ' committed suicide.');
+                                            for(var i in SOCKET_LIST){
+                                                if(Player.list[i]){
+                                                    if(Player.list[i].map === self.map){
+                                                        SOCKET_LIST[i].emit('createParticle',{
+                                                            x:self.x,
+                                                            y:self.y,
+                                                            map:self.map,
+                                                            particleType:'death',
+                                                            number:40,
+                                                        });
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    else{
-                                        if(self.type === 'Monster'){
-                                            self.dropItems(pt.parent);
+                                        else{
+                                            if(self.type === 'Monster'){
+                                                self.dropItems(pt.parent);
+                                            }
+                                            self.toRemove = true;
                                         }
-                                        self.toRemove = true;
+                                        continue;
                                     }
-                                    continue;
                                 }
                             }
                         }
@@ -1093,6 +1095,9 @@ Player = function(param,socket){
         self.updateStats();
         self.updateXp();
         self.updateAnimation();
+        self.updateAttack();
+        self.updateHp();
+        self.updateMana();
         if(self.mapChange === 0){
             socket.emit('changeMap',self.transporter);
         }
@@ -1151,10 +1156,39 @@ Player = function(param,socket){
         if(self.hp < 1){
             return;
         }
-        if(self.keyPress.leftClick === true){
+        if(self.keyPress.leftClick === true && self.canAttack){
             self.passiveReload += 1;
             self.doAttack(self.passiveAttackData,self.passiveReload);
+            if(self.inventory.items[self.inventory.hotbarSelectedItem]){
+                if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
+                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                        if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
+                            self.inventory.items[self.inventory.hotbarSelectedItem].cooldown = Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].useTime;
+                            self.mainReload += 1;
+                            self.doAttack(self.mainAttackData,self.mainReload);
+                            socket.emit('attack');
+                            if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
+                                self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
+                                if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
+                                    self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                                }
+                                self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
+                            }
+                        }
+                    }
+                }
+            }
         }
+        for(var i in self.inventory.items){
+            if(self.inventory.items[i]){
+                if(self.inventory.items[i].id){
+                    if(self.inventory.items[i].cooldown > 0){
+                        self.inventory.items[i].cooldown -= 1;
+                    }
+                }
+            }
+        }
+        socket.emit('nextReload');
     }
     self.updateStats = function(){
         if(self.inventory.updateStats){
@@ -1781,32 +1815,11 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('nextReload',function(data){
-            socket.detectSpam('game');
-            player.updateAttack();
-            player.updateHp();
-            player.updateMana();
+            socket.disconnectUser();
         });
 
         socket.on('attack',function(data){
-            if(player.hp < 1){
-                return;
-            }
-            socket.detectSpam('gameAttack');
-            player.mainReload += 1;
-            player.doAttack(player.mainAttackData,player.mainReload);
-            if(player.canAttack){
-                if(player.inventory.items[player.inventory.hotbarSelectedItem]){
-                    if(player.inventory.items[player.inventory.hotbarSelectedItem].id){
-                        if(Item.list[player.inventory.items[player.inventory.hotbarSelectedItem].id].equip === 'consume'){
-                            player.inventory.items[player.inventory.hotbarSelectedItem].amount -= 1;
-                            if(player.inventory.items[player.inventory.hotbarSelectedItem].amount <= 0){
-                                player.inventory.items[player.inventory.hotbarSelectedItem] = {};
-                            }
-                            player.inventory.refreshItem(player.inventory.hotbarSelectedItem);
-                        }
-                    }
-                }
-            }
+            socket.disconnectUser();
         });
 
         socket.on('updateTrade',function(data){
@@ -2015,6 +2028,7 @@ Player.onDisconnect = function(socket){
             delete Player.list[socket.id];
         }
     }
+    socket.disconnect();
 }
 Player.getAllInitPack = function(socket){
     try{

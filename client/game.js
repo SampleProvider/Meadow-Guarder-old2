@@ -40,7 +40,6 @@ var lastMap = '';
 
 var respawnTimer = 0;
 
-var attacking = false;
 var inGame = false;
 
 var getEntityDescription = function(entity){
@@ -762,7 +761,6 @@ socket.on('death',function(data){
     healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
     itemMenu.style.display = 'none';
     socket.emit('keyPress',{inputId:'releaseAll'});
-    attacking = false;
 });
 var runRespawn = function(){
     socket.emit('respawn');
@@ -1054,32 +1052,7 @@ var loop = function(){
     window.requestAnimationFrame(loop);
 }
 
-setInterval(function(){
-    if(attacking){
-        if(inventory.items[inventory.hotbarSelectedItem]){
-            if(inventory.items[inventory.hotbarSelectedItem].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
-                    if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
-                        socket.emit('attack');
-                        for(var i in inventory.items){
-                            if(inventory.items[i]){
-                                if(inventory.items[i].id){
-                                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
-                                        inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
-                                        document.getElementById('cooldownDiv' + i).style.height = '100%';
-                                        if(i >= 0 && i <= 9){
-                                            document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        return;
-                    }
-                }
-            }
-        }
-    }
+socket.on("nextReload",function(){
     for(var i in inventory.items){
         if(inventory.items[i]){
             if(inventory.items[i].id){
@@ -1093,15 +1066,24 @@ setInterval(function(){
             }
         }
     }
-    socket.emit('nextReload');
-},50);
-
-var tickArray = [];
-
-socket.on('tick',function(data){
-    if(tickArray.length > 0){
-        tickArray.splice(0,1);
+});
+socket.on("attack",function(){
+    for(var i in inventory.items){
+        if(inventory.items[i]){
+            if(inventory.items[i].id){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
+                    inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
+                    document.getElementById('cooldownDiv' + i).style.height = '100%';
+                    if(i >= 0 && i <= 9){
+                        document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
+                    }
+                }
+            }
+        }
     }
+});
+
+socket.on('playerList',function(data){
     playerList.innerHTML = '';
     for(var i in data){
         playerList.innerHTML += data[i] + '<br>';
@@ -1121,37 +1103,8 @@ disconnectClient = function(){
     selfId = null;
 }
 
-setInterval(function(){
-    if(tickArray.length > 200 && selfId && tabVisible){
-        disconnectClient();
-    }
-    if(tabVisible === true){
-        var d = new Date();
-        tickArray.push(d.getMilliseconds());
-        socket.emit('tick');
-    }
-    disconnectClient = function(){
-        disconnectedDiv.style.display = 'inline-block';
-        if(selfId){
-            Player.list[selfId].spdX = 0;
-            Player.list[selfId].spdY = 0;
-        }
-        setTimeout(function(){
-            location.reload();
-        },5000);
-        socket.emit('timeout');
-        selfId = null;
-    }
-},100);
-
-setInterval(function(){
-    tickArray = [];
-},10000);
-
-setInterval(function(){
-    socket.on('rickroll',function(){
-        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    });
+socket.on('rickroll',function(){
+    window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
 
@@ -1267,7 +1220,6 @@ document.onkeydown = function(event){
     }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
-        attacking = false;
     }
     socket.emit('keyPress',{inputId:key,state:true});
 }
@@ -1282,7 +1234,6 @@ document.onmousemove = function(event){
         var y = -cameraY - Player.list[selfId].y + event.clientY;
         if(event.clientY > window.innerHeight){
             socket.emit('keyPress',{inputId:'releaseAll'});
-            attacking = false;
         }
         mouseX = x;
         mouseY = y;
@@ -1329,7 +1280,6 @@ document.addEventListener("visibilitychange",function(){
     tabVisible = !tabVisible;
     socket.emit('init');
     socket.emit('keyPress',{inputId:"releaseAll",state:true});
-    attacking = false;
 });
 mouseDown = function(event){
     if(inventory.draggingItem.id){
@@ -1338,40 +1288,11 @@ mouseDown = function(event){
     if(document.activeElement === chatInput || document.activeElement === craftInput){
         return;
     }
-    if(selected){
-        socket.emit('keyPress',{inputId:'leftClick',state:true});
-        return;
-    }
     if(!event.isTrusted){
         socket.emit('timeout');
     }
     if(event.button === 0){
         socket.emit('keyPress',{inputId:'leftClick',state:true});
-        if(Player.list[selfId].canAttack){
-            if(inventory.items[inventory.hotbarSelectedItem]){
-                if(inventory.items[inventory.hotbarSelectedItem].id){
-                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar' || Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'consume'){
-                        if(inventory.items[inventory.hotbarSelectedItem].cooldown === 0 || inventory.items[inventory.hotbarSelectedItem].cooldown === undefined){
-                            socket.emit('attack');
-                            attacking = true;
-                            for(var i in inventory.items){
-                                if(inventory.items[i]){
-                                    if(inventory.items[i].id){
-                                        if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
-                                            inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
-                                            document.getElementById('cooldownDiv' + i).style.height = '100%';
-                                            if(i >= 0 && i <= 9){
-                                                document.getElementById('hotbarCooldownDiv' + i).style.height = '100%';
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
     if(event.button === 2){
         socket.emit('keyPress',{inputId:'rightClick',state:true});
@@ -1380,7 +1301,6 @@ mouseDown = function(event){
 mouseUp = function(event){
     if(event.button === 0){
         socket.emit('keyPress',{inputId:'leftClick',state:false});
-        attacking = false;
     }
     if(event.button === 2){
         socket.emit('keyPress',{inputId:'rightClick',state:false});

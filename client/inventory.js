@@ -119,7 +119,7 @@ Inventory = function(socket,server){
                 self.addItem(id,amount - Item.list[id].maxStack);
             }
             else{
-                self.items[hasSpace.index] = {id:id,amount:amount || 1};
+                self.items[hasSpace.index] = {id:id,amount:amount || 1,cooldown:0};
             }
             if(hasSpace.index + '' === self.hotbarSelectedItem + ''){
                 self.updateStats = true;
@@ -134,7 +134,7 @@ Inventory = function(socket,server){
                 self.addItem(id,amount + self.items[hasSpace.index].amount - Item.list[id].maxStack);
             }
             else{
-                self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount};
+                self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount,cooldown:0};
             }
             self.refreshItem(hasSpace.index);
             socket.emit('itemChange');

@@ -150,46 +150,6 @@ npcTracers.onclick = function(){
     }
 };
 
-var attackIncrease = document.createElement('button');
-attackIncrease.className = 'UI-button-light';
-attackIncrease.style.position = 'static';
-attackIncrease.style.top = '8px';
-attackIncrease.innerHTML = 'Attack Increase';
-hackedCollumn4.appendChild(attackIncrease);
-
-var attackIncreaseState = false;
-attackIncrease.onclick = function(){
-    attackIncreaseState = !attackIncreaseState;
-    if(attackIncreaseState){
-        attackIncrease.style.color = '#ffffff';
-        attackIncrease.style.backgroundColor = '#725640';
-    }
-    else{
-        attackIncrease.style.color = '#ffffff';
-        attackIncrease.style.backgroundColor = '#362a1e';
-    }
-};
-
-var tickIncrease = document.createElement('button');
-tickIncrease.className = 'UI-button-light';
-tickIncrease.style.position = 'static';
-tickIncrease.style.top = '8px';
-tickIncrease.innerHTML = 'Tick Increase';
-hackedCollumn4.appendChild(tickIncrease);
-
-var tickIncreaseState = false;
-tickIncrease.onclick = function(){
-    tickIncreaseState = !tickIncreaseState;
-    if(tickIncreaseState){
-        tickIncrease.style.color = '#ffffff';
-        tickIncrease.style.backgroundColor = '#725640';
-    }
-    else{
-        tickIncrease.style.color = '#ffffff';
-        tickIncrease.style.backgroundColor = '#362a1e';
-    }
-};
-
 var freeCam = document.createElement('button');
 freeCam.className = 'UI-button-light';
 freeCam.style.position = 'static';
@@ -212,28 +172,6 @@ freeCam.onclick = function(){
     else{
         freeCam.style.color = '#ffffff';
         freeCam.style.backgroundColor = '#362a1e';
-    }
-};
-
-var autoRing = document.createElement('button');
-autoRing.className = 'UI-button-light';
-autoRing.style.position = 'static';
-autoRing.style.top = '8px';
-autoRing.innerHTML = 'Auto Ring';
-hackedCollumn4.appendChild(autoRing);
-
-var autoRingState = false;
-var autoRingDirection = 0;
-
-autoRing.onclick = function(){
-    autoRingState = !autoRingState;
-    if(autoRingState){
-        autoRing.style.color = '#ffffff';
-        autoRing.style.backgroundColor = '#725640';
-    }
-    else{
-        autoRing.style.color = '#ffffff';
-        autoRing.style.backgroundColor = '#362a1e';
     }
 };
 
@@ -387,32 +325,6 @@ MGHC = function(){
             socket.emit('keyPress',{inputId:'direction',state:{x:closestPlayer.x - Player.list[selfId].x,y:closestPlayer.y - Player.list[selfId].y}});
         }
     }
-    if(tickIncreaseState){
-        socket.emit('nextReload');
-    }
-    if(autoRingState){
-        if(t % 25 === 0){
-            for(var i = 0;i < 8;i++){
-                socket.emit('keyPress',{inputId:"direction",state:{x:Math.cos(autoRingDirection / 180 * Math.PI),y:Math.sin(autoRingDirection / 180 * Math.PI)}});
-                socket.emit('attack');
-                autoRingDirection += 45;
-            }
-        }
-        autoRingDirection += 2;
-    }
-    else if(attackIncreaseState){
-        if(t % 4 === 0){
-            if(inventory.items[inventory.hotbarSelectedItem]){
-                if(inventory.items[inventory.hotbarSelectedItem].id){
-                    if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === 'hotbar'){
-                        if(attacking || attackMonstersState || attackPlayersState){
-                            socket.emit('attack');
-                        }
-                    }
-                }
-            }
-        }
-    }
 };
 MGHC1 = function(){
     if(freeCamState){
@@ -512,7 +424,7 @@ document.onmousemove = function(event){
         }
         rawMouseX = event.clientX;
         rawMouseY = event.clientY;
-        if(!attackMonstersState && !attackPlayersState && !autoRingState){
+        if(!attackMonstersState && !attackPlayersState){
             socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
             mouseX = x;
             mouseY = y;

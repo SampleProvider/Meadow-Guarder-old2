@@ -52,6 +52,9 @@ var Entity = function(initPack){
         }
         self.interpolationStage -= 1;
     }
+	self.getSquareDistance = function(pt){
+		return Math.max(Math.abs(Math.floor(self.x - pt.x)),Math.abs(Math.floor(self.y - pt.y))) / 64;
+    }
     self.isColliding = function(pt){
         if(pt.x + pt.width / 2 <= self.x - self.width / 2){
             return false;
@@ -303,6 +306,9 @@ var Monster = function(initPack){
     var self = Actor(initPack);
     self.monsterType = initPack.monsterType;
     self.draw = function(){
+        if(self.monsterType === 'tenEyedOne' && self.getSquareDistance(Player.list[selfId]) < 32){
+            fadeInSong('tenEyedOne');
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
