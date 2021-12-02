@@ -174,12 +174,12 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":25000,
+        "hpMax":10000,
         "stats":{
-            "damage":1,
+            "damage":30,
             "defense":0,
             "hpRegen":20,
-            "critChance":0.01,
+            "critChance":0.05,
             "critPower":10000
         },
         "maxSpeed":5,
@@ -196,7 +196,7 @@
             },
             "paper":{
                 "chance":1,
-                "amount":10
+                "amount":15
             }
         },
         "img":{
@@ -213,6 +213,23 @@
                     "directionDeviation":360,
                     "projectilePattern":"homing",
                     "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":25,
+                    "timer":80,
+                    "directionDeviation":60,
+                    "collisionType":"none"
+                }
+            }],
+            "40":[{
+                "id":"dash",
+                "param":{
+                    "directionDeviation":15,
+                    "time":10,
+                    "dashDistance":8
                 }
             }]
         }
