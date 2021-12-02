@@ -1182,6 +1182,7 @@ releaseAll = function(){
 }
 
 document.onkeydown = function(event){
+    tabVisible = true;
     if(!selfId){
         return;
     }
@@ -1228,11 +1229,13 @@ document.onkeydown = function(event){
     socket.emit('keyPress',{inputId:key,state:true});
 }
 document.onkeyup = function(event){
+    tabVisible = true;
     chatPress = false;
     var key = event.key || event.keyCode;
     socket.emit('keyPress',{inputId:key,state:false});
 }
 document.onmousemove = function(event){
+    tabVisible = true;
     if(selfId){
         var x = -cameraX - Player.list[selfId].x + event.clientX;
         var y = -cameraY - Player.list[selfId].y + event.clientY;
@@ -1286,6 +1289,7 @@ document.addEventListener("visibilitychange",function(){
     socket.emit('keyPress',{inputId:"releaseAll",state:true});
 });
 mouseDown = function(event){
+    tabVisible = true;
     if(inventory.draggingItem.id){
         return;
     }
@@ -1303,6 +1307,7 @@ mouseDown = function(event){
     }
 }
 mouseUp = function(event){
+    tabVisible = true;
     if(event.button === 0){
         socket.emit('keyPress',{inputId:'leftClick',state:false});
     }
@@ -1311,10 +1316,12 @@ mouseUp = function(event){
     }
 }
 mouseInGame = function(event){
+    tabVisible = true;
     scrollAllowed = true;
     inGame = true;
 }
 mouseInMenu = function(event){
+    tabVisible = true;
     if(inGame === true){
         itemMenu.style.display = 'none';
     }
@@ -1322,6 +1329,7 @@ mouseInMenu = function(event){
     inGame = false;
 }
 mouseInHotbar = function(event){
+    tabVisible = true;
     if(inGame === true){
         itemMenu.style.display = 'none';
     }
@@ -1334,14 +1342,17 @@ document.querySelectorAll("button").forEach(function(item){
     });
 });
 window.onresize = function(){
+    tabVisible = true;
     pageDiv.style.backgroundSize = window.innerWidth + 'px,' + window.innerHeight + 'px';
     pageDiv.style.width = window.innerWidth + 'px';
     pageDiv.style.height = window.innerHeight + 'px';
 }
 document.oncontextmenu = function(event){
+    tabVisible = true;
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){
+    tabVisible = true;
     if(!selfId){
         return;
     }

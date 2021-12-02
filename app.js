@@ -489,6 +489,7 @@ io.sockets.on('connection',function(socket){
 								message:'[!] ' + name + ' is not trapped anymore.',
 								debug:true,
 							});
+							Player.list[i].canMove = true;
 						}
 					},function(name){
 						socket.emit('addToChat',{
@@ -536,6 +537,7 @@ io.sockets.on('connection',function(socket){
 							message:'[!] ' + Player.list[socket.id].name + ' is not invincible anymore.',
 							debug:true,
 						});
+						Player.list[socket.id].invincible = false;
 					}
 					return;
 				}

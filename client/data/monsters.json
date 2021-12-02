@@ -176,7 +176,7 @@
         "name":"Ten Eyed One",
         "hpMax":10000,
         "stats":{
-            "damage":30,
+            "damage":20,
             "defense":0,
             "hpRegen":20,
             "critChance":0.05,

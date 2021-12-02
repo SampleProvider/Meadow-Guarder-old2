@@ -215,7 +215,6 @@ MGHC = function(){
             };
             ctx.strokeStyle = tracers[Monster.list[i].monsterType].strokeStyle;
             ctx.lineWidth = tracers[Monster.list[i].monsterType].lineWidth;
-            ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(Player.list[selfId].x,Player.list[selfId].y);
             ctx.lineTo(Monster.list[i].x,Monster.list[i].y);
