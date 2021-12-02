@@ -305,10 +305,11 @@ Projectile.list = {};
 var Monster = function(initPack){
     var self = Actor(initPack);
     self.monsterType = initPack.monsterType;
+    if(self.monsterType === 'teneyedone'){
+        fadeInSong('tenEyedOne');
+        fadeOutSong('theMeadow');
+    }
     self.draw = function(){
-        if(self.monsterType === 'tenEyedOne' && self.getSquareDistance(Player.list[selfId]) < 32){
-            fadeInSong('tenEyedOne');
-        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -327,6 +328,10 @@ var Monster = function(initPack){
         }
         else{
             if(settings.entityFadeOut === false){
+                if(self.monsterType === 'teneyedone'){
+                    fadeOutSong('tenEyedOne');
+                    fadeInSong('theMeadow');
+                }
                 delete Monster.list[self.id];
                 return;
             }
@@ -335,6 +340,10 @@ var Monster = function(initPack){
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     ctx.globalAlpha = 1;
+                    if(self.monsterType === 'teneyedone'){
+                        fadeOutSong('tenEyedOne');
+                        fadeInSong('theMeadow');
+                    }
                     delete Monster.list[self.id];
                     return;
                 }

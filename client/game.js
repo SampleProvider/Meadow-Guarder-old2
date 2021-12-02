@@ -675,6 +675,10 @@ socket.on('update',function(data){
     for(var i in Monster.list){
         if(Monster.list[i].updated === false){
             if(!Monster.list[i].toRemove){
+                if(Monster.list[i].monsterType === 'teneyedone'){
+                    fadeOutSong('tenEyedOne');
+                    fadeInSong('theMeadow');
+                }
                 delete Monster.list[i];
             }
         }

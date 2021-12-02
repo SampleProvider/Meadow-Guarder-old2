@@ -13,15 +13,27 @@ stopSong = function(songName){
     songs[songName].currentTime = 0;
 }
 fadeInSong = function(songName){
+    songs[songName].currentTime = 0;
     songs[songName].play();
-    songs[songName].setVolume(0);
+    songs[songName].volume = 0;
     var fade = 0;
     var interval = setInterval(function(){
-        songs[songName].setVolume(fade);
+        songs[songName].volume = fade;
         fade += 0.05;
         if(fade > 1){
             clearInterval(interval);
         }
-    },100);
+    },100 * (fade + 0.2));
 }
-// setTimeout(function(){fadeInSong('tenEyedOne');},1000);
+fadeOutSong = function(songName){
+    songs[songName].volume = 1;
+    var fade = 1;
+    var interval = setInterval(function(){
+        songs[songName].volume = fade;
+        fade -= 0.05;
+        if(fade <= 0){
+            stopSong(songName);
+            clearInterval(interval);
+        }
+    },100 * (1 - fade + 0.2));
+}
