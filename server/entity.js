@@ -805,62 +805,60 @@ Actor = function(param){
         }
         for(var i in data){
             if(reload % parseInt(i) === 0){
-                if(data[i]){
-                    for(var j = 0;j < data[i].length;j++){
-                        if(data[i][j]){
-                            if(data[i][j].manaCost){
-                                if(self.mana >= data[i][j].manaCost){
-                                    self.mana -= data[i][j].manaCost;
-                                }
-                                else{
-                                    continue;
-                                }
+                for(var j = 0;j < data[i].length;j++){
+                    if(data[i][j]){
+                        if(data[i][j].manaCost){
+                            if(self.mana >= data[i][j].manaCost){
+                                self.mana -= data[i][j].manaCost;
                             }
-                            switch(data[i][j].id){
-                                case "projectile":
-                                    self.shootProjectile(data[i][j].projectileType,data[i][j].param);
-                                    break;
-                                case "dash":
-                                    self.dash(data[i][j].param);
+                            else{
+                                continue;
                             }
-                            if(data[i][j].xpGain){
-                                if(self.type === 'Player'){
-                                    self.xp += data[i][j].xpGain;
-                                }
+                        }
+                        switch(data[i][j].id){
+                            case "projectile":
+                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
+                                break;
+                            case "dash":
+                                self.dash(data[i][j].param);
+                        }
+                        if(data[i][j].xpGain){
+                            if(self.type === 'Player'){
+                                self.xp += data[i][j].xpGain;
                             }
-                            if(data[i][j].hpCost){
-                                if(self.hp > data[i][j].hpCost){
-                                    self.hp -= data[i][j].hpCost;
-                                }
-                                else{
-                                    if(self.hp > 0){
-                                        self.hp = 0;
-                                        self.onDeath(self);
-                                        if(self.type === 'Player'){
-                                            SOCKET_LIST[self.id].emit('death');
-                                            addToChat('#ff0000',self.name + ' committed suicide.');
-                                            for(var i in SOCKET_LIST){
-                                                if(Player.list[i]){
-                                                    if(Player.list[i].map === self.map){
-                                                        SOCKET_LIST[i].emit('createParticle',{
-                                                            x:self.x,
-                                                            y:self.y,
-                                                            map:self.map,
-                                                            particleType:'death',
-                                                            number:40,
-                                                        });
-                                                    }
+                        }
+                        if(data[i][j].hpCost){
+                            if(self.hp > data[i][j].hpCost){
+                                self.hp -= data[i][j].hpCost;
+                            }
+                            else{
+                                if(self.hp > 0){
+                                    self.hp = 0;
+                                    self.onDeath(self);
+                                    if(self.type === 'Player'){
+                                        SOCKET_LIST[self.id].emit('death');
+                                        addToChat('#ff0000',self.name + ' committed suicide.');
+                                        for(var i in SOCKET_LIST){
+                                            if(Player.list[i]){
+                                                if(Player.list[i].map === self.map){
+                                                    SOCKET_LIST[i].emit('createParticle',{
+                                                        x:self.x,
+                                                        y:self.y,
+                                                        map:self.map,
+                                                        particleType:'death',
+                                                        number:40,
+                                                    });
                                                 }
                                             }
                                         }
-                                        else{
-                                            if(self.type === 'Monster'){
-                                                self.dropItems(pt.parent);
-                                            }
-                                            self.toRemove = true;
-                                        }
-                                        continue;
                                     }
+                                    else{
+                                        if(self.type === 'Monster'){
+                                            self.dropItems(pt.parent);
+                                        }
+                                        self.toRemove = true;
+                                    }
+                                    return;
                                 }
                             }
                         }
