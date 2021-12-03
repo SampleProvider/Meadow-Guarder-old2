@@ -157,8 +157,8 @@ Inventory = function(socket,server){
         var itemsToRemove = [];
         for(var i in self.items){
             if(self.items[i].id === item){
-                if(index2.toString().slice(0,5) === 'trade'){
-                    if(parseInt(index2.substring(5)) >= 9){
+                if(i.toString().slice(0,5) === 'trade'){
+                    if(parseInt(i.substring(5)) >= 9){
                         continue;
                     }
                     else if(server === false){
@@ -242,8 +242,8 @@ Inventory = function(socket,server){
         var amountFound = 0;
         for(var i in self.items){
             if(self.items[i].id === item){
-                if(index2.toString().slice(0,5) === 'trade'){
-                    if(parseInt(index2.substring(5)) >= 9){
+                if(i.toString().slice(0,5) === 'trade'){
+                    if(parseInt(i.substring(5)) >= 9){
                         continue;
                     }
                     else if(server === false){
