@@ -557,6 +557,20 @@
             }
         }]
     },
+    "rustysword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"rustysword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        }]
+    },
     "coppershiv":{
         "1":[{
             "id":"projectile",

@@ -2009,8 +2009,8 @@ Player.onDisconnect = function(socket){
             if(Player.list[socket.id].debug.invisible === false){
                 addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
             }
-            delete Player.list[socket.id];
         }
+        delete Player.list[socket.id];
     }
     socket.disconnect();
 }

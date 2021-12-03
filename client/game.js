@@ -204,9 +204,11 @@ var canDragTradeItems = true;
 
 acceptTrade.onclick = function(){
     acceptTrade.style.display = 'none';
-    declineTrade.style.display = 'none';
     socket.emit('acceptTrade');
     canDragTradeItems = false;
+    for(var i in inventory.craftItems){
+        inventory.updateCraftClient(i);
+    }
 }
 
 declineTrade.onclick = function(){
@@ -214,6 +216,9 @@ declineTrade.onclick = function(){
     declineTrade.style.display = 'none';
     socket.emit('declineTrade');
     canDragTradeItems = false;
+    for(var i in inventory.craftItems){
+        inventory.updateCraftClient(i);
+    }
 }
 
 var text = '';

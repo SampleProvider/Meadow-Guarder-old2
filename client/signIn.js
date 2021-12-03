@@ -320,7 +320,7 @@ socket.on('createAccountResponse',function(data){
     }
     else if(data.success === 3){
         signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters.</span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters. Invalid characters: <b>--,;,\',<,></b></span><br>' + signErrorText;
     }
     else if(data.success === 4){
         signErrorText = signError.innerHTML;
@@ -329,6 +329,10 @@ socket.on('createAccountResponse',function(data){
     else if(data.success === 5){
         signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not be all spaces.</span><br>' + signErrorText;
+    }
+    else if(data.success === 6){
+        signErrorText = signError.innerHTML;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not contain a bad word.</span><br>' + signErrorText;
     }
 });
 socket.on('deleteAccountResponse',function(data){
