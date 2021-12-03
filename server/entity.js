@@ -1474,6 +1474,13 @@ Player = function(param,socket){
             }
         }
     }
+    self.updateTrade = function(pack){
+        if(self.tradingEntity){
+            if(Player.list[self.tradingEntity]){
+                SOCKET_LIST[self.tradingEntity].emit('updateTrade',pack);
+            }
+        }
+    }
     self.startDialogue = function(message){
         if(message.message === undefined){
             self.endDialogue();
@@ -1818,27 +1825,6 @@ Player.onConnect = function(socket,username){
 
         socket.on('attack',function(data){
             socket.disconnectUser();
-        });
-
-        socket.on('updateTrade',function(data){
-            socket.detectSpam('game');
-            if(!data){
-                socket.disconnectUser();
-                return;
-            }
-            if(typeof data !== 'object' || Array.isArray(data) || data === null){
-                socket.disconnectUser();
-                return;
-            }
-            if(Object.keys(data).length === 0){
-                socket.disconnectUser();
-                return;
-            }
-            if(player.tradingEntity){
-                if(Player.list[player.tradingEntity]){
-                    SOCKET_LIST[player.tradingEntity].emit('updateTrade',data);
-                }
-            }
         });
 
         socket.on('acceptTrade',function(data){

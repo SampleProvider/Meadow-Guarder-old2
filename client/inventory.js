@@ -157,6 +157,23 @@ Inventory = function(socket,server){
         var itemsToRemove = [];
         for(var i in self.items){
             if(self.items[i].id === item){
+                if(index2.toString().slice(0,5) === 'trade'){
+                    if(parseInt(index2.substring(5)) >= 9){
+                        continue;
+                    }
+                    else if(server === false){
+                        if(canDragTradeItems === false){
+                            continue;
+                        }
+                    }
+                    else{
+                        if(Player.list[socket.id]){
+                            if(Player.list[socket.id].acceptedTrade){
+                                continue;
+                            }
+                        }
+                    }
+                }
                 itemsToRemove.push(i);
             }
         }
@@ -225,6 +242,23 @@ Inventory = function(socket,server){
         var amountFound = 0;
         for(var i in self.items){
             if(self.items[i].id === item){
+                if(index2.toString().slice(0,5) === 'trade'){
+                    if(parseInt(index2.substring(5)) >= 9){
+                        continue;
+                    }
+                    else if(server === false){
+                        if(canDragTradeItems === false){
+                            continue;
+                        }
+                    }
+                    else{
+                        if(Player.list[socket.id]){
+                            if(Player.list[socket.id].acceptedTrade){
+                                continue;
+                            }
+                        }
+                    }
+                }
                 amountFound += self.items[i].amount;
             }
         }
@@ -1223,14 +1257,14 @@ Inventory = function(socket,server){
                 self.updateStats = true;
             }
             socket.emit('updateItem',{items:self.items,index:index});
+            if(index.toString().slice(0,5) === 'trade' && parseInt(index.substring(5)) <= 8){
+                Player.list[socket.id].updateTrade({
+                    index:parseInt(index.substring(5)),
+                    id:self.items[index].id,
+                    amount:self.items[index].amount,
+                });
+            }
             return;
-        }
-        if(index.toString().slice(0,5) === 'trade' && parseInt(index.substring(5)) <= 8){
-            socket.emit('updateTrade',{
-                index:parseInt(index.substring(5)),
-                id:self.items[index].id,
-                amount:self.items[index].amount,
-            });
         }
         self.addItemClient(index);
     }
