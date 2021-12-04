@@ -2384,6 +2384,8 @@ Monster = function(param){
 
     self.spawnId = param.spawnId;
 
+    self.updated = true;
+
     self.trackTime = 100;
     self.randomPos = {
         x:self.x,

@@ -950,8 +950,10 @@ setInterval(function(){
 				}
 			}
 			if(update === false){
+				Monster.list[i].updated = false;
 				continue;
 			}
+			Monster.list[i].updated = true;
             Monster.list[i].update();
             if(pack[Monster.list[i].map]){
 				if(pack[Monster.list[i].map][Math.floor(Monster.list[i].x / 1024)]){
@@ -1091,12 +1093,14 @@ setInterval(function(){
 		}
 	}
 	for(var i in Monster.list){
-		for(var j in Projectile.list){
-			if(Projectile.list[j].isColliding(Monster.list[i]) && i + '' !== Projectile.list[j].parent + ''){
-				if(Monster.list[i].team !== Projectile.list[j].team){
-					Monster.list[i].onDamage(Projectile.list[j]);
-					if(Monster.list[i].toRemove){
-						break;
+		if(Monster.list[i].updated){
+			for(var j in Projectile.list){
+				if(Projectile.list[j].isColliding(Monster.list[i]) && i + '' !== Projectile.list[j].parent + ''){
+					if(Monster.list[i].team !== Projectile.list[j].team){
+						Monster.list[i].onDamage(Projectile.list[j]);
+						if(Monster.list[i].toRemove){
+							break;
+						}
 					}
 				}
 			}
