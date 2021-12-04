@@ -733,43 +733,50 @@
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":-60
+                "direction":-60,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":-40
+                "direction":-40,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":-20
+                "direction":-20,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":0
+                "direction":0,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":20
+                "direction":20,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":40
+                "direction":40,
+                "collisionType":"none"
             }
         },{
             "id":"projectile",
             "projectileType":"alienflames",
             "param":{
-                "direction":60
+                "direction":60,
+                "collisionType":"none"
             }
         }]
     },
@@ -780,7 +787,8 @@
             "param":{
                 "spin":20,
                 "pierce":5,
-                "directionDeviation":5
+                "directionDeviation":5,
+                "collisionType":"none"
             }
         }]
     },
