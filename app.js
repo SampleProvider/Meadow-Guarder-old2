@@ -934,9 +934,7 @@ setInterval(function(){
 				if(SOCKET_LIST[i]){
 					SOCKET_LIST[i].disconnectUser();
 				}
-				else{
-					delete Player.list[i];
-				}
+				delete Player.list[i];
 				continue;
 			}
         }

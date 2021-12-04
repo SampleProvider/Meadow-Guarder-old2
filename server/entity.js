@@ -162,9 +162,7 @@ Entity = function(param){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
     }
 	self.getSquareDistance = function(pt){
-        if(pt){
-            return Math.max(Math.abs(Math.floor(self.x - pt.x)),Math.abs(Math.floor(self.y - pt.y))) / 64;
-        }
+		return Math.max(Math.abs(Math.floor(self.x - pt.x)),Math.abs(Math.floor(self.y - pt.y))) / 64;
     }
     self.isColliding = function(pt){
         if(pt.map !== self.map){
