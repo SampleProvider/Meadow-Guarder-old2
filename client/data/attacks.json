@@ -707,7 +707,7 @@
             "param":{
                 "sameId":true,
                 "pierce":-1,
-                "timer":5,
+                "timer":10,
                 "relativeToParent":true,
                 "projectilePattern":"shiv",
                 "collisionType":"none"
