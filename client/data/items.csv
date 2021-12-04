@@ -1,5 +1,5 @@
 id,name,rarity,PPR,drawId,displayItem,maxStack,equip,type,damage,meleeDamage,rangedDamage,magicDamage,critChance,critPower,manaCost,useTime,missChance,DPS,DPR,defense,hp,hpRegen,mana,manaRegen,movementSpeed,BPR,slots,axePower,pickaxePower,scythePower,attacks,passives,buffs,debuffs,effects,EPR,description
-death,Death,6.0,148958741.64,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,1,0.00,20020020000.00,148958482.14,1000,1000,1000.00,1000,1000.00,0,259.50,1000,0,0,0,death,none,all,all,none,0.00,How did you get this? sp made an oopsie.
+death,Death,6.0,148958482.14,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,1,0.00,20020020000.00,148958482.14,0,0,0.00,0,0.00,0,0.00,0,0,0,0,death,none,all,all,none,0.00,How did you get this? sp made an oopsie.
 coppersword,Copper Sword,0.5,1.01,80,false,1,hotbar,Weapon,0,6,0,0,0.05,0.00,0,10,0.50,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppersword,none,none,none,none,0.00,
 ironsword,Iron Sword,1.0,1.06,81,false,1,hotbar,Weapon,0,11,0,0,0.05,0.00,0,10,0.50,11.55,1.06,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironsword,none,none,none,none,0.00,
 goldsword,Gold Sword,2.0,1.03,82,false,1,hotbar,Weapon,0,24,0,0,0.05,0.00,0,10,0.50,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldsword,none,none,none,none,0.00,
@@ -8,14 +8,14 @@ azuritesword,Azurite Sword,3.0,1.01,84,false,1,hotbar,Weapon,0,42,0,0,0.05,0.00,
 emeralditesword,Emeraldite Sword,3.5,1.01,85,false,1,hotbar,Weapon,0,53,0,0,0.05,0.00,0,10,0.50,55.65,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditesword,none,none,none,none,0.00,
 rubysword,Ruby Sword,4.0,1.02,86,false,1,hotbar,Weapon,0,66,0,0,0.05,0.00,0,10,0.50,69.30,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubysword,none,none,none,none,0.00,
 diamondsword,Diamond Sword,5.0,1.01,87,false,1,hotbar,Weapon,0,95,0,0,0.05,0.00,0,10,0.50,99.75,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondsword,none,none,none,none,0.00,
-copperstaff,Copper Staff,0.5,1.00,88,true,1,hotbar,Weapon,0,0,0,13,0.05,0.00,3,10,0.50,13.65,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperstaff,none,none,none,none,0.00,
-ironstaff,Iron Staff,1.0,1.04,89,true,1,hotbar,Weapon,0,0,0,25,0.05,0.00,5,10,0.50,26.25,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironstaff,none,none,none,none,0.00,
-goldstaff,Gold Staff,2.0,0.25,90,true,1,hotbar,Weapon,0,0,0,40,0.05,0.00,9,10,0.50,42.00,0.25,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldstaff,none,none,none,none,0.00,
-amethyststaff,Amethyst Staff,2.5,0.19,91,true,1,hotbar,Weapon,0,0,0,57,0.05,0.00,12,10,0.50,59.85,0.19,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethyststaff,none,none,none,none,0.00,
-azuritestaff,Azurite Staff,3.0,0.27,92,true,1,hotbar,Weapon,0,0,0,72,0.05,0.00,13,10,0.50,75.60,0.27,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritestaff,none,none,none,none,0.00,
-emeralditestaff,Emeraldite Staff,3.5,0.22,93,true,1,hotbar,Weapon,0,0,0,93,0.05,0.00,16,10,0.50,97.65,0.22,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditestaff,none,none,none,none,0.00,
-rubystaff,Ruby Staff,4.0,0.20,94,true,1,hotbar,Weapon,0,0,0,117,0.05,0.00,19,10,0.50,122.85,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubystaff,none,none,none,none,0.00,
-diamondstaff,Diamond Staff,5.0,0.22,95,true,1,hotbar,Weapon,0,0,0,168,0.05,0.00,24,10,0.50,176.40,0.22,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondstaff,none,none,none,none,0.00,
+copperstaff,Copper Staff,0.5,1.03,88,true,1,hotbar,Weapon,0,0,0,13,0.05,0.00,3,10,0.50,13.65,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperstaff,none,none,none,none,0.00,
+ironstaff,Iron Staff,1.0,1.03,89,true,1,hotbar,Weapon,0,0,0,24,0.05,0.00,5,10,0.50,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironstaff,none,none,none,none,0.00,
+goldstaff,Gold Staff,2.0,1.02,90,true,1,hotbar,Weapon,0,0,0,50,0.05,0.00,8,10,0.50,52.50,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldstaff,none,none,none,none,0.00,
+amethyststaff,Amethyst Staff,2.5,0.99,91,true,1,hotbar,Weapon,0,0,0,70,0.05,0.00,11,10,0.50,73.50,0.99,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethyststaff,none,none,none,none,0.00,
+azuritestaff,Azurite Staff,3.0,1.00,92,true,1,hotbar,Weapon,0,0,0,90,0.05,0.00,13,10,0.50,94.50,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritestaff,none,none,none,none,0.00,
+emeralditestaff,Emeraldite Staff,3.5,1.00,93,true,1,hotbar,Weapon,0,0,0,115,0.05,0.00,16,10,0.50,120.75,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditestaff,none,none,none,none,0.00,
+rubystaff,Ruby Staff,4.0,1.01,94,true,1,hotbar,Weapon,0,0,0,143,0.05,0.00,19,10,0.50,150.15,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubystaff,none,none,none,none,0.00,
+diamondstaff,Diamond Staff,5.0,1.00,95,true,1,hotbar,Weapon,0,0,0,207,0.05,0.00,26,10,0.50,217.35,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondstaff,none,none,none,none,0.00,
 copperwaraxe,Copper Waraxe,0.5,1.01,96,true,1,hotbar,Weapon,0,0,5,0,0.05,0.00,0,15,0.10,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperwaraxe,none,none,none,none,0.00,
 ironwaraxe,Iron Waraxe,1.0,1.04,97,true,1,hotbar,Weapon,0,0,9,0,0.05,0.00,0,15,0.10,11.34,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironwaraxe,none,none,none,none,0.00,
 goldwaraxe,Gold Waraxe,2.0,1.03,98,true,1,hotbar,Weapon,0,0,20,0,0.05,0.00,0,15,0.10,25.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldwaraxe,none,none,none,none,0.00,
@@ -24,14 +24,14 @@ azuritewaraxe,Azuite Waraxe,3.0,1.01,100,true,1,hotbar,Weapon,0,0,35,0,0.05,0.00
 emeralditewaraxe,Emeraldite Waraxe,3.5,1.01,101,true,1,hotbar,Weapon,0,0,44,0,0.05,0.00,0,15,0.10,55.44,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditewaraxe,none,none,none,none,0.00,
 rubywaraxe,Ruby Waraxe,4.0,1.02,102,true,1,hotbar,Weapon,0,0,55,0,0.05,0.00,0,15,0.10,69.30,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubywaraxe,none,none,none,none,0.00,
 diamondwaraxe,Diamond Waraxe,5.0,1.01,103,true,1,hotbar,Weapon,0,0,79,0,0.05,0.00,0,15,0.10,99.54,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondwaraxe,none,none,none,none,0.00,
-copperclaw,Copper Claw,0.5,1.01,104,false,1,hotbar,Weapon,0,9,0,0,0.05,0.00,0,3,0.90,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperclaw,none,none,none,none,0.00,
-ironclaw,Iron Claw,1.0,1.03,105,false,1,hotbar,Weapon,0,16,0,0,0.05,0.00,0,3,0.90,11.20,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironclaw,none,none,none,none,0.00,
-goldclaw,Gold Claw,2.0,1.00,106,false,1,hotbar,Weapon,0,35,0,0,0.05,0.00,0,3,0.90,24.50,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldclaw,none,none,none,none,0.00,
-amethystclaw,Amethsyt Claw,2.5,1.01,107,false,1,hotbar,Weapon,0,48,0,0,0.05,0.00,0,3,0.90,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystclaw,none,none,none,none,0.00,
-azuriteclaw,Azurite Claw,3.0,1.01,108,false,1,hotbar,Weapon,0,63,0,0,0.05,0.00,0,3,0.90,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuriteclaw,none,none,none,none,0.00,
-emeralditeclaw,Emeraldite Claw,3.5,1.02,109,false,1,hotbar,Weapon,0,80,0,0,0.05,0.00,0,3,0.90,56.00,1.02,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditeclaw,none,none,none,none,0.00,
-rubyclaw,Ruby Claw,4.0,1.01,110,false,1,hotbar,Weapon,0,98,0,0,0.05,0.00,0,3,0.90,68.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubyclaw,none,none,none,none,0.00,
-diamondclaw,Diamond Claw,5.0,1.01,111,false,1,hotbar,Weapon,0,142,0,0,0.05,0.00,0,3,0.90,99.40,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondclaw,none,none,none,none,0.00,
+copperclaw,Copper Claw,0.5,1.01,104,false,1,hotbar,Weapon,0,6,0,0,0.05,0.00,0,3,0.85,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperclaw,none,none,none,none,0.00,
+ironclaw,Iron Claw,1.0,0.96,105,false,1,hotbar,Weapon,0,10,0,0,0.05,0.00,0,3,0.85,10.50,0.96,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironclaw,none,none,none,none,0.00,
+goldclaw,Gold Claw,2.0,0.99,106,false,1,hotbar,Weapon,0,23,0,0,0.05,0.00,0,3,0.85,24.15,0.99,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldclaw,none,none,none,none,0.00,
+amethystclaw,Amethsyt Claw,2.5,1.01,107,false,1,hotbar,Weapon,0,32,0,0,0.05,0.00,0,3,0.85,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,amethystclaw,none,none,none,none,0.00,
+azuriteclaw,Azurite Claw,3.0,1.01,108,false,1,hotbar,Weapon,0,42,0,0,0.05,0.00,0,3,0.85,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuriteclaw,none,none,none,none,0.00,
+emeralditeclaw,Emeraldite Claw,3.5,1.01,109,false,1,hotbar,Weapon,0,53,0,0,0.05,0.00,0,3,0.85,55.65,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditeclaw,none,none,none,none,0.00,
+rubyclaw,Ruby Claw,4.0,1.00,110,false,1,hotbar,Weapon,0,65,0,0,0.05,0.00,0,3,0.85,68.25,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubyclaw,none,none,none,none,0.00,
+diamondclaw,Diamond Claw,5.0,1.00,111,false,1,hotbar,Weapon,0,94,0,0,0.05,0.00,0,3,0.85,98.70,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondclaw,none,none,none,none,0.00,
 copperbow,Copper Bow,0.5,1.08,112,true,1,hotbar,Weapon,0,0,8,0,0.05,0.00,0,20,0.20,6.72,1.08,0,0,0.00,0,0.00,0,0.00,0,0,0,0,copperbow,none,none,none,none,0.00,
 ironbow,Iron Bow,1.0,1.00,113,true,1,hotbar,Weapon,0,0,13,0,0.05,0.00,0,20,0.20,10.92,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,ironbow,none,none,none,none,0.00,
 goldbow,Gold Bow,2.0,1.00,114,true,1,hotbar,Weapon,0,0,29,0,0.05,0.00,0,20,0.20,24.36,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,goldbow,none,none,none,none,0.00,
@@ -40,10 +40,20 @@ azuritebow,Azurite Bow,3.0,1.02,116,true,1,hotbar,Weapon,0,0,53,0,0.05,0.00,0,20
 emeralditebow,Emeraldite Bow,3.5,1.01,117,true,1,hotbar,Weapon,0,0,66,0,0.05,0.00,0,20,0.20,55.44,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditebow,none,none,none,none,0.00,
 rubybow,Ruby Bow,4.0,1.01,118,true,1,hotbar,Weapon,0,0,82,0,0.05,0.00,0,20,0.20,68.88,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubybow,none,none,none,none,0.00,
 diamondbow,Diamond Bow,5.0,1.01,119,true,1,hotbar,Weapon,0,0,118,0,0.05,0.00,0,20,0.20,99.12,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondbow,none,none,none,none,0.00,
-azuritegun,Azurite Gun,3.0,1.01,124,true,1,hotbar,Weapon,0,0,6,0,0.05,0.00,0,2,0.30,44.10,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritegun,none,none,none,none,0.00,
-emeralditegun,Emeraldite Gun,3.5,1.07,125,true,1,hotbar,Weapon,0,0,8,0,0.05,0.00,0,2,0.30,58.80,1.07,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditegun,none,none,none,none,0.00,
-rubygun,Ruby Gun,4.0,0.97,126,true,1,hotbar,Weapon,0,0,9,0,0.05,0.00,0,2,0.30,66.15,0.97,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubygun,none,none,none,none,0.00,
-diamondgun,Diamond Gun,5.0,1.04,127,true,1,hotbar,Weapon,0,0,14,0,0.05,0.00,0,2,0.30,102.90,1.04,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondgun,none,none,none,none,0.00,
+azuritegun,Azurite Gun,3.0,1.03,124,true,1,hotbar,Weapon,0,0,17,0,0.05,0.00,0,2,0.75,44.63,1.03,0,0,0.00,0,0.00,0,0.00,0,0,0,0,azuritegun,none,none,none,none,0.00,
+emeralditegun,Emeraldite Gun,3.5,1.00,125,true,1,hotbar,Weapon,0,0,21,0,0.05,0.00,0,2,0.75,55.13,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,emeralditegun,none,none,none,none,0.00,
+rubygun,Ruby Gun,4.0,1.00,126,true,1,hotbar,Weapon,0,0,26,0,0.05,0.00,0,2,0.75,68.25,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rubygun,none,none,none,none,0.00,
+diamondgun,Diamond Gun,5.0,1.01,127,true,1,hotbar,Weapon,0,0,38,0,0.05,0.00,0,2,0.75,99.75,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,diamondgun,none,none,none,none,0.00,
+rustysword,Rusty Sword,0.5,1.01,128,false,1,hotbar,Weapon,0,9,0,0,0.05,0.00,0,15,0.50,6.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,rustysword,none,none,none,none,0.00,
+knightlysword,Knightly Sword,1.5,1.01,129,false,1,hotbar,Weapon,0,35,0,0,0.15,0.50,0,25,0.50,17.15,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,knightlysword,none,none,none,none,0.00,
+spikedsword,Spiked Sword,3.5,1.00,130,false,1,hotbar,Weapon,0,41,0,0,0.35,0.00,0,10,0.50,55.35,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,spikedsword,none,none,none,none,0.00,
+bladeofdeath,Blade of Death,5.5,1.00,131,false,1,hotbar,Weapon,0,108,0,0,0.35,0.75,0,15,0.50,116.10,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,bladeofdeath,none,none,none,none,0.00,The legend's sword.
+icystinger,Icy Stinger,2.5,1.01,132,false,1,hotbar,Weapon,0,32,0,0,0.05,0.00,0,10,0.50,33.60,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,icystinger,none,none,none,none,0.00,
+coldhearticicle,Coldheart Icicle,2.0,1.00,133,false,1,hotbar,Weapon,0,1,0,0,0.01,3550.00,0,15,0.50,24.34,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coldhearticicle,none,none,none,none,0.00,AAAAAAA!!! CALAMITY!!!
+heavywhammo,Heavy Whammo,4.5,1.00,134,false,1,hotbar,Weapon,0,252,0,0,0.05,0.00,0,20,0.50,132.30,1.60,0,0,0.00,0,0.00,-8,-0.60,0,0,0,0,heavywhammo,none,none,none,none,0.00,
+staffoflife,Staff of Life,5.5,1.01,135,true,1,hotbar,Weapon,0,0,0,123,0.05,0.00,15,5,0.50,258.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,staffoflife,none,none,none,none,0.00,
+staffoflove,Staff of Love,4.5,1.00,136,true,1,hotbar,Weapon,0,0,0,92,0.05,0.00,33,15,0.50,64.40,-0.40,0,0,0.00,0,0.00,0,0.00,0,0,0,0,staffoflove,none,none,none,none,1.40,
+thornedbow,Thorned Bow,4.5,1.00,147,true,1,hotbar,Weapon,0,0,276,0,0.05,0.00,0,35,0.50,82.80,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,thornedbow,none,none,none,none,0.00,
 coppershiv,Copper Shiv,0.0,1.11,155,false,1,hotbar,Weapon,0,5,0,0,0.00,0.00,0,15,0.50,3.33,1.11,0,0,0.00,0,0.00,0,0.00,0,0,0,0,coppershiv,none,none,none,none,0.00,
 flowerhat,Flower Hat,2.0,1.00,174,false,1,helmet,Helmet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,10,0.00,0,0.85,0,0,0,0,none,none,none,none,+0.2 Luck,0.15,A luck charm.
 foresthat,Forest Hat,2.0,1.00,175,false,1,helmet,Helmet,0,0,3,0,0.15,0.20,0,0,0.00,4.34,0.18,3,18,0.30,0,0.00,0,0.82,0,0,0,0,none,none,none,none,none,0.00,Nature is on your side.
@@ -245,8 +255,8 @@ rubyscythe,Ruby Scythe,4.0,1.00,388,false,1,hotbar,Tool,0,24,0,0,0.00,0.00,0,10,
 diamondscythe,Diamond Scythe,5.0,1.01,389,false,1,hotbar,Tool,0,35,0,0,0.00,0.00,0,10,0.00,70.00,0.71,0,0,0.00,0,0.00,0,0.00,0,0,0,90,diamondscythe,none,none,none,none,0.30,
 healthpotion,Health Potion,1.0,0.00,405,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,healthpotion,none,none,none,none,0.00,A standard brewed health potion.
 greaterhealthpotion,Greater Health Potion,5.0,0.00,406,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greaterhealthpotion,none,none,none,none,0.00,A more concentrated version of the health potion.
-manapotion,Mana Potion,1.0,0.00,407,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,manapotion,none,none,none,none,0.00,A standard brewed mana potion.
-greatermanapotion,Greater Mana Potion,5.0,0.00,408,false,1000,consume,Potion,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greatermanapotion,none,none,none,none,0.00,A more concentrated version of the mana potion.
+manapotion,Mana Potion,1.0,0.85,407,false,1000,consume,Potion,0,0,0,0,0.00,0.00,-100,300,0.00,0.00,0.85,0,0,0.00,0,0.00,0,0.00,0,0,0,0,manapotion,none,none,none,none,0.00,A standard brewed mana potion.
+greatermanapotion,Greater Mana Potion,5.0,0.31,408,false,1000,consume,Potion,0,0,0,0,0.00,0.00,-200,300,0.00,0.00,0.31,0,0,0.00,0,0.00,0,0.00,0,0,0,0,greatermanapotion,none,none,none,none,0.00,A more concentrated version of the mana potion.
 coal,Coal,0.0,0.00,442,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 copperore,Copper Ore,0.5,0.00,443,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 ironore,Iron Ore,1.0,0.00,444,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
@@ -316,7 +326,7 @@ bloodorb,Blood Orb,4.0,0.00,662,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0
 fur,Fur,0.0,0.00,663,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 predatorhorn,Predator Horn,2.0,0.00,664,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 sharptooth,Sharp Tooth,3.0,0.00,665,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
-sharpclaw,Sharp Claw,2.0,0.00,666,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+sharpclaw,Sharp Claw,0.0,0.00,666,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 batwings,Bat Wings,3.0,0.00,667,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 angelwings,Angel Wings,4.0,0.00,668,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Wings from a mythical angel.
 mysticscales,Mystic Scales,5.0,0.00,669,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Mystic energy radiates from these scales.

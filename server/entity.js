@@ -320,6 +320,8 @@ Actor = function(param){
     self.dashX = 0;
     self.dashY = 0;
 
+    self.projectilesHit = {};
+
     if(param.onDeath){
         self.onDeath = param.onDeath;
     }
@@ -359,6 +361,12 @@ Actor = function(param){
             }
             if(64 * Math.abs(self.x / 64 - self.trackingPath[0][0] - 0.5) < 2 && 64 * Math.abs(self.y / 64 - self.trackingPath[0][1] - 0.5) < 2){
                 self.trackingPath.shift();
+            }
+        }
+        for(var i in self.projectilesHit){
+            self.projectilesHit[i] -= 1;
+            if(self.projectilesHit[i] <= 0){
+                delete self.projectilesHit[i];
             }
         }
     }
@@ -617,7 +625,9 @@ Actor = function(param){
         }
     }
     self.onHit = function(pt){
-
+        if(pt.sameId === false){
+            self.projectilesHit[pt.id] = 10;
+        }
     }
     self.dropItems = function(pt){
         if(!Player.list[pt]){
@@ -677,6 +687,9 @@ Actor = function(param){
     }
     self.onDamage = function(pt){
         if(self.invincible === true){
+            return;
+        }
+        if(pt.sameId === false && self.projectilesHit[pt.id]){
             return;
         }
         var hp = self.hp;
@@ -809,14 +822,6 @@ Actor = function(param){
             if(reload % parseInt(i) === 0){
                 for(var j = 0;j < data[i].length;j++){
                     if(data[i][j]){
-                        if(data[i][j].manaCost){
-                            if(self.mana >= data[i][j].manaCost){
-                                self.mana -= data[i][j].manaCost;
-                            }
-                            else{
-                                continue;
-                            }
-                        }
                         switch(data[i][j].id){
                             case "projectile":
                                 self.shootProjectile(data[i][j].projectileType,data[i][j].param);
@@ -1163,16 +1168,27 @@ Player = function(param,socket){
                 if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
                     if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
                         if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
-                            self.inventory.items[self.inventory.hotbarSelectedItem].cooldown = Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].useTime;
-                            self.mainReload += 1;
-                            self.doAttack(self.mainAttackData,self.mainReload);
-                            socket.emit('attack');
-                            if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
-                                self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
-                                if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
-                                    self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                            var hasMana = true;
+                            if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
+                                if(self.mana >= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
+                                    self.mana -= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost;
                                 }
-                                self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
+                                else{
+                                    hasMana = false;
+                                }
+                            }
+                            if(hasMana){
+                                self.inventory.items[self.inventory.hotbarSelectedItem].cooldown = Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].useTime;
+                                self.mainReload += 1;
+                                self.doAttack(self.mainAttackData,self.mainReload);
+                                socket.emit('attack');
+                                if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
+                                    self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
+                                    if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
+                                        self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                                    }
+                                    self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
+                                }
                             }
                         }
                     }
@@ -1236,6 +1252,24 @@ Player = function(param,socket){
                                 continue;
                             }
                             self.currentItem = self.inventory.items[i].id;
+                            if(item.defense !== undefined){
+                                self.stats.defense += item.defense;
+                            }
+                            if(item.hp !== undefined){
+                                self.hpMax += item.hp;
+                            }
+                            if(item.hpRegen !== undefined){
+                                self.stats.hpRegen += item.hpRegen;
+                            }
+                            if(item.mana !== undefined){
+                                self.manaMax += item.mana;
+                            }
+                            if(item.manaRegen !== undefined){
+                                self.stats.manaRegen += item.manaRegen;
+                            }
+                            if(item.movementSpeed !== undefined){
+                                self.maxSpeed += item.movementSpeed;
+                            }
                             if(item.damage !== undefined){
                                 self.stats.damage += item.damage;
                             }
@@ -2161,6 +2195,14 @@ Projectile = function(param){
             self.spdY = Math.sin(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
             self.direction += 135;
         }
+        if(self.projectilePattern === 'heavysword'){
+            self.x = entity.x;
+            self.y = entity.y;
+            self.direction = param.direction - 90 + (self.timer - 1) * 20;
+            self.spdX = Math.cos(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.spdY = Math.sin(self.direction / 180 * Math.PI) * 48 * Math.sqrt(2);
+            self.direction += 135;
+        }
         if(self.projectilePattern === 'harvest'){
             self.x = entity.x;
             self.y = entity.y;
@@ -2359,6 +2401,9 @@ Monster = function(param){
     
     self.randomWalk(true);
     self.onHit = function(pt){
+        if(pt.sameId === false){
+            self.projectilesHit[pt.id] = 10;
+        }
         if(self.attackState === 'passive'){
             self.target = pt.parent;
             self.damaged = true;

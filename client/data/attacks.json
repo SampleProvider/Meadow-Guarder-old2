@@ -128,7 +128,6 @@
     "copperstaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":3,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -138,7 +137,6 @@
     "ironstaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":5,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -148,7 +146,6 @@
     "goldstaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":9,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -158,7 +155,6 @@
     "amethyststaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":12,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -168,7 +164,6 @@
     "azuritestaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":13,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -178,7 +173,6 @@
     "emeralditestaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":16,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -188,7 +182,6 @@
     "rubystaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":19,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -198,7 +191,6 @@
     "diamondstaff":{
         "1":[{
             "id":"projectile",
-            "manaCost":24,
             "projectileType":"fireball",
             "param":{
                 "directionDeviation":5
@@ -211,9 +203,10 @@
             "projectileType":"copperwaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -226,9 +219,10 @@
             "projectileType":"ironwaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -241,9 +235,10 @@
             "projectileType":"goldwaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -256,9 +251,10 @@
             "projectileType":"amethystwaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -271,9 +267,10 @@
             "projectileType":"azuritewaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -286,9 +283,10 @@
             "projectileType":"emeralditewaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -301,9 +299,10 @@
             "projectileType":"rubywaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -316,9 +315,10 @@
             "projectileType":"diamondwaraxe",
             "param":{
                 "speed":50,
-                "spin":50,
-                "timer":80,
                 "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
                 "relativeToParent":false,
                 "projectilePattern":"waraxe",
                 "collisionType":"sticky"
@@ -523,7 +523,8 @@
             "projectileType":"bullet",
             "param":{
                 "speed":35,
-                "directionDeviation":20
+                "directionDeviation":20,
+                "pierce":5
             }
         }]
     },
@@ -533,7 +534,8 @@
             "projectileType":"bullet",
             "param":{
                 "speed":35,
-                "directionDeviation":20
+                "directionDeviation":20,
+                "pierce":5
             }
         }]
     },
@@ -543,7 +545,8 @@
             "projectileType":"bullet",
             "param":{
                 "speed":35,
-                "directionDeviation":20
+                "directionDeviation":20,
+                "pierce":5
             }
         }]
     },
@@ -553,7 +556,8 @@
             "projectileType":"bullet",
             "param":{
                 "speed":35,
-                "directionDeviation":20
+                "directionDeviation":20,
+                "pierce":5
             }
         }]
     },
@@ -568,6 +572,225 @@
                 "relativeToParent":true,
                 "projectilePattern":"sword",
                 "collisionType":"none"
+            }
+        }]
+    },
+    "knightlysword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"knightlysword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        }]
+    },
+    "spikedsword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"spikedsword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"bone",
+            "param":{
+                "directionDeviation":20,
+                "pierce":-1,
+                "timer":15
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"bone",
+            "param":{
+                "directionDeviation":20,
+                "pierce":-1,
+                "timer":15
+            }
+        }]
+    },
+    "bladeofdeath":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"bladeofdeath",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        }]
+    },
+    "icystinger":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"icystinger",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"frozenflames",
+            "param":{
+                "speed":5,
+                "directionDeviation":20,
+                "pierce":-1,
+                "timer":40
+            }
+        }]
+    },
+    "coldhearticicle":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"coldhearticicle",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"shiv",
+                "collisionType":"none"
+            }
+        }]
+    },
+    "heavywhammo":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"heavywhammo",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":9,
+                "relativeToParent":true,
+                "projectilePattern":"heavysword",
+                "collisionType":"none"
+            }
+        }]
+    },
+    "staffoflife":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":-60
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":-40
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":-20
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":0
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":20
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":40
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"alienflames",
+            "param":{
+                "direction":60
+            }
+        }]
+    },
+    "staffoflove":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"heart",
+            "param":{
+                "spin":20,
+                "pierce":5,
+                "directionDeviation":5
+            }
+        }]
+    },
+    "thornedbow":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"alienarrow",
+            "param":{
+                "pierce":5,
+                "speed":60
             }
         }]
     },
@@ -1067,14 +1290,12 @@
     },
     "manapotion":{
         "1":[{
-            "id":"none",
-            "manaCost":-100
+            "id":"none"
         }]
     },
     "greatermanapotion":{
         "1":[{
-            "id":"none",
-            "manaCost":-200
+            "id":"none"
         }]
     },
     "redbook":{

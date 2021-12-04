@@ -920,8 +920,8 @@ Inventory = function(socket,server){
                         else{
                             draggingItem.style.display = 'none';
                         }
-                        for(var i in self.craftItems[data].materials){
-                            self.removeItem(self.craftItems[data].materials[i].id,self.craftItems[data].materials[i].amount);
+                        for(var i in self.craftItems[index].materials){
+                            self.removeItem(self.craftItems[index].materials[i].id,self.craftItems[index].materials[i].amount);
                         }
                     }
                 }
@@ -1147,40 +1147,40 @@ Inventory = function(socket,server){
                         coins += self.hasItem('goldcoin',1) * 10000;
                         coins += self.hasItem('meteoritecoin',1) * 1000000;
                         var startCoins = coins;
-                        for(var i in npcData[self.shopNpc].shop[data].materials){
-                            if(npcData[self.shopNpc].shop[data].materials[i].id === 'coppercoin'){
-                                if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount){
-                                    coins -= npcData[self.shopNpc].shop[data].materials[i].amount;
+                        for(var i in npcData[self.shopNpc].shop[index].materials){
+                            if(npcData[self.shopNpc].shop[index].materials[i].id === 'coppercoin'){
+                                if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount){
+                                    coins -= npcData[self.shopNpc].shop[index].materials[i].amount;
                                 }
                                 else{
                                     return;
                                 }
                             }
-                            else if(npcData[self.shopNpc].shop[data].materials[i].id === 'silvercoin'){
-                                if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 100){
-                                    coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 100;
+                            else if(npcData[self.shopNpc].shop[index].materials[i].id === 'silvercoin'){
+                                if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 100){
+                                    coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 100;
                                 }
                                 else{
                                     return;
                                 }
                             }
-                            else if(npcData[self.shopNpc].shop[data].materials[i].id === 'goldcoin'){
-                                if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 10000){
-                                    coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 10000;
+                            else if(npcData[self.shopNpc].shop[index].materials[i].id === 'goldcoin'){
+                                if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 10000){
+                                    coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 10000;
                                 }
                                 else{
                                     return;
                                 }
                             }
-                            else if(npcData[self.shopNpc].shop[data].materials[i].id === 'meteoritecoin'){
-                                if(coins >= npcData[self.shopNpc].shop[data].materials[i].amount * 1000000){
-                                    coins -= npcData[self.shopNpc].shop[data].materials[i].amount * 1000000;
+                            else if(npcData[self.shopNpc].shop[index].materials[i].id === 'meteoritecoin'){
+                                if(coins >= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000){
+                                    coins -= npcData[self.shopNpc].shop[index].materials[i].amount * 1000000;
                                 }
                                 else{
                                     return;
                                 }
                             }
-                            else if(!self.hasItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount)){
+                            else if(!self.hasItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount)){
                                 return;
                             }
                         }
@@ -1236,9 +1236,9 @@ Inventory = function(socket,server){
                         removeCoins('goldcoin',coins % 100);
                         coins = Math.floor(coins / 100);
                         removeCoins('meteoritecoin',coins);
-                        for(var i in npcData[self.shopNpc].shop[data].materials){
-                            if(npcData[self.shopNpc].shop[data].materials[i].id !== 'coppercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'silvercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'goldcoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'meteoritecoin'){
-                                self.removeItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount);
+                        for(var i in npcData[self.shopNpc].shop[index].materials){
+                            if(npcData[self.shopNpc].shop[index].materials[i].id !== 'coppercoin' && npcData[self.shopNpc].shop[index].materials[i].id !== 'silvercoin' && npcData[self.shopNpc].shop[index].materials[i].id !== 'goldcoin' && npcData[self.shopNpc].shop[index].materials[i].id !== 'meteoritecoin'){
+                                self.removeItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount);
                             }
                         }
                     }
