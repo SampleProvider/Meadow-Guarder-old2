@@ -319,6 +319,9 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		stringData = data.toString();
+		if(stringData.length === 0){
+			return;
+		}
 		if(Player.list[socket.id]){
 			if(stringData[0] === '/'){
 				if(stringData.length === 1){
