@@ -1295,7 +1295,7 @@ Player = function(param,socket){
                                 self.stats.critChance += item.critChance;
                             }
                             if(item.critPower !== undefined){
-                                self.critPower += item.critPower;
+                                self.stats.critPower += item.critPower;
                             }
                             if(item.pickaxePower !== undefined){
                                 self.pickaxePower = item.pickaxePower;
@@ -1374,10 +1374,10 @@ Player = function(param,socket){
                             self.stats.damage += item.magicDamage;
                         }
                         if(item.critChance !== undefined){
-                            self.critChance += item.critChance;
+                            self.stats.critChance += item.critChance;
                         }
                         if(item.critPower !== undefined){
-                            self.critPower += item.critPower;
+                            self.stats.critPower += item.critPower;
                         }
                         if(item.slots !== undefined){
                             self.inventory.maxSlots += item.slots;
