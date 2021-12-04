@@ -39,8 +39,11 @@ socket.on('addToChat',function(data){
 });
 chatForm.onsubmit = function(e){
     e.preventDefault();
+    if(chatInput.value === ''){
+        return;
+    }
     socket.emit('chatMessage',chatInput.value);
-    if(commandList[commandList.length - 1] !== chatInput.value && chatInput.value !== ''){
+    if(commandList[commandList.length - 1] !== chatInput.value){
         commandList.push(chatInput.value);
         commandIndex = commandList.length;
     }
