@@ -175,6 +175,26 @@ freeCam.onclick = function(){
     }
 };
 
+var autoAttack = document.createElement('button');
+autoAttack.className = 'UI-button-light';
+autoAttack.style.position = 'static';
+autoAttack.style.top = '8px';
+autoAttack.innerHTML = 'Auto Attack';
+hackedCollumn4.appendChild(autoAttack);
+
+var autoAttackState = false;
+autoAttack.onclick = function(){
+    autoAttackState = !autoAttackState;
+    if(autoAttackState){
+        autoAttack.style.color = '#ffffff';
+        autoAttack.style.backgroundColor = '#725640';
+    }
+    else{
+        autoAttack.style.color = '#ffffff';
+        autoAttack.style.backgroundColor = '#362a1e';
+    }
+};
+
 var t = 0;
 
 var getDistance = function(pt1,pt2){
@@ -323,6 +343,9 @@ MGHC = function(){
         if(closestPlayer !== undefined){
             socket.emit('keyPress',{inputId:'direction',state:{x:closestPlayer.x - Player.list[selfId].x,y:closestPlayer.y - Player.list[selfId].y}});
         }
+    }
+    if(autoAttackState){
+        socket.emit('keyPress',{inputId:'leftClick',state:true});
     }
 };
 MGHC1 = function(){

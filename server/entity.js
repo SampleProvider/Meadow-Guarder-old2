@@ -1210,6 +1210,12 @@ Player = function(param,socket){
         if(self.inventory.updateStats){
             self.inventory.updateStats = false;
 
+            for(var i in Projectile.list){
+                if(Projectile.list[i].id === self.id){
+                    delete Projectile.list[i];
+                }
+            }
+
             var hpMax = self.hpMax;
             var manaMax = self.manaMax;
 
