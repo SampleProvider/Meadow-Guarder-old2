@@ -1362,7 +1362,7 @@ Player = function(param,socket){
                             self.maxSpeed += item.movementSpeed;
                         }
                         if(item.damage !== undefined){
-                            self.damage += item.damage;
+                            self.stats.damage += item.damage;
                         }
                         if(item.meleeDamage !== undefined && damageType === 'melee'){
                             self.stats.damage += item.meleeDamage;
