@@ -16,7 +16,8 @@ require('./server/entity');
 require('./server/database');
 
 var debugData = require('./server/debug.json');
-var badwords = require('./server/badwords.json').words;
+var Filter = require('bad-words'),
+filter = new Filter();
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -174,11 +175,9 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		for(var i in badwords){
-			if(stringData.username.includes(badwords[i])){
-				socket.emit('createAccountResponse',{success:6,username:stringData.username});
-				return;
-			}
+		if(filter.isProfane(stringData.username)){
+			socket.emit('createAccountResponse',{success:6,username:stringData.username});
+			return;
 		}
 		if(stringData.username.length > 3 && stringData.username.length < 41 && stringData.password.length < 41){
 			Database.isUsernameTaken(stringData,function(res){
@@ -837,15 +836,7 @@ io.sockets.on('connection',function(socket){
 					}
 				}
 				if(notSpace){
-					for(var i in badwords){
-						if(stringData.includes(badwords[i])){
-							var censor = "";
-							for(var j = 0;j < badwords[i].length;j++){
-								censor += "*";
-							}
-							stringData = stringData.replace(badwords[i],censor);
-						}
-					}
+					stringData = filter.clean(stringData);
 					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
 					Player.list[socket.id].lastChat = 20;
 					Player.list[socket.id].chatWarnings -= 0.5;

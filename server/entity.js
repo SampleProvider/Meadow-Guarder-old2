@@ -731,14 +731,16 @@ Actor = function(param){
                 for(var i in SOCKET_LIST){
                     if(Player.list[i]){
                         if(Player.list[i].map === self.map){
-                            SOCKET_LIST[i].emit('createParticle',{
-                                x:self.x,
-                                y:self.y,
-                                map:self.map,
-                                particleType:crit === true ? 'critDamage' : 'damage',
-                                number:1,
-                                value:Math.round(hp - self.hp),
-                            });
+                            if(Player.list[i].getSquareDistance(self) < 32){
+                                SOCKET_LIST[i].emit('createParticle',{
+                                    x:self.x,
+                                    y:self.y,
+                                    map:self.map,
+                                    particleType:crit === true ? 'critDamage' : 'damage',
+                                    number:1,
+                                    value:Math.round(hp - self.hp),
+                                });
+                            }
                         }
                     }
                 }
@@ -1474,6 +1476,24 @@ Player = function(param,socket){
             }
         }
     }
+    self.startTrade = function(tradingEntity){
+        if(tradingEntity.tradingEntity === null && self.tradingEntity === null && tradingEntity.id + '' !== self.id + ''){
+            tradingEntity.tradingEntity = self.id;
+            tradingEntity.acceptedTrade = false;
+            tradingEntity.finalAcceptedTrade = false;
+            self.tradingEntity = tradingEntity.id;
+            self.acceptedTrade = false;
+            self.finalAcceptedTrade = false;
+            for(var i = 0;i < 18;i++){
+                self.inventory.items['trade' + i] = {};
+            }
+            for(var i = 0;i < 18;i++){
+                tradingEntity.inventory.items['trade' + i] = {};
+            }
+            socket.emit('openTrade',tradingEntity.name);
+            SOCKET_LIST[tradingEntity.id].emit('openTrade',self.name);
+        }
+    }
     self.updateTrade = function(pack){
         if(self.tradingEntity){
             if(Player.list[self.tradingEntity]){
@@ -1608,24 +1628,6 @@ Player = function(param,socket){
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
-    }
-    self.startTrade = function(tradingEntity){
-        if(tradingEntity.tradingEntity === null && self.tradingEntity === null){
-            tradingEntity.tradingEntity = self.id;
-            tradingEntity.acceptedTrade = false;
-            tradingEntity.finalAcceptedTrade = false;
-            self.tradingEntity = tradingEntity.id;
-            self.acceptedTrade = false;
-            self.finalAcceptedTrade = false;
-            for(var i = 0;i < 18;i++){
-                self.inventory.items['trade' + i] = {};
-            }
-            for(var i = 0;i < 18;i++){
-                tradingEntity.inventory.items['trade' + i] = {};
-            }
-            socket.emit('openTrade',tradingEntity.name);
-            SOCKET_LIST[tradingEntity.id].emit('openTrade',self.name);
-        }
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){

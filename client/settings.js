@@ -9,6 +9,7 @@ var settings = {
     particlesPercentage:100,
     entityFadeOut:true,
     textSpeed:2,
+    volumePercentage:100,
 };
 
 var setCookie = function(){
@@ -46,10 +47,15 @@ var getCookie = function(){
                             entityFadeOutButton.innerHTML = 'Entities Don\'t Fade Out';
                         }
                     }
-                    if(i === 'particlesPercentage'){
+                    if(i === 'textSpeed'){
                         settings[i] = parseInt(settings[i]);
                         textSpeedSlider.value = settings[i];
                         textSpeedHeader.innerHTML = 'Text Speed: ' + textSpeedSlider.value;
+                    }
+                    if(i === 'volumePercentage'){
+                        settings[i] = parseInt(settings[i]);
+                        volumePercentageSlider.value = settings[i];
+                        volumePercentageHeader.innerHTML = 'Volume: ' + volumePercentageSlider.value + '%';
                     }
                 }
             }
@@ -102,6 +108,17 @@ textSpeedSlider.oninput = function(){
     settings.textSpeed = parseInt(textSpeedSlider.value);
     textSpeedHeader.innerHTML = 'Text Speed: ' + textSpeedSlider.value;
     setCookie();
+}
+volumePercentageSlider.oninput = function(){
+    var oldVolumePercentage = settings.volumePercentage;
+    settings.volumePercentage = parseInt(volumePercentageSlider.value);
+    volumePercentageHeader.innerHTML = 'Volume: ' + volumePercentageSlider.value + '%';
+    setCookie();
+    for(var i in songs){
+        if(songs[i].state === 'playing'){
+            songs[i].audio.volume = settings.volumePercentage / 100;
+        }
+    }
 }
 openInventory = function(){
     settings.inventoryOpen = true;

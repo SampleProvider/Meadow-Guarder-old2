@@ -1203,6 +1203,11 @@ canvas {
     top: 105px;
     left: 358px;
 }
+#volumePercentageSlider {
+    position: absolute;
+    top: 135px;
+    left: 358px;
+}
 
 #playerListBackground {
     position: absolute;
