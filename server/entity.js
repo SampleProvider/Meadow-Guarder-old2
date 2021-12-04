@@ -1986,6 +1986,7 @@ Player.onConnect = function(socket,username){
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
+                delete SOCKET_LIST[player.id];
                 return;
             }
             player.canMove = true;
@@ -2039,7 +2040,6 @@ Player.onDisconnect = function(socket){
                             });
                         }
                     }
-                    SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
                     for(var i in Player.list[socket.id].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
                             new DroppedItem({
@@ -2053,7 +2053,10 @@ Player.onDisconnect = function(socket){
                             });
                         }
                     }
-                    Player.list[Player.list[socket.id].tradingEntity] = null;
+                    if(SOCKET_LIST[Player.list[socket.id].tradingEntity]){
+                        SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
+                    }
+                    Player.list[Player.list[socket.id].tradingEntity].tradingEntity = null;
                 }
             }
             playerMap[Player.list[socket.id].map] -= 1;
