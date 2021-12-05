@@ -635,8 +635,10 @@ Actor = function(param){
         var playersPercentage = {};
         var totalDamage = 0;
         for(var i in self.playersDamaged){
-            playersPercentage[i] = self.playersDamaged[i];
-            totalDamage += self.playersDamaged[i];
+            if(Player.list[i]){
+                playersPercentage[i] = self.playersDamaged[i];
+                totalDamage += self.playersDamaged[i];
+            }
         }
         for(var i in playersPercentage){
             playersPercentage[i] /= totalDamage;
@@ -1072,7 +1074,6 @@ Player = function(param,socket){
     self.debug = {
         invisible:false,
         invincible:false,
-        trapped:false,
     }
 
     self.inventory = new Inventory(socket,true);
@@ -1550,9 +1551,6 @@ Player = function(param,socket){
     self.updateDebug = function(){
         if(self.debug.invincible){
             self.invincible = true;
-        }
-        if(self.debug.trapped){
-            self.canMove = false;
         }
     }
     self.pickUpItems = function(){

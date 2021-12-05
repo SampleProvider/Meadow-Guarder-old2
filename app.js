@@ -470,45 +470,6 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'trap' && level >= 2){
-					commandList.splice(0,1);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to trap ' + name + '.',
-								debug:true,
-							});
-							return;
-						}
-					}
-					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						Player.list[i].debug.trapped = !Player.list[i].debug.trapped;
-						if(!Player.list[i].debug.trapped){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] ' + name + ' is now trapped.',
-								debug:true,
-							});
-						}
-						else{
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] ' + name + ' is not trapped anymore.',
-								debug:true,
-							});
-							Player.list[i].canMove = true;
-						}
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
-					});
-					return;
-				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
@@ -731,11 +692,16 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
 						Player.list[socket.id].startTrade(Player.list[i]);
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] Started trade with ' + name + '.',
-							debug:true,
-						});
+						if(i + '' === socket.id + ''){
+
+						}
+						else{
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Started trade with ' + name + '.',
+								debug:true,
+							});
+						}
 					},function(name){
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -779,7 +745,6 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
-						message += '<br>/trap [player name] - Trap someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
@@ -797,7 +762,6 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
-						message += '<br>/trap [player name] - Trap someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/invincible [player name] - Toggle invincibility for someone.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
