@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.5" tiledversion="1.7.2" name="tileset" tilewidth="16" tileheight="16" tilecount="13054" columns="107">
  <image source="tileset.png" width="1712" height="1952"/>
+ <tile id="19" type="pyroweed"/>
  <tile id="235" type="cottonFlower"/>
  <tile id="535">
   <objectgroup draworder="index" id="2">

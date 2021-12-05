@@ -26,6 +26,26 @@
         "harvestOffsetX":0,
         "harvestOffsetY":32
     },
+    "pyroweed":{
+        "itemDrops":{
+            "pyroweed":{
+                "chance":1,
+                "amount":2
+            }
+        },
+        "harvestPower":10,
+        "harvestTool":"scythe",
+        "harvestHp":250,
+        "collisions":[],
+        "offsetX":0,
+        "offsetY":0,
+        "width":64,
+        "height":64,
+        "harvestWidth":64,
+        "harvestHeight":64,
+        "harvestOffsetX":0,
+        "harvestOffsetY":0
+    },
     "cottonFlower":{
         "itemDrops":{
             "cotton":{
@@ -46,7 +66,7 @@
         "harvestOffsetX":0,
         "harvestOffsetY":0
     },
-    "giantgoldcrystal":{
+    "giantdiamondcrystal":{
         "itemDrops":{},
         "harvestPower":10,
         "harvestTool":"pickaxe",
