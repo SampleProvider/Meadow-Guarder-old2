@@ -879,7 +879,7 @@ Actor = function(param){
                                     }
                                     else{
                                         if(self.type === 'Monster'){
-                                            self.dropItems(pt.parent);
+                                            self.dropItems();
                                         }
                                         self.toRemove = true;
                                     }
@@ -912,6 +912,34 @@ Actor = function(param){
         }
         self.hp += self.stats.hpRegen / 20;
         self.hp = Math.min(self.hpMax,self.hp);
+        if(self.hp < 1){
+            self.hp = 0;
+            self.onDeath(self);
+            if(self.type === 'Player'){
+                SOCKET_LIST[self.id].emit('death');
+                addToChat('#ff0000',self.name + ' committed suicide.');
+                for(var i in SOCKET_LIST){
+                    if(Player.list[i]){
+                        if(Player.list[i].map === self.map){
+                            SOCKET_LIST[i].emit('createParticle',{
+                                x:self.x,
+                                y:self.y,
+                                map:self.map,
+                                particleType:'death',
+                                number:40,
+                            });
+                        }
+                    }
+                }
+            }
+            else{
+                if(self.type === 'Monster'){
+                    self.dropItems();
+                }
+                self.toRemove = true;
+            }
+            return;
+        }
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
