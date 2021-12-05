@@ -734,6 +734,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-60,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -741,6 +742,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-40,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -748,6 +750,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-20,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -755,6 +758,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":0,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -762,6 +766,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":20,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -769,6 +774,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":40,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         },{
@@ -776,6 +782,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":60,
+                "projectilePattern":"homing",
                 "collisionType":"none"
             }
         }]

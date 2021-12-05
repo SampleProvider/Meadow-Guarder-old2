@@ -340,6 +340,104 @@
    <object id="1" x="0" y="0" width="13" height="4"/>
   </objectgroup>
  </tile>
+ <tile id="1834">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="1" y="0" width="12" height="16"/>
+   <object id="3" x="13" y="0" width="3" height="4"/>
+  </objectgroup>
+ </tile>
+ <tile id="1835">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="4"/>
+  </objectgroup>
+ </tile>
+ <tile id="1836">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="3" height="4"/>
+   <object id="2" x="3" y="0" width="12" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1943">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="3" y="0" width="12" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2048">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="12" height="2"/>
+   <object id="3" x="1" y="2" width="15" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="2049">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="2" width="16" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="2050">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="0" y="2" width="15" height="14"/>
+   <object id="3" x="3" y="0" width="12" height="2"/>
+  </objectgroup>
+ </tile>
+ <tile id="2145">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="12" y="0" width="4" height="3"/>
+   <object id="3" x="0" y="0" width="12" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2146">
+  <objectgroup draworder="index" id="2">
+   <object id="3" x="0" y="0" width="16" height="4"/>
+  </objectgroup>
+ </tile>
+ <tile id="2147">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="3" height="4"/>
+   <object id="3" x="3" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2252">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="12" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2254">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="3" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2359">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="2"/>
+   <object id="2" x="0" y="2" width="16" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="2360">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="0" y="2" width="16" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="2361">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="2" width="16" height="14"/>
+   <object id="2" x="3" y="0" width="13" height="2"/>
+  </objectgroup>
+ </tile>
+ <tile id="2466">
+  <objectgroup draworder="index" id="2">
+   <object id="2" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2467">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="2468">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="3533">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="1" width="14" height="15"/>
@@ -1828,6 +1926,22 @@
    <wangtile tileid="2051" wangid="0,0,0,3,0,3,0,3"/>
    <wangtile tileid="2052" wangid="0,3,0,3,0,3,0,0"/>
    <wangtile tileid="3880" wangid="0,3,0,3,0,3,0,3"/>
+  </wangset>
+  <wangset name="Elevated 2" type="corner" tile="0">
+   <wangcolor name="Grass" color="#ff0000" tile="0" probability="1"/>
+   <wangtile tileid="0" wangid="0,1,0,1,0,1,0,1"/>
+   <wangtile tileid="1720" wangid="0,0,0,1,0,1,0,1"/>
+   <wangtile tileid="1721" wangid="0,1,0,1,0,1,0,0"/>
+   <wangtile tileid="2145" wangid="0,0,0,1,0,0,0,0"/>
+   <wangtile tileid="2146" wangid="0,0,0,1,0,1,0,0"/>
+   <wangtile tileid="2147" wangid="0,0,0,0,0,1,0,0"/>
+   <wangtile tileid="2148" wangid="0,1,0,0,0,1,0,1"/>
+   <wangtile tileid="2149" wangid="0,1,0,1,0,0,0,1"/>
+   <wangtile tileid="2252" wangid="0,1,0,1,0,0,0,0"/>
+   <wangtile tileid="2254" wangid="0,0,0,0,0,1,0,1"/>
+   <wangtile tileid="2359" wangid="0,1,0,0,0,0,0,0"/>
+   <wangtile tileid="2360" wangid="0,1,0,0,0,0,0,1"/>
+   <wangtile tileid="2361" wangid="0,0,0,0,0,0,0,1"/>
   </wangset>
   <wangset name="Transitions" type="corner" tile="0">
    <wangcolor name="Sand -&gt; Grass" color="#ff0000" tile="3880" probability="1"/>

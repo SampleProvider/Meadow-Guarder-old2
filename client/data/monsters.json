@@ -174,11 +174,11 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":10000,
+        "hpMax":50000,
         "stats":{
-            "damage":20,
+            "damage":30,
             "defense":0,
-            "hpRegen":20,
+            "hpRegen":40,
             "critChance":0.05,
             "critPower":10000
         },
