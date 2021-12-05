@@ -16,7 +16,8 @@ require('./server/entity');
 require('./server/database');
 
 var debugData = require('./server/debug.json');
-var filter = require('leo-profanity');
+var Filter = require('bad-words'),
+filter = new Filter();
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -174,7 +175,7 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
-		if(filter.check(stringData.username)){
+		if(filter.isProfane(stringData.username)){
 			socket.emit('createAccountResponse',{success:6,username:stringData.username});
 			return;
 		}
@@ -802,10 +803,17 @@ io.sockets.on('connection',function(socket){
 					}
 				}
 				if(notSpace){
-					stringData = filter.clean(stringData,'*',1);
-					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
-					Player.list[socket.id].lastChat = 20;
-					Player.list[socket.id].chatWarnings -= 0.5;
+					try{
+						stringData = filter.clean(stringData);
+						addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
+						Player.list[socket.id].lastChat = 20;
+						Player.list[socket.id].chatWarnings -= 0.5;
+					}
+					catch(err){
+						addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
+						Player.list[socket.id].lastChat = 20;
+						Player.list[socket.id].chatWarnings -= 0.5;
+					}
 				}
 			}
 		}
