@@ -1144,7 +1144,7 @@ setInterval(function(){
 		socket.spam -= 0.05;
 	}
 	for(var i in Spawner.list){
-		if(Math.random() < 0.003 && Spawner.list[i].spawned === false){
+		if(Math.random() < 0.001 && Spawner.list[i].spawned === false){
 			spawnMonster(Spawner.list[i],i);
 		}
 	}
