@@ -1905,6 +1905,9 @@
   <wangset name="Interior" type="corner" tile="11365">
    <wangcolor name="Light Wood" color="#ff0000" tile="11696" probability="1"/>
    <wangcolor name="Dark Wood" color="#00ff00" tile="11708" probability="1"/>
+   <wangcolor name="Stone" color="#0000ff" tile="12112" probability="1"/>
+   <wangcolor name="Gold" color="#ff7700" tile="12124" probability="1"/>
+   <wangcolor name="Wood Bricks" color="#00e9ff" tile="12136" probability="1"/>
    <wangtile tileid="11365" wangid="0,1,0,1,0,1,0,1"/>
    <wangtile tileid="11366" wangid="0,1,0,1,0,1,0,0"/>
    <wangtile tileid="11367" wangid="0,0,0,1,0,1,0,1"/>
@@ -1935,6 +1938,50 @@
    <wangtile tileid="11698" wangid="0,0,0,0,0,2,0,0"/>
    <wangtile tileid="11700" wangid="0,0,0,0,0,0,0,2"/>
    <wangtile tileid="11702" wangid="0,2,0,0,0,0,0,0"/>
+   <wangtile tileid="11781" wangid="0,3,0,3,0,3,0,3"/>
+   <wangtile tileid="11782" wangid="0,3,0,3,0,3,0,0"/>
+   <wangtile tileid="11783" wangid="0,0,0,3,0,3,0,3"/>
+   <wangtile tileid="11785" wangid="0,3,0,0,0,3,0,3"/>
+   <wangtile tileid="11786" wangid="0,3,0,0,0,3,0,0"/>
+   <wangtile tileid="11789" wangid="0,3,0,3,0,0,0,3"/>
+   <wangtile tileid="11791" wangid="0,0,0,3,0,0,0,3"/>
+   <wangtile tileid="11793" wangid="0,4,0,4,0,4,0,4"/>
+   <wangtile tileid="11794" wangid="0,4,0,4,0,4,0,0"/>
+   <wangtile tileid="11795" wangid="0,0,0,4,0,4,0,4"/>
+   <wangtile tileid="11797" wangid="0,4,0,0,0,4,0,4"/>
+   <wangtile tileid="11798" wangid="0,4,0,0,0,4,0,0"/>
+   <wangtile tileid="11801" wangid="0,4,0,4,0,0,0,4"/>
+   <wangtile tileid="11803" wangid="0,0,0,4,0,0,0,4"/>
+   <wangtile tileid="11805" wangid="0,5,0,5,0,5,0,5"/>
+   <wangtile tileid="11806" wangid="0,5,0,5,0,5,0,0"/>
+   <wangtile tileid="11807" wangid="0,0,0,5,0,5,0,5"/>
+   <wangtile tileid="11809" wangid="0,5,0,0,0,5,0,5"/>
+   <wangtile tileid="11810" wangid="0,5,0,0,0,5,0,0"/>
+   <wangtile tileid="11813" wangid="0,5,0,5,0,0,0,5"/>
+   <wangtile tileid="11815" wangid="0,0,0,5,0,0,0,5"/>
+   <wangtile tileid="11892" wangid="0,3,0,3,0,0,0,0"/>
+   <wangtile tileid="11896" wangid="0,0,0,3,0,3,0,0"/>
+   <wangtile tileid="11904" wangid="0,4,0,4,0,0,0,0"/>
+   <wangtile tileid="11908" wangid="0,0,0,4,0,4,0,0"/>
+   <wangtile tileid="11916" wangid="0,5,0,5,0,0,0,0"/>
+   <wangtile tileid="11920" wangid="0,0,0,5,0,5,0,0"/>
+   <wangtile tileid="11995" wangid="0,0,0,0,0,3,0,3"/>
+   <wangtile tileid="11999" wangid="0,3,0,0,0,0,0,3"/>
+   <wangtile tileid="12005" wangid="0,0,0,3,0,0,0,0"/>
+   <wangtile tileid="12007" wangid="0,0,0,0,0,4,0,4"/>
+   <wangtile tileid="12011" wangid="0,4,0,0,0,0,0,4"/>
+   <wangtile tileid="12017" wangid="0,0,0,4,0,0,0,0"/>
+   <wangtile tileid="12019" wangid="0,0,0,0,0,5,0,5"/>
+   <wangtile tileid="12023" wangid="0,5,0,0,0,0,0,5"/>
+   <wangtile tileid="12029" wangid="0,0,0,5,0,0,0,0"/>
+   <wangtile tileid="12102" wangid="0,0,0,0,0,3,0,0"/>
+   <wangtile tileid="12104" wangid="0,0,0,0,0,0,0,3"/>
+   <wangtile tileid="12114" wangid="0,0,0,0,0,4,0,0"/>
+   <wangtile tileid="12116" wangid="0,0,0,0,0,0,0,4"/>
+   <wangtile tileid="12118" wangid="0,4,0,0,0,0,0,0"/>
+   <wangtile tileid="12126" wangid="0,0,0,0,0,5,0,0"/>
+   <wangtile tileid="12128" wangid="0,0,0,0,0,0,0,5"/>
+   <wangtile tileid="12130" wangid="0,5,0,0,0,0,0,0"/>
   </wangset>
   <wangset name="Interior Wall 1" type="corner" tile="6555">
    <wangcolor name="" color="#ff0000" tile="-1" probability="1"/>
@@ -2004,6 +2051,10 @@
   <wangset name="Carpets" type="corner" tile="9213">
    <wangcolor name="Brown Carpet" color="#ff0000" tile="9213" probability="1"/>
    <wangcolor name="Blue Carpet" color="#00ff00" tile="9225" probability="1"/>
+   <wangcolor name="Light Brown Carpet" color="#0000ff" tile="9237" probability="1"/>
+   <wangcolor name="Green Carpet" color="#ff7700" tile="9641" probability="1"/>
+   <wangcolor name="Medium Brown Carpet" color="#00e9ff" tile="9653" probability="1"/>
+   <wangcolor name="Yellow Carpet" color="#ff00d8" tile="9665" probability="1"/>
    <wangtile tileid="9213" wangid="0,1,0,1,0,1,0,1"/>
    <wangtile tileid="9214" wangid="0,1,0,1,0,1,0,0"/>
    <wangtile tileid="9215" wangid="0,0,0,1,0,1,0,1"/>
@@ -2018,22 +2069,82 @@
    <wangtile tileid="9230" wangid="0,2,0,0,0,2,0,0"/>
    <wangtile tileid="9233" wangid="0,2,0,2,0,0,0,2"/>
    <wangtile tileid="9235" wangid="0,0,0,2,0,0,0,2"/>
+   <wangtile tileid="9237" wangid="0,3,0,3,0,3,0,3"/>
+   <wangtile tileid="9238" wangid="0,3,0,3,0,3,0,0"/>
+   <wangtile tileid="9239" wangid="0,0,0,3,0,3,0,3"/>
+   <wangtile tileid="9241" wangid="0,3,0,0,0,3,0,3"/>
+   <wangtile tileid="9242" wangid="0,3,0,0,0,3,0,0"/>
+   <wangtile tileid="9245" wangid="0,3,0,3,0,0,0,3"/>
+   <wangtile tileid="9247" wangid="0,0,0,3,0,0,0,3"/>
    <wangtile tileid="9324" wangid="0,1,0,1,0,0,0,0"/>
    <wangtile tileid="9328" wangid="0,0,0,1,0,1,0,0"/>
    <wangtile tileid="9336" wangid="0,2,0,2,0,0,0,0"/>
    <wangtile tileid="9340" wangid="0,0,0,2,0,2,0,0"/>
+   <wangtile tileid="9348" wangid="0,3,0,3,0,0,0,0"/>
+   <wangtile tileid="9352" wangid="0,0,0,3,0,3,0,0"/>
    <wangtile tileid="9427" wangid="0,0,0,0,0,1,0,1"/>
    <wangtile tileid="9431" wangid="0,1,0,0,0,0,0,1"/>
    <wangtile tileid="9437" wangid="0,0,0,1,0,0,0,0"/>
    <wangtile tileid="9439" wangid="0,0,0,0,0,2,0,2"/>
    <wangtile tileid="9443" wangid="0,2,0,0,0,0,0,2"/>
    <wangtile tileid="9449" wangid="0,0,0,2,0,0,0,0"/>
+   <wangtile tileid="9451" wangid="0,0,0,0,0,3,0,3"/>
+   <wangtile tileid="9455" wangid="0,3,0,0,0,0,0,3"/>
+   <wangtile tileid="9461" wangid="0,0,0,3,0,0,0,0"/>
    <wangtile tileid="9534" wangid="0,0,0,0,0,1,0,0"/>
    <wangtile tileid="9536" wangid="0,0,0,0,0,0,0,1"/>
    <wangtile tileid="9538" wangid="0,1,0,0,0,0,0,0"/>
    <wangtile tileid="9546" wangid="0,0,0,0,0,2,0,0"/>
    <wangtile tileid="9548" wangid="0,0,0,0,0,0,0,2"/>
    <wangtile tileid="9550" wangid="0,2,0,0,0,0,0,0"/>
+   <wangtile tileid="9558" wangid="0,0,0,0,0,3,0,0"/>
+   <wangtile tileid="9560" wangid="0,0,0,0,0,0,0,3"/>
+   <wangtile tileid="9562" wangid="0,3,0,0,0,0,0,0"/>
+   <wangtile tileid="9641" wangid="0,4,0,4,0,4,0,4"/>
+   <wangtile tileid="9642" wangid="0,4,0,4,0,4,0,0"/>
+   <wangtile tileid="9643" wangid="0,0,0,4,0,4,0,4"/>
+   <wangtile tileid="9645" wangid="0,4,0,0,0,4,0,4"/>
+   <wangtile tileid="9646" wangid="0,4,0,0,0,4,0,0"/>
+   <wangtile tileid="9649" wangid="0,4,0,4,0,0,0,4"/>
+   <wangtile tileid="9651" wangid="0,0,0,4,0,0,0,4"/>
+   <wangtile tileid="9653" wangid="0,5,0,5,0,5,0,5"/>
+   <wangtile tileid="9654" wangid="0,5,0,5,0,5,0,0"/>
+   <wangtile tileid="9655" wangid="0,0,0,5,0,5,0,5"/>
+   <wangtile tileid="9657" wangid="0,5,0,0,0,5,0,5"/>
+   <wangtile tileid="9658" wangid="0,5,0,0,0,5,0,0"/>
+   <wangtile tileid="9661" wangid="0,5,0,5,0,0,0,5"/>
+   <wangtile tileid="9663" wangid="0,0,0,5,0,0,0,5"/>
+   <wangtile tileid="9665" wangid="0,6,0,6,0,6,0,6"/>
+   <wangtile tileid="9666" wangid="0,6,0,6,0,6,0,0"/>
+   <wangtile tileid="9667" wangid="0,0,0,6,0,6,0,6"/>
+   <wangtile tileid="9669" wangid="0,6,0,0,0,6,0,6"/>
+   <wangtile tileid="9670" wangid="0,6,0,0,0,6,0,0"/>
+   <wangtile tileid="9673" wangid="0,6,0,6,0,0,0,6"/>
+   <wangtile tileid="9675" wangid="0,0,0,6,0,0,0,6"/>
+   <wangtile tileid="9752" wangid="0,4,0,4,0,0,0,0"/>
+   <wangtile tileid="9756" wangid="0,0,0,4,0,4,0,0"/>
+   <wangtile tileid="9764" wangid="0,5,0,5,0,0,0,0"/>
+   <wangtile tileid="9768" wangid="0,0,0,5,0,5,0,0"/>
+   <wangtile tileid="9776" wangid="0,6,0,6,0,0,0,0"/>
+   <wangtile tileid="9780" wangid="0,0,0,6,0,6,0,0"/>
+   <wangtile tileid="9855" wangid="0,0,0,0,0,4,0,4"/>
+   <wangtile tileid="9859" wangid="0,4,0,0,0,0,0,4"/>
+   <wangtile tileid="9865" wangid="0,0,0,4,0,0,0,0"/>
+   <wangtile tileid="9867" wangid="0,0,0,0,0,5,0,5"/>
+   <wangtile tileid="9871" wangid="0,5,0,0,0,0,0,5"/>
+   <wangtile tileid="9877" wangid="0,0,0,5,0,0,0,0"/>
+   <wangtile tileid="9879" wangid="0,0,0,0,0,6,0,6"/>
+   <wangtile tileid="9883" wangid="0,6,0,0,0,0,0,6"/>
+   <wangtile tileid="9889" wangid="0,0,0,6,0,0,0,0"/>
+   <wangtile tileid="9962" wangid="0,0,0,0,0,4,0,0"/>
+   <wangtile tileid="9964" wangid="0,0,0,0,0,0,0,4"/>
+   <wangtile tileid="9966" wangid="0,4,0,0,0,0,0,0"/>
+   <wangtile tileid="9974" wangid="0,0,0,0,0,5,0,0"/>
+   <wangtile tileid="9976" wangid="0,0,0,0,0,0,0,5"/>
+   <wangtile tileid="9978" wangid="0,5,0,0,0,0,0,0"/>
+   <wangtile tileid="9986" wangid="0,0,0,0,0,6,0,0"/>
+   <wangtile tileid="9988" wangid="0,0,0,0,0,0,0,6"/>
+   <wangtile tileid="9990" wangid="0,6,0,0,0,0,0,0"/>
   </wangset>
  </wangsets>
 </tileset>

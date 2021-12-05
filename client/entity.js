@@ -509,6 +509,9 @@ var DroppedItem = function(initPack){
     self.amount = initPack.amount;
     self.parent = initPack.parent;
     self.allPlayers = initPack.allPlayers;
+    if(self.parent + '' !== selfId + '' && self.allPlayers === false){
+        return
+    }
     self.render = new OffscreenCanvas(48,48);
     self.renderSelect = new OffscreenCanvas(48,48);
     var renderCtx = self.render.getContext("2d");
@@ -521,40 +524,38 @@ var DroppedItem = function(initPack){
     renderCtx.drawImage(Img.items2,img_x,img_y,24,24,0,0,48,48);
     renderSelectCtx.drawImage(Img.items2select,img_x,img_y,24,24,0,0,48,48);
     self.draw = function(){
-        if(self.parent === selfId || self.allPlayers){
-            if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
-                ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
-                selected = true;
-                itemMenu.innerHTML = getEntityDescription(self);
-                itemMenu.style.display = 'inline-block';
-                var rect = itemMenu.getBoundingClientRect();
-                itemMenu.style.left = '';
-                itemMenu.style.right = '';
-                itemMenu.style.top = '';
-                itemMenu.style.bottom = '';
-                if(rawMouseX + rect.right - rect.left > window.innerWidth){
-                    itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
-                }
-                else{
-                    itemMenu.style.left = rawMouseX + 'px';
-                }
-                if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
-                    itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
-                }
-                else{
-                    itemMenu.style.top = rawMouseY + 'px';
-                }
+        if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
+            ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
+            selected = true;
+            itemMenu.innerHTML = getEntityDescription(self);
+            itemMenu.style.display = 'inline-block';
+            var rect = itemMenu.getBoundingClientRect();
+            itemMenu.style.left = '';
+            itemMenu.style.right = '';
+            itemMenu.style.top = '';
+            itemMenu.style.bottom = '';
+            if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
             }
             else{
-                ctx.drawImage(self.render,self.x - 24,self.y - 24);
+                itemMenu.style.left = rawMouseX + 'px';
             }
-            if(self.amount !== 1){
-                ctx.font = "13px pixel";
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = "right";
-                ctx.textBaseline = "bottom";
-                ctx.fillText(self.amount,Math.round(self.x + 24),Math.round(self.y + 24));
+            if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
             }
+            else{
+                itemMenu.style.top = rawMouseY + 'px';
+            }
+        }
+        else{
+            ctx.drawImage(self.render,self.x - 24,self.y - 24);
+        }
+        if(self.amount !== 1){
+            ctx.font = "13px pixel";
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = "right";
+            ctx.textBaseline = "bottom";
+            ctx.fillText(self.amount,Math.round(self.x + 24),Math.round(self.y + 24));
         }
     }
     DroppedItem.list[self.id] = self;

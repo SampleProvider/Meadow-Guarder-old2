@@ -618,7 +618,12 @@ Inventory = function(socket,server){
             }
         }
         if(item.manaCost){
-            description += 'Uses ' + item.manaCost + ' mana.<br>';
+            if(item.manaCost > 0){
+                description += 'Uses ' + item.manaCost + ' mana.<br>';
+            }
+            else{
+                description += 'Gives ' + (-item.manaCost) + ' mana.<br>';
+            }
         }
         if(item.hp){
             if(item.hp > 0){

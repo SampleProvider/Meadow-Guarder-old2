@@ -322,6 +322,8 @@ Actor = function(param){
 
     self.projectilesHit = {};
 
+    self.playersDamaged = {};
+
     if(param.onDeath){
         self.onDeath = param.onDeath;
     }
@@ -629,61 +631,69 @@ Actor = function(param){
             self.projectilesHit[pt.id] = 10;
         }
     }
-    self.dropItems = function(pt){
-        if(!Player.list[pt]){
-            return;
+    self.dropItems = function(){
+        var playersPercentage = {};
+        var totalDamage = 0;
+        for(var i in self.playersDamaged){
+            playersPercentage[i] = self.playersDamaged[i];
+            totalDamage += self.playersDamaged[i];
         }
-        for(var i in self.itemDrops){
-            if(Math.random() < self.itemDrops[i].chance * Player.list[pt].luck){
-                var amount = Math.round(self.itemDrops[i].amount * (Math.random() + 0.5) * Player.list[pt].luck);
-                if(i === 'random'){
-                    var numItems = 0;
-                    for(var j in Item.list){
-                        if(Item.list[j].type === 'Material'){
-                            numItems += 1;
-                        }
-                    }
-                    var randomItem = Math.floor(Math.random() * numItems);
-                    numItems = 0;
-                    for(var j in Item.list){
-                        if(Item.list[j].type === 'Material'){
-                            if(numItems === randomItem){
-                                while(amount > 0){
-                                    var amountRemoved = Math.ceil(Math.random() * amount);
-                                    amount -= amountRemoved;
-                                    new DroppedItem({
-                                        x:self.x,
-                                        y:self.y,
-                                        map:self.map,
-                                        item:j,
-                                        amount:amountRemoved,
-                                        parent:pt,
-                                        allPlayers:false,
-                                    });
-                                }
+        for(var i in playersPercentage){
+            playersPercentage[i] /= totalDamage;
+        }
+        for(var i in playersPercentage){
+            for(var j in self.itemDrops){
+                if(Math.random() < self.itemDrops[j].chance * Player.list[i].luck){
+                    var amount = Math.round(self.itemDrops[j].amount * (Math.random() + 0.5) * Player.list[i].luck * playersPercentage[i]);
+                    if(j === 'random'){
+                        var numItems = 0;
+                        for(var k in Item.list){
+                            if(Item.list[k].type === 'Material'){
+                                numItems += 1;
                             }
-                            numItems += 1;
+                        }
+                        var randomItem = Math.floor(Math.random() * numItems);
+                        numItems = 0;
+                        for(var k in Item.list){
+                            if(Item.list[k].type === 'Material'){
+                                if(numItems === randomItem){
+                                    while(amount > 0){
+                                        var amountRemoved = Math.ceil(Math.random() * amount);
+                                        amount -= amountRemoved;
+                                        new DroppedItem({
+                                            x:self.x,
+                                            y:self.y,
+                                            map:self.map,
+                                            item:k,
+                                            amount:amountRemoved,
+                                            parent:i,
+                                            allPlayers:false,
+                                        });
+                                    }
+                                }
+                                numItems += 1;
+                            }
                         }
                     }
-                }
-                else{
-                    while(amount > 0){
-                        var amountRemoved = Math.ceil(Math.random() * amount);
-                        amount -= amountRemoved;
-                        new DroppedItem({
-                            x:self.x,
-                            y:self.y,
-                            map:self.map,
-                            item:i,
-                            amount:amountRemoved,
-                            parent:pt,
-                            allPlayers:false,
-                        });
+                    else{
+                        while(amount > 0){
+                            var amountRemoved = Math.ceil(Math.random() * amount);
+                            amount -= amountRemoved;
+                            new DroppedItem({
+                                x:self.x,
+                                y:self.y,
+                                map:self.map,
+                                item:j,
+                                amount:amountRemoved,
+                                parent:i,
+                                allPlayers:false,
+                            });
+                        }
                     }
                 }
             }
+            Player.list[i].xp += Math.ceil(Math.random() * 15 * playersPercentage[i]);
         }
-        Player.list[pt].xp += Math.ceil(Math.random() * 5);
     }
     self.onDamage = function(pt){
         if(self.invincible === true){
@@ -696,12 +706,20 @@ Actor = function(param){
         var crit = false;
         if(Math.random() < pt.stats.critChance){
             crit = true;
-            self.hp -= Math.max(Math.floor(pt.stats.damage * (1 + pt.stats.critPower) * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+            self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense) * (1 + pt.stats.critPower)),0);
         }
         else{
             self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
         }
         self.hp = Math.round(self.hp);
+        if(pt.type === 'Projectile' && pt.parentType === 'Player'){
+            if(self.playersDamaged[pt.parent]){
+                self.playersDamaged[pt.parent] += hp - Math.max(self.hp,0);
+            }
+            else{
+                self.playersDamaged[pt.parent] = hp - Math.max(self.hp,0);
+            }
+        }
         if(self.hp < 1 && hp > 0){
             self.onDeath(self);
             if(self.type === 'Player'){
@@ -734,7 +752,7 @@ Actor = function(param){
             }
             else{
                 if(self.type === 'Monster'){
-                    self.dropItems(pt.parent);
+                    self.dropItems();
                 }
                 self.toRemove = true;
             }
@@ -2425,7 +2443,12 @@ Monster = function(param){
             self.projectilesHit[pt.id] = 10;
         }
         if(self.attackState === 'passive'){
-            self.target = pt.parent;
+            if(pt.parentType === 'Player'){
+                self.target = Player.list[pt.parent];
+            }
+            else if(pt.parentType === 'Monster'){
+                self.target = Monster.list[pt.parent];
+            }
             self.damaged = true;
             self.attackState = 'attack';
         }
@@ -2456,7 +2479,7 @@ Monster = function(param){
                         if(Player.list[i].hp > 0){
                             if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
                                 if(Player.list[i]){
-                                    self.target = i;
+                                    self.target = Player.list[i];
                                     self.attackState = 'attack';
                                     self.damaged = false;
                                 }
@@ -2468,58 +2491,49 @@ Monster = function(param){
         }
         else if(self.attackState === 'attack'){
             if(self.target){
-                if(Player.list[self.target]){
-                    if(Player.list[self.target].hp < 1){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                    else if(Player.list[self.target].team === self.team){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                    else if(Player.list[self.target].map !== self.map){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
-                    }
-                    else{
-                        if(self.getSquareDistance(Player.list[self.target]) > self.aggro * 2 && self.damaged === false){
-                            self.target = null;
-                            self.attackState = 'retreat';
-                            self.trackPos(self.randomPos.x,self.randomPos.y);
-                            self.spdX = 0;
-                            self.spdY = 0;
-                        }
-                        else if(self.getSquareDistance(Player.list[self.target]) > self.aggro * 3){
-                            self.target = null;
-                            self.attackState = 'retreat';
-                            self.trackPos(self.randomPos.x,self.randomPos.y);
-                            self.spdX = 0;
-                            self.spdY = 0;
-                        }
-                        else if(self.getSquareDistance(self.randomPos) > 16){
-                            self.target = null;
-                            self.attackState = 'retreat';
-                            self.trackPos(self.randomPos.x,self.randomPos.y);
-                            self.spdX = 0;
-                            self.spdY = 0;
-                        }
-                    }
-                }
-                else{
+                if(self.target.hp < 1){
                     self.target = null;
                     self.attackState = 'retreat';
                     self.trackPos(self.randomPos.x,self.randomPos.y);
                     self.spdX = 0;
                     self.spdY = 0;
+                }
+                else if(self.target.team === self.team){
+                    self.target = null;
+                    self.attackState = 'retreat';
+                    self.trackPos(self.randomPos.x,self.randomPos.y);
+                    self.spdX = 0;
+                    self.spdY = 0;
+                }
+                else if(self.target.map !== self.map){
+                    self.target = null;
+                    self.attackState = 'retreat';
+                    self.trackPos(self.randomPos.x,self.randomPos.y);
+                    self.spdX = 0;
+                    self.spdY = 0;
+                }
+                else{
+                    if(self.getSquareDistance(self.target) > self.aggro * 2 && self.damaged === false){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else if(self.getSquareDistance(self.target) > self.aggro * 3){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else if(self.getSquareDistance(self.randomPos) > 16){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
                 }
             }
         }
@@ -2560,65 +2574,63 @@ Monster = function(param){
         }
         else if(self.attackState === 'attack'){
             if(self.target){
-                if(Player.list[self.target]){
-                    self.spdX = 0;
-                    self.spdY = 0;
-                    var size = 33;
-                    var dx = self.gridX - size / 2 + 0.5;
-                    var dy = self.gridY - size / 2 + 0.5;
-                    var tx = Player.list[self.target].gridX - dx;
-                    var ty = Player.list[self.target].gridY - dy;
-                    self.trackTime += 1;
-                    if(self.trackTime > 50 + 50 * Math.random()){
-                        self.trackTime = 0;
-                        var finder = new PF.BiAStarFinder({
-                            allowDiagonal:true,
-                            dontCrossCorners:true,
-                        });
-                        var grid = new PF.Grid(size,size);
-                        for(var i = 0;i < size;i++){
-                            for(var j = 0;j < size;j++){
-                                var x = dx + i;
-                                var y = dy + j;
-                                if(Collision.list[self.map]){
-                                    if(Collision.list[self.map][self.zindex]){
-                                        if(Collision.list[self.map][self.zindex][x]){
-                                            if(Collision.list[self.map][self.zindex][x][y]){
-                                                grid.setWalkableAt(i,j,false);
-                                            }
+                self.spdX = 0;
+                self.spdY = 0;
+                var size = 33;
+                var dx = self.gridX - size / 2 + 0.5;
+                var dy = self.gridY - size / 2 + 0.5;
+                var tx = self.target.gridX - dx;
+                var ty = self.target.gridY - dy;
+                self.trackTime += 1;
+                if(self.trackTime > 50 + 50 * Math.random()){
+                    self.trackTime = 0;
+                    var finder = new PF.BiAStarFinder({
+                        allowDiagonal:true,
+                        dontCrossCorners:true,
+                    });
+                    var grid = new PF.Grid(size,size);
+                    for(var i = 0;i < size;i++){
+                        for(var j = 0;j < size;j++){
+                            var x = dx + i;
+                            var y = dy + j;
+                            if(Collision.list[self.map]){
+                                if(Collision.list[self.map][self.zindex]){
+                                    if(Collision.list[self.map][self.zindex][x]){
+                                        if(Collision.list[self.map][self.zindex][x][y]){
+                                            grid.setWalkableAt(i,j,false);
                                         }
                                     }
                                 }
-                                if(RegionChanger.list[self.map]){
-                                    if(RegionChanger.list[self.map][x]){
-                                        if(RegionChanger.list[self.map][x][y]){
-                                            if(RegionChanger.list[self.map][x][y].noMonster){
-                                                grid.setWalkableAt(i,j,false);
-                                            }
+                            }
+                            if(RegionChanger.list[self.map]){
+                                if(RegionChanger.list[self.map][x]){
+                                    if(RegionChanger.list[self.map][x][y]){
+                                        if(RegionChanger.list[self.map][x][y].noMonster){
+                                            grid.setWalkableAt(i,j,false);
                                         }
                                     }
                                 }
                             }
                         }
-                        var nx = self.gridX - dx;
-                        var ny = self.gridY - dy;
-                        if(tx < size && tx > 0 && ty < size && ty > 0){
-                            var path = finder.findPath(nx,ny,tx,ty,grid);
-                            if(path[0]){
-                                self.trackingPath = PF.Util.compressPath(path);
-                                for(var i in self.trackingPath){
-                                    self.trackingPath[i][0] += dx;
-                                    self.trackingPath[i][1] += dy;
-                                }
-                                self.trackingPath.shift();
+                    }
+                    var nx = self.gridX - dx;
+                    var ny = self.gridY - dy;
+                    if(tx < size && tx > 0 && ty < size && ty > 0){
+                        var path = finder.findPath(nx,ny,tx,ty,grid);
+                        if(path[0]){
+                            self.trackingPath = PF.Util.compressPath(path);
+                            for(var i in self.trackingPath){
+                                self.trackingPath[i][0] += dx;
+                                self.trackingPath[i][1] += dy;
                             }
+                            self.trackingPath.shift();
                         }
                     }
-                    if(self.getSquareDistance(self.randomPos) > 16){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                    }
+                }
+                if(self.getSquareDistance(self.randomPos) > 16){
+                    self.target = null;
+                    self.attackState = 'retreat';
+                    self.trackPos(self.randomPos.x,self.randomPos.y);
                 }
             }
         }
@@ -2634,14 +2646,9 @@ Monster = function(param){
             self.passiveReload = 0;
             return;
         }
-        if(!Player.list[self.target]){
-            self.mainReload = 0;
-            self.passiveReload = 0;
-            return;
-        }
         self.mainReload += 1;
         self.passiveReload += 1;
-        self.direction = Math.atan2(Player.list[self.target].y - self.y,Player.list[self.target].x - self.x) / Math.PI * 180;
+        self.direction = Math.atan2(self.target.y - self.y,self.target.x - self.x) / Math.PI * 180;
         self.doAttack(self.mainAttackData,self.mainReload);
         self.doAttack(self.passiveAttackData,self.passiveReload);
     }
