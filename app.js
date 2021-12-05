@@ -491,38 +491,6 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'disguise' && level >= 2){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to disguise as ' + name + '.',
-								debug:true,
-							});
-							return;
-						}
-					}
-					doCommand(name,function(name,i){
-						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].emit('rickroll');
-						}
-						addToChat('#ff0000',Player.list[i].name + ' just got rickrolled.');
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] Rickrolled player ' + name + '.',
-							debug:true,
-						});
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
-					});
-					return;
-				}
 				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invincible = !Player.list[socket.id].debug.invincible;
