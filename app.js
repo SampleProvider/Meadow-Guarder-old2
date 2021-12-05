@@ -835,8 +835,13 @@ io.sockets.on('connection',function(socket){
 					}
 				}
 				if(notSpace){
-					if(stringData){
+					try{
 						stringData = filter.clean(stringData);
+						addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
+						Player.list[socket.id].lastChat = 20;
+						Player.list[socket.id].chatWarnings -= 0.5;
+					}
+					catch(err){
 						addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
 						Player.list[socket.id].lastChat = 20;
 						Player.list[socket.id].chatWarnings -= 0.5;
