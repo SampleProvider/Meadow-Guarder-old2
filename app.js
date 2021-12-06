@@ -175,7 +175,7 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		for(var i in badwords){
-			if(stringData.toLowerCase().username.includes(badwords[i])){
+			if(stringData.username.toLowerCase().includes(badwords[i])){
 				socket.emit('createAccountResponse',{success:6,username:stringData.username});
 				return;
 			}
