@@ -2080,11 +2080,16 @@ Player.onDisconnect = function(socket){
                 if(Player.list[Player.list[socket.id].tradingEntity]){
                     for(var i in Player.list[Player.list[socket.id].tradingEntity].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount);                        }
+                            if(Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id){
+                                Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount);
+                            }
+                        }
                     }
                     for(var i in Player.list[socket.id].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[socket.id].inventory.items[i].id,Player.list[socket.id].inventory.items[i].amount);
+                            if(Player.list[socket.id].inventory.items[i].id){
+                                Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[socket.id].inventory.items[i].id,Player.list[socket.id].inventory.items[i].amount);
+                            }
                         }
                     }
                     if(SOCKET_LIST[Player.list[socket.id].tradingEntity]){
