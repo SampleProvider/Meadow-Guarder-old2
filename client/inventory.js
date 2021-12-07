@@ -83,6 +83,9 @@ Inventory = function(socket,server){
         }
     }
     self.hasSpace = function(id,amount){
+        if(!Item.list[id]){
+            return;
+        }
         var hasSpace = 0;
         var index = -1;
         for(var i in self.items){
