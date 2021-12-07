@@ -61,7 +61,7 @@
     },
     "radioactiveskeleton":{
         "name":"Radioactive Skeleton",
-        "hpMax":500,
+        "hpMax":1000,
         "stats":{
             "damage":25,
             "defense":50,
@@ -96,7 +96,7 @@
         "name":"Karate Skeleton",
         "hpMax":1500,
         "stats":{
-            "damage":15,
+            "damage":25,
             "defense":5,
             "hpRegen":1,
             "critChance":0,
@@ -166,8 +166,7 @@
                 "id":"projectile",
                 "projectileType":"bone",
                 "param":{
-                    "direction":0,
-                    "directionDeviation":360
+                    "directionDeviation":60
                 }
             }]
         }
@@ -178,7 +177,7 @@
         "stats":{
             "damage":30,
             "defense":0,
-            "hpRegen":40,
+            "hpRegen":20,
             "critChance":0.05,
             "critPower":10000
         },
