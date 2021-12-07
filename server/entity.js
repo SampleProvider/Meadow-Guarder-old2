@@ -1226,7 +1226,13 @@ Player = function(param,socket){
                                 }
                             }
                             if(hasMana){
-                                self.inventory.items[self.inventory.hotbarSelectedItem].cooldown = Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].useTime;
+                                for(var i in self.inventory.items){
+                                    if(self.inventory.items[i].id){
+                                        if(Item.list[self.inventory.items[i].id].equip === Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip){
+                                            self.inventory.items[i].cooldown = Item.list[self.inventory.items[i].id].useTime;
+                                        }
+                                    }
+                                }
                                 self.mainReload += 1;
                                 self.doAttack(self.mainAttackData,self.mainReload);
                                 socket.emit('attack');
@@ -2074,28 +2080,11 @@ Player.onDisconnect = function(socket){
                 if(Player.list[Player.list[socket.id].tradingEntity]){
                     for(var i in Player.list[Player.list[socket.id].tradingEntity].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            new DroppedItem({
-                                x:Player.list[Player.list[socket.id].tradingEntity].x,
-                                y:Player.list[Player.list[socket.id].tradingEntity].y,
-                                map:Player.list[Player.list[socket.id].tradingEntity].map,
-                                item:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,
-                                amount:Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount,
-                                parent:Player.list[socket.id].tradingEntity,
-                                allPlayers:false,
-                            });
-                        }
+                            Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].id,Player.list[Player.list[socket.id].tradingEntity].inventory.items[i].amount);                        }
                     }
                     for(var i in Player.list[socket.id].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
-                            new DroppedItem({
-                                x:Player.list[Player.list[socket.id].tradingEntity].x,
-                                y:Player.list[Player.list[socket.id].tradingEntity].y,
-                                map:Player.list[Player.list[socket.id].tradingEntity].map,
-                                item:Player.list[socket.id].inventory.items[i].id,
-                                amount:Player.list[socket.id].inventory.items[i].amount,
-                                parent:Player.list[socket.id].tradingEntity,
-                                allPlayers:false,
-                            });
+                            Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[socket.id].inventory.items[i].id,Player.list[socket.id].inventory.items[i].amount);
                         }
                     }
                     if(SOCKET_LIST[Player.list[socket.id].tradingEntity]){
@@ -2450,6 +2439,8 @@ Monster = function(param){
     self.updated = true;
 
     self.trackTime = 100;
+    self.circlingTarget = false;
+    self.circleDirection = 1;
     self.randomPos = {
         x:self.x,
         y:self.y,
@@ -2501,14 +2492,33 @@ Monster = function(param){
         if(self.attackState === 'passive'){
             self.target = null;
             for(var i in Player.list){
-                if(Player.list[i].map === self.map){
-                    if(Player.list[i].team !== self.team){
-                        if(Player.list[i].hp > 0){
-                            if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
-                                if(Player.list[i]){
-                                    self.target = Player.list[i];
-                                    self.attackState = 'attack';
-                                    self.damaged = false;
+                if(!self.target){
+                    if(Player.list[i].map === self.map){
+                        if(Player.list[i].team !== self.team){
+                            if(Player.list[i].hp > 0){
+                                if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
+                                    if(Player.list[i]){
+                                        self.target = Player.list[i];
+                                        self.attackState = 'attack';
+                                        self.damaged = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for(var i in Monster.list){
+                if(!self.target){
+                    if(Monster.list[i].map === self.map){
+                        if(Monster.list[i].team !== self.team){
+                            if(Monster.list[i].hp > 0){
+                                if(self.getSquareDistance(Monster.list[i]) < self.aggro && Monster.list[i].getSquareDistance(self.randomPos) <= 16){
+                                    if(Monster.list[i]){
+                                        self.target = Monster.list[i];
+                                        self.attackState = 'attack';
+                                        self.damaged = false;
+                                    }
                                 }
                             }
                         }
@@ -2555,6 +2565,22 @@ Monster = function(param){
                         self.spdY = 0;
                     }
                     else if(self.getSquareDistance(self.randomPos) > 16){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                }
+                if(self.target){
+                    if(self.target.type === 'Player' && !Player.list[self.target.id]){
+                        self.target = null;
+                        self.attackState = 'retreat';
+                        self.trackPos(self.randomPos.x,self.randomPos.y);
+                        self.spdX = 0;
+                        self.spdY = 0;
+                    }
+                    else if(self.target.type === 'Monster' && !Monster.list[self.target.id]){
                         self.target = null;
                         self.attackState = 'retreat';
                         self.trackPos(self.randomPos.x,self.randomPos.y);
@@ -2609,48 +2635,108 @@ Monster = function(param){
                 var tx = self.target.gridX - dx;
                 var ty = self.target.gridY - dy;
                 self.trackTime += 1;
-                if(self.trackTime > 50 + 50 * Math.random()){
-                    self.trackTime = 0;
-                    var finder = new PF.BiAStarFinder({
-                        allowDiagonal:true,
-                        dontCrossCorners:true,
-                    });
-                    var grid = new PF.Grid(size,size);
-                    for(var i = 0;i < size;i++){
-                        for(var j = 0;j < size;j++){
-                            var x = dx + i;
-                            var y = dy + j;
-                            if(Collision.list[self.map]){
-                                if(Collision.list[self.map][self.zindex]){
-                                    if(Collision.list[self.map][self.zindex][x]){
-                                        if(Collision.list[self.map][self.zindex][x][y]){
-                                            grid.setWalkableAt(i,j,false);
+                var distance = self.getDistance(self.target);
+                if(distance < 192){
+                    self.circlingTarget = true;
+                }
+                else if(distance > 256){
+                    self.circlingTarget = false;
+                }
+                if(self.circlingTarget){
+                    self.trackingPath = [];
+                    var direction = Math.atan2(self.y - self.target.y,self.x - self.target.x) / Math.PI * 180;
+                    direction = Math.floor(direction / 45 + 0.5);
+                    if(distance < 128){
+                        direction -= 1;
+                    }
+                    direction = direction % 8;
+                    while(direction < 0){
+                        direction += 8;
+                    }
+                    if(self.collided.x || self.collided.y){
+                        self.circleDirection *= -1;
+                    }
+                    switch(direction){
+                        case 0:
+                            self.spdX = 0;
+                            self.spdY = 1;
+                            break;
+                        case 1:
+                            self.spdX = -1;
+                            self.spdY = 1;
+                            break;
+                        case 2:
+                            self.spdX = -1;
+                            self.spdY = 0;
+                            break;
+                        case 3:
+                            self.spdX = -1;
+                            self.spdY = -1;
+                            break;
+                        case 4:
+                            self.spdX = 0;
+                            self.spdY = -1;
+                            break;
+                        case 5:
+                            self.spdX = 1;
+                            self.spdY = -1;
+                            break;
+                        case 6:
+                            self.spdX = 1;
+                            self.spdY = 0;
+                            break;
+                        case 7:
+                            self.spdX = 1;
+                            self.spdY = 1;
+                            break;
+                    }
+                    self.spdX *= self.circleDirection;
+                    self.spdY *= self.circleDirection;
+                }
+                else{
+                    if(self.trackTime > 50 + 50 * Math.random()){
+                        self.trackTime = 0;
+                        var finder = new PF.BiAStarFinder({
+                            allowDiagonal:true,
+                            dontCrossCorners:true,
+                        });
+                        var grid = new PF.Grid(size,size);
+                        for(var i = 0;i < size;i++){
+                            for(var j = 0;j < size;j++){
+                                var x = dx + i;
+                                var y = dy + j;
+                                if(Collision.list[self.map]){
+                                    if(Collision.list[self.map][self.zindex]){
+                                        if(Collision.list[self.map][self.zindex][x]){
+                                            if(Collision.list[self.map][self.zindex][x][y]){
+                                                grid.setWalkableAt(i,j,false);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            if(RegionChanger.list[self.map]){
-                                if(RegionChanger.list[self.map][x]){
-                                    if(RegionChanger.list[self.map][x][y]){
-                                        if(RegionChanger.list[self.map][x][y].noMonster){
-                                            grid.setWalkableAt(i,j,false);
+                                if(RegionChanger.list[self.map]){
+                                    if(RegionChanger.list[self.map][x]){
+                                        if(RegionChanger.list[self.map][x][y]){
+                                            if(RegionChanger.list[self.map][x][y].noMonster){
+                                                grid.setWalkableAt(i,j,false);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    var nx = self.gridX - dx;
-                    var ny = self.gridY - dy;
-                    if(tx < size && tx > 0 && ty < size && ty > 0){
-                        var path = finder.findPath(nx,ny,tx,ty,grid);
-                        if(path[0]){
-                            self.trackingPath = PF.Util.compressPath(path);
-                            for(var i in self.trackingPath){
-                                self.trackingPath[i][0] += dx;
-                                self.trackingPath[i][1] += dy;
+                        var nx = self.gridX - dx;
+                        var ny = self.gridY - dy;
+                        if(tx < size && tx > 0 && ty < size && ty > 0){
+                            var path = finder.findPath(nx,ny,tx,ty,grid);
+                            if(path[0]){
+                                self.trackingPath = PF.Util.compressPath(path);
+                                for(var i in self.trackingPath){
+                                    self.trackingPath[i][0] += dx;
+                                    self.trackingPath[i][1] += dy;
+                                }
+                                self.trackingPath.shift();
                             }
-                            self.trackingPath.shift();
                         }
                     }
                 }

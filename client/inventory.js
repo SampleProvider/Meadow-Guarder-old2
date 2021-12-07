@@ -1524,10 +1524,16 @@ Inventory = function(socket,server){
             }
         });
         socket.on("hotbarSelectedItem",function(data){
-            self.hotbarSelectedItem = data;
-            self.updateStats = true;
-            if(Player.list[socket.id]){
-                Player.list[socket.id].keyPress.leftClick = false;
+            if(data){
+                if(typeof data === 'number'){
+                    if(data >= 0 && data <= 9){
+                        self.hotbarSelectedItem = Math.round(data);
+                        self.updateStats = true;
+                        if(Player.list[socket.id]){
+                            Player.list[socket.id].keyPress.leftClick = false;
+                        }
+                    }
+                }
             }
         });
         socket.on("useItem",function(data){

@@ -306,8 +306,7 @@ var Monster = function(initPack){
     var self = Actor(initPack);
     self.monsterType = initPack.monsterType;
     if(self.monsterType === 'teneyedone'){
-        fadeInSong('tenEyedOne');
-        fadeOutSong('theMeadow');
+        startBossSong('tenEyedOne');
     }
     self.draw = function(){
         if(self.fadeState === 0){
@@ -329,8 +328,7 @@ var Monster = function(initPack){
         else{
             if(settings.entityFadeOut === false){
                 if(self.monsterType === 'teneyedone'){
-                    fadeOutSong('tenEyedOne');
-                    fadeInSong('theMeadow');
+                    stopBossSong('tenEyedOne');
                 }
                 delete Monster.list[self.id];
                 return;
@@ -341,8 +339,7 @@ var Monster = function(initPack){
                 if(self.fade <= 0){
                     ctx.globalAlpha = 1;
                     if(self.monsterType === 'teneyedone'){
-                        fadeOutSong('tenEyedOne');
-                        fadeInSong('theMeadow');
+                        stopBossSong('tenEyedOne');
                     }
                     delete Monster.list[self.id];
                     return;

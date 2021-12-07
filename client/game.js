@@ -37,6 +37,7 @@ var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
 var teleportingMap = '';
 var lastMap = '';
+var region = '';
 
 var respawnTimer = 0;
 
@@ -681,8 +682,7 @@ socket.on('update',function(data){
         if(Monster.list[i].updated === false){
             if(!Monster.list[i].toRemove){
                 if(Monster.list[i].monsterType === 'teneyedone'){
-                    fadeOutSong('tenEyedOne');
-                    fadeInSong('theMeadow');
+                    stopBossSong('tenEyedOne');
                 }
                 delete Monster.list[i];
             }
@@ -803,6 +803,8 @@ socket.on('regionChange',function(data){
     regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
     mapShadeAmount = 0;
     mapShadeSpeed = 0.08;
+    region = data.region;
+    playRegionSong(region);
 });
 
 var increaseProjectileByParent = function(projectile){
@@ -1110,6 +1112,7 @@ disconnectClient = function(){
     },5000);
     socket.emit('timeout');
     selfId = null;
+    stopAllSongs();
 }
 
 socket.on('rickroll',function(){
