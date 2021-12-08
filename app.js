@@ -721,8 +721,10 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'pvp' && level >= 0){
 					commandList.splice(0,1);
-					Player.list[socket.id].teleport(-0.5,-0.5,'PVP Arena');
-					addToChat('#ffff00',Player.list[socket.id].name + ' wants to PVP.');
+					if(Player.list[socket.id].map !== 'PVP Arena'){
+						Player.list[socket.id].teleport((Math.random() * 20 - 10.5) * 64,(Math.random() * 20 - 10.5) * 64,'PVP Arena');
+						addToChat('#ffff00',Player.list[socket.id].name + ' wants to PVP.');
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
