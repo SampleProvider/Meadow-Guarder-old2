@@ -1524,7 +1524,7 @@ Inventory = function(socket,server){
             }
         });
         socket.on("hotbarSelectedItem",function(data){
-            if(data){
+            if(data || data === 0){
                 if(typeof data === 'number'){
                     if(data >= 0 && data <= 9){
                         self.hotbarSelectedItem = Math.round(data);

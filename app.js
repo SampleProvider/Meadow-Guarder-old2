@@ -712,6 +712,11 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'pvp' && level >= 0){
+					commandList.splice(0,1);
+					Player.list[socket.id].teleport(-0.5,-0.5,'PVP Arena');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
 					if(level === 0){
 						var message = 'Commands:';
@@ -719,6 +724,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/pvp - Enter the PVP Arena.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -734,6 +740,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/pvp - Enter the PVP Arena.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -751,6 +758,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/pvp - Enter the PVP Arena.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -773,6 +781,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
+						message += '<br>/pvp - Enter the PVP Arena.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',

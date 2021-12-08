@@ -182,3 +182,4 @@ loadMap('Altoris Forge Basement');
 loadMap('Altoris General Store');
 loadMap('Altoris General Store Upstairs');
 loadMap('Altoris Mapmakers Lodge');
+loadMap('PVP Arena');

@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 7;
+var totalMaps = 8;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -141,5 +141,6 @@ var loadAllMaps = function(){
     loadMap('Altoris General Store');
     loadMap('Altoris General Store Upstairs');
     loadMap('Altoris Mapmakers Lodge');
+    loadMap('PVP Arena');
     loadingComplete = true;
 }
