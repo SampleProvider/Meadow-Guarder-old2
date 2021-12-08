@@ -1920,14 +1920,6 @@ Player.onConnect = function(socket,username){
             }
         });
 
-        socket.on('nextReload',function(data){
-            socket.disconnectUser();
-        });
-
-        socket.on('attack',function(data){
-            socket.disconnectUser();
-        });
-
         socket.on('acceptTrade',function(data){
             socket.detectSpam('game');
             if(player.tradingEntity){
