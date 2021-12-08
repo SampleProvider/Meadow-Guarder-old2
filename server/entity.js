@@ -709,7 +709,7 @@ Actor = function(param){
         var crit = false;
         if(Math.random() < pt.stats.critChance){
             crit = true;
-            self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense) * (1 + pt.stats.critPower)),0);
+            self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
         }
         else{
             self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);

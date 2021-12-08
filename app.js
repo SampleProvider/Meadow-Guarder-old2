@@ -17,6 +17,7 @@ require('./server/database');
 
 var debugData = require('./server/debug.json');
 var badwords = require('./server/badwords.json').words;
+var suspendedAccounts = require('./server/suspendedAccounts.json');
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -98,6 +99,12 @@ io.sockets.on('connection',function(socket){
 		var stringData = {
 			username:data.username.toString(),
 			password:data.password.toString(),
+		}
+		for(var i in suspendedAccounts){
+			if(i === stringData.username){
+				socket.emit('signInResponse',{success:4,username:stringData.username});
+				return;
+			}
 		}
 		Database.isValidPassword(stringData,function(res){
 			if(res === 3){

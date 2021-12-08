@@ -273,7 +273,16 @@ document.getElementById('changePassword').onclick = function(){
     }
 }
 socket.on('signInResponse',function(data){
-    if(data.success === 3){
+    if(data.success === 4){
+        canSignIn = true;
+        signErrorText = signError.innerHTML;
+        signError.innerHTML = '<span style="color: #ff0000">Error: This account is currently suspended.</span><br>' + signErrorText;
+        pageDiv.style.display = 'inline-block';
+        disconnectedDiv.style.display = 'none';
+        deathDiv.style.display = 'none';
+        gameDiv.style.display = 'none';
+    }
+    else if(data.success === 3){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
     }
