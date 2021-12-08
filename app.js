@@ -722,6 +722,7 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'pvp' && level >= 0){
 					commandList.splice(0,1);
 					Player.list[socket.id].teleport(-0.5,-0.5,'PVP Arena');
+					addToChat('#ffff00',Player.list[socket.id].name + ' wants to PVP.');
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
@@ -1075,6 +1076,7 @@ setInterval(function(){
 			}
         }
     }
+	var grid = [];
 	for(var i in Player.list){
 		for(var j in Projectile.list){
 			if(Projectile.list[j].isColliding(Player.list[i]) && i + '' !== Projectile.list[j].parent + ''){
