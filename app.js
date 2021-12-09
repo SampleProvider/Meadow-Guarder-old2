@@ -647,7 +647,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -669,7 +669,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){

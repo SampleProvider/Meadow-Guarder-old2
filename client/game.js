@@ -312,7 +312,9 @@ var renderPlayer = function(img,drawSize){
     resetCanvas(gl);
     for(var i in img){
         if(img[i] !== "none"){
-            gl.drawImage(Img[img[i]],0,0,size * 4,size * 4);
+            if(Img[img[i]]){
+                gl.drawImage(Img[img[i]],0,0,size * 4,size * 4);
+            }
         }
     }
     return temp;
