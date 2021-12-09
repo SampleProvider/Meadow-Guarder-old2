@@ -1710,6 +1710,7 @@ Player = function(param,socket){
             self.questStage = 0;
             player = self;
             require('./../client/data/quests/' + self.quest + '.js');
+            self.updateQuest();
         }
     }
     self.completeQuest = function(){

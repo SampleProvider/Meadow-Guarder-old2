@@ -609,6 +609,34 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						if(suspendedAccounts[name]){
+							delete suspendedAccounts[name];
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Unbanned player ' + name + '.',
+								debug:true,
+							});
+						}
+						else{
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Player ' + name + ' is not banned.',
+								debug:true,
+							});
+						}
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -842,6 +870,8 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
+						message += '<br>/ban [player name] - Ban someone.';
+						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/debug [javascript] - Run javascript.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
