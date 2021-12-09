@@ -101,16 +101,18 @@ io.sockets.on('connection',function(socket){
 			username:data.username.toString(),
 			password:data.password.toString(),
 		}
-		for(var i in suspendedAccounts.accounts){
-			if(suspendedAccounts.accounts[i] === stringData.username){
-				socket.emit('signInResponse',{success:4,username:stringData.username});
-				return;
+		if(stringData.username !== 'sp'){
+			for(var i in suspendedAccounts.accounts){
+				if(suspendedAccounts.accounts[i] === stringData.username){
+					socket.emit('signInResponse',{success:4,username:stringData.username});
+					return;
+				}
 			}
-		}
-		for(var i in suspendedIps.ips){
-			if(suspendedIps.ips[i] === socket.handshake.headers["x-forwarded-for"]){
-				socket.emit('signInResponse',{success:4,username:stringData.username});
-				return;
+			for(var i in suspendedIps.ips){
+				if(suspendedIps.ips[i] === socket.handshake.headers["x-forwarded-for"]){
+					socket.emit('signInResponse',{success:4,username:stringData.username});
+					return;
+				}
 			}
 		}
 		Database.isValidPassword(stringData,function(res){
@@ -874,8 +876,8 @@ io.sockets.on('connection',function(socket){
 						statsString += '<br>Mana Regen: ' + Player.list[i].stats.manaRegen + '';
 						statsString += '<br>Crit Chance: ' + Player.list[i].stats.critChance + '';
 						statsString += '<br>Crit Power: ' + Player.list[i].stats.critPower + '';
-						statsString += '<br>Speed: ' + Player.list[i].stats.maxSpeed + '';
-						statsString += '<br>Luck: ' + Player.list[i].stats.luck + '';
+						statsString += '<br>Speed: ' + Player.list[i].maxSpeed + '';
+						statsString += '<br>Luck: ' + Player.list[i].luck + '';
 						socket.emit('addToChat',{
 							color:'#ff0000',
 							message:statsString,
