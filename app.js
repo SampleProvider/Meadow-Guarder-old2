@@ -597,6 +597,9 @@ io.sockets.on('connection',function(socket){
 							message:'[!] Banned player ' + name + '.',
 							debug:true,
 						});
+						if(SOCKET_LIST[i]){
+							SOCKET_LIST[i].disconnectUser();
+						}
 					},function(name){
 						socket.emit('addToChat',{
 							color:'#ff0000',
