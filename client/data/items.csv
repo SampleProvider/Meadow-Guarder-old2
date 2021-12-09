@@ -218,14 +218,14 @@ azuritenecklace,Azurite Necklace,3.0,0.43,351,false,1,accessory,Necklace,0,0,0,0
 emeralditenecklace,Emeraldite Necklace,3.5,0.32,352,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,23,0.00,0,0.00,0,0.32,0,0,0,0,none,none,none,none,none,0.00,Necklace of Unbreaking.
 rubynecklace,Ruby Necklace,4.0,0.29,353,false,1,accessory,Necklace,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.50,2,0.29,0,0,0,0,none,none,none,none,none,0.00,Necklace of Wizardry.
 diamondnecklace,Diamond Necklace,5.0,0.20,354,false,1,accessory,Necklace,10,0,0,0,0.20,0.30,0,0,0.00,19.36,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Necklace of Power.
-amuletofdeath,Amulet of Death,5.0,0.20,355,false,1,accessory,Amulet,0,0,0,0,0.00,7.00,0,0,0.00,34.48,0.35,0,-22,-0.30,0,0.00,0,-0.15,0,0,0,0,none,none,none,none,none,0.00,"Like the Skull of Death, but better."
-amuletoffire,Amulet of Fire,5.0,0.20,356,false,1,accessory,Amulet,14,0,0,0,0.00,0.00,0,0,0.00,14.00,0.14,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,none,0.00,Burn! BURN!!!
-amuletofblood,Amulet of Blood,5.0,0.20,357,false,1,accessory,Amulet,5,0,0,0,0.30,0.35,0,0,0.00,20.02,0.20,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Bloodlust.
-amuletofwater,Amulet of Water,5.0,0.20,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.50,0,0.00,2,0.20,0,0,0,0,none,none,none,none,none,0.00,Flowing water never freezes.
-amuletofice,Amulet of Ice,5.0,0.20,359,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.40,0,0.20,0,0,0,0,none,none,none,none,none,0.00,A cold wisp washes over you.
-amuletofnature,Amulet of Nature,5.0,0.20,360,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.60,23,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,You feel connected to the trees around you.
-amuletofriches,Amulet of Riches,5.0,0.20,361,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,1.05,0,0.20,0,0,0,0,none,none,none,none,none,0.00,Legends say this amulet increases your wealth.
-amuletofspirits,Amulet of Spirits,5.0,0.20,362,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,16,0.00,16,0.00,0,0.20,0,0,0,0,none,none,none,none,none,0.00,The Lost Spirits possess this amulet. You remember the Ghastly Omelette.
+amuletofdeath,Amulet of Death,5.0,0.27,355,false,1,accessory,Amulet,0,0,0,0,0.00,7.00,0,0,0.00,34.48,0.35,0,-24,-7.00,0,0.00,5,-0.83,0,0,0,0,none,none,none,none,none,0.75,"Like the Skull of Death, but better."
+amuletoffire,Amulet of Fire,5.0,0.25,356,false,1,accessory,Amulet,18,0,0,0,0.00,0.00,0,0,0.00,18.00,0.18,0,0,0.00,0,0.00,1,0.06,0,0,0,0,none,none,none,none,none,0.00,Burn! BURN!!!
+amuletofblood,Amulet of Blood,5.0,0.25,357,false,1,accessory,Amulet,5,0,0,0,0.35,0.40,0,0,0.00,24.21,0.25,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Bloodlust.
+amuletofwater,Amulet of Water,5.0,0.25,358,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.85,0,0.00,2,0.25,0,0,0,0,none,none,none,none,none,0.00,Flowing water never freezes.
+amuletofice,Amulet of Ice,5.0,0.25,359,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,0,0.80,0,0.25,0,0,0,0,none,none,none,none,none,0.00,A cold wisp washes over you.
+amuletofnature,Amulet of Nature,5.0,0.25,360,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.90,25,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.00,You feel connected to the trees around you.
+amuletofriches,Amulet of Riches,5.0,0.25,361,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,1.40,0,0.25,0,0,0,0,none,none,none,none,none,0.00,Legends say this amulet increases your wealth.
+amuletofspirits,Amulet of Spirits,5.0,0.25,362,false,1,accessory,Amulet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,21,0.00,21,0.00,0,0.25,0,0,0,0,none,none,none,none,none,0.00,The Lost Spirits possess this amulet. You remember the Ghastly Omelette.
 wornaxe,Worn Axe,0.0,0.97,363,false,1,hotbar,Tool,0,1,0,0,0.00,0.00,0,10,0.00,2.00,0.67,0,0,0.00,0,0.00,0,0.00,0,10,0,0,wornaxe,none,none,none,none,0.30,
 copperaxe,Copper Axe,0.5,0.94,364,false,1,hotbar,Tool,0,2,0,0,0.00,0.00,0,10,0.00,4.00,0.64,0,0,0.00,0,0.00,0,0.00,0,20,0,0,copperaxe,none,none,none,none,0.30,
 ironaxe,Iron Axe,1.0,1.03,365,false,1,hotbar,Tool,0,4,0,0,0.00,0.00,0,10,0.00,8.00,0.73,0,0,0.00,0,0.00,0,0.00,0,30,0,0,ironaxe,none,none,none,none,0.30,

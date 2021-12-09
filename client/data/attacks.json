@@ -636,6 +636,7 @@
             "projectileType":"darkflames",
             "param":{
                 "speed":30,
+                "direction":-40,
                 "directionDeviation":5,
                 "pierce":-1,
                 "timer":40,
@@ -647,6 +648,7 @@
             "projectileType":"darkflames",
             "param":{
                 "speed":30,
+                "direction":-40,
                 "directionDeviation":5,
                 "pierce":-1,
                 "timer":40,
@@ -658,6 +660,7 @@
             "projectileType":"darkflames",
             "param":{
                 "speed":30,
+                "direction":-20,
                 "directionDeviation":5,
                 "pierce":-1,
                 "timer":40,
@@ -669,6 +672,79 @@
             "projectileType":"darkflames",
             "param":{
                 "speed":30,
+                "direction":-20,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":0,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":0,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":20,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":20,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":40,
+                "directionDeviation":5,
+                "pierce":-1,
+                "timer":40,
+                "projectilePattern":"homing",
+                "collisionType":"none"
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"darkflames",
+            "param":{
+                "speed":30,
+                "direction":40,
                 "directionDeviation":5,
                 "pierce":-1,
                 "timer":40,

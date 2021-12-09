@@ -587,6 +587,25 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'ban' && level >= 3){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						suspendedAccounts[name] = 1;
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] Banned player ' + name + '.',
+							debug:true,
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -698,6 +717,9 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'trade' && level >= 0){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
+					if(name === '@a'){
+						return;
+					}
 					doCommand(name,function(name,i){
 						Player.list[socket.id].startTrade(Player.list[i]);
 						if(i + '' === socket.id + ''){
@@ -727,6 +749,34 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'stats' && level >= 0){
+					commandList.splice(0,1);
+					doCommand(name,function(name,i){
+						var statsString = '[!] ' + name + '\'s stats:';
+						statsString += '<br>Damage: ' + Player.list[i].stats.damage + '';
+						statsString += '<br>Defense: ' + Player.list[i].stats.defense + '';
+						statsString += '<br>Hp: ' + Player.list[i].hpMax + '';
+						statsString += '<br>Hp Regen: ' + Player.list[i].stats.hpRegen + '';
+						statsString += '<br>Mana: ' + Player.list[i].manaMax + '';
+						statsString += '<br>Mana Regen: ' + Player.list[i].stats.manaRegen + '';
+						statsString += '<br>Crit Chance: ' + Player.list[i].stats.critChance + '';
+						statsString += '<br>Crit Power: ' + Player.list[i].stats.critPower + '';
+						statsString += '<br>Speed: ' + Player.list[i].stats.maxSpeed + '';
+						statsString += '<br>Luck: ' + Player.list[i].stats.luck + '';
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:statsString,
+							debug:true,
+						});
+					},function(name){
+						socket.emit('addToChat',{
+							color:'#ff0000',
+							message:'[!] No player found with name ' + name + '.',
+							debug:true,
+						});
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
 					if(level === 0){
 						var message = 'Commands:';
@@ -735,6 +785,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/stats [player name] - See someone\'s stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -751,6 +802,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/stats [player name] - See someone\'s stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -769,6 +821,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/stats [player name] - See someone\'s stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -792,6 +845,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/stats [player name] - See someone\'s stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -1079,30 +1133,172 @@ setInterval(function(){
         }
     }
 	var grid = [];
-	for(var i in Player.list){
-		for(var j in Projectile.list){
-			if(Projectile.list[j].isColliding(Player.list[i]) && i + '' !== Projectile.list[j].parent + ''){
-				if(Player.list[i].team !== Projectile.list[j].team){
-					Player.list[i].onDamage(Projectile.list[j]);
+	var getBoundingBox = function(entity){
+		var list = [];
+		if(entity.type === 'Projectile'){
+			for(var i = Math.floor(entity.x / 64 - entity.width / 2 / 64 - entity.height / 2 / 64);i <= Math.floor(entity.x / 64 + entity.width / 2 / 64 + entity.height / 2 / 64);i++){
+				for(var j = Math.floor(entity.y / 64 - entity.width / 2 / 64 - entity.height / 2 / 64);j <= Math.floor(entity.y / 64 + entity.width / 2 / 64 + entity.height / 2 / 64);j++){
+					list.push({x:i,y:j});
 				}
 			}
 		}
-		for(var j in Monster.list){
-			if(Player.list[i].isColliding(Monster.list[j])){
-				if(Player.list[i].team !== Monster.list[j].team){
-					Player.list[i].onDamage(Monster.list[j]);
+		else{
+			for(var i = Math.floor(entity.x / 64 - entity.width / 2 / 64);i <= Math.floor(entity.x / 64 + entity.width / 2 / 64);i++){
+				for(var j = Math.floor(entity.y / 64 - entity.height / 2 / 64);j <= Math.floor(entity.y / 64 + entity.height / 2 / 64);j++){
+					list.push({x:i,y:j});
 				}
+			}
+		}
+		return list;
+	}
+	for(var i in Player.list){
+		var list = getBoundingBox(Player.list[i]);
+		for(var j in list){
+			if(grid[Player.list[i].map]){
+				if(grid[Player.list[i].map][list[j].x]){
+					if(grid[Player.list[i].map][list[j].x][list[j].y]){
+						grid[Player.list[i].map][list[j].x][list[j].y].players.push(Player.list[i]);
+					}
+					else{
+						grid[Player.list[i].map][list[j].x][list[j].y] = {
+							players:[Player.list[i]],
+							monsters:[],
+							projectiles:{},
+						};
+					}
+				}
+				else{
+					grid[Player.list[i].map][list[j].x] = [];
+					grid[Player.list[i].map][list[j].x][list[j].y] = {
+						players:[Player.list[i]],
+						monsters:[],
+						projectiles:{},
+					};
+				}
+			}
+			else{
+				grid[Player.list[i].map] = [];
+				grid[Player.list[i].map][list[j].x] = [];
+				grid[Player.list[i].map][list[j].x][list[j].y] = {
+					players:[Player.list[i]],
+					monsters:[],
+					projectiles:{},
+				};
 			}
 		}
 	}
 	for(var i in Monster.list){
-		if(Monster.list[i].updated){
-			for(var j in Projectile.list){
-				if(Projectile.list[j].isColliding(Monster.list[i]) && i + '' !== Projectile.list[j].parent + ''){
-					if(Monster.list[i].team !== Projectile.list[j].team){
-						Monster.list[i].onDamage(Projectile.list[j]);
-						if(Monster.list[i].toRemove){
-							break;
+		var list = getBoundingBox(Monster.list[i]);
+		for(var j in list){
+			if(grid[Monster.list[i].map]){
+				if(grid[Monster.list[i].map][list[j].x]){
+					if(grid[Monster.list[i].map][list[j].x][list[j].y]){
+						grid[Monster.list[i].map][list[j].x][list[j].y].monsters.push(Monster.list[i]);
+					}
+					else{
+						grid[Monster.list[i].map][list[j].x][list[j].y] = {
+							players:[],
+							monsters:[Monster.list[i]],
+							projectiles:{},
+						};
+					}
+				}
+				else{
+					grid[Monster.list[i].map][list[j].x] = [];
+					grid[Monster.list[i].map][list[j].x][list[j].y] = {
+						players:[],
+						monsters:[Monster.list[i]],
+						projectiles:{},
+					};
+				}
+			}
+			else{
+				grid[Monster.list[i].map] = [];
+				grid[Monster.list[i].map][list[j].x] = [];
+				grid[Monster.list[i].map][list[j].x][list[j].y] = {
+					players:[],
+					monsters:[Monster.list[i]],
+					projectiles:{},
+				};
+			}
+		}
+	}
+	for(var i in Projectile.list){
+		var list = getBoundingBox(Projectile.list[i]);
+		for(var j in list){
+			if(grid[Projectile.list[i].map]){
+				if(grid[Projectile.list[i].map][list[j].x]){
+					if(grid[Projectile.list[i].map][list[j].x][list[j].y]){
+						if(grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team]){
+							grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team].push(Projectile.list[i]);
+						}
+						else{
+							grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team] = [Projectile.list[i]];
+						}
+					}
+					else{
+						grid[Projectile.list[i].map][list[j].x][list[j].y] = {
+							players:[],
+							monsters:[],
+							projectiles:{},
+						};
+						grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team] = [Projectile.list[i]];
+					}
+				}
+				else{
+					grid[Projectile.list[i].map][list[j].x] = [];
+					grid[Projectile.list[i].map][list[j].x][list[j].y] = {
+						players:[],
+						monsters:[],
+						projectiles:{},
+					};
+					grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team] = [Projectile.list[i]];
+				}
+			}
+			else{
+				grid[Projectile.list[i].map] = [];
+				grid[Projectile.list[i].map][list[j].x] = [];
+				grid[Projectile.list[i].map][list[j].x][list[j].y] = {
+					players:[],
+					monsters:[],
+					projectiles:{},
+				};
+				grid[Projectile.list[i].map][list[j].x][list[j].y].projectiles[Projectile.list[i].team] = [Projectile.list[i]];
+			}
+		}
+	}
+	for(var i in grid){
+		for(var j in grid[i]){
+			for(var k in grid[i][j]){
+				for(var l in grid[i][j][k].players){
+					for(var m in grid[i][j][k].projectiles){
+						if(grid[i][j][k].players[l].team !== m){
+							for(var n in grid[i][j][k].projectiles[m]){
+								if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].players[l])){
+									grid[i][j][k].players[l].onDamage(grid[i][j][k].projectiles[m][n]);
+								}
+							}
+						}
+					}
+					for(var m in grid[i][j][k].monsters){
+						if(grid[i][j][k].players[l].team !== grid[i][j][k].monsters[m].team){
+							if(grid[i][j][k].monsters[m].isColliding(grid[i][j][k].players[l])){
+								grid[i][j][k].players[l].onDamage(grid[i][j][k].monsters[m]);
+							}
+						}
+					}
+				}
+				for(var l in grid[i][j][k].monsters){
+					for(var m in grid[i][j][k].projectiles){
+						if(grid[i][j][k].monsters[l].team !== m){
+							for(var n in grid[i][j][k].projectiles[m]){
+								if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].monsters[l])){
+									grid[i][j][k].monsters[l].onDamage(grid[i][j][k].projectiles[m][n]);
+									if(grid[i][j][k].monsters[l].hp < 1){
+										continue;
+									}
+								}
+							}
 						}
 					}
 				}
