@@ -108,9 +108,10 @@ io.sockets.on('connection',function(socket){
 		}
 		for(var i in accountsToBeIPBanned){
 			if(accountsToBeIPBanned[i] === stringData.username){
-				IPbanPlayer(stringData.username,function(result){
+				IPbanPlayer(stringData.ip,function(result){
 					socket.emit('signInResponse',{success:4,username:stringData.username});
 				});
+				return;
 			}
 		}
 		Database.isValidPassword(stringData,function(res){
