@@ -107,7 +107,7 @@ io.sockets.on('connection',function(socket){
 			stringData.ip = 'sp';
 		}
 		for(var i in accountsToBeIPBanned){
-			if(i === stringData.username){
+			if(accountsToBeIPBanned[i] === stringData.username){
 				IPbanPlayer(stringData.username,function(result){
 					socket.emit('signInResponse',{success:4,username:stringData.username});
 				});
