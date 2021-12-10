@@ -599,105 +599,85 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'ban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						suspendedAccounts.accounts.push(name);
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] Banned player ' + name + '.',
-							debug:true,
-						});
-						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].disconnectUser();
-						}
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
+					suspendedAccounts.accounts.push(name);
+					socket.emit('addToChat',{
+						color:'#ff0000',
+						message:'[!] Banned player ' + name + '.',
+						debug:true,
 					});
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							if(SOCKET_LIST[i]){
+								SOCKET_LIST[i].disconnectUser();
+							}
+						}
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						for(var j in suspendedAccounts.accounts){
-							if(suspendedAccounts.accounts[j] === name){
-								suspendedAccounts.accounts.splice(j,1);
-								socket.emit('addToChat',{
-									color:'#ff0000',
-									message:'[!] Unbanned player ' + name + '.',
-									debug:true,
-								});
-								return;
-							}
+					for(var i in suspendedAccounts.accounts){
+						if(suspendedAccounts.accounts[i] === name){
+							suspendedAccounts.accounts.splice(i,1);
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Unbanned player ' + name + '.',
+								debug:true,
+							});
+							return;
 						}
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] Player ' + name + ' is not banned.',
-							debug:true,
-						});
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
+					}
+					socket.emit('addToChat',{
+						color:'#ff0000',
+						message:'[!] Player ' + name + ' is not banned.',
+						debug:true,
 					});
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						if(SOCKET_LIST[i]){
-							suspendedIps.ips.push(SOCKET_LIST[i].handshake.headers["x-forwarded-for"]);
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] IPBanned player ' + name + '.',
-								debug:true,
-							});
-							SOCKET_LIST[i].disconnectUser();
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							if(SOCKET_LIST[i]){
+								suspendedIps.ips.push(SOCKET_LIST[i].handshake.headers["x-forwarded-for"]);
+								socket.emit('addToChat',{
+									color:'#ff0000',
+									message:'[!] IPBanned player ' + name + '.',
+									debug:true,
+								});
+								SOCKET_LIST[i].disconnectUser();
+							}
 						}
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
-					});
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					doCommand(name,function(name,i){
-						if(SOCKET_LIST[i]){
-							for(var j in suspendedIps.ips){
-								if(suspendedIps.ips[j] === SOCKET_LIST[i].handshake.headers["x-forwarded-for"]){
-									suspendedIps.ips.splice(j,1);
-									socket.emit('addToChat',{
-										color:'#ff0000',
-										message:'[!] UnIPbanned player ' + name + '.',
-										debug:true,
-									});
-									return;
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							if(SOCKET_LIST[i]){
+								for(var j in suspendedIps.ips){
+									if(suspendedIps.ips[j] === SOCKET_LIST[i].handshake.headers["x-forwarded-for"]){
+										suspendedIps.ips.splice(j,1);
+										socket.emit('addToChat',{
+											color:'#ff0000',
+											message:'[!] UnIPbanned player ' + name + '.',
+											debug:true,
+										});
+										return;
+									}
 								}
+								socket.emit('addToChat',{
+									color:'#ff0000',
+									message:'[!] Player ' + name + ' is not IPbanned.',
+									debug:true,
+								});
 							}
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] Player ' + name + ' is not IPbanned.',
-								debug:true,
-							});
 						}
-					},function(name){
-						socket.emit('addToChat',{
-							color:'#ff0000',
-							message:'[!] No player found with name ' + name + '.',
-							debug:true,
-						});
-					});
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'ip' && level >= 3){
