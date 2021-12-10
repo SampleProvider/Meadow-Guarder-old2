@@ -136,6 +136,42 @@ clearDatabase = function(){
 	});
 }
 
+banPlayer = function(username,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
+		if(res.rows[0]){
+			client.query('DELETE FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
+				cb(1);
+			});
+		}
+		else{
+			client.query('INSERT INTO suspendedAccounts(username) VALUES (\'' + username + '\');', (err, res) => {
+				cb(2);
+			});
+		}
+	});
+}
+
+IPbanPlayer = function(ip,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
+		if(res.rows[0]){
+			client.query('DELETE FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
+				cb(1);
+			});
+		}
+		else{
+			client.query('INSERT INTO suspendedIps(ip) VALUES (\'' + ip + '\');', (err, res) => {
+				cb(2);
+			});
+		}
+	});
+}
+
 // clearDatabase();
 
 Database = {};
@@ -144,26 +180,41 @@ Database.isValidPassword = function(data,cb){
     if(!USE_DB){
 		return cb(3);
 	}
-	client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
-		if(err){
-			throw err;
-		}
+	
+	client.query('SELECT * FROM suspendedAccounts WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(res.rows[0]){
-			var row = JSON.parse(JSON.stringify(res.rows[0]));
-			if(row.password === data.password){
-				for(var i in Player.list){
-					if(Player.list[i].username === data.username){
-						return cb(2);
-					}
-				}
-				return cb(3);
-			}
-			else{
-				return cb(1);
-			}
+			return cb(4);
 		}
 		else{
-			return cb(0);
+			client.query('SELECT * FROM suspendedIps WHERE ip=\'' + data.ip + '\';', (err, res) => {
+				if(res.rows[0]){
+					return cb(4);
+				}
+				else{
+					client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
+						if(err){
+							throw err;
+						}
+						if(res.rows[0]){
+							var row = JSON.parse(JSON.stringify(res.rows[0]));
+							if(row.password === data.password){
+								for(var i in Player.list){
+									if(Player.list[i].username === data.username){
+										return cb(2);
+									}
+								}
+								return cb(3);
+							}
+							else{
+								return cb(1);
+							}
+						}
+						else{
+							return cb(0);
+						}
+					});
+				}
+			});
 		}
 	});
 }
@@ -171,15 +222,22 @@ Database.isUsernameTaken = function(data,cb){
     if(!USE_DB){
 		return;
 	}
-	client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
-		if(err){
-			throw err;
-		}
+	client.query('SELECT * FROM suspendedIps WHERE ip=\'' + data.ip + '\';', (err, res) => {
 		if(res.rows[0]){
-			return cb(0);
+			return cb(2);
 		}
 		else{
-			return cb(1);
+			client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
+				if(err){
+					throw err;
+				}
+				if(res.rows[0]){
+					return cb(0);
+				}
+				else{
+					return cb(1);
+				}
+			});
 		}
 	});
 }

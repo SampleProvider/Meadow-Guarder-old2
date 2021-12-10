@@ -611,7 +611,7 @@ Actor = function(param){
         if(self.toRemove){
             return;
         }
-        if(self.hp < 1){
+        if(self.hp <= 0){
             return;
         }
         if(self.isColliding(transporter)){
@@ -910,12 +910,12 @@ Actor = function(param){
         }
     }
     self.updateHp = function(){
-        if(self.hp < 1){
+        if(self.hp <= 0){
             return;
         }
         self.hp += self.stats.hpRegen / 20;
         self.hp = Math.min(self.hpMax,self.hp);
-        if(self.hp < 1){
+        if(self.hp <= 0){
             self.hp = 0;
             self.onDeath(self);
             if(self.type === 'Player'){
@@ -1206,7 +1206,7 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
-        if(self.hp < 1){
+        if(self.hp <= 0){
             return;
         }
         if(self.keyPress.leftClick === true && self.canAttack){
@@ -1493,6 +1493,24 @@ Player = function(param,socket){
 
             self.hp += self.hpMax - hpMax;
             self.mana += self.manaMax - manaMax;
+
+            if(self.hp <= 0){
+                SOCKET_LIST[self.id].emit('death');
+                addToChat('#ff0000',self.name + ' was dumb.');
+                for(var i in SOCKET_LIST){
+                    if(Player.list[i]){
+                        if(Player.list[i].map === self.map){
+                            SOCKET_LIST[i].emit('createParticle',{
+                                x:self.x,
+                                y:self.y,
+                                map:self.map,
+                                particleType:'death',
+                                number:40,
+                            });
+                        }
+                    }
+                }
+            }
         }
     }
     self.updateHarvest = function(){
@@ -1795,7 +1813,7 @@ Player.onConnect = function(socket,username){
                     rightClick:false,
                 };
             }
-            if(player.hp < 1){
+            if(player.hp <= 0){
                 return;
             }
             if(data.inputId === player.keyMap.left || data.inputId === player.secondKeyMap.left || data.inputId === player.thirdKeyMap.left){
@@ -2525,7 +2543,7 @@ Monster = function(param){
         }
         else if(self.attackState === 'attack'){
             if(self.target){
-                if(self.target.hp < 1){
+                if(self.target.hp <= 0){
                     self.target = null;
                     self.attackState = 'retreat';
                     self.trackPos(self.randomPos.x,self.randomPos.y);

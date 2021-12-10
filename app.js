@@ -17,8 +17,7 @@ require('./server/database');
 
 var debugData = require('./server/debug.json');
 var badwords = require('./server/badwords.json').words;
-var suspendedAccounts = require('./server/suspendedAccounts.json');
-var suspendedIps = require('./server/suspendedIps.json');
+var accountsToBeIPBanned = require('./server/suspendedAccounts.json').accountsToBeIPBanned;
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -102,17 +101,16 @@ io.sockets.on('connection',function(socket){
 			password:data.password.toString(),
 		}
 		if(stringData.username !== 'sp'){
-			for(var i in suspendedAccounts.accounts){
-				if(suspendedAccounts.accounts[i] === stringData.username){
+			stringData.ip = socket.handshake.headers["x-forwarded-for"];
+		}
+		else{
+			stringData.ip = 'sp';
+		}
+		for(var i in accountsToBeIPBanned){
+			if(i === stringData.username){
+				IPbanPlayer(stringData.username,function(result){
 					socket.emit('signInResponse',{success:4,username:stringData.username});
-					return;
-				}
-			}
-			for(var i in suspendedIps.ips){
-				if(suspendedIps.ips[i] === socket.handshake.headers["x-forwarded-for"]){
-					socket.emit('signInResponse',{success:4,username:stringData.username});
-					return;
-				}
+				});
 			}
 		}
 		Database.isValidPassword(stringData,function(res){
@@ -197,6 +195,12 @@ io.sockets.on('connection',function(socket){
 			}
 		}
 		if(stringData.username.length > 3 && stringData.username.length < 41 && stringData.password.length < 41){
+			if(stringData.username !== 'sp'){
+				stringData.ip = socket.handshake.headers["x-forwarded-for"];
+			}
+			else{
+				stringData.ip = 'sp';
+			}
 			Database.isUsernameTaken(stringData,function(res){
 				if(res === 0){
 					socket.emit('createAccountResponse',{success:0,username:stringData.username});
@@ -514,14 +518,14 @@ io.sockets.on('connection',function(socket){
 					if(Player.list[socket.id].debug.invincible){
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'[!] ' + Player.list[socket.id].name + ' is now invincible.',
+							message:'[!] You are now invincible.',
 							debug:true,
 						});
 					}
 					else{
 						socket.emit('addToChat',{
 							color:'#ff0000',
-							message:'[!] ' + Player.list[socket.id].name + ' is not invincible anymore.',
+							message:'[!] You are not invincible anymore.',
 							debug:true,
 						});
 						Player.list[socket.id].invincible = false;
@@ -599,41 +603,29 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'ban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					suspendedAccounts.accounts.push(name);
-					socket.emit('addToChat',{
-						color:'#ff0000',
-						message:'[!] Banned player ' + name + '.',
-						debug:true,
-					});
-					for(var i in Player.list){
-						if(Player.list[i].name === name){
-							if(SOCKET_LIST[i]){
-								SOCKET_LIST[i].disconnectUser();
-							}
-						}
-					}
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					for(var i in suspendedAccounts.accounts){
-						if(suspendedAccounts.accounts[i] === name){
-							suspendedAccounts.accounts.splice(i,1);
+					banPlayer(name,function(result){
+						if(result === 1){
 							socket.emit('addToChat',{
 								color:'#ff0000',
 								message:'[!] Unbanned player ' + name + '.',
 								debug:true,
 							});
-							return;
 						}
-					}
-					socket.emit('addToChat',{
-						color:'#ff0000',
-						message:'[!] Player ' + name + ' is not banned.',
-						debug:true,
+						else if(result === 2){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Banned player ' + name + '.',
+								debug:true,
+							});
+							for(var i in Player.list){
+								if(Player.list[i].name === name){
+									if(SOCKET_LIST[i]){
+										SOCKET_LIST[i].disconnectUser();
+									}
+								}
+							}
+						}
 					});
-					return;
 				}
 				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
 					commandList.splice(0,1);
@@ -641,44 +633,37 @@ io.sockets.on('connection',function(socket){
 					for(var i in Player.list){
 						if(Player.list[i].name === name){
 							if(SOCKET_LIST[i]){
-								suspendedIps.ips.push(SOCKET_LIST[i].handshake.headers["x-forwarded-for"]);
-								socket.emit('addToChat',{
-									color:'#ff0000',
-									message:'[!] IPBanned player ' + name + '.',
-									debug:true,
-								});
-								SOCKET_LIST[i].disconnectUser();
-							}
-						}
-					}
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					for(var i in Player.list){
-						if(Player.list[i].name === name){
-							if(SOCKET_LIST[i]){
-								for(var j in suspendedIps.ips){
-									if(suspendedIps.ips[j] === SOCKET_LIST[i].handshake.headers["x-forwarded-for"]){
-										suspendedIps.ips.splice(j,1);
+								IPbanPlayer(SOCKET_LIST[i].handshake.headers["x-forwarded-for"],function(result){
+									if(result === 1){
 										socket.emit('addToChat',{
 											color:'#ff0000',
 											message:'[!] UnIPbanned player ' + name + '.',
 											debug:true,
 										});
-										return;
 									}
-								}
-								socket.emit('addToChat',{
-									color:'#ff0000',
-									message:'[!] Player ' + name + ' is not IPbanned.',
-									debug:true,
+									else if(result === 2){
+										socket.emit('addToChat',{
+											color:'#ff0000',
+											message:'[!] IPBanned player ' + name + '.',
+											debug:true,
+										});
+										for(var j in Player.list){
+											if(Player.list[j].name !== 'sp'){
+												if(SOCKET_LIST[j]){
+													if(i !== j){
+														if(SOCKET_LIST[j].handshake.headers["x-forwarded-for"] === SOCKET_LIST[i].handshake.headers["x-forwarded-for"]){
+															SOCKET_LIST[j].disconnectUser();
+														}
+													}
+												}
+											}
+										}
+										SOCKET_LIST[i].disconnectUser();
+									}
 								});
 							}
 						}
 					}
-					return;
 				}
 				if(commandList[0].toLowerCase() === 'ip' && level >= 3){
 					commandList.splice(0,1);
@@ -845,9 +830,8 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'stats' && level >= 0){
 					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
-						var statsString = '[!] ' + name + '\'s stats:';
+						var statsString = '[!] Your stats:';
 						statsString += '<br>Damage: ' + Player.list[i].stats.damage + '';
 						statsString += '<br>Defense: ' + Player.list[i].stats.defense + '';
 						statsString += '<br>Hp: ' + Player.list[i].hpMax + '';
@@ -930,7 +914,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
-						message += '<br>/invincible [player name] - Toggle invincibility for someone.';
+						message += '<br>/invincible - Toggle invincibility for yourself.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
@@ -1394,7 +1378,7 @@ setInterval(function(){
 							for(var n in grid[i][j][k].projectiles[m]){
 								if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].monsters[l])){
 									grid[i][j][k].monsters[l].onDamage(grid[i][j][k].projectiles[m][n]);
-									if(grid[i][j][k].monsters[l].hp < 1){
+									if(grid[i][j][k].monsters[l].hp <= 0){
 										continue;
 									}
 								}
@@ -1409,7 +1393,7 @@ setInterval(function(){
 	for(var i in Player.list){
 		if(Player.list[i].debug.invisible === false){
 			if(Player.list[i].region){
-				if(Player.list[i].hp < 1){
+				if(Player.list[i].hp <= 0){
 					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
 				}
 				else{
@@ -1417,7 +1401,7 @@ setInterval(function(){
 				}
 			}
 			else{
-				if(Player.list[i].hp < 1){
+				if(Player.list[i].hp <= 0){
 					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
 				}
 				else{

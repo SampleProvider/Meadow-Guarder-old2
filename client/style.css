@@ -508,13 +508,11 @@ canvas {
     user-select: text;
 }
 @keyframes fieryred{
-    0%{color: red;}
-    16%{color: orangered;}
-    33%{color: orange;}
-    50%{color: yellow;}
-    66%{color: orange;}
-    84%{color: orangered;}
-    100%{color: red;}
+    0%{color: #ff0000;}
+    25%{color: #00ff90;}
+    50%{color: #3bcc3b;}
+    75%{color: #9900ff;}
+    100%{color: #ff0000;}
 }
 .rainbow {
     animation: fieryred 3s infinite; 
