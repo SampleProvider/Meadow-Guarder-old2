@@ -188,10 +188,12 @@ autoAttack.onclick = function(){
     if(autoAttackState){
         autoAttack.style.color = '#ffffff';
         autoAttack.style.backgroundColor = '#725640';
+        socket.emit('keyPress',{inputId:'leftClick',state:true});
     }
     else{
         autoAttack.style.color = '#ffffff';
         autoAttack.style.backgroundColor = '#362a1e';
+        socket.emit('keyPress',{inputId:'leftClick',state:false});
     }
 };
 
@@ -344,7 +346,7 @@ MGHC = function(){
             socket.emit('keyPress',{inputId:'direction',state:{x:closestPlayer.x - Player.list[selfId].x,y:closestPlayer.y - Player.list[selfId].y}});
         }
     }
-    if(autoAttackState){
+    if(autoAttackState && t % 20 === 0){
         socket.emit('keyPress',{inputId:'leftClick',state:true});
     }
 };

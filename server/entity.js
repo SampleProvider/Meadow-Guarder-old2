@@ -1270,6 +1270,7 @@ Player = function(param,socket){
                 }
             }
 
+            var hp = self.hp;
             var hpMax = self.hpMax;
             var manaMax = self.manaMax;
 
@@ -1494,7 +1495,7 @@ Player = function(param,socket){
             self.hp += self.hpMax - hpMax;
             self.mana += self.manaMax - manaMax;
 
-            if(self.hp <= 0){
+            if(self.hp <= 0 && hp > 0){
                 SOCKET_LIST[self.id].emit('death');
                 addToChat('#ff0000',self.name + ' was dumb.');
                 for(var i in SOCKET_LIST){
