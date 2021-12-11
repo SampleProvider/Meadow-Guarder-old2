@@ -464,6 +464,7 @@ socket.on('update',function(data){
                         else if(j === 'img'){
                             for(var k in data.player[i][j]){
                                 if(player[j][k] !== data.player[i][j][k]){
+                                    player[j] = data.player[i][j];
                                     player.render = renderPlayer(player[j]);
                                     break;
                                 }
