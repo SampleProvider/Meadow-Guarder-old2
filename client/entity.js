@@ -26,22 +26,22 @@ var Entity = function(initPack){
     self.update = function(){
         if(self.interpolationStage > 0){
             if(self.spdX >= 0.25 && self.spdX <= 0.5){
-                self.x += 0.5;
+                self.x += 0.6;
                 self.spdX = 0;
             }
             else if(self.spdX <= -0.25 && self.spdX >= -0.5){
-                self.x -= 0.5;
+                self.x -= 0.6;
                 self.spdX = 0;
             }
             else{
                 self.x += self.spdX;
             }
             if(self.spdY >= 0.25 && self.spdY <= 0.5){
-                self.y += 0.5;
+                self.y += 0.6;
                 self.spdY = 0;
             }
             else if(self.spdY <= -0.25 && self.spdY >= -0.5){
-                self.y -= 0.5;
+                self.y -= 0.6;
                 self.spdY = 0;
             }
             else{
