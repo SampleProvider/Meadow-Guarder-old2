@@ -513,6 +513,53 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'ban' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					banPlayer(name,function(result){
+						if(result === 1){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Player ' + name + ' is already banned.',
+								debug:true,
+							});
+						}
+						else if(result === 2){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Banned player ' + name + '.',
+								debug:true,
+							});
+							for(var i in Player.list){
+								if(Player.list[i].name === name){
+									if(SOCKET_LIST[i]){
+										SOCKET_LIST[i].disconnectUser();
+									}
+								}
+							}
+						}
+					});
+				}
+				if(commandList[0].toLowerCase() === 'unban' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					unbanPlayer(name,function(result){
+						if(result === 1){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Player ' + name + ' is not banned.',
+								debug:true,
+							});
+						}
+						else if(result === 2){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] Unbanned player ' + name + '.',
+								debug:true,
+							});
+						}
+					});
+				}
 				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invincible = !Player.list[socket.id].debug.invincible;
@@ -601,33 +648,6 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					banPlayer(name,function(result){
-						if(result === 1){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] Unbanned player ' + name + '.',
-								debug:true,
-							});
-						}
-						else if(result === 2){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] Banned player ' + name + '.',
-								debug:true,
-							});
-							for(var i in Player.list){
-								if(Player.list[i].name === name){
-									if(SOCKET_LIST[i]){
-										SOCKET_LIST[i].disconnectUser();
-									}
-								}
-							}
-						}
-					});
-				}
 				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -638,7 +658,7 @@ io.sockets.on('connection',function(socket){
 									if(result === 1){
 										socket.emit('addToChat',{
 											color:'#ff0000',
-											message:'[!] UnIPbanned player ' + name + '.',
+											message:'[!] Player ' + name + ' is already IPBanned.',
 											debug:true,
 										});
 									}
@@ -660,6 +680,32 @@ io.sockets.on('connection',function(socket){
 											}
 										}
 										SOCKET_LIST[i].disconnectUser();
+									}
+								});
+							}
+						}
+					}
+				}
+				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							if(SOCKET_LIST[i]){
+								unIPbanPlayer(SOCKET_LIST[i].handshake.headers["x-forwarded-for"],function(result){
+									if(result === 1){
+										socket.emit('addToChat',{
+											color:'#ff0000',
+											message:'[!] Player ' + name + ' is not IPBanned.',
+											debug:true,
+										});
+									}
+									else if(result === 2){
+										socket.emit('addToChat',{
+											color:'#ff0000',
+											message:'[!] UnIPBanned player ' + name + '.',
+											debug:true,
+										});
 									}
 								});
 							}
@@ -865,7 +911,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/stats [player name] - See someone\'s stats.';
+						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -882,7 +928,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/stats [player name] - See someone\'s stats.';
+						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -896,12 +942,14 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/ban [player name] - Ban someone.';
+						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/stats [player name] - See someone\'s stats.';
+						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',
@@ -915,12 +963,12 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/ban [player name] - Ban someone.';
+						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/invincible - Toggle invincibility for yourself.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
-						message += '<br>/ban [player name] - Ban someone.';
-						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/ipban [player name] - IPBan someone.';
 						message += '<br>/unipban [player name] - UnIPban someone.';
 						message += '<br>/ip [player name] - See someone\'s ip.';
@@ -930,7 +978,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/stats [player name] - See someone\'s stats.';
+						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						socket.emit('addToChat',{
 							color:'#ff0000',

@@ -142,14 +142,28 @@ banPlayer = function(username,cb){
 	}
 	client.query('SELECT * FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
 		if(res.rows[0]){
-			client.query('DELETE FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
-				cb(1);
-			});
+			cb(1);
 		}
 		else{
 			client.query('INSERT INTO suspendedAccounts(username) VALUES (\'' + username + '\');', (err, res) => {
 				cb(2);
 			});
+		}
+	});
+}
+
+unbanPlayer = function(username,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
+		if(res.rows[0]){
+			client.query('DELETE FROM suspendedAccounts WHERE username=\'' + username + '\';', (err, res) => {
+				cb(2);
+			});
+		}
+		else{
+			cb(1);
 		}
 	});
 }
@@ -160,14 +174,28 @@ IPbanPlayer = function(ip,cb){
 	}
 	client.query('SELECT * FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
 		if(res.rows[0]){
-			client.query('DELETE FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
-				cb(1);
-			});
+			cb(1);
 		}
 		else{
 			client.query('INSERT INTO suspendedIps(ip) VALUES (\'' + ip + '\');', (err, res) => {
 				cb(2);
 			});
+		}
+	});
+}
+
+unIPbanPlayer = function(ip,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
+		if(res.rows[0]){
+			client.query('DELETE FROM suspendedIps WHERE ip=\'' + ip + '\';', (err, res) => {
+				cb(2);
+			});
+		}
+		else{
+			cb(1);
 		}
 	});
 }
