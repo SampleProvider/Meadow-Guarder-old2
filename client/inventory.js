@@ -396,8 +396,8 @@ Inventory = function(socket,server){
                             return;
                         }
                         else{
-                            self.items[index2].amount = Item.list[item2.id].maxStack;
                             self.draggingItem.amount -= Item.list[item2.id].maxStack - item2.amount;
+                            self.items[index2].amount = Item.list[item2.id].maxStack;
                             self.refreshItem(index2);
                             return;
                         }

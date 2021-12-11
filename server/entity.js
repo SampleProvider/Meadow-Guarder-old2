@@ -2403,8 +2403,6 @@ Projectile = function(param){
             pack.x = self.x;
             pack.y = self.y;
         }
-        pack.width = self.width;
-        pack.height = self.height;
         pack.projectileType = self.projectileType;
         pack.parent = self.parent;
         pack.parentType = self.parentType;
@@ -2931,8 +2929,6 @@ HarvestableNpc = function(param){
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
         var pack = getInitPack();
-        pack.width = self.width;
-        pack.height = self.height;
         pack.img = self.img;
         pack.harvestHpMax = self.harvestHpMax;
         pack.harvestHp = self.harvestHp;

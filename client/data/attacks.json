@@ -885,6 +885,33 @@
             }
         }]
     },
+    "frozenbreath":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"bluefrozenarrow",
+            "param":{
+                "pierce":-1,
+                "speed":60,
+                "directionDeviation":15
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"bluefrozenarrow",
+            "param":{
+                "pierce":-1,
+                "speed":60,
+                "directionDeviation":15
+            }
+        },{
+            "id":"projectile",
+            "projectileType":"bluefrozenarrow",
+            "param":{
+                "pierce":-1,
+                "speed":60,
+                "directionDeviation":15
+            }
+        }]
+    },
     "coppershiv":{
         "1":[{
             "id":"projectile",
