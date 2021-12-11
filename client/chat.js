@@ -24,7 +24,7 @@ socket.on('addToChat',function(data){
         m = '00';
     }
     var message = data.message;
-    message = message.replace(/ /gi,'&nbsp;');
+    message = message.replace(/  /gi,'&nbsp;&nbsp;');
     if(data.debug){
         chat += '<div class="text rainbow">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
