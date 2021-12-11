@@ -74,7 +74,50 @@
             {
                 "requirements":{
                     "Tutorial":1,
-                    "Gearing Up":1
+                    "Gearing Up":1,
+                    "Talk to Wally":false
+                },
+                "message":"Hello. I am your server today. Will you like anything to eat?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Talk to Wally*",
+                    "triggers":"startQuest",
+                    "quest":"Talk to Wally"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":1,
+                    "Talk to Wally":false
+                },
+                "message":"I do hope you find that Shield of Life, because otherwise we are all doomed. I might even have to use the emergency Whirlwind!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Talk to Wally*",
+                    "triggers":"startQuest",
+                    "quest":"Talk to Wally"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Tutorial":1,
+                    "Gearing Up":1,
+                    "Talk to Wally":1
                 },
                 "message":"Hello. I am your server today. Will you like anything to eat?",
                 "option1":{
@@ -89,7 +132,8 @@
             {
                 "requirements":{
                     "Tutorial":1,
-                    "Gearing Up":1
+                    "Gearing Up":1,
+                    "Talk to Wally":1
                 },
                 "message":"I do hope you find that Shield of Life, because otherwise we are all doomed. I might even have to use the emergency Whirlwind!",
                 "option1":{

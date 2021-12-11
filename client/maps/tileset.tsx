@@ -2,7 +2,37 @@
 <tileset version="1.5" tiledversion="1.7.2" name="tileset" tilewidth="16" tileheight="16" tilecount="13054" columns="107">
  <image source="tileset.png" width="1712" height="1952"/>
  <tile id="19" type="pyroweed"/>
+ <tile id="46">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="10" width="4" height="6"/>
+  </objectgroup>
+ </tile>
+ <tile id="48">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="12" y="10" width="4" height="6"/>
+  </objectgroup>
+ </tile>
+ <tile id="153">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="4" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="155">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="12" y="0" width="4" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="235" type="cottonFlower"/>
+ <tile id="260">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="4" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="262">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="12" y="0" width="4" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="535">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="13"/>
@@ -2063,6 +2093,11 @@
  <tile id="10463">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="10464">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="8"/>
   </objectgroup>
  </tile>
  <tile id="10465">
