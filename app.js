@@ -540,7 +540,7 @@ io.sockets.on('connection',function(socket){
 						}
 					});
 				}
-				if(commandList[0].toLowerCase() === 'unban' && level >= 2){
+				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					unbanPlayer(name,function(result){
@@ -943,7 +943,6 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
-						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';

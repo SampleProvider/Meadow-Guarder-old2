@@ -88,6 +88,7 @@ spawnMonster = function(spawner,spawnId){
                     Projectile.list[i].toRemove = true;
                 }
             }
+            pt.dropItems();
         },
     });
     spawner.spawned = true;
@@ -724,39 +725,8 @@ Actor = function(param){
             }
         }
         if(self.hp < 1 && hp > 0){
-            self.onDeath(self);
-            if(self.type === 'Player'){
-                SOCKET_LIST[self.id].emit('death');
-                if(pt.name){
-                    addToChat('#ff0000',self.name + ' was killed by ' + pt.name + '.');
-                }
-                else if(Player.list[pt.parent]){
-                    addToChat('#ff0000',self.name + ' was killed by ' + Player.list[pt.parent].name + '.');
-                }
-                else if(Monster.list[pt.parent]){
-                    addToChat('#ff0000',self.name + ' was killed by ' + Monster.list[pt.parent].name + '.');
-                }
-                else{
-                    addToChat('#ff0000',self.name + ' died.');
-                }
-                for(var i in SOCKET_LIST){
-                    if(Player.list[i]){
-                        if(Player.list[i].map === self.map){
-                            SOCKET_LIST[i].emit('createParticle',{
-                                x:self.x,
-                                y:self.y,
-                                map:self.map,
-                                particleType:'death',
-                                number:40,
-                            });
-                        }
-                    }
-                }
-            }
-            else{
-                if(self.type === 'Monster'){
-                    self.dropItems();
-                }
+            self.onDeath(self,pt);
+            if(self.type !== 'Player'){
                 self.toRemove = true;
             }
         }
@@ -799,6 +769,7 @@ Actor = function(param){
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
             parent:param.id !== undefined ? param.id : self.id,
+            parentName:self.name,
             x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
             y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
             spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 20,
@@ -862,28 +833,8 @@ Actor = function(param){
                             else{
                                 if(self.hp > 0){
                                     self.hp = 0;
-                                    self.onDeath(self);
-                                    if(self.type === 'Player'){
-                                        SOCKET_LIST[self.id].emit('death');
-                                        addToChat('#ff0000',self.name + ' committed suicide.');
-                                        for(var i in SOCKET_LIST){
-                                            if(Player.list[i]){
-                                                if(Player.list[i].map === self.map){
-                                                    SOCKET_LIST[i].emit('createParticle',{
-                                                        x:self.x,
-                                                        y:self.y,
-                                                        map:self.map,
-                                                        particleType:'death',
-                                                        number:40,
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else{
-                                        if(self.type === 'Monster'){
-                                            self.dropItems();
-                                        }
+                                    self.onDeath(self,'self');
+                                    if(self.type !== 'Player'){
                                         self.toRemove = true;
                                     }
                                     return;
@@ -917,28 +868,8 @@ Actor = function(param){
         self.hp = Math.min(self.hpMax,self.hp);
         if(self.hp <= 0){
             self.hp = 0;
-            self.onDeath(self);
-            if(self.type === 'Player'){
-                SOCKET_LIST[self.id].emit('death');
-                addToChat('#ff0000',self.name + ' committed suicide.');
-                for(var i in SOCKET_LIST){
-                    if(Player.list[i]){
-                        if(Player.list[i].map === self.map){
-                            SOCKET_LIST[i].emit('createParticle',{
-                                x:self.x,
-                                y:self.y,
-                                map:self.map,
-                                particleType:'death',
-                                number:40,
-                            });
-                        }
-                    }
-                }
-            }
-            else{
-                if(self.type === 'Monster'){
-                    self.dropItems();
-                }
+            self.onDeath(self,'self');
+            if(self.type !== 'Player'){
                 self.toRemove = true;
             }
             return;
@@ -1120,7 +1051,7 @@ Player = function(param,socket){
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
-    self.onDeath = function(pt){
+    self.onDeath = function(pt,entity){
         pt.canMove = false;
         pt.keyPress = {
             left:false,
@@ -1129,6 +1060,34 @@ Player = function(param,socket){
             down:false,
             leftClick:false,
             rightClick:false,
+        }
+        for(var i in SOCKET_LIST){
+            if(Player.list[i]){
+                if(Player.list[i].map === pt.map){
+                    SOCKET_LIST[i].emit('createParticle',{
+                        x:pt.x,
+                        y:pt.y,
+                        map:pt.map,
+                        particleType:'death',
+                        number:40,
+                    });
+                }
+            }
+        }
+        SOCKET_LIST[pt.id].emit('death');
+        if(entity){
+            if(entity === 'self'){
+                addToChat('#ff0000',pt.name + ' committed suicide.');
+            }
+            else if(entity.name){
+                addToChat('#ff0000',pt.name + ' was killed by ' + entity.name + '.');
+            }
+            else if(entity.parentName){
+                addToChat('#ff0000',pt.name + ' was killed by ' + entity.parentName + '.');
+            }
+            else{
+                addToChat('#ff0000',pt.name + ' died.');
+            }
         }
     }
     self.update = function(){
@@ -1496,21 +1455,7 @@ Player = function(param,socket){
             self.mana += self.manaMax - manaMax;
 
             if(self.hp <= 0 && hp > 0){
-                SOCKET_LIST[self.id].emit('death');
-                addToChat('#ff0000',self.name + ' was dumb.');
-                for(var i in SOCKET_LIST){
-                    if(Player.list[i]){
-                        if(Player.list[i].map === self.map){
-                            SOCKET_LIST[i].emit('createParticle',{
-                                x:self.x,
-                                y:self.y,
-                                map:self.map,
-                                particleType:'death',
-                                number:40,
-                            });
-                        }
-                    }
-                }
+                self.onDeath(self,'self');
             }
         }
     }
@@ -2182,6 +2127,7 @@ Projectile = function(param){
     self.projectilePattern = param.projectilePattern;
     self.timer = param.timer;
     self.parent = param.parent;
+    self.parentName = param.parentName;
     self.parentType = param.parentType;
     self.relativeToParent = param.relativeToParent;
     self.team = param.team;
