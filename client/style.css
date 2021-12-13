@@ -492,6 +492,7 @@ canvas {
     padding-left: 4px;
     padding-bottom: 0px;
     overflow-y: scroll;
+    overflow-wrap: break-word;
     font-size: small;
     border-radius: 4px;
 }

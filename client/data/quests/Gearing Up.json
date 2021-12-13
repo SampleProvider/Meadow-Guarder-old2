@@ -2,52 +2,76 @@
     "0":{
         "dialogue":{
             "message":"You'll need some armor and weapons to defeat Ten-Eyed One, so head to our Forge. It is located North-West of Sleeping Boar Inn. You should meet Macklel there.",
-            "option1":{
-                "message":"Thanks!",
+            "option1":"Thanks!"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
                 "questStage":1
             }
-        }
+        ]
     },
     "1":{
         "dialogue":{},
-        "triggers":{
-            "questStage":1
-        }
+        "tasks":[
+            {
+                "id":"npc",
+                "name":"Macklel"
+            }
+        ],
+        "questStage":1
     },
     "2":{
         "dialogue":{
             "message":"Yes, I heard about you. <name>, wasn't it? Apparently you woke up with amnesia and lost all your stuff. Is that true?",
-            "option1":{
-                "message":"Yes. How did you know?",
+            "option1":"Yes. How did you know?"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
                 "questStage":1
             }
-        }
+        ]
     },
     "3":{
         "dialogue":{
             "message":"I have my ways. You need armor and weapons right?",
-            "option1":{
-                "message":"Yeah, do you have any spares?",
+            "option1":"Yeah, do you have any spares?"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
                 "questStage":1
             }
-        }
+        ]
     },
     "4":{
         "dialogue":{
             "message":"Unfortunately no. However, you did give me this sword yesterday. You said it was a \"junk\" sword and was useless. Here, I'll give it to you.",
-            "option1":{
-                "message":"Thanks a lot! What should I do next?",
+            "option1":"Thanks a lot! What should I do next?"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
                 "questStage":1
             }
-        }
+        ]
     },
     "5":{
         "dialogue":{
             "message":"You should return to Adecus. He probably knows where you should go next.",
-            "option1":{
-                "message":"Thanks!",
-                "questStage":1
+            "option1":"Thanks for all the help!"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "triggers":"completeQuest"
             }
-        }
+        ]
     }
 }

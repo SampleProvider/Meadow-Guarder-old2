@@ -279,7 +279,7 @@ Inventory = function(socket,server){
         return false;
     }
     self.isCraft = function(index){
-        if(self.craftItems[index]){
+        if(crafts[index]){
             return true;
         }
         return false;
@@ -840,13 +840,13 @@ Inventory = function(socket,server){
             slot.onmouseout = function(){};
             slot.className = 'inventorySlot craftMenuSlot';
             if(self.isCraft(index)){
-                var item = Item.list[self.craftItems[index].id];
+                var item = Item.list[crafts[index].id];
                 self.drawItem(slot,item.drawId,false);
                 var itemName = item.name;
-                if(self.craftItems[index].amount !== 1){
-                    itemName += ' (' + self.craftItems[index].amount + ')';
+                if(crafts[index].amount !== 1){
+                    itemName += ' (' + crafts[index].amount + ')';
                     var itemAmount = document.createElement('div');
-                    itemAmount.innerHTML = self.craftItems[index].amount;
+                    itemAmount.innerHTML = crafts[index].amount;
                     itemAmount.className = 'itemAmount';
                     var itemAmountDiv = document.createElement('div');
                     itemAmountDiv.className = 'itemAmountDiv';
@@ -855,13 +855,13 @@ Inventory = function(socket,server){
                 }
                 var craftMaterials = '';
                 var canCraft = true;
-                for(var i in self.craftItems[index].materials){
-                    if(!self.hasItem(self.craftItems[index].materials[i].id,self.craftItems[index].materials[i].amount)){
+                for(var i in crafts[index].materials){
+                    if(!self.hasItem(crafts[index].materials[i].id,crafts[index].materials[i].amount)){
                         canCraft = false;
-                        craftMaterials += "<br><span style='color: #ff5555'>" + self.craftItems[index].materials[i].amount + ' ' + Item.list[self.craftItems[index].materials[i].id].name + '</span>';
+                        craftMaterials += "<br><span style='color: #ff5555'>" + crafts[index].materials[i].amount + ' ' + Item.list[crafts[index].materials[i].id].name + '</span>';
                     }
                     else{
-                        craftMaterials += "<br>" + self.craftItems[index].materials[i].amount + ' ' + Item.list[self.craftItems[index].materials[i].id].name;
+                        craftMaterials += "<br>" + crafts[index].materials[i].amount + ' ' + Item.list[crafts[index].materials[i].id].name;
                     }
                 }
                 if(canCraft === false){
@@ -886,23 +886,23 @@ Inventory = function(socket,server){
                 slot.onclick = function(){
                     socket.emit('craftItem',index);
                     var canCraft = true;
-                    for(var i in self.craftItems[index].materials){
-                        if(!self.hasItem(self.craftItems[index].materials[i].id,self.craftItems[index].materials[i].amount,)){
+                    for(var i in crafts[index].materials){
+                        if(!self.hasItem(crafts[index].materials[i].id,crafts[index].materials[i].amount,)){
                             canCraft = false;
                         }
                     }
                     if(canCraft){
                         if(self.draggingItem.id){
-                            if(self.draggingItem.id === self.craftItems[index].id){
-                                if(self.draggingItem.amount + self.craftItems[index].amount <= Item.list[self.draggingItem.id].maxStack){
-                                    self.draggingItem.amount += self.craftItems[index].amount;
+                            if(self.draggingItem.id === crafts[index].id){
+                                if(self.draggingItem.amount + crafts[index].amount <= Item.list[self.draggingItem.id].maxStack){
+                                    self.draggingItem.amount += crafts[index].amount;
                                 }
                             }
                         }
                         else{
                             self.draggingItem = {
-                                id:self.craftItems[index].id,
-                                amount:self.craftItems[index].amount,
+                                id:crafts[index].id,
+                                amount:crafts[index].amount,
                             }
                         }
                         itemMenu.style.display = 'none';
@@ -925,8 +925,8 @@ Inventory = function(socket,server){
                         else{
                             draggingItem.style.display = 'none';
                         }
-                        for(var i in self.craftItems[index].materials){
-                            self.removeItem(self.craftItems[index].materials[i].id,self.craftItems[index].materials[i].amount);
+                        for(var i in crafts[index].materials){
+                            self.removeItem(crafts[index].materials[i].id,crafts[index].materials[i].amount);
                         }
                     }
                 }
@@ -937,20 +937,20 @@ Inventory = function(socket,server){
         var slot = document.getElementById("craftSlot" + index);
         if(slot){
             if(self.isCraft(index)){
-                var item = Item.list[self.craftItems[index].id];
+                var item = Item.list[crafts[index].id];
                 var itemName = item.name;
-                if(self.craftItems[index].amount !== 1){
-                    itemName += ' (' + self.craftItems[index].amount + ')';
+                if(crafts[index].amount !== 1){
+                    itemName += ' (' + crafts[index].amount + ')';
                 }
                 var craftMaterials = '';
                 var canCraft = true;
-                for(var i in self.craftItems[index].materials){
-                    if(!self.hasItem(self.craftItems[index].materials[i].id,self.craftItems[index].materials[i].amount)){
+                for(var i in crafts[index].materials){
+                    if(!self.hasItem(crafts[index].materials[i].id,crafts[index].materials[i].amount)){
                         canCraft = false;
-                        craftMaterials += "<br><span style='color: #ff5555'>" + self.craftItems[index].materials[i].amount + ' ' + Item.list[self.craftItems[index].materials[i].id].name + '</span>';
+                        craftMaterials += "<br><span style='color: #ff5555'>" + crafts[index].materials[i].amount + ' ' + Item.list[crafts[index].materials[i].id].name + '</span>';
                     }
                     else{
-                        craftMaterials += "<br>" + self.craftItems[index].materials[i].amount + ' ' + Item.list[self.craftItems[index].materials[i].id].name;
+                        craftMaterials += "<br>" + crafts[index].materials[i].amount + ' ' + Item.list[crafts[index].materials[i].id].name;
                     }
                 }
                 if(canCraft === false){
@@ -1333,18 +1333,18 @@ Inventory = function(socket,server){
         }
     }
     self.filterCraft = function(filter){
-        for(var i in self.craftItems){
+        for(var i in crafts){
             var slot = document.getElementById("craftSlot" + i);
             var showSlot = false;
-            if(Item.list[self.craftItems[i].id].name.toLowerCase().includes(filter.toLowerCase())){
+            if(Item.list[crafts[i].id].name.toLowerCase().includes(filter.toLowerCase())){
                 if(slot.style.display !== 'inline-block'){
                     slot.style.display = 'inline-block';
                 }
                 showSlot = true;
             }
             else{
-                for(var j in self.craftItems[i].materials){
-                    if(Item.list[self.craftItems[i].materials[j].id].name.toLowerCase().includes(filter.toLowerCase())){
+                for(var j in crafts[i].materials){
+                    if(Item.list[crafts[i].materials[j].id].name.toLowerCase().includes(filter.toLowerCase())){
                         if(slot.style.display !== 'inline-block'){
                             slot.style.display = 'inline-block';
                         }
@@ -1385,7 +1385,7 @@ Inventory = function(socket,server){
         for(var i in self.items){
             self.addItemClient(i);
         }
-        for(var i in self.craftItems){
+        for(var i in crafts){
             self.updateCraftClient(i);
         }
     }
@@ -1474,17 +1474,17 @@ Inventory = function(socket,server){
     }
     self.refreshCraft = function(){
         if(self.server){
-            socket.emit('refreshCraft',self.craftItems);
+            socket.emit('refreshCraft',crafts);
             return;
         }
         craftItems.innerHTML = "";
-        for(var i = 0;i < self.craftItems.length;i++){
+        for(var i = 0;i < crafts.length;i++){
             var div = document.createElement('div');
             div.id = 'craftSlot' + i;
             div.className = 'inventorySlot';
             craftItems.appendChild(div);
         }
-        for(var i in self.craftItems){
+        for(var i in crafts){
             self.addCraftClient(i);
         }
     }
@@ -1512,7 +1512,6 @@ Inventory = function(socket,server){
         }
     }
     if(self.server){
-        self.craftItems = crafts;
         self.refreshCraft();
         self.refreshMenu(0);
         socket.on("dragItem",function(data){
@@ -1546,15 +1545,15 @@ Inventory = function(socket,server){
         });
         socket.on("craftItem",function(data){
             try{
-                for(var i in self.craftItems[data].materials){
-                    if(!self.hasItem(self.craftItems[data].materials[i].id,self.craftItems[data].materials[i].amount)){
+                for(var i in crafts[data].materials){
+                    if(!self.hasItem(crafts[data].materials[i].id,crafts[data].materials[i].amount)){
                         return;
                     }
                 }
                 if(self.draggingItem.id){
-                    if(self.draggingItem.id === self.craftItems[data].id){
-                        if(self.draggingItem.amount + self.craftItems[data].amount <= Item.list[self.draggingItem.id].maxStack){
-                            self.draggingItem.amount += self.craftItems[data].amount;
+                    if(self.draggingItem.id === crafts[data].id){
+                        if(self.draggingItem.amount + crafts[data].amount <= Item.list[self.draggingItem.id].maxStack){
+                            self.draggingItem.amount += crafts[data].amount;
                         }
                         else{
                             return;
@@ -1563,12 +1562,12 @@ Inventory = function(socket,server){
                 }
                 else{
                     self.draggingItem = {
-                        id:self.craftItems[data].id,
-                        amount:self.craftItems[data].amount,
+                        id:crafts[data].id,
+                        amount:crafts[data].amount,
                     }
                 }
-                for(var i in self.craftItems[data].materials){
-                    self.removeItem(self.craftItems[data].materials[i].id,self.craftItems[data].materials[i].amount);
+                for(var i in crafts[data].materials){
+                    self.removeItem(crafts[data].materials[i].id,crafts[data].materials[i].amount);
                 }
             }
             catch(err){

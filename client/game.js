@@ -106,6 +106,7 @@ Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
 
 var inventory = new Inventory(socket,false);
+var crafts = [];
 socket.on('updateInventory',function(pack){
     var items = pack.items;
     for(var i in inventory.items){
@@ -141,11 +142,11 @@ socket.on('refreshMenu',function(pack){
     inventory.refreshMenu(pack.oldMaxSlots);
 });
 socket.on('refreshCraft',function(pack){
-    inventory.craftItems = pack;
+    crafts = pack;
     inventory.refreshCraft();
 });
 socket.on('itemChange',function(pack){
-    for(var i in inventory.craftItems){
+    for(var i in crafts){
         inventory.updateCraftClient(i);
     }
     inventory.refreshShop();
@@ -207,7 +208,7 @@ acceptTrade.onclick = function(){
     acceptTrade.style.display = 'none';
     socket.emit('acceptTrade');
     canDragTradeItems = false;
-    for(var i in inventory.craftItems){
+    for(var i in crafts){
         inventory.updateCraftClient(i);
     }
 }
@@ -217,7 +218,7 @@ declineTrade.onclick = function(){
     declineTrade.style.display = 'none';
     socket.emit('declineTrade');
     canDragTradeItems = false;
-    for(var i in inventory.craftItems){
+    for(var i in crafts){
         inventory.updateCraftClient(i);
     }
 }

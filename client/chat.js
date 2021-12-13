@@ -24,15 +24,16 @@ socket.on('addToChat',function(data){
         m = '00';
     }
     var message = data.message;
-    message = message.replace(/  /gi,'&nbsp;&nbsp;');
     if(data.debug){
-        chat += '<div class="text rainbow">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+        message = '<div class="text rainbow">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     else{
         message = message.replace(/</gi,'&lt;');
         message = message.replace(/>/gi,'&gt;');
-        chat += '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+        message = '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
+    message = message.replace(/  /gi,'&nbsp;&nbsp;');
+    chat += message;
     chatText.innerHTML = chat;
     if(scroll){
         chatText.scrollTop = chatText.scrollHeight;
@@ -46,8 +47,8 @@ chatForm.onsubmit = function(e){
     socket.emit('chatMessage',chatInput.value);
     if(commandList[commandList.length - 1] !== chatInput.value){
         commandList.push(chatInput.value);
-        commandIndex = commandList.length;
     }
+    commandIndex = commandList.length;
     chatInput.value = '';
 }
 chatInput.onkeydown = function(e){

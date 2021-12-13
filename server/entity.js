@@ -21,6 +21,52 @@ var xpLevels = [
     10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
 ];
 
+var hpLevels = [
+    100,
+    110,
+    120,
+    135,
+    150,
+    165,
+    180,
+    200,
+    220,
+    240,
+    255,
+    280,
+    305,
+    335,
+    365,
+    410,
+    455,
+    505,
+    565,
+    10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+];
+
+var manaLevels = [
+    100,
+    110,
+    120,
+    135,
+    150,
+    165,
+    180,
+    200,
+    220,
+    240,
+    255,
+    280,
+    305,
+    335,
+    365,
+    410,
+    455,
+    505,
+    565,
+    10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+];
+
 
 ENV = {
     spawnpoint:{
@@ -69,6 +115,8 @@ attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
 harvestableNpcData = require('./../client/data/harvestableNpcs.json');
+
+quests = {};
 
 require('./../client/inventory.js');
 
@@ -640,6 +688,15 @@ Actor = function(param){
             if(Player.list[i]){
                 playersPercentage[i] = self.playersDamaged[i];
                 totalDamage += self.playersDamaged[i];
+                for(var j in Player.list[i].questTasks){
+                    if(Player.list[i].questTasks[j].id === 'monster' && Player.list[i].questTasks[j].name === self.name){
+                        Player.list[i].questTasks[j].amount += 1;
+                        if(Player.list[i].questTasks[j].amount === Player.list[i].questTasks[j].target){
+                            Player.list[i].questTasks[j].completed = true;
+                            Player.list[i].updateQuest(Player.list[i]);
+                        }
+                    }
+                }
             }
         }
         for(var i in playersPercentage){
@@ -696,7 +753,7 @@ Actor = function(param){
                     }
                 }
             }
-            Player.list[i].xp += Math.ceil(Math.random() * 15 * playersPercentage[i]);
+            Player.list[i].xp += parseInt(Math.ceil(Math.random() * 15 * playersPercentage[i]));
         }
     }
     self.onDamage = function(pt){
@@ -718,10 +775,10 @@ Actor = function(param){
         self.hp = Math.round(self.hp);
         if(pt.type === 'Projectile' && pt.parentType === 'Player'){
             if(self.playersDamaged[pt.parent]){
-                self.playersDamaged[pt.parent] += hp - Math.max(self.hp,0);
+                self.playersDamaged[pt.parent] += Math.ceil(hp - Math.max(self.hp,0));
             }
             else{
-                self.playersDamaged[pt.parent] = hp - Math.max(self.hp,0);
+                self.playersDamaged[pt.parent] = Math.max(Math.ceil(hp - Math.max(self.hp,0)),1);
             }
         }
         if(self.hp < 1 && hp > 0){
@@ -1032,8 +1089,7 @@ Player = function(param,socket){
 
     self.quest = false;
     self.questStage = 0;
-    self.questNpcs = [];
-    self.questTriggers = {};
+    self.questTasks = [];
 
     self.advancements = {};
     if(param.database.advancements){
@@ -1048,6 +1104,10 @@ Player = function(param,socket){
         self.team = 'Human';
     }
     self.xpMax = xpLevels[self.level];
+    self.hpMax = hpLevels[self.level];
+    self.hp = self.hpMax;
+    self.manaMax = manaLevels[self.level];
+    self.mana = self.manaMax;
     self.inventory.refreshInventory();
 
     playerMap[self.map] += 1;
@@ -1233,8 +1293,8 @@ Player = function(param,socket){
             var hpMax = self.hpMax;
             var manaMax = self.manaMax;
 
-            self.hpMax = 100;
-            self.manaMax = 100;
+            self.hpMax = hpLevels[self.level];
+            self.manaMax = manaLevels[self.level];
             
             self.stats = {
                 damage:0,
@@ -1556,6 +1616,7 @@ Player = function(param,socket){
             }
             socket.emit('openTrade',tradingEntity.name);
             SOCKET_LIST[tradingEntity.id].emit('openTrade',self.name);
+            self.sendMessage('[!] Started trade with ' + tradingEntity.name + '.');
         }
     }
     self.updateTrade = function(pack){
@@ -1570,111 +1631,76 @@ Player = function(param,socket){
             self.endDialogue();
             return;
         }
-        var differentMessage = false;
-        for(var i in self.dialogueMessage){
-            if(message[i] !== undefined && message[i] !== self.dialogueMessage[i]){
-                differentMessage = true;
+        self.dialogueMessage = message;
+        var option1 = '';
+        var option2 = '';
+        var option3 = '';
+        var option4 = '';
+        if(message.option1){
+            if(message.option1.message){
+                option1 = message.option1.message;
+            }
+            else{
+                option1 = message.option1;
             }
         }
-        if(self.dialogueMessage.message === undefined){
-            differentMessage = true;
+        if(message.option2){
+            if(message.option2.message){
+                option2 = message.option2.message;
+            }
+            else{
+                option2 = message.option2;
+            }
         }
-        if(differentMessage){
-            self.dialogueMessage = message;
-            var option1 = '';
-            var option2 = '';
-            var option3 = '';
-            var option4 = '';
-            if(message.option1){
-                if(message.option1.message){
-                    option1 = message.option1.message;
-                }
-                else{
-                    option1 = message.option1;
-                }
+        if(message.option3){
+            if(message.option3.message){
+                option3 = message.option3.message;
             }
-            if(message.option2){
-                if(message.option2.message){
-                    option2 = message.option2.message;
-                }
-                else{
-                    option2 = message.option2;
-                }
+            else{
+                option3 = message.option3;
             }
-            if(message.option3){
-                if(message.option3.message){
-                    option3 = message.option3.message;
-                }
-                else{
-                    option3 = message.option3;
-                }
-            }
-            if(message.option4){
-                if(message.option4.message){
-                    option4 = message.option4.message;
-                }
-                else{
-                    option4 = message.option4;
-                }
-            }
-            socket.emit('dialogue',{
-                message:message.message.replace('<name>',self.name),
-                option1:option1.replace('<name>',self.name),
-                option2:option2.replace('<name>',self.name),
-                option3:option3.replace('<name>',self.name),
-                option4:option4.replace('<name>',self.name),
-            });
-            self.inDialogue = true;
-            return;
         }
+        if(message.option4){
+            if(message.option4.message){
+                option4 = message.option4.message;
+            }
+            else{
+                option4 = message.option4;
+            }
+        }
+        socket.emit('dialogue',{
+            message:message.message.replace('<name>',self.name),
+            option1:option1.replace('<name>',self.name),
+            option2:option2.replace('<name>',self.name),
+            option3:option3.replace('<name>',self.name),
+            option4:option4.replace('<name>',self.name),
+        });
+        self.inDialogue = true;
     }
     self.endDialogue = function(){
         self.dialogueMessage = {};
         socket.emit('dialogue',{});
         self.inDialogue = false;
     }
-    self.setQuestTriggers = function(triggers){
-        self.questTriggers = triggers;
-    }
-    self.runDialogueTriggers = function(option){
-        self.runTrigger(self.dialogueMessage[option]);
-    }
-    self.runQuestTriggers = function(){
-        self.runTrigger(self.questTriggers);
-    }
-    self.runTrigger = function(triggers){
-        if(triggers.questStage){
-            self.questStage += triggers.questStage;
-        }
-        if(triggers.triggers){
-            if(triggers.triggers === 'completeQuest'){
-                self.completeQuest();
-            }
-            else if(triggers.triggers === 'abandonQuest'){
-                self.abandonQuest();
-            }
-            else if(triggers.triggers === 'endConversation'){
-                self.endDialogue();
-            }
-            else if(triggers.triggers === 'shopOpen'){
-                self.inventory.refreshShop(Npc.list[self.dialogueMessage.npc].name);
-                self.endDialogue();
-            }
-            else if(triggers.triggers === 'startQuest'){
-                self.startQuest(triggers.quest);
-                self.endDialogue();
-            }
-        }
-        self.updateQuest();
-    }
     self.updateQuest = function(){}
     self.startQuest = function(quest){
         if(self.quest === false){
             self.quest = quest;
             self.questStage = 0;
-            player = self;
-            require('./../client/data/quests/' + self.quest + '.js');
-            self.updateQuest();
+            self.questTasks = [];
+            if(quests[self.quest]){
+                self.updateQuest = quests[self.quest].updateQuest;
+                self.completeQuest = quests[self.quest].completeQuest;
+                self.abandonQuest = quests[self.quest].abandonQuest;
+            }
+            else{
+                player = self;
+                require('./../client/data/quests/' + self.quest + '.js');
+                self.updateQuest = quests[self.quest].updateQuest;
+                self.completeQuest = quests[self.quest].completeQuest;
+                self.abandonQuest = quests[self.quest].abandonQuest;
+            }
+            self.updateQuest(self);
         }
     }
     self.completeQuest = function(){
@@ -1682,6 +1708,19 @@ Player = function(param,socket){
     }
     self.abandonQuest = function(){
 
+    }
+    self.setQuestTasks = function(tasks){
+        self.questTasks = tasks;
+        for(var i in self.questTasks){
+            self.questTasks[i].completed = false;
+        }
+    }
+    self.sendMessage = function(message){
+        socket.emit('addToChat',{
+            color:'#ff0000',
+            message:message,
+            debug:true,
+        });
     }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
@@ -1822,9 +1861,10 @@ Player.onConnect = function(socket,username){
                             if(player.inDialogue){
                                 return;
                             }
-                            for(var i in player.questNpcs){
-                                if(player.questNpcs[i] === interactingEntity.name){
-                                    player.runQuestTriggers();
+                            for(var i in player.questTasks){
+                                if(player.questTasks[i].id === 'npc' && player.questTasks[i].name === interactingEntity.name){
+                                    player.questTasks[i].completed = true;
+                                    player.updateQuest(player);
                                     return;
                                 }
                             }
@@ -1912,7 +1952,9 @@ Player.onConnect = function(socket,username){
                             }
                             socket.emit('closeTrade');
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');
+                            Player.list[player.tradingEntity].sendMessage('[!] Successfully traded with ' + player.name + '.');
                             Player.list[player.tradingEntity].tradingEntity = null;
+                            player.sendMessage('[!] Successfully traded with ' + player.tradingEntity.name + '.');
                             player.tradingEntity = null;
                         }
                     }
@@ -1939,6 +1981,7 @@ Player.onConnect = function(socket,username){
                     }
                     SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                     Player.list[player.tradingEntity].tradingEntity = null;
+                    Player.list[player.tradingEntity].sendMessage('[!] ' + player.name + ' declined the trade.');
                 }
                 for(var i in player.inventory.items){
                     if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
@@ -1946,6 +1989,7 @@ Player.onConnect = function(socket,username){
                     }
                 }
                 socket.emit('closeTrade');
+                player.sendMessage('[!] Declined trade with ' + player.tradingEntity.name + '.');
                 player.tradingEntity = null;
             }
         });
@@ -1957,7 +2001,45 @@ Player.onConnect = function(socket,username){
                 return;
             }
             if(player.dialogueMessage[data]){
-                player.runDialogueTriggers(data);
+                for(var i in player.questTasks){
+                    if(player.questTasks[i].id === 'dialogue' && player.questTasks[i].option === data){
+                        player.questTasks[i].completed = true;
+                        if(player.questTasks[i].triggers === 'completeQuest'){
+                            player.completeQuest(player);
+                        }
+                        else if(player.questTasks[i].triggers === 'abandonQuest'){
+                            player.abandonQuest(player);
+                        }
+                        else if(player.questTasks[i].triggers === 'endConversation'){
+                            player.endDialogue();
+                        }
+                        else if(player.questTasks[i].triggers === 'shopOpen'){
+                            player.inventory.refreshShop(Npc.list[player.dialogueMessage.npc].name);
+                            player.endDialogue();
+                        }
+                        else if(player.questTasks[i].triggers === 'startQuest'){
+                            player.startQuest(player.questTasks[i].quest);
+                        }
+                        player.updateQuest(player,i);
+                        return;
+                    }
+                }
+                if(player.dialogueMessage[data].triggers === 'completeQuest'){
+                    player.completeQuest(player);
+                }
+                else if(player.dialogueMessage[data].triggers === 'abandonQuest'){
+                    player.abandonQuest(player);
+                }
+                else if(player.dialogueMessage[data].triggers === 'endConversation'){
+                    player.endDialogue();
+                }
+                else if(player.dialogueMessage[data].triggers === 'shopOpen'){
+                    player.inventory.refreshShop(Npc.list[player.dialogueMessage.npc].name);
+                    player.endDialogue();
+                }
+                else if(player.dialogueMessage[data].triggers === 'startQuest'){
+                    player.startQuest(player.dialogueMessage[data].quest);
+                }
             }
         });
 
@@ -2028,7 +2110,6 @@ Player.onDisconnect = function(socket){
     if(!socket){
         return;
     }
-    storeDatabase(Player.list);
     if(Player.list[socket.id]){
         if(Player.list[socket.id].loggedOn){
             Player.list[socket.id].loggedOn = null;
@@ -2044,7 +2125,7 @@ Player.onDisconnect = function(socket){
                     for(var i in Player.list[socket.id].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
                             if(Player.list[socket.id].inventory.items[i].id){
-                                Player.list[Player.list[socket.id].tradingEntity].inventory.addItem(Player.list[socket.id].inventory.items[i].id,Player.list[socket.id].inventory.items[i].amount);
+                                Player.list[socket.id].inventory.addItem(Player.list[socket.id].inventory.items[i].id,Player.list[socket.id].inventory.items[i].amount);
                             }
                         }
                     }
@@ -2059,7 +2140,11 @@ Player.onDisconnect = function(socket){
                 addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
             }
         }
+        storeDatabase(Player.list);
         delete Player.list[socket.id];
+    }
+    else{
+        storeDatabase(Player.list);
     }
     socket.disconnect();
 }

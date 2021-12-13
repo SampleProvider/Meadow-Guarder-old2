@@ -1,45 +1,50 @@
-var json = require('./' + player.quest + '.json');
+quests[player.quest] = {};
 
-player.updateQuest = function(){
-    switch(player.questStage){
-        case 1:
-            player.questNpcs = ['Macklel'];
-            player.setQuestTriggers(json[player.questStage].triggers);
-            player.endDialogue();
-            break;
-        case 2:
-            player.questNpcs = [];
-            player.startDialogue(json[player.questStage].dialogue);
-            break;
+quests[player.quest].json = require('./' + player.quest + '.json');
+
+quests[player.quest].updateQuest = function(self,dialogueTask){
+    for(var i in self.questTasks){
+        if(self.questTasks[i].completed === false){
+            return;
+        }
+    }
+    if(quests[player.quest].json[self.questStage].questStage){
+        self.questStage += quests[player.quest].json[self.questStage].questStage;
+    }
+    if(dialogueTask){
+        if(self.questTasks[dialogueTask].questStage){
+            self.questStage += self.questTasks[dialogueTask].questStage;
+        }
+    }
+    switch(self.questStage){
         case 4:
-            player.startDialogue(json[player.questStage].dialogue);
-            player.inventory.addItem('coppershiv',1);
-            break;
-        case 6:
-            player.completeQuest();
+            self.startDialogue(quests[player.quest].json[self.questStage].dialogue);
+            self.setQuestTasks(quests[player.quest].json[self.questStage].tasks);
+            self.inventory.addItem('coppershiv',1);
             break;
         default:
-            player.startDialogue(json[player.questStage].dialogue);
+            self.startDialogue(quests[player.quest].json[self.questStage].dialogue);
+            self.setQuestTasks(quests[player.quest].json[self.questStage].tasks);
             break;
     }
 }
 
-player.completeQuest = function(){
-    addToChat(player.textColor,player.name + ' completed the quest ' + player.quest + '.');
-    if(player.advancements[player.quest] === undefined){
-        player.advancements[player.quest] = 1;
+quests[player.quest].completeQuest = function(self){
+    addToChat(self.textColor,self.name + ' completed the quest ' + self.quest + '.');
+    if(self.advancements[self.quest] === undefined){
+        self.advancements[self.quest] = 1;
     }
     else{
-        player.advancements[player.quest] += 1;
+        self.advancements[self.quest] += 1;
     }
-    player.quest = false;
-    player.endDialogue();
-    player.updateQuest = function(){};
-    player.questNpcs = [];
+    self.quest = false;
+    self.questTasks = [];
+    self.endDialogue();
+    self.updateQuest = function(){};
 }
-player.abandonQuest = function(){
-    player.quest = false;
-    player.endDialogue();
-    player.updateQuest = function(){};
-    player.questNpcs = [];
+quests[player.quest].abandonQuest = function(self){
+    self.quest = false;
+    self.questTasks = [];
+    self.endDialogue();
+    self.updateQuest = function(){};
 }
