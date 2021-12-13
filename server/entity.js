@@ -1750,7 +1750,6 @@ Player = function(param,socket){
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
-        console.log(regionChanger)
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
         if(self.map === 'World'){
             self.worldRegion = self.region;
