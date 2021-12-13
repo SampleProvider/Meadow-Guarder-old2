@@ -41,6 +41,7 @@ var hpLevels = [
     455,
     505,
     565,
+    630,
     10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
 ];
 
@@ -64,16 +65,13 @@ var manaLevels = [
     455,
     505,
     565,
+    630,
     10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
 ];
 
 
 ENV = {
-    spawnpoint:{
-        x:0,
-        y:0,
-        map:"World",
-    }
+    spawnpoints:{}
 }
 
 var PF = require('pathfinding');
@@ -197,6 +195,7 @@ Entity = function(param){
     }
     self.update = function(){
         self.updatePosition();
+        self.updateGridPosition();
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
     }
@@ -205,6 +204,8 @@ Entity = function(param){
         self.lastY = self.y;
         self.x += self.spdX;
         self.y += self.spdY;
+    }
+    self.updateGridPosition = function(){
         self.gridX = Math.floor(self.x / 64);
         self.gridY = Math.floor(self.y / 64);
     }
@@ -1006,9 +1007,11 @@ Player = function(param,socket){
 
     self.changeSize();
 
-    self.x = ENV.spawnpoint.x;
-    self.y = ENV.spawnpoint.y;
-    self.map = ENV.spawnpoint.map;
+    self.worldRegion = 'Altoris Island';
+
+    self.x = ENV.spawnpoints[self.worldRegion].x;
+    self.y = ENV.spawnpoints[self.worldRegion].y;
+    self.map = ENV.spawnpoints[self.worldRegion].map;
 
     self.type = 'Player';
 
@@ -1110,6 +1113,16 @@ Player = function(param,socket){
     self.mana = self.manaMax;
     self.inventory.refreshInventory();
 
+    if(param.database.worldRegion){
+        self.worldRegion = param.database.worldRegion;
+    }
+    
+    if(ENV.spawnpoints[self.worldRegion]){
+        self.x = ENV.spawnpoints[self.worldRegion].x;
+        self.y = ENV.spawnpoints[self.worldRegion].y;
+        self.map = ENV.spawnpoints[self.worldRegion].map;
+    }
+
     playerMap[self.map] += 1;
     self.onDeath = function(pt,entity){
         pt.canMove = false;
@@ -1160,6 +1173,7 @@ Player = function(param,socket){
             if(self.canMove && self.inDialogue === false){
                 self.updatePosition();
             }
+            self.updateGridPosition();
             self.updateCollisions();
         }
         self.x = Math.round(self.x);
@@ -1569,6 +1583,7 @@ Player = function(param,socket){
                 self.xpMax = xpLevels[self.level];
                 addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
                 self.xp -= xpLevels[self.level - 1];
+                self.updateStats();
             }
             else{
                 self.xpMax = self.xp;
@@ -1722,6 +1737,11 @@ Player = function(param,socket){
             debug:true,
         });
     }
+    self.teleportToSpawn = function(){
+        if(ENV.spawnpoints[self.worldRegion]){
+            self.teleport(ENV.spawnpoints[self.worldRegion].x,ENV.spawnpoints[self.worldRegion].y,ENV.spawnpoints[self.worldRegion].map);
+        }
+    }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
         if(regionChanger.canAttack === false){
@@ -1730,7 +1750,11 @@ Player = function(param,socket){
         else{
             self.canAttack = param.canAttack !== undefined ? param.canAttack : true;
         }
+        console.log(regionChanger)
         socket.emit('regionChange',{region:regionChanger.region,mapName:regionChanger.mapName});
+        if(self.map === 'World'){
+            self.worldRegion = self.region;
+        }
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
@@ -2081,7 +2105,7 @@ Player.onConnect = function(socket,username){
             player.canMove = true;
             player.canAttack = false;
             player.hp = Math.round(player.hpMax / 2);
-            player.teleport(ENV.spawnpoint.x,ENV.spawnpoint.y,ENV.spawnpoint.map);
+            player.teleportToSpawn();
             addToChat('#00ff00',player.name + ' respawned.');
         });
 
@@ -2247,6 +2271,7 @@ Projectile = function(param){
         self.vertices = [];
         self.updatePattern();
         self.updatePosition();
+        self.updateGridPosition();
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
         self.updateCollisions();
@@ -2524,6 +2549,7 @@ Monster = function(param){
             if(self.canMove){
                 self.updatePosition();
             }
+            self.updateGridPosition();
             self.updateCollisions();
         }
         self.x = Math.round(self.x);
@@ -2846,6 +2872,7 @@ Npc = function(param){
             if(self.canMove){
                 self.updatePosition();
             }
+            self.updateGridPosition();
             self.updateCollisions();
         }
         self.x = Math.round(self.x);

@@ -4,7 +4,6 @@ Inventory = function(socket,server){
         server:server,
         items:{},
         itemDescriptions:{},
-        craftItems:[],
         craftDescriptions:{},
         shopDescriptions:{},
         shopNpc:null,

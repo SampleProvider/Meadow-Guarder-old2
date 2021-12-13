@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 8;
+var totalMaps = 9;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -142,5 +142,6 @@ var loadAllMaps = function(){
     loadMap('Altoris General Store Upstairs');
     loadMap('Altoris Mapmakers Lodge');
     loadMap('PVP Arena');
+    loadMap('Lightning Whelk Inn');
     loadingComplete = true;
 }

@@ -162,9 +162,12 @@ var renderWorld = function(json,name){
                             });
                         }
                         else if(tile_idx + 1 === json.tilesets[1].firstgid + 9){
-                            ENV.spawnpoint.x = s_x + 32;
-                            ENV.spawnpoint.y = s_y + 32;
-                            ENV.spawnpoint.map = name;
+                            var array = parseName(json.layers[i].name);
+                            ENV.spawnpoints[array[1]] = {
+                                x:s_x + 32,
+                                y:s_y + 32,
+                                map:name,
+                            }
                         }
                     }
                 }
@@ -183,3 +186,4 @@ loadMap('Altoris General Store');
 loadMap('Altoris General Store Upstairs');
 loadMap('Altoris Mapmakers Lodge');
 loadMap('PVP Arena');
+loadMap('Lightning Whelk Inn');

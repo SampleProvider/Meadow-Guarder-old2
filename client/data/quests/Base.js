@@ -8,18 +8,18 @@ quests[player.quest].updateQuest = function(self,dialogueTask){
             return;
         }
     }
-    if(quests[player.quest].json[self.questStage].questStage){
-        self.questStage += quests[player.quest].json[self.questStage].questStage;
+    if(quests[self.quest].json[self.questStage].questStage){
+        self.questStage += quests[self.quest].json[self.questStage].questStage;
     }
-    if(dialogueTask){
+    if(dialogueTask !== undefined){
         if(self.questTasks[dialogueTask].questStage){
             self.questStage += self.questTasks[dialogueTask].questStage;
         }
     }
     switch(self.questStage){
         default:
-            self.startDialogue(quests[player.quest].json[self.questStage].dialogue);
-            self.setQuestTasks(quests[player.quest].json[self.questStage].tasks);
+            self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
+            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
             break;
     }
 }
