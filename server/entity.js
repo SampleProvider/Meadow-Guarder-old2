@@ -1977,7 +1977,7 @@ Player.onConnect = function(socket,username){
                             SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                             Player.list[player.tradingEntity].sendMessage('[!] Successfully traded with ' + player.name + '.');
                             Player.list[player.tradingEntity].tradingEntity = null;
-                            player.sendMessage('[!] Successfully traded with ' + player.tradingEntity.name + '.');
+                            player.sendMessage('[!] Successfully traded with ' + Player.list[player.tradingEntity].name + '.');
                             player.tradingEntity = null;
                         }
                     }
@@ -2012,7 +2012,7 @@ Player.onConnect = function(socket,username){
                     }
                 }
                 socket.emit('closeTrade');
-                player.sendMessage('[!] Declined trade with ' + player.tradingEntity.name + '.');
+                player.sendMessage('[!] Declined trade with ' + Player.list[player.tradingEntity].name + '.');
                 player.tradingEntity = null;
             }
         });
@@ -2162,6 +2162,9 @@ Player.onDisconnect = function(socket){
             if(Player.list[socket.id].debug.invisible === false){
                 addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
             }
+        }
+        if(Player.list[socket.id].inventory.draggingItem.id){
+            Player.list[socket.id].inventory.addItem(Player.list[socket.id].inventory.draggingItem.id,Player.list[socket.id].inventory.draggingItem.amount);
         }
         storeDatabase(Player.list);
         delete Player.list[socket.id];

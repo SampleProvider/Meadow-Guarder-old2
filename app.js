@@ -818,13 +818,9 @@ io.sockets.on('connection',function(socket){
 			else{
 				if(Player.list[socket.id].lastChat > 0){
 					Player.list[socket.id].chatWarnings += 1.5;
-					if(Player.list[socket.id].chatWarnings > 5){
-						Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account. Please lower your chat message rate.');
-					}
-					if(Player.list[socket.id].chatWarnings > 7){
-						socket.disconnectUser();
-						return;
-					}
+				}
+				if(stringData.length > 100){
+					Player.list[socket.id].chatWarnings += 5.5;
 				}
 				var notSpace = false;
 				for(var i = 0;i < stringData.length;i++){
@@ -853,7 +849,14 @@ io.sockets.on('connection',function(socket){
 					}
 					addToChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
 					Player.list[socket.id].lastChat = 20;
-					Player.list[socket.id].chatWarnings -= 0.5;
+					Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
+				}
+				if(Player.list[socket.id].chatWarnings > 5){
+					Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account.');
+				}
+				if(Player.list[socket.id].chatWarnings > 7){
+					socket.disconnectUser();
+					return;
 				}
 			}
 		}
