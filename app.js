@@ -324,14 +324,13 @@ io.sockets.on('connection',function(socket){
 		}
 	});
 	socket.on('disconnect',function(){
-		if(Player.list[socket.id]){
-			Player.list[socket.id].toRemove = true;
-		}
+		socket.disconnectUser();
 	});
 	socket.on('timeout',function(){
-		if(Player.list[socket.id]){
-			Player.list[socket.id].toRemove = true;
-		}
+		socket.disconnectUser();
+	});
+	socket.on('error',function(){
+		socket.disconnectUser();
 	});
 	socket.on('chatMessage',function(data){
 		if(!data){
