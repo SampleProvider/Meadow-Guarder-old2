@@ -2005,6 +2005,9 @@ Player.onConnect = function(socket,username){
                             Player.list[player.tradingEntity].inventory.addItem(Player.list[player.tradingEntity].inventory.items[i].id,Player.list[player.tradingEntity].inventory.items[i].amount);
                         }
                     }
+                    for(var i = 0;i < 18;i++){
+                        Player.list[player.tradingEntity].inventory.items['trade' + i] = {};
+                    }
                     SOCKET_LIST[player.tradingEntity].emit('closeTrade');
                     Player.list[player.tradingEntity].tradingEntity = null;
                     Player.list[player.tradingEntity].sendMessage('[!] ' + player.name + ' declined the trade.');
@@ -2013,6 +2016,9 @@ Player.onConnect = function(socket,username){
                     if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
                         player.inventory.addItem(player.inventory.items[i].id,player.inventory.items[i].amount);
                     }
+                }
+                for(var i = 0;i < 18;i++){
+                    player.inventory.items['trade' + i] = {};
                 }
                 socket.emit('closeTrade');
                 player.sendMessage('[!] Declined trade with ' + Player.list[player.tradingEntity].name + '.');
