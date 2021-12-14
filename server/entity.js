@@ -1718,9 +1718,6 @@ Player = function(param,socket){
             self.updateQuest(self);
         }
     }
-    if(!self.advancements['Tutorial']){
-        self.startQuest('Tutorial');
-    }
     self.completeQuest = function(){
 
     }
@@ -1757,6 +1754,9 @@ Player = function(param,socket){
         if(self.map === 'World'){
             self.worldRegion = self.region;
         }
+    }
+    if(!self.advancements['Tutorial']){
+        self.startQuest('Tutorial');
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
