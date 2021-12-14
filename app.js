@@ -1234,7 +1234,7 @@ setInterval(function(){
 					for(var m in grid[i][j][k].projectiles){
 						if(grid[i][j][k].players[l].team !== m){
 							for(var n in grid[i][j][k].projectiles[m]){
-								if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].players[l]) && grid[i][j][k].projectiles[m][n].parent + '' !==grid[i][j][k].players[l].id){
+								if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].players[l]) && grid[i][j][k].projectiles[m][n].parent + '' !== grid[i][j][k].players[l].id + ''){
 									grid[i][j][k].players[l].onDamage(grid[i][j][k].projectiles[m][n]);
 								}
 							}
