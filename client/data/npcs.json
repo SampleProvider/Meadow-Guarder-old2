@@ -371,5 +371,86 @@
                 }
             }
         ]
+    },
+    "Joseph":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_5 Green",
+            "pants":"Pants_1 Brown",
+            "boots":"Boots_1 Black",
+            "hair":"MHair_6 White",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Talk to Wally":false
+                },
+                "message":"Uhh, you shouldn't be here.",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Talk to Wally":1,
+                    "Snake Removal":false
+                },
+                "message":"These annoying snakes. Somehow they always find a way to sneak in.",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Snake Removal*",
+                    "triggers":"startQuest",
+                    "quest":"Snake Removal"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Snake Removal":1
+                },
+                "message":"These annoying snakes. Somehow they always find a way to sneak in.",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"goldbar",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"goldcoin",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"sand",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"meteoritecoin",
+                        "amount":1000
+                    }
+                ]
+            }
+        ]
     }
 }

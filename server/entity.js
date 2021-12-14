@@ -1718,6 +1718,9 @@ Player = function(param,socket){
             self.updateQuest(self);
         }
     }
+    if(self.advancements['Tutorial'] === false){
+        self.startQuest('Tutorial');
+    }
     self.completeQuest = function(){
 
     }

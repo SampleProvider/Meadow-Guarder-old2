@@ -1,0 +1,63 @@
+{
+    "0":{
+        "dialogue":{
+            "message":"Snakes keep invading Seashell Village. They keep stealing our food! I need you to kill 10 snakes for me.",
+            "option1":"Sure! I hate snakes as well!"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "1":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"monster",
+                "name":"Snake",
+                "amount":0,
+                "target":10
+            }
+        ],
+        "questStage":1
+    },
+    "2":{
+        "dialogue":{
+            "message":"10 Snakes Killed!",
+            "option1":"I should return back to Joseph."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "3":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"npc",
+                "name":"Joseph"
+            }
+        ],
+        "questStage":1
+    },
+    "4":{
+        "dialogue":{
+            "message":"You killed 10 Snakes? Thanks a lot! Although I keep getting the feeling more Snakes will invade...",
+            "option1":"I can kill more snakes if you need it."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "triggers":"completeQuest"
+            }
+        ]
+    }
+}

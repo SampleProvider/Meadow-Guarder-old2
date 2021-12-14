@@ -429,14 +429,17 @@ io.sockets.on('connection',function(socket){
 					doCommand(name,function(name,i){
 						Player.list[i].hp = 0;
 						Player.list[i].onDeath(Player.list[i]);
-						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].emit('death');
-						}
 						addToChat('#ff0000',Player.list[i].name + ' felt the wrath of ' + Player.list[socket.id].name + '.');
 						Player.list[socket.id].sendMessage('[!] Killed player ' + name + '.');
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'announce' && level >= 1){
+					commandList.splice(0,1);
+					var message = recreateCommand(commandList);
+					addToChat('#00ffff',Player.list[socket.id].name + ' announced: ' + message);
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2){
@@ -762,6 +765,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
@@ -775,6 +779,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
@@ -791,6 +796,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
@@ -901,6 +907,9 @@ setInterval(function(){
     for(var i in Player.list){
         if(Player.list[i]){
             Player.list[i].update();
+			if(!Player.list[i]){
+				return;
+			}
             var updatePack = Player.list[i].getInitPack();
 			if(Player.list[i].debug.invisible === false){
 				if(pack[Player.list[i].map]){
