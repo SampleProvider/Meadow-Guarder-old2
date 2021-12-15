@@ -159,13 +159,20 @@ io.sockets.on('connection',function(socket){
 			username:data.username.toString(),
 			password:data.password.toString(),
 		}
-		var allSpaces = true;
-		for(var i = 0;i < stringData.username.length;i++){
-			if(stringData.username[i] !== ' '){
-				allSpaces = false;
-			}
+		if(stringData[0] === ' '){
+			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+			return;
 		}
-		if(allSpaces){
+		if(stringData[0] === 'ㅤ'){
+			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+			return;
+		}
+		if(stringData[stringData.length - 1] === ' '){
+			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+			return;
+
+		}
+		if(stringData[stringData.length - 1] === 'ㅤ'){
 			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 		}
@@ -427,10 +434,15 @@ io.sockets.on('connection',function(socket){
 						}
 					}
 					doCommand(name,function(name,i){
-						Player.list[i].hp = 0;
-						Player.list[i].onDeath(Player.list[i]);
-						addToChat('#ff0000',Player.list[i].name + ' felt the wrath of ' + Player.list[socket.id].name + '.');
-						Player.list[socket.id].sendMessage('[!] Killed player ' + name + '.');
+						if(Player.list[i].hp <= 0){
+							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already dead.');
+						}
+						else{
+							Player.list[i].hp = 0;
+							Player.list[i].onDeath(Player.list[i]);
+							addToChat('#ff0000',Player.list[i].name + ' felt the wrath of ' + Player.list[socket.id].name + '.');
+							Player.list[socket.id].sendMessage('[!] Killed player ' + name + '.');
+						}
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					});

@@ -337,7 +337,7 @@ socket.on('createAccountResponse',function(data){
     }
     else if(data.success === 5){
         signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not be all spaces.</span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not start or end with a space.</span><br>' + signErrorText;
     }
     else if(data.success === 6){
         signErrorText = signError.innerHTML;
