@@ -731,22 +731,18 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'stats' && level >= 0){
 					commandList.splice(0,1);
-					doCommand(name,function(name,i){
-						var statsString = '[!] Your stats:';
-						statsString += '<br>Damage: ' + Player.list[i].stats.damage + '';
-						statsString += '<br>Defense: ' + Player.list[i].stats.defense + '';
-						statsString += '<br>Hp: ' + Player.list[i].hpMax + '';
-						statsString += '<br>Hp Regen: ' + Player.list[i].stats.hpRegen + '';
-						statsString += '<br>Mana: ' + Player.list[i].manaMax + '';
-						statsString += '<br>Mana Regen: ' + Player.list[i].stats.manaRegen + '';
-						statsString += '<br>Crit Chance: ' + Player.list[i].stats.critChance + '';
-						statsString += '<br>Crit Power: ' + Player.list[i].stats.critPower + '';
-						statsString += '<br>Speed: ' + Player.list[i].maxSpeed + '';
-						statsString += '<br>Luck: ' + Player.list[i].luck + '';
-						Player.list[socket.id].sendMessage(statsString);
-					},function(name){
-						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
-					});
+					var statsString = '[!] Your stats:';
+					statsString += '<br>Damage: ' + Player.list[socket.id].stats.damage + '';
+					statsString += '<br>Defense: ' + Player.list[socket.id].stats.defense + '';
+					statsString += '<br>Hp: ' + Player.list[socket.id].hpMax + '';
+					statsString += '<br>Hp Regen: ' + Player.list[socket.id].stats.hpRegen + '';
+					statsString += '<br>Mana: ' + Player.list[socket.id].manaMax + '';
+					statsString += '<br>Mana Regen: ' + Player.list[socket.id].stats.manaRegen + '';
+					statsString += '<br>Crit Chance: ' + Player.list[socket.id].stats.critChance + '';
+					statsString += '<br>Crit Power: ' + Player.list[socket.id].stats.critPower + '';
+					statsString += '<br>Speed: ' + Player.list[socket.id].maxSpeed + '';
+					statsString += '<br>Luck: ' + Player.list[socket.id].luck + '';
+					Player.list[socket.id].sendMessage(statsString);
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
