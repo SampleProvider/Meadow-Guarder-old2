@@ -343,6 +343,10 @@ socket.on('createAccountResponse',function(data){
         signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not contain a bad word.</span><br>' + signErrorText;
     }
+    else if(data.success === 7){
+        signErrorText = signError.innerHTML;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not contain a blank character.</span><br>' + signErrorText;
+    }
 });
 socket.on('deleteAccountResponse',function(data){
     if(data.success === 4){

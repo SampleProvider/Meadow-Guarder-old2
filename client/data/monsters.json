@@ -173,7 +173,7 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":50000,
+        "hpMax":75000,
         "stats":{
             "damage":30,
             "defense":0,
@@ -206,17 +206,6 @@
                 "id":"projectile",
                 "projectileType":"eye",
                 "param":{
-                    "speed":35,
-                    "timer":80,
-                    "direction":0,
-                    "directionDeviation":360,
-                    "projectilePattern":"homing",
-                    "collisionType":"none"
-                }
-            },{
-                "id":"projectile",
-                "projectileType":"eye",
-                "param":{
                     "speed":25,
                     "timer":80,
                     "directionDeviation":60,
@@ -224,11 +213,103 @@
                 }
             }],
             "40":[{
-                "id":"dash",
+                "id":"projectile",
+                "projectileType":"eye",
                 "param":{
-                    "directionDeviation":15,
-                    "time":10,
-                    "dashDistance":8
+                    "speed":60,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":58,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":56,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":54,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":52,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":50,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":48,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":46,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":44,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":42,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"eye",
+                "param":{
+                    "speed":40,
+                    "timer":80,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
                 }
             }]
         }

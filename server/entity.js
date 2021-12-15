@@ -436,13 +436,27 @@ Actor = function(param){
         var grid = new PF.Grid(size,size);
         for(var i = 0;i < size;i++){
             for(var j = 0;j < size;j++){
+                var setWalkableAt = function(){
+                    if(self.drawSize === 'large'){
+                        for(var k = 0;k < 2;k++){
+                            for(var l = 0;l < 2;l++){
+                                if(i + k < size && j + l < size){
+                                    grid.setWalkableAt(i + k,j + l,false);
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        grid.setWalkableAt(i,j,false);
+                    }
+                }
                 var x = dx + i;
                 var y = dy + j;
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][x]){
                             if(Collision.list[self.map][self.zindex][x][y]){
-                                grid.setWalkableAt(i,j,false);
+                                setWalkableAt();
                             }
                         }
                     }
@@ -452,7 +466,7 @@ Actor = function(param){
                         if(RegionChanger.list[self.map][x]){
                             if(RegionChanger.list[self.map][x][y]){
                                 if(RegionChanger.list[self.map][x][y].noMonster){
-                                    grid.setWalkableAt(i,j,false);
+                                    setWalkableAt();
                                 }
                             }
                         }
@@ -2785,13 +2799,27 @@ Monster = function(param){
                         var grid = new PF.Grid(size,size);
                         for(var i = 0;i < size;i++){
                             for(var j = 0;j < size;j++){
+                                var setWalkableAt = function(){
+                                    if(self.drawSize === 'large'){
+                                        for(var k = 0;k < 2;k++){
+                                            for(var l = 0;l < 2;l++){
+                                                if(i + k < size && j + l < size){
+                                                    grid.setWalkableAt(i + k,j + l,false);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        grid.setWalkableAt(i,j,false);
+                                    }
+                                }
                                 var x = dx + i;
                                 var y = dy + j;
                                 if(Collision.list[self.map]){
                                     if(Collision.list[self.map][self.zindex]){
                                         if(Collision.list[self.map][self.zindex][x]){
                                             if(Collision.list[self.map][self.zindex][x][y]){
-                                                grid.setWalkableAt(i,j,false);
+                                                setWalkableAt();
                                             }
                                         }
                                     }
@@ -2800,7 +2828,7 @@ Monster = function(param){
                                     if(RegionChanger.list[self.map][x]){
                                         if(RegionChanger.list[self.map][x][y]){
                                             if(RegionChanger.list[self.map][x][y].noMonster){
-                                                grid.setWalkableAt(i,j,false);
+                                                setWalkableAt();
                                             }
                                         }
                                     }

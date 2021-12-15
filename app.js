@@ -159,21 +159,17 @@ io.sockets.on('connection',function(socket){
 			username:data.username.toString(),
 			password:data.password.toString(),
 		}
-		if(stringData[0] === ' '){
+		if(stringData.username[0] === ' '){
 			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 		}
-		if(stringData[0] === 'ㅤ'){
-			socket.emit('createAccountResponse',{success:5,username:stringData.username});
-			return;
-		}
-		if(stringData[stringData.length - 1] === ' '){
+		if(stringData.username[stringData.length - 1] === ' '){
 			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 
 		}
-		if(stringData[stringData.length - 1] === 'ㅤ'){
-			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+		if(stringData.username.includes('ㅤ')){
+			socket.emit('createAccountResponse',{success:7,username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('--') || stringData.password.includes('--')){
@@ -614,7 +610,7 @@ io.sockets.on('connection',function(socket){
 						}
 					}
 				}
-				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					for(var i in Player.list){
@@ -642,6 +638,11 @@ io.sockets.on('connection',function(socket){
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'serverupdate' && level >= 3){
+					commandList.splice(0,1);
+					addToChat('#ff00ff','[!] SERVER UPDATE [!]');
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
@@ -816,6 +817,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/ipban [player name] - IPBan someone.';
 						message += '<br>/unipban [player name] - UnIPban someone.';
 						message += '<br>/ip [player name] - See someone\'s ip.';
+						message += '<br>/serverupdate - Announce a server update.';
 						message += '<br>/debug [javascript] - Run javascript.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
