@@ -1106,7 +1106,8 @@ socket.on("attack",function(){
 socket.on('playerList',function(data){
     playerList.innerHTML = '';
     for(var i in data){
-        playerList.innerHTML += data[i] + '<br>';
+        var newData = data[i].replace(/  /gi,'&nbsp;&nbsp;');
+        playerList.innerHTML += newData + '<br>';
     }
 });
 
