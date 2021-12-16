@@ -438,8 +438,8 @@ Actor = function(param){
             for(var j = 0;j < size;j++){
                 var setWalkableAt = function(){
                     if(self.drawSize === 'large'){
-                        for(var k = 0;k < 2;k++){
-                            for(var l = 0;l < 2;l++){
+                        for(var k = -1;k < 2;k++){
+                            for(var l = -1;l < 2;l++){
                                 if(i + k < size && j + l < size){
                                     grid.setWalkableAt(i + k,j + l,false);
                                 }
@@ -2801,8 +2801,8 @@ Monster = function(param){
                             for(var j = 0;j < size;j++){
                                 var setWalkableAt = function(){
                                     if(self.drawSize === 'large'){
-                                        for(var k = 0;k < 2;k++){
-                                            for(var l = 0;l < 2;l++){
+                                        for(var k = -1;k < 2;k++){
+                                            for(var l = -1;l < 2;l++){
                                                 if(i + k < size && j + l < size){
                                                     grid.setWalkableAt(i + k,j + l,false);
                                                 }
