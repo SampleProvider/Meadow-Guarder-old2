@@ -5,6 +5,11 @@ quests[player.quest].json = require('./' + player.quest + '.json');
 quests[player.quest].updateQuest = function(self,dialogueTask){
     for(var i in self.questTasks){
         if(self.questTasks[i].completed === false){
+            if(dialogueTask !== undefined){
+                if(self.questTasks[i].id === 'dialogue' && self.questTasks[i].option !== self.questTasks[dialogueTask].option){
+                    continue;
+                }
+            }
             return;
         }
     }
