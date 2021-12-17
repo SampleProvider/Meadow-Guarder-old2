@@ -162,7 +162,7 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 		}
-		if(stringData.username[stringData.length - 1] === ' '){
+		if(stringData.username[stringData.username.length - 1] === ' '){
 			socket.emit('createAccountResponse',{success:5,username:stringData.username});
 			return;
 

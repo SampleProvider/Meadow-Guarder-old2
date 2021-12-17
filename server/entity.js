@@ -2838,7 +2838,7 @@ Monster = function(param){
                     while(direction < 0){
                         direction += 8;
                     }
-                    if(self.collided.x || self.collided.y){
+                    if(self.collided.x || self.collided.y || self.targetLeftView !== 0){
                         self.circleDirection *= -1;
                     }
                     switch(direction){
