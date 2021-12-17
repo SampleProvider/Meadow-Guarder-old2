@@ -252,7 +252,14 @@ document.getElementById('deleteAccount').onclick = function(){
     }
     else{
         document.getElementById('deleteAccount').innerHTML = 'Delete Account';
-        socket.emit('deleteAccount',{username:document.getElementById('username').value,password:document.getElementById('password').value});
+        var password = prompt('Enter your password below:');
+        if(password === null){
+            signErrorText = signError.innerHTML;
+            signError.innerHTML = '<span style="color: #ff0000">Error: No password entered.</span><br>' + signErrorText;
+        }
+        else{
+            socket.emit('deleteAccount',{username:document.getElementById('username').value,password:password});
+        }
         deletePasswordState = 0;
     }
 }

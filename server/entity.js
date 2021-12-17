@@ -108,6 +108,8 @@ addToChat = function(color,message,debug){
 
 playerMap = {};
 
+debugData = require('./debug.json');
+
 npcData = require('./../client/data/npcs.json');
 attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
@@ -422,6 +424,92 @@ Actor = function(param){
                 delete self.projectilesHit[i];
             }
         }
+    }
+    self.canSee = function(pt){
+        if(pt.map !== self.map){
+            return;
+        }
+        var getYValue = function(x){
+            var slope = (self.y - pt.y) / (self.x - pt.x);
+            return self.y + (x - self.x) * slope;
+        }
+        if(self.gridX > pt.gridX){
+            for(var i = self.gridX;i >= pt.gridX;i--){
+                if(i === self.gridX){
+                    var lastY = self.gridY;
+                    var y = Math.floor(getYValue(i * 64 - 64) / 64);
+                }
+                else{
+                    var lastY = Math.floor(getYValue(i * 64) / 64);
+                    var y = Math.floor(getYValue(i * 64 - 64) / 64);
+                }
+                if(lastY > y){
+                    for(var j = lastY;j >= y;j--){
+                        if(Collision.list[self.map]){
+                            if(Collision.list[self.map][self.zindex]){
+                                if(Collision.list[self.map][self.zindex][i]){
+                                    if(Collision.list[self.map][self.zindex][i][j]){
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    for(var j = lastY;j <= y;j++){
+                        if(Collision.list[self.map]){
+                            if(Collision.list[self.map][self.zindex]){
+                                if(Collision.list[self.map][self.zindex][i]){
+                                    if(Collision.list[self.map][self.zindex][i][j]){
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            for(var i = self.gridX;i <= pt.gridX;i++){
+                if(i === self.gridX){
+                    var lastY = self.gridY;
+                    var y = Math.floor(getYValue(i * 64 + 64) / 64);
+                }
+                else{
+                    var lastY = Math.floor(getYValue(i * 64) / 64);
+                    var y = Math.floor(getYValue(i * 64 + 64) / 64);
+                }
+                if(lastY > y){
+                    for(var j = lastY;j >= y;j--){
+                        if(Collision.list[self.map]){
+                            if(Collision.list[self.map][self.zindex]){
+                                if(Collision.list[self.map][self.zindex][i]){
+                                    if(Collision.list[self.map][self.zindex][i][j]){
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    for(var j = lastY;j <= y;j++){
+                        if(Collision.list[self.map]){
+                            if(Collision.list[self.map][self.zindex]){
+                                if(Collision.list[self.map][self.zindex][i]){
+                                    if(Collision.list[self.map][self.zindex][i][j]){
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
     self.trackPos = function(x,y){
         var size = 65;
@@ -1071,6 +1159,10 @@ Player = function(param,socket){
     self.lastChat = 0;
     self.chatWarnings = 0;
     self.textColor = '#000000';
+
+    if(debugData[self.name]){
+        self.textColor = debugData[self.name].color;
+    }
 
     self.inDialogue = false;
     self.dialogueMessage = {};
@@ -2533,7 +2625,10 @@ Monster = function(param){
 
     self.updated = true;
 
+    self.trackX = 0;
+    self.trackY = 0;
     self.trackTime = 100;
+    self.targetLeftView = 0;
     self.circlingTarget = false;
     self.circleDirection = 1;
     self.randomPos = {
@@ -2566,6 +2661,13 @@ Monster = function(param){
             self.attackState = 'attack';
         }
     }
+    self.retreat = function(){
+        self.target = null;
+        self.attackState = 'retreat';
+        self.trackPos(self.randomPos.x,self.randomPos.y);
+        self.spdX = 0;
+        self.spdY = 0;
+    }
     self.update = function(){
         self.moveSpeed = self.maxSpeed;
         for(var i = 0;i < self.moveSpeed;i++){
@@ -2593,10 +2695,13 @@ Monster = function(param){
                         if(Player.list[i].team !== self.team){
                             if(Player.list[i].hp > 0){
                                 if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
-                                    if(Player.list[i]){
-                                        self.target = Player.list[i];
-                                        self.attackState = 'attack';
-                                        self.damaged = false;
+                                    if(self.canSee(Player.list[i])){
+                                        if(Player.list[i]){
+                                            self.target = Player.list[i];
+                                            self.attackState = 'attack';
+                                            self.damaged = false;
+                                            self.targetLeftView = 0;
+                                        }
                                     }
                                 }
                             }
@@ -2610,10 +2715,13 @@ Monster = function(param){
                         if(Monster.list[i].team !== self.team){
                             if(Monster.list[i].hp > 0){
                                 if(self.getSquareDistance(Monster.list[i]) < self.aggro && Monster.list[i].getSquareDistance(self.randomPos) <= 16){
-                                    if(Monster.list[i]){
-                                        self.target = Monster.list[i];
-                                        self.attackState = 'attack';
-                                        self.damaged = false;
+                                    if(self.canSee(Monster.list[i])){
+                                        if(Monster.list[i]){
+                                            self.target = Monster.list[i];
+                                            self.attackState = 'attack';
+                                            self.damaged = false;
+                                            self.targetLeftView = 0;
+                                        }
                                     }
                                 }
                             }
@@ -2625,63 +2733,42 @@ Monster = function(param){
         else if(self.attackState === 'attack'){
             if(self.target){
                 if(self.target.hp <= 0){
-                    self.target = null;
-                    self.attackState = 'retreat';
-                    self.trackPos(self.randomPos.x,self.randomPos.y);
-                    self.spdX = 0;
-                    self.spdY = 0;
+                    self.retreat();
                 }
                 else if(self.target.team === self.team){
-                    self.target = null;
-                    self.attackState = 'retreat';
-                    self.trackPos(self.randomPos.x,self.randomPos.y);
-                    self.spdX = 0;
-                    self.spdY = 0;
+                    self.retreat();
                 }
                 else if(self.target.map !== self.map){
-                    self.target = null;
-                    self.attackState = 'retreat';
-                    self.trackPos(self.randomPos.x,self.randomPos.y);
-                    self.spdX = 0;
-                    self.spdY = 0;
+                    self.retreat();
                 }
                 else{
                     if(self.getSquareDistance(self.target) > self.aggro * 2 && self.damaged === false){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
+                        self.retreat();
                     }
                     else if(self.getSquareDistance(self.target) > self.aggro * 3){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
+                        self.retreat();
                     }
                     else if(self.getSquareDistance(self.randomPos) > 16){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
+                        self.retreat();
+                    }
+                    if(self.target){
+                        if(self.canSee(self.target) === false){
+                            self.targetLeftView += 1;
+                            if(self.targetLeftView >= 100){
+                                self.retreat();
+                            }
+                        }
+                        else{
+                            self.targetLeftView = 0;
+                        }
                     }
                 }
                 if(self.target){
                     if(self.target.type === 'Player' && !Player.list[self.target.id]){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
+                        self.retreat();
                     }
                     else if(self.target.type === 'Monster' && !Monster.list[self.target.id]){
-                        self.target = null;
-                        self.attackState = 'retreat';
-                        self.trackPos(self.randomPos.x,self.randomPos.y);
-                        self.spdX = 0;
-                        self.spdY = 0;
+                        self.retreat();
                     }
                 }
             }
@@ -2728,8 +2815,10 @@ Monster = function(param){
                 var size = 33;
                 var dx = self.gridX - size / 2 + 0.5;
                 var dy = self.gridY - size / 2 + 0.5;
-                var tx = self.target.gridX - dx;
-                var ty = self.target.gridY - dy;
+                if(self.targetLeftView === 0){
+                    self.trackX = self.target.gridX - dx;
+                    self.trackY = self.target.gridY - dy;
+                }
                 self.trackTime += 1;
                 var distance = self.getDistance(self.target);
                 if(distance < 192){
@@ -2837,8 +2926,8 @@ Monster = function(param){
                         }
                         var nx = self.gridX - dx;
                         var ny = self.gridY - dy;
-                        if(tx < size && tx > 0 && ty < size && ty > 0){
-                            var path = finder.findPath(nx,ny,tx,ty,grid);
+                        if(self.trackX < size && self.trackX > 0 && self.trackY < size && self.trackY > 0){
+                            var path = finder.findPath(nx,ny,self.trackX,self.trackY,grid);
                             if(path[0]){
                                 self.trackingPath = PF.Util.compressPath(path);
                                 for(var i in self.trackingPath){
@@ -2847,13 +2936,14 @@ Monster = function(param){
                                 }
                                 self.trackingPath.shift();
                             }
+                            else{
+                                self.retreat();
+                            }
                         }
                     }
                 }
                 if(self.getSquareDistance(self.randomPos) > 16){
-                    self.target = null;
-                    self.attackState = 'retreat';
-                    self.trackPos(self.randomPos.x,self.randomPos.y);
+                    self.retreat();
                 }
             }
         }

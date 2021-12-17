@@ -15,7 +15,6 @@ var serv = require('http').Server(app);
 require('./server/entity');
 require('./server/database');
 
-var debugData = require('./server/debug.json');
 var badwords = require('./server/badwords.json').words;
 var accountsToBeIPBanned = require('./server/suspendedAccounts.json').accountsToBeIPBanned;
 
