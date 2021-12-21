@@ -1439,6 +1439,12 @@ Inventory = function(socket,server){
                     self.items[i] = {};
                 }
             }
+            for(var i = oldMaxSlots - 1;i >= self.maxSlots;i--){
+                if(self.items[i].id){
+                    self.addItem(self.items[i].id,self.items[i].amount);
+                }
+                delete self.items[i];
+            }
             if(self.items['helmet'] === undefined){
                 self.items['helmet'] = {};
             }

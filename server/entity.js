@@ -1389,7 +1389,7 @@ Player = function(param,socket){
             }
         }
         for(var i in self.inventory.items){
-            if(self.inventory.items[i]){
+            if(typeof self.inventory.items[i] === 'object'){
                 if(self.inventory.items[i].id){
                     if(self.inventory.items[i].cooldown > 0){
                         self.inventory.items[i].cooldown -= 1;
