@@ -1440,8 +1440,10 @@ Inventory = function(socket,server){
                 }
             }
             for(var i = oldMaxSlots - 1;i >= self.maxSlots;i--){
-                if(self.items[i].id){
-                    self.addItem(self.items[i].id,self.items[i].amount);
+                if(typeof self.items[i] === 'object'){
+                    if(self.items[i].id){
+                        self.addItem(self.items[i].id,self.items[i].amount);
+                    }
                 }
                 delete self.items[i];
             }

@@ -1177,7 +1177,7 @@ Player = function(param,socket){
     self.inventory = new Inventory(socket,true);
     if(param.database.items){
         for(var i in param.database.items){
-            if(param.database.items[i]){
+            if(typeof param.database.items[i] === 'object'){
                 if(Item.list[param.database.items[i].id]){
                     self.inventory.items[i] = param.database.items[i];
                 }
