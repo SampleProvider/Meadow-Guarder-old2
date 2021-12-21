@@ -1608,26 +1608,6 @@ Player = function(param,socket){
                 }
             }
             if(self.inventory.maxSlots !== maxSlots){
-                if(self.inventory.maxSlots < maxSlots){
-                    for(var i in self.inventory.items){
-                        if(i >= 0){
-                            if(i >= self.inventory.maxSlots){
-                                if(self.inventory.items[i].id){
-                                    new DroppedItem({
-                                        x:self.x,
-                                        y:self.y,
-                                        map:self.map,
-                                        item:self.inventory.items[i].id,
-                                        amount:self.inventory.items[i].amount,
-                                        parent:self.id,
-                                        allPlayers:false,
-                                    });
-                                }
-                                self.inventory.items[i] = undefined;
-                            }
-                        }
-                    }
-                }
                 self.inventory.refreshMenu(maxSlots);
             }
 
