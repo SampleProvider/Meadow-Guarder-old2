@@ -181,7 +181,7 @@
             "critChance":0.05,
             "critPower":10000
         },
-        "maxSpeed":5,
+        "maxSpeed":25,
         "drawSize":"large",
         "team":"Harmful",
         "itemDrops":{

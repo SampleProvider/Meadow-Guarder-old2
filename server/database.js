@@ -272,15 +272,25 @@ Database.isUsernameTaken = function(data,cb){
 Database.addUser = function(data,cb){
     if(!USE_DB)
 	    return cb();
-	client.query('INSERT INTO account(username, password) VALUES (\'' + data.username + '\', \'' + data.password + '\');', (err, res) => {
+	client.query('DELETE FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(err){
 			throw err;
 		}
-		client.query('INSERT INTO progress(username, progress) VALUES (\'' + data.username + '\', \'{}\');', (err, res) => {
+		client.query('DELETE FROM progress WHERE username=\'' + data.username + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}
-			return cb();
+			client.query('INSERT INTO account(username, password) VALUES (\'' + data.username + '\', \'' + data.password + '\');', (err, res) => {
+				if(err){
+					throw err;
+				}
+				client.query('INSERT INTO progress(username, progress) VALUES (\'' + data.username + '\', \'{}\');', (err, res) => {
+					if(err){
+						throw err;
+					}
+					return cb();
+				});
+			});
 		});
 	});
 }

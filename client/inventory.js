@@ -1439,13 +1439,15 @@ Inventory = function(socket,server){
                     self.items[i] = {};
                 }
             }
-            for(var i = oldMaxSlots - 1;i >= self.maxSlots;i--){
+            for(var i = self.maxSlots;i < oldMaxSlots;i++){
                 if(typeof self.items[i] === 'object'){
                     if(self.items[i].id){
-                        self.addItem(self.items[i].id,self.items[i].amount);
+                        var id = self.items[i].id;
+                        var amount = self.items[i].amount;
+                        delete self.items[i];
+                        self.addItem(id,amount);
                     }
                 }
-                delete self.items[i];
             }
             if(self.items['helmet'] === undefined){
                 self.items['helmet'] = {};

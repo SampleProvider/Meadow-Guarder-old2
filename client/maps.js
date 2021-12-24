@@ -101,6 +101,9 @@ var renderWorld = function(json,name){
     numLoaded += 1;
     var mapLoading = document.getElementById('mapLoading');
     mapLoading.innerHTML = '<span style="color: #55ff55">Loading maps... (' + Math.round(numLoaded / totalMaps * 100) + '%)</span>';
+    if(numLoaded === totalMaps){
+        loadingComplete = true;
+    }
 }
 var loadTileset = function(json,name){
     if(tilesetLoaded){
@@ -143,5 +146,4 @@ var loadAllMaps = function(){
     loadMap('Altoris Mapmakers Lodge');
     loadMap('PVP Arena');
     loadMap('Lightning Whelk Inn');
-    loadingComplete = true;
 }

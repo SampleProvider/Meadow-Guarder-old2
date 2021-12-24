@@ -12,11 +12,11 @@ var express = require('express');
 const {setInterval} = require('timers');
 var app = express();
 var serv = require('http').Server(app);
+require('./server/chat');
 require('./server/entity');
 require('./server/database');
 
 var badwords = require('./server/badwords.json').words;
-var accountsToBeIPBanned = require('./server/suspendedAccounts.json').accountsToBeIPBanned;
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -104,14 +104,6 @@ io.sockets.on('connection',function(socket){
 		}
 		else{
 			stringData.ip = 'sp';
-		}
-		for(var i in accountsToBeIPBanned){
-			if(accountsToBeIPBanned[i] === stringData.username){
-				IPbanPlayer(stringData.ip,function(result){
-					socket.emit('signInResponse',{success:4,username:stringData.username});
-				});
-				return;
-			}
 		}
 		Database.isValidPassword(stringData,function(res){
 			if(res === 3){
@@ -1113,15 +1105,15 @@ setInterval(function(){
 		var list = [];
 		var distance = 256;
 		if(entity.type === 'Projectile'){
-			for(var i = Math.floor(entity.x / 256 - entity.width / 2 / 256 - entity.height / 2 / 256);i <= Math.floor(entity.x / 256 + entity.width / 2 / 256 + entity.height / 2 / 256);i++){
-				for(var j = Math.floor(entity.y / 256 - entity.width / 2 / 256 - entity.height / 2 / 256);j <= Math.floor(entity.y / 256 + entity.width / 2 / 256 + entity.height / 2 / 256);j++){
+			for(var i = Math.floor(entity.x / distance - entity.width / 2 / distance - entity.height / 2 / distance);i <= Math.floor(entity.x / distance + entity.width / 2 / distance + entity.height / 2 / distance);i++){
+				for(var j = Math.floor(entity.y / distance - entity.width / 2 / distance - entity.height / 2 / distance);j <= Math.floor(entity.y / distance + entity.width / 2 / distance + entity.height / 2 / distance);j++){
 					list.push({x:i,y:j});
 				}
 			}
 		}
 		else{
-			for(var i = Math.floor(entity.x / 256 - entity.width / 2 / 256);i <= Math.floor(entity.x / 256 + entity.width / 2 / 256);i++){
-				for(var j = Math.floor(entity.y / 256 - entity.height / 2 / 256);j <= Math.floor(entity.y / 256 + entity.height / 2 / 256);j++){
+			for(var i = Math.floor(entity.x / distance - entity.width / 2 / distance);i <= Math.floor(entity.x / distance + entity.width / 2 / distance);i++){
+				for(var j = Math.floor(entity.y / distance - entity.height / 2 / distance);j <= Math.floor(entity.y / distance + entity.height / 2 / distance);j++){
 					list.push({x:i,y:j});
 				}
 			}

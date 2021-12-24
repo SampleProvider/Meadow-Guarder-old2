@@ -2,6 +2,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "csv-parser": "^3.0.0",
+    "discord.js": "^13.3.1",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "pathfinding": "^0.4.18",

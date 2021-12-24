@@ -76,36 +76,6 @@ ENV = {
 
 var PF = require('pathfinding');
 
-addToChat = function(color,message,debug){
-    var d = new Date();
-    var m = '' + d.getMinutes();
-    var h = d.getHours() + 24;
-    if(SERVER !== 'localhost'){
-        h -= 5;
-    }
-    h = h % 24;
-    h = '' + h;
-    if(m.length === 1){
-        m = '' + 0 + m;
-    }
-    if(m === '0'){
-        m = '00';
-    }
-    console.error("[" + h + ":" + m + "] " + message);
-    for(var i in Player.list){
-        if(Player.list[i]){
-            if(Player.list[i].loggedOn){
-                if(SOCKET_LIST[i]){
-                    SOCKET_LIST[i].emit('addToChat',{
-                        color:color,
-                        message:message,
-                    });
-                }
-            }
-        }
-    }
-}
-
 playerMap = {};
 
 debugData = require('./debug.json');
@@ -402,19 +372,25 @@ Actor = function(param){
             }
         }
         else if(self.trackingPath[0]){
-            if(self.x / 64 < self.trackingPath[0][0] + 0.5){
+            if(self.x < self.trackingPath[0][0] * 64 + self.width / 2){
                 self.spdX = 1;
             }
-            if(self.x / 64 > self.trackingPath[0][0] + 0.5){
+            else if(self.x > self.trackingPath[0][0] * 64 + self.width / 2){
                 self.spdX = -1;
             }
-            if(self.y / 64 < self.trackingPath[0][1] + 0.5){
+            else{
+                self.spdX = 0;
+            }
+            if(self.y < self.trackingPath[0][1] * 64 + self.height / 2){
                 self.spdY = 1;
             }
-            if(self.y / 64 > self.trackingPath[0][1] + 0.5){
+            else if(self.y > self.trackingPath[0][1] * 64 + self.height / 2){
                 self.spdY = -1;
             }
-            if(64 * Math.abs(self.x / 64 - self.trackingPath[0][0] - 0.5) < 2 && 64 * Math.abs(self.y / 64 - self.trackingPath[0][1] - 0.5) < 2){
+            else{
+                self.spdY = 0;
+            }
+            if(self.spdX === 0 && self.spdY === 0){
                 self.trackingPath.shift();
             }
         }
@@ -513,8 +489,8 @@ Actor = function(param){
     }
     self.trackPos = function(x,y){
         var size = 65;
-        var dx = self.gridX - size / 2 + 0.5;
-        var dy = self.gridY - size / 2 + 0.5;
+        var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
+        var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
         var tx = Math.floor(x / 64) - dx;
         var ty = Math.floor(y / 64) - dy;
         var finder = new PF.BiAStarFinder({
@@ -525,17 +501,12 @@ Actor = function(param){
         for(var i = 0;i < size;i++){
             for(var j = 0;j < size;j++){
                 var setWalkableAt = function(){
-                    if(self.drawSize === 'large'){
-                        for(var k = -1;k < 2;k++){
-                            for(var l = -1;l < 2;l++){
-                                if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
-                                    grid.setWalkableAt(i + k,j + l,false);
-                                }
+                    for(var k = -self.width / 64 + 1;k < 1;k++){
+                        for(var l = -self.height / 64 + 1;l < 1;l++){
+                            if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
+                                grid.setWalkableAt(i + k,j + l,false);
                             }
                         }
-                    }
-                    else{
-                        grid.setWalkableAt(i,j,false);
                     }
                 }
                 var x = dx + i;
@@ -636,13 +607,13 @@ Actor = function(param){
             }
         }
         var collisions = [];
-        for(var i = -1;i < 2;i++){
-            for(var j = -1;j < 2;j++){
+        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
-                        if(Collision.list[self.map][self.zindex][self.gridX + i]){
-                            if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
-                                var collision = Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j];
+                        if(Collision.list[self.map][self.zindex][i]){
+                            if(Collision.list[self.map][self.zindex][i][j]){
+                                var collision = Collision.list[self.map][self.zindex][i][j];
                                 for(var k in collision){
                                     if(self.isColliding(collision[k])){
                                         collisions.push(collision[k]);
@@ -696,12 +667,12 @@ Actor = function(param){
             self.collided = {x:false,y:false};
         }
         if(self.canMove && self.type !== 'Monster'){
-            for(var i = -1;i < 2;i++){
-                for(var j = -1;j < 2;j++){
+            for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+                for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                     if(Transporter.list[self.map]){
-                        if(Transporter.list[self.map][self.gridX + i]){
-                            if(Transporter.list[self.map][self.gridX + i][self.gridY + j]){
-                                var transporter = Transporter.list[self.map][self.gridX + i][self.gridY + j];
+                        if(Transporter.list[self.map][i]){
+                            if(Transporter.list[self.map][i][j]){
+                                var transporter = Transporter.list[self.map][i][j];
                                 if(self.isColliding(transporter)){
                                     if(transporter.teleportdirection === "up" && self.spdY < 0){
                                         self.doTransport(transporter);
@@ -2182,8 +2153,11 @@ Player.onConnect = function(socket,username){
                 if(data.type === 'Undead' || data.type === 'Orc'){
                     player.team = 'Undead';
                 }
-                else{
+                else if(data.type === 'Human' || data.type === 'Avian' || data.type === 'Panda'){
                     player.team = 'Human';
+                }
+                else{
+                    socket.disconnectUser();
                 }
             }
         });
@@ -2501,13 +2475,13 @@ Projectile = function(param){
     }
     self.updateCollisions = function(){
         var collisions = [];
-        for(var i = -1;i < 2;i++){
-            for(var j = -1;j < 2;j++){
+        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
-                        if(Collision.list[self.map][self.zindex][self.gridX + i]){
-                            if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
-                                var collision = Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j];
+                        if(Collision.list[self.map][self.zindex][i]){
+                            if(Collision.list[self.map][self.zindex][i][j]){
+                                var collision = Collision.list[self.map][self.zindex][i][j];
                                 for(var k in collision){
                                     if(collision[k].info === 'noProjectileCollisions'){
                                         continue;
@@ -2605,6 +2579,9 @@ Monster = function(param){
 
     self.updated = true;
 
+    self.targetX = 0;
+    self.targetY = 0;
+
     self.trackX = 0;
     self.trackY = 0;
     self.trackTime = 100;
@@ -2645,6 +2622,7 @@ Monster = function(param){
         self.target = null;
         self.attackState = 'retreat';
         self.trackPos(self.randomPos.x,self.randomPos.y);
+        self.maxSpeed *= 2;
         self.spdX = 0;
         self.spdY = 0;
     }
@@ -2740,6 +2718,8 @@ Monster = function(param){
                         }
                         else{
                             self.targetLeftView = 0;
+                            self.targetX = self.target.x;
+                            self.targetY = self.target.y;
                         }
                     }
                 }
@@ -2793,23 +2773,29 @@ Monster = function(param){
                 self.spdX = 0;
                 self.spdY = 0;
                 var size = 33;
-                var dx = self.gridX - size / 2 + 0.5;
-                var dy = self.gridY - size / 2 + 0.5;
+                var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
+                var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
+                var lastTrackX = self.trackX;
+                var lastTrackY = self.trackY;
                 if(self.targetLeftView === 0){
                     self.trackX = self.target.gridX - dx;
                     self.trackY = self.target.gridY - dy;
                 }
                 self.trackTime += 1;
                 var distance = self.getDistance(self.target);
-                if(distance < 192){
+                if(distance < 192 && self.targetLeftView > 0){
                     self.circlingTarget = true;
+                    if(distance < 64){
+                        self.retreat();
+                        return;
+                    }
                 }
                 else if(distance > 256){
                     self.circlingTarget = false;
                 }
                 if(self.circlingTarget){
                     self.trackingPath = [];
-                    var direction = Math.atan2(self.y - self.target.y,self.x - self.target.x) / Math.PI * 180;
+                    var direction = Math.atan2(self.y - self.targetY,self.x - self.targetX) / Math.PI * 180;
                     direction = Math.floor(direction / 45 + 0.5);
                     if(distance < 128){
                         direction -= 1;
@@ -2818,7 +2804,7 @@ Monster = function(param){
                     while(direction < 0){
                         direction += 8;
                     }
-                    if(self.collided.x || self.collided.y || self.targetLeftView !== 0){
+                    if(self.collided.x || self.collided.y || self.targetLeftView > 0){
                         self.circleDirection *= -1;
                     }
                     switch(direction){
@@ -2869,17 +2855,12 @@ Monster = function(param){
                         for(var i = 0;i < size;i++){
                             for(var j = 0;j < size;j++){
                                 var setWalkableAt = function(){
-                                    if(self.drawSize === 'large'){
-                                        for(var k = -1;k < 2;k++){
-                                            for(var l = -1;l < 2;l++){
-                                                if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
-                                                    grid.setWalkableAt(i + k,j + l,false);
-                                                }
+                                    for(var k = -self.width / 64 + 1;k < 1;k++){
+                                        for(var l = -self.height / 64 + 1;l < 1;l++){
+                                            if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
+                                                grid.setWalkableAt(i + k,j + l,false);
                                             }
                                         }
-                                    }
-                                    else{
-                                        grid.setWalkableAt(i,j,false);
                                     }
                                 }
                                 var x = dx + i;
@@ -2907,6 +2888,7 @@ Monster = function(param){
                         var nx = self.gridX - dx;
                         var ny = self.gridY - dy;
                         if(self.trackX < size && self.trackX > 0 && self.trackY < size && self.trackY > 0){
+                            var grid2 = grid.clone();
                             var path = finder.findPath(nx,ny,self.trackX,self.trackY,grid);
                             if(path[0]){
                                 self.trackingPath = PF.Util.compressPath(path);
@@ -2917,7 +2899,18 @@ Monster = function(param){
                                 self.trackingPath.shift();
                             }
                             else{
-                                self.retreat();
+                                var path = finder.findPath(nx,ny,lastTrackX,lastTrackY,grid2);
+                                if(path[0]){
+                                    self.trackingPath = PF.Util.compressPath(path);
+                                    for(var i in self.trackingPath){
+                                        self.trackingPath[i][0] += dx;
+                                        self.trackingPath[i][1] += dy;
+                                    }
+                                    self.trackingPath.shift();
+                                }
+                                else{
+                                    self.retreat();
+                                }
                             }
                         }
                     }
@@ -2926,10 +2919,14 @@ Monster = function(param){
                     self.retreat();
                 }
             }
+            else{
+                self.retreat();
+            }
         }
         else if(self.attackState === 'retreat'){
             if(self.getSquareDistance(self.randomPos) <= 2){
                 self.attackState = 'passive';
+                self.maxSpeed = monsterData[self.monsterType].maxSpeed;
             }
         }
     }
@@ -2941,7 +2938,7 @@ Monster = function(param){
         }
         self.mainReload += 1;
         self.passiveReload += 1;
-        self.direction = Math.atan2(self.target.y - self.y,self.target.x - self.x) / Math.PI * 180;
+        self.direction = Math.atan2(self.targetY - self.y,self.targetX - self.x) / Math.PI * 180;
         self.doAttack(self.mainAttackData,self.mainReload);
         self.doAttack(self.passiveAttackData,self.passiveReload);
     }
@@ -3120,13 +3117,13 @@ DroppedItem = function(param){
         self.gridX = Math.floor(self.x / 64);
         self.gridY = Math.floor(self.y / 64);
         var collisions = [];
-        for(var i = -1;i < 2;i++){
-            for(var j = -1;j < 2;j++){
+        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][0]){
-                        if(Collision.list[self.map][0][self.gridX + i]){
-                            if(Collision.list[self.map][0][self.gridX + i][self.gridY + j]){
-                                var collision = Collision.list[self.map][0][self.gridX + i][self.gridY + j];
+                        if(Collision.list[self.map][0][i]){
+                            if(Collision.list[self.map][0][i][j]){
+                                var collision = Collision.list[self.map][0][i][j];
                                 for(var k in collision){
                                     if(self.isColliding(collision[k])){
                                         collisions.push(collision[k]);
