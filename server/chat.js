@@ -38,5 +38,5 @@ addToChat = function(color,message){
             }
         }
     }
-    client.channels.fetch('923580123574329404').then(channel => channel.send("[" + h + ":" + m + "] " + message));
+    client.channels.fetch('923580123574329404').then(channel => channel.send("```[" + h + ":" + m + "] " + message + '```'));
 }
