@@ -1,3 +1,5 @@
 node_modules
 
 server/DATABASE_URL.js
+
+server/CHAT_TOKEN.js

@@ -1,7 +1,14 @@
 const {Client,Intents} = require('discord.js');
 const client = new Client({intents:[Intents.FLAGS.GUILDS]});
 
-client.login('OTE1Nzg0Mzk4Mzc5NTY5MTUz.Yagorw.X1OmxZhxvbfJq5VSRyheboW1dVw');
+if(SERVER === 'localhost'){
+    require('./CHAT_TOKEN');
+}
+else{
+    chatToken = process.env.TOKEN;
+}
+
+client.login(chatToken);
 
 addToChat = function(color,message){
     var d = new Date();
