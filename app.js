@@ -461,6 +461,35 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'summon' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(monsterData[name]){
+						new Monster({
+							x:Player.list[socket.id].x,
+							y:Player.list[socket.id].y,
+							map:Player.list[socket.id].map,
+							monsterType:name,
+						});
+						Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[name].name + '.');
+					}
+					else{
+						for(var i in monsterData){
+							if(monsterData[i].name === name){
+								new Monster({
+									x:Player.list[socket.id].x,
+									y:Player.list[socket.id].y,
+									map:Player.list[socket.id].map,
+									monsterType:i,
+								});
+								Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[i].name + '.');
+								return;
+							}
+						}
+						Player.list[socket.id].sendMessage('[!] No monster called ' + name + '.');
+					}
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
@@ -781,6 +810,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
+						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
@@ -798,6 +828,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/kill [player name] - Kill someone.';
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
+						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/unban [player name] - Unban someone.';
