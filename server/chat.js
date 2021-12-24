@@ -8,6 +8,8 @@ else{
     chatToken = process.env.TOKEN;
 }
 
+console.log(process.env)
+
 client.login(chatToken);
 
 addToChat = function(color,message){
