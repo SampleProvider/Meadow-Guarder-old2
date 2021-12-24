@@ -2157,6 +2157,8 @@ Player.onConnect = function(socket,username){
                     player.team = 'Human';
                 }
                 else{
+                    player.img[data.id] = 'Human';
+                    player.team = 'Human';
                     socket.disconnectUser();
                 }
             }
