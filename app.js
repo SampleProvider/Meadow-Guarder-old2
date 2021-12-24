@@ -1389,14 +1389,14 @@ setInterval(function(){
 
 if(SERVER !== 'localhost'){
 	process.on('SIGTERM',function(){
-		storeDatabase();
+		storeDatabase(Player.list);
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
 		},1000);
 	});
 	process.on('SIGINT',function(){
-		storeDatabase();
+		storeDatabase(Player.list);
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
@@ -1404,7 +1404,7 @@ if(SERVER !== 'localhost'){
 	});
 }
 process.on('uncaughtException',function(err){
-	storeDatabase();
+	storeDatabase(Player.list);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	addToChat('#ff00ff',err);
 	setTimeout(function(){
@@ -1412,7 +1412,7 @@ process.on('uncaughtException',function(err){
 	},1000);
 });
 process.on('unhandledRejection',function(reason,promise){
-	storeDatabase();
+	storeDatabase(Player.list);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
 	setTimeout(function(){
 		process.exit(1);
