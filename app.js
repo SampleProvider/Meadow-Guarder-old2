@@ -668,7 +668,11 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'exit' && level >= 3){
 					commandList.splice(0,1);
 					Player.list[socket.id].sendMessage('[!] Exited Meadow Guarder.');
-					process.exit(0);
+					addToChat('#ff00ff','[!] THE SERVER HAS EXITED WITHOUT SAVING. [!]');
+					setTimeout(function(){
+						process.exit(0);
+					},1000);
+					return
 				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
