@@ -1,14 +1,14 @@
 const {Client,Intents} = require('discord.js');
 const client = new Client({intents:[Intents.FLAGS.GUILDS]});
 
+console.log(process.env)
+
 if(SERVER === 'localhost'){
     require('./CHAT_TOKEN');
 }
 else{
     chatToken = process.env.TOKEN;
 }
-
-console.log(process.env)
 
 client.login(chatToken);
 
