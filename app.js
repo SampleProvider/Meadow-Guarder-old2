@@ -665,6 +665,11 @@ io.sockets.on('connection',function(socket){
 					addToChat('#ff00ff','[!] SERVER UPDATE [!]');
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'exit' && level >= 3){
+					commandList.splice(0,1);
+					Player.list[socket.id].sendMessage('[!] Exited Meadow Guarder.');
+					process.exit(0);
+				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -840,6 +845,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/unipban [player name] - UnIPban someone.';
 						message += '<br>/ip [player name] - See someone\'s ip.';
 						message += '<br>/serverupdate - Announce a server update.';
+						message += '<br>/exit - Exits the server without saving.';
 						message += '<br>/debug [javascript] - Run javascript.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
@@ -1377,3 +1383,34 @@ setInterval(function(){
 	}
 },1000 / 20);
 
+if(SERVER !== 'localhost'){
+	process.on('SIGTERM',function(){
+		storeDatabase();
+		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
+		setTimeout(function(){
+			process.exit(0);
+		},1000);
+	});
+	process.on('SIGINT',function(){
+		storeDatabase();
+		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
+		setTimeout(function(){
+			process.exit(0);
+		},1000);
+	});
+}
+process.on('uncaughtException',function(err){
+	storeDatabase();
+	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
+	addToChat('#ff00ff',err);
+	setTimeout(function(){
+		process.exit(1);
+	},1000);
+});
+process.on('unhandledRejection',function(reason,promise){
+	storeDatabase();
+	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
+	setTimeout(function(){
+		process.exit(1);
+	},1000);
+});
