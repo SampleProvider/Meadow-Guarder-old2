@@ -3,6 +3,10 @@
         "level":3,
         "color":"#ff0099"
     },
+    "the-real-sp":{
+        "level":3,
+        "color":"#ff0099"
+    },
     "suvanth":{
         "level":2,
         "color":"#009900"
@@ -11,7 +15,15 @@
         "level":2,
         "color":"#0099ff"
     },
+    "Tianmu":{
+        "level":2,
+        "color":"#0099ff"
+    },
     "samuel mcelya":{
+        "level":1,
+        "color":"#990099"
+    },
+    "smorties":{
         "level":1,
         "color":"#990099"
     }
