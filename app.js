@@ -386,6 +386,16 @@ io.sockets.on('connection',function(socket){
 					failurecb(name);
 					return;
 				}
+				if(Player.list[socket.id].lastChat > 0){
+					Player.list[socket.id].chatWarnings += 0.5;
+				}
+				if(Player.list[socket.id].chatWarnings > 5){
+					Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account.');
+				}
+				if(Player.list[socket.id].chatWarnings > 7){
+					socket.disconnectUser();
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -488,6 +498,15 @@ io.sockets.on('connection',function(socket){
 						}
 						Player.list[socket.id].sendMessage('[!] No monster called ' + name + '.');
 					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'butcher' && level >= 2){
+					commandList.splice(0,1);
+					for(var i in Monster.list){
+						Monster.list[i].onDeath(Monster.list[i]);
+						Monster.list[i].toRemove = true;
+					}
+					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
@@ -820,6 +839,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
+						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
@@ -838,6 +858,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
+						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/unban [player name] - Unban someone.';
@@ -1407,14 +1428,14 @@ process.on('uncaughtException',function(err){
 	storeDatabase(Player.list);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	addToChat('#ff00ff',err);
-	setTimeout(function(){
-		process.exit(1);
-	},1000);
+	// setTimeout(function(){
+	// 	process.exit(1);
+	// },1000);
 });
 process.on('unhandledRejection',function(reason,promise){
 	storeDatabase(Player.list);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
-	setTimeout(function(){
-		process.exit(1);
-	},1000);
+	// setTimeout(function(){
+	// 	process.exit(1);
+	// },1000);
 });

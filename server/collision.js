@@ -6,70 +6,78 @@ Collision = function(param){
     self.width = param.width;
     self.height = param.height;
     self.info = param.info;
-    if(Collision.list[self.map]){
-        if(Collision.list[self.map][param.zindex]){
-            if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)]){
-                if(Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)]){
-                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
+    for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+        for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
+            if(Collision.list[self.map]){
+                if(Collision.list[self.map][param.zindex]){
+                    if(Collision.list[self.map][param.zindex][i]){
+                        if(Collision.list[self.map][param.zindex][i][j]){
+                            Collision.list[self.map][param.zindex][i][j][Math.random()] = self;
+                        }
+                        else{
+                            Collision.list[self.map][param.zindex][i][j] = [];
+                            Collision.list[self.map][param.zindex][i][j][Math.random()] = self;
+                        }
+                    }
+                    else{
+                        Collision.list[self.map][param.zindex][i] = [];
+                        Collision.list[self.map][param.zindex][i][j] = [];
+                        Collision.list[self.map][param.zindex][i][j][Math.random()] = self;
+                    }
                 }
                 else{
-                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
-                    Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
+                    Collision.list[self.map][param.zindex] = [];
+                    Collision.list[self.map][param.zindex][i] = [];
+                    Collision.list[self.map][param.zindex][i][j] = [];
+                    Collision.list[self.map][param.zindex][i][j][Math.random()] = self;
                 }
             }
             else{
-                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
-                Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
+                Collision.list[self.map] = [];
+                Collision.list[self.map][param.zindex] = [];
+                Collision.list[self.map][param.zindex][i] = [];
+                Collision.list[self.map][param.zindex][i][j] = [];
+                Collision.list[self.map][param.zindex][i][j][Math.random()] = self;
             }
         }
-        else{
-            Collision.list[self.map][param.zindex] = [];
-            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
-            Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
-        }
-    }
-    else{
-        Collision.list[self.map] = [];
-        Collision.list[self.map][param.zindex] = [];
-        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)] = [];
-        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)] = [];
-        Collision.list[self.map][param.zindex][Math.floor(self.x / 64)][Math.floor(self.y / 64)][Math.random()] = self;
     }
     return self;
 }
 Collision.add = function(collision,id){
-    if(Collision.list[collision.map]){
-        if(Collision.list[collision.map][collision.zindex]){
-            if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)]){
-                if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)]){
-                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+    for(var i = Math.floor((collision.x - collision.width / 2) / 64);i <= Math.floor((collision.x + collision.width / 2) / 64);i++){
+        for(var j = Math.floor((collision.y - collision.height / 2) / 64);j <= Math.floor((collision.y + collision.height / 2) / 64);j++){
+            if(Collision.list[collision.map]){
+                if(Collision.list[collision.map][collision.zindex]){
+                    if(Collision.list[collision.map][collision.zindex][i]){
+                        if(Collision.list[collision.map][collision.zindex][i][j]){
+                            Collision.list[collision.map][collision.zindex][i][j][id] = collision;
+                        }
+                        else{
+                            Collision.list[collision.map][collision.zindex][i][j] = [];
+                            Collision.list[collision.map][collision.zindex][i][j][id] = collision;
+                        }
+                    }
+                    else{
+                        Collision.list[collision.map][collision.zindex][i] = [];
+                        Collision.list[collision.map][collision.zindex][i][j] = [];
+                        Collision.list[collision.map][collision.zindex][i][j][id] = collision;
+                    }
                 }
                 else{
-                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
-                    Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+                    Collision.list[collision.map][collision.zindex] = [];
+                    Collision.list[collision.map][collision.zindex][i] = [];
+                    Collision.list[collision.map][collision.zindex][i][j] = [];
+                    Collision.list[collision.map][collision.zindex][i][j][id] = collision;
                 }
             }
             else{
-                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
-                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
-                Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
+                Collision.list[collision.map] = [];
+                Collision.list[collision.map][collision.zindex] = [];
+                Collision.list[collision.map][collision.zindex][i] = [];
+                Collision.list[collision.map][collision.zindex][i][j] = [];
+                Collision.list[collision.map][collision.zindex][i][j][id] = collision;
             }
         }
-        else{
-            Collision.list[collision.map][collision.zindex] = [];
-            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
-            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
-            Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
-        }
-    }
-    else{
-        Collision.list[collision.map] = [];
-        Collision.list[collision.map][collision.zindex] = [];
-        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)] = [];
-        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)] = [];
-        Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id] = collision;
     }
     for(var i in Player.list){
         if(Player.list[i].isColliding(collision)){
@@ -84,12 +92,16 @@ Collision.add = function(collision,id){
     }
 }
 Collision.remove = function(collision,id){
-    if(Collision.list[collision.map]){
-        if(Collision.list[collision.map][collision.zindex]){
-            if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)]){
-                if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)]){
-                    if(Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id]){
-                        delete Collision.list[collision.map][collision.zindex][Math.floor(collision.x / 64)][Math.floor(collision.y / 64)][id];
+    for(var i = Math.floor((collision.x - collision.width / 2) / 64);i <= Math.floor((collision.x + collision.width / 2) / 64);i++){
+        for(var j = Math.floor((collision.y - collision.height / 2) / 64);j <= Math.floor((collision.y + collision.height / 2) / 64);j++){
+            if(Collision.list[collision.map]){
+                if(Collision.list[collision.map][collision.zindex]){
+                    if(Collision.list[collision.map][collision.zindex][i]){
+                        if(Collision.list[collision.map][collision.zindex][i][j]){
+                            if(Collision.list[collision.map][collision.zindex][i][j][id]){
+                                delete Collision.list[collision.map][collision.zindex][i][j][id];
+                            }
+                        }
                     }
                 }
             }

@@ -59,6 +59,38 @@
             }]
         }
     },
+    "slime":{
+        "name":"Slime",
+        "hpMax":80,
+        "stats":{
+            "damage":3,
+            "defense":2,
+            "hpRegen":5,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":2,
+        "drawSize":"small",
+        "team":"Harmful",
+        "itemDrops":{
+            "random":{
+                "chance":1,
+                "amount":2
+            }
+        },
+        "img":{
+            "body":"Slime"
+        },
+        "mainAttackData":{
+            "15":[{
+                "id":"dash",
+                "param":{
+                    "directionDeviation":35,
+                    "dashDistance":2
+                }
+            }]
+        }
+    },
     "radioactiveskeleton":{
         "name":"Radioactive Skeleton",
         "hpMax":1000,

@@ -63,6 +63,10 @@ playRegionSong = function(region){
         fadeInSong('theOasis');
         fadeOutSong('theMeadow');
     }
+    else if(region === 'Lightning Whelk Inn'){
+        fadeInSong('theOasis');
+        fadeOutSong('theMeadow');
+    }
     else{
         fadeInSong('theMeadow');
         fadeOutSong('theOasis');

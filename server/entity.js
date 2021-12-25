@@ -1043,25 +1043,22 @@ Player = function(param,socket){
         right:'d',
         leftClick:'leftClick',
         rightClick:'rightClick',
-        heal:' ',
     };
     self.secondKeyMap = {
         up:'ArrowUp',
         down:'ArrowDown',
         left:'ArrowLeft',
         right:'ArrowRight',
-        leftClick:'leftClick',
-        rightClick:'rightClick',
-        heal:'Shift',
+        leftClick:'q',
+        rightClick:'e',
     };
     self.thirdKeyMap = {
         up:'W',
         down:'S',
         left:'A',
         right:'D',
-        leftClick:'leftClick',
-        rightClick:'rightClick',
-        heal:' ',
+        leftClick:'Q',
+        rightClick:'E',
     };
 
     self.img = {

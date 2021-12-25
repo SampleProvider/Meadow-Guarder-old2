@@ -450,6 +450,26 @@
                         "amount":1000
                     }
                 ]
+            },
+            {
+                "id":"deathglobe",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":1
+                    }
+                ]
             }
         ]
     }
