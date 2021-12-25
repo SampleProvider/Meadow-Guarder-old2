@@ -2459,13 +2459,13 @@ Projectile = function(param){
                 var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x) / Math.PI * 180;
                 self.direction = self.direction % 360;
                 if(direction - self.direction > 180){
-                    self.direction += (direction - self.direction - 360) / 10;
+                    self.direction += (direction - self.direction - 360) / 5;
                 }
                 else if(direction - self.direction < -180){
-                    self.direction += (direction - self.direction - 360) / 10;
+                    self.direction += (direction - self.direction - 360) / 5;
                 }
                 else{
-                    self.direction += (direction - self.direction) / 10;
+                    self.direction += (direction - self.direction) / 5;
                 }
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;

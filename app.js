@@ -1426,8 +1426,8 @@ if(SERVER !== 'localhost'){
 }
 process.on('uncaughtException',function(err){
 	storeDatabase(Player.list);
-	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	addToChat('#ff00ff',err);
+	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	// setTimeout(function(){
 	// 	process.exit(1);
 	// },1000);
