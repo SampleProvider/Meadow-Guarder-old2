@@ -998,6 +998,7 @@ canvas {
     padding: 0px;
     font-size: small;
     transform: translate(-50%, 0%);
+    z-index: 5;
 }
 #tradeItems1 {
     position: absolute;
