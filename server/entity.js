@@ -1637,6 +1637,7 @@ Player = function(param,socket){
                 self.xpMax = xpLevels[self.level];
                 addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
                 self.xp -= xpLevels[self.level - 1];
+                self.inventory.updateStats = true;
                 self.updateStats();
             }
             else{

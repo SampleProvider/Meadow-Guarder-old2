@@ -442,7 +442,7 @@ canvas {
     border: 1px solid #000000;
     opacity: 0;
     cursor: crosshair;
-    z-index: 11;
+    z-index: 3;
 }
 #regionDisplaySmall {
     position: static;
@@ -808,7 +808,7 @@ canvas {
 .itemMenu {
     display: none;
     position: absolute;
-    z-index: 10;
+    z-index: 2;
     pointer-events: none;
 }
 #inventorySlothelmet {
@@ -884,7 +884,7 @@ canvas {
     position: absolute;
     width: 64px;
     height: 64px;
-    z-index: 10;
+    z-index: 2;
     image-rendering: pixelated;
     pointer-events: none;
 }
@@ -986,6 +986,7 @@ canvas {
     border: 1px solid #000000;
     border-radius: 8px;
     transform: translate(-50%, 0%);
+    z-index: 4;
 }
 #tradeDiv {
     position: absolute;

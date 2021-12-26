@@ -527,6 +527,17 @@
 			<div id="respawnTimerDiv"></div>
 			<button id="respawn" onclick="runRespawn()" style="display: none;">Respawn</button>
 		</div>
+		<div id="chatBackground" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
+
+		</div>
+		<div id="chatDiv" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
+			<div id="chatText" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
+					
+			</div>
+			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);mouseInMenu(event);">
+				<input id="chatInput" class="UI-input" type="text"></input>
+			</form>
+		</div>
 		<div id="playerListBackground" class="UI-text" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
@@ -674,17 +685,6 @@
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display" style="display: none;"></div>
 		<div id="draggingItem" draggable="false"></div>
-		<div id="chatBackground" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
-
-		</div>
-		<div id="chatDiv" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
-			<div id="chatText" class="UI-text" onmouseover="mouseUp(event);mouseInMenu(event);">
-					
-			</div>
-			<form id="chatForm" autocomplete="off" onmouseover="mouseUp(event);mouseInMenu(event);">
-				<input id="chatInput" class="UI-input" type="text"></input>
-			</form>
-		</div>
 	</div>
 	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);" onclick="location.reload()">
 		<button class="disconnectedDiv">Disconnected</button>
