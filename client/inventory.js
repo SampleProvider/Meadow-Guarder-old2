@@ -586,7 +586,7 @@ Inventory = function(socket,server){
             if(self.draggingItem.amount !== 1){
                 var itemAmount = document.createElement('div');
                 itemAmount.innerHTML = self.draggingItem.amount;
-                itemAmount.className = 'UI-text-light itemAmount';
+                itemAmount.className = 'UI-text itemAmount';
                 var itemAmountDiv = document.createElement('div');
                 itemAmountDiv.className = 'itemAmountLargeDiv';
                 itemAmountDiv.appendChild(itemAmount);
@@ -915,7 +915,7 @@ Inventory = function(socket,server){
                             if(self.draggingItem.amount !== 1){
                                 var itemAmount = document.createElement('div');
                                 itemAmount.innerHTML = self.draggingItem.amount;
-                                itemAmount.className = 'UI-text-light itemAmount';
+                                itemAmount.className = 'UI-text itemAmount';
                                 var itemAmountDiv = document.createElement('div');
                                 itemAmountDiv.className = 'itemAmountLargeDiv';
                                 itemAmountDiv.appendChild(itemAmount);
@@ -1136,7 +1136,7 @@ Inventory = function(socket,server){
                             if(self.draggingItem.amount !== 1){
                                 var itemAmount = document.createElement('div');
                                 itemAmount.innerHTML = self.draggingItem.amount;
-                                itemAmount.className = 'UI-text-light itemAmount';
+                                itemAmount.className = 'UI-text itemAmount';
                                 var itemAmountDiv = document.createElement('div');
                                 itemAmountDiv.className = 'itemAmountLargeDiv';
                                 itemAmountDiv.appendChild(itemAmount);
@@ -1414,7 +1414,7 @@ Inventory = function(socket,server){
                 if(self.draggingItem.amount !== 1){
                     var itemAmount = document.createElement('div');
                     itemAmount.innerHTML = self.draggingItem.amount;
-                    itemAmount.className = 'UI-text-light itemAmount';
+                    itemAmount.className = 'UI-text itemAmount';
                     var itemAmountDiv = document.createElement('div');
                     itemAmountDiv.className = 'itemAmountLargeDiv';
                     itemAmountDiv.appendChild(itemAmount);
@@ -1568,6 +1568,9 @@ Inventory = function(socket,server){
                         else{
                             return;
                         }
+                    }
+                    else{
+                        return;
                     }
                 }
                 else{

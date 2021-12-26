@@ -82,7 +82,7 @@ canvas {
     font-style: normal;
 }
 
-.UI-display-light {
+.UI-display {
     position: absolute;
     font-family: 'pixel';
     font-size: 15px;
@@ -95,7 +95,7 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
-.UI-display-light:before {
+.UI-display:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -105,7 +105,7 @@ canvas {
     border: 1px solid #725640;
     pointer-events: none;
 }
-.UI-button-light {
+.UI-button {
     position: absolute;
     font-family: 'pixel';
     font-size: 15px;
@@ -119,10 +119,10 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
-.UI-button-light:hover {
+.UI-button:hover {
     background-color: #231913;
 }
-.UI-button-light:before {
+.UI-button:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -132,7 +132,7 @@ canvas {
     border: 1px solid #725640;
     pointer-events: none;
 }
-.UI-dropdown-light {
+.UI-dropdown {
     position: absolute;
     font-family: 'pixel';
     font-size: 15px;
@@ -146,10 +146,10 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
-.UI-dropdown-light:hover {
+.UI-dropdown:hover {
     background-color: #231913;
 }
-.UI-dropdown-light:before {
+.UI-dropdown:before {
     content: " ";
     position: absolute;
     top: 0px;
@@ -159,7 +159,7 @@ canvas {
     border: 1px solid #725640;
     pointer-events: none;
 }
-.UI-input-light {
+.UI-input {
     position: absolute;
     font-family: 'pixel';
     color: #000000;
@@ -171,7 +171,7 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
-.UI-text-light {
+.UI-text {
     position: absolute;
     font-family: 'pixel';
     color: #000000;
@@ -181,10 +181,10 @@ canvas {
     padding-bottom: 2px;
     padding-left: 5px;
 }
-.UI-link-light {
+.UI-link {
     color: #00ff90;
 }
-.UI-link-light:focus {
+.UI-link:focus {
     color: #00aa70;
 }
 
@@ -442,6 +442,7 @@ canvas {
     border: 1px solid #000000;
     opacity: 0;
     cursor: crosshair;
+    z-index: 11;
 }
 #regionDisplaySmall {
     position: static;

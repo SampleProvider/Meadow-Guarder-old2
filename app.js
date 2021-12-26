@@ -396,6 +396,8 @@ io.sockets.on('connection',function(socket){
 					socket.disconnectUser();
 					return;
 				}
+				Player.list[socket.id].lastChat = 10;
+				Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.25);
 				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);

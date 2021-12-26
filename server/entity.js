@@ -533,8 +533,8 @@ Actor = function(param){
                 }
             }
         }
-        var nx = self.gridX - dx;
-        var ny = self.gridY - dy;
+        var nx = Math.floor(size / 2);
+        var ny = Math.floor(size / 2);
         if(tx < size && tx > 0 && ty < size && ty > 0){
             var path = finder.findPath(nx,ny,tx,ty,grid);
             if(path[0]){
@@ -2884,8 +2884,8 @@ Monster = function(param){
                                 }
                             }
                         }
-                        var nx = self.gridX - dx;
-                        var ny = self.gridY - dy;
+                        var nx = Math.floor(size / 2);
+                        var ny = Math.floor(size / 2);
                         if(self.trackX < size && self.trackX > 0 && self.trackY < size && self.trackY > 0){
                             var grid2 = grid.clone();
                             var path = finder.findPath(nx,ny,self.trackX,self.trackY,grid);

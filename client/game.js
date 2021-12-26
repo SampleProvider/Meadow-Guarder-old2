@@ -809,7 +809,7 @@ socket.on('changeMap',function(data){
     closeShop();
 });
 socket.on('regionChange',function(data){
-    regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text-light" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
+    regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
     mapShadeAmount = 0;
     mapShadeSpeed = 0.08;
     region = data.region;
@@ -1179,7 +1179,7 @@ dropItem = function(click){
         if(inventory.draggingItem.amount !== 1){
             var itemAmount = document.createElement('div');
             itemAmount.innerHTML = inventory.draggingItem.amount;
-            itemAmount.className = 'UI-text-light itemAmount';
+            itemAmount.className = 'UI-text itemAmount';
             var itemAmountDiv = document.createElement('div');
             itemAmountDiv.className = 'itemAmountLargeDiv';
             itemAmountDiv.appendChild(itemAmount);
@@ -1238,8 +1238,11 @@ document.onkeydown = function(event){
     if(key === 'p' || key === 'P'){
         togglePlayerList();
     }
-    if(key === 'Enter'){
+    if(key === 'Enter' || key === '/'){
         chatInput.focus();
+    }
+    if(key === 'Enter'){
+        event.preventDefault();
     }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});

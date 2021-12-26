@@ -187,3 +187,4 @@ loadMap('Altoris General Store Upstairs');
 loadMap('Altoris Mapmakers Lodge');
 loadMap('PVP Arena');
 loadMap('Lightning Whelk Inn');
+loadMap('Lightning Whelk Inn Upstairs');

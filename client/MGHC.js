@@ -218,6 +218,10 @@ MGHC = function(){
                     strokeStyle:'#cccc55',
                     lineWidth:4,
                 },
+                slime:{
+                    strokeStyle:'#33dd33',
+                    lineWidth:4,
+                },
                 radioactiveskeleton:{
                     strokeStyle:'#ff0000',
                     lineWidth:6,
@@ -423,8 +427,11 @@ document.onkeydown = function(event){
     if(key === 'p' || key === 'P'){
         togglePlayerList();
     }
-    if(key === 'Enter'){
+    if(key === 'Enter' || key === '/'){
         chatInput.focus();
+    }
+    if(key === 'Enter'){
+        event.preventDefault();
     }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
