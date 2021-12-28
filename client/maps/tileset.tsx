@@ -1769,6 +1769,21 @@
    <object id="1" x="0" y="0" width="14" height="8"/>
   </objectgroup>
  </tile>
+ <tile id="8689">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="8690">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="8691">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="5" width="12" height="10"/>
+  </objectgroup>
+ </tile>
  <tile id="8698">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
@@ -1822,6 +1837,11 @@
  <tile id="8711">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="8783">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="1" width="13" height="15"/>
   </objectgroup>
  </tile>
  <tile id="8805">

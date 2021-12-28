@@ -189,3 +189,4 @@ loadMap('PVP Arena');
 loadMap('Lightning Whelk Inn');
 loadMap('Lightning Whelk Inn Upstairs');
 loadMap('Shark Eye Sunhouse');
+loadMap('Coquina General Store');

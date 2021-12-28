@@ -476,10 +476,10 @@
     "Janus":{
         "img":{
             "body":"Human",
-            "shirt":"Shirt_5 Green",
-            "pants":"Pants_1 Brown",
-            "boots":"Boots_1 Black",
-            "hair":"MHair_6 White",
+            "shirt":"Shirt_4 Yellow",
+            "pants":"Pants_1 Pink",
+            "boots":"Boots_1 Pink",
+            "hair":"FHair_4 Black",
             "headwear":"none",
             "gloves":"none",
             "waist":"none"
@@ -544,6 +544,87 @@
             },
             {
                 "id":"pyroweed",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
+            }
+        ]
+    },
+    "Mason":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_3 Brown",
+            "pants":"Pants_1 Black",
+            "boots":"Boots_1 Red",
+            "hair":"MHair_3 Black",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Talk to Wally":false
+                },
+                "message":"Uhh, you shouldn't be here.",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Talk to Wally":1
+                },
+                "message":"Em, yeah! I run the Coquina General Store in Altoris Island! These Coquina Clams... I love them! I have 2 of them in my store for display!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"mysticscales",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"meteoritecoin",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"firefeather",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
+            },
+            {
+                "id":"angelwings",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
+            },
+            {
+                "id":"malachite",
                 "amount":1,
                 "materials":[
                     {

@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 11;
+var totalMaps = 12;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -148,4 +148,5 @@ var loadAllMaps = function(){
     loadMap('Lightning Whelk Inn');
     loadMap('Lightning Whelk Inn Upstairs');
     loadMap('Shark Eye Sunhouse');
+    loadMap('Coquina General Store');
 }
