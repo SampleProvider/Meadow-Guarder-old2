@@ -1007,7 +1007,7 @@
  </tile>
  <tile id="6094">
   <objectgroup draworder="index" id="3">
-   <object id="2" x="5" y="5" width="7" height="11"/>
+   <object id="2" x="6" y="5" width="5" height="11"/>
   </objectgroup>
  </tile>
  <tile id="6198">
@@ -1024,7 +1024,7 @@
  </tile>
  <tile id="6201">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="5" y="0" width="7" height="16"/>
+   <object id="1" x="6" y="0" width="5" height="16"/>
   </objectgroup>
  </tile>
  <tile id="6305">
@@ -1041,7 +1041,7 @@
  </tile>
  <tile id="6308">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="5" y="0" width="7" height="15"/>
+   <object id="1" x="6" y="0" width="5" height="15"/>
   </objectgroup>
  </tile>
  <tile id="6447">
