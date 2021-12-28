@@ -442,6 +442,7 @@ canvas {
     border: 1px solid #000000;
     opacity: 0;
     cursor: crosshair;
+    pointer-events: none;
     z-index: 3;
 }
 #regionDisplaySmall {
@@ -986,7 +987,6 @@ canvas {
     border: 1px solid #000000;
     border-radius: 8px;
     transform: translate(-50%, 0%);
-    z-index: 4;
 }
 #tradeDiv {
     position: absolute;
@@ -998,7 +998,6 @@ canvas {
     padding: 0px;
     font-size: small;
     transform: translate(-50%, 0%);
-    z-index: 5;
 }
 #tradeItems1 {
     position: absolute;

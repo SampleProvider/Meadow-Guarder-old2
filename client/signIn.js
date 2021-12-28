@@ -336,7 +336,7 @@ socket.on('createAccountResponse',function(data){
     }
     else if(data.success === 3){
         signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters. Invalid characters: <b>--,;,\',<,></b></span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters. Invalid characters: <b>-- ; \' < ></b></span><br>' + signErrorText;
     }
     else if(data.success === 4){
         signErrorText = signError.innerHTML;

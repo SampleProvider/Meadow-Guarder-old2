@@ -47,7 +47,7 @@ var renderWorld = function(json,name){
                                         });
                                     }
                                 }
-                                if(harvestableNpcData[json.tilesets[0].tiles[l].type]){
+                                if(harvestableNpcData[json.tilesets[0].tiles[l].type] && json.layers[i].name === 'HarvestableNpc:'){
                                     new HarvestableNpc({
                                         x:s_x + 32,
                                         y:s_y + 32,
@@ -188,3 +188,4 @@ loadMap('Altoris Mapmakers Lodge');
 loadMap('PVP Arena');
 loadMap('Lightning Whelk Inn');
 loadMap('Lightning Whelk Inn Upstairs');
+loadMap('Shark Eye Sunhouse');

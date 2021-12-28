@@ -6,31 +6,31 @@ hackedDiv.style.right = '20px';
 hackedDiv.backgroundColor = 'none';
 
 var hackedCollumn1 = document.createElement('div');
-hackedCollumn1.className = 'UI-display-light';
+hackedCollumn1.className = 'UI-display';
 hackedDiv.appendChild(hackedCollumn1);
 hackedCollumn1.style.top = '20px';
 hackedCollumn1.style.right = '20px';
 
 var hackedCollumn2 = document.createElement('div');
-hackedCollumn2.className = 'UI-display-light';
+hackedCollumn2.className = 'UI-display';
 hackedDiv.appendChild(hackedCollumn2);
 hackedCollumn2.style.top = '60px';
 hackedCollumn2.style.right = '20px';
 
 var hackedCollumn3 = document.createElement('div');
-hackedCollumn3.className = 'UI-display-light';
+hackedCollumn3.className = 'UI-display';
 hackedDiv.appendChild(hackedCollumn3);
 hackedCollumn3.style.top = '100px';
 hackedCollumn3.style.right = '20px';
 
 var hackedCollumn4 = document.createElement('div');
-hackedCollumn4.className = 'UI-display-light';
+hackedCollumn4.className = 'UI-display';
 hackedDiv.appendChild(hackedCollumn4);
 hackedCollumn4.style.top = '140px';
 hackedCollumn4.style.right = '20px';
 
 var attackMonsters = document.createElement('button');
-attackMonsters.className = 'UI-button-light';
+attackMonsters.className = 'UI-button';
 attackMonsters.style.position = 'static';
 attackMonsters.style.top = '8px';
 attackMonsters.innerHTML = 'Attack Monsters';
@@ -50,7 +50,7 @@ attackMonsters.onclick = function(){
 };
 
 var monsterTracers = document.createElement('button');
-monsterTracers.className = 'UI-button-light';
+monsterTracers.className = 'UI-button';
 monsterTracers.style.position = 'static';
 monsterTracers.style.top = '8px';
 monsterTracers.innerHTML = 'Monster Tracers';
@@ -70,7 +70,7 @@ monsterTracers.onclick = function(){
 };
 
 var autoRespawn = document.createElement('button');
-autoRespawn.className = 'UI-button-light';
+autoRespawn.className = 'UI-button';
 autoRespawn.style.position = 'static';
 autoRespawn.style.top = '8px';
 autoRespawn.innerHTML = 'Auto Respawn';
@@ -91,7 +91,7 @@ autoRespawn.onclick = function(){
 };
 
 var attackPlayers = document.createElement('button');
-attackPlayers.className = 'UI-button-light';
+attackPlayers.className = 'UI-button';
 attackPlayers.style.position = 'static';
 attackPlayers.style.top = '8px';
 attackPlayers.innerHTML = 'Attack Players';
@@ -111,7 +111,7 @@ attackPlayers.onclick = function(){
 };
 
 var playerTracers = document.createElement('button');
-playerTracers.className = 'UI-button-light';
+playerTracers.className = 'UI-button';
 playerTracers.style.position = 'static';
 playerTracers.style.top = '8px';
 playerTracers.innerHTML = 'Player Tracers';
@@ -131,7 +131,7 @@ playerTracers.onclick = function(){
 };
 
 var npcTracers = document.createElement('button');
-npcTracers.className = 'UI-button-light';
+npcTracers.className = 'UI-button';
 npcTracers.style.position = 'static';
 npcTracers.style.top = '8px';
 npcTracers.innerHTML = 'Npc Tracers';
@@ -151,7 +151,7 @@ npcTracers.onclick = function(){
 };
 
 var freeCam = document.createElement('button');
-freeCam.className = 'UI-button-light';
+freeCam.className = 'UI-button';
 freeCam.style.position = 'static';
 freeCam.style.top = '8px';
 freeCam.innerHTML = 'FreeCam';
@@ -176,7 +176,7 @@ freeCam.onclick = function(){
 };
 
 var autoAttack = document.createElement('button');
-autoAttack.className = 'UI-button-light';
+autoAttack.className = 'UI-button';
 autoAttack.style.position = 'static';
 autoAttack.style.top = '8px';
 autoAttack.innerHTML = 'Auto Attack';

@@ -472,5 +472,86 @@
                 ]
             }
         ]
+    },
+    "Janus":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_5 Green",
+            "pants":"Pants_1 Brown",
+            "boots":"Boots_1 Black",
+            "hair":"MHair_6 White",
+            "headwear":"none",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Talk to Wally":false
+                },
+                "message":"Uhh, you shouldn't be here.",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Talk to Wally":1
+                },
+                "message":"I LOVE FLOWERS!!! All kinds of flowers! Roses, Golden Glows, Pyroweed, Daisies, I love them all!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"rosemary",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":15
+                    }
+                ]
+            },
+            {
+                "id":"daisy",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":15
+                    }
+                ]
+            },
+            {
+                "id":"goldenglow",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
+            },
+            {
+                "id":"pyroweed",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":80
+                    }
+                ]
+            }
+        ]
     }
 }

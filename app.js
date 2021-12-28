@@ -55,21 +55,21 @@ io.sockets.on('connection',function(socket){
 	}
 	socket.detectSpam = function(type){
 		if(type === 'database'){
-			socket.spam += 0.5;
+			socket.spam += 1.5;
 		}
 		if(type === 'game'){
-			socket.spam += 0.01;
+			socket.spam += 0.4;
 		}
 		if(type === 'keyPress'){
-			socket.spam += 0.005;
+			socket.spam += 0.2;
 		}
-		if(type === 'gameClick'){
-			socket.spam += 0.03;
+		if(type === 'nonFrequent'){
+			socket.spam += 1;
 		}
-		if(type === 'gameAttack'){
-			socket.spam += 0.03;
+		if(type === 'veryNonFrequent'){
+			socket.spam += 1.5;
 		}
-		if(socket.spam > 1){
+		if(socket.spam > 2){
 			socket.disconnectUser();
 		}
 	}
@@ -1401,7 +1401,7 @@ setInterval(function(){
 			socket.emit('update',data);
 			socket.emit('playerList',players);
 		}
-		socket.spam -= 0.05;
+		socket.spam = Math.max(socket.spam - 1,0);
 	}
 	for(var i in Spawner.list){
 		if(Math.random() < 0.001 && Spawner.list[i].spawned === false){

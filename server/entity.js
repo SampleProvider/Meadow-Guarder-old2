@@ -2052,7 +2052,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('declineTrade',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('nonFrequent');
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
@@ -2082,7 +2082,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('dialogueResponse',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('nonFrequent');
             if(data !== 'option1' && data !== 'option2' && data !== 'option3' && data !== 'option4'){
                 socket.disconnectUser();
                 return;
@@ -2131,7 +2131,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('changePlayer',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -2163,7 +2163,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('respawn',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('nonFrequent');
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
                 Player.onDisconnect(SOCKET_LIST[player.id]);
@@ -2178,7 +2178,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('init',function(data){
-            socket.detectSpam('game');
+            socket.detectSpam('veryNonFrequent');
             Player.getAllInitPack(socket);
         });
 
@@ -2718,9 +2718,9 @@ Monster = function(param){
                         }
                         else{
                             self.targetLeftView = 0;
-                            self.targetX = self.target.x;
-                            self.targetY = self.target.y;
                         }
+                        self.targetX = self.target.x;
+                        self.targetY = self.target.y;
                     }
                 }
                 if(self.target){

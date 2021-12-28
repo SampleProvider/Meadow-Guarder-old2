@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="1" height="1" tilewidth="16" tileheight="16" infinite="1" nextlayerid="6" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="1" height="1" tilewidth="16" tileheight="16" infinite="1" nextlayerid="7" nextobjectid="1">
+ <editorsettings>
+  <export target="Lightning Whelk Inn Upstairs.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="13055" source="specialtiles.tsx"/>
  <layer id="1" name="Flooring" width="1" height="1">
