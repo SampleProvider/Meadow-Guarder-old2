@@ -2719,8 +2719,10 @@ Monster = function(param){
                         else{
                             self.targetLeftView = 0;
                         }
-                        self.targetX = self.target.x;
-                        self.targetY = self.target.y;
+                        if(self.target){
+                            self.targetX = self.target.x;
+                            self.targetY = self.target.y;
+                        }
                     }
                 }
                 if(self.target){
@@ -2783,7 +2785,7 @@ Monster = function(param){
                 }
                 self.trackTime += 1;
                 var distance = self.getDistance(self.target);
-                if(distance < 192 && self.targetLeftView > 0){
+                if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
                     if(distance < 64){
                         self.retreat();

@@ -880,7 +880,8 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
 						message += '<br>/stats - See your stats.';
-						message += '<br>/help - Help.';Player.list[socket.id].sendMessage(message);
+						message += '<br>/help - Help.';
+						Player.list[socket.id].sendMessage(message);
 					}
 					return;
 				}
@@ -1403,6 +1404,7 @@ setInterval(function(){
 		}
 		socket.spam = Math.max(socket.spam - 1,0);
 	}
+	asdf
 	for(var i in Spawner.list){
 		if(Math.random() < 0.001 && Spawner.list[i].spawned === false){
 			spawnMonster(Spawner.list[i],i);
@@ -1428,8 +1430,7 @@ if(SERVER !== 'localhost'){
 }
 process.on('uncaughtException',function(err){
 	storeDatabase(Player.list);
-	console.log(err);
-	addToChat('#ff00ff',err);
+	logError(err.stack);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	// setTimeout(function(){
 	// 	process.exit(1);
