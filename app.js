@@ -1404,7 +1404,6 @@ setInterval(function(){
 		}
 		socket.spam = Math.max(socket.spam - 1,0);
 	}
-	asdf
 	for(var i in Spawner.list){
 		if(Math.random() < 0.001 && Spawner.list[i].spawned === false){
 			spawnMonster(Spawner.list[i],i);
