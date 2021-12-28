@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 10;
+var totalMaps = 11;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
