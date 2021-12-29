@@ -2178,7 +2178,7 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('init',function(data){
-            socket.detectSpam('veryNonFrequent');
+            socket.detectSpam('nonFrequent');
             Player.getAllInitPack(socket);
         });
 
