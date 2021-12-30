@@ -566,6 +566,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					});
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
 					commandList.splice(0,1);
@@ -578,6 +579,7 @@ io.sockets.on('connection',function(socket){
 							Player.list[socket.id].sendMessage('[!] Unbanned player ' + name + '.');
 						}
 					});
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
 					commandList.splice(0,1);
@@ -664,6 +666,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					}
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
 					commandList.splice(0,1);
@@ -682,6 +685,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					}
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'ip' && level >= 3){
 					commandList.splice(0,1);

@@ -114,9 +114,14 @@ volumePercentageSlider.oninput = function(){
     settings.volumePercentage = parseInt(volumePercentageSlider.value);
     volumePercentageHeader.innerHTML = 'Volume: ' + volumePercentageSlider.value + '%';
     setCookie();
-    for(var i in songs){
-        if(songs[i].state === 'playing'){
-            songs[i].audio.volume = settings.volumePercentage / 100;
+    if(webAudio){
+        globalVolume.gain.value = settings.volumePercentage / 100;
+    }
+    else{
+        for(var i in songs){
+            if(songs[i].state === 'playing'){
+                songs[i].audio.volume = songs[i].audio.volume / oldVolumePercentage * settings.volumePercentage;
+            }
         }
     }
 }

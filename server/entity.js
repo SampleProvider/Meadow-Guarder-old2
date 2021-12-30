@@ -1824,6 +1824,7 @@ Player = function(param,socket){
         pack.mana = self.mana;
         pack.manaMax = self.manaMax;
         pack.currentItem = self.currentItem;
+        pack.worldRegion = self.worldRegion;
         pack.type = self.type;
         return pack;
     }

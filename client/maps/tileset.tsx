@@ -2023,6 +2023,11 @@
    <object id="1" x="0" y="0" width="16" height="9"/>
   </objectgroup>
  </tile>
+ <tile id="8889">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="9"/>
+  </objectgroup>
+ </tile>
  <tile id="8899">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="13"/>

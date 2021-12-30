@@ -37,7 +37,7 @@ var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
 var teleportingMap = '';
 var lastMap = '';
-var region = '';
+var worldRegion = '';
 
 var respawnTimer = 0;
 
@@ -379,7 +379,6 @@ socket.on('selfId',function(data){
         canSignIn = true;
         tickArray = [];
         itemMenu.style.display = 'none';
-        playSong('theMeadow');
     },750);
 });
 socket.on('update',function(data){
@@ -812,8 +811,14 @@ socket.on('regionChange',function(data){
     regionDisplay.innerHTML = data.region + '<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);">' + data.mapName + '</div>';
     mapShadeAmount = 0;
     mapShadeSpeed = 0.08;
-    region = data.region;
-    playRegionSong(region);
+    if(selfId){
+        if(Player.list[selfId].map === 'World'){
+            if(worldRegion !== data.region){
+                worldRegion = data.region;
+                playRegionSong(data.region);
+            }
+        }
+    }
 });
 
 var increaseProjectileByParent = function(projectile){
@@ -984,13 +989,14 @@ var loop = function(){
     entities.sort(compare);
     if(inGame){
         itemMenu.style.display = 'none';
+        entitySelected = false;
     }
     for(var i in Particle.list){
         Particle.list[i].draw();
     }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
-        if(inGame && entities[i].name){
+        if(inGame && entities[i].name && entitySelected === false){
             if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
                 itemMenu.innerHTML = getEntityDescription(entities[i]);
                 itemMenu.style.display = 'inline-block';
@@ -1011,6 +1017,7 @@ var loop = function(){
                 else{
                     itemMenu.style.top = rawMouseY + 'px';
                 }
+                entitySelected = true;
             }
         }
     }

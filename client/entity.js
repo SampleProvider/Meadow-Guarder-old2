@@ -151,6 +151,11 @@ var Player = function(initPack){
     self.level = initPack.level;
     self.currentItem = initPack.currentItem;
     self.debuffs = initPack.debuffs;
+    self.worldRegion = initPack.worldRegion;
+    if(self.worldRegion !== worldRegion){
+        worldRegion = self.worldRegion;
+        playRegionSong(worldRegion);
+    }
     self.draw = function(){
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){

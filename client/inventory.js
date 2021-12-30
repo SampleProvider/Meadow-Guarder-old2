@@ -80,6 +80,9 @@ Inventory = function(socket,server){
         if(type === 'Book'){
             return '#dd99dd';
         }
+        if(type === 'Music Box'){
+            return '#0099dd';
+        }
     }
     self.hasSpace = function(id,amount){
         var hasSpace = 0;
