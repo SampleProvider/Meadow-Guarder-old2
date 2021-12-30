@@ -454,6 +454,7 @@ io.sockets.on('connection',function(socket){
 						if(Player.list[i].name === name){
 							Player.list[socket.id].teleport(Player.list[i].x,Player.list[i].y,Player.list[i].map);
 							Player.list[socket.id].sendMessage('[!] Teleported to player ' + name + '.');
+							Player.list[socket.id].doRegionChange(Player.list[i].regionChanger);
 							return;
 						}
 					}

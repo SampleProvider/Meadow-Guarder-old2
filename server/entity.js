@@ -1077,6 +1077,7 @@ Player = function(param,socket){
 
     self.changeSize();
 
+    self.regionChanger = {};
     self.worldRegion = 'Altoris Island';
 
     self.x = ENV.spawnpoints[self.worldRegion].x;
@@ -1799,6 +1800,7 @@ Player = function(param,socket){
     }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
+        self.regionChanger = regionChanger;
         if(regionChanger.canAttack === false){
             self.canAttack = false;
         }
