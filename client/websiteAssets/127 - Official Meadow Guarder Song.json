@@ -3659,63 +3659,22 @@
 			"type": "pitch",
 			"instruments": [
 				{
-					"type": "FM",
+					"type": "chip",
 					"volume": 100,
-					"eqFilter": [],
-					"preset": 192,
-					"effects": [
-						"chord type",
-						"note filter",
-						"reverb"
-					],
-					"chord": "strum",
-					"noteFilter": [
+					"eqFilter": [
 						{
 							"type": "low-pass",
-							"cutoffHz": 6727.17,
+							"cutoffHz": 4000,
 							"linearGain": 0.5
 						}
 					],
-					"reverb": 33,
+					"preset": 67,
+					"effects": [],
 					"fadeInSeconds": 0,
-					"fadeOutTicks": 48,
-					"algorithm": "(1 2)←(3 4)",
-					"feedbackType": "1⟲ 2⟲",
-					"feedbackAmplitude": 0,
-					"operators": [
-						{
-							"frequency": "~1×",
-							"amplitude": 11
-						},
-						{
-							"frequency": "8×",
-							"amplitude": 6
-						},
-						{
-							"frequency": "20×",
-							"amplitude": 3
-						},
-						{
-							"frequency": "3×",
-							"amplitude": 1
-						}
-					],
-					"envelopes": [
-						{
-							"target": "noteFilterAllFreqs",
-							"envelope": "twang 2"
-						},
-						{
-							"target": "operatorAmplitude",
-							"envelope": "twang 1",
-							"index": 2
-						},
-						{
-							"target": "operatorAmplitude",
-							"envelope": "twang 2",
-							"index": 3
-						}
-					]
+					"fadeOutTicks": -3,
+					"wave": "sawtooth",
+					"unison": "shimmer",
+					"envelopes": []
 				}
 			],
 			"patterns": [

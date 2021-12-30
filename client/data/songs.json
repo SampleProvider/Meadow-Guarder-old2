@@ -1,0 +1,32 @@
+{
+    "theMeadow":{
+        "name":"The Meadow",
+        "url":"./client/websiteAssets/The Meadow - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "tenEyedOne":{
+        "name":"Ten Eyed One",
+        "url":"./client/websiteAssets/Ten Eyed One - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "theOasis":{
+        "name":"The Oasis",
+        "url":"./client/websiteAssets/The Oasis - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "crystalite":{
+        "name":"Crystalite",
+        "url":"./client/websiteAssets/Crystalite - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "127":{
+        "name":"127",
+        "url":"./client/websiteAssets/127 - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    }
+}

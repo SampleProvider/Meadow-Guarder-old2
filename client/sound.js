@@ -1,31 +1,5 @@
 var webAudio = false;
-var songs = {
-    theMeadow:{
-        url:'./client/websiteAssets/The Meadow - Official Meadow Guarder Song.mp3',
-        loaded:false,
-        state:"paused",
-    },
-    tenEyedOne:{
-        url:'./client/websiteAssets/Ten Eyed One - Official Meadow Guarder Song.mp3',
-        loaded:false,
-        state:"paused",
-    },
-    theOasis:{
-        url:'./client/websiteAssets/The Oasis - Official Meadow Guarder Song.mp3',
-        loaded:false,
-        state:"paused",
-    },
-    crystalite:{
-        url:'./client/websiteAssets/Crystalite - Official Meadow Guarder Song.mp3',
-        loaded:false,
-        state:"paused",
-    },
-    "127":{
-        url:'./client/websiteAssets/127 - Official Meadow Guarder Song.mp3',
-        loaded:false,
-        state:"paused",
-    },
-}
+var songs = {};
 var music = {};
 initAudio = function(){
     if(webAudio){
@@ -79,6 +53,7 @@ initAudio = function(){
                 return;
             }
             if(songs[songName].state === 'playing'){
+                console.log(songName)
                 songs[songName].volume.gain.value = 1;
                 songs[songName].state = 'fadeOut';
                 var fade = 1;
@@ -97,6 +72,12 @@ initAudio = function(){
             if(songName !== music.name){
                 for(var i in songs){
                     fadeOutSong(i);
+                }
+                if(music.audio){
+                    if(music.audio.stop){
+                        music.audio.onended = function(){};
+                        music.audio.stop();
+                    }
                 }
                 music = {
                     name:songName,
@@ -183,6 +164,12 @@ initAudio = function(){
                 for(var i in songs){
                     fadeOutSong(i);
                 }
+                if(music.audio){
+                    if(music.audio.stop){
+                        music.audio.onended = function(){};
+                        music.audio.stop();
+                    }
+                }
                 music = {
                     name:songName,
                     audio:new Audio(songs[songName].url),
@@ -238,3 +225,7 @@ stopAllSongs = function(){
         stopSong[i]
     }
 }
+
+socket.on('musicBox',function(songName){
+    startMusic(songName);
+});

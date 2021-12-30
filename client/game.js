@@ -1098,7 +1098,7 @@ socket.on("attack",function(){
     for(var i in inventory.items){
         if(inventory.items[i]){
             if(inventory.items[i].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].equip === Item.list[inventory.items[i].id].equip){
+                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].type === Item.list[inventory.items[i].id].type){
                     inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
                     document.getElementById('cooldownDiv' + i).style.height = '100%';
                     if(i >= 0 && i <= 9){

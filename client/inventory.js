@@ -81,7 +81,7 @@ Inventory = function(socket,server){
             return '#dd99dd';
         }
         if(type === 'Music Box'){
-            return '#0099dd';
+            return '#0033dd';
         }
     }
     self.hasSpace = function(id,amount){

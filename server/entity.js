@@ -84,6 +84,7 @@ npcData = require('./../client/data/npcs.json');
 attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
+songData = require('./../client/data/songs.json');
 harvestableNpcData = require('./../client/data/harvestableNpcs.json');
 
 quests = {};
@@ -951,6 +952,13 @@ Actor = function(param){
                                 break;
                             case "dash":
                                 self.dash(data[i][j].param);
+                                break;
+                            case "music":
+                                for(var k in Player.list){
+                                    SOCKET_LIST[k].emit('musicBox',data[i][j].songName);
+                                }
+                                addToChat('#00ffff',self.name + ' started the music ' + songData[data[i][j].songName].name + '.');
+                                break;
                         }
                         if(data[i][j].xpGain){
                             if(self.type === 'Player'){
@@ -1336,7 +1344,7 @@ Player = function(param,socket){
                             if(hasMana){
                                 for(var i in self.inventory.items){
                                     if(self.inventory.items[i].id){
-                                        if(Item.list[self.inventory.items[i].id].equip === Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip){
+                                        if(Item.list[self.inventory.items[i].id].type === Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type){
                                             self.inventory.items[i].cooldown = Item.list[self.inventory.items[i].id].useTime;
                                         }
                                     }

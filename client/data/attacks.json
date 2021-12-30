@@ -1422,6 +1422,30 @@
             "songName":"theMeadow"
         }]
     },
+    "musicboxteneyedone":{
+        "1":[{
+            "id":"music",
+            "songName":"tenEyedOne"
+        }]
+    },
+    "musicboxtheoasis":{
+        "1":[{
+            "id":"music",
+            "songName":"theOasis"
+        }]
+    },
+    "musicboxcrystalite":{
+        "1":[{
+            "id":"music",
+            "songName":"crystalite"
+        }]
+    },
+    "musicbox127":{
+        "1":[{
+            "id":"music",
+            "songName":"127"
+        }]
+    },
     "redbook":{
         "1":[{
             "id":"none",
