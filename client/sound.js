@@ -32,11 +32,10 @@ initAudio = function(){
                 console.error('Song "' + songName + '" has not loaded yet.');
                 return;
             }
-            if(songs[songName].state === 'paused'){
+            if(songs[songName].state === 'paused' || songs[songName] === 'fadeOut'){
                 songs[songName].audio.connect(songs[songName].volume);
-                songs[songName].volume.gain.value = 0;
                 songs[songName].state = 'fadeIn';
-                var fade = 0;
+                var fade = songs[songName].volume.gain.value;
                 var interval = setInterval(function(){
                     fade += 0.05;
                     songs[songName].volume.gain.value = Math.min(fade,1);
@@ -52,11 +51,9 @@ initAudio = function(){
                 console.error('Song "' + songName + '" has not loaded yet.');
                 return;
             }
-            if(songs[songName].state === 'playing'){
-                console.log(songName)
-                songs[songName].volume.gain.value = 1;
+            if(songs[songName].state === 'playing' || songs[songName] === 'fadeIn'){
                 songs[songName].state = 'fadeOut';
-                var fade = 1;
+                var fade = songs[songName].volume.gain.value;
                 var interval = setInterval(function(){
                     fade -= 0.05;
                     songs[songName].volume.gain.value = Math.max(fade,0);
@@ -113,6 +110,7 @@ initAudio = function(){
             }
             songs[songName].audio.pause();
             songs[songName].audio.currentTime = 0;
+            songs[songName].audio.volume = 0;
             songs[songName].state = 'paused';
         }
         fadeInSong = function(songName){
@@ -123,12 +121,13 @@ initAudio = function(){
                 console.error('Song "' + songName + '" has not loaded yet.');
                 return;
             }
-            if(songs[songName].state === 'paused'){
-                songs[songName].audio.currentTime = 0;
-                songs[songName].audio.volume = 0;
+            if(songs[songName].state === 'paused' || songs[songName] === 'fadeOut'){
+                if(songs[songName] === 'paused'){
+                    songs[songName].audio.currentTime = 0;
+                }
                 songs[songName].audio.play();
                 songs[songName].state = 'fadeIn';
-                var fade = 0;
+                var fade = songs[songName].audio.volume / settings.volumePercentage * 100;
                 var interval = setInterval(function(){
                     fade += 0.05;
                     songs[songName].audio.volume = Math.min(fade * settings.volumePercentage / 100,1);
@@ -144,10 +143,9 @@ initAudio = function(){
                 console.error('Song "' + songName + '" has not loaded yet.');
                 return;
             }
-            if(songs[songName].state === 'playing'){
-                songs[songName].audio.volume = settings.volumePercentage / 100;
+            if(songs[songName].state === 'playing' || songs[songName] === 'fadeIn'){
                 songs[songName].state = 'fadeOut';
-                var fade = 1;
+                var fade = songs[songName].audio.volume / settings.volumePercentage * 100;
                 var interval = setInterval(function(){
                     fade -= 0.05;
                     songs[songName].audio.volume = Math.max(fade * settings.volumePercentage / 100,0);

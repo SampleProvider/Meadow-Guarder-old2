@@ -810,6 +810,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-60,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -818,6 +819,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-40,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -826,6 +828,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":-20,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -834,6 +837,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":0,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -842,6 +846,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":20,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -850,6 +855,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":40,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
@@ -858,6 +864,7 @@
             "projectileType":"alienflames",
             "param":{
                 "direction":60,
+                "pierce":-1,
                 "projectilePattern":"homing",
                 "collisionType":"none"
             }
