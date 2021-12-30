@@ -447,6 +447,19 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'teleport' && level >= 1){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					for(var i in Player.list){
+						if(Player.list[i].name === name){
+							Player.list[socket.id].teleport(Player.list[i].x,Player.list[i].y,Player.list[i].map);
+							Player.list[socket.id].sendMessage('[!] Teleported to player ' + name + '.');
+							return;
+						}
+					}
+					Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'announce' && level >= 1){
 					commandList.splice(0,1);
 					var message = recreateCommand(commandList);
@@ -824,6 +837,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/teleport [player name] - Teleport to someone.';
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
@@ -838,6 +852,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/teleport [player name] - Teleport to someone.';
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
@@ -857,6 +872,7 @@ io.sockets.on('connection',function(socket){
 						var message = 'Commands:';
 						message += '<br>/kick [player name] - Kick someone.';
 						message += '<br>/kill [player name] - Kill someone.';
+						message += '<br>/teleport [player name] - Teleport to someone.';
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
@@ -885,6 +901,8 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				Player.list[socket.id].sendMessage('[!] You do not have permission to use that command.');
+				return;
 			}
 			else{
 				if(Player.list[socket.id].lastChat > 0){
