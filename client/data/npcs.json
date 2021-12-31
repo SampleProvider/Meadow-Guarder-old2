@@ -498,7 +498,28 @@
             },
             {
                 "requirements":{
-                    "Talk to Wally":1
+                    "Talk to Wally":1,
+                    "Beginner Herbalism":false
+                },
+                "message":"I LOVE FLOWERS!!! All kinds of flowers! Roses, Golden Glows, Pyroweed, Daisies, I love them all!",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest Beginner Herbalism*",
+                    "triggers":"startQuest",
+                    "quest":"Beginner Herbalism"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Talk to Wally":1,
+                    "Beginner Herbalism":1
                 },
                 "message":"I LOVE FLOWERS!!! All kinds of flowers! Roses, Golden Glows, Pyroweed, Daisies, I love them all!",
                 "option1":{

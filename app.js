@@ -906,8 +906,6 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				Player.list[socket.id].sendMessage('[!] You do not have permission to use that command.');
-				return;
 			}
 			else{
 				if(Player.list[socket.id].lastChat > 0){

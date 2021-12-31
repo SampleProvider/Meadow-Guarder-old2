@@ -1794,6 +1794,29 @@ Player = function(param,socket){
     self.setQuestTasks = function(tasks){
         self.questTasks = tasks;
         for(var i in self.questTasks){
+            if(self.questTasks[i].amount !== undefined){
+                if(self.questTasks[i].amount === '<current>'){
+                    switch(self.questTasks[i].id){
+                        case "obtain":
+                            self.questTasks[i].amount = self.inventory.hasItem(self.questTasks[i].name,1);
+                            break;
+                    }
+                }
+            }
+            if(self.questTasks[i].target !== undefined){
+                if(self.questTasks[i].target === '<current>'){
+                    switch(self.questTasks[i].id){
+                        case "obtain":
+                            self.questTasks[i].target = self.inventory.hasItem(self.questTasks[i].name,1);
+                            break;
+                    }
+                }
+                else if(self.questTasks[i].target + '' === self.questTasks[i].target){
+                    if(self.questTasks[i].target.slice(0,10) === '<relative>'){
+                        self.questTasks[i].target = parseInt(self.questTasks[i].target.substring(10)) + self.inventory.hasItem(self.questTasks[i].name,1);
+                    }
+                }
+            }
             self.questTasks[i].completed = false;
         }
     }
@@ -2192,7 +2215,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('init',function(data){
-            socket.detectSpam('nonFrequent');
             Player.getAllInitPack(socket);
         });
 

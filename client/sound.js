@@ -69,7 +69,7 @@ initAudio = function(){
         startMusic = function(songName){
             if(songName !== music.name){
                 for(var i in songs){
-                    fadeOutSong(i);
+                    stopSong(i);
                 }
                 if(music.audio){
                     if(music.audio.stop){
@@ -161,7 +161,7 @@ initAudio = function(){
         startMusic = function(songName){
             if(songName !== music.name){
                 for(var i in songs){
-                    fadeOutSong(i);
+                    stopSong(i);
                 }
                 if(music.audio){
                     if(music.audio.stop){

@@ -127,7 +127,7 @@ Inventory = function(socket,server){
                 self.updateStats = true;
             }
             self.refreshItem(hasSpace.index);
-            socket.emit('itemChange');
+            self.itemChange();
             return hasSpace.index;
         }
         else if(hasSpace.hasSpace === 2){
@@ -140,7 +140,7 @@ Inventory = function(socket,server){
                 self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount,cooldown:0};
             }
             self.refreshItem(hasSpace.index);
-            socket.emit('itemChange');
+            self.itemChange();
             return hasSpace.index;
         }
         if(Player.list[socket.id]){
@@ -205,7 +205,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.refreshItem(itemsToRemove[i]);
-                        socket.emit('itemChange');
+                        self.itemChange();
                         return true;
                     }
                     amountFound += self.draggingItem.amount;
@@ -225,7 +225,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.refreshItem(itemsToRemove[i]);
-                        socket.emit('itemChange');
+                        self.itemChange();
                         return true;
                     }
                     amountFound += self.items[itemsToRemove[i]].amount;
@@ -470,7 +470,7 @@ Inventory = function(socket,server){
                             }
                         }
                         self.draggingItem = {};
-                        socket.emit('itemChange');
+                        self.itemChange();
                     }
                     else if(data.click === 2){
                         if(server){
@@ -489,7 +489,7 @@ Inventory = function(socket,server){
                         if(self.draggingItem.amount === 0){
                             self.draggingItem = {};
                         }
-                        socket.emit('itemChange');
+                        self.itemChange();
                     }
                     return;
                 }
@@ -1360,6 +1360,21 @@ Inventory = function(socket,server){
                     slot.style.display = 'none';
                 }
             }
+        }
+    }
+    self.itemChange = function(){
+        if(server){
+            socket.emit('itemChange');
+            for(var i in Player.list[socket.id].questTasks){
+                if(Player.list[socket.id].questTasks[i].id === 'obtain'){
+                    Player.list[socket.id].questTasks[i].amount = self.hasItem(Player.list[socket.id].questTasks[i].name,1);
+                    if(Player.list[socket.id].questTasks[i].amount >= Player.list[socket.id].questTasks[i].target){
+                        Player.list[socket.id].questTasks[i].completed = true;
+                        Player.list[socket.id].updateQuest(Player.list[socket.id]);
+                    }
+                }
+            }
+            return;
         }
     }
     self.refreshItem = function(index){

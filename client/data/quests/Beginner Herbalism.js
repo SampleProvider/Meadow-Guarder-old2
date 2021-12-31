@@ -22,6 +22,10 @@ quests[player.quest].updateQuest = function(self,dialogueTask){
         }
     }
     switch(self.questStage){
+        case 3:
+            self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
+            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
+            self.inventory.addItem('wornscythe',1);
         default:
             self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
             self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
