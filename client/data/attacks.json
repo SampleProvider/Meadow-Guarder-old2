@@ -1447,10 +1447,22 @@
             "songName":"crystalite"
         }]
     },
+    "musicboxdewdrop":{
+        "1":[{
+            "id":"music",
+            "songName":"dewdrop"
+        }]
+    },
     "musicbox127":{
         "1":[{
             "id":"music",
             "songName":"127"
+        }]
+    },
+    "musicboxrickroll":{
+        "1":[{
+            "id":"music",
+            "songName":"neverGonnaGiveYouUp"
         }]
     },
     "redbook":{

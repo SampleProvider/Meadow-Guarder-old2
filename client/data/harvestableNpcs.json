@@ -21,6 +21,7 @@
         "offsetY":-32,
         "width":64,
         "height":128,
+        "aboveHeight":64,
         "harvestWidth":64,
         "harvestHeight":64,
         "harvestOffsetX":0,
@@ -41,6 +42,28 @@
         "offsetY":0,
         "width":64,
         "height":64,
+        "aboveHeight":0,
+        "harvestWidth":64,
+        "harvestHeight":64,
+        "harvestOffsetX":0,
+        "harvestOffsetY":0
+    },
+    "porcelain":{
+        "itemDrops":{
+            "porcelainvine":{
+                "chance":1,
+                "amount":2
+            }
+        },
+        "harvestPower":10,
+        "harvestTool":"scythe",
+        "harvestHp":40,
+        "collisions":[],
+        "offsetX":0,
+        "offsetY":0,
+        "width":64,
+        "height":64,
+        "aboveHeight":0,
         "harvestWidth":64,
         "harvestHeight":64,
         "harvestOffsetX":0,
@@ -61,6 +84,7 @@
         "offsetY":0,
         "width":64,
         "height":64,
+        "aboveHeight":0,
         "harvestWidth":64,
         "harvestHeight":64,
         "harvestOffsetX":0,
@@ -89,6 +113,7 @@
         "offsetY":-32,
         "width":128,
         "height":128,
+        "aboveHeight":64,
         "harvestWidth":128,
         "harvestHeight":64,
         "harvestOffsetX":0,

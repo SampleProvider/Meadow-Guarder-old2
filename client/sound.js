@@ -1,3 +1,4 @@
+var audioContext = {};
 var webAudio = false;
 var songs = {};
 var music = {};
@@ -78,7 +79,7 @@ initAudio = function(){
                 }
                 music = {
                     name:songName,
-                    audio:context.createBufferSource(),
+                    audio:audioContext.createBufferSource(),
                 };
                 music.audio.buffer = songs[songName].buffer;
                 music.audio.connect(globalVolume);

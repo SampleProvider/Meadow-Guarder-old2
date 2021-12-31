@@ -291,7 +291,9 @@ musicboxthemeadow,Music Box - The Meadow,1.0,0.00,481,false,1,hotbar,Music Box,0
 musicboxteneyedone,Music Box - Ten Eyed One,6.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicboxteneyedone,none,none,none,none,0.00,
 musicboxtheoasis,Music Box - The Oasis,2.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicboxtheoasis,none,none,none,none,0.00,
 musicboxcrystalite,Music Box - Crystalite,4.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicboxcrystalite,none,none,none,none,0.00,
+musicboxdewdrop,Music Box - Dewdrop,5.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicboxdewdrop,none,none,none,none,0.00,
 musicbox127,Music Box - 127,0.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicbox127,none,none,none,none,0.00,
+musicboxrickroll,Music Box - Never Gonna Give You Up,6.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,musicboxrickroll,none,none,none,none,0.00,
 copperbar,Copper Bar,0.5,0.00,482,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 ironbar,Iron Bar,1.0,0.00,483,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 goldbar,Gold Bar,2.0,0.00,484,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
@@ -322,7 +324,7 @@ wildflax,Wild Flax,0.0,0.00,651,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0
 starofbethlehem,Star of Bethlehem,5.0,0.00,652,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 pyroweed,Pyroweed,4.0,0.00,653,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 goldendewdrop,Golden Dewdrop,3.0,0.00,654,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
-snapdragon,Snapdragon,1.0,0.00,655,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
+porcelainvine,Porcelain Vine,1.0,0.00,655,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,
 lovagevines,Lovage Vines,2.0,0.00,656,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Essence of slimes.
 lead,Lead,2.0,0.00,657,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Poisonous.
 malachite,Malachite,3.0,0.00,658,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,none,none,none,none,none,0.00,Found deep in the ocean.

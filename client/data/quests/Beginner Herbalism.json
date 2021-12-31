@@ -1,0 +1,108 @@
+{
+    "0":{
+        "dialogue":{
+            "message":"Today you will learn Beginner Herbalism!",
+            "option1":"I'm interested! Let's start!",
+            "option2":"What is Herbalism?"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":2
+            },
+            {
+                "id":"dialogue",
+                "option":"option2",
+                "questStage":1
+            }
+        ]
+    },
+    "1":{
+        "dialogue":{
+            "message":"Oh, Herbalism is just collecting and using plants. You see the plants around in my Sunhouse?",
+            "option1":"Yeah, they're very pretty."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "2":{
+        "dialogue":{
+            "message":"First of all, a very common plant in these regions is Porcelain. You can collect their fruit, Porcelain Berries, and you can collect their vines, Porcelain Vines.",
+            "option1":"How do you collect them?"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "3":{
+        "dialogue":{
+            "message":"Oh, you need a Scythe. I just bought a new Gold Scythe from Serpent Palace! Here, you can have my old one.",
+            "option1":"Thanks a lot!"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "3":{
+        "dialogue":{
+            "message":"Now I want you to collect 10 Porcelain Vines and bring them to me.",
+            "option1":"Sure!"
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "1":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"obtain",
+                "name":"porcelainvine",
+                "amount":"<current>",
+                "target":"<relat"
+            }
+        ],
+        "questStage":1
+    },
+    "3":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"npc",
+                "name":"Joseph"
+            }
+        ],
+        "questStage":1
+    },
+    "4":{
+        "dialogue":{
+            "message":"You killed 10 Snakes? Thanks a lot! Although I keep getting the feeling more Snakes will invade...",
+            "option1":"I can kill more snakes if you need it."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "triggers":"completeQuest"
+            }
+        ]
+    }
+}

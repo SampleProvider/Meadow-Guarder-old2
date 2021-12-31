@@ -23,9 +23,21 @@
         "loaded":false,
         "state":"paused"
     },
+    "dewdrop":{
+        "name":"Dewdrop",
+        "url":"./client/websiteAssets/Dewdrop - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
     "127":{
         "name":"127",
         "url":"./client/websiteAssets/127 - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "neverGonnaGiveYouUp":{
+        "name":"Never Gonna Give You Up",
+        "url":"./client/websiteAssets/Never Gonna Give You Up.mp3",
         "loaded":false,
         "state":"paused"
     }

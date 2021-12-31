@@ -194,9 +194,9 @@ var Player = function(initPack){
                 ctx.translate(self.x,self.y);
                 ctx.rotate((self.direction - 225) / 180 * Math.PI);
                 var drawId = Item.list[self.currentItem].drawId;
-                var img_x = ((drawId - 1) % 26) * 24;
-                var img_y = ~~((drawId - 1) / 26) * 24;
-                ctx.drawImage(Img.items2,img_x,img_y,24,24,-96,-96,96,96);
+                var imgX = ((drawId - 1) % 26) * 24;
+                var imgY = ~~((drawId - 1) / 26) * 24;
+                ctx.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
                 ctx.restore();
             }
         }
@@ -233,9 +233,9 @@ var Projectile = function(initPack){
         var renderCtx = self.render.getContext("2d");
         resetCanvas(renderCtx);
         var drawId = Item.list[self.projectileType].drawId;
-        var img_x = ((drawId - 1) % 26) * 24;
-        var img_y = ~~((drawId - 1) / 26) * 24;
-        renderCtx.drawImage(Img.items2,img_x,img_y,24,24,0,0,24,24);
+        var imgX = ((drawId - 1) % 26) * 24;
+        var imgY = ~~((drawId - 1) / 26) * 24;
+        renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,24,24);
     }
 
     self.update = function(){
@@ -443,20 +443,13 @@ var HarvestableNpc = function(initPack){
                 }
             }
         }
-        if(Img[self.img + '0']){
-            if(self.height === 64){
-                ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height);
-            }
-            else{
-                ctx.drawImage(Img[self.img + '0'],self.x - self.width / 2,self.y,self.width,self.height / 2);
-            }
-        }
+        ctx.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8 + harvestableNpcData[self.img].aboveHeight / 4,self.width / 4,self.height / 4 - harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2 + harvestableNpcData[self.img].aboveHeight,self.width,self.height - harvestableNpcData[self.img].aboveHeight);
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
     }
     self.drawLayer1 = function(){
-        if(self.height === 64){
+        if(harvestableNpcData[self.img].aboveHeight === 0){
             return;
         }
         if(settings.entityFadeOut === true){
@@ -470,9 +463,7 @@ var HarvestableNpc = function(initPack){
                 ctx.globalAlpha = self.fade;
             }
         }
-        if(Img[self.img + '1']){
-            ctx.drawImage(Img[self.img + '1'],self.x - self.width / 2,self.y - self.height / 2,self.width,self.height / 2);
-        }
+        ctx.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8,self.width / 4,harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2,self.width,harvestableNpcData[self.img].aboveHeight);
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -521,10 +512,10 @@ var DroppedItem = function(initPack){
     resetCanvas(renderCtx);
     resetCanvas(renderSelectCtx);
     var drawId = Item.list[self.item].drawId;
-    var img_x = ((drawId - 1) % 26) * 24;
-    var img_y = ~~((drawId - 1) / 26) * 24;
-    renderCtx.drawImage(Img.items2,img_x,img_y,24,24,0,0,48,48);
-    renderSelectCtx.drawImage(Img.items2select,img_x,img_y,24,24,0,0,48,48);
+    var imgX = ((drawId - 1) % 26) * 24;
+    var imgY = ~~((drawId - 1) / 26) * 24;
+    renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,48,48);
+    renderSelectCtx.drawImage(Img.items2select,imgX,imgY,24,24,0,0,48,48);
     self.draw = function(){
         if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
             ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);

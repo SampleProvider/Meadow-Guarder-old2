@@ -10,9 +10,19 @@ tileset.onload = function(){
 };
 var renderWorld = function(json,name){
     var tile = json.tilesets[0];
+    var size = json.tilewidth;
+    for(var i in json.tilesets[0].tiles){
+        for(var j in harvestableNpcData){
+            if(json.tilesets[0].tiles[i].type === j){
+                var imgX = (json.tilesets[0].tiles[i].id % ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                var imgY = ~~(json.tilesets[0].tiles[i].id / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                harvestableNpcData[j].imgX = imgX + 8;
+                harvestableNpcData[j].imgY = imgY + 8;
+            }
+        }
+    }
     for(var i = 0;i < json.layers.length;i++){
         if(json.layers[i].type === "tilelayer" && json.layers[i].visible && json.layers[i].name !== "HarvestableNpc:"){
-            var size = json.tilewidth;
             for(var j = 0;j < json.layers[i].chunks.length;j++){
                 if(loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':']){
                     var tempLower = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].lower;
@@ -39,10 +49,10 @@ var renderWorld = function(json,name){
                 for(var k = 0;k < json.layers[i].chunks[j].data.length;k++){
                     tile_idx = json.layers[i].chunks[j].data[k];
                     if(tile_idx !== 0){
-                        var img_x, img_y, s_x, s_y;
+                        var imgX, imgY, s_x, s_y;
                         tile_idx -= 1;
-                        img_x = (tile_idx % ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
-                        img_y = ~~(tile_idx / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                        imgX = (tile_idx % ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                        imgY = ~~(tile_idx / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
                         s_x = (k % 16) * size;
                         s_y = ~~(k / 16) * size;
                         if(json.layers[i].offsetx){
@@ -54,10 +64,10 @@ var renderWorld = function(json,name){
                         // s_x += json.layers[i].chunks[j].x * 64;
                         // s_y += json.layers[i].chunks[j].y * 64;
                         if(json.layers[i].name.includes('Roof') || json.layers[i].name.includes('Top')){
-                            glUpper.drawImage(tileset,Math.round(img_x),Math.round(img_y),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
+                            glUpper.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
                         }
                         else{
-                            glLower.drawImage(tileset,Math.round(img_x),Math.round(img_y),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
+                            glLower.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
                         }
                     }
                 }

@@ -20,6 +20,15 @@ socket.on('disconnect',function(){
     disconnectClient();
 });
 
+onGesture = function(){
+    if(audioContext){
+        if(audioContext.state === 'suspended'){
+            audioContext.resume();
+        }
+    }
+    tabVisible = true;
+}
+
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 var mouseX = 0;
@@ -1210,7 +1219,7 @@ releaseAll = function(){
 }
 
 document.onkeydown = function(event){
-    tabVisible = true;
+    onGesture();
     if(!selfId){
         return;
     }
@@ -1260,13 +1269,13 @@ document.onkeydown = function(event){
     socket.emit('keyPress',{inputId:key,state:true});
 }
 document.onkeyup = function(event){
-    tabVisible = true;
+    onGesture();
     chatPress = false;
     var key = event.key || event.keyCode;
     socket.emit('keyPress',{inputId:key,state:false});
 }
 document.onmousemove = function(event){
-    tabVisible = true;
+    onGesture();
     if(selfId){
         var x = -cameraX - Player.list[selfId].x + event.clientX;
         var y = -cameraY - Player.list[selfId].y + event.clientY;
@@ -1373,13 +1382,16 @@ document.querySelectorAll("button").forEach(function(item){
     });
 });
 window.onresize = function(){
-    tabVisible = true;
+    onGesture();
     pageDiv.style.backgroundSize = window.innerWidth + 'px,' + window.innerHeight + 'px';
     pageDiv.style.width = window.innerWidth + 'px';
     pageDiv.style.height = window.innerHeight + 'px';
 }
+document.onclick = function(){
+    onGesture();
+}
 document.oncontextmenu = function(event){
-    tabVisible = true;
+    onGesture();
     event.preventDefault();
 }
 window.addEventListener('wheel',function(event){

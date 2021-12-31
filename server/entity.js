@@ -1104,6 +1104,7 @@ Player = function(param,socket){
     self.xpMax = 100;
     self.mana = 100;
     self.manaMax = 100;
+    self.lastUsedMana = 0;
 
     self.level = 0;
 
@@ -1352,6 +1353,7 @@ Player = function(param,socket){
                                 self.mainReload += 1;
                                 self.doAttack(self.mainAttackData,self.mainReload);
                                 socket.emit('attack');
+                                self.lastUsedMana = 0;
                                 if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
                                     self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
                                     if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
@@ -1655,8 +1657,9 @@ Player = function(param,socket){
         }
     }
     self.updateMana = function(){
-        self.mana += self.stats.manaRegen / 20;
+        self.mana += self.stats.manaRegen / 20 * (self.lastUsedMana / 5);
         self.mana = Math.min(self.manaMax,self.mana);
+        self.lastUsedMana += 1;
     }
     self.updateDebug = function(){
         if(self.debug.invincible){
