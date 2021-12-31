@@ -107,8 +107,8 @@
     },
     "8":{
         "dialogue":{
-            "message":"You killed 10 Snakes? Thanks a lot! Although I keep getting the feeling more Snakes will invade...",
-            "option1":"I can kill more snakes if you need it."
+            "message":"10 Porcelain Vines already? That's pretty quick! Not as quick as me though! If you keep practicing, you'll get better!",
+            "option1":"Thanks!"
         },
         "tasks":[
             {

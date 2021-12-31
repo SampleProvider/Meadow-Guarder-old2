@@ -234,12 +234,12 @@ declineTrade.onclick = function(){
 
 var text = '';
 var textIndex = 0;
-var typeWriter = function(element,cb){
+var typeWriter = function(cb){
     if(textIndex < text.length){
-        element.innerHTML += text.charAt(textIndex);
+        dialogueMessage.innerHTML += text.charAt(textIndex);
         textIndex += 1;
         setTimeout(function(){
-            typeWriter(element,cb);
+            typeWriter(cb);
         },100 / settings.textSpeed);
     }
     else{
@@ -261,7 +261,7 @@ socket.on('dialogue',function(data){
         dialogueOption2.style.animationName = 'none';
         dialogueOption3.style.animationName = 'none';
         dialogueOption4.style.animationName = 'none';
-        typeWriter(dialogueMessage,function(){
+        typeWriter(function(){
             if(data.option1){
                 dialogueOption1.innerHTML = data.option1;
                 dialogueOption1.style.display = 'inline-block';
