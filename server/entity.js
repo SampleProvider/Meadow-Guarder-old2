@@ -785,29 +785,33 @@ Actor = function(param){
                         var numItems = 0;
                         for(var k in Item.list){
                             if(Item.list[k].type === 'Material'){
-                                numItems += 1;
+                                if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
+                                    numItems += 1;
+                                }
                             }
                         }
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
                             if(Item.list[k].type === 'Material'){
-                                if(numItems === randomItem){
-                                    while(amount > 0){
-                                        var amountRemoved = Math.ceil(Math.random() * amount);
-                                        amount -= amountRemoved;
-                                        new DroppedItem({
-                                            x:self.x,
-                                            y:self.y,
-                                            map:self.map,
-                                            item:k,
-                                            amount:amountRemoved,
-                                            parent:i,
-                                            allPlayers:false,
-                                        });
+                                if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
+                                    if(numItems === randomItem){
+                                        while(amount > 0){
+                                            var amountRemoved = Math.ceil(Math.random() * amount);
+                                            amount -= amountRemoved;
+                                            new DroppedItem({
+                                                x:self.x,
+                                                y:self.y,
+                                                map:self.map,
+                                                item:k,
+                                                amount:amountRemoved,
+                                                parent:i,
+                                                allPlayers:false,
+                                            });
+                                        }
                                     }
+                                    numItems += 1;
                                 }
-                                numItems += 1;
                             }
                         }
                     }
@@ -828,7 +832,68 @@ Actor = function(param){
                     }
                 }
             }
-            Player.list[i].xp += parseInt(Math.ceil(Math.random() * 15 * playersPercentage[i]));
+            Player.list[i].xp += parseInt(Math.round((0.8 + Math.random() * 0.4) * (2.5 * Math.pow(self.rarity),2 + 7.5 * self.rarity + 5) * playersPercentage[i]));
+            var coins = parseInt(Math.round((0.8 + Math.random() * 0.4) * (2.5 * Math.pow(self.rarity),2 + 7.5 * self.rarity + 5) * playersPercentage[i]));
+            var coppercoins = coins % 100;
+            var silvercoins = Math.floor(coins / 100) % 100;
+            var goldcoins = Math.floor(coins / 10000) % 100;
+            var meteoritecoins = Math.floor(coins / 1000000) % 100;
+            var amount = coppercoins;
+            while(amount > 0){
+                var amountRemoved = Math.ceil(Math.random() * amount);
+                amount -= amountRemoved;
+                new DroppedItem({
+                    x:self.x,
+                    y:self.y,
+                    map:self.map,
+                    item:'coppercoin',
+                    amount:amountRemoved,
+                    parent:i,
+                    allPlayers:false,
+                });
+            }
+            amount = silvercoins;
+            while(amount > 0){
+                var amountRemoved = Math.ceil(Math.random() * amount);
+                amount -= amountRemoved;
+                new DroppedItem({
+                    x:self.x,
+                    y:self.y,
+                    map:self.map,
+                    item:'silvercoin',
+                    amount:amountRemoved,
+                    parent:i,
+                    allPlayers:false,
+                });
+            }
+            amount = goldcoins;
+            while(amount > 0){
+                var amountRemoved = Math.ceil(Math.random() * amount);
+                amount -= amountRemoved;
+                new DroppedItem({
+                    x:self.x,
+                    y:self.y,
+                    map:self.map,
+                    item:'goldcoin',
+                    amount:amountRemoved,
+                    parent:i,
+                    allPlayers:false,
+                });
+            }
+            amount = meteoritecoins;
+            while(amount > 0){
+                var amountRemoved = Math.ceil(Math.random() * amount);
+                amount -= amountRemoved;
+                new DroppedItem({
+                    x:self.x,
+                    y:self.y,
+                    map:self.map,
+                    item:'meteoritecoin',
+                    amount:amountRemoved,
+                    parent:i,
+                    allPlayers:false,
+                });
+            }
         }
     }
     self.onDamage = function(pt){

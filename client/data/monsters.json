@@ -21,6 +21,7 @@
         "img":{
             "body":"Undead"
         },
+        "rarity":0,
         "mainAttackData":{
             "20":[{
                 "id":"projectile",
@@ -51,6 +52,7 @@
         "img":{
             "body":"Snake"
         },
+        "rarity":0,
         "mainAttackData":{
             "10":[{
                 "id":"projectile",
@@ -81,6 +83,7 @@
         "img":{
             "body":"Slime"
         },
+        "rarity":1,
         "mainAttackData":{
             "15":[{
                 "id":"dash",
@@ -114,6 +117,7 @@
             "body":"Undead",
             "headwear":"GasMask_1 Red"
         },
+        "rarity":3,
         "mainAttackData":{
             "8":[{
                 "id":"projectile",
@@ -149,6 +153,7 @@
             "pants":"Pants_1 Blue",
             "waist":"Belt_2 Blue"
         },
+        "rarity":3,
         "mainAttackData":{
             "20":[{
                 "id":"dash",
@@ -193,6 +198,7 @@
             "body":"Undead",
             "headwear":"Crown_1 Yellow"
         },
+        "rarity":20,
         "mainAttackData":{
             "1":[{
                 "id":"projectile",
@@ -233,6 +239,7 @@
         "img":{
             "body":"Ten Eyed One"
         },
+        "rarity":75,
         "mainAttackData":{
             "1":[{
                 "id":"projectile",
