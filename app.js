@@ -175,6 +175,10 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
 		}
+		if(stringData.username.includes('`') || stringData.password.includes('`')){
+			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			return;
+		}
 		if(stringData.username.includes('<') || stringData.password.includes('<')){
 			socket.emit('createAccountResponse',{success:3,username:stringData.username});
 			return;
