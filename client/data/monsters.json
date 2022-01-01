@@ -21,7 +21,8 @@
         "img":{
             "body":"Undead"
         },
-        "rarity":0,
+        "xpDrop":5,
+        "coinDrop":5,
         "mainAttackData":{
             "20":[{
                 "id":"projectile",
@@ -52,7 +53,8 @@
         "img":{
             "body":"Snake"
         },
-        "rarity":0,
+        "xpDrop":5,
+        "coinDrop":5,
         "mainAttackData":{
             "10":[{
                 "id":"projectile",
@@ -83,7 +85,8 @@
         "img":{
             "body":"Slime"
         },
-        "rarity":1,
+        "xpDrop":15,
+        "coinDrop":15,
         "mainAttackData":{
             "15":[{
                 "id":"dash",
@@ -117,7 +120,8 @@
             "body":"Undead",
             "headwear":"GasMask_1 Red"
         },
-        "rarity":3,
+        "xpDrop":15,
+        "coinDrop":50,
         "mainAttackData":{
             "8":[{
                 "id":"projectile",
@@ -153,7 +157,8 @@
             "pants":"Pants_1 Blue",
             "waist":"Belt_2 Blue"
         },
-        "rarity":3,
+        "xpDrop":15,
+        "coinDrop":50,
         "mainAttackData":{
             "20":[{
                 "id":"dash",
@@ -198,7 +203,8 @@
             "body":"Undead",
             "headwear":"Crown_1 Yellow"
         },
-        "rarity":20,
+        "xpDrop":250,
+        "coinDrop":150,
         "mainAttackData":{
             "1":[{
                 "id":"projectile",
@@ -239,7 +245,8 @@
         "img":{
             "body":"Ten Eyed One"
         },
-        "rarity":75,
+        "xpDrop":750,
+        "coinDrop":13500,
         "mainAttackData":{
             "1":[{
                 "id":"projectile",

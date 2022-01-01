@@ -152,8 +152,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"goldcoin",
-                        "amount":1
+                        "id":"coppercoin",
+                        "amount":50
                     }
                 ]
             },
@@ -162,8 +162,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"goldcoin",
-                        "amount":1
+                        "id":"coppercoin",
+                        "amount":50
                     }
                 ]
             }
@@ -211,8 +211,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"silvercoin",
-                        "amount":1
+                        "id":"coppercoin",
+                        "amount":50
                     }
                 ]
             },
@@ -221,7 +221,7 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"silvercoin",
+                        "id":"coppercoin",
                         "amount":80
                     }
                 ]
@@ -436,7 +436,7 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"goldcoin",
+                        "id":"silvercoin",
                         "amount":1
                     }
                 ]
@@ -538,8 +538,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"silvercoin",
-                        "amount":15
+                        "id":"coppercoin",
+                        "amount":80
                     }
                 ]
             },
@@ -548,8 +548,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"silvercoin",
-                        "amount":15
+                        "id":"coppercoin",
+                        "amount":80
                     }
                 ]
             },
@@ -559,7 +559,7 @@
                 "materials":[
                     {
                         "id":"silvercoin",
-                        "amount":80
+                        "amount":5
                     }
                 ]
             },
@@ -569,7 +569,7 @@
                 "materials":[
                     {
                         "id":"silvercoin",
-                        "amount":80
+                        "amount":5
                     }
                 ]
             }
@@ -619,8 +619,8 @@
                 "amount":1,
                 "materials":[
                     {
-                        "id":"meteoritecoin",
-                        "amount":1
+                        "id":"silvercoin",
+                        "amount":50
                     }
                 ]
             },
@@ -630,7 +630,7 @@
                 "materials":[
                     {
                         "id":"silvercoin",
-                        "amount":80
+                        "amount":10
                     }
                 ]
             },
@@ -640,7 +640,7 @@
                 "materials":[
                     {
                         "id":"silvercoin",
-                        "amount":80
+                        "amount":10
                     }
                 ]
             },
@@ -650,7 +650,7 @@
                 "materials":[
                     {
                         "id":"silvercoin",
-                        "amount":80
+                        "amount":10
                     }
                 ]
             }

@@ -832,8 +832,8 @@ Actor = function(param){
                     }
                 }
             }
-            Player.list[i].xp += parseInt(Math.round((0.8 + Math.random() * 0.4) * (2.5 * Math.pow(self.rarity),2 + 7.5 * self.rarity + 5) * playersPercentage[i]));
-            var coins = parseInt(Math.round((0.8 + Math.random() * 0.4) * (2.5 * Math.pow(self.rarity),2 + 7.5 * self.rarity + 5) * playersPercentage[i]));
+            Player.list[i].xp += parseInt(Math.round((0.8 + Math.random() * 0.4) * self.xpDrop * playersPercentage[i]));
+            var coins = parseInt(Math.round((0.8 + Math.random() * 0.4) * self.coinDrop * playersPercentage[i]));
             var coppercoins = coins % 100;
             var silvercoins = Math.floor(coins / 100) % 100;
             var goldcoins = Math.floor(coins / 10000) % 100;
