@@ -405,13 +405,13 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							Player.list[socket.id].sendMessage('[!] You do not have permission to kick ' + name + '.');
-							return;
-						}
-					}
 					doCommand(name,function(name,i){
+						if(debugData[name]){
+							if(debugData[name].level > level){
+								Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
+								return;
+							}
+						}
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('disconnected');
 							Player.onDisconnect(SOCKET_LIST[i]);
@@ -426,17 +426,13 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'kill' && level >= 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to kill ' + name + '.',
-								debug:true,
-							});
-							return;
-						}
-					}
 					doCommand(name,function(name,i){
+						if(debugData[name]){
+							if(debugData[name].level > level){
+								Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
+								return;
+							}
+						}
 						if(Player.list[i].hp <= 0){
 							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already dead.');
 						}
@@ -474,17 +470,17 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
-							return;
-						}
-					}
 					doCommand(name,function(name,i){
+						if(debugData[name]){
+							if(debugData[name].level > level){
+								Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
+								return;
+							}
+						}
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('rickroll');
 						}
-						addToChat('#ff0000',Player.list[i].name + ' just got rickrolled.');
+						addToChat('#ff0000',name + ' just got rickrolled.');
 						Player.list[socket.id].sendMessage('[!] Rickrolled player ' + name + '.');
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');

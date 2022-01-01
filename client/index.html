@@ -12,7 +12,8 @@
 	<link href="/client/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="pageDiv" style="display:inline-block;">
+	<video id="rickroll" style="left: 0px; top: 0px; width: 100%; height: 100%;" src="/client/websiteAssets/Never Gonna Give You Up.mp4"></video>
+	<div id="pageDiv" style="display: inline-block;">
 		<div id="pageShade"></div>
 		<div id="pageScroll">
 			<div id="pageName">Meadow Guarder</div>
@@ -608,7 +609,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="gameDiv" style="display:none;">
+	<div id="gameDiv" style="display: none;">
     	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="regionDisplay" class="UI-display UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">

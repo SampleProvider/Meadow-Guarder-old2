@@ -1144,10 +1144,14 @@ disconnectClient = function(){
 }
 
 socket.on('rickroll',function(){
-    document.body.innerHTML = '<iframe width="' + window.innerWidth + '" height="' + window.innerHeight + '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&autoplay=1&rel=0&controls=0&disablekb=1" title="Rickroll LOL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    disconnectClient = function(){};
+    pageDiv.style.display = 'none';
+    gameDiv.style.display = 'none';
+    disconnectedDiv.style.display = 'none';
     socket.emit('timeout');
     selfId = null;
     stopAllSongs();
+    rickroll.play();
 });
 
 
