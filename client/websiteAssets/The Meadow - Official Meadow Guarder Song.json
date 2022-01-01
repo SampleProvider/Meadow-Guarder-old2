@@ -3,8 +3,8 @@
 	"version": 9,
 	"scale": "expert",
 	"key": "D♯",
-	"introBars": 10,
-	"loopBars": 3,
+	"introBars": 0,
+	"loopBars": 12,
 	"beatsPerBar": 12,
 	"ticksPerBeat": 4,
 	"beatsPerMinute": 150,
@@ -828,9 +828,18 @@
 				}
 			],
 			"sequence": [
+				1,
+				2,
+				1,
+				2,
 				3,
 				4,
-				0
+				1,
+				2,
+				1,
+				2,
+				3,
+				4
 			],
 			"octaveScrollBar": 3
 		},
@@ -1798,9 +1807,18 @@
 				}
 			],
 			"sequence": [
+				1,
+				2,
+				1,
+				2,
 				3,
 				4,
-				0
+				1,
+				2,
+				1,
+				2,
+				3,
+				4
 			],
 			"octaveScrollBar": 2
 		},
@@ -2065,7 +2083,16 @@
 				}
 			],
 			"sequence": [
+				1,
+				2,
+				1,
+				2,
 				0,
+				0,
+				1,
+				2,
+				1,
+				2,
 				0,
 				0
 			],
