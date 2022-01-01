@@ -2517,8 +2517,8 @@ Projectile = function(param){
     }
     self.updateCollisions = function(){
         var collisions = [];
-        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
-            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
+        for(var i = Math.floor((self.x - self.width / 2 - self.height / 2) / 64);i <= Math.floor((self.x + self.width / 2 + self.height / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.width / 2 - self.height / 2) / 64);j <= Math.floor((self.y + self.width / 2 + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][i]){
