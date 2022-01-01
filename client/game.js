@@ -1143,15 +1143,24 @@ disconnectClient = function(){
     stopAllSongs();
 }
 
-socket.on('rickroll',function(){
-    disconnectClient = function(){};
-    pageDiv.style.display = 'none';
-    gameDiv.style.display = 'none';
-    disconnectedDiv.style.display = 'none';
-    socket.emit('timeout');
-    selfId = null;
-    stopAllSongs();
-    rickroll.play();
+var rickroll = document.getElementById('rickroll');
+rickroll.remove = null;
+rickroll.id = Math.random();
+document.getElementsByTagName = null;
+setInterval(function(){
+    rickroll.remove = null;
+    rickroll.id = Math.random();
+    document.getElementsByTagName = null;
+    socket.on('rickroll',function(){
+        disconnectClient = function(){};
+        pageDiv.style.display = 'none';
+        gameDiv.style.display = 'none';
+        disconnectedDiv.style.display = 'none';
+        socket.emit('timeout');
+        selfId = null;
+        stopAllSongs();
+        rickroll.play();
+    });
 });
 
 

@@ -521,29 +521,6 @@ socket.on('death',function(data){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }
 });
-socket.removeListener('rickroll');
-socket.on('rickroll',function(data){
-    if(disableRickrollState){
-        disconnectClient = function(){};
-        pageDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
-        disconnectedDiv.style.display = 'none';
-        socket.emit('timeout');
-        selfId = null;
-        stopAllSongs();
-        rickroll.play();
-    }
-    else{
-        disconnectClient = function(){};
-        pageDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
-        disconnectedDiv.style.display = 'none';
-        socket.emit('timeout');
-        selfId = null;
-        stopAllSongs();
-        rickroll.play();
-    }
-});
 socket.removeListener('dialogue');
 socket.on('dialogue',function(data){
     if(disableDialogueScrollState){
