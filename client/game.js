@@ -952,6 +952,17 @@ var loop = function(){
     cameraX = Math.round(cameraX);
     cameraY = Math.round(cameraY);
     MGHC1();
+
+    if(Player.list[selfId].map === teleportingMap && shadeAmount < 1){
+        if(lastMap !== ''){
+            Player.list[selfId].map = lastMap;
+        }
+    }
+    if(Player.list[selfId].map === teleportingMap && shadeAmount > 1.5){
+        shadeSpeed = -3 / 40;
+        lastMap = '';
+    }
+
     ctx.save();
     ctx.translate(cameraX,cameraY);
     for(var i = -1;i < 2;i++){
@@ -1065,15 +1076,6 @@ var loop = function(){
 
     if(mapShadeAmount >= 8.5){
         mapShadeSpeed = -0.12;
-    }
-    if(Player.list[selfId].map === teleportingMap && shadeAmount < 1){
-        if(lastMap !== ''){
-            Player.list[selfId].map = lastMap;
-        }
-    }
-    if(Player.list[selfId].map === teleportingMap && shadeAmount > 1.5){
-        shadeSpeed = -3 / 40;
-        lastMap = '';
     }
     shadeAmount += shadeSpeed;
     mapShadeAmount += mapShadeSpeed;

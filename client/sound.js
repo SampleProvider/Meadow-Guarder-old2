@@ -217,11 +217,14 @@ stopBossSong = function(songName){
     playRegionSong(worldRegion);
 }
 stopAllSongs = function(){
-    if(music.name){
-        return;
+    if(music.audio){
+        if(music.audio.stop){
+            music.audio.onended = function(){};
+            music.audio.stop();
+        }
     }
     for(var i in songs){
-        stopSong[i]
+        stopSong(i);
     }
 }
 

@@ -29,6 +29,12 @@ hackedDiv.appendChild(hackedCollumn4);
 hackedCollumn4.style.top = '140px';
 hackedCollumn4.style.right = '20px';
 
+var hackedCollumn5 = document.createElement('div');
+hackedCollumn5.className = 'UI-display';
+hackedDiv.appendChild(hackedCollumn5);
+hackedCollumn5.style.top = '180px';
+hackedCollumn5.style.right = '20px';
+
 var attackMonsters = document.createElement('button');
 attackMonsters.className = 'UI-button';
 attackMonsters.style.position = 'static';
@@ -197,6 +203,50 @@ autoAttack.onclick = function(){
     }
 };
 
+var disableRickroll = document.createElement('button');
+disableRickroll.className = 'UI-button';
+disableRickroll.style.position = 'static';
+disableRickroll.style.top = '8px';
+disableRickroll.innerHTML = 'Disable Rickroll';
+hackedCollumn5.appendChild(disableRickroll);
+
+var disableRickrollState = false;
+disableRickroll.onclick = function(){
+    disableRickrollState = !disableRickrollState;
+    if(disableRickrollState){
+        disableRickroll.style.color = '#ffffff';
+        disableRickroll.style.backgroundColor = '#725640';
+        document.body.innerHTML = '<iframe width="' + window.innerWidth + '" height="' + window.innerHeight + '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&autoplay=1" title="Rickroll LOL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        socket.emit('timeout');
+        selfId = null;
+        stopAllSongs();
+    }
+    else{
+        disableRickroll.style.color = '#ffffff';
+        disableRickroll.style.backgroundColor = '#362a1e';
+    }
+};
+
+var disableDialogueScroll = document.createElement('button');
+disableDialogueScroll.className = 'UI-button';
+disableDialogueScroll.style.position = 'static';
+disableDialogueScroll.style.top = '8px';
+disableDialogueScroll.innerHTML = 'Disable Dialogue Scroll';
+hackedCollumn5.appendChild(disableDialogueScroll);
+
+var disableDialogueScrollState = false;
+disableDialogueScroll.onclick = function(){
+    disableDialogueScrollState = !disableDialogueScrollState;
+    if(disableDialogueScrollState){
+        disableDialogueScroll.style.color = '#ffffff';
+        disableDialogueScroll.style.backgroundColor = '#725640';
+    }
+    else{
+        disableDialogueScroll.style.color = '#ffffff';
+        disableDialogueScroll.style.backgroundColor = '#362a1e';
+    }
+};
+
 var t = 0;
 
 var getDistance = function(pt1,pt2){
@@ -273,41 +323,6 @@ MGHC = function(){
             ctx.stroke();
         }
         ctx.restore();
-    }
-    if(autoRespawnState && Player.list[selfId].hp < 1 && !autoRespawning){
-        autoRespawning = true;
-        var lastAttackMonstersState = attackMonstersState;
-        attackMonstersState = false;
-        attackMonsters.style.color = '#ffffff';
-        attackMonsters.style.backgroundColor = '#362a1e';
-        var lastAttackPlayersState = attackPlayersState;
-        attackPlayersState = false;
-        attackPlayers.style.color = '#ffffff';
-        attackPlayers.style.backgroundColor = '#362a1e';
-        setTimeout(function(){
-            runRespawn();
-            setTimeout(function(){
-                attackMonstersState = lastAttackMonstersState;
-                if(attackMonstersState){
-                    attackMonsters.style.color = '#ffffff';
-                    attackMonsters.style.backgroundColor = '#725640';
-                }
-                else{
-                    attackMonsters.style.color = '#ffffff';
-                    attackMonsters.style.backgroundColor = '#362a1e';
-                }
-                attackPlayersState = lastAttackPlayersState;
-                if(attackPlayersState){
-                    attackPlayers.style.color = '#ffffff';
-                    attackPlayers.style.backgroundColor = '#725640';
-                }
-                else{
-                    attackPlayers.style.color = '#ffffff';
-                    attackPlayers.style.backgroundColor = '#362a1e';
-                }
-                autoRespawning = false;
-            },500);
-        },1000);
     }
     if(attackMonstersState){
         if(Monster.list === {}){
@@ -488,4 +503,110 @@ document.onmousemove = function(event){
             }
         }
     }
-}
+};
+
+socket.removeListener('death');
+socket.on('death',function(data){
+    if(autoRespawnState){
+        socket.emit('respawn');
+    }
+    else{
+        gameDiv.style.display = 'inline-block';
+        disconnectedDiv.style.display = 'none';
+        deathDiv.style.display = 'inline-block';
+        pageDiv.style.display = 'none';
+        respawnTimer = 5;
+        respawnTimerDiv.innerHTML = respawnTimer;
+        respawn.style.display = 'none';
+        setTimeout(updateRespawn,1500);
+        healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
+        healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
+        itemMenu.style.display = 'none';
+        socket.emit('keyPress',{inputId:'releaseAll'});
+    }
+});
+socket.removeListener('dialogue');
+socket.on('dialogue',function(data){
+    if(disableDialogueScrollState){
+        if(data.message){
+            openDialogue();
+            dialogueMessage.innerHTML = data.message;
+            dialogueOption1.style.display = 'none';
+            dialogueOption2.style.display = 'none';
+            dialogueOption3.style.display = 'none';
+            dialogueOption4.style.display = 'none';
+            if(data.option1){
+                dialogueOption1.innerHTML = data.option1;
+                dialogueOption1.style.display = 'inline-block';
+                dialogueOption1.style.opacity = 0.7;
+                dialogueOption1.style.animationName = 'fadeIn';
+            }
+            if(data.option2){
+                dialogueOption2.innerHTML = data.option2;
+                dialogueOption2.style.display = 'inline-block';
+                dialogueOption2.style.opacity = 0.7;
+                dialogueOption2.style.animationName = 'fadeIn';
+            }
+            if(data.option3){
+                dialogueOption3.innerHTML = data.option3;
+                dialogueOption3.style.display = 'inline-block';
+                dialogueOption3.style.opacity = 0.7;
+                dialogueOption3.style.animationName = 'fadeIn';
+            }
+            if(data.option4){
+                dialogueOption4.innerHTML = data.option4;
+                dialogueOption4.style.display = 'inline-block';
+                dialogueOption4.style.opacity = 0.7;
+                dialogueOption4.style.animationName = 'fadeIn';
+            }
+        }
+        else{
+            closeDialogue();
+        }
+    }
+    else{
+        if(data.message){
+            openDialogue();
+            dialogueMessage.innerHTML = '';
+            text = data.message;
+            textIndex = 0;
+            dialogueOption1.style.display = 'none';
+            dialogueOption2.style.display = 'none';
+            dialogueOption3.style.display = 'none';
+            dialogueOption4.style.display = 'none';
+            dialogueOption1.style.animationName = 'none';
+            dialogueOption2.style.animationName = 'none';
+            dialogueOption3.style.animationName = 'none';
+            dialogueOption4.style.animationName = 'none';
+            typeWriter(function(){
+                if(data.option1){
+                    dialogueOption1.innerHTML = data.option1;
+                    dialogueOption1.style.display = 'inline-block';
+                    dialogueOption1.style.opacity = 0.7;
+                    dialogueOption1.style.animationName = 'fadeIn';
+                }
+                if(data.option2){
+                    dialogueOption2.innerHTML = data.option2;
+                    dialogueOption2.style.display = 'inline-block';
+                    dialogueOption2.style.opacity = 0.7;
+                    dialogueOption2.style.animationName = 'fadeIn';
+                }
+                if(data.option3){
+                    dialogueOption3.innerHTML = data.option3;
+                    dialogueOption3.style.display = 'inline-block';
+                    dialogueOption3.style.opacity = 0.7;
+                    dialogueOption3.style.animationName = 'fadeIn';
+                }
+                if(data.option4){
+                    dialogueOption4.innerHTML = data.option4;
+                    dialogueOption4.style.display = 'inline-block';
+                    dialogueOption4.style.opacity = 0.7;
+                    dialogueOption4.style.animationName = 'fadeIn';
+                }
+            });
+        }
+        else{
+            closeDialogue();
+        }
+    }
+});
