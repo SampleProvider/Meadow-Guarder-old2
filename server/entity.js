@@ -1323,10 +1323,7 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
-        if(self.hp <= 0){
-            return;
-        }
-        if(self.keyPress.leftClick === true && self.canAttack){
+        if(self.keyPress.leftClick === true && self.canAttack && self.hp > 0){
             self.passiveReload += 1;
             self.doAttack(self.passiveAttackData,self.passiveReload);
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
@@ -1667,15 +1664,17 @@ Player = function(param,socket){
         }
     }
     self.pickUpItems = function(){
-        for(var i in DroppedItem.list){
-            if(DroppedItem.list[i].parent + '' === self.id + '' || DroppedItem.list[i].allPlayers){
-                if(self.getSquareDistance(DroppedItem.list[i]) < 32){
-                    if(DroppedItem.list[i].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
-                        if(self.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
-                            self.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
-                            self.keyPress.leftClick = false;
-                            delete DroppedItem.list[i];
-                            break;
+        if(self.canMove){
+            for(var i in DroppedItem.list){
+                if(DroppedItem.list[i].parent + '' === self.id + '' || DroppedItem.list[i].allPlayers){
+                    if(self.getSquareDistance(DroppedItem.list[i]) < 32){
+                        if(DroppedItem.list[i].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
+                            if(self.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
+                                self.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
+                                self.keyPress.leftClick = false;
+                                delete DroppedItem.list[i];
+                                break;
+                            }
                         }
                     }
                 }
@@ -2207,8 +2206,6 @@ Player.onConnect = function(socket,username){
                 delete SOCKET_LIST[player.id];
                 return;
             }
-            player.canMove = true;
-            player.canAttack = false;
             player.hp = Math.round(player.hpMax / 2);
             player.teleportToSpawn();
             addToChat('#00ff00',player.name + ' respawned.');
@@ -2377,11 +2374,20 @@ Projectile = function(param){
     self.update = function(){
         self.vertices = [];
         self.updatePattern();
-        self.updatePosition();
-        self.updateGridPosition();
-        self.x = Math.round(self.x);
-        self.y = Math.round(self.y);
-        self.updateCollisions();
+        var calculations = Math.floor(Math.max(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)) / 20,1));
+        var spdX = self.spdX;
+        var spdY = self.spdY;
+        self.spdX /= calculations;
+        self.spdY /= calculations;
+        for(var i = 0;i < calculations;i++){
+            self.updatePosition();
+            self.updateGridPosition();
+            self.x = Math.round(self.x);
+            self.y = Math.round(self.y);
+            self.updateCollisions();
+        }
+        self.spdX = spdX;
+        self.spdY = spdY;
         self.animation += 0.5;
         if(self.animation >= self.animations){
             self.animation = 0;
@@ -2545,6 +2551,10 @@ Projectile = function(param){
                 self.collided = true;
             }
         }
+    }
+    self.updateCollisions();
+    if(self.collided === true){
+        return;
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
