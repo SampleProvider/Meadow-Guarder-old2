@@ -536,6 +536,7 @@ socket.on('update',function(data){
                                 else{
                                     for(var k in data.player[i][j]){
                                         var index = k;
+                                        var slot = document.getElementById('debuffSlot' + index);
                                         var debuff = debuffData[index];
                                         var debuffName = debuff.name;
                                         var time = Math.ceil(data.player[i][j][index] / 20);
