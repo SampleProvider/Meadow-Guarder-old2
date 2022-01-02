@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<!--<meta name="viewport" content="width=device-width">-->
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-
 	<link rel="icon" href="/client/img/favicon.png" type="image/png" async>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<noscript><meta http-equiv="refresh" content="0; url=./client/nojs.html"/></noscript>
@@ -58,6 +57,20 @@
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
 							Do you want to contribute to this game? Then click <a class="UI-link" href="https://forms.gle/ScdgYv1CqezcGb1r9" target="_blank">here</a>! Also, be sure to join our discord server <a class="UI-link" href="https://discord.gg/Py5GKdMvrZ" target="_blank">here</a>! The Official Meadow Guarder Wiki is <a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/wiki">here</a>!
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/2/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added the Debuff System.
+							<br>
+							Added more potions.
+							<br>
+							Fixed Bugs.
 						</div>
 					</div>
 				</div>
@@ -673,6 +686,7 @@
 
 			</div>
 		</div>
+		<div id="debuffDiv" onmouseover="mouseUp(event);mouseInHotbar(event);"></div>
 		<div id="craftBackground" class="UI-text" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);">
 			
 		</div>
@@ -777,6 +791,7 @@
 			</div>
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display" style="display: none;"></div>
+		<div id="debuffMenu" class="itemMenu UI-display" style="display: none;"></div>
 		<div id="draggingItem" draggable="false"></div>
 	</div>
 	<div id="disconnectedDiv" style="display: none;" onmouseover="mouseUp(event);mouseInMenu(event);" onclick="location.reload()">
@@ -784,12 +799,12 @@
 	</div>
 	<script src="/client/inventory.js" defer></script>
 	<script src="/client/game.js" defer></script>
+	<script src="/client/sound.js" defer></script>
 	<script src="/client/chat.js" defer></script>
 	<script src="/client/settings.js" defer></script>
 	<script src="/client/entity.js" defer></script>
 	<script src="/client/maps.js" defer></script>
 	<script src="/client/signIn.js" defer></script>
-	<script src="/client/sound.js" defer></script>
 	<!--<script src="/client/socket.js"></script>-->
 	<script src="/socket.io/socket.io.js"></script>
 </body>

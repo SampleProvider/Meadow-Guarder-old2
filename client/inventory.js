@@ -295,10 +295,13 @@ Inventory = function(socket,server){
         }
         return false;
     }
-    self.drawItem = function(slot,drawId,large){
+    self.drawItem = function(slot,drawId,size){
         var slotCanvas = document.createElement("canvas");
-        if(large){
+        if(size === 'large'){
             slotCanvas.className += 'slotCanvasLarge';
+        }
+        else if(size === 'small'){
+            slotCanvas.className += 'slotCanvasSmall';
         }
         else{
             slotCanvas.className += 'slotCanvas';
@@ -583,7 +586,7 @@ Inventory = function(socket,server){
         if(self.draggingItem.id){
             draggingItem.style.display = 'inline-block';
             draggingItem.innerHTML = '';
-            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
             draggingItem.style.left = (rawMouseX - 32) + 'px';
             draggingItem.style.top = (rawMouseY - 32) + 'px';
             if(self.draggingItem.amount !== 1){
@@ -777,7 +780,7 @@ Inventory = function(socket,server){
             }
             if(self.isItem(index)){
                 var item = Item.list[self.items[index].id];
-                self.drawItem(slot,item.drawId,false);
+                self.drawItem(slot,item.drawId,'normal');
                 var itemName = item.name;
                 if(self.items[index].amount !== 1){
                     itemName += ' (' + self.items[index].amount + ')';
@@ -792,7 +795,7 @@ Inventory = function(socket,server){
                 cooldownDiv.style.height = 100 * self.items[index].cooldown / item.useTime + '%';
                 self.itemDescriptions[index] = '<span style="color: ' + self.getRarityColor(item.rarity) + '">' + itemName + '</span><br><div style="font-size: 11px">' + self.getDescription(item) + '</div>';
                 if(index >= 0 && index <= 9){
-                    self.drawItem(hotbarSlot,item.drawId,false);
+                    self.drawItem(hotbarSlot,item.drawId,'normal');
                     if(self.items[index].amount !== 1){
                         var itemAmount = document.createElement('div');
                         itemAmount.innerHTML = self.items[index].amount;
@@ -844,7 +847,7 @@ Inventory = function(socket,server){
             slot.className = 'inventorySlot craftMenuSlot';
             if(self.isCraft(index)){
                 var item = Item.list[crafts[index].id];
-                self.drawItem(slot,item.drawId,false);
+                self.drawItem(slot,item.drawId,'normal');
                 var itemName = item.name;
                 if(crafts[index].amount !== 1){
                     itemName += ' (' + crafts[index].amount + ')';
@@ -912,7 +915,7 @@ Inventory = function(socket,server){
                         if(self.draggingItem.id){
                             draggingItem.style.display = 'inline-block';
                             draggingItem.innerHTML = '';
-                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
                             draggingItem.style.left = (rawMouseX - 32) + 'px';
                             draggingItem.style.top = (rawMouseY - 32) + 'px';
                             if(self.draggingItem.amount !== 1){
@@ -983,7 +986,7 @@ Inventory = function(socket,server){
             slot.className = 'inventorySlot shopMenuSlot';
             if(self.isShop(index)){
                 var item = Item.list[npcData[self.shopNpc].shop[index].id];
-                self.drawItem(slot,item.drawId,false);
+                self.drawItem(slot,item.drawId,'normal');
                 var itemName = item.name;
                 if(npcData[self.shopNpc].shop[index].amount !== 1){
                     itemName += ' (' + npcData[self.shopNpc].shop[index].amount + ')';
@@ -1133,7 +1136,7 @@ Inventory = function(socket,server){
                         if(self.draggingItem.id){
                             draggingItem.style.display = 'inline-block';
                             draggingItem.innerHTML = '';
-                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                            self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
                             draggingItem.style.left = (rawMouseX - 32) + 'px';
                             draggingItem.style.top = (rawMouseY - 32) + 'px';
                             if(self.draggingItem.amount !== 1){
@@ -1426,7 +1429,7 @@ Inventory = function(socket,server){
             if(self.draggingItem.id){
                 draggingItem.style.display = 'inline-block';
                 draggingItem.innerHTML = '';
-                self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,true);
+                self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
                 draggingItem.style.left = (rawMouseX - 32) + 'px';
                 draggingItem.style.top = (rawMouseY - 32) + 'px';
                 if(self.draggingItem.amount !== 1){

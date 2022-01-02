@@ -1401,6 +1401,34 @@
             }
         }]
     },
+    "regenerationpotion":{
+        "1":[{
+            "id":"debuff",
+            "name":"regeneration",
+            "time":9600
+        }]
+    },
+    "speedpotion":{
+        "1":[{
+            "id":"debuff",
+            "name":"speed",
+            "time":9600
+        }]
+    },
+    "resistancepotion":{
+        "1":[{
+            "id":"debuff",
+            "name":"resistance",
+            "time":9600
+        }]
+    },
+    "strengthpotion":{
+        "1":[{
+            "id":"debuff",
+            "name":"strength",
+            "time":9600
+        }]
+    },
     "healthpotion":{
         "1":[{
             "id":"none",

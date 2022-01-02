@@ -58,10 +58,10 @@ io.sockets.on('connection',function(socket){
 			socket.spam += 1.5;
 		}
 		if(type === 'game'){
-			socket.spam += 0.4;
+			socket.spam += 0.2;
 		}
 		if(type === 'keyPress'){
-			socket.spam += 0.2;
+			socket.spam += 0.1;
 		}
 		if(type === 'nonFrequent'){
 			socket.spam += 1;

@@ -755,6 +755,15 @@ canvas {
     border-radius: 3px;
     pointer-events: none;
 }
+.slotCanvasSmall {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    image-rendering: pixelated;
+}
 .slotCanvas {
     position: relative;
     left: 2px;
@@ -892,6 +901,35 @@ canvas {
     pointer-events: none;
 }
 
+
+#debuffDiv {
+    position: absolute;
+    left: 50%;
+    bottom: 76px;
+    width: 584px;
+    height: 24px;
+    margin: 0px;
+    padding: 0px;
+    font-size: small;
+    border-radius: 4px;
+    transform: translate(-50%, 0%);
+}
+.debuffSlot {
+    position: relative;
+    right: 0px;
+    width: 28px;
+    height: 28px;
+    margin-left: 0px;
+    margin-right: 4px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+    padding: 0px;
+    background-color: #725640;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    float: left;
+    cursor: pointer;
+}
 
 #craftBackground {
     position: absolute;

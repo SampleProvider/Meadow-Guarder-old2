@@ -1,0 +1,32 @@
+{
+    "regeneration":{
+        "name":"Regeneration",
+        "drawId":10,
+        "rarity":3,
+        "hpRegen":10
+    },
+    "speed":{
+        "name":"Speed",
+        "drawId":12,
+        "rarity":3,
+        "movementSpeed":10
+    },
+    "resistance":{
+        "name":"Resistance",
+        "drawId":11,
+        "rarity":3,
+        "defense":10
+    },
+    "strength":{
+        "name":"Strength",
+        "drawId":14,
+        "rarity":3,
+        "damage":15
+    },
+    "poison":{
+        "name":"Poison",
+        "drawId":2,
+        "rarity":4,
+        "hpRegen":-10
+    }
+}

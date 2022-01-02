@@ -85,6 +85,7 @@ attackData = require('./../client/data/attacks.json');
 monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
 songData = require('./../client/data/songs.json');
+debuffData = require('./../client/data/debuffs.json');
 harvestableNpcData = require('./../client/data/harvestableNpcs.json');
 
 quests = {};
@@ -347,6 +348,8 @@ Actor = function(param){
     self.projectilesHit = {};
 
     self.playersDamaged = {};
+
+    self.debuffs = {};
 
     if(param.onDeath){
         self.onDeath = param.onDeath;
@@ -1003,6 +1006,116 @@ Actor = function(param){
         self.dashX = dashDistance / self.dashTime * dashX;
         self.dashY = dashDistance / self.dashTime * dashY;
     }
+    self.addDebuff = function(id,time){
+        if(self.debuffs[id]){
+            if(self.debuffs[id] > time){
+
+            }
+            else{
+                self.debuffs[id] = time;
+            }
+        }
+        else{
+            self.debuffs[id] = time;
+            if(debuffData[id].hpMax !== undefined){
+                self.hpMax += debuffData[id].hpMax;
+                self.hp += debuffData[id].hpMax;
+            }
+            if(debuffData[id].manaMax !== undefined){
+                self.manaMax += debuffData[id].manaMax;
+                self.mana += debuffData[id].manaMax;
+            }
+            if(debuffData[id].damage !== undefined){
+                self.stats.damage += debuffData[id].damage;
+            }
+            if(debuffData[id].critChance !== undefined){
+                self.stats.critChance += debuffData[id].critChance;
+            }
+            if(debuffData[id].critPower !== undefined){
+                self.stats.critPower += debuffData[id].critPower;
+            }
+            if(debuffData[id].defense !== undefined){
+                self.stats.defense += debuffData[id].defense;
+            }
+            if(debuffData[id].hpRegen !== undefined){
+                self.stats.hpRegen += debuffData[id].hpRegen;
+            }
+            if(debuffData[id].manaRegen !== undefined){
+                self.stats.manaRegen += debuffData[id].manaRegen;
+            }
+            if(debuffData[id].movementSpeed !== undefined){
+                self.maxSpeed += debuffData[id].movementSpeed;
+            }
+            if(debuffData[id].attacks !== undefined){
+                if(attackData[debuffData[id].attacks]){
+                    for(var j in attackData[debuffData[id].attacks]){
+                        if(self.mainAttackData[j]){
+                            for(var k in attackData[debuffData[id].attacks][j]){
+                                self.mainAttackData[j].push(attackData[debuffData[id].attacks][j][k]);
+                            }
+                        }
+                        else{
+                            self.mainAttackData[j] = Object.create(attackData[debuffData[id].attacks][j]);
+                        }
+                    }
+                }
+            }
+            if(debuffData[id].passives !== undefined){
+                if(attackData[debuffData[id].passives]){
+                    for(var j in attackData[debuffData[id].passives]){
+                        if(self.passiveAttackData[j]){
+                            for(var k in attackData[debuffData[id].passives][j]){
+                                self.passiveAttackData[j].push(attackData[debuffData[id].passives][j][k]);
+                            }
+                        }
+                        else{
+                            self.passiveAttackData[j] = Object.create(attackData[debuffData[id].passives][j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    self.updateDebuffs = function(){
+        for(var i in self.debuffs){
+            self.debuffs[i] -= 1;
+            if(self.debuffs[i] <= 0){
+                delete self.debuffs[i];
+                if(debuffData[i].hpMax !== undefined){
+                    self.hpMax -= debuffData[i].hpMax;
+                    self.hp -= debuffData[i].hpMax;
+                }
+                if(debuffData[i].manaMax !== undefined){
+                    self.manaMax -= debuffData[i].manaMax;
+                    self.mana -= debuffData[i].manaMax;
+                }
+                if(debuffData[i].damage !== undefined){
+                    self.stats.damage -= debuffData[i].damage;
+                }
+                if(debuffData[i].critChance !== undefined){
+                    self.stats.critChance -= debuffData[i].critChance;
+                }
+                if(debuffData[i].critPower !== undefined){
+                    self.stats.critPower -= debuffData[i].critPower;
+                }
+                if(debuffData[i].defense !== undefined){
+                    self.stats.defense -= debuffData[i].defense;
+                }
+                if(debuffData[i].hpRegen !== undefined){
+                    self.stats.hpRegen -= debuffData[i].hpRegen;
+                }
+                if(debuffData[i].manaRegen !== undefined){
+                    self.stats.manaRegen -= debuffData[i].manaRegen;
+                }
+                if(debuffData[i].movementSpeed !== undefined){
+                    self.maxSpeed -= debuffData[i].movementSpeed;
+                }
+                if(debuffData[i].attacks !== undefined || debuffData[i].passives !== undefined){
+                    self.updateStats();
+                }
+            }
+        }
+    }
     self.doAttack = function(data,reload){
         if(self.canAttack === false){
             return;
@@ -1023,6 +1136,9 @@ Actor = function(param){
                                     SOCKET_LIST[k].emit('musicBox',data[i][j].songName);
                                 }
                                 addToChat('#00ffff',self.name + ' started the music ' + songData[data[i][j].songName].name + '.');
+                                break;
+                            case "debuff":
+                                self.addDebuff(data[i][j].name,data[i][j].time);
                                 break;
                         }
                         if(data[i][j].xpGain){
@@ -1327,10 +1443,14 @@ Player = function(param,socket){
         }
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
-        self.updateStats();
+        if(self.inventory.updateStats){
+            self.inventory.updateStats = false;
+            self.updateStats();
+        }
         self.updateXp();
         self.updateAnimation();
         self.updateAttack();
+        self.updateDebuffs();
         self.updateHp();
         self.updateMana();
         if(self.mapChange === 0){
@@ -1441,143 +1561,55 @@ Player = function(param,socket){
         socket.emit('nextReload');
     }
     self.updateStats = function(){
-        if(self.inventory.updateStats){
-            self.inventory.updateStats = false;
-
-            for(var i in Projectile.list){
-                if(Projectile.list[i].id === self.id){
-                    delete Projectile.list[i];
-                }
+        for(var i in Projectile.list){
+            if(Projectile.list[i].id === self.id){
+                delete Projectile.list[i];
             }
+        }
 
-            var hp = self.hp;
-            var hpMax = self.hpMax;
-            var manaMax = self.manaMax;
+        var hp = self.hp;
+        var hpMax = self.hpMax;
+        var manaMax = self.manaMax;
 
-            self.hpMax = hpLevels[self.level];
-            self.manaMax = manaLevels[self.level];
-            
-            self.stats = {
-                damage:0,
-                defense:0,
-                hpRegen:2,
-                manaRegen:2,
-                critChance:0,
-                critPower:0,
-            }
-            self.luck = 1;
+        self.hpMax = hpLevels[self.level];
+        self.manaMax = manaLevels[self.level];
+        
+        self.stats = {
+            damage:0,
+            defense:0,
+            hpRegen:2,
+            manaRegen:2,
+            critChance:0,
+            critPower:0,
+        }
+        self.luck = 1;
 
-            self.pickaxePower = 0;
-            self.axePower = 0;
-            self.scythePower = 0;
+        self.pickaxePower = 0;
+        self.axePower = 0;
+        self.scythePower = 0;
 
-            self.currentItem = '';
+        self.currentItem = '';
 
-            self.maxSpeed = 10;
+        self.maxSpeed = 10;
 
-            self.mainAttackData = {};
-            self.passiveAttackData = {};
-            self.useTime = 0;
+        self.mainAttackData = {};
+        self.passiveAttackData = {};
+        self.useTime = 0;
 
-            var maxSlots = self.inventory.maxSlots;
-            self.inventory.maxSlots = 20;
+        var maxSlots = self.inventory.maxSlots;
+        self.inventory.maxSlots = 20;
 
-            var damageType = '';
+        var damageType = '';
 
-            for(var i in self.inventory.items){
-                if(i >= 0){
-                    if(i + '' === self.inventory.hotbarSelectedItem + ''){
-                        if(self.inventory.items[i].id){
-                            var item = Item.list[self.inventory.items[i].id];
-                            if(item.equip !== 'hotbar' && item.equip !== 'consume'){
-                                continue;
-                            }
-                            self.currentItem = self.inventory.items[i].id;
-                            if(item.defense !== undefined){
-                                self.stats.defense += item.defense;
-                            }
-                            if(item.hp !== undefined){
-                                self.hpMax += item.hp;
-                            }
-                            if(item.hpRegen !== undefined){
-                                self.stats.hpRegen += item.hpRegen;
-                            }
-                            if(item.mana !== undefined){
-                                self.manaMax += item.mana;
-                            }
-                            if(item.manaRegen !== undefined){
-                                self.stats.manaRegen += item.manaRegen;
-                            }
-                            if(item.movementSpeed !== undefined){
-                                self.maxSpeed += item.movementSpeed;
-                            }
-                            if(item.damage !== undefined){
-                                self.stats.damage += item.damage;
-                            }
-                            if(item.meleeDamage !== undefined){
-                                self.stats.damage += item.meleeDamage;
-                                damageType = 'melee';
-                            }
-                            if(item.rangedDamage !== undefined){
-                                self.stats.damage += item.rangedDamage;
-                                damageType = 'ranged';
-                            }
-                            if(item.magicDamage !== undefined){
-                                self.stats.damage += item.magicDamage;
-                                damageType = 'magic';
-                            }
-                            if(item.critChance !== undefined){
-                                self.stats.critChance += item.critChance;
-                            }
-                            if(item.critPower !== undefined){
-                                self.stats.critPower += item.critPower;
-                            }
-                            if(item.pickaxePower !== undefined){
-                                self.pickaxePower = item.pickaxePower;
-                            }
-                            if(item.axePower !== undefined){
-                                self.axePower = item.axePower;
-                            }
-                            if(item.scythePower !== undefined){
-                                self.scythePower = item.scythePower;
-                            }
-                            if(item.useTime !== undefined){
-                                self.useTime = item.useTime;
-                            }
-                            if(item.attacks !== undefined){
-                                if(attackData[item.attacks]){
-                                    for(var j in attackData[item.attacks]){
-                                        if(self.mainAttackData[j]){
-                                            for(var k in attackData[item.attacks][j]){
-                                                self.mainAttackData[j].push(attackData[item.attacks][j][k]);
-                                            }
-                                        }
-                                        else{
-                                            self.mainAttackData[j] = Object.create(attackData[item.attacks][j]);
-                                        }
-                                    }
-                                }
-                            }
-                            if(item.passives !== undefined){
-                                if(attackData[item.passives]){
-                                    for(var j in attackData[item.passives]){
-                                        if(self.passiveAttackData[j]){
-                                            for(var k in attackData[item.passives][j]){
-                                                self.passiveAttackData[j].push(attackData[item.passives][j][k]);
-                                            }
-                                        }
-                                        else{
-                                            self.passiveAttackData[j] = Object.create(attackData[item.passives][j]);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else if(i.slice(0,5) !== 'trade'){
+        for(var i in self.inventory.items){
+            if(i >= 0){
+                if(i + '' === self.inventory.hotbarSelectedItem + ''){
                     if(self.inventory.items[i].id){
                         var item = Item.list[self.inventory.items[i].id];
+                        if(item.equip !== 'hotbar' && item.equip !== 'consume'){
+                            continue;
+                        }
+                        self.currentItem = self.inventory.items[i].id;
                         if(item.defense !== undefined){
                             self.stats.defense += item.defense;
                         }
@@ -1599,14 +1631,17 @@ Player = function(param,socket){
                         if(item.damage !== undefined){
                             self.stats.damage += item.damage;
                         }
-                        if(item.meleeDamage !== undefined && damageType === 'melee'){
+                        if(item.meleeDamage !== undefined){
                             self.stats.damage += item.meleeDamage;
+                            damageType = 'melee';
                         }
-                        if(item.rangedDamage !== undefined && damageType === 'ranged'){
+                        if(item.rangedDamage !== undefined){
                             self.stats.damage += item.rangedDamage;
+                            damageType = 'ranged';
                         }
-                        if(item.magicDamage !== undefined && damageType === 'magic'){
+                        if(item.magicDamage !== undefined){
                             self.stats.damage += item.magicDamage;
+                            damageType = 'magic';
                         }
                         if(item.critChance !== undefined){
                             self.stats.critChance += item.critChance;
@@ -1614,8 +1649,17 @@ Player = function(param,socket){
                         if(item.critPower !== undefined){
                             self.stats.critPower += item.critPower;
                         }
-                        if(item.slots !== undefined){
-                            self.inventory.maxSlots += item.slots;
+                        if(item.pickaxePower !== undefined){
+                            self.pickaxePower = item.pickaxePower;
+                        }
+                        if(item.axePower !== undefined){
+                            self.axePower = item.axePower;
+                        }
+                        if(item.scythePower !== undefined){
+                            self.scythePower = item.scythePower;
+                        }
+                        if(item.useTime !== undefined){
+                            self.useTime = item.useTime;
                         }
                         if(item.attacks !== undefined){
                             if(attackData[item.attacks]){
@@ -1648,16 +1692,147 @@ Player = function(param,socket){
                     }
                 }
             }
-            if(self.inventory.maxSlots !== maxSlots){
-                self.inventory.refreshMenu(maxSlots);
+            else if(i.slice(0,5) !== 'trade'){
+                if(self.inventory.items[i].id){
+                    var item = Item.list[self.inventory.items[i].id];
+                    if(item.defense !== undefined){
+                        self.stats.defense += item.defense;
+                    }
+                    if(item.hp !== undefined){
+                        self.hpMax += item.hp;
+                    }
+                    if(item.hpRegen !== undefined){
+                        self.stats.hpRegen += item.hpRegen;
+                    }
+                    if(item.mana !== undefined){
+                        self.manaMax += item.mana;
+                    }
+                    if(item.manaRegen !== undefined){
+                        self.stats.manaRegen += item.manaRegen;
+                    }
+                    if(item.movementSpeed !== undefined){
+                        self.maxSpeed += item.movementSpeed;
+                    }
+                    if(item.damage !== undefined){
+                        self.stats.damage += item.damage;
+                    }
+                    if(item.meleeDamage !== undefined && damageType === 'melee'){
+                        self.stats.damage += item.meleeDamage;
+                    }
+                    if(item.rangedDamage !== undefined && damageType === 'ranged'){
+                        self.stats.damage += item.rangedDamage;
+                    }
+                    if(item.magicDamage !== undefined && damageType === 'magic'){
+                        self.stats.damage += item.magicDamage;
+                    }
+                    if(item.critChance !== undefined){
+                        self.stats.critChance += item.critChance;
+                    }
+                    if(item.critPower !== undefined){
+                        self.stats.critPower += item.critPower;
+                    }
+                    if(item.slots !== undefined){
+                        self.inventory.maxSlots += item.slots;
+                    }
+                    if(item.attacks !== undefined){
+                        if(attackData[item.attacks]){
+                            for(var j in attackData[item.attacks]){
+                                if(self.mainAttackData[j]){
+                                    for(var k in attackData[item.attacks][j]){
+                                        self.mainAttackData[j].push(attackData[item.attacks][j][k]);
+                                    }
+                                }
+                                else{
+                                    self.mainAttackData[j] = Object.create(attackData[item.attacks][j]);
+                                }
+                            }
+                        }
+                    }
+                    if(item.passives !== undefined){
+                        if(attackData[item.passives]){
+                            for(var j in attackData[item.passives]){
+                                if(self.passiveAttackData[j]){
+                                    for(var k in attackData[item.passives][j]){
+                                        self.passiveAttackData[j].push(attackData[item.passives][j][k]);
+                                    }
+                                }
+                                else{
+                                    self.passiveAttackData[j] = Object.create(attackData[item.passives][j]);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
-            self.hp += self.hpMax - hpMax;
-            self.mana += self.manaMax - manaMax;
-
-            if(self.hp <= 0 && hp > 0){
-                self.onDeath(self,'self');
+        }
+        for(var i in self.debuffs){
+            if(debuffData[i].hpMax !== undefined){
+                self.hpMax += debuffData[i].hpMax;
+                self.hp += debuffData[i].hpMax;
             }
+            if(debuffData[i].manaMax !== undefined){
+                self.manaMax += debuffData[i].manaMax;
+                self.mana += debuffData[i].manaMax;
+            }
+            if(debuffData[i].damage !== undefined){
+                self.stats.damage += debuffData[i].damage;
+            }
+            if(debuffData[i].critChance !== undefined){
+                self.stats.critChance += debuffData[i].critChance;
+            }
+            if(debuffData[i].critPower !== undefined){
+                self.stats.critPower += debuffData[i].critPower;
+            }
+            if(debuffData[i].defense !== undefined){
+                self.stats.defense += debuffData[i].defense;
+            }
+            if(debuffData[i].hpRegen !== undefined){
+                self.stats.hpRegen += debuffData[i].hpRegen;
+            }
+            if(debuffData[i].manaRegen !== undefined){
+                self.stats.manaRegen += debuffData[i].manaRegen;
+            }
+            if(debuffData[i].movementSpeed !== undefined){
+                self.maxSpeed += debuffData[i].movementSpeed;
+            }
+            if(debuffData[i].attacks !== undefined){
+                if(attackData[debuffData[i].attacks]){
+                    for(var j in attackData[debuffData[i].attacks]){
+                        if(self.mainAttackData[j]){
+                            for(var k in attackData[debuffData[i].attacks][j]){
+                                self.mainAttackData[j].push(attackData[debuffData[i].attacks][j][k]);
+                            }
+                        }
+                        else{
+                            self.mainAttackData[j] = Object.create(attackData[debuffData[i].attacks][j]);
+                        }
+                    }
+                }
+            }
+            if(debuffData[i].passives !== undefined){
+                if(attackData[debuffData[i].passives]){
+                    for(var j in attackData[debuffData[i].passives]){
+                        if(self.passiveAttackData[j]){
+                            for(var k in attackData[debuffData[i].passives][j]){
+                                self.passiveAttackData[j].push(attackData[debuffData[i].passives][j][k]);
+                            }
+                        }
+                        else{
+                            self.passiveAttackData[j] = Object.create(attackData[debuffData[i].passives][j]);
+                        }
+                    }
+                }
+            }
+        }
+        if(self.inventory.maxSlots !== maxSlots){
+            self.inventory.refreshMenu(maxSlots);
+        }
+
+        self.hp += self.hpMax - hpMax;
+        self.mana += self.manaMax - manaMax;
+
+        if(self.hp <= 0 && hp > 0){
+            self.onDeath(self,'self');
         }
     }
     self.updateHarvest = function(){
@@ -1710,7 +1885,6 @@ Player = function(param,socket){
                 self.xpMax = xpLevels[self.level];
                 addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
                 self.xp -= xpLevels[self.level - 1];
-                self.inventory.updateStats = true;
                 self.updateStats();
             }
             else{
@@ -1923,6 +2097,7 @@ Player = function(param,socket){
         pack.manaMax = self.manaMax;
         pack.currentItem = self.currentItem;
         pack.worldRegion = self.worldRegion;
+        pack.debuffs = self.debuffs;
         pack.type = self.type;
         return pack;
     }
@@ -2750,10 +2925,11 @@ Monster = function(param){
         }
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
-        self.updateHp();
-        self.updateAnimation();
         self.updateTarget();
+        self.updateAnimation();
         self.updateAttack();
+        self.updateDebuffs();
+        self.updateHp();
     }
     self.updateTarget = function(){
         if(self.attackState === 'passive'){

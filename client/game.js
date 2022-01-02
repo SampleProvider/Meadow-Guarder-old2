@@ -21,10 +21,13 @@ socket.on('disconnect',function(){
 });
 
 onGesture = function(){
-    if(audioContext){
+    try{
         if(audioContext.state === 'suspended'){
             audioContext.resume();
         }
+    }
+    catch(err){
+
     }
     tabVisible = true;
 }
@@ -368,6 +371,8 @@ var arrayIsEqual = function(arr1,arr2){
 	return true;
 };
 
+debuffDescriptions = [];
+
 socket.on('selfId',function(data){
     var settingPlayers = document.getElementsByClassName('settingDropdown');
     for(var i = 0;i < settingPlayers.length;i++){
@@ -388,6 +393,7 @@ socket.on('selfId',function(data){
         canSignIn = true;
         tickArray = [];
         itemMenu.style.display = 'none';
+        debuffMenu.style.display = 'none';
     },750);
 });
 socket.on('update',function(data){
@@ -468,6 +474,80 @@ socket.on('update',function(data){
                             if(data.player[i].id === selfId){
                                 manaBarText.innerHTML = player.mana + " / " + player.manaMax;
                                 manaBarValue.style.width = "" + 150 * player.mana / player.manaMax + "px";
+                            }
+                        }
+                        else if(j === 'debuffs'){
+                            var different = false;
+                            if(!player[j]){
+                                different = true;
+                            }
+                            else{
+                                for(var k in data.player[i][j]){
+                                    if(!player[j][k]){
+                                        different = true;
+                                    }
+                                }
+                                for(var k in player[j]){
+                                    if(!data.player[i][j][k]){
+                                        different = true;
+                                    }
+                                }
+                            }
+                            player[j] = data.player[i][j];
+                            if(data.player[i].id === selfId){
+                                if(different){
+                                    var inSlot = false;
+                                    debuffDiv.innerHTML = '';
+                                    for(var k in data.player[i][j]){
+                                        debuffDiv.innerHTML += '<div id="debuffSlot' + k + '" class="debuffSlot"></div>';
+                                    }
+                                    for(var k in data.player[i][j]){
+                                        var createDebuff = function(index){
+                                            var slot = document.getElementById('debuffSlot' + index);
+                                            var debuff = debuffData[index];
+                                            inventory.drawItem(slot,debuff.drawId,'small');
+                                            var debuffName = debuff.name;
+                                            var time = Math.ceil(data.player[i][j][index] / 20);
+                                            if(time >= 60){
+                                                debuffName += ' (' + Math.ceil(time / 60) + 'm)';
+                                            }
+                                            else{
+                                                debuffName += ' (' + time + 's)';
+                                            }
+                                            debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
+                                            slot.onmouseover = function(){
+                                                updateDebuffPopupMenu(index);
+                                            }
+                                            slot.onmouseout = function(){
+                                                updateDebuffPopupMenu(-1);
+                                            }
+                                            var rect = debuffMenu.getBoundingClientRect(slot);
+                                            if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
+                                                updateDebuffPopupMenu(index);
+                                                inSlot = true;
+                                            }
+                                        }
+                                        createDebuff(k);
+                                    }
+                                    if(inSlot === false){
+                                        updateDebuffPopupMenu(-1);
+                                    }
+                                }
+                                else{
+                                    for(var k in data.player[i][j]){
+                                        var index = k;
+                                        var debuff = debuffData[index];
+                                        var debuffName = debuff.name;
+                                        var time = Math.ceil(data.player[i][j][index] / 20);
+                                        if(time >= 60){
+                                            debuffName += ' (' + Math.ceil(time / 60) + 'm)';
+                                        }
+                                        else{
+                                            debuffName += ' (' + time + 's)';
+                                        }
+                                        debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
+                                    }
+                                }
                             }
                         }
                         else if(j === 'img'){
@@ -786,6 +866,7 @@ socket.on('death',function(data){
     healthBarText.innerHTML = 0 + " / " + Player.list[selfId].hpMax;
     healthBarValue.style.width = "" + 150 * 0 / Player.list[selfId].hpMax + "px";
     itemMenu.style.display = 'none';
+    debuffMenu.style.display = 'none';
     socket.emit('keyPress',{inputId:'releaseAll'});
 });
 var runRespawn = function(){
@@ -795,6 +876,7 @@ var runRespawn = function(){
     deathDiv.style.display = 'none';
     pageDiv.style.display = 'none';
     itemMenu.style.display = 'none';
+    debuffMenu.style.display = 'none';
 }
 var updateRespawn = function(){
     if(deathDiv.style.display === 'none'){
@@ -1194,6 +1276,31 @@ updateInventoryPopupMenu = function(slotType,index){
         itemMenu.style.top = rawMouseY + 'px';
     }
 }
+updateDebuffPopupMenu = function(index){
+    if(index === -1){
+        debuffMenu.style.display = 'none';
+        return;
+    }
+    debuffMenu.style.display = 'inline-block';
+    debuffMenu.innerHTML = debuffDescriptions[index];
+    var rect = debuffMenu.getBoundingClientRect();
+    debuffMenu.style.left = '';
+    debuffMenu.style.right = '';
+    debuffMenu.style.top = '';
+    debuffMenu.style.bottom = '';
+    if(rawMouseX + rect.right - rect.left > window.innerWidth){
+        debuffMenu.style.right = window.innerWidth - rawMouseX + 'px';
+    }
+    else{
+        debuffMenu.style.left = rawMouseX + 'px';
+    }
+    if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+        debuffMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+    }
+    else{
+        debuffMenu.style.top = rawMouseY + 'px';
+    }
+}
 dropItem = function(click){
     socket.emit('dragItem',{
         index1:-1,
@@ -1331,6 +1438,25 @@ document.onmousemove = function(event){
                 itemMenu.style.top = rawMouseY + 'px';
             }
         }
+        if(debuffMenu.style.display === 'inline-block'){
+            var rect = debuffMenu.getBoundingClientRect();
+            debuffMenu.style.left = '';
+            debuffMenu.style.right = '';
+            debuffMenu.style.top = '';
+            debuffMenu.style.bottom = '';
+            if(rawMouseX + rect.right - rect.left > window.innerWidth){
+                debuffMenu.style.right = window.innerWidth - rawMouseX + 'px';
+            }
+            else{
+                debuffMenu.style.left = rawMouseX + 'px';
+            }
+            if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+                debuffMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+            }
+            else{
+                debuffMenu.style.top = rawMouseY + 'px';
+            }
+        }
     }
     else{
         mouseX = event.clientX;
@@ -1381,6 +1507,7 @@ mouseInMenu = function(event){
     tabVisible = true;
     if(inGame === true){
         itemMenu.style.display = 'none';
+        debuffMenu.style.display = 'none';
     }
     scrollAllowed = false;
     inGame = false;
@@ -1389,6 +1516,7 @@ mouseInHotbar = function(event){
     tabVisible = true;
     if(inGame === true){
         itemMenu.style.display = 'none';
+        debuffMenu.style.display = 'none';
     }
     scrollAllowed = true;
     inGame = false;

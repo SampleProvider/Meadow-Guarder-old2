@@ -26,6 +26,7 @@ var loadJSON = function(json,cb){
 
 var npcData = {};
 var harvestableNpcData = {};
+var debuffData = {};
 
 window.onload = function(){
     loadJSON('playerImg',function(json){
@@ -171,7 +172,14 @@ window.onload = function(){
                                                                                                     harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
                                                                                                     harvestableNpcData = json;
                                                                                                     harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                                    loadAllMaps();
+                                                                                                    loadJSON('debuffs',function(json){
+                                                                                                        signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
+                                                                                                        var debuffLoading = document.getElementById('debuffLoading');
+                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
+                                                                                                        debuffData = json;
+                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
+                                                                                                        loadAllMaps();
+                                                                                                    });
                                                                                                 });
                                                                                             }
                                                                                         },function(err){
@@ -199,7 +207,14 @@ window.onload = function(){
                                                                                         harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
                                                                                         harvestableNpcData = json;
                                                                                         harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                        loadAllMaps();
+                                                                                        loadJSON('debuffs',function(json){
+                                                                                            signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
+                                                                                            var debuffLoading = document.getElementById('debuffLoading');
+                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
+                                                                                            debuffData = json;
+                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
+                                                                                            loadAllMaps();
+                                                                                        });
                                                                                     });
                                                                                 }
                                                                             }
@@ -272,7 +287,14 @@ window.onload = function(){
                                                                                                     harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
                                                                                                     harvestableNpcData = json;
                                                                                                     harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                                    loadAllMaps();
+                                                                                                    loadJSON('debuffs',function(json){
+                                                                                                        signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
+                                                                                                        var debuffLoading = document.getElementById('debuffLoading');
+                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
+                                                                                                        debuffData = json;
+                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
+                                                                                                        loadAllMaps();
+                                                                                                    });
                                                                                                 });
                                                                                             }
                                                                                         },function(err){
@@ -300,7 +322,14 @@ window.onload = function(){
                                                                                         harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
                                                                                         harvestableNpcData = json;
                                                                                         harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                        loadAllMaps();
+                                                                                        loadJSON('debuffs',function(json){
+                                                                                            signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
+                                                                                            var debuffLoading = document.getElementById('debuffLoading');
+                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
+                                                                                            debuffData = json;
+                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
+                                                                                            loadAllMaps();
+                                                                                        });
                                                                                     });
                                                                                 }
                                                                             }
