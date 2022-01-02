@@ -1144,13 +1144,15 @@ disconnectClient = function(){
 }
 
 var rickroll = document.getElementById('rickroll');
-rickroll.remove = null;
-rickroll.id = Math.random();
-document.getElementsByTagName = null;
 setInterval(function(){
-    rickroll.remove = null;
-    rickroll.id = Math.random();
-    document.getElementsByTagName = null;
+    if(!document.getElementById('rickroll')){
+        document.body.innerHTML = '<video style="left: 0px; top: 0px; width: 100%; height: 100%;" src="/client/websiteAssets/Never Gonna Give You Up.mp4" id="rickroll"></video>';
+        disconnectClient = function(){};
+        socket.emit('timeout');
+        selfId = null;
+        stopAllSongs();
+        rickroll.play();
+    }
     socket.on('rickroll',function(){
         disconnectClient = function(){};
         pageDiv.style.display = 'none';
