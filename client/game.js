@@ -521,7 +521,7 @@ socket.on('update',function(data){
                                             slot.onmouseout = function(){
                                                 updateDebuffPopupMenu(-1);
                                             }
-                                            var rect = document.getBoundingClientRect(slot);
+                                            var rect = slot.getBoundingClientRect();
                                             if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
                                                 updateDebuffPopupMenu(index);
                                                 inSlot = true;
@@ -547,7 +547,7 @@ socket.on('update',function(data){
                                             debuffName += ' (' + time + 's)';
                                         }
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
-                                        var rect = document.getBoundingClientRect(slot);
+                                        var rect = slot.getBoundingClientRect();
                                         if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
                                             updateDebuffPopupMenu(index);
                                         }
