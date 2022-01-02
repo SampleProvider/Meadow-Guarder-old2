@@ -546,6 +546,10 @@ socket.on('update',function(data){
                                             debuffName += ' (' + time + 's)';
                                         }
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
+                                        var rect = debuffMenu.getBoundingClientRect(slot);
+                                        if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
+                                            updateDebuffPopupMenu(index);
+                                        }
                                     }
                                 }
                             }
