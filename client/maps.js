@@ -112,7 +112,10 @@ var renderWorld = function(json,name){
     var mapLoading = document.getElementById('mapLoading');
     mapLoading.innerHTML = '<span style="color: #55ff55">Loading maps... (' + Math.round(numLoaded / totalMaps * 100) + '%)</span>';
     if(numLoaded === totalMaps){
-        loadingComplete = true;
+        totalLoading -= 1;
+        if(totalLoading === 0){
+            loadingComplete = true;
+        }
     }
 }
 var loadTileset = function(json,name){

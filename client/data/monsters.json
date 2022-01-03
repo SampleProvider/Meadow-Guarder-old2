@@ -27,7 +27,13 @@
             "20":[{
                 "id":"projectile",
                 "projectileType":"bone",
-                "param":{}
+                "param":{
+                    "stats":{
+                        "damage":4,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
             }]
         }
     },
@@ -59,7 +65,13 @@
             "10":[{
                 "id":"projectile",
                 "projectileType":"snakeSpit",
-                "param":{}
+                "param":{
+                    "stats":{
+                        "damage":4,
+                        "critChance":0.05,
+                        "critPower":2
+                    }
+                }
             }]
         }
     },
@@ -127,7 +139,73 @@
                 "id":"projectile",
                 "projectileType":"alienflames",
                 "param":{
-                    "directionDeviation":25
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":25,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
+            }],
+            "20":[{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "speed":45,
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":50,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "speed":45,
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":50,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "speed":45,
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":50,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "speed":45,
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":50,
+                        "critChance":0,
+                        "critPower":0
+                    }
+                }
+            },{
+                "id":"projectile",
+                "projectileType":"alienflames",
+                "param":{
+                    "speed":45,
+                    "directionDeviation":25,
+                    "stats":{
+                        "damage":50,
+                        "critChance":0,
+                        "critPower":0
+                    }
                 }
             }]
         }
@@ -210,7 +288,12 @@
                 "id":"projectile",
                 "projectileType":"bone",
                 "param":{
-                    "directionDeviation":60
+                    "directionDeviation":60,
+                    "stats":{
+                        "damage":25,
+                        "critChance":0,
+                        "critPower":0
+                    }
                 }
             }]
         }
@@ -255,7 +338,12 @@
                     "speed":25,
                     "timer":80,
                     "directionDeviation":60,
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":30,
+                        "critChance":0,
+                        "critPower":0
+                    }
                 }
             }],
             "40":[{
@@ -265,7 +353,12 @@
                     "speed":60,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -274,7 +367,12 @@
                     "speed":58,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -283,7 +381,12 @@
                     "speed":56,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -292,7 +395,12 @@
                     "speed":54,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -301,7 +409,12 @@
                     "speed":52,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -310,7 +423,12 @@
                     "speed":50,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -319,7 +437,12 @@
                     "speed":48,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -328,7 +451,12 @@
                     "speed":46,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -337,7 +465,12 @@
                     "speed":44,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -346,7 +479,12 @@
                     "speed":42,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             },{
                 "id":"projectile",
@@ -355,7 +493,12 @@
                     "speed":40,
                     "timer":80,
                     "projectilePattern":"homing",
-                    "collisionType":"none"
+                    "collisionType":"none",
+                    "stats":{
+                        "damage":65,
+                        "critChance":0.05,
+                        "critPower":10000
+                    }
                 }
             }]
         }

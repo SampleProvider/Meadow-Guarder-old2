@@ -586,6 +586,10 @@ Inventory = function(socket,server){
         if(self.draggingItem.id){
             draggingItem.style.display = 'inline-block';
             draggingItem.innerHTML = '';
+            var cooldownDiv = document.createElement('div');
+            cooldownDiv.className = 'cooldownDiv';
+            cooldownDiv.style.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id].useTime + "%";
+            draggingItem.appendChild(cooldownDiv);
             self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
             draggingItem.style.left = (rawMouseX - 32) + 'px';
             draggingItem.style.top = (rawMouseY - 32) + 'px';
@@ -598,10 +602,6 @@ Inventory = function(socket,server){
                 itemAmountDiv.appendChild(itemAmount);
                 draggingItem.appendChild(itemAmountDiv);
             }
-            var cooldownDiv = document.createElement('div');
-            cooldownDiv.className = 'cooldownDiv';
-            cooldownDiv.style.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id].useTime + "%";
-            draggingItem.appendChild(cooldownDiv);
         }
         else{
             draggingItem.style.display = 'none';

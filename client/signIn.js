@@ -4,6 +4,7 @@ var signErrorText = '';
 var deletePasswordState = 0;
 var changePasswordState = 0;
 var canSignIn = true;
+var totalLoading = 8;
 var loadingComplete = false;
 
 var loadJSON = function(json,cb){
@@ -77,274 +78,10 @@ window.onload = function(){
                         var playerImgLoading = document.getElementById('playerImgLoading');
                         playerImgLoading.innerHTML = '<span style="color: #55ff55">Loading players... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
                         if(currentAmount === amount){
-                            loadJSON('projectiles',function(json){
-                                signError.innerHTML = '<div id="projectileLoading"></div>' + signError.innerHTML;
-                                var projectileLoading = document.getElementById('projectileLoading');
-                                projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (0%)</span>';
-                                var amount = 0;
-                                for(var i in json){
-                                    amount += 1;
-                                }
-                                var currentAmount = 0;
-                                for(var i in json){
-                                    Img[i] = new Image();
-                                    Img[i].src = '/client/img/projectiles/' + i + '.png';
-                                    Img[i].onload = function(){
-                                        currentAmount += 1;
-                                        var projectileLoading = document.getElementById('projectileLoading');
-                                        projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                        if(currentAmount === amount){
-                                            loadJSON('npcs',function(json){
-                                                signError.innerHTML = '<div id="npcLoading"></div>' + signError.innerHTML;
-                                                var npcLoading = document.getElementById('npcLoading');
-                                                npcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (0%)</span>';
-                                                npcData = json;
-                                                npcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (100%)</span>';
-                                                loadJSON('monsters',function(json){
-                                                    signError.innerHTML = '<div id="monsterLoading"></div>' + signError.innerHTML;
-                                                    var monsterLoading = document.getElementById('monsterLoading');
-                                                    monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (0%)</span>';
-                                                    var amount = 0;
-                                                    for(var i in json){
-                                                        amount += 1;
-                                                    }
-                                                    var currentAmount = 0;
-                                                    for(var i in json){
-                                                        if(Img[json[i].img.body] !== undefined){
-                                                            currentAmount += 1;
-                                                            var monsterLoading = document.getElementById('monsterLoading');
-                                                            monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                            if(currentAmount === amount){
-                                                                loadJSON('songs',function(json){
-                                                                    songs = json;
-                                                                    signError.innerHTML = '<div id="audioLoading"></div>' + signError.innerHTML;
-                                                                    var audioLoading = document.getElementById('audioLoading');
-                                                                    audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (0%)</span>';
-                                                                    try{
-                                                                        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-                                                                        audioContext = new AudioContext();
-                                                                        webAudio = true;
-                                                                        globalVolume = audioContext.createGain();
-                                                                        globalVolume.connect(audioContext.destination);
-                                                                        globalVolume.gain.value = settings.volumePercentage / 100;
-                                                                    }
-                                                                    catch(e){
-                                                                        console.log(e)
-                                                                        signErrorText = signError.innerHTML;
-                                                                        signError.innerHTML = '<span style="color: #ffff00">Warning: WebAudio is not supported in your browser. You will still be able to hear music, however there will be gaps in looping.</span><br>' + signErrorText;
-                                                                        for(var i in songs){
-                                                                            if(songs[i].state === 'playing'){
-                                                                                songs[i].audio.volume = settings.volumePercentage / 100;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    var amount = 0;
-                                                                    for(var i in songs){
-                                                                        amount += 1;
-                                                                    }
-                                                                    var currentAmount = 0;
-                                                                    for(var i in songs){
-                                                                        if(webAudio){
-                                                                            var getAudioData = function(songName){
-                                                                                var request = new XMLHttpRequest();
-                                                                                request.open('GET',songs[songName].url,true);
-                                                                                request.responseType = 'arraybuffer';
-                                                                                request.onload = function(){
-                                                                                    if(songs[songName].loaded === false){
-                                                                                        songs[songName].loaded = true;
-                                                                                        audioContext.decodeAudioData(request.response,function(buffer){
-                                                                                            songs[songName].buffer = buffer;
-                                                                                            songs[songName].audio = audioContext.createBufferSource();
-                                                                                            songs[songName].audio.buffer = buffer;
-                                                                                            songs[songName].audio.loop = true;
-                                                                                            songs[songName].volume = audioContext.createGain();
-                                                                                            songs[songName].volume.gain.value = 0;
-                                                                                            songs[songName].volume.connect(globalVolume);
-                                                                                            songs[songName].audio.start();
-                                                                                            currentAmount += 1;
-                                                                                            var audioLoading = document.getElementById('audioLoading');
-                                                                                            audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                                                            if(currentAmount === amount){
-                                                                                                initAudio();
-                                                                                                loadJSON('harvestableNpcs',function(json){
-                                                                                                    signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
-                                                                                                    var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
-                                                                                                    harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
-                                                                                                    harvestableNpcData = json;
-                                                                                                    harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                                    loadJSON('debuffs',function(json){
-                                                                                                        signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
-                                                                                                        var debuffLoading = document.getElementById('debuffLoading');
-                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
-                                                                                                        debuffData = json;
-                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
-                                                                                                        loadAllMaps();
-                                                                                                    });
-                                                                                                });
-                                                                                            }
-                                                                                        },function(err){
-                                                                                            getAudioData(songName);
-                                                                                        });
-                                                                                    }
-                                                                                }
-                                                                                request.send();
-                                                                            }
-                                                                            getAudioData(i);
-                                                                        }
-                                                                        else{
-                                                                            if(songs[i].loaded === false){
-                                                                                songs[i].loaded = true;
-                                                                                songs[i].audio = new Audio(songs[i].url);
-                                                                                songs[i].audio.loop = true;
-                                                                                currentAmount += 1;
-                                                                                var audioLoading = document.getElementById('audioLoading');
-                                                                                audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                                                if(currentAmount === amount){
-                                                                                    initAudio();
-                                                                                    loadJSON('harvestableNpcs',function(json){
-                                                                                        signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
-                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
-                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
-                                                                                        harvestableNpcData = json;
-                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                        loadJSON('debuffs',function(json){
-                                                                                            signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
-                                                                                            var debuffLoading = document.getElementById('debuffLoading');
-                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
-                                                                                            debuffData = json;
-                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
-                                                                                            loadAllMaps();
-                                                                                        });
-                                                                                    });
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                            }
-                                                            continue;
-                                                        }
-                                                        Img[json[i].img.body] = new Image();
-                                                        Img[json[i].img.body].src = '/client/img/monsters/' + json[i].img.body + '.png';
-                                                        Img[json[i].img.body].onload = function(){
-                                                            currentAmount += 1;
-                                                            var monsterLoading = document.getElementById('monsterLoading');
-                                                            monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                            if(currentAmount === amount){
-                                                                loadJSON('songs',function(json){
-                                                                    songs = json;
-                                                                    signError.innerHTML = '<div id="audioLoading"></div>' + signError.innerHTML;
-                                                                    var audioLoading = document.getElementById('audioLoading');
-                                                                    audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (0%)</span>';
-                                                                    try{
-                                                                        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-                                                                        audioContext = new AudioContext();
-                                                                        webAudio = true;
-                                                                        globalVolume = audioContext.createGain();
-                                                                        globalVolume.connect(audioContext.destination);
-                                                                        globalVolume.gain.value = settings.volumePercentage / 100;
-                                                                    }
-                                                                    catch(e){
-                                                                        signErrorText = signError.innerHTML;
-                                                                        signError.innerHTML = '<span style="color: #ffff00">Warning: WebAudio is not supported in your browser. You will still be able to hear music, however there will be gaps in looping.</span><br>' + signErrorText;
-                                                                        for(var i in songs){
-                                                                            if(songs[i].state === 'playing'){
-                                                                                songs[i].audio.volume = settings.volumePercentage / 100;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    var amount = 0;
-                                                                    for(var i in songs){
-                                                                        amount += 1;
-                                                                    }
-                                                                    var currentAmount = 0;
-                                                                    for(var i in songs){
-                                                                        if(webAudio){
-                                                                            var getAudioData = function(songName){
-                                                                                var request = new XMLHttpRequest();
-                                                                                request.open('GET',songs[songName].url,true);
-                                                                                request.responseType = 'arraybuffer';
-                                                                                request.onload = function(){
-                                                                                    if(songs[songName].loaded === false){
-                                                                                        songs[songName].loaded = true;
-                                                                                        audioContext.decodeAudioData(request.response,function(buffer){
-                                                                                            songs[songName].buffer = buffer;
-                                                                                            songs[songName].audio = audioContext.createBufferSource();
-                                                                                            songs[songName].audio.buffer = buffer;
-                                                                                            songs[songName].audio.loop = true;
-                                                                                            songs[songName].volume = audioContext.createGain();
-                                                                                            songs[songName].volume.gain.value = 0;
-                                                                                            songs[songName].volume.connect(globalVolume);
-                                                                                            songs[songName].audio.start();
-                                                                                            currentAmount += 1;
-                                                                                            var audioLoading = document.getElementById('audioLoading');
-                                                                                            audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                                                            if(currentAmount === amount){
-                                                                                                initAudio();
-                                                                                                loadJSON('harvestableNpcs',function(json){
-                                                                                                    signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
-                                                                                                    var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
-                                                                                                    harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
-                                                                                                    harvestableNpcData = json;
-                                                                                                    harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                                    loadJSON('debuffs',function(json){
-                                                                                                        signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
-                                                                                                        var debuffLoading = document.getElementById('debuffLoading');
-                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
-                                                                                                        debuffData = json;
-                                                                                                        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
-                                                                                                        loadAllMaps();
-                                                                                                    });
-                                                                                                });
-                                                                                            }
-                                                                                        },function(err){
-                                                                                            getAudioData(songName);
-                                                                                        });
-                                                                                    }
-                                                                                }
-                                                                                request.send();
-                                                                            }
-                                                                            getAudioData(i);
-                                                                        }
-                                                                        else{
-                                                                            if(songs[i].loaded === false){
-                                                                                songs[i].loaded = true;
-                                                                                songs[i].audio = new Audio(songs[i].url);
-                                                                                songs[i].audio.loop = true;
-                                                                                currentAmount += 1;
-                                                                                var audioLoading = document.getElementById('audioLoading');
-                                                                                audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
-                                                                                if(currentAmount === amount){
-                                                                                    initAudio();
-                                                                                    loadJSON('harvestableNpcs',function(json){
-                                                                                        signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
-                                                                                        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
-                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
-                                                                                        harvestableNpcData = json;
-                                                                                        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
-                                                                                        loadJSON('debuffs',function(json){
-                                                                                            signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
-                                                                                            var debuffLoading = document.getElementById('debuffLoading');
-                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
-                                                                                            debuffData = json;
-                                                                                            debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
-                                                                                            loadAllMaps();
-                                                                                        });
-                                                                                    });
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                            });
-                                        }
-                                    }
-                                }
-                            });
+                            totalLoading -= 1;
+                            if(totalLoading === 0){
+                                loadingComplete = true;
+                            }
                         }
                     }
                 }
@@ -364,6 +101,187 @@ window.onload = function(){
                 this.blur();
             });
         });
+    });
+    loadJSON('projectiles',function(json){
+        signError.innerHTML = '<div id="projectileLoading"></div>' + signError.innerHTML;
+        var projectileLoading = document.getElementById('projectileLoading');
+        projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (0%)</span>';
+        var amount = 0;
+        for(var i in json){
+            amount += 1;
+        }
+        var currentAmount = 0;
+        for(var i in json){
+            Img[i] = new Image();
+            Img[i].src = '/client/img/projectiles/' + i + '.png';
+            Img[i].onload = function(){
+                currentAmount += 1;
+                var projectileLoading = document.getElementById('projectileLoading');
+                projectileLoading.innerHTML = '<span style="color: #55ff55">Loading projectiles... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                if(currentAmount === amount){
+                    totalLoading -= 1;
+                    if(totalLoading === 0){
+                        loadingComplete = true;
+                    }
+                }
+            }
+        }
+    });
+    loadJSON('npcs',function(json){
+        signError.innerHTML = '<div id="npcLoading"></div>' + signError.innerHTML;
+        var npcLoading = document.getElementById('npcLoading');
+        npcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (0%)</span>';
+        npcData = json;
+        npcLoading.innerHTML = '<span style="color: #55ff55">Loading npcs... (100%)</span>';
+        totalLoading -= 1;
+        if(totalLoading === 0){
+            loadingComplete = true;
+        }
+    });
+    loadJSON('harvestableNpcs',function(json){
+        signError.innerHTML = '<div id="harvestableNpcLoading"></div>' + signError.innerHTML;
+        var harvestableNpcLoading = document.getElementById('harvestableNpcLoading');
+        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (0%)</span>';
+        harvestableNpcData = json;
+        harvestableNpcLoading.innerHTML = '<span style="color: #55ff55">Loading harvestable npcs... (100%)</span>';
+        totalLoading -= 1;
+        if(totalLoading === 0){
+            loadingComplete = true;
+        }
+    });
+    loadJSON('monsters',function(json){
+        signError.innerHTML = '<div id="monsterLoading"></div>' + signError.innerHTML;
+        var monsterLoading = document.getElementById('monsterLoading');
+        monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (0%)</span>';
+        var amount = 0;
+        for(var i in json){
+            amount += 1;
+        }
+        var currentAmount = 0;
+        for(var i in json){
+            if(Img[json[i].img.body] !== undefined){
+                currentAmount += 1;
+                var monsterLoading = document.getElementById('monsterLoading');
+                monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                if(currentAmount === amount){
+                    totalLoading -= 1;
+                    if(totalLoading === 0){
+                        loadingComplete = true;
+                    }
+                }
+                continue;
+            }
+            Img[json[i].img.body] = new Image();
+            Img[json[i].img.body].src = '/client/img/monsters/' + json[i].img.body + '.png';
+            Img[json[i].img.body].onload = function(){
+                currentAmount += 1;
+                var monsterLoading = document.getElementById('monsterLoading');
+                monsterLoading.innerHTML = '<span style="color: #55ff55">Loading monsters... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                if(currentAmount === amount){
+                    totalLoading -= 1;
+                    if(totalLoading === 0){
+                        loadingComplete = true;
+                    }
+                }
+            }
+        }
+    });
+    loadJSON('debuffs',function(json){
+        signError.innerHTML = '<div id="debuffLoading"></div>' + signError.innerHTML;
+        var debuffLoading = document.getElementById('debuffLoading');
+        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
+        debuffData = json;
+        debuffLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (100%)</span>';
+        totalLoading -= 1;
+        if(totalLoading === 0){
+            loadingComplete = true;
+        }
+    });
+    loadJSON('songs',function(json){
+        setTimeout(function(){
+            loadAllMaps();
+        },200);
+        songs = json;
+        signError.innerHTML = '<div id="audioLoading"></div>' + signError.innerHTML;
+        var audioLoading = document.getElementById('audioLoading');
+        audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (0%)</span>';
+        try{
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioContext = new AudioContext();
+            webAudio = true;
+            globalVolume = audioContext.createGain();
+            globalVolume.connect(audioContext.destination);
+            globalVolume.gain.value = settings.volumePercentage / 100;
+        }
+        catch(e){
+            signErrorText = signError.innerHTML;
+            signError.innerHTML = '<span style="color: #ffff00">Warning: WebAudio is not supported in your browser. You will still be able to hear music, however there will be gaps in looping.</span><br>' + signErrorText;
+            for(var i in songs){
+                if(songs[i].state === 'playing'){
+                    songs[i].audio.volume = settings.volumePercentage / 100;
+                }
+            }
+        }
+        var amount = 0;
+        for(var i in songs){
+            amount += 1;
+        }
+        var currentAmount = 0;
+        for(var i in songs){
+            if(webAudio){
+                var getAudioData = function(songName){
+                    var request = new XMLHttpRequest();
+                    request.open('GET',songs[songName].url,true);
+                    request.responseType = 'arraybuffer';
+                    request.onload = function(){
+                        if(songs[songName].loaded === false){
+                            songs[songName].loaded = true;
+                            audioContext.decodeAudioData(request.response,function(buffer){
+                                songs[songName].buffer = buffer;
+                                songs[songName].audio = audioContext.createBufferSource();
+                                songs[songName].audio.buffer = buffer;
+                                songs[songName].audio.loop = true;
+                                songs[songName].volume = audioContext.createGain();
+                                songs[songName].volume.gain.value = 0;
+                                songs[songName].volume.connect(globalVolume);
+                                songs[songName].audio.start();
+                                currentAmount += 1;
+                                var audioLoading = document.getElementById('audioLoading');
+                                audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                                if(currentAmount === amount){
+                                    initAudio();
+                                    totalLoading -= 1;
+                                    if(totalLoading === 0){
+                                        loadingComplete = true;
+                                    }
+                                }
+                            },function(err){
+                                getAudioData(songName);
+                            });
+                        }
+                    }
+                    request.send();
+                }
+                getAudioData(i);
+            }
+            else{
+                if(songs[i].loaded === false){
+                    songs[i].loaded = true;
+                    songs[i].audio = new Audio(songs[i].url);
+                    songs[i].audio.loop = true;
+                    currentAmount += 1;
+                    var audioLoading = document.getElementById('audioLoading');
+                    audioLoading.innerHTML = '<span style="color: #55ff55">Loading audio... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                    if(currentAmount === amount){
+                        initAudio();
+                        totalLoading -= 1;
+                        if(totalLoading === 0){
+                            loadingComplete = true;
+                        }
+                    }
+                }
+            }
+        }
     });
 };
 

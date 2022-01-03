@@ -491,7 +491,7 @@ var HarvestableNpc = function(initPack){
 }
 HarvestableNpc.list = {};
 
-var selected = false;
+var selectedDroppedItem = null;
 
 var DroppedItem = function(initPack){
     var self = Entity(initPack);
@@ -517,9 +517,8 @@ var DroppedItem = function(initPack){
     renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,48,48);
     renderSelectCtx.drawImage(Img.items2select,imgX,imgY,24,24,0,0,48,48);
     self.draw = function(){
-        if(Player.list[selfId].x + mouseX > self.x - 24 && Player.list[selfId].x + mouseX < self.x + 24 && Player.list[selfId].y + mouseY > self.y - 24 && Player.list[selfId].y + mouseY < self.y + 24 && selected === false && inGame === true){
+        if(self.isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0}) && inGame === true && selectedDroppedItem === null){
             ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
-            selected = true;
             itemMenu.innerHTML = getEntityDescription(self);
             itemMenu.style.display = 'inline-block';
             var rect = itemMenu.getBoundingClientRect();
@@ -539,6 +538,7 @@ var DroppedItem = function(initPack){
             else{
                 itemMenu.style.top = rawMouseY + 'px';
             }
+            selectedDroppedItem = self.id;
         }
         else{
             ctx.drawImage(self.render,self.x - 24,self.y - 24);

@@ -958,14 +958,6 @@ Actor = function(param){
     self.shootProjectile = function(projectileType,param){
         var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
         direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
-        var stats = Object.create(self.stats);
-        if(param.stats){
-            for(var i in param.stats){
-                if(stats[i]){
-                    stats[i] *= param.stats[i];
-                }
-            }
-        }
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
             parent:param.id !== undefined ? param.id : self.id,
@@ -987,7 +979,7 @@ Actor = function(param){
             collisionType:param.collisionType !== undefined ? param.collisionType : false,
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
             team:param.team !== undefined ? param.team : self.team,
-            stats:stats,
+            stats:param.stats !== undefined ? param.stats : self.stats,
         };
         var projectile = new Projectile(properties);
         return projectile;
@@ -1120,47 +1112,62 @@ Actor = function(param){
         if(self.canAttack === false){
             return;
         }
+        var runAttack = function(data){
+            switch(data.id){
+                case "projectile":
+                    self.shootProjectile(data.projectileType,data.param);
+                    break;
+                case "dash":
+                    self.dash(data.param);
+                    break;
+                case "music":
+                    for(var i in Player.list){
+                        SOCKET_LIST[i].emit('musicBox',data.songName);
+                    }
+                    addToChat('#00ffff',self.name + ' started the music ' + songData[data.songName].name + '.');
+                    break;
+                case "debuff":
+                    self.addDebuff(data.name,data.time);
+                    break;
+                case "nameChecker":
+                    if(self.name === data.name){
+                        for(var i in data.correct){
+                            runAttack(data.correct[i]);
+                        }
+                    }
+                    else{
+                        for(var i in data.incorrect){
+                            runAttack(data.incorrect[i]);
+                        }
+                    }
+                    break;
+            }
+            if(data.xpGain){
+                if(self.type === 'Player'){
+                    self.xp += data.xpGain;
+                }
+            }
+            if(data.hpCost){
+                if(self.hp > data.hpCost){
+                    self.hp -= data.hpCost;
+                }
+                else{
+                    if(self.hp > 0){
+                        self.hp = 0;
+                        self.onDeath(self,'self');
+                        if(self.type !== 'Player'){
+                            self.toRemove = true;
+                        }
+                        return;
+                    }
+                }
+            }
+        }
         for(var i in data){
             if(reload % parseInt(i) === 0){
                 for(var j = 0;j < data[i].length;j++){
                     if(data[i][j]){
-                        switch(data[i][j].id){
-                            case "projectile":
-                                self.shootProjectile(data[i][j].projectileType,data[i][j].param);
-                                break;
-                            case "dash":
-                                self.dash(data[i][j].param);
-                                break;
-                            case "music":
-                                for(var k in Player.list){
-                                    SOCKET_LIST[k].emit('musicBox',data[i][j].songName);
-                                }
-                                addToChat('#00ffff',self.name + ' started the music ' + songData[data[i][j].songName].name + '.');
-                                break;
-                            case "debuff":
-                                self.addDebuff(data[i][j].name,data[i][j].time);
-                                break;
-                        }
-                        if(data[i][j].xpGain){
-                            if(self.type === 'Player'){
-                                self.xp += data[i][j].xpGain;
-                            }
-                        }
-                        if(data[i][j].hpCost){
-                            if(self.hp > data[i][j].hpCost){
-                                self.hp -= data[i][j].hpCost;
-                            }
-                            else{
-                                if(self.hp > 0){
-                                    self.hp = 0;
-                                    self.onDeath(self,'self');
-                                    if(self.type !== 'Player'){
-                                        self.toRemove = true;
-                                    }
-                                    return;
-                                }
-                            }
-                        }
+                        runAttack(data[i][j]);
                     }
                 }
             }
@@ -1534,7 +1541,7 @@ Player = function(param,socket){
                                 }
                                 self.mainReload += 1;
                                 self.doAttack(self.mainAttackData,self.mainReload);
-                                socket.emit('attack');
+                                socket.emit('attack',Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type);
                                 self.lastUsedMana = 0;
                                 if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
                                     self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
@@ -1902,17 +1909,16 @@ Player = function(param,socket){
             self.invincible = true;
         }
     }
-    self.pickUpItems = function(){
+    self.pickUpItems = function(id){
         if(self.canMove){
-            for(var i in DroppedItem.list){
-                if(DroppedItem.list[i].parent + '' === self.id + '' || DroppedItem.list[i].allPlayers){
-                    if(self.getSquareDistance(DroppedItem.list[i]) < 32){
-                        if(DroppedItem.list[i].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
-                            if(self.inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
-                                self.inventory.addItem(DroppedItem.list[i].item,DroppedItem.list[i].amount);
+            if(DroppedItem.list[id]){
+                if(DroppedItem.list[id].parent + '' === self.id + '' || DroppedItem.list[id].allPlayers){
+                    if(self.getSquareDistance(DroppedItem.list[id]) < 32){
+                        if(DroppedItem.list[id].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
+                            if(self.inventory.hasSpace(DroppedItem.list[id].item,DroppedItem.list[id].amount).hasSpace){
+                                self.inventory.addItem(DroppedItem.list[id].item,DroppedItem.list[id].amount);
                                 self.keyPress.leftClick = false;
-                                delete DroppedItem.list[i];
-                                break;
+                                delete DroppedItem.list[id];
                             }
                         }
                     }
@@ -2178,7 +2184,7 @@ Player.onConnect = function(socket,username){
                 socket.detectSpam('gameClick');
                 player.keyPress.leftClick = data.state;
                 if(data.state === true){
-                    player.pickUpItems();
+                    player.pickUpItems(data.selectedDroppedItem);
                 }
             }
             if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
@@ -2617,6 +2623,9 @@ Projectile = function(param){
         var calculations = Math.floor(Math.max(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)) / 20,1));
         var spdX = self.spdX;
         var spdY = self.spdY;
+        if(self.collisionType === 'none'){
+            calculations = 1;
+        }
         self.spdX /= calculations;
         self.spdY /= calculations;
         for(var i = 0;i < calculations;i++){
@@ -2769,26 +2778,24 @@ Projectile = function(param){
                                         continue;
                                     }
                                     if(self.isColliding(collision[k])){
-                                        collisions.push(collision[k]);
+                                        if(self.collisionType === 'remove'){
+                                            self.toRemove = true;
+                                        }
+                                        else if(self.collisionType === 'sticky'){
+                                            self.spdX = 0;
+                                            self.spdY = 0;
+                                            self.x = self.lastX;
+                                            self.y = self.lastY;
+                                            self.spin = 0;
+                                            self.collided = true;
+                                        }
+                                        return;
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-        }
-        if(collisions[0]){
-            if(self.collisionType === 'remove'){
-                self.toRemove = true;
-            }
-            else if(self.collisionType === 'sticky'){
-                self.spdX = 0;
-                self.spdY = 0;
-                self.x = self.lastX;
-                self.y = self.lastY;
-                self.spin = 0;
-                self.collided = true;
             }
         }
     }
@@ -3400,12 +3407,7 @@ DroppedItem = function(param){
     self.parent = param.parent;
     self.width = 48;
     self.height = 48;
-    for(var i = 0;i < 100;i++){
-        self.x = param.x + 128 * Math.random() - 64;
-        self.y = param.y + 128 * Math.random() - 64;
-        self.gridX = Math.floor(self.x / 64);
-        self.gridY = Math.floor(self.y / 64);
-        var collisions = [];
+    var isColliding = function(){
         for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
             for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
@@ -3415,7 +3417,7 @@ DroppedItem = function(param){
                                 var collision = Collision.list[self.map][0][i][j];
                                 for(var k in collision){
                                     if(self.isColliding(collision[k])){
-                                        collisions.push(collision[k]);
+                                        return true;
                                     }
                                 }
                             }
@@ -3424,8 +3426,84 @@ DroppedItem = function(param){
                 }
             }
         }
-        if(!collisions[0]){
+        return false;
+    }
+    var foundSpot = false;
+    for(var index = 0;index < 100;index++){
+        self.x = Math.round(param.x + 128 * Math.random() - 64);
+        self.y = Math.round(param.y + 128 * Math.random() - 64);
+        if(isColliding()){
+            continue;
+        }
+        else{
+            console.log(index)
+            foundSpot = true;
             break;
+        }
+    }
+    if(foundSpot === false){
+        var availablePositions = [];
+        for(var x = -64;x <= 64;x++){
+            for(var y = -64;y < 64;y++){
+                if(availablePositions[x]){
+                    availablePositions[x][y] = 1;
+                }
+                else{
+                    availablePositions[x] = [];
+                    availablePositions[x][y] = 1;
+                }
+            }
+        }
+        for(var i = Math.floor((self.x - 64) / 64);i <= Math.floor((self.x + 64) / 64);i++){
+            for(var j = Math.floor((self.y - 64) / 64);j <= Math.floor((self.y + 64) / 64);j++){
+                if(Collision.list[self.map]){
+                    if(Collision.list[self.map][0]){
+                        if(Collision.list[self.map][0][i]){
+                            if(Collision.list[self.map][0][i][j]){
+                                var collision = Collision.list[self.map][0][i][j];
+                                for(var k in collision){
+                                    for(var l = collision[k].x - collision[k].width / 2 - self.width / 2;l < collision[k].x + collision[k].width / 2 + self.width / 2;l++){
+                                        if(availablePositions[l]){
+                                            for(var m = collision[k].x - collision[k].width / 2 - self.width / 2;m < collision[k].x + collision[k].width / 2 + self.width / 2;m++){
+                                                if(availablePositions[l][m]){
+                                                    availablePositions[l][m] = 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        var numberOfPositions = 0;
+        for(var x in availablePositions){
+            for(var y in availablePositions[x]){
+                if(availablePositions[x][y]){
+                    numberOfPositions += 1;
+                }
+            }
+        }
+        if(numberOfPositions === 0){
+            self.x += Math.floor(Math.random() * 128 - 64);
+            self.y += Math.floor(Math.random() * 128 - 64);
+        }
+        else{
+            var randomNumber = Math.floor(Math.random() * numberOfPositions);
+            var currentPosition = 0;
+            for(var x in availablePositions){
+                for(var y in availablePositions[x]){
+                    if(availablePositions[x][y]){
+                        if(currentPosition === randomNumber){
+                            self.x += parseInt(x);
+                            self.y += parseInt(y);
+                        }
+                        currentPosition += 1;
+                    }
+                }
+            }
         }
     }
     self.allPlayers = param.allPlayers;

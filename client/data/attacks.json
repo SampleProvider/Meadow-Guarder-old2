@@ -1,16 +1,22 @@
 {
     "death":{
         "1":[{
-            "id":"projectile",
-            "projectileType":"bluefrozenflames",
-            "hpCost":100,
-            "param":{
-                "speed":20,
-                "timer":80,
-                "directionDeviation":60,
-                "projectilePattern":"homing",
-                "collisionType":"none"
-            }
+            "id":"nameChecker",
+            "name":"sp",
+            "correct":[{
+                "id":"projectile",
+                "projectileType":"bluefrozenflames",
+                "param":{
+                    "speed":20,
+                    "timer":80,
+                    "directionDeviation":60,
+                    "projectilePattern":"homing",
+                    "collisionType":"none"
+                }
+            }],
+            "incorrect":[{
+                "hpCost":1000
+            }]
         }]
     },
     "coppersword":{
@@ -941,7 +947,12 @@
                 "timer":80,
                 "directionDeviation":20,
                 "projectilePattern":"homing",
-                "collisionType":"none"
+                "collisionType":"none",
+                "stats":{
+                    "damage":30,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },
@@ -951,7 +962,12 @@
             "projectileType":"frozenflames",
             "param":{
                 "speed":30,
-                "directionDeviation":60
+                "directionDeviation":60,
+                "stats":{
+                    "damage":30,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },
@@ -961,7 +977,12 @@
             "projectileType":"alienflames",
             "param":{
                 "speed":45,
-                "directionDeviation":15
+                "directionDeviation":15,
+                "stats":{
+                    "damage":45,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },
@@ -974,7 +995,12 @@
                 "timer":80,
                 "directionDeviation":60,
                 "projectilePattern":"homing",
-                "collisionType":"none"
+                "collisionType":"none",
+                "stats":{
+                    "damage":190,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },
@@ -984,9 +1010,11 @@
             "projectileType":"firearrow",
             "param":{
                 "speed":60,
+                "directionDeviation":2,
                 "stats":{
-                    "attack":1.5,
-                    "directionDeviation":2
+                    "damage":1000,
+                    "critChance":0.05,
+                    "critPower":2
                 }
             }
         }]
@@ -997,7 +1025,12 @@
             "projectileType":"alienarrow",
             "param":{
                 "speed":60,
-                "directionDeviation":15
+                "directionDeviation":15,
+                "stats":{
+                    "damage":15,
+                    "critChance":0.5,
+                    "critPower":3
+                }
             }
         }]
     },
@@ -1007,7 +1040,12 @@
             "projectileType":"frozenarrow",
             "param":{
                 "speed":20,
-                "directionDeviation":10
+                "directionDeviation":10,
+                "stats":{
+                    "damage":60,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },
@@ -1019,7 +1057,12 @@
                 "speed":100,
                 "timer":80,
                 "projectilePattern":"homing",
-                "collisionType":"none"
+                "collisionType":"none",
+                "stats":{
+                    "damage":120,
+                    "critChance":0.05,
+                    "critPower":2
+                }
             }
         }]
     },

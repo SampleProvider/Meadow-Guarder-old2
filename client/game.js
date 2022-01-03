@@ -120,33 +120,11 @@ Img.items2select.src = '/client/img/items2select.png';
 var inventory = new Inventory(socket,false);
 var crafts = [];
 socket.on('updateInventory',function(pack){
-    var items = pack.items;
-    for(var i in inventory.items){
-        if(items[i]){
-            if(inventory.items[i].cooldown){
-                items[i].cooldown = inventory.items[i].cooldown;
-            }
-            else{
-                items[i].cooldown = 0;
-            }
-        }
-    }
-    inventory.items = items;
+    inventory.items = pack.items;
     inventory.refreshInventory();
 });
 socket.on('updateItem',function(pack){
-    var items = pack.items;
-    for(var i in inventory.items){
-        if(items[i]){
-            if(inventory.items[i].cooldown){
-                items[i].cooldown = inventory.items[i].cooldown;
-            }
-            else{
-                items[i].cooldown = 0;
-            }
-        }
-    }
-    inventory.items = items;
+    inventory.items = pack.items;
     inventory.refreshItem(pack.index);
 });
 socket.on('refreshMenu',function(pack){
@@ -549,6 +527,7 @@ socket.on('update',function(data){
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
                                         var rect = slot.getBoundingClientRect();
                                         if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
+                                            console.log(1)
                                             updateDebuffPopupMenu(index);
                                         }
                                     }
@@ -1063,8 +1042,6 @@ var loop = function(){
         HarvestableNpc.list[i].drawLayer0();
     }
 
-    selected = false;
-
     var entities = [];
     for(var i in Player.list){
         entities.push(Player.list[i]);
@@ -1094,16 +1071,16 @@ var loop = function(){
         return 0;
     }
     entities.sort(compare);
+    selectedDroppedItem = null;
     if(inGame){
         itemMenu.style.display = 'none';
-        entitySelected = false;
     }
     for(var i in Particle.list){
         Particle.list[i].draw();
     }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
-        if(inGame && entities[i].name && entitySelected === false){
+        if(inGame && entities[i].name && selectedDroppedItem === null){
             if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
                 itemMenu.innerHTML = getEntityDescription(entities[i]);
                 itemMenu.style.display = 'inline-block';
@@ -1124,7 +1101,6 @@ var loop = function(){
                 else{
                     itemMenu.style.top = rawMouseY + 'px';
                 }
-                entitySelected = true;
             }
         }
     }
@@ -1192,11 +1168,11 @@ socket.on("nextReload",function(){
         }
     }
 });
-socket.on("attack",function(){
+socket.on("attack",function(type){
     for(var i in inventory.items){
         if(inventory.items[i]){
             if(inventory.items[i].id){
-                if(Item.list[inventory.items[inventory.hotbarSelectedItem].id].type === Item.list[inventory.items[i].id].type){
+                if(type === Item.list[inventory.items[i].id].type){
                     inventory.items[i].cooldown = Item.list[inventory.items[i].id].useTime;
                     document.getElementById('cooldownDiv' + i).style.height = '100%';
                     if(i >= 0 && i <= 9){
@@ -1230,26 +1206,15 @@ disconnectClient = function(){
     stopAllSongs();
 }
 
-var rickroll = document.getElementById('rickroll');
-setInterval(function(){
-    if(!document.getElementById('rickroll')){
-        document.body.innerHTML = '<video style="left: 0px; top: 0px; width: 100%; height: 100%;" src="/client/websiteAssets/Never Gonna Give You Up.mp4" id="rickroll"></video>';
-        disconnectClient = function(){};
-        socket.emit('timeout');
-        selfId = null;
-        stopAllSongs();
-        rickroll.play();
-    }
-    socket.on('rickroll',function(){
-        disconnectClient = function(){};
-        pageDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
-        disconnectedDiv.style.display = 'none';
-        socket.emit('timeout');
-        selfId = null;
-        stopAllSongs();
-        rickroll.play();
-    });
+socket.on('rickroll',function(){
+    disconnectClient = function(){};
+    pageDiv.style.display = 'none';
+    gameDiv.style.display = 'none';
+    disconnectedDiv.style.display = 'none';
+    socket.emit('timeout');
+    selfId = null;
+    stopAllSongs();
+    rickroll.play();
 });
 
 
@@ -1488,7 +1453,7 @@ mouseDown = function(event){
         socket.emit('timeout');
     }
     if(event.button === 0){
-        socket.emit('keyPress',{inputId:'leftClick',state:true});
+        socket.emit('keyPress',{inputId:'leftClick',state:true,selectedDroppedItem:selectedDroppedItem});
     }
     if(event.button === 2){
         socket.emit('keyPress',{inputId:'rightClick',state:true});
@@ -1573,7 +1538,3 @@ window.addEventListener('wheel',function(event){
     document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).className = 'hotbarSlot hotbarSlotSelected';
     socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
 });
-
-// if(navigator.webdriver === true){
-//     disconnectClient();
-// }
