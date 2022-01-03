@@ -697,18 +697,18 @@ Inventory = function(socket,server){
         }
         if(item.critChance){
             if(item.critChance > 0){
-                description += '<span style="color: #33ee33">+' + item.critChance * 100 + '% critical strike chance.</span><br>';
+                description += '<span style="color: #33ee33">+' + Math.round(item.critChance * 100) + '% critical strike chance.</span><br>';
             }
             else{
-                description += '<span style="color: #ee3333">' + item.critChance * 100 + '% critical strike chance.</span><br>';
+                description += '<span style="color: #ee3333">' + Math.round(item.critChance * 100) + '% critical strike chance.</span><br>';
             }
         }
         if(item.critPower){
             if(item.critPower > 0){
-                description += '<span style="color: #33ee33">+' + item.critPower * 100 + '% critical strike power.</span><br>';
+                description += '<span style="color: #33ee33">+' + Math.round(item.critPower * 100) + '% critical strike power.</span><br>';
             }
             else{
-                description += '<span style="color: #ee3333">' + item.critPower * 100 + '% critical strike power.</span><br>';
+                description += '<span style="color: #ee3333">' + Math.round(item.critPower * 100) + '% critical strike power.</span><br>';
             }
         }
         if(item.movementSpeed){
