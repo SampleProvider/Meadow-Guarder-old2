@@ -9,6 +9,8 @@ else{
 	connectionString = connectionString = process.env.DATABASE_URL;
 }
 
+console.log(connectionString)
+
 const client = new Client({
 	connectionString:connectionString,
 	ssl:{
