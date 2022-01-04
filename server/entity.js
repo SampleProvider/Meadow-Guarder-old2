@@ -908,7 +908,7 @@ Actor = function(param){
         }
         var hp = self.hp;
         var crit = false;
-        if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) < 75){
+        if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) > 105){
             if(Math.random() < pt.stats.critChance){
                 crit = true;
                 self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) * (1 - self.shieldProtection) - self.stats.defense)),0);
