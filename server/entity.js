@@ -1594,7 +1594,9 @@ Player = function(param,socket){
         }
         else if(self.inventory.items[self.inventory.hotbarSelectedItem]){
             if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                self.currentItem = self.inventory.items[self.inventory.hotbarSelectedItem].id;
+                if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip !== 'shield'){
+                    self.currentItem = self.inventory.items[self.inventory.hotbarSelectedItem].id;
+                }
             }
         }
     }
