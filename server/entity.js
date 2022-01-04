@@ -1867,7 +1867,10 @@ Player = function(param,socket){
             self.inventory.refreshMenu(maxSlots);
         }
 
-        self.hp += self.hpMax - hpMax;
+        if(hp > 0){
+            self.hp += self.hpMax - hpMax;
+        }
+
         self.mana += self.manaMax - manaMax;
 
         if(self.hp <= 0 && hp > 0){

@@ -168,7 +168,7 @@ royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,
 warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,0.60,none,none,none,none,none,0.50,A true warrior shield.
 goldtoken,Gold Token,3.0,0.00,283,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,none,none,none,none,none,0.00,
 ashtoken,Ash Token,1.0,0.00,284,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,none,none,none,none,none,0.00,
-shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0.20,0,0,0,0,0.00,none,none,none,none,Lifesteal.,0.80,OG Item.
+shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0.20,0,0,0,0,0.80,none,none,none,none,Lifesteal.,0.80,OG Item.
 frozenboots,Frozen Boots,2.0,1.00,286,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,5,0.00,0,0.00,0,0.50,0,0,0,0,0.00,none,frozenflames,none,none,none,0.50,I think your feet are already getting frostbite.
 hikingboots,Hiking Boots,3.0,1.00,287,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,4,0.00,0,0.00,2,0.50,0,0,0,0,0.00,none,none,none,none,none,0.50,A pair of excellent hiking boots.
 woolenboots,Woolen Boots,3.0,1.00,288,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,8,0.20,0,0.00,0,0.50,0,0,0,0,0.00,none,none,none,none,none,0.50,Nice and warm.
