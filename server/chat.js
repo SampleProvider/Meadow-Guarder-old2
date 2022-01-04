@@ -8,8 +8,6 @@ else{
     chatToken = process.env.TOKEN;
 }
 
-console.log(chatToken)
-
 client.login(chatToken);
 
 addToChat = function(color,message){
@@ -27,7 +25,7 @@ addToChat = function(color,message){
     if(m === '0'){
         m = '00';
     }
-    // console.error("[" + h + ":" + m + "] " + message);
+    console.error("[" + h + ":" + m + "] " + message);
     for(var i in Player.list){
         if(Player.list[i]){
             if(Player.list[i].loggedOn){
