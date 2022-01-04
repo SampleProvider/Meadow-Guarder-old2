@@ -1027,6 +1027,9 @@ var loop = function(){
     if(Player.list[selfId].map === teleportingMap && shadeAmount > 1.5){
         shadeSpeed = -3 / 40;
         lastMap = '';
+        mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
+        mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
+        socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
     }
 
     ctx.save();
