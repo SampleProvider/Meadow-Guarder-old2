@@ -229,6 +229,7 @@ canvas {
     font-size: 80px;
     font-family: 'pixel';
     color: #000000;
+    text-align: center;
 }
 
 #pageStackLeft {

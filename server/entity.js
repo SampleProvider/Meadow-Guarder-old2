@@ -908,12 +908,23 @@ Actor = function(param){
         }
         var hp = self.hp;
         var crit = false;
-        if(Math.random() < pt.stats.critChance){
-            crit = true;
-            self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
+        if(self.shieldProtection && self.shieldActive && Math.abs(Math.atan2(pt.y - self.y,pt.x - self.x) / Math.PI * 180 - self.direction) < 75){
+            if(Math.random() < pt.stats.critChance){
+                crit = true;
+                self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) * (1 - self.shieldProtection) - self.stats.defense)),0);
+            }
+            else{
+                self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 - self.shieldProtection) - self.stats.defense),0);
+            }
         }
         else{
-            self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+            if(Math.random() < pt.stats.critChance){
+                crit = true;
+                self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
+            }
+            else{
+                self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+            }
         }
         self.hp = Math.round(self.hp);
         if(pt.type === 'Projectile' && pt.parentType === 'Player'){
@@ -1304,7 +1315,10 @@ Player = function(param,socket){
         critChance:0,
         critPower:0,
     }
+    self.shieldProtection = 0;
     self.luck = 1;
+
+    self.shieldActive = false;
 
     self.pickaxePower = 0;
     self.axePower = 0;
@@ -1436,9 +1450,11 @@ Player = function(param,socket){
         }
     }
     self.update = function(){
-        self.updateDebug();
         self.mapChange += 1;
         self.moveSpeed = self.maxSpeed;
+        self.updateDebug();
+        self.updateCurrentItem();
+        self.updateDebuffs();
         for(var i = 0;i < self.moveSpeed;i++){
             self.updateSpd();
             self.updateMove();
@@ -1457,7 +1473,6 @@ Player = function(param,socket){
         self.updateXp();
         self.updateAnimation();
         self.updateAttack();
-        self.updateDebuffs();
         self.updateHp();
         self.updateMana();
         if(self.mapChange === 0){
@@ -1517,7 +1532,7 @@ Player = function(param,socket){
         }
     }
     self.updateAttack = function(){
-        if(self.keyPress.leftClick === true && self.canAttack && self.hp > 0){
+        if(self.keyPress.leftClick === true && self.canAttack && self.hp > 0 && self.shieldActive === false){
             self.passiveReload += 1;
             self.doAttack(self.passiveAttackData,self.passiveReload);
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
@@ -1569,6 +1584,20 @@ Player = function(param,socket){
         }
         socket.emit('nextReload');
     }
+    self.updateCurrentItem = function(){
+        self.shieldActive = false;
+        self.currentItem = '';
+        if(self.keyPress.rightClick === true && self.inventory.items['shield'].id && self.canAttack){
+            self.currentItem = self.inventory.items['shield'].id;
+            self.shieldActive = true;
+            self.moveSpeed = Math.ceil(self.moveSpeed / 3);
+        }
+        else if(self.inventory.items[self.inventory.hotbarSelectedItem]){
+            if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
+                self.currentItem = self.inventory.items[self.inventory.hotbarSelectedItem].id;
+            }
+        }
+    }
     self.updateStats = function(){
         for(var i in Projectile.list){
             if(Projectile.list[i].id === self.id){
@@ -1591,13 +1620,12 @@ Player = function(param,socket){
             critChance:0,
             critPower:0,
         }
+        self.shieldProtection = 0;
         self.luck = 1;
 
         self.pickaxePower = 0;
         self.axePower = 0;
         self.scythePower = 0;
-
-        self.currentItem = '';
 
         self.maxSpeed = 10;
 
@@ -1618,7 +1646,6 @@ Player = function(param,socket){
                         if(item.equip !== 'hotbar' && item.equip !== 'consume'){
                             continue;
                         }
-                        self.currentItem = self.inventory.items[i].id;
                         if(item.defense !== undefined){
                             self.stats.defense += item.defense;
                         }
@@ -1742,6 +1769,9 @@ Player = function(param,socket){
                     }
                     if(item.slots !== undefined){
                         self.inventory.maxSlots += item.slots;
+                    }
+                    if(item.shieldPower !== undefined){
+                        self.shieldProtection += item.shieldPower;
                     }
                     if(item.attacks !== undefined){
                         if(attackData[item.attacks]){
@@ -3437,7 +3467,6 @@ DroppedItem = function(param){
             continue;
         }
         else{
-            console.log(index)
             foundSpot = true;
             break;
         }

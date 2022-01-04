@@ -189,7 +189,19 @@ var Player = function(initPack){
             }
         }
         if(Item.list[self.currentItem]){
-            if(Item.list[self.currentItem].displayItem === true){
+            if(Item.list[self.currentItem].equip === 'shield'){
+                if(self.direction >= 195 && self.direction <= 345){
+                    ctx.save();
+                    ctx.translate(self.x,self.y);
+                    ctx.rotate((self.direction - 90) / 180 * Math.PI);
+                    var drawId = Item.list[self.currentItem].drawId;
+                    var imgX = ((drawId - 1) % 26) * 24;
+                    var imgY = ~~((drawId - 1) / 26) * 24;
+                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,0,96,96);
+                    ctx.restore();
+                }
+            }
+            else if(Item.list[self.currentItem].displayItem === true){
                 ctx.save();
                 ctx.translate(self.x,self.y);
                 ctx.rotate((self.direction - 225) / 180 * Math.PI);
@@ -202,6 +214,34 @@ var Player = function(initPack){
         }
         self.animation = Math.floor(self.animation);
         drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = 1;
+        }
+    }
+    self.drawLayer1 = function(){
+        if(self.direction < 210 || self.direction > 330){
+
+        }
+        else{
+            return;
+        }
+        if(self.fadeState !== 1){
+            ctx.globalAlpha = self.fade;
+        }
+        if(self.direction < 195 || self.direction > 345){
+            if(Item.list[self.currentItem]){
+                if(Item.list[self.currentItem].equip === 'shield'){
+                    ctx.save();
+                    ctx.translate(self.x,self.y);
+                    ctx.rotate((self.direction - 90) / 180 * Math.PI);
+                    var drawId = Item.list[self.currentItem].drawId;
+                    var imgX = ((drawId - 1) % 26) * 24;
+                    var imgY = ~~((drawId - 1) / 26) * 24;
+                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,0,96,96);
+                    ctx.restore();
+                }
+            }
+        }
         if(self.fadeState !== 1){
             ctx.globalAlpha = 1;
         }
@@ -514,8 +554,14 @@ var DroppedItem = function(initPack){
     var drawId = Item.list[self.item].drawId;
     var imgX = ((drawId - 1) % 26) * 24;
     var imgY = ~~((drawId - 1) / 26) * 24;
-    renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,48,48);
-    renderSelectCtx.drawImage(Img.items2select,imgX,imgY,24,24,0,0,48,48);
+    if(drawId === 155){
+        renderCtx.drawImage(Img.items2,imgX,imgY,14,14,0,0,48,48);
+        renderSelectCtx.drawImage(Img.items2select,imgX,imgY,14,14,0,0,48,48);
+    }
+    else{
+        renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,48,48);
+        renderSelectCtx.drawImage(Img.items2select,imgX,imgY,24,24,0,0,48,48);
+    }
     self.draw = function(){
         if(self.isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0}) && inGame === true && selectedDroppedItem === null){
             ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
