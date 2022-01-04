@@ -114,9 +114,7 @@ io.sockets.on('connection',function(socket){
 					if(Player.list[i].username === stringData.username){
 						Player.list[i].toRemove = true;
 						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].emit('disconnected');
-							Player.onDisconnect(SOCKET_LIST[i]);
-							delete SOCKET_LIST[i];
+							SOCKET_LIST[i].disconnectUser();
 						}
 					}
 				}
@@ -413,9 +411,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].emit('disconnected');
-							Player.onDisconnect(SOCKET_LIST[i]);
-							delete SOCKET_LIST[i];
+							SOCKET_LIST[i].disconnectUser();
 							Player.list[socket.id].sendMessage('[!] Kicked player ' + name + '.');
 						}
 					},function(name){

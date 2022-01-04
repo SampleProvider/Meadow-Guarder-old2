@@ -1477,11 +1477,13 @@ Player = function(param,socket){
             if(map !== self.map){
                 Player.getAllInitPack(socket);
                 for(var i in Player.list){
-                    if(Player.list[i].map === self.map){
-                        SOCKET_LIST[i].emit('initEntity',self.getInitPack());
-                    }
-                    else{
-                        SOCKET_LIST[i].emit('removePlayer',self.id);
+                    if(SOCKET_LIST[i]){
+                        if(Player.list[i].map === self.map){
+                            SOCKET_LIST[i].emit('initEntity',self.getInitPack());
+                        }
+                        else{
+                            SOCKET_LIST[i].emit('removePlayer',self.id);
+                        }
                     }
                 }
             }
@@ -2448,8 +2450,7 @@ Player.onConnect = function(socket,username){
             socket.detectSpam('nonFrequent');
             if(player.hp > 0){
                 addToChat('#ff0000',player.name + ' cheated using respawn.');
-                Player.onDisconnect(SOCKET_LIST[player.id]);
-                delete SOCKET_LIST[player.id];
+                socket.disconnectUser();
                 return;
             }
             player.hp = Math.round(player.hpMax / 2);
