@@ -1590,7 +1590,7 @@ Player = function(param,socket){
         if(self.keyPress.rightClick === true && self.inventory.items['shield'].id && self.canAttack){
             self.currentItem = self.inventory.items['shield'].id;
             self.shieldActive = true;
-            self.moveSpeed = Math.ceil(self.moveSpeed / 3);
+            self.moveSpeed = Math.ceil(self.moveSpeed / 5);
         }
         else if(self.inventory.items[self.inventory.hotbarSelectedItem]){
             if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
