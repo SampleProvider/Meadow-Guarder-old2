@@ -38,9 +38,9 @@ addToChat = function(color,message){
             }
         }
     }
-    client.channels.fetch('923580123574329404').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace('`','\'') + '```'));
+    client.channels.fetch('927992766452072510').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace('`','\'') + '```'));
 }
 
 logError = function(err){
-    client.channels.fetch('925382870208503828').then(channel => channel.send("```" + err + "```"));
+    client.channels.fetch('927995990898782319').then(channel => channel.send("```" + err + "```"));
 }
