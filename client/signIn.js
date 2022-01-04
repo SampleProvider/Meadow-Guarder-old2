@@ -303,33 +303,6 @@ document.getElementById('signIn').onclick = function(){
         socket.emit('signIn',{username:document.getElementById('username').value,password:document.getElementById('password').value});
     },750);
 }
-document.getElementById('createAccount').onclick = function(){
-    if(document.getElementById('username').value === ''){
-        return;
-    }
-    socket.emit('createAccount',{username:document.getElementById('username').value,password:document.getElementById('password').value});
-}
-document.getElementById('deleteAccount').onclick = function(){
-    if(document.getElementById('username').value === ''){
-        return;
-    }
-    if(deletePasswordState === 0){
-        document.getElementById('deleteAccount').innerHTML = 'Are you sure?';
-        deletePasswordState = 1;
-    }
-    else{
-        document.getElementById('deleteAccount').innerHTML = 'Delete Account';
-        var password = prompt('Enter your password below:');
-        if(password === null){
-            signErrorText = signError.innerHTML;
-            signError.innerHTML = '<span style="color: #ff0000">Error: No password entered.</span><br>' + signErrorText;
-        }
-        else{
-            socket.emit('deleteAccount',{username:document.getElementById('username').value,password:password});
-        }
-        deletePasswordState = 0;
-    }
-}
 document.getElementById('changePassword').onclick = function(){
     if(document.getElementById('username').value === ''){
         return;
@@ -386,62 +359,6 @@ socket.on('signInResponse',function(data){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
         gameDiv.style.display = 'none';
-    }
-});
-socket.on('createAccountResponse',function(data){
-    if(data.success === 1){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #55ff55">Successfully created an account with username \'' + data.username + '\'.</span><br>' + signErrorText;
-    }
-    else if(data.success === 0){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: There is already an account with username \'' + data.username + '\'.</span><br>' + signErrorText;
-    }
-    else if(data.success === 2){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username must have more than 3 characters.</span><br>' + signErrorText;
-    }
-    else if(data.success === 3){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters. Invalid characters: <b>-- ; \' ` < ></b></span><br>' + signErrorText;
-    }
-    else if(data.success === 4){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password may not exceed 40 characters.</span><br>' + signErrorText;
-    }
-    else if(data.success === 5){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not start or end with a space.</span><br>' + signErrorText;
-    }
-    else if(data.success === 6){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not contain a bad word.</span><br>' + signErrorText;
-    }
-    else if(data.success === 7){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not contain a blank character.</span><br>' + signErrorText;
-    }
-});
-socket.on('deleteAccountResponse',function(data){
-    if(data.success === 4){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: You cannot delete this account.</span><br>' + signErrorText;
-    }
-    else if(data.success === 3){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #55ff55">Successfully deleted the account \'' + data.username + '\'.</span><br>' + signErrorText;
-    }
-    else if(data.success === 2){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is currently in game. Disconnect this account to delete the account.</span><br>' + signErrorText;
-    }
-    else if(data.success === 1){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Incorrect Password.</span><br>' + signErrorText;
-    }
-    else{
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: No account found with username \'' + data.username + '\'.</span><br>' + signErrorText;
     }
 });
 socket.on('changePasswordResponse',function(data){
