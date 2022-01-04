@@ -307,8 +307,14 @@ Inventory = function(socket,server){
             slotCanvas.className += 'slotCanvas';
         }
         var slotCanvasCtx = slotCanvas.getContext("2d");
-        slotCanvasCtx.canvas.width = 48;
-        slotCanvasCtx.canvas.height = 48;
+        if(drawId === 155){
+            slotCanvasCtx.canvas.width = 28;
+            slotCanvasCtx.canvas.height = 28;
+        }
+        else{
+            slotCanvasCtx.canvas.width = 48;
+            slotCanvasCtx.canvas.height = 48;
+        }
         resetCanvas(slotCanvasCtx);
         var img_x = ((drawId - 1) % 26) * 24;
         var img_y = ~~((drawId - 1) / 26) * 24;
@@ -725,6 +731,14 @@ Inventory = function(socket,server){
             }
             else{
                 description += '<span style="color: #ee3333">' + item.slots + ' slots.</span><br>';
+            }
+        }
+        if(item.shieldPower){
+            if(item.shieldPower > 0){
+                description += '<span style="color: #33ee33">+' + Math.round(item.shieldPower * 100) + '% shield power.</span><br>';
+            }
+            else{
+                description += '<span style="color: #ee3333">' + Math.round(item.shieldPower * 100) + '% shield power.</span><br>';
             }
         }
         if(item.equip === 'consume'){

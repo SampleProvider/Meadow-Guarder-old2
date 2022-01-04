@@ -534,6 +534,9 @@ socket.on('update',function(data){
                                 }
                             }
                         }
+                        else if(j === 'direction'){
+                            player[j] = (data.player[i][j] + 360) % 360;
+                        }
                         else if(j === 'img'){
                             for(var k in data.player[i][j]){
                                 if(player[j][k] !== data.player[i][j][k]){
@@ -578,15 +581,7 @@ socket.on('update',function(data){
                             projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
                         }
                         else if(j === 'direction'){
-                            if(data.projectile[i].direction % 360 - projectile.direction % 360 > 180){
-                                projectile.spdDirection = ((data.projectile[i].direction % 360 - projectile.direction % 360) - 360) / 4;
-                            }
-                            else if(data.projectile[i].direction % 360 - projectile.direction % 360 < -180){
-                                projectile.spdDirection = ((data.projectile[i].direction % 360 - projectile.direction % 360) + 360) / 4;
-                            }
-                            else{
-                                projectile.spdDirection = (data.projectile[i].direction % 360 - projectile.direction % 360) / 4;
-                            }
+                            projectile[j] = (data.projectile[i][j] + 360) % 360;
                         }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];
@@ -621,6 +616,9 @@ socket.on('update',function(data){
                         else if(j === 'y'){
                             monster.spdY = (data.monster[i].y - monster.y) / 4;
                         }
+                        else if(j === 'direction'){
+                            monster[j] = (data.monster[i][j] + 360) % 360;
+                        }
                         else if(j === 'toRemove'){
                             monster[j] = data.monster[i][j];
                             monster.fadeState = 2;
@@ -654,6 +652,9 @@ socket.on('update',function(data){
                         }
                         else if(j === 'y'){
                             npc.spdY = (data.npc[i].y - npc.y) / 4;
+                        }
+                        else if(j === 'direction'){
+                            npc[j] = (data.npc[i][j] + 360) % 360;
                         }
                         else if(j === 'toRemove'){
                             npc[j] = data.npc[i][j];
@@ -1111,6 +1112,9 @@ var loop = function(){
         decreaseProjectileByParent(Projectile.list[i]);
     }
 
+    for(var i in Player.list){
+        Player.list[i].drawLayer1();
+    }
     for(var i = -1;i < 2;i++){
         for(var j = -1;j < 2;j++){
             if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
@@ -1484,6 +1488,8 @@ mouseInMenu = function(event){
     }
     scrollAllowed = false;
     inGame = false;
+    socket.emit('keyPress',{inputId:'leftClick',state:false});
+    socket.emit('keyPress',{inputId:'rightClick',state:false});
 }
 mouseInHotbar = function(event){
     tabVisible = true;
@@ -1493,6 +1499,8 @@ mouseInHotbar = function(event){
     }
     scrollAllowed = true;
     inGame = false;
+    socket.emit('keyPress',{inputId:'leftClick',state:false});
+    socket.emit('keyPress',{inputId:'rightClick',state:false});
 }
 document.querySelectorAll("button").forEach(function(item){
     item.addEventListener('focus',function(){
