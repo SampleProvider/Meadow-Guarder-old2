@@ -399,50 +399,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ban' && level >= 2){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					if(debugData[name]){
-						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to ban ' + name + '.',
-								debug:true,
-							});
-							return;
-						}
-					}
-					banPlayer(name,function(result){
-						if(result === 1){
-							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already banned.');
-						}
-						else if(result === 2){
-							Player.list[socket.id].sendMessage('[!] Banned player ' + name + '.');
-							for(var i in Player.list){
-								if(Player.list[i].name === name){
-									if(SOCKET_LIST[i]){
-										SOCKET_LIST[i].disconnectUser();
-									}
-								}
-							}
-						}
-					});
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					unbanPlayer(name,function(result){
-						if(result === 1){
-							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is not banned.');
-						}
-						else if(result === 2){
-							Player.list[socket.id].sendMessage('[!] Unbanned player ' + name + '.');
-						}
-					});
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'invincible' && level >= 3){
+				if(commandList[0].toLowerCase() === 'invincible' && level >= 2){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invincible = !Player.list[socket.id].debug.invincible;
 					if(Player.list[socket.id].debug.invincible){
@@ -454,7 +411,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'give' && level >= 3 && commandList.length > 3){
+				if(commandList[0].toLowerCase() === 'give' && level >= 2 && commandList.length > 3){
 					commandList.splice(0,1);
 					var amount = commandList.splice(commandList.length - 1,1)[0];
 					var id = commandList.splice(commandList.length - 1,1)[0];
@@ -496,56 +453,6 @@ io.sockets.on('connection',function(socket){
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					});
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					for(var i in Player.list){
-						if(Player.list[i].name === name){
-							if(SOCKET_LIST[i]){
-								IPbanPlayer(SOCKET_LIST[i].handshake.headers["x-forwarded-for"],function(result){
-									if(result === 1){
-										Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already IPBanned.');
-									}
-									else if(result === 2){
-										Player.list[socket.id].sendMessage('[!] IPBanned player ' + name + '.');
-										for(var j in Player.list){
-											if(Player.list[j].name !== 'sp'){
-												if(SOCKET_LIST[j]){
-													if(i !== j){
-														if(SOCKET_LIST[j].handshake.headers["x-forwarded-for"] === SOCKET_LIST[i].handshake.headers["x-forwarded-for"]){
-															SOCKET_LIST[j].disconnectUser();
-														}
-													}
-												}
-											}
-										}
-										SOCKET_LIST[i].disconnectUser();
-									}
-								});
-							}
-						}
-					}
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
-					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
-					for(var i in Player.list){
-						if(Player.list[i].name === name){
-							if(SOCKET_LIST[i]){
-								unIPbanPlayer(SOCKET_LIST[i].handshake.headers["x-forwarded-for"],function(result){
-									if(result === 1){
-										Player.list[socket.id].sendMessage('[!] Player ' + name + ' is not IPBanned.');
-									}
-									else if(result === 2){
-										Player.list[socket.id].sendMessage('[!] UnIPBanned player ' + name + '.');
-									}
-								});
-							}
-						}
-					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'ip' && level >= 3){
@@ -724,7 +631,8 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
-						message += '<br>/ban [player name] - Ban someone.';
+						message += '<br>/invincible - Toggle invincibility for yourself.';
+						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
 						message += '<br>/leaderboard - Leaderboards.';
@@ -744,14 +652,10 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
-						message += '<br>/ban [player name] - Ban someone.';
-						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/invincible - Toggle invincibility for yourself.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
-						message += '<br>/ipban [player name] - IPBan someone.';
-						message += '<br>/unipban [player name] - UnIPban someone.';
 						message += '<br>/ip [player name] - See someone\'s ip.';
 						message += '<br>/serverupdate - Announce a server update.';
 						message += '<br>/exit - Exits the server without saving.';
