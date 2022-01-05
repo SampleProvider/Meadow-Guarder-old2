@@ -1433,7 +1433,9 @@ Player = function(param,socket){
                 }
             }
         }
-        SOCKET_LIST[pt.id].emit('death');
+        if(SOCKET_LIST[pt.id]){
+            SOCKET_LIST[pt.id].emit('death');
+        }
         if(entity){
             if(entity === 'self'){
                 addToChat('#ff0000',pt.name + ' committed suicide.');
@@ -2975,38 +2977,17 @@ Monster = function(param){
         if(self.attackState === 'passive'){
             self.target = null;
             for(var i in Player.list){
-                if(!self.target){
-                    if(Player.list[i].map === self.map){
-                        if(Player.list[i].team !== self.team){
-                            if(Player.list[i].hp > 0){
-                                if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
-                                    if(self.canSee(Player.list[i])){
-                                        if(Player.list[i]){
-                                            self.target = Player.list[i];
-                                            self.attackState = 'attack';
-                                            self.damaged = false;
-                                            self.targetLeftView = 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            for(var i in Monster.list){
-                if(!self.target){
-                    if(Monster.list[i].map === self.map){
-                        if(Monster.list[i].team !== self.team){
-                            if(Monster.list[i].hp > 0){
-                                if(self.getSquareDistance(Monster.list[i]) < self.aggro && Monster.list[i].getSquareDistance(self.randomPos) <= 16){
-                                    if(self.canSee(Monster.list[i])){
-                                        if(Monster.list[i]){
-                                            self.target = Monster.list[i];
-                                            self.attackState = 'attack';
-                                            self.damaged = false;
-                                            self.targetLeftView = 0;
-                                        }
+                if(Player.list[i].map === self.map){
+                    if(Player.list[i].team !== self.team){
+                        if(Player.list[i].hp > 0){
+                            if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
+                                if(self.canSee(Player.list[i])){
+                                    if(Player.list[i]){
+                                        self.target = Player.list[i];
+                                        self.attackState = 'attack';
+                                        self.damaged = false;
+                                        self.targetLeftView = 0;
+                                        return;
                                     }
                                 }
                             }

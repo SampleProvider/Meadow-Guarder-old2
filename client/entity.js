@@ -197,7 +197,7 @@ var Player = function(initPack){
                     var drawId = Item.list[self.currentItem].drawId;
                     var imgX = ((drawId - 1) % 26) * 24;
                     var imgY = ~~((drawId - 1) / 26) * 24;
-                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,0,96,96);
+                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
                     ctx.restore();
                 }
             }
@@ -237,7 +237,7 @@ var Player = function(initPack){
                     var drawId = Item.list[self.currentItem].drawId;
                     var imgX = ((drawId - 1) % 26) * 24;
                     var imgY = ~~((drawId - 1) / 26) * 24;
-                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,0,96,96);
+                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
                     ctx.restore();
                 }
             }
