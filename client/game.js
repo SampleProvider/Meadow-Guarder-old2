@@ -581,7 +581,8 @@ socket.on('update',function(data){
                             projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
                         }
                         else if(j === 'direction'){
-                            projectile[j] = (data.projectile[i][j] + 360) % 360;
+                            projectile.direction = (projectile.direction + 360) % 360;
+                            projectile.spdDirection = ((data.projectile[i][j] + 360) % 360 - projectile.direction) / 4;
                         }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];
@@ -949,8 +950,8 @@ var loop = function(){
         WIDTH = window.innerWidth;
         HEIGHT = window.innerHeight;
     }
-    ctx.fillStyle = '#354149';
-    ctx.fillRect(0,0,WIDTH,HEIGHT);
+    // ctx.fillStyle = '#354149';
+    // ctx.fillRect(0,0,WIDTH,HEIGHT);
     for(var i in Player.list){
         Player.list[i].update();
     }

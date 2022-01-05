@@ -32,7 +32,7 @@ socket.on('addToChat',function(data){
             message = message.replace(/</gi,'&lt;');
             message = message.replace(/>/gi,'&gt;');
         }
-        message = '<div class="text" style="color:' + data.color + '";">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+        message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     message = message.replace(/  /gi,'&nbsp;&nbsp;');
     chat += message;

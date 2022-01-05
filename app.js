@@ -907,8 +907,9 @@ io.sockets.on('connection',function(socket){
 				if(Player.list[socket.id].lastChat > 0){
 					Player.list[socket.id].chatWarnings += 1.5;
 				}
-				if(stringData.length > 100){
-					Player.list[socket.id].chatWarnings += 5.5;
+				Player.list[socket.id].chatWarnings += stringData.length / 50;
+				if(stringData.length > 2000){
+					return;
 				}
 				var notSpace = false;
 				for(var i = 0;i < stringData.length;i++){
@@ -927,9 +928,14 @@ io.sockets.on('connection',function(socket){
 						if(stringData.toLowerCase().includes(badwords[i])){
 							var censor = "";
 							for(var j = 0;j < badwords[i].length;j++){
-								censor += "*";
+								if(badwords[i] === ' '){
+									censor += ' ';
+								}
+								else{
+									censor += "*";
+								}
 							}
-							stringData = stringData.toLowerCase().replace(badwords[i],censor);
+							stringData = stringData.toLowerCase().replace(/badwords[i]/,censor);
 							for(var i in uppercase){
 								stringData[i] = stringData[i].toUpperCase();
 							}
@@ -1239,14 +1245,24 @@ setInterval(function(){
 		}
 	}
 	for(var i in Monster.list){
-		var list = getBoundingBox(Monster.list[i]);
-		for(var j in list){
-			if(grid[Monster.list[i].map]){
-				if(grid[Monster.list[i].map][list[j].x]){
-					if(grid[Monster.list[i].map][list[j].x][list[j].y]){
-						grid[Monster.list[i].map][list[j].x][list[j].y].monsters.push(Monster.list[i]);
+		if(Monster.list[i].updated){
+			var list = getBoundingBox(Monster.list[i]);
+			for(var j in list){
+				if(grid[Monster.list[i].map]){
+					if(grid[Monster.list[i].map][list[j].x]){
+						if(grid[Monster.list[i].map][list[j].x][list[j].y]){
+							grid[Monster.list[i].map][list[j].x][list[j].y].monsters.push(Monster.list[i]);
+						}
+						else{
+							grid[Monster.list[i].map][list[j].x][list[j].y] = {
+								players:[],
+								monsters:[Monster.list[i]],
+								projectiles:{},
+							};
+						}
 					}
 					else{
+						grid[Monster.list[i].map][list[j].x] = [];
 						grid[Monster.list[i].map][list[j].x][list[j].y] = {
 							players:[],
 							monsters:[Monster.list[i]],
@@ -1255,6 +1271,7 @@ setInterval(function(){
 					}
 				}
 				else{
+					grid[Monster.list[i].map] = [];
 					grid[Monster.list[i].map][list[j].x] = [];
 					grid[Monster.list[i].map][list[j].x][list[j].y] = {
 						players:[],
@@ -1262,15 +1279,6 @@ setInterval(function(){
 						projectiles:{},
 					};
 				}
-			}
-			else{
-				grid[Monster.list[i].map] = [];
-				grid[Monster.list[i].map][list[j].x] = [];
-				grid[Monster.list[i].map][list[j].x][list[j].y] = {
-					players:[],
-					monsters:[Monster.list[i]],
-					projectiles:{},
-				};
 			}
 		}
 	}

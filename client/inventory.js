@@ -102,6 +102,27 @@ Inventory = function(socket,server){
                 }
             }
         }
+        if(hasSpace === 0){
+
+        }
+        for(var i in self.items){
+            if(self.items[i] === null || self.items[i] === undefined){
+                self.items[i] = {};
+            }
+            if(i >= 0 || index.toString().slice(0,5) === 'trade'){
+
+            }
+            else{
+                if(hasSpace < 1 && self.items[i].id === undefined){
+                    hasSpace = 1;
+                    index = i;
+                }
+                if(hasSpace < 2 && self.items[i].id === id && Item.list[id].maxStack > self.items[i].amount && amount !== undefined){
+                    hasSpace = 2;
+                    index = i;
+                }
+            }
+        }
         return {
             hasSpace:hasSpace,
             index:index,
