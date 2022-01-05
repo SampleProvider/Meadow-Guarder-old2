@@ -913,7 +913,7 @@ canvas {
     padding: 0px;
     font-size: small;
     border-radius: 4px;
-    pointer-events: none;
+    cursor: crosshair;
     transform: translate(-50%, 0%);
 }
 .debuffSlot {
