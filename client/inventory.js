@@ -109,7 +109,7 @@ Inventory = function(socket,server){
             if(self.items[i] === null || self.items[i] === undefined){
                 self.items[i] = {};
             }
-            if(i >= 0 || index.toString().slice(0,5) === 'trade'){
+            if(i >= 0 || i.toString().slice(0,5) === 'trade'){
 
             }
             else{
