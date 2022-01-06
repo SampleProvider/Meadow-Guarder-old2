@@ -2528,6 +2528,12 @@ Player.onDisconnect = function(socket){
                             }
                         }
                     }
+                    for(var i = 0;i < 18;i++){
+                        Player.list[Player.list[socket.id].tradingEntity].inventory.items['trade' + i] = {};
+                    }
+                    if(SOCKET_LIST[Player.list[socket.id].tradingEntity]){
+                        SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
+                    }
                     for(var i in Player.list[socket.id].inventory.items){
                         if(i.slice(0,5) === 'trade' && parseInt(i.substring(5)) <= 8){
                             if(Player.list[socket.id].inventory.items[i].id){
@@ -2535,8 +2541,8 @@ Player.onDisconnect = function(socket){
                             }
                         }
                     }
-                    if(SOCKET_LIST[Player.list[socket.id].tradingEntity]){
-                        SOCKET_LIST[Player.list[socket.id].tradingEntity].emit('closeTrade');
+                    for(var i = 0;i < 18;i++){
+                        Player.list[socket.id].inventory.items['trade' + i] = {};
                     }
                     Player.list[Player.list[socket.id].tradingEntity].tradingEntity = null;
                 }
