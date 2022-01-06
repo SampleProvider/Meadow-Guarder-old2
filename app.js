@@ -697,7 +697,7 @@ io.sockets.on('connection',function(socket){
 						if(stringData.toLowerCase().includes(badwords[i])){
 							var censor = "";
 							for(var j = 0;j < badwords[i].length;j++){
-								if(badwords[i] === ' '){
+								if(badwords[i][j] === ' '){
 									censor += ' ';
 								}
 								else{
@@ -705,8 +705,8 @@ io.sockets.on('connection',function(socket){
 								}
 							}
 							stringData = stringData.toLowerCase().replace(/badwords[i]/,censor);
-							for(var i in uppercase){
-								stringData[i] = stringData[i].toUpperCase();
+							for(var j in uppercase){
+								stringData[j] = stringData[j].toUpperCase();
 							}
 						}
 					}
