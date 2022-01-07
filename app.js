@@ -850,6 +850,30 @@ io.sockets.on('connection',function(socket){
 					statsString += '<br>Crit Power: ' + Player.list[socket.id].stats.critPower + '';
 					statsString += '<br>Speed: ' + Player.list[socket.id].maxSpeed + '';
 					statsString += '<br>Luck: ' + Player.list[socket.id].luck + '';
+					statsString += '<br>Shield Protection: ' + Player.list[socket.id].shieldProtection + '';
+					var seconds = Math.floor(Player.list[socket.id].playTime / 20);
+					var minutes = Math.floor(seconds / 60);
+					seconds = seconds % 60;
+					var hours = Math.floor(minutes / 60);
+					minutes = minutes % 60;
+					if(hours === 1){
+						statsString += '<br>Play Time: ' + hours + ' hour, ';
+					}
+					else{
+						statsString += '<br>Play Time: ' + hours + ' hours, ';
+					}
+					if(minutes === 1){
+						statsString += minutes + ' minute, ';
+					}
+					else{
+						statsString += minutes + ' minutes, ';
+					}
+					if(seconds === 1){
+						statsString += seconds + ' second';
+					}
+					else{
+						statsString += seconds + ' seconds';
+					}
 					Player.list[socket.id].sendMessage(statsString);
 					return;
 				}
