@@ -586,20 +586,6 @@ Actor = function(param){
         }
     }
     self.updateCollisions = function(){
-        if(RegionChanger.list[self.map]){
-            if(RegionChanger.list[self.map][self.gridX]){
-                if(RegionChanger.list[self.map][self.gridX][self.gridY]){
-                    var regionChanger = RegionChanger.list[self.map][self.gridX][self.gridY];
-                    if(regionChanger.noMonster && self.type === 'Monster'){
-                        self.x = self.lastX;
-                        self.y = self.lastY;
-                    }
-                    if(regionChanger.region !== self.region){
-                        self.doRegionChange(regionChanger);
-                    }
-                }
-            }
-        }
         if(Slope.list[self.map]){
             if(Slope.list[self.map][self.gridX]){
                 if(Slope.list[self.map][self.gridX][self.gridY]){
@@ -719,6 +705,22 @@ Actor = function(param){
             self.teleport(transporter.teleportx,transporter.teleporty,transporter.teleport);
         }
     }
+    self.updateRegion = function(){
+        if(RegionChanger.list[self.map]){
+            if(RegionChanger.list[self.map][self.gridX]){
+                if(RegionChanger.list[self.map][self.gridX][self.gridY]){
+                    var regionChanger = RegionChanger.list[self.map][self.gridX][self.gridY];
+                    if(regionChanger.noMonster && self.type === 'Monster'){
+                        self.x = self.lastX;
+                        self.y = self.lastY;
+                    }
+                    if(regionChanger.region !== self.region){
+                        self.doRegionChange(regionChanger);
+                    }
+                }
+            }
+        }
+    }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
         if(regionChanger.canAttack === false){
@@ -815,58 +817,46 @@ Actor = function(param){
             var silvercoins = Math.floor(coins / 100) % 100;
             var goldcoins = Math.floor(coins / 10000) % 100;
             var meteoritecoins = Math.floor(coins / 1000000) % 100;
-            var amount = coppercoins;
-            while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
-                amount -= amountRemoved;
+            if(coppercoins > 0){
                 new DroppedItem({
                     x:self.x,
                     y:self.y,
                     map:self.map,
                     item:'coppercoin',
-                    amount:amountRemoved,
+                    amount:coppercoins,
                     parent:i,
                     allPlayers:false,
                 });
             }
-            amount = silvercoins;
-            while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
-                amount -= amountRemoved;
+            if(silvercoins > 0){
                 new DroppedItem({
                     x:self.x,
                     y:self.y,
                     map:self.map,
                     item:'silvercoin',
-                    amount:amountRemoved,
+                    amount:silvercoins,
                     parent:i,
                     allPlayers:false,
                 });
             }
-            amount = goldcoins;
-            while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
-                amount -= amountRemoved;
+            if(goldcoins > 0){
                 new DroppedItem({
                     x:self.x,
                     y:self.y,
                     map:self.map,
                     item:'goldcoin',
-                    amount:amountRemoved,
+                    amount:goldcoins,
                     parent:i,
                     allPlayers:false,
                 });
             }
-            amount = meteoritecoins;
-            while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
-                amount -= amountRemoved;
+            if(meteoritecoins > 0){
                 new DroppedItem({
                     x:self.x,
                     y:self.y,
                     map:self.map,
                     item:'meteoritecoin',
-                    amount:amountRemoved,
+                    amount:meteoritecoins,
                     parent:i,
                     allPlayers:false,
                 });
@@ -1316,6 +1306,8 @@ Player = function(param,socket){
     self.chatWarnings = 0;
     self.textColor = '#000000';
 
+    self.playTime = 0;
+
     if(debugData[self.name]){
         self.textColor = debugData[self.name].color;
     }
@@ -1350,6 +1342,9 @@ Player = function(param,socket){
         for(var i in param.database.img){
             self.img[i] = param.database.img[i];
         }
+    }
+    if(param.database.playTime){
+        self.playTime = param.database.playTime;
     }
 
     self.quest = false;
@@ -1428,6 +1423,7 @@ Player = function(param,socket){
         }
     }
     self.update = function(){
+        self.playTime += 1;
         self.stepsLeft = self.maxSpeed;
         self.updateDebug();
         self.updateCurrentItem();
@@ -1474,6 +1470,7 @@ Player = function(param,socket){
                 self.stepsLeft -= 1;
             }
             if(self.stepsLeft === stepsLeft){
+                self.updateRegion();
                 break;
             }
             var spdX = self.spdX;
@@ -1484,6 +1481,7 @@ Player = function(param,socket){
                 self.y = Math.round(self.y);
             }
             self.updateGridPosition();
+            self.updateRegion();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
                 if(self.dashing){
@@ -1519,6 +1517,7 @@ Player = function(param,socket){
                         self.y = Math.round(self.y);
                     }
                     self.updateGridPosition();
+                    self.updateRegion();
                     self.updateCollisions();
                     self.stepsLeft -= 1;
                     if(self.stepsLeft <= 0){
@@ -1729,9 +1728,11 @@ Player = function(param,socket){
                         }
                         if(item.critChance !== undefined){
                             self.stats.critChance += item.critChance;
+                            self.stats.critChance = Math.round(self.stats.critChance * 100) / 100;
                         }
                         if(item.critPower !== undefined){
                             self.stats.critPower += item.critPower;
+                            self.stats.critPower = Math.round(self.stats.critPower * 100) / 100;
                         }
                         if(item.pickaxePower !== undefined){
                             self.pickaxePower = item.pickaxePower;
@@ -3101,6 +3102,7 @@ Monster = function(param){
                 self.trackSteps += 50;
             }
             if(self.stepsLeft === stepsLeft){
+                self.updateRegion();
                 break;
             }
             var spdX = self.spdX;
@@ -3112,6 +3114,7 @@ Monster = function(param){
             }
             self.updateGridPosition();
             self.updateCollisions();
+            self.updateRegion();
             if(self.collided.x || self.collided.y){
                 if(self.dashing){
                     break;
@@ -3147,6 +3150,7 @@ Monster = function(param){
                     }
                     self.updateGridPosition();
                     self.updateCollisions();
+                    self.updateRegion();
                     self.stepsLeft -= 1;
                     if(self.stepsLeft <= 0){
                         break;
@@ -3480,6 +3484,7 @@ Npc = function(param){
             }
             self.updateGridPosition();
             self.updateCollisions();
+            self.updateRegion();
         }
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
