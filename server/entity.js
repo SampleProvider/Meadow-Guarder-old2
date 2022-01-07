@@ -3398,17 +3398,19 @@ Monster = function(param){
                                 self.trackingPath.shift();
                             }
                             else{
-                                var path = finder.findPath(nx,ny,lastTrackX,lastTrackY,grid2);
-                                if(path[0]){
-                                    self.trackingPath = PF.Util.compressPath(path);
-                                    for(var i in self.trackingPath){
-                                        self.trackingPath[i][0] += dx;
-                                        self.trackingPath[i][1] += dy;
+                                if(lastTrackX < size && lastTrackX > 0 && lastTrackY < size && lastTrackY > 0){
+                                    var path = finder.findPath(nx,ny,lastTrackX,lastTrackY,grid2);
+                                    if(path[0]){
+                                        self.trackingPath = PF.Util.compressPath(path);
+                                        for(var i in self.trackingPath){
+                                            self.trackingPath[i][0] += dx;
+                                            self.trackingPath[i][1] += dy;
+                                        }
+                                        self.trackingPath.shift();
                                     }
-                                    self.trackingPath.shift();
-                                }
-                                else{
-                                    self.retreat();
+                                    else{
+                                        self.retreat();
+                                    }
                                 }
                             }
                         }
