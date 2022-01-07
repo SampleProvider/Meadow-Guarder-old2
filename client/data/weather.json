@@ -3,7 +3,7 @@
         "name":"None",
         "darkness":0,
         "changeChances":{
-            "lightdrizzle":0.00025
+            "lightdrizzle":0.0001
         },
         "particles":[]
     },
