@@ -2583,6 +2583,7 @@ Player.onConnect = function(socket,username){
                         }
                     }
                 }
+                player.updateRegion();
                 player.teleportStage = 'fadeOut';
             }
         });
@@ -2591,7 +2592,6 @@ Player.onConnect = function(socket,username){
                 player.canMove = true;
                 player.invincible = false;
                 player.teleportStage = null;
-                player.updateRegion();
             }
         });
 
