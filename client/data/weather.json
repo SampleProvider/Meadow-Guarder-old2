@@ -19,7 +19,7 @@
     },
     "rain":{
         "name":"Rain",
-        "darkness":0.4,
+        "darkness":0.3,
         "changeChances":{
             "lightdrizzle":0.0005,
             "heavyrain":0.0005,
@@ -29,7 +29,7 @@
     },
     "heavyrain":{
         "name":"Heavy Rain",
-        "darkness":0.5,
+        "darkness":0.4,
         "changeChances":{
             "rain":0.0005,
             "pouringrain":0.0005
@@ -38,7 +38,7 @@
     },
     "pouringrain":{
         "name":"Pouring Rain",
-        "darkness":0.6,
+        "darkness":0.5,
         "changeChances":{
             "heavypouringrain":0.0005,
             "pouringrain":0.0005
@@ -47,7 +47,7 @@
     },
     "heavypouringrain":{
         "name":"Heavy Pouring Rain",
-        "darkness":0.7,
+        "darkness":0.6,
         "changeChances":{
             "pouringrain":0.0005,
             "insanepouringrain":0.0000001
