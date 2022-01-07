@@ -1470,7 +1470,6 @@ Player = function(param,socket){
                 self.stepsLeft -= 1;
             }
             if(self.stepsLeft === stepsLeft){
-                self.updateRegion();
                 break;
             }
             var spdX = self.spdX;
@@ -2592,6 +2591,7 @@ Player.onConnect = function(socket,username){
                 player.canMove = true;
                 player.invincible = false;
                 player.teleportStage = null;
+                player.updateRegion();
             }
         });
 
@@ -3105,7 +3105,6 @@ Monster = function(param){
                 self.trackSteps += 50;
             }
             if(self.stepsLeft === stepsLeft){
-                self.updateRegion();
                 break;
             }
             var spdX = self.spdX;
