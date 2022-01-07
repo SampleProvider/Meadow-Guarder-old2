@@ -54,8 +54,9 @@ coldhearticicle,Coldheart Icicle,2.0,1.00,133,false,1,hotbar,Weapon,0,1,0,0,0.01
 heavywhammo,Heavy Whammo,4.5,1.00,134,false,1,hotbar,Weapon,0,252,0,0,0.05,0.00,0,20,0.50,132.30,1.60,0,0,0.00,0,0.00,-8,-0.60,0,0,0,0,0.00,heavywhammo,none,none,none,none,0.00,
 staffoflife,Staff of Life,5.5,1.01,135,true,1,hotbar,Weapon,0,0,0,123,0.05,0.00,15,5,0.50,258.30,1.01,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,staffoflife,none,none,none,none,0.00,
 staffoflove,Staff of Love,4.5,1.00,136,true,1,hotbar,Weapon,0,0,0,258,0.05,0.00,33,15,0.50,180.60,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,staffoflove,none,none,none,none,0.00,
+valerianwand,Valerian Wand,5.5,1.00,142,true,1,hotbar,Weapon,0,0,0,705,0.05,0.00,45,20,0.70,222.08,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,valerianwand,none,none,none,none,0.00,"Harnessing the power of gold, this wand summons a golden laser."
 thornedbow,Thorned Bow,4.5,1.00,147,true,1,hotbar,Weapon,0,0,276,0,0.05,0.00,0,35,0.50,82.80,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,thornedbow,none,none,none,none,0.00,
-frozenbreath,Frozen Breath,5.5,1.00,148,true,1,hotbar,Weapon,0,0,553,0,0.05,0.00,0,25,0.50,116.13,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,frozenbreath,none,none,none,none,0.00,
+frozenbreath,Frozen Breath,5.5,1.00,148,true,1,hotbar,Weapon,0,0,553,0,0.05,0.00,0,50,0.50,116.13,1.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,frozenbreath,none,none,none,none,0.00,
 coppershiv,Copper Shiv,0.0,1.11,155,false,1,hotbar,Weapon,0,5,0,0,0.00,0.00,0,15,0.50,3.33,1.11,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,coppershiv,none,none,none,none,0.00,
 flowerhat,Flower Hat,2.0,1.00,174,false,1,helmet,Helmet,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,10,0.00,0,0.85,0,0,0,0,0.00,none,none,none,none,+0.2 Luck,0.15,A luck charm.
 foresthat,Forest Hat,2.0,1.02,175,false,1,helmet,Helmet,0,0,3,0,0.15,0.20,0,0,0.00,4.83,0.20,3,18,0.30,0,0.00,0,0.82,0,0,0,0,0.00,none,none,none,none,none,0.00,Nature is on your side.
@@ -168,7 +169,7 @@ royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,
 warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0.50,0,0,0,0,0.60,none,none,none,none,none,0.50,A true warrior shield.
 goldtoken,Gold Token,3.0,0.00,283,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,none,none,none,none,none,0.00,
 ashtoken,Ash Token,1.0,0.00,284,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,none,none,none,none,none,0.00,
-shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0.20,0,0,0,0,0.00,none,none,none,none,Lifesteal.,0.80,OG Item.
+shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0.20,0,0,0,0,0.80,none,none,none,none,Lifesteal.,0.80,OG Item.
 frozenboots,Frozen Boots,2.0,1.00,286,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,5,0.00,0,0.00,0,0.50,0,0,0,0,0.00,none,frozenflames,none,none,none,0.50,I think your feet are already getting frostbite.
 hikingboots,Hiking Boots,3.0,1.00,287,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,4,0.00,0,0.00,2,0.50,0,0,0,0,0.00,none,none,none,none,none,0.50,A pair of excellent hiking boots.
 woolenboots,Woolen Boots,3.0,1.00,288,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,8,0.20,0,0.00,0,0.50,0,0,0,0,0.00,none,none,none,none,none,0.50,Nice and warm.
@@ -296,6 +297,7 @@ musicboxteneyedone,Music Box - Ten Eyed One,6.0,0.00,481,false,1,hotbar,Music Bo
 musicboxtheoasis,Music Box - The Oasis,2.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicboxtheoasis,none,none,none,none,0.00,
 musicboxcrystalite,Music Box - Crystalite,4.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicboxcrystalite,none,none,none,none,0.00,
 musicboxdewdrop,Music Box - Dewdrop,5.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicboxdewdrop,none,none,none,none,0.00,
+musicboxtheolddays,Music Box - The Old Days,3.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicboxdewdrop,none,none,none,none,0.00,
 musicbox127,Music Box - 127,0.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicbox127,none,none,none,none,0.00,
 musicboxrickroll,Music Box - Never Gonna Give You Up,6.0,0.00,481,false,1,hotbar,Music Box,0,0,0,0,0.00,0.00,0,300,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,musicboxrickroll,none,none,none,none,0.00,
 copperbar,Copper Bar,0.5,0.00,482,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0.00,0,0,0,0,0.00,none,none,none,none,none,0.00,

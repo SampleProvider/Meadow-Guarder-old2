@@ -154,7 +154,7 @@
                     "speed":45,
                     "directionDeviation":25,
                     "stats":{
-                        "damage":50,
+                        "damage":35,
                         "critChance":0,
                         "critPower":0
                     }
@@ -166,7 +166,7 @@
                     "speed":45,
                     "directionDeviation":25,
                     "stats":{
-                        "damage":50,
+                        "damage":35,
                         "critChance":0,
                         "critPower":0
                     }
@@ -178,7 +178,7 @@
                     "speed":45,
                     "directionDeviation":25,
                     "stats":{
-                        "damage":50,
+                        "damage":35,
                         "critChance":0,
                         "critPower":0
                     }
@@ -190,7 +190,7 @@
                     "speed":45,
                     "directionDeviation":25,
                     "stats":{
-                        "damage":50,
+                        "damage":35,
                         "critChance":0,
                         "critPower":0
                     }
@@ -202,7 +202,7 @@
                     "speed":45,
                     "directionDeviation":25,
                     "stats":{
-                        "damage":50,
+                        "damage":35,
                         "critChance":0,
                         "critPower":0
                     }
@@ -300,7 +300,7 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":75000,
+        "hpMax":750000,
         "stats":{
             "damage":30,
             "defense":0,

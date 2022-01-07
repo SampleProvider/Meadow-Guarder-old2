@@ -18,5 +18,9 @@
     "smorties":{
         "level":2,
         "color":"#900090"
+    },
+    "leothelion":{
+        "level":2,
+        "color":"#900090"
     }
 }

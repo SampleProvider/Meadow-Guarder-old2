@@ -48,7 +48,6 @@ var shadeAmount = 1;
 var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
 var teleportingMap = '';
-var lastMap = '';
 var worldRegion = '';
 
 var respawnTimer = 0;
@@ -116,6 +115,10 @@ Img.items2 = new Image();
 Img.items2.src = '/client/img/items2.png';
 Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
+Img.rain = new Image();
+Img.rain.src = '/client/img/weather/rain.png';
+Img.snowflake = new Image();
+Img.snowflake.src = '/client/img/weather/snowflake.png';
 
 var inventory = new Inventory(socket,false);
 var crafts = [];
@@ -360,6 +363,7 @@ socket.on('selfId',function(data){
             }
         }
     }
+    currentWeather = data.weather;
     signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         selfId = data.id;
@@ -369,7 +373,6 @@ socket.on('selfId',function(data){
         window.requestAnimationFrame(loop);
         socket.emit('signInFinished');
         canSignIn = true;
-        tickArray = [];
         itemMenu.style.display = 'none';
         debuffMenu.style.display = 'none';
     },750);
@@ -581,8 +584,11 @@ socket.on('update',function(data){
                             projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
                         }
                         else if(j === 'direction'){
-                            projectile.direction = (projectile.direction + 360) % 360;
-                            projectile.spdDirection = ((data.projectile[i][j] + 360) % 360 - projectile.direction) / 4;
+                            projectile.direction = projectile.direction % 360;
+                            while(projectile.direction < 0){
+                                projectile.direction += 360;
+                            }
+                            projectile.spdDirection = (data.projectile[i][j] - projectile.direction) / 4;
                         }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];
@@ -624,7 +630,7 @@ socket.on('update',function(data){
                             monster[j] = data.monster[i][j];
                             monster.fadeState = 2;
                             monster.fade -= 0.05;
-                            Particle.create(monster.x,monster.y,monster.map,'death',40);
+                            Particle.create(monster.x,monster.y,monster.map,'death',20);
                         }
                         else{
                             monster[j] = data.monster[i][j];
@@ -661,7 +667,7 @@ socket.on('update',function(data){
                             npc[j] = data.npc[i][j];
                             npc.fadeState = 2;
                             npc.fade -= 0.05;
-                            Particle.create(npc.x,npc.y,npc.map,'death',40);
+                            Particle.create(npc.x,npc.y,npc.map,'death',20);
                         }
                         else{
                             npc[j] = data.npc[i][j];
@@ -880,7 +886,6 @@ socket.on('changeMap',function(data){
         shadeAmount = 0;
     }
     teleportingMap = data.teleport;
-    lastMap = Player.list[selfId].map;
     shadeSpeed = 3 / 40;
     closeShop();
 });
@@ -1019,20 +1024,32 @@ var loop = function(){
     // cameraY -= mouseCameraY;
     cameraX = Math.round(cameraX);
     cameraY = Math.round(cameraY);
-    MGHC1();
 
-    if(Player.list[selfId].map === teleportingMap && shadeAmount < 1){
-        if(lastMap !== ''){
-            Player.list[selfId].map = lastMap;
-        }
+    if(shadeAmount > 1){
+        socket.emit('teleportFadeIn');
     }
-    if(Player.list[selfId].map === teleportingMap && shadeAmount > 1.5){
+    if(Player.list[selfId].map === teleportingMap && shadeAmount > 1){
         shadeSpeed = -3 / 40;
-        lastMap = '';
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
         socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        if(Player.list[selfId].map === 'World'){
+            setWeather(currentWeather);
+        }
+        else{
+            resetWeather();
+        }
     }
+    if(Player.list[selfId].map === teleportingMap && shadeAmount <= 0){
+        teleportingMap = '';
+        socket.emit('teleportFadeOut');
+    }
+    if(Player.list[selfId].map === 'World'){
+        for(var i in weatherData[currentWeather].particles){
+            Particle.create(-cameraX + Math.random() * WIDTH,-cameraY + Math.random() * HEIGHT,Player.list[selfId].map,weatherData[currentWeather].particles[i],1,1);
+        }
+    }
+    MGHC1();
 
     ctx.save();
     ctx.translate(cameraX,cameraY);
@@ -1080,9 +1097,6 @@ var loop = function(){
     if(inGame){
         itemMenu.style.display = 'none';
     }
-    for(var i in Particle.list){
-        Particle.list[i].draw();
-    }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
         if(inGame && entities[i].name && selectedDroppedItem === null){
@@ -1125,6 +1139,9 @@ var loop = function(){
     }
     for(var i in HarvestableNpc.list){
         HarvestableNpc.list[i].drawLayer1();
+    }
+    for(var i in Particle.list){
+        Particle.list[i].draw();
     }
 
     ctx.globalAlpha = 0.5;

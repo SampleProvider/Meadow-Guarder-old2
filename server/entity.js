@@ -86,7 +86,11 @@ monsterData = require('./../client/data/monsters.json');
 projectileData = require('./../client/data/projectiles.json');
 songData = require('./../client/data/songs.json');
 debuffData = require('./../client/data/debuffs.json');
+weatherData = require('./../client/data/weather.json');
 harvestableNpcData = require('./../client/data/harvestableNpcs.json');
+
+currentWeather = 'none';
+weatherLastChanged = 0;
 
 quests = {};
 
@@ -308,7 +312,6 @@ Actor = function(param){
     self.animationDirection = "down";
 
     self.invincible = false;
-    self.mapChange = 11;
     self.transporter = {};
 
     self.collided = {x:false,y:false};
@@ -320,7 +323,7 @@ Actor = function(param){
     self.name = param.name || 'null';
 
     self.maxSpeed = 10;
-    self.moveSpeed = 10;
+    self.stepsLeft = 10;
 
     self.img = {
         body:"Human",
@@ -376,20 +379,14 @@ Actor = function(param){
             }
         }
         else if(self.trackingPath[0]){
-            if(self.x < self.trackingPath[0][0] * 64 + self.width / 2){
-                self.spdX = 1;
-            }
-            else if(self.x > self.trackingPath[0][0] * 64 + self.width / 2){
-                self.spdX = -1;
+            if(self.x !== self.trackingPath[0][0] * 64 + self.width / 2){
+                self.spdX = Math.min(self.trackingPath[0][0] * 64 + self.width / 2 - self.x,self.width);
             }
             else{
                 self.spdX = 0;
             }
-            if(self.y < self.trackingPath[0][1] * 64 + self.height / 2){
-                self.spdY = 1;
-            }
-            else if(self.y > self.trackingPath[0][1] * 64 + self.height / 2){
-                self.spdY = -1;
+            if(self.y !== self.trackingPath[0][1] * 64 + self.height / 2){
+                self.spdY = Math.min(self.trackingPath[0][1] * 64 + self.height / 2 - self.y,self.height);
             }
             else{
                 self.spdY = 0;
@@ -698,41 +695,18 @@ Actor = function(param){
             }
         }
     }
-    self.updateMap = function(){
-        if(self.mapChange === 5){
-            self.map = self.transporter.teleport;
-            if(self.transporter.teleportx !== -1){
-                self.x = self.transporter.teleportx;
-            }
-            if(self.transporter.teleporty !== -1){
-                self.y = self.transporter.teleporty;
-            }
-            self.keyPress.up = false;
-            self.keyPress.down = false;
-            self.keyPress.left = false;
-            self.keyPress.right = false;
-        }
-        if(self.mapChange === 10){
-            self.canMove = true;
-            self.canAttack = self.transporter.canAttack;
-            self.invincible = false;
-        }
-    }
     self.teleport = function(x,y,map){
         if(playerMap[map] === undefined){
             return;
         }
-        if(self.mapChange > 10){
-            self.mapChange = -1;
-            self.transporter = {
-                teleport:map,
-                teleportx:x,
-                teleporty:y,
-            };
-            self.canMove = false;
-            self.canAttack = false;
-            self.invincible = true;
-        }
+        self.transporter = {
+            teleport:map,
+            teleportx:x,
+            teleporty:y,
+        };
+        self.canMove = false;
+        self.canAttack = false;
+        self.invincible = true;
     }
     self.doTransport = function(transporter){
         if(self.toRemove){
@@ -800,7 +774,7 @@ Actor = function(param){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
-                                            var amountRemoved = Math.ceil(Math.random() * amount);
+                                            var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                                             amount -= amountRemoved;
                                             new DroppedItem({
                                                 x:self.x,
@@ -820,7 +794,7 @@ Actor = function(param){
                     }
                     else{
                         while(amount > 0){
-                            var amountRemoved = Math.ceil(Math.random() * amount);
+                            var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                             amount -= amountRemoved;
                             new DroppedItem({
                                 x:self.x,
@@ -843,7 +817,7 @@ Actor = function(param){
             var meteoritecoins = Math.floor(coins / 1000000) % 100;
             var amount = coppercoins;
             while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount);
+                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                 amount -= amountRemoved;
                 new DroppedItem({
                     x:self.x,
@@ -857,7 +831,7 @@ Actor = function(param){
             }
             amount = silvercoins;
             while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount);
+                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                 amount -= amountRemoved;
                 new DroppedItem({
                     x:self.x,
@@ -871,7 +845,7 @@ Actor = function(param){
             }
             amount = goldcoins;
             while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount);
+                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                 amount -= amountRemoved;
                 new DroppedItem({
                     x:self.x,
@@ -885,7 +859,7 @@ Actor = function(param){
             }
             amount = meteoritecoins;
             while(amount > 0){
-                var amountRemoved = Math.ceil(Math.random() * amount);
+                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                 amount -= amountRemoved;
                 new DroppedItem({
                     x:self.x,
@@ -1296,6 +1270,8 @@ Player = function(param,socket){
     self.canMove = false;
     self.invincible = true;
     self.canAttack = false;
+    
+    self.teleportStage = null;
 
     self.hp = 100;
     self.hpMax = 100;
@@ -1428,7 +1404,7 @@ Player = function(param,socket){
                         y:pt.y,
                         map:pt.map,
                         particleType:'death',
-                        number:40,
+                        number:20,
                     });
                 }
             }
@@ -1452,63 +1428,131 @@ Player = function(param,socket){
         }
     }
     self.update = function(){
-        self.mapChange += 1;
-        self.moveSpeed = self.maxSpeed;
+        self.stepsLeft = self.maxSpeed;
         self.updateDebug();
         self.updateCurrentItem();
         self.updateDebuffs();
-        for(var i = 0;i < self.moveSpeed;i++){
+        while(self.stepsLeft > 0){
             self.updateSpd();
             self.updateMove();
+            var stepsLeft = self.stepsLeft;
+            if(!self.dashing){
+                if(self.spdX !== 0 && self.spdY !== 0){
+                    var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                    if(self.spdX > 0){
+                        self.spdX = minSpeed;
+                    }   
+                    else if(self.spdX < 0){
+                        self.spdX = -minSpeed;
+                    }
+                    if(self.spdY > 0){
+                        self.spdY = minSpeed;
+                    }
+                    else if(self.spdY < 0){
+                        self.spdY = -minSpeed;
+                    }
+                    self.stepsLeft -= minSpeed;
+                }
+                else{
+                    var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                    if(self.spdX > 0){
+                        self.spdX = maxSpeed;
+                    }   
+                    else if(self.spdX < 0){
+                        self.spdX = -maxSpeed;
+                    }
+                    if(self.spdY > 0){
+                        self.spdY = maxSpeed;
+                    }
+                    else if(self.spdY < 0){
+                        self.spdY = -maxSpeed;
+                    }
+                    self.stepsLeft -= maxSpeed;
+                }
+            }
+            else{
+                self.stepsLeft -= 1;
+            }
+            if(self.stepsLeft === stepsLeft){
+                break;
+            }
+            var spdX = self.spdX;
+            var spdY = self.spdY;
             if(self.canMove && self.inDialogue === false){
                 self.updatePosition();
+                self.x = Math.round(self.x);
+                self.y = Math.round(self.y);
             }
             self.updateGridPosition();
             self.updateCollisions();
+            if(self.collided.x || self.collided.y){
+                if(self.dashing){
+                    break;
+                }
+                self.x = self.lastX;
+                self.y = self.lastY;
+                self.stepsLeft = stepsLeft;
+                self.collided.x = false;
+                self.collided.y = false;
+                while(!self.collided.x && !self.collided.y){
+                    if(spdX > 0){
+                        self.spdX = 1;
+                    }
+                    else if(spdX < 0){
+                        self.spdX = -1;
+                    }
+                    else{
+                        self.spdX = 0;
+                    }
+                    if(spdY > 0){
+                        self.spdY = 1;
+                    }
+                    else if(spdY < 0){
+                        self.spdY = -1;
+                    }
+                    else{
+                        self.spdY = 0;
+                    }
+                    if(self.canMove && self.inDialogue === false){
+                        self.updatePosition();
+                        self.x = Math.round(self.x);
+                        self.y = Math.round(self.y);
+                    }
+                    self.updateGridPosition();
+                    self.updateCollisions();
+                    self.stepsLeft -= 1;
+                    if(self.stepsLeft <= 0){
+                        break;
+                    }
+                }
+                if(self.collided.x && self.collided.y){
+                    break;
+                }
+            }
         }
-        self.x = Math.round(self.x);
-        self.y = Math.round(self.y);
         if(self.inventory.updateStats){
             self.inventory.updateStats = false;
             self.updateStats();
         }
         self.updateXp();
+        self.spdX = self.x - self.lastX;
+        self.spdY = self.y - self.lastY;
+        if(spdX > 0){
+            self.spdX = 1;
+        }
+        else if(spdX < 0){
+            self.spdX = -1;
+        }
+        if(spdY > 0){
+            self.spdY = 1;
+        }
+        else if(spdY < 0){
+            self.spdY = -1;
+        }
         self.updateAnimation();
         self.updateAttack();
         self.updateHp();
         self.updateMana();
-        if(self.mapChange === 0){
-            socket.emit('changeMap',self.transporter);
-        }
-        if(self.mapChange === 5){
-            var map = self.map;
-            playerMap[self.map] -= 1;
-            self.map = self.transporter.teleport;
-            if(self.transporter.teleportx !== -1){
-                self.x = self.transporter.teleportx;
-            }
-            if(self.transporter.teleporty !== -1){
-                self.y = self.transporter.teleporty;
-            }
-            playerMap[self.map] += 1;
-            if(map !== self.map){
-                Player.getAllInitPack(socket);
-                for(var i in Player.list){
-                    if(SOCKET_LIST[i]){
-                        if(Player.list[i].map === self.map){
-                            SOCKET_LIST[i].emit('initEntity',self.getInitPack());
-                        }
-                        else{
-                            SOCKET_LIST[i].emit('removePlayer',self.id);
-                        }
-                    }
-                }
-            }
-        }
-        if(self.mapChange === 10){
-            self.canMove = true;
-            self.invincible = false;
-        }
         self.lastChat -= 1;
     }
     self.updateSpd = function(){
@@ -1517,16 +1561,16 @@ Player = function(param,socket){
         self.lastX = self.x;
         self.lastY = self.y;
         if(self.keyPress.up){
-            self.spdY = -1;
+            self.spdY = -Math.min(self.stepsLeft,self.height);
         }
         if(self.keyPress.down){
-            self.spdY = 1;
+            self.spdY = Math.min(self.stepsLeft,self.height);
         }
         if(self.keyPress.left){
-            self.spdX = -1;
+            self.spdX = -Math.min(self.stepsLeft,self.width);
         }
         if(self.keyPress.right){
-            self.spdX = 1;
+            self.spdX = Math.min(self.stepsLeft,self.width);
         }
         if(self.isDead){
             self.spdX = 0;
@@ -1592,7 +1636,7 @@ Player = function(param,socket){
         if(self.keyPress.rightClick === true && self.inventory.items['shield'].id && self.canAttack){
             self.currentItem = self.inventory.items['shield'].id;
             self.shieldActive = true;
-            self.moveSpeed = Math.ceil(self.moveSpeed / 5);
+            self.stepsLeft = Math.ceil(self.stepsLeft / 5);
         }
         else if(self.inventory.items[self.inventory.hotbarSelectedItem]){
             if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
@@ -1945,6 +1989,21 @@ Player = function(param,socket){
             self.invincible = true;
         }
     }
+    self.teleport = function(x,y,map){
+        if(playerMap[map] === undefined){
+            return;
+        }
+        self.transporter = {
+            teleport:map,
+            teleportx:x,
+            teleporty:y,
+        };
+        self.canMove = false;
+        self.canAttack = false;
+        self.invincible = true;
+        socket.emit('changeMap',self.transporter);
+        self.teleportStage = 'fadeIn';
+    }
     self.pickUpItems = function(id){
         if(self.canMove){
             if(DroppedItem.list[id]){
@@ -2164,7 +2223,7 @@ Player.onConnect = function(socket,username){
             }
         }
         
-        socket.emit('selfId',{id:socket.id,img:player.img});
+        socket.emit('selfId',{id:socket.id,img:player.img,weather:currentWeather});
 
         socket.on('keyPress',function(data){
             if(!data){
@@ -2496,6 +2555,42 @@ Player.onConnect = function(socket,username){
             Player.getAllInitPack(socket);
         });
 
+        socket.on('teleportFadeIn',function(data){
+            if(player.teleportStage === 'fadeIn'){
+                var map = player.map;
+                playerMap[player.map] -= 1;
+                player.map = player.transporter.teleport;
+                if(player.transporter.teleportx !== -1){
+                    player.x = player.transporter.teleportx;
+                }
+                if(player.transporter.teleporty !== -1){
+                    player.y = player.transporter.teleporty;
+                }
+                playerMap[player.map] += 1;
+                if(map !== player.map){
+                    Player.getAllInitPack(socket);
+                    for(var i in Player.list){
+                        if(SOCKET_LIST[i]){
+                            if(Player.list[i].map === player.map){
+                                SOCKET_LIST[i].emit('initEntity',player.getInitPack());
+                            }
+                            else{
+                                SOCKET_LIST[i].emit('removePlayer',player.id);
+                            }
+                        }
+                    }
+                }
+                player.teleportStage = 'fadeOut';
+            }
+        });
+        socket.on('teleportFadeOut',function(data){
+            if(player.teleportStage === 'fadeOut'){
+                player.canMove = true;
+                player.invincible = false;
+                player.teleportStage = null;
+            }
+        });
+
         socket.on('signInFinished',function(data){
             if(player.loggedOn === false){
                 player.loggedOn = true;
@@ -2683,6 +2778,10 @@ Projectile = function(param){
             self.animation = 0;
         }
         self.direction += self.spin;
+        self.direction = self.direction % 360;
+        while(self.direction < 0){
+            self.direction += 360;
+        }
         if(self.timer <= 0){
             self.toRemove = true;
         }
@@ -2790,16 +2889,11 @@ Projectile = function(param){
             }
             if(nearestEntity){
                 var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x) / Math.PI * 180;
-                self.direction = self.direction % 360;
-                if(direction - self.direction > 180){
-                    self.direction += (direction - self.direction - 360) / 5;
+                direction = direction % 360;
+                while(direction < 0){
+                    direction += 360;
                 }
-                else if(direction - self.direction < -180){
-                    self.direction += (direction - self.direction - 360) / 5;
-                }
-                else{
-                    self.direction += (direction - self.direction) / 5;
-                }
+                self.direction += (direction - self.direction) / 5;
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
             }
@@ -2918,7 +3012,7 @@ Monster = function(param){
 
     self.trackX = 0;
     self.trackY = 0;
-    self.trackTime = 100;
+    self.trackSteps = 64;
     self.targetLeftView = 0;
     self.circlingTarget = false;
     self.circleDirection = 1;
@@ -2961,18 +3055,108 @@ Monster = function(param){
         self.spdY = 0;
     }
     self.update = function(){
-        self.moveSpeed = self.maxSpeed;
-        for(var i = 0;i < self.moveSpeed;i++){
+        self.stepsLeft = self.maxSpeed;
+        while(self.stepsLeft > 0){
             self.trackTarget();
             self.updateMove();
+            var stepsLeft = self.stepsLeft;
+            if(!self.dashing){
+                if(self.spdX !== 0 && self.spdY !== 0){
+                    var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                    if(self.spdX > 0){
+                        self.spdX = minSpeed;
+                    }   
+                    else if(self.spdX < 0){
+                        self.spdX = -minSpeed;
+                    }
+                    if(self.spdY > 0){
+                        self.spdY = minSpeed;
+                    }
+                    else if(self.spdY < 0){
+                        self.spdY = -minSpeed;
+                    }
+                    self.stepsLeft -= minSpeed;
+                    self.trackSteps += minSpeed;
+                }
+                else{
+                    var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                    if(self.spdX > 0){
+                        self.spdX = maxSpeed;
+                    }   
+                    else if(self.spdX < 0){
+                        self.spdX = -maxSpeed;
+                    }
+                    if(self.spdY > 0){
+                        self.spdY = maxSpeed;
+                    }
+                    else if(self.spdY < 0){
+                        self.spdY = -maxSpeed;
+                    }
+                    self.stepsLeft -= maxSpeed;
+                    self.trackSteps += maxSpeed;
+                }
+            }
+            else{
+                self.stepsLeft -= 1;
+                self.trackSteps += 50;
+            }
+            if(self.stepsLeft === stepsLeft){
+                break;
+            }
+            var spdX = self.spdX;
+            var spdY = self.spdY;
             if(self.canMove){
                 self.updatePosition();
+                self.x = Math.round(self.x);
+                self.y = Math.round(self.y);
             }
             self.updateGridPosition();
             self.updateCollisions();
+            if(self.collided.x || self.collided.y){
+                if(self.dashing){
+                    break;
+                }
+                self.x = self.lastX;
+                self.y = self.lastY;
+                self.stepsLeft = stepsLeft;
+                self.collided.x = false;
+                self.collided.y = false;
+                while(!self.collided.x && !self.collided.y){
+                    if(spdX > 0){
+                        self.spdX = 1;
+                    }
+                    else if(spdX < 0){
+                        self.spdX = -1;
+                    }
+                    else{
+                        self.spdX = 0;
+                    }
+                    if(spdY > 0){
+                        self.spdY = 1;
+                    }
+                    else if(spdY < 0){
+                        self.spdY = -1;
+                    }
+                    else{
+                        self.spdY = 0;
+                    }
+                    if(self.canMove){
+                        self.updatePosition();
+                        self.x = Math.round(self.x);
+                        self.y = Math.round(self.y);
+                    }
+                    self.updateGridPosition();
+                    self.updateCollisions();
+                    self.stepsLeft -= 1;
+                    if(self.stepsLeft <= 0){
+                        break;
+                    }
+                }
+                if(self.collided.x && self.collided.y){
+                    break;
+                }
+            }
         }
-        self.x = Math.round(self.x);
-        self.y = Math.round(self.y);
         self.updateTarget();
         self.updateAnimation();
         self.updateAttack();
@@ -3097,7 +3281,6 @@ Monster = function(param){
                     self.trackX = self.target.gridX - dx;
                     self.trackY = self.target.gridY - dy;
                 }
-                self.trackTime += 1;
                 var distance = self.getDistance(self.target);
                 if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
@@ -3161,8 +3344,8 @@ Monster = function(param){
                     self.spdY *= self.circleDirection;
                 }
                 else{
-                    if(self.trackTime > 50 + 50 * Math.random()){
-                        self.trackTime = 0;
+                    if(self.trackSteps >= 64){
+                        self.trackSteps = 0;
                         var finder = new PF.BiAStarFinder({
                             allowDiagonal:true,
                             dontCrossCorners:true,
@@ -3287,9 +3470,8 @@ Npc = function(param){
     }
     self.changeSize();
     self.update = function(){
-        self.mapChange += 1;
-        self.moveSpeed = self.maxSpeed;
-        for(var i = 0;i < self.moveSpeed;i++){
+        self.stepsLeft = self.maxSpeed;
+        for(var i = 0;i < self.stepsLeft;i++){
             self.updateMove();
             if(self.canMove){
                 self.updatePosition();
@@ -3300,27 +3482,6 @@ Npc = function(param){
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
         self.updateAnimation();
-        if(self.mapChange === 0){
-            self.canMove = false;
-        }
-        if(self.mapChange === 5){
-            self.map = self.transporter.teleport;
-            if(self.transporter.teleportx !== -1){
-                self.x = self.transporter.teleportx;
-            }
-            if(self.transporter.teleporty !== -1){
-                self.y = self.transporter.teleporty;
-            }
-            for(var i in Player.list){
-                if(Player.list[i].map === self.map){
-                    SOCKET_LIST[i].emit('initEntity',self.getInitPack());
-                }
-            }
-        }
-        if(self.mapChange === 10){
-            self.canMove = true;
-            self.invincible = false;
-        }
     }
     Npc.list[self.id] = self;
     return self;

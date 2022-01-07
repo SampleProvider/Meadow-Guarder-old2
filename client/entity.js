@@ -605,23 +605,65 @@ DroppedItem.list = {};
 var Particle = function(initPack){
     var self = Entity(initPack);
     self.id = Math.random();
-    self.x = initPack.x += 16 * (Math.random() * 2 - 1);
-    self.y = initPack.y += 16 * (Math.random() * 2 - 1);
-    self.spdX = Math.random() * 6 - 3;
-    self.spdY = Math.random() * -4;
-    self.direction = Math.random() * 360;
-    self.spdDirection = Math.random() * 2;
-    self.opacity = 0.9;
+    if(initPack.particleType === 'rain'){
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.spdX = Math.random() * 6 - 3;
+        self.spdY = 15;
+        self.timer = 20;
+        self.opacity = 0.9;
+        self.y -= self.spdY * (self.timer - 6);
+    }
+    else if(initPack.particleType === 'snowflake'){
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.spdX = Math.random() * 6 - 3;
+        self.spdY = 5;
+        self.direction = Math.random() * 360;
+        self.spdDirection = Math.random() * 100 - 50;
+        self.timer = 50;
+        self.opacity = 0.9;
+        self.y -= self.spdY * (self.timer - 6);
+    }
+    else{
+        self.x = initPack.x += 16 * (Math.random() * 2 - 1);
+        self.y = initPack.y += 16 * (Math.random() * 2 - 1);
+        self.spdX = Math.random() * 6 - 3;
+        self.spdY = Math.random() * -4;
+        self.direction = Math.random() * 360;
+        self.spdDirection = Math.random() * 4 - 2;
+        self.opacity = 0.9;
+    }
     self.update = function(){
         self.x += self.spdX;
         self.y += self.spdY;
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
-        self.spdY += 0.1;
-        self.spdX *= 0.99;
-        self.direction += self.spdDirection;
-        self.direction = Math.round(self.direction);
-        self.opacity -= 0.01;
+        if(initPack.particleType === 'rain'){
+            self.timer -= 1;
+            if(self.timer <= 0){
+                self.toRemove = true;
+            }
+            else if(self.timer <= 6){
+                self.spdX = 0;
+                self.spdY = 0;
+            }
+        }
+        else if(initPack.particleType === 'snowflake'){
+            self.timer -= 1;
+            if(self.timer <= 0){
+                self.toRemove = true;
+            }
+            self.direction += self.spdDirection;
+            self.direction = Math.round(self.direction);
+        }
+        else{
+            self.spdY += 0.1;
+            self.spdX *= 0.99;
+            self.direction += self.spdDirection;
+            self.direction = Math.round(self.direction);
+            self.opacity -= 0.01;
+        }
         if(self.map !== Player.list[selfId].map){
             self.toRemove = true;
         }
@@ -668,6 +710,24 @@ var Particle = function(initPack){
                 ctx.fillStyle = 'rgba(90,197,79,' + self.opacity * 2 + ')';
                 ctx.fillText('+' + initPack.value,0,0);
             }
+            ctx.restore();
+        }
+        if(initPack.particleType === 'rain'){
+            if(self.timer <= 3){
+                ctx.drawImage(Img.rain,14,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+            }
+            else if(self.timer <= 6){
+                ctx.drawImage(Img.rain,7,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+            }
+            else{
+                ctx.drawImage(Img.rain,0,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+            }
+        }
+        if(initPack.particleType === 'snowflake'){
+            ctx.save();
+            ctx.translate(Math.round(self.x),Math.round(self.y));
+            ctx.rotate(self.direction * Math.PI / 180);
+            ctx.drawImage(Img.snowflake,-Img.snowflake.width,-Img.snowflake.height,Img.snowflake.width * 2,Img.snowflake.height * 2);
             ctx.restore();
         }
     }

@@ -191,3 +191,4 @@ loadMap('Lightning Whelk Inn Upstairs');
 loadMap('Shark Eye Sunhouse');
 loadMap('Coquina General Store');
 loadMap('Coquina General Store Upstairs');
+loadMap('Tulip Forge');
