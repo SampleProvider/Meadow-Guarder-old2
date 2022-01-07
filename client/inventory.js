@@ -112,7 +112,7 @@ Inventory = function(socket,server){
             if(i >= 0 || i.toString().slice(0,5) === 'trade'){
 
             }
-            else{
+            else if(Item.list[id].equip === i || (Item.list[id].equip === "accessory" && (i === "accessory1" || i === "accessory2" || i === "accessory3"))){
                 if(hasSpace < 1 && self.items[i].id === undefined){
                     hasSpace = 1;
                     index = i;

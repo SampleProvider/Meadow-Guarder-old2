@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 13;
+var totalMaps = 14;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -163,4 +163,5 @@ var loadAllMaps = function(){
     loadMap('Shark Eye Sunhouse');
     loadMap('Coquina General Store');
     loadMap('Coquina General Store Upstairs');
+    loadMap('Tulip Forge');
 }

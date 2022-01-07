@@ -75,6 +75,22 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/7/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added a weather system.
+							<br>
+							Added a new weapon, Valerian Wand.
+							<br>
+							Nerfed <b>Radioactive Skeletons</b>.
+							<br>
+							Fixed Bugs.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							1/3/2022
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -529,25 +545,49 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
-							<span style="color: #dd3333;">Do not make accounts with inappropriate names. The account may be deleted and you may be suspended.</span>
+							<b>RULES:</b>
 							<br>
 							<br>
-							<span style="color: #dd3333; font-size: 30;">Do not make accounts that inpersonate another player. You will get suspended.</span>
+							Do not make accounts with inappropriate names. Do not make accounts that inpersonate another player. Do not advertize using your username or in the chat. No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>. Do not spawnkill. Do not kill players outside of the PVP Arena unless it is an accident. If two accidents happen in a row then it will be considered intentional.
 							<br>
 							<br>
-							<span style="color: #dd3333;">Do not advertise. You will get kicked and may get suspended.</span>
+							Violation of any of these rules may result in your account(s) being suspended and/or deleted.
 							<br>
 							<br>
-							<span style="color: #dd3333;">No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>.</span>
+							<b>HOW TO GET ADMIN:</b>
 							<br>
 							<br>
-							<span style="color: #dd3333;">No <b>SPAWNKILLING</b>. If you spawnkill, your account <b>WILL</b> get suspended.</span>
+							1. Don't beg for admin.
+							<br>
+							2. Play Meadow Guarder for over 1 month.
+							<br>
+							3. Complete the <a class="UI-link" href="https://forms.gle/ScdgYv1CqezcGb1r9" target="_blank">contribution form</a>.
+							<br>
+							4. Contribute by submiting <b>at least</b> 5 bugs or suggestions. If it is a suggestion, it must have been added into the game.
 							<br>
 							<br>
-							<span style="color: #dd3333;">Do <b>NOT</b> kill people outside of the PVP Arena unless it was an accident. If two accidents happen in a row, then it was an intentional kill. If you violate this, your account <b>WILL</b> get suspended.</span>
+							<b>WHEN YOU ARE ADMIN:</b>
 							<br>
 							<br>
-							<span style="color: #dd3333; font-size: 15px;"><b>NO BEGGING FOR ADMIN! YOU WILL NOT GET ADMIN! ADMIN WILL BE GIVEN OUT TO PEOPLE WHO HAVE CONTRIBUTED A LOT TO MEADOW GUARDER AND DESERVE IT! IF YOU ABUSE ADMIN PERMISSION YOUR ACCOUNT WILL GET SUSPENDED!</b></span>
+							1. Don't break any of the rules.
+							<br>
+							2. Don't abuse your powers.
+							<br>
+							3. If you don't contribute much, your admin powers will be revoked.
+							<br>
+							<br>
+							<b>ADMIN LEVELS:</b>
+							<br>
+							<br>
+							There are 3 admin levels: Level 1, Level 2, and Level 3.
+							<br>
+							When you first get admin, you start off at Level 1. This allows you to kill and kick people.
+							<br>
+							Requirements for Level 2: 50 issues/suggestions, trustworthy, joined discord server.
+							<br>
+							At Level 2, you can teleport, ban players, and rickroll players.
+							<br>
+							There is no way to obtain Level 3, its is just for sp.
 							<br>
 							<br>
 							<span style="color:#00ff00; font-size: 17px;">Please help support Meadow Guarder by <b style="color:#ff0000">Watching</b> and <b style="color:#ffff00">Starring</b> <a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder" target="_blank">our Github page</a>.</span>
@@ -649,8 +689,10 @@
 		</div>
 	</div>
 	<div id="gameDiv" style="display: none;">
+		<div id="gameBackground"></div>
     	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="weatherFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="regionDisplay" class="UI-display UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
 			<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
 		</div>
@@ -826,6 +868,7 @@
 	<script src="/client/inventory.js" defer></script>
 	<script src="/client/game.js" defer></script>
 	<script src="/client/sound.js" defer></script>
+	<script src="/client/weather.js" defer></script>
 	<script src="/client/chat.js" defer></script>
 	<script src="/client/settings.js" defer></script>
 	<script src="/client/entity.js" defer></script>

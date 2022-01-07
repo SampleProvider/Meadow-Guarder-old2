@@ -521,6 +521,37 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(weatherData[name]){
+						currentWeather = name;
+						weatherLastChanged = 0;
+						for(var i in SOCKET_LIST){
+							if(Player.list[i]){
+								SOCKET_LIST[i].emit('changeWeather',currentWeather);
+							}
+						}
+						Player.list[socket.id].sendMessage('[!] Changed weather to ' + weatherData[name].name + '.');
+					}
+					else{
+						for(var i in weatherData){
+							if(weatherData[i].name === name){
+								currentWeather = i;
+								weatherLastChanged = 0;
+								for(var j in SOCKET_LIST){
+									if(Player.list[j]){
+										SOCKET_LIST[j].emit('changeWeather',currentWeather);
+									}
+								}
+								Player.list[socket.id].sendMessage('[!] Changed weather to ' + weatherData[i].name + '.');
+								return;
+							}
+						}
+						Player.list[socket.id].sendMessage('[!] No weather found with name ' + name + '.');
+					}
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
@@ -858,6 +889,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/butcher - Kills all monsters.';
+						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
@@ -878,6 +910,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
 						message += '<br>/butcher - Kills all monsters.';
+						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/unban [player name] - Unban someone.';
@@ -907,7 +940,7 @@ io.sockets.on('connection',function(socket){
 				if(Player.list[socket.id].lastChat > 0){
 					Player.list[socket.id].chatWarnings += 1.5;
 				}
-				Player.list[socket.id].chatWarnings += stringData.length / 50;
+				Player.list[socket.id].chatWarnings += stringData.length / 100;
 				if(stringData.length > 2000){
 					return;
 				}
@@ -935,7 +968,7 @@ io.sockets.on('connection',function(socket){
 									censor += "*";
 								}
 							}
-							stringData = stringData.toLowerCase().replace(/badwords[i]/,censor);
+							stringData = stringData.toLowerCase().replaceAll(badwords[i],censor);
 							for(var j in uppercase){
 								stringData[j] = stringData[j].toUpperCase();
 							}
@@ -1434,6 +1467,21 @@ setInterval(function(){
 			spawnMonster(Spawner.list[i],i);
 		}
 	}
+	if(weatherLastChanged > 100){
+		for(var i in weatherData[currentWeather].changeChances){
+			if(Math.random() * 500 / weatherLastChanged < weatherData[currentWeather].changeChances[i]){
+				currentWeather = i;
+				weatherLastChanged = 0;
+				for(var j in SOCKET_LIST){
+					if(Player.list[j]){
+						SOCKET_LIST[j].emit('changeWeather',currentWeather);
+					}
+				}
+				break;
+			}
+		}
+	}
+	weatherLastChanged += 1;
 },1000 / 20);
 
 if(SERVER !== 'localhost'){
