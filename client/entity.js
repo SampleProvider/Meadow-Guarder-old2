@@ -152,9 +152,11 @@ var Player = function(initPack){
     self.currentItem = initPack.currentItem;
     self.debuffs = initPack.debuffs;
     self.worldRegion = initPack.worldRegion;
-    if(self.worldRegion !== worldRegion){
-        worldRegion = self.worldRegion;
-        playRegionSong(worldRegion);
+    if(self.id === selfId){
+        if(self.worldRegion !== worldRegion){
+            worldRegion = self.worldRegion;
+            playRegionSong(worldRegion);
+        }
     }
     self.draw = function(){
         if(self.fadeState === 0){
@@ -605,7 +607,7 @@ DroppedItem.list = {};
 var Particle = function(initPack){
     var self = Entity(initPack);
     self.id = Math.random();
-    if(initPack.particleType === 'rain'){
+    if(initPack.particleType.includes('rain')){
         self.x = initPack.x;
         self.y = initPack.y;
         self.spdX = Math.random() * 6 - 3;
@@ -613,6 +615,8 @@ var Particle = function(initPack){
         self.timer = 20;
         self.opacity = 0.9;
         self.y -= self.spdY * (self.timer - 6);
+        self.width = 7;
+        self.height = 8;
     }
     else if(initPack.particleType === 'snowflake'){
         self.x = initPack.x;
@@ -624,6 +628,8 @@ var Particle = function(initPack){
         self.timer = 50;
         self.opacity = 0.9;
         self.y -= self.spdY * (self.timer - 6);
+        self.width = 15;
+        self.height = 15;
     }
     else{
         self.x = initPack.x += 16 * (Math.random() * 2 - 1);
@@ -633,13 +639,15 @@ var Particle = function(initPack){
         self.direction = Math.random() * 360;
         self.spdDirection = Math.random() * 4 - 2;
         self.opacity = 0.9;
+        self.width = 12;
+        self.height = 12;
     }
     self.update = function(){
         self.x += self.spdX;
         self.y += self.spdY;
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
-        if(initPack.particleType === 'rain'){
+        if(initPack.particleType.includes('rain')){
             self.timer -= 1;
             if(self.timer <= 0){
                 self.toRemove = true;
@@ -672,6 +680,11 @@ var Particle = function(initPack){
         }
     }
     self.draw = function(){
+        if(initPack.particleType !== 'damage' && initPack.particleType !== 'critDamage'){
+            if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+                return;
+            }
+        }
         if(initPack.particleType === 'death'){
             ctx.save();
             ctx.translate(Math.round(self.x),Math.round(self.y));
@@ -712,15 +725,15 @@ var Particle = function(initPack){
             }
             ctx.restore();
         }
-        if(initPack.particleType === 'rain'){
+        if(initPack.particleType.includes('rain')){
             if(self.timer <= 3){
-                ctx.drawImage(Img.rain,14,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+                ctx.drawImage(Img[initPack.particleType],14,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
             }
             else if(self.timer <= 6){
-                ctx.drawImage(Img.rain,7,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+                ctx.drawImage(Img[initPack.particleType],7,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
             }
             else{
-                ctx.drawImage(Img.rain,0,0,Img.rain.width / 3,Img.rain.height,self.x - Img.rain.width * 2 / 3,self.y - Img.rain.height * 2,Img.rain.width * 4 / 3,Img.rain.height * 4);
+                ctx.drawImage(Img[initPack.particleType],0,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
             }
         }
         if(initPack.particleType === 'snowflake'){

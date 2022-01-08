@@ -455,6 +455,7 @@ canvas {
     background-color: #725640;
     border: 1px solid #000000;
     opacity: 0;
+    text-align: center;
     cursor: crosshair;
     pointer-events: none;
     z-index: 3;

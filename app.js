@@ -525,7 +525,7 @@ io.sockets.on('connection',function(socket){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(name === ''){
-						Player.list[socket.id].sendMessage('[!] Current weather ' + currentWeather + '.');
+						Player.list[socket.id].sendMessage('[!] Current weather is ' + weatherData[currentWeather].name + '.');
 					}
 					else if(weatherData[name]){
 						currentWeather = name;

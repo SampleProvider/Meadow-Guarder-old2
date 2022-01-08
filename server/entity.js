@@ -1481,7 +1481,6 @@ Player = function(param,socket){
                 self.y = Math.round(self.y);
             }
             self.updateGridPosition();
-            self.updateRegion();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
                 if(self.dashing){
@@ -1517,7 +1516,6 @@ Player = function(param,socket){
                         self.y = Math.round(self.y);
                     }
                     self.updateGridPosition();
-                    self.updateRegion();
                     self.updateCollisions();
                     self.stepsLeft -= 1;
                     if(self.stepsLeft <= 0){
@@ -1529,6 +1527,7 @@ Player = function(param,socket){
                 }
             }
         }
+        self.updateRegion();
         if(self.inventory.updateStats){
             self.inventory.updateStats = false;
             self.updateStats();
@@ -2229,7 +2228,7 @@ Player.onConnect = function(socket,username){
             }
         }
         
-        socket.emit('selfId',{id:socket.id,img:player.img,weather:currentWeather});
+        socket.emit('selfId',{id:socket.id,img:player.img,worldRegion:player.worldRegion,weather:currentWeather});
 
         socket.on('keyPress',function(data){
             if(!data){
@@ -3120,7 +3119,6 @@ Monster = function(param){
             }
             self.updateGridPosition();
             self.updateCollisions();
-            self.updateRegion();
             if(self.collided.x || self.collided.y){
                 if(self.dashing){
                     break;
@@ -3156,7 +3154,6 @@ Monster = function(param){
                     }
                     self.updateGridPosition();
                     self.updateCollisions();
-                    self.updateRegion();
                     self.stepsLeft -= 1;
                     if(self.stepsLeft <= 0){
                         break;
@@ -3167,6 +3164,7 @@ Monster = function(param){
                 }
             }
         }
+        self.updateRegion();
         self.updateTarget();
         self.updateAnimation();
         self.updateAttack();
