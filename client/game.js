@@ -1246,10 +1246,13 @@ socket.on("attack",function(type){
 });
 
 socket.on('playerList',function(data){
-    playerList.innerHTML = '';
+    var html = '';
     for(var i in data){
         var newData = data[i].replace(/ /gi,'&nbsp;');
-        playerList.innerHTML += newData + '<br>';
+        html += newData + '<br>';
+    }
+    if(html !== playerList.innerHTML){
+        playerList.innerHTML = html;
     }
 });
 
