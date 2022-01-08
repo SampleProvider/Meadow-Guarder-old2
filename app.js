@@ -24,6 +24,7 @@ app.get('/',function(req,res){
 app.use('/client',express.static(__dirname + '/client'));
 if(SERVER === 'localhost'){
 	var port = serv.listen(3000);
+	console.log('[!] WARNING: This is the DEVELOPMENT server, not meant to be run locally. [!]');
 }
 else{
 	var port = serv.listen(process.env.PORT);
