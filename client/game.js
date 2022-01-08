@@ -1060,7 +1060,7 @@ var loop = function(){
         for(var i = -1;i < 2;i++){
             for(var j = -1;j < 2;j++){
                 for(var k in weatherData[currentWeather].particles){
-                    for(var l = 0;l < Math.ceil(weatherData[currentWeather].particles[k] * settings.particlePercentage / 100);l++){
+                    for(var l = 0;l < Math.ceil(weatherData[currentWeather].particles[k] * settings.particlesPercentage / 100);l++){
                         Particle.create((Math.floor(Player.list[selfId].x / 1024) + i) * 1024 + Math.random() * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024 + Math.random() * 1024,Player.list[selfId].map,k,1,1);
                     }
                 }
