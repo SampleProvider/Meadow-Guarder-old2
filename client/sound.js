@@ -2,6 +2,7 @@ var audioContext = {};
 var webAudio = false;
 var songs = {};
 var music = {};
+var playingBossMusic = false;
 initAudio = function(){
     if(webAudio){
         playSong = function(songName){
@@ -195,6 +196,9 @@ playRegionSong = function(region){
     if(music.name){
         return;
     }
+    if(playingBossMusic){
+        return;
+    }
     if(region === 'Altoris Island'){
         playOneSong('theMeadow');
     }
@@ -221,6 +225,7 @@ startBossSong = function(songName){
     if(music.name){
         return;
     }
+    playingBossMusic = true;
     for(var i in songs){
         if(i === songName){
             fadeInSong(i);
@@ -234,6 +239,7 @@ stopBossSong = function(songName){
     if(music.name){
         return;
     }
+    playingBossMusic = false;
     fadeOutSong(songName);
     playRegionSong(worldRegion);
 }

@@ -117,6 +117,14 @@ Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
 Img.rain = new Image();
 Img.rain.src = '/client/img/weather/rain.png';
+Img.acidrain = new Image();
+Img.acidrain.src = '/client/img/weather/acidrain.png';
+Img.bloodrain = new Image();
+Img.bloodrain.src = '/client/img/weather/bloodrain.png';
+Img.goldenrain = new Image();
+Img.goldenrain.src = '/client/img/weather/goldenrain.png';
+Img.darkrain = new Image();
+Img.darkrain.src = '/client/img/weather/darkrain.png';
 Img.snowflake = new Image();
 Img.snowflake.src = '/client/img/weather/snowflake.png';
 
@@ -375,6 +383,8 @@ socket.on('selfId',function(data){
         canSignIn = true;
         itemMenu.style.display = 'none';
         debuffMenu.style.display = 'none';
+        worldRegion = data.worldRegion;
+        playRegionSong(worldRegion);
     },750);
 });
 socket.on('update',function(data){
