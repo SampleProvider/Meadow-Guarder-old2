@@ -1660,6 +1660,12 @@
             "songName":"theOldDays"
         }]
     },
+    "musicboxavalanche":{
+        "1":[{
+            "id":"music",
+            "songName":"avalanche"
+        }]
+    },
     "musicbox127":{
         "1":[{
             "id":"music",

@@ -46,6 +46,7 @@ var getCookie = function(){
                         else{
                             settings[i] = false;
                             entityFadeOutButton.innerHTML = 'No Darkness Effects';
+                            resetWeather();
                         }
                     }
                     if(i === 'entityFadeOut'){
@@ -113,7 +114,7 @@ darknessEffectsButton.onclick = function(){
     }
     else{
         darknessEffectsButton.innerHTML = 'No Darkness Effects';
-        darknessFade.style.opacity = 0;
+        resetWeather();
     }
     setCookie();
 }

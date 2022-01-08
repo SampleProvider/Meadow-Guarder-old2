@@ -209,16 +209,16 @@ playRegionSong = function(region){
         playOneSong('theOasis');
     }
     else if(region === 'Lujadih Mountain'){
-        playOneSong('crystalite');
+        playOneSong('theOldDays');
     }
     else if(region === 'Lujadih Pass'){
-        playOneSong('crystalite');
+        playOneSong('theOldDays');
     }
     else if(region === 'Lujadih Plateau'){
-        playOneSong('crystalite');
+        playOneSong('theOldDays');
     }
     else if(region === 'Rocky Pass'){
-        playOneSong('theOldDays');
+        playOneSong('avalanche');
     }
 }
 startBossSong = function(songName){

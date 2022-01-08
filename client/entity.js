@@ -662,10 +662,6 @@ var Particle = function(initPack){
         self.direction = Math.random() * 360;
         self.spdDirection = self.rotationValue * (Math.random() * 2 - 1);
     }
-    if(self.opacityType === 'fadeOut'){
-        self.opacity = self.opacityValue;
-        self.spdOpacity = -0.01;
-    }
     if(self.drawType === 'text'){
         ctx.font = self.drawSize + "px pixel";
         var metrics = ctx.measureText(initPack.value);
@@ -711,7 +707,9 @@ var Particle = function(initPack){
         }
         if(self.drawType === 'image'){
             if(self.opacity !== undefined){
-                ctx.globalAlpha = self.opacity;
+                if(self.opacity >= 0 && self.opacity < 1){
+                    ctx.globalAlpha = self.opacity;
+                }
             }
             if(self.direction){
                 ctx.save();
@@ -724,7 +722,9 @@ var Particle = function(initPack){
                 ctx.drawImage(Img[self.particleType],self.x - Img[self.particleType].width / 2 * self.drawScale,self.y - Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
             }
             if(self.opacity !== undefined){
-                ctx.globalAlpha = 1;
+                if(self.opacity >= 0 && self.opacity < 1){
+                    ctx.globalAlpha = 1;
+                }
             }
         }
         if(self.drawType === 'text'){

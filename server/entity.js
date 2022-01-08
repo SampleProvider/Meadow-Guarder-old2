@@ -918,7 +918,7 @@ Actor = function(param){
                                     map:self.map,
                                     particleType:Math.round(hp - self.hp) > 0 ? crit === true ? 'critDamage' : 'damage' : 'heal',
                                     number:1,
-                                    value:Math.round(hp - self.hp) > 0 ? '-' : '+' + Math.abs(Math.round(hp - self.hp)),
+                                    value:(Math.round(hp - self.hp) > 0 ? '-' : '+') + Math.abs(Math.round(hp - self.hp)),
                                 });
                             }
                         }
@@ -1085,9 +1085,6 @@ Actor = function(param){
         }
     }
     self.doAttack = function(data,reload){
-        if(self.canAttack === false){
-            return;
-        }
         var runAttack = function(data){
             switch(data.id){
                 case "projectile":
@@ -1579,37 +1576,41 @@ Player = function(param,socket){
         if(self.keyPress.leftClick === true && self.canAttack && self.hp > 0 && self.shieldActive === false){
             self.passiveReload += 1;
             self.doAttack(self.passiveAttackData,self.passiveReload);
+        }
+        if(self.keyPress.leftClick === true && self.hp > 0 && self.shieldActive === false){
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
                 if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
-                        if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
-                            var hasMana = true;
-                            if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
-                                if(self.mana >= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
-                                    self.mana -= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost;
+                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || self.canAttack){
+                        if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
+                            if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
+                                var hasMana = true;
+                                if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
+                                    if(self.mana >= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
+                                        self.mana -= Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost;
+                                    }
+                                    else{
+                                        hasMana = false;
+                                    }
                                 }
-                                else{
-                                    hasMana = false;
-                                }
-                            }
-                            if(hasMana){
-                                for(var i in self.inventory.items){
-                                    if(self.inventory.items[i].id){
-                                        if(Item.list[self.inventory.items[i].id].type === Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type){
-                                            self.inventory.items[i].cooldown = Item.list[self.inventory.items[i].id].useTime;
+                                if(hasMana){
+                                    for(var i in self.inventory.items){
+                                        if(self.inventory.items[i].id){
+                                            if(Item.list[self.inventory.items[i].id].type === Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type){
+                                                self.inventory.items[i].cooldown = Item.list[self.inventory.items[i].id].useTime;
+                                            }
                                         }
                                     }
-                                }
-                                self.mainReload += 1;
-                                self.doAttack(self.mainAttackData,self.mainReload);
-                                socket.emit('attack',Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type);
-                                self.lastUsedMana = 0;
-                                if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
-                                    self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
-                                    if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
-                                        self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                                    self.mainReload += 1;
+                                    self.doAttack(self.mainAttackData,self.mainReload);
+                                    socket.emit('attack',Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type);
+                                    self.lastUsedMana = 0;
+                                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
+                                        self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
+                                        if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
+                                            self.inventory.items[self.inventory.hotbarSelectedItem] = {};
+                                        }
+                                        self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
                                     }
-                                    self.inventory.refreshItem(self.inventory.hotbarSelectedItem);
                                 }
                             }
                         }
@@ -3120,6 +3121,7 @@ Monster = function(param){
                 self.y = Math.round(self.y);
             }
             self.updateGridPosition();
+            self.updateRegion();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
                 if(self.dashing){
@@ -3155,6 +3157,7 @@ Monster = function(param){
                         self.y = Math.round(self.y);
                     }
                     self.updateGridPosition();
+                    self.updateRegion();
                     self.updateCollisions();
                     self.stepsLeft -= 1;
                     if(self.stepsLeft <= 0){
@@ -3166,7 +3169,6 @@ Monster = function(param){
                 }
             }
         }
-        self.updateRegion();
         self.updateTarget();
         self.updateAnimation();
         self.updateAttack();
@@ -3447,6 +3449,9 @@ Monster = function(param){
         if(!self.target){
             self.mainReload = 0;
             self.passiveReload = 0;
+            return;
+        }
+        if(!self.canAttack){
             return;
         }
         self.mainReload += 1;

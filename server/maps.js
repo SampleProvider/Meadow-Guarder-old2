@@ -194,3 +194,8 @@ loadMap('Coquina General Store Upstairs');
 loadMap('Tulip Forge');
 loadMap('Pear Whelk Art Center');
 loadMap('Moon Snail Shack');
+loadMap('Forest Fortress Inn');
+loadMap('Maple Cabin');
+loadMap('Lumberjack General Store');
+loadMap('Lumberjack General Store Upstairs');
+loadMap('Forest Fortress Mining Hut');
