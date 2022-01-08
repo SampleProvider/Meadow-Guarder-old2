@@ -4,7 +4,7 @@ var signErrorText = '';
 var deletePasswordState = 0;
 var changePasswordState = 0;
 var canSignIn = true;
-var totalLoading = 9;
+var totalLoading = 10;
 var loadingComplete = false;
 
 var loadJSON = function(json,cb){
@@ -29,6 +29,7 @@ var npcData = {};
 var harvestableNpcData = {};
 var debuffData = {};
 var weatherData = {};
+var particleData = {};
 
 window.onload = function(){
     loadJSON('playerImg',function(json){
@@ -204,6 +205,17 @@ window.onload = function(){
         weatherLoading.innerHTML = '<span style="color: #55ff55">Loading debuffs... (0%)</span>';
         weatherData = json;
         weatherLoading.innerHTML = '<span style="color: #55ff55">Loading weather... (100%)</span>';
+        totalLoading -= 1;
+        if(totalLoading === 0){
+            loadingComplete = true;
+        }
+    });
+    loadJSON('particles',function(json){
+        signError.innerHTML = '<div id="particleLoading"></div>' + signError.innerHTML;
+        var particleLoading = document.getElementById('particleLoading');
+        particleLoading.innerHTML = '<span style="color: #55ff55">Loading particles... (0%)</span>';
+        particleData = json;
+        particleLoading.innerHTML = '<span style="color: #55ff55">Loading particles... (100%)</span>';
         totalLoading -= 1;
         if(totalLoading === 0){
             loadingComplete = true;

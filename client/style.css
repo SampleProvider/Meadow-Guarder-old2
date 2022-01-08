@@ -430,7 +430,7 @@ canvas {
     opacity: 0;
     cursor: crosshair;
 }
-#weatherFade {
+#darknessFade {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -1244,26 +1244,6 @@ canvas {
     width: 1px;
     height: 100%;
     background-color: #000000;
-}
-#particleSlider {
-    position: absolute;
-    top: 45px;
-    left: 358px;
-}
-#entityFadeOutButton {
-    position: absolute;
-    top: 65px;
-    left: 358px;
-}
-#textSpeedSlider {
-    position: absolute;
-    top: 105px;
-    left: 358px;
-}
-#volumePercentageSlider {
-    position: absolute;
-    top: 135px;
-    left: 358px;
 }
 
 #playerListBackground {

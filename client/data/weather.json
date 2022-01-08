@@ -5,7 +5,7 @@
         "changeChances":{
             "lightdrizzle":0.0001
         },
-        "particles":[]
+        "particles":{}
     },
     "lightdrizzle":{
         "name":"Light Drizzle",
@@ -15,7 +15,7 @@
             "rain":0.0005,
             "lightsnow":0.00025
         },
-        "particles":["rain"]
+        "particles":{"rain":1}
     },
     "rain":{
         "name":"Rain",
@@ -28,7 +28,7 @@
             "goldenrain":0.0000001,
             "darkrain":0.0000001
         },
-        "particles":["rain","rain"]
+        "particles":{"rain":2}
     },
     "heavyrain":{
         "name":"Heavy Rain",
@@ -37,7 +37,7 @@
             "rain":0.0005,
             "pouringrain":0.0005
         },
-        "particles":["rain","rain","rain","rain"]
+        "particles":{"rain":4}
     },
     "pouringrain":{
         "name":"Pouring Rain",
@@ -46,7 +46,7 @@
             "heavypouringrain":0.0005,
             "pouringrain":0.0005
         },
-        "particles":["rain","rain","rain","rain","rain","rain","rain","rain"]
+        "particles":{"rain":8}
     },
     "heavypouringrain":{
         "name":"Heavy Pouring Rain",
@@ -55,7 +55,7 @@
             "pouringrain":0.0005,
             "insanepouringrain":0.0000001
         },
-        "particles":["rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain"]
+        "particles":{"rain":12}
     },
     "insanepouringrain":{
         "name":"Insane Pouring Rain",
@@ -63,7 +63,7 @@
         "changeChances":{
             "heavypouringrain":0.0005
         },
-        "particles":["rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain","rain"]
+        "particles":{"rain":32}
     },
     "lightsnow":{
         "name":"Light Snow",
@@ -72,7 +72,7 @@
             "lightdrizzle":0.0005,
             "snow":0.0005
         },
-        "particles":["snowflake"]
+        "particles":{"snowflake":1}
     },
     "snow":{
         "name":"Snow",
@@ -82,7 +82,7 @@
             "lightsnow":0.0005,
             "heavysnow":0.0005
         },
-        "particles":["snowflake","snowflake"]
+        "particles":{"snowflake":2}
     },
     "heavysnow":{
         "name":"Heavy Snow",
@@ -91,7 +91,7 @@
             "heavyrain":0.0005,
             "snow":0.0005
         },
-        "particles":["snowflake","snowflake","snowflake","snowflake"]
+        "particles":{"snowflake":4}
     },
     "acidrain":{
         "name":"Acid Rain",
@@ -99,7 +99,7 @@
         "changeChances":{
             "rain":0.0005
         },
-        "particles":["acidrain","acidrain","acidrain","acidrain"]
+        "particles":{"acidrain":4}
     },
     "bloodrain":{
         "name":"Blood Rain",
@@ -107,7 +107,7 @@
         "changeChances":{
             "rain":0.0005
         },
-        "particles":["bloodrain","bloodrain","bloodrain","bloodrain","death","death"]
+        "particles":{"bloodrain":4,"death":2}
     },
     "goldenrain":{
         "name":"Golden Rain",
@@ -115,7 +115,7 @@
         "changeChances":{
             "rain":0.0005
         },
-        "particles":["goldenrain","goldenrain","goldenrain","goldenrain"]
+        "particles":{"goldenrain":4}
     },
     "darkrain":{
         "name":"Dark Rain",
@@ -123,6 +123,6 @@
         "changeChances":{
             "rain":0.0005
         },
-        "particles":["darkrain","darkrain","darkrain","darkrain"]
+        "particles":{"darkrain":4}
     }
 }

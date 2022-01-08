@@ -699,7 +699,7 @@
 		<div id="gameBackground"></div>
     	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-		<div id="weatherFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="darknessFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="regionDisplay" class="UI-display UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
 			<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
 		</div>
@@ -831,12 +831,13 @@
 			</div>
 			<div id="settingLine"></div>
 			<div id="particleHeader" class="UI-text" style="left: 358px;top: 30px;font-size: small;" onmouseover="mouseInMenu(event);">Particles: 100%</div>
-			<input id="particleSlider" type="range" min="0" max="100" value="100">
-			<button id="entityFadeOutButton" class="UI-button">Entities Fade Out</button>
-			<div id="textSpeedHeader" class="UI-text" style="left: 358px;top: 90px;font-size: small;" onmouseover="mouseInMenu(event);">Text Speed: 2</div>
-			<input id="textSpeedSlider" type="range" min="1" max="10" value="2">
-			<div id="volumePercentageHeader" class="UI-text" style="left: 358px;top: 120px;font-size: small;" onmouseover="mouseInMenu(event);">Volume: 100%</div>
-			<input id="volumePercentageSlider" type="range" min="0" max="100" value="100">
+			<input id="particleSlider" style="position: absolute;left: 358px;top: 45px;" type="range" min="0" max="100" value="100">
+			<button id="darknessEffectsButton" class="UI-button" style="position: absolute;left: 358px;top: 65px;">Darkness Effects</button>
+			<button id="entityFadeOutButton" class="UI-button" style="position: absolute;left: 358px;top: 95px;">Entities Fade Out</button>
+			<div id="textSpeedHeader" class="UI-text" style="left: 358px;top: 120px;font-size: small;" onmouseover="mouseInMenu(event);">Text Speed: 2</div>
+			<input id="textSpeedSlider" style="position: absolute;left: 358px;top: 135px;" type="range" min="1" max="10" value="2">
+			<div id="volumePercentageHeader" class="UI-text" style="left: 358px;top: 150px;font-size: small;" onmouseover="mouseInMenu(event);">Volume: 100%</div>
+			<input id="volumePercentageSlider" style="position: absolute;left: 358px;top: 165px;" type="range" min="0" max="100" value="100">
 			<button id="settingExit" class="UI-button">
 				<div id="settingExitText">X</div>
 			</button>

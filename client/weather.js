@@ -1,14 +1,14 @@
 var currentWeather = 'none';
-weatherFade.style.opacity = 0;
+darknessFade.style.opacity = 0;
 
 changeWeather = function(weather){
-    var darknessChange = (weatherData[weather].darkness - parseFloat(weatherFade.style.opacity)) / 10;
+    var darknessChange = (weatherData[weather].darkness - parseFloat(darknessFade.style.opacity)) / 10;
     currentWeather = weather;
     var weatherInterval = setInterval(function(){
         if(weather === currentWeather){
-            weatherFade.style.opacity = parseFloat(weatherFade.style.opacity) + darknessChange;
-            if(Math.abs(weatherData[weather].darkness - parseFloat(weatherFade.style.opacity)) < 0.01){
-                weatherFade.style.opacity = weatherData[weather].darkness;
+            darknessFade.style.opacity = parseFloat(darknessFade.style.opacity) + darknessChange;
+            if(Math.abs(weatherData[weather].darkness - parseFloat(darknessFade.style.opacity)) < 0.01){
+                darknessFade.style.opacity = weatherData[weather].darkness;
                 clearInterval(weatherInterval);
             }
         }
@@ -19,10 +19,10 @@ changeWeather = function(weather){
 }
 setWeather = function(weather){
     currentWeather = weather;
-    weatherFade.style.opacity = weatherData[weather].darkness;
+    darknessFade.style.opacity = weatherData[weather].darkness;
 }
 resetWeather = function(){
-    weatherFade.style.opacity = 0;
+    darknessFade.style.opacity = 0;
 }
 
 socket.on('changeWeather',function(data){
