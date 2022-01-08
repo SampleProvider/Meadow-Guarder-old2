@@ -916,9 +916,9 @@ Actor = function(param){
                                     x:self.x,
                                     y:self.y,
                                     map:self.map,
-                                    particleType:crit === true ? 'critDamage' : 'damage',
+                                    particleType:Math.round(hp - self.hp) > 0 ? crit === true ? 'critDamage' : 'damage' : 'heal',
                                     number:1,
-                                    value:Math.round(hp - self.hp),
+                                    value:Math.round(hp - self.hp) > 0 ? '-' : '+' + Math.abs(Math.round(hp - self.hp)),
                                 });
                             }
                         }
@@ -1811,9 +1811,11 @@ Player = function(param,socket){
                     }
                     if(item.critChance !== undefined){
                         self.stats.critChance += item.critChance;
+                        self.stats.critChance = Math.round(self.stats.critChance * 100) / 100;
                     }
                     if(item.critPower !== undefined){
                         self.stats.critPower += item.critPower;
+                        self.stats.critPower = Math.round(self.stats.critPower * 100) / 100;
                     }
                     if(item.slots !== undefined){
                         self.inventory.maxSlots += item.slots;

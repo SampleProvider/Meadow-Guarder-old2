@@ -90,6 +90,9 @@ var Actor = function(initPack){
     self.render = renderPlayer(self.img,self.drawSize);
 
     self.drawName = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         ctx.font = "15px pixel";
         ctx.fillStyle = '#00ff90';
         ctx.textAlign = "center";
@@ -110,6 +113,9 @@ var Actor = function(initPack){
         }
     }
     self.drawHp = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState !== 1){
             if(self.fade <= 0){
                 return;
@@ -159,6 +165,9 @@ var Player = function(initPack){
         }
     }
     self.draw = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -221,6 +230,9 @@ var Player = function(initPack){
         }
     }
     self.drawLayer1 = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.direction < 210 || self.direction > 330){
 
         }
@@ -295,6 +307,9 @@ var Projectile = function(initPack){
         self.interpolationStage -= 1;
     }
     self.draw = function(){
+        if(self.x - self.width * 2 - self.height * 2 > -cameraX + WIDTH || self.x + self.width * 2 + self.height * 2 < -cameraX || self.y - self.width * 2 - self.height * 2 > -cameraY + HEIGHT || self.y + self.width * 2 + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -356,6 +371,9 @@ var Monster = function(initPack){
         startBossSong('tenEyedOne');
     }
     self.draw = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -406,6 +424,9 @@ Monster.list = {};
 var Npc = function(initPack){
     var self = Actor(initPack);
     self.draw = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -454,6 +475,9 @@ var HarvestableNpc = function(initPack){
     self.harvestHp = 0;
     self.harvestHpMax = 0;
     self.drawLayer0 = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
@@ -491,6 +515,9 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawLayer1 = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(harvestableNpcData[self.img].aboveHeight === 0){
             return;
         }
@@ -511,6 +538,9 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawHp = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.fadeState === 0){
             ctx.globalAlpha = self.fade;
         }
@@ -565,6 +595,9 @@ var DroppedItem = function(initPack){
         renderSelectCtx.drawImage(Img.items2select,imgX,imgY,24,24,0,0,48,48);
     }
     self.draw = function(){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
         if(self.isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0}) && inGame === true && selectedDroppedItem === null){
             ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
             itemMenu.innerHTML = getEntityDescription(self);
@@ -605,143 +638,125 @@ var DroppedItem = function(initPack){
 DroppedItem.list = {};
 
 var Particle = function(initPack){
-    var self = Entity(initPack);
+    var self = Object.create(particleData[initPack.particleType]);
     self.id = Math.random();
-    if(initPack.particleType.includes('rain')){
-        self.x = initPack.x;
-        self.y = initPack.y;
-        self.spdX = Math.random() * 6 - 3;
-        self.spdY = 15;
-        self.timer = 20;
-        self.opacity = 0.9;
-        self.y -= self.spdY * (self.timer - 6);
-        self.width = 7;
-        self.height = 8;
+    self.x = initPack.x;
+    self.y = initPack.y;
+    self.map = initPack.map;
+    self.particleType = initPack.particleType;
+    if(self.positionType === 'random'){
+        self.x += self.positionValue * (Math.random() * 2 - 1);
+        self.y += self.positionValue * (Math.random() * 2 - 1);
     }
-    else if(initPack.particleType === 'snowflake'){
-        self.x = initPack.x;
-        self.y = initPack.y;
-        self.spdX = Math.random() * 6 - 3;
-        self.spdY = 5;
-        self.direction = Math.random() * 360;
-        self.spdDirection = Math.random() * 100 - 50;
-        self.timer = 50;
-        self.opacity = 0.9;
-        self.y -= self.spdY * (self.timer - 6);
-        self.width = 15;
-        self.height = 15;
-    }
-    else{
-        self.x = initPack.x += 16 * (Math.random() * 2 - 1);
-        self.y = initPack.y += 16 * (Math.random() * 2 - 1);
+    if(self.movementType === 'shower'){
         self.spdX = Math.random() * 6 - 3;
         self.spdY = Math.random() * -4;
+    }
+    if(self.movementType === 'fall'){
+        self.spdX = Math.random() * 6 - 3;
+        self.spdY = self.movementSpeed;
+        self.timer = self.movementTimer;
+        self.y -= self.spdY * (self.timer - self.movementTimerBuffer);
+    }
+    if(self.rotationType === 'random'){
         self.direction = Math.random() * 360;
-        self.spdDirection = Math.random() * 4 - 2;
-        self.opacity = 0.9;
-        self.width = 12;
-        self.height = 12;
+        self.spdDirection = self.rotationValue * (Math.random() * 2 - 1);
+    }
+    if(self.opacityType === 'fadeOut'){
+        self.opacity = self.opacityValue;
+        self.spdOpacity = -0.01;
+    }
+    if(self.drawType === 'text'){
+        ctx.font = self.drawSize + "px pixel";
+        var metrics = ctx.measureText(initPack.value);
+        self.width = metrics.width;
+        self.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     }
     self.update = function(){
         self.x += self.spdX;
         self.y += self.spdY;
         self.x = Math.round(self.x);
         self.y = Math.round(self.y);
-        if(initPack.particleType.includes('rain')){
+        if(self.movementType === 'shower'){
+            self.spdY += 0.1;
+            self.spdX *= 0.99;
+        }
+        if(self.timer !== undefined){
             self.timer -= 1;
             if(self.timer <= 0){
                 self.toRemove = true;
             }
-            else if(self.timer <= 6){
+            else if(self.timer <= self.movementTimerBuffer){
                 self.spdX = 0;
                 self.spdY = 0;
             }
         }
-        else if(initPack.particleType === 'snowflake'){
-            self.timer -= 1;
-            if(self.timer <= 0){
-                self.toRemove = true;
-            }
+        if(self.direction !== undefined){
             self.direction += self.spdDirection;
             self.direction = Math.round(self.direction);
         }
-        else{
-            self.spdY += 0.1;
-            self.spdX *= 0.99;
-            self.direction += self.spdDirection;
-            self.direction = Math.round(self.direction);
-            self.opacity -= 0.01;
+        if(self.opacity !== undefined){
+            self.opacity += self.spdOpacity;
+            if(self.opacity <= 0){
+                self.toRemove = true;
+            }
         }
         if(self.map !== Player.list[selfId].map){
             self.toRemove = true;
         }
-        if(self.opacity <= 0){
-            self.toRemove = true;
-        }
     }
     self.draw = function(){
-        if(initPack.particleType !== 'damage' && initPack.particleType !== 'critDamage'){
-            if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-                return;
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+            return;
+        }
+        if(self.drawType === 'image'){
+            if(self.opacity !== undefined){
+                ctx.globalAlpha = self.opacity;
             }
-        }
-        if(initPack.particleType === 'death'){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.rotate(self.direction * Math.PI / 180);
-            ctx.fillStyle = 'rgba(234,50,60,' + self.opacity + ')';
-            ctx.fillRect(-8,-8,16,16);
-            ctx.restore();
-        }
-        if(initPack.particleType === 'damage'){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "35px pixel";
-            if(initPack.value >= 0){
-                ctx.fillStyle = 'rgba(234,50,60,' + self.opacity + ')';
-                ctx.fillText('-' + initPack.value,0,0);
+            if(self.direction){
+                ctx.save();
+                ctx.translate(self.x,self.y);
+                ctx.rotate(self.direction * Math.PI / 180);
+                ctx.drawImage(Img[self.particleType],-Img[self.particleType].width / 2 * self.drawScale,-Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
+                ctx.restore();
             }
             else{
-                ctx.fillStyle = 'rgba(90,197,79,' + self.opacity + ')';
-                ctx.fillText('+' + initPack.value,0,0);
+                ctx.drawImage(Img[self.particleType],self.x - Img[self.particleType].width / 2 * self.drawScale,self.y - Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
             }
-            ctx.restore();
+            if(self.opacity !== undefined){
+                ctx.globalAlpha = 1;
+            }
         }
-        if(initPack.particleType === 'critDamage'){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "55px pixel";
-            if(initPack.value >= 0){
-                ctx.fillStyle = 'rgba(234,50,60,' + self.opacity * 2 + ')';
-                ctx.fillText('-' + initPack.value,0,0);
+        if(self.drawType === 'text'){
+            if(self.direction !== undefined){
+                ctx.save();
+                ctx.translate(self.x,self.y);
+                ctx.rotate(self.direction * Math.PI / 180);
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.font = self.drawSize + "px pixel";
+                ctx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
+                ctx.fillText(initPack.value,0,0);
+                ctx.restore();
             }
             else{
-                ctx.fillStyle = 'rgba(90,197,79,' + self.opacity * 2 + ')';
-                ctx.fillText('+' + initPack.value,0,0);
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.font = self.drawSize + "px pixel";
+                ctx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
+                ctx.fillText(initPack.value,self.x,self.y);
             }
-            ctx.restore();
         }
-        if(initPack.particleType.includes('rain')){
+        if(self.drawType === 'rain'){
             if(self.timer <= 3){
-                ctx.drawImage(Img[initPack.particleType],14,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
+                ctx.drawImage(Img[self.particleType],14,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
             else if(self.timer <= 6){
-                ctx.drawImage(Img[initPack.particleType],7,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
+                ctx.drawImage(Img[self.particleType],7,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
             else{
-                ctx.drawImage(Img[initPack.particleType],0,0,Img[initPack.particleType].width / 3,Img[initPack.particleType].height,self.x - Img[initPack.particleType].width * 2 / 3,self.y - Img[initPack.particleType].height * 2,Img[initPack.particleType].width * 4 / 3,Img[initPack.particleType].height * 4);
+                ctx.drawImage(Img[self.particleType],0,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
-        }
-        if(initPack.particleType === 'snowflake'){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.rotate(self.direction * Math.PI / 180);
-            ctx.drawImage(Img.snowflake,-Img.snowflake.width,-Img.snowflake.height,Img.snowflake.width * 2,Img.snowflake.height * 2);
-            ctx.restore();
         }
     }
     Particle.list[self.id] = self;

@@ -115,6 +115,8 @@ Img.items2 = new Image();
 Img.items2.src = '/client/img/items2.png';
 Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
+Img.death = new Image();
+Img.death.src = '/client/img/death.png';
 Img.rain = new Image();
 Img.rain.src = '/client/img/weather/rain.png';
 Img.acidrain = new Image();
@@ -1050,7 +1052,7 @@ var loop = function(){
             resetWeather();
         }
     }
-    if(Player.list[selfId].map === teleportingMap && shadeAmount <= 0){
+    if(Player.list[selfId].map === teleportingMap && shadeAmount <= 0 && shadeSpeed < 0){
         teleportingMap = '';
         socket.emit('teleportFadeOut');
     }
@@ -1058,7 +1060,9 @@ var loop = function(){
         for(var i = -1;i < 2;i++){
             for(var j = -1;j < 2;j++){
                 for(var k in weatherData[currentWeather].particles){
-                    Particle.create((Math.floor(Player.list[selfId].x / 1024) + i) * 1024 + Math.random() * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024 + Math.random() * 1024,Player.list[selfId].map,weatherData[currentWeather].particles[k],1,1);
+                    for(var l = 0;l < Math.ceil(weatherData[currentWeather].particles[k] * settings.particlePercentage / 100)){
+                        Particle.create((Math.floor(Player.list[selfId].x / 1024) + i) * 1024 + Math.random() * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024 + Math.random() * 1024,Player.list[selfId].map,k,1,1);
+                    }
                 }
             }
         }

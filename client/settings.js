@@ -7,6 +7,7 @@ var settings = {
     playerListOpen:false,
     shopOpen:false,
     particlesPercentage:100,
+    darknessEffects:true,
     entityFadeOut:true,
     textSpeed:2,
     volumePercentage:100,
@@ -36,6 +37,16 @@ var getCookie = function(){
                         settings[i] = parseInt(settings[i]);
                         particleSlider.value = settings[i];
                         particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
+                    }
+                    if(i === 'darknessEffects'){
+                        if(settings[i] === 'true'){
+                            settings[i] = true;
+                            entityFadeOutButton.innerHTML = 'Darkness Effects';
+                        }
+                        else{
+                            settings[i] = false;
+                            entityFadeOutButton.innerHTML = 'No Darkness Effects';
+                        }
                     }
                     if(i === 'entityFadeOut'){
                         if(settings[i] === 'true'){
@@ -92,6 +103,18 @@ playerListExit.onclick = function(){
 particleSlider.oninput = function(){
     settings.particlesPercentage = parseInt(particleSlider.value);
     particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
+    setCookie();
+}
+darknessEffectsButton.onclick = function(){
+    settings.darknessEffects = !settings.darknessEffects;
+    if(settings.darknessEffects === true){
+        darknessEffectsButton.innerHTML = 'Darkness Effects';
+        setWeather(currentWeather);
+    }
+    else{
+        darknessEffectsButton.innerHTML = 'No Darkness Effects';
+        darknessFade.style.opacity = 0;
+    }
     setCookie();
 }
 entityFadeOutButton.onclick = function(){
