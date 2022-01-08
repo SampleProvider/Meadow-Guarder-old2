@@ -365,7 +365,7 @@
 </chunk>
   </data>
  </layer>
- <layer id="9" name="Coquina General Store:Seashore Province:false:true:" width="1" height="1" visible="0">
+ <layer id="9" name="Coquina General Store:Seashell Village:false:true:" width="1" height="1" visible="0">
   <data encoding="csv">
    <chunk x="0" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -524,7 +524,10 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
-					if(weatherData[name]){
+					if(name === ''){
+						Player.list[socket.id].sendMessage('[!] Current weather ' + currentWeather + '.');
+					}
+					else if(weatherData[name]){
 						currentWeather = name;
 						weatherLastChanged = 0;
 						for(var i in SOCKET_LIST){

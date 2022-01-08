@@ -397,7 +397,7 @@
 </chunk>
   </data>
  </layer>
- <layer id="9" name="Shark Eye Sunhouse:Seashore Province:false:true:" width="1" height="1" visible="0">
+ <layer id="9" name="Shark Eye Sunhouse:Seashell Village:false:true:" width="1" height="1" visible="0">
   <data encoding="csv">
    <chunk x="-16" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

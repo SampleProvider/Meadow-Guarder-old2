@@ -23,6 +23,16 @@
    <object id="1" x="12" y="0" width="4" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="156">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="4" height="12"/>
+  </objectgroup>
+ </tile>
+ <tile id="158">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="12" y="0" width="4" height="12"/>
+  </objectgroup>
+ </tile>
  <tile id="235" type="cottonFlower"/>
  <tile id="260">
   <objectgroup draworder="index" id="2">
@@ -662,6 +672,26 @@
    <object id="1" x="0" y="2" width="16" height="14"/>
   </objectgroup>
  </tile>
+ <tile id="3210">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3211">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3212">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3213">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="3214">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0" width="11" height="16"/>
@@ -682,6 +712,17 @@
    <object id="1" x="2" y="0" width="11" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="3218">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+   <object id="2" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3219">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="3220">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="2" width="14" height="14"/>
@@ -700,6 +741,68 @@
  <tile id="3329">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="2" width="16" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="3424">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3425">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3426">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3427">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3428">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3429">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3430">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3431">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3432">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+   <object id="2" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3433">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="14" height="16"/>
+   <object id="2" x="0" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3434">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="3435">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
   </objectgroup>
  </tile>
  <tile id="3436">
@@ -2675,7 +2778,6 @@
    <wangtile tileid="4619" wangid="0,3,0,4,0,3,0,3"/>
    <wangtile tileid="4620" wangid="0,3,0,3,0,4,0,3"/>
    <wangtile tileid="4621" wangid="0,5,0,5,0,3,0,3"/>
-   <wangtile tileid="4622" wangid="0,5,0,5,0,5,0,5"/>
    <wangtile tileid="4623" wangid="0,3,0,3,0,5,0,5"/>
    <wangtile tileid="4651" wangid="0,5,0,5,0,5,0,3"/>
    <wangtile tileid="4652" wangid="0,3,0,5,0,5,0,5"/>

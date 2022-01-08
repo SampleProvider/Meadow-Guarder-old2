@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 14;
+var totalMaps = 16;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -164,4 +164,6 @@ var loadAllMaps = function(){
     loadMap('Coquina General Store');
     loadMap('Coquina General Store Upstairs');
     loadMap('Tulip Forge');
+    loadMap('Pear Whelk Art Center');
+    loadMap('Moon Snail Shack');
 }
