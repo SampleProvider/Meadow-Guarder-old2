@@ -1045,8 +1045,12 @@ var loop = function(){
         socket.emit('teleportFadeOut');
     }
     if(Player.list[selfId].map === 'World'){
-        for(var i in weatherData[currentWeather].particles){
-            Particle.create(-cameraX + Math.random() * WIDTH,-cameraY + Math.random() * HEIGHT,Player.list[selfId].map,weatherData[currentWeather].particles[i],1,1);
+        for(var i = -1;i < 2;i++){
+            for(var j = -1;j < 2;j++){
+                for(var k in weatherData[currentWeather].particles){
+                    Particle.create((Math.floor(Player.list[selfId].x / 1024) + i) * 1024 + Math.random() * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024 + Math.random() * 1024,Player.list[selfId].map,weatherData[currentWeather].particles[k],1,1);
+                }
+            }
         }
     }
     MGHC1();

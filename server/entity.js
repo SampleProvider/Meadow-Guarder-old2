@@ -270,6 +270,7 @@ Entity = function(param){
             return false;
         }
     }
+    self.updateGridPosition();
     self.getInitPack = function(){
         var pack = {};
         pack.id = self.id;
@@ -2185,6 +2186,8 @@ Player = function(param,socket){
             self.worldRegion = self.region;
         }
     }
+    self.updateGridPosition();
+    self.updateRegion();
     if(!self.advancements['Tutorial']){
         self.startQuest('Tutorial');
     }
@@ -2580,6 +2583,7 @@ Player.onConnect = function(socket,username){
                         }
                     }
                 }
+                player.updateGridPosition();
                 player.updateRegion();
                 player.teleportStage = 'fadeOut';
             }
@@ -3173,14 +3177,16 @@ Monster = function(param){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
-                            if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
-                                if(self.canSee(Player.list[i])){
-                                    if(Player.list[i]){
-                                        self.target = Player.list[i];
-                                        self.attackState = 'attack';
-                                        self.damaged = false;
-                                        self.targetLeftView = 0;
-                                        return;
+                            if(Player.list[i].regionChanger.noMonster === false){
+                                if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
+                                    if(self.canSee(Player.list[i])){
+                                        if(Player.list[i]){
+                                            self.target = Player.list[i];
+                                            self.attackState = 'attack';
+                                            self.damaged = false;
+                                            self.targetLeftView = 0;
+                                            return;
+                                        }
                                     }
                                 }
                             }

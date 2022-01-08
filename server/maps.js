@@ -192,3 +192,5 @@ loadMap('Shark Eye Sunhouse');
 loadMap('Coquina General Store');
 loadMap('Coquina General Store Upstairs');
 loadMap('Tulip Forge');
+loadMap('Pear Whelk Art Center');
+loadMap('Moon Snail Shack');

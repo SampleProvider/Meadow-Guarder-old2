@@ -195,13 +195,26 @@ playRegionSong = function(region){
     if(music.name){
         return;
     }
-    if(region === 'Seashore Province'){
-        fadeInSong('theOasis');
-        fadeOutSong('theMeadow');
+    if(region === 'Altoris Island'){
+        playOneSong('theMeadow');
     }
-    else{
-        fadeInSong('theMeadow');
-        fadeOutSong('theOasis');
+    else if(region === 'Seashore Province'){
+        playOneSong('theOasis');
+    }
+    else if(region === 'Seashell Village'){
+        playOneSong('theOasis');
+    }
+    else if(region === 'Lujadih Mountain'){
+        playOneSong('crystalite');
+    }
+    else if(region === 'Lujadih Pass'){
+        playOneSong('crystalite');
+    }
+    else if(region === 'Lujadih Plateau'){
+        playOneSong('crystalite');
+    }
+    else if(region === 'Rocky Pass'){
+        playOneSong('theOldDays');
     }
 }
 startBossSong = function(songName){
@@ -233,6 +246,19 @@ stopAllSongs = function(){
     }
     for(var i in songs){
         stopSong(i);
+    }
+}
+playOneSong = function(songName){
+    if(music.name){
+        return;
+    }
+    for(var i in songs){
+        if(i === songName){
+            fadeInSong(i);
+        }
+        else{
+            fadeOutSong(i);
+        }
     }
 }
 
