@@ -5,8 +5,8 @@
         "movementType":"shower",
         "rotationType":"random",
         "rotationValue":2,
-        "opacityType":"fadeOut",
-        "opacityValue":0.9,
+        "opacity":0.9,
+        "spdOpacity":-0.01,
         "drawType":"image",
         "drawScale":1,
         "width":12,
@@ -17,8 +17,8 @@
         "positionValue":16,
         "movementType":"shower",
         "rotationType":"none",
-        "opacityType":"fadeOut",
-        "opacityValue":0.9,
+        "opacity":0.9,
+        "spdOpacity":-0.01,
         "drawType":"text",
         "drawColor":"234,50,60",
         "drawSize":35
@@ -28,8 +28,8 @@
         "positionValue":16,
         "movementType":"shower",
         "rotationType":"none",
-        "opacityType":"fadeOut",
-        "opacityValue":1.8,
+        "opacity":1.8,
+        "spdOpacity":-0.01,
         "drawType":"text",
         "drawColor":"234,50,60",
         "drawSize":55
@@ -92,7 +92,8 @@
         "movementTimerBuffer":0,
         "rotationType":"random",
         "rotationValue":20,
-        "opacityType":"none",
+        "opacity":5,
+        "spdOpacity":-0.1,
         "drawType":"image",
         "drawScale":2
     }

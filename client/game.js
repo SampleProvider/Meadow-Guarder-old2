@@ -317,7 +317,18 @@ var renderPlayer = function(img,drawSize){
     for(var i in img){
         if(img[i] !== "none"){
             if(Img[img[i]]){
-                gl.drawImage(Img[img[i]],0,0,size * 4,size * 4);
+                try{
+                    gl.drawImage(Img[img[i]],0,0,size * 4,size * 4);
+                }
+                catch(err){
+                    var src = Img[img[i]].src;
+                    delete Img[img[i]];
+                    Img[img[i]] = new Image();
+                    Img[img[i]].src = src;
+                    Img[img[i]].onload = function(){
+                        return renderPlayer(img,drawSize);
+                    }
+                }
             }
         }
     }
@@ -600,7 +611,14 @@ socket.on('update',function(data){
                             while(projectile.direction < 0){
                                 projectile.direction += 360;
                             }
-                            projectile.spdDirection = (data.projectile[i][j] - projectile.direction) / 4;
+                            var direction = data.projectile[i][j];
+                            if(direction - projectile.direction > 180){
+                                direction -= 360;
+                            }
+                            else if(direction - projectile.direction < -180){
+                                direction += 360;
+                            }
+                            projectile.spdDirection = (direction - projectile.direction) / 4;
                         }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];

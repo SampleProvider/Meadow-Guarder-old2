@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 16;
+var totalMaps = 21;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -166,4 +166,9 @@ var loadAllMaps = function(){
     loadMap('Tulip Forge');
     loadMap('Pear Whelk Art Center');
     loadMap('Moon Snail Shack');
+    loadMap('Forest Fortress Inn');
+    loadMap('Maple Cabin');
+    loadMap('Lumberjack General Store');
+    loadMap('Lumberjack General Store Upstairs');
+    loadMap('Forest Fortress Mining Hut');
 }
