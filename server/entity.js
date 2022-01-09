@@ -2903,6 +2903,12 @@ Projectile = function(param){
                 while(direction < 0){
                     direction += 360;
                 }
+                if(direction - self.direction > 180){
+                    direction -= 180;
+                }
+                else if(direction - self.direction < -180){
+                    direction += 180;
+                }
                 self.direction += (direction - self.direction) / 5;
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
@@ -2910,7 +2916,9 @@ Projectile = function(param){
         }
     }
     self.updateCollisions = function(){
-        var collisions = [];
+        if(self.collisionType === 'none'){
+            return;
+        }
         for(var i = Math.floor((self.x - self.width / 2 - self.height / 2) / 64);i <= Math.floor((self.x + self.width / 2 + self.height / 2) / 64);i++){
             for(var j = Math.floor((self.y - self.width / 2 - self.height / 2) / 64);j <= Math.floor((self.y + self.width / 2 + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
@@ -2925,6 +2933,7 @@ Projectile = function(param){
                                     if(self.isColliding(collision[k])){
                                         if(self.collisionType === 'remove'){
                                             self.toRemove = true;
+                                            self.collided = true;
                                         }
                                         else if(self.collisionType === 'sticky'){
                                             self.spdX = 0;
@@ -3011,7 +3020,8 @@ Monster = function(param){
 
     self.aggro = 6;
     self.attackState = 'passive';
-    self.attackPhase = 1;
+
+    self.mainAttackData = self.phases[self.phase].mainAttackData;
 
     self.spawnId = param.spawnId;
 
@@ -3171,6 +3181,7 @@ Monster = function(param){
         }
         self.updateTarget();
         self.updateAnimation();
+        self.updatePhase();
         self.updateAttack();
         self.updateDebuffs();
         self.updateHp();
@@ -3443,6 +3454,15 @@ Monster = function(param){
                 self.attackState = 'passive';
                 self.maxSpeed = monsterData[self.monsterType].maxSpeed;
             }
+        }
+    }
+    self.changePhase = function(){
+        self.phase = self.phases[self.phase].changePhase.nextPhases[Math.floor(Math.random() * self.phases[self.phase].changePhase.nextPhases.length)];
+        self.mainAttackData = self.phases[self.phase].mainAttackData;
+    }
+    self.updatePhase = function(){
+        if(self.phases[self.phase].changePhase.hp >= self.hp){
+            self.changePhase();
         }
     }
     self.updateAttack = function(){

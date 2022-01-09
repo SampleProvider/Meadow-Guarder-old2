@@ -1785,7 +1785,7 @@
  </tile>
  <tile id="8145">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="1" y="4" width="13" height="12"/>
+   <object id="1" x="1" y="1" width="13" height="15"/>
   </objectgroup>
  </tile>
  <tile id="8146">
