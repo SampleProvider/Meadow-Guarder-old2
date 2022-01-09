@@ -220,6 +220,12 @@ playRegionSong = function(region){
     else if(region === 'Rocky Pass'){
         playOneSong('avalanche');
     }
+    else if(region === 'The Eternal Forest'){
+        playOneSong('dewdrop');
+    }
+    else if(region === 'Forest Fortress'){
+        playOneSong('dewdrop');
+    }
 }
 startBossSong = function(songName){
     if(music.name){
