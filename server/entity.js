@@ -381,13 +381,29 @@ Actor = function(param){
         }
         else if(self.trackingPath[0]){
             if(self.x !== self.trackingPath[0][0] * 64 + self.width / 2){
-                self.spdX = Math.min(self.trackingPath[0][0] * 64 + self.width / 2 - self.x,self.width);
+                if(self.trackingPath[0][0] * 64 + self.width / 2 - self.x > self.width){
+                    self.spdX = self.width;
+                }
+                else if(self.trackingPath[0][0] * 64 + self.width / 2 - self.x < -self.width){
+                    self.spdX = -self.width;
+                }
+                else{
+                    self.spdX = self.trackingPath[0][0] * 64 + self.width / 2 - self.x;
+                }
             }
             else{
                 self.spdX = 0;
             }
             if(self.y !== self.trackingPath[0][1] * 64 + self.height / 2){
-                self.spdY = Math.min(self.trackingPath[0][1] * 64 + self.height / 2 - self.y,self.height);
+                if(self.trackingPath[0][1] * 64 + self.height / 2 - self.y > self.height){
+                    self.spdY = self.height;
+                }
+                else if(self.trackingPath[0][1] * 64 + self.height / 2 - self.y < -self.height){
+                    self.spdY = -self.height;
+                }
+                else{
+                    self.spdY = self.trackingPath[0][1] * 64 + self.height / 2 - self.y;
+                }
             }
             else{
                 self.spdY = 0;
