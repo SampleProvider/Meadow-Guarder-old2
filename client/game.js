@@ -527,6 +527,7 @@ socket.on('update',function(data){
                                             }
                                             var rect = slot.getBoundingClientRect();
                                             if(rawMouseX >= rect.left && rawMouseX <= rect.right && rawMouseY >= rect.top && rawMouseY <= rect.bottom){
+                                                inSlot = true;
                                                 updateDebuffPopupMenu(index);
                                             }
                                         }
@@ -537,6 +538,7 @@ socket.on('update',function(data){
                                     }
                                 }
                                 else{
+                                    var inSlot = false;
                                     for(var k in data.player[i][j]){
                                         var index = k;
                                         var slot = document.getElementById('debuffSlot' + index);
@@ -552,8 +554,12 @@ socket.on('update',function(data){
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
                                         var rect = slot.getBoundingClientRect();
                                         if(rawMouseX >= rect.left && rawMouseX <= rect.right && rawMouseY >= rect.top && rawMouseY <= rect.bottom){
+                                            inSlot = true;
                                             updateDebuffPopupMenu(index);
                                         }
+                                    }
+                                    if(inSlot === false){
+                                        updateDebuffPopupMenu(-1);
                                     }
                                 }
                             }
