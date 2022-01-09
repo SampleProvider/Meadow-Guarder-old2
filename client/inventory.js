@@ -36,6 +36,9 @@ Inventory = function(socket,server){
         if(Math.floor(rarity) === 6){
             return '#ff0000';
         }
+        if(Math.floor(rarity) === 7){
+            return '#00ffff';
+        }
     }
     self.getTypeColor = function(type){
         if(type === 'Weapon'){
@@ -82,6 +85,9 @@ Inventory = function(socket,server){
         }
         if(type === 'Music Box'){
             return '#0033dd';
+        }
+        if(type === 'Food'){
+            return '#dd9900';
         }
     }
     self.hasSpace = function(id,amount){

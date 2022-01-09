@@ -526,9 +526,8 @@ socket.on('update',function(data){
                                                 updateDebuffPopupMenu(-1);
                                             }
                                             var rect = slot.getBoundingClientRect();
-                                            if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
+                                            if(rawMouseX >= rect.left && rawMouseX <= rect.right && rawMouseY >= rect.top && rawMouseY <= rect.bottom){
                                                 updateDebuffPopupMenu(index);
-                                                inSlot = true;
                                             }
                                         }
                                         createDebuff(k);
@@ -552,8 +551,7 @@ socket.on('update',function(data){
                                         }
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
                                         var rect = slot.getBoundingClientRect();
-                                        if(mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom){
-                                            console.log(1)
+                                        if(rawMouseX >= rect.left && rawMouseX <= rect.right && rawMouseY >= rect.top && rawMouseY <= rect.bottom){
                                             updateDebuffPopupMenu(index);
                                         }
                                     }
@@ -1075,8 +1073,8 @@ var loop = function(){
         socket.emit('teleportFadeOut');
     }
     if(Player.list[selfId].map === 'World'){
-        for(var i = -1;i < 2;i++){
-            for(var j = -1;j < 2;j++){
+        for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
+            for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
                 for(var k in weatherData[currentWeather].particles){
                     for(var l = 0;l < Math.ceil(weatherData[currentWeather].particles[k] * settings.particlesPercentage / 100);l++){
                         Particle.create((Math.floor(Player.list[selfId].x / 1024) + i) * 1024 + Math.random() * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024 + Math.random() * 1024,Player.list[selfId].map,k,1,1);
@@ -1089,8 +1087,8 @@ var loop = function(){
 
     ctx.save();
     ctx.translate(cameraX,cameraY);
-    for(var i = -1;i < 2;i++){
-        for(var j = -1;j < 2;j++){
+    for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
+        for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
             if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
                 ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].lower,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
             }
@@ -1166,8 +1164,8 @@ var loop = function(){
     for(var i in Player.list){
         Player.list[i].drawLayer1();
     }
-    for(var i = -1;i < 2;i++){
-        for(var j = -1;j < 2;j++){
+    for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
+        for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
             if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
                 ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
             }

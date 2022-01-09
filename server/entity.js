@@ -911,7 +911,7 @@ Actor = function(param){
                 for(var i in SOCKET_LIST){
                     if(Player.list[i]){
                         if(Player.list[i].map === self.map){
-                            if(Player.list[i].getSquareDistance(self) < 32){
+                            if(Player.list[i].getSquareDistance(self) < SOCKET_LIST[i].renderDistance * 16){
                                 SOCKET_LIST[i].emit('createParticle',{
                                     x:self.x,
                                     y:self.y,
@@ -1580,7 +1580,7 @@ Player = function(param,socket){
         if(self.keyPress.leftClick === true && self.hp > 0 && self.shieldActive === false){
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
                 if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || self.canAttack){
+                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Music Box' || self.canAttack){
                         if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
                             if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
                                 var hasMana = true;
@@ -2011,7 +2011,7 @@ Player = function(param,socket){
         if(self.canMove){
             if(DroppedItem.list[id]){
                 if(DroppedItem.list[id].parent + '' === self.id + '' || DroppedItem.list[id].allPlayers){
-                    if(self.getSquareDistance(DroppedItem.list[id]) < 32){
+                    if(self.getSquareDistance(DroppedItem.list[id]) < socket.renderDistance * 16){
                         if(DroppedItem.list[id].isColliding({x:self.mouseX,y:self.mouseY,width:0,height:0,map:self.map,type:'Player'})){
                             if(self.inventory.hasSpace(DroppedItem.list[id].item,DroppedItem.list[id].amount).hasSpace){
                                 self.inventory.addItem(DroppedItem.list[id].item,DroppedItem.list[id].amount);
@@ -2673,7 +2673,7 @@ Player.getAllInitPack = function(socket){
             for(var i in Player.list){
                 if(Player.list[i].map === player.map){
                     if(Player.list[i].debug.invisible === false || i + '' === socket.id + ''){
-                        if(player.getSquareDistance(Player.list[i]) < 32){
+                        if(player.getSquareDistance(Player.list[i]) < socket.renderDistance * 16){
                             pack.player.push(Player.list[i].getInitPack());
                         }
                     }
@@ -2681,35 +2681,35 @@ Player.getAllInitPack = function(socket){
             }
             for(var i in Projectile.list){
                 if(Projectile.list[i].map === player.map){
-                    if(player.getSquareDistance(Projectile.list[i]) < 32){
+                    if(player.getSquareDistance(Projectile.list[i]) < socket.renderDistance * 16){
                         pack.projectile.push(Projectile.list[i].getInitPack());
                     }
                 }
             }
             for(var i in Monster.list){
                 if(Monster.list[i].map === player.map){
-                    if(player.getSquareDistance(Monster.list[i]) < 32){
+                    if(player.getSquareDistance(Monster.list[i]) < socket.renderDistance * 16){
                         pack.monster.push(Monster.list[i].getInitPack());
                     }
                 }
             }
             for(var i in Npc.list){
                 if(Npc.list[i].map === player.map){
-                    if(player.getSquareDistance(Npc.list[i]) < 32){
+                    if(player.getSquareDistance(Npc.list[i]) < socket.renderDistance * 16){
                         pack.npc.push(Npc.list[i].getInitPack());
                     }
                 }
             }
             for(var i in DroppedItem.list){
                 if(DroppedItem.list[i].map === player.map){
-                    if(player.getSquareDistance(DroppedItem.list[i]) < 32){
+                    if(player.getSquareDistance(DroppedItem.list[i]) < socket.renderDistance * 16){
                         pack.droppedItem.push(DroppedItem.list[i].getInitPack());
                     }
                 }
             }
             for(var i in HarvestableNpc.list){
                 if(HarvestableNpc.list[i].map === player.map){
-                    if(player.getSquareDistance(HarvestableNpc.list[i]) < 32){
+                    if(player.getSquareDistance(HarvestableNpc.list[i]) < socket.renderDistance * 16){
                         pack.harvestableNpc.push(HarvestableNpc.list[i].getInitPack());
                     }
                 }

@@ -53,6 +53,14 @@
             "porcelainvine":{
                 "chance":1,
                 "amount":2
+            },
+            "porcelainberry":{
+                "chance":1,
+                "amount":2
+            },
+            "mysticporcelainberry":{
+                "chance":0.01,
+                "amount":1
             }
         },
         "harvestPower":10,

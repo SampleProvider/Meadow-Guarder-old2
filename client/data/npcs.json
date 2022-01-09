@@ -22,7 +22,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Tutorial*",
+                    "message":"*Start quest <b>Tutorial</b>*",
                     "triggers":"startQuest",
                     "quest":"Tutorial"
                 },
@@ -42,7 +42,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Gearing Up*",
+                    "message":"*Start quest <b>Gearing Up</b>*",
                     "triggers":"startQuest",
                     "quest":"Gearing Up"
                 },
@@ -62,7 +62,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Gearing Up*",
+                    "message":"*Start quest <b>Gearing Up</b>*",
                     "triggers":"startQuest",
                     "quest":"Gearing Up"
                 },
@@ -83,7 +83,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Talk to Wally*",
+                    "message":"*Start quest <b>Talk to Wally</b>*",
                     "triggers":"startQuest",
                     "quest":"Talk to Wally"
                 },
@@ -104,7 +104,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Talk to Wally*",
+                    "message":"*Start quest <b>Talk to Wally</b>*",
                     "triggers":"startQuest",
                     "quest":"Talk to Wally"
                 },
@@ -406,7 +406,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Snake Removal*",
+                    "message":"*Start quest <b>Snake Removal</b>*",
                     "triggers":"startQuest",
                     "quest":"Snake Removal"
                 },
@@ -473,6 +473,96 @@
             }
         ]
     },
+    "Mori":{
+        "img":{
+            "body":"Human",
+            "shirt":"Robe_2 White",
+            "pants":"none",
+            "boots":"none",
+            "hair":"none",
+            "headwear":"Hat_3 White",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Snake Removal":false
+                },
+                "message":"Hey, I heard Joesph needed your help with a snakes problem.",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Beginner Herbalism":false
+                },
+                "message":"I heard Janus is looking for you. You should head to the Shark Eye Sunhouse east from here.",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Snake Removal":1,
+                    "Beginner Herbalism":1,
+                    "Porcelain Salad":false
+                },
+                "message":"You helped Joesph kill off the snakes? That's great! Could you also, by chance, help me?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*Start quest <b>Porcelain Salad</b>*",
+                    "triggers":"startQuest",
+                    "quest":"Porcelain Salad"
+                },
+                "option3":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Porcelain Salad":1
+                },
+                "message":"Hey, do you want to try out my new Dripleaf Salad?",
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"porcelainberry",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":1
+                    }
+                ]
+            }
+        ]
+    },
     "Janus":{
         "img":{
             "body":"Human",
@@ -507,7 +597,7 @@
                     "triggers":"shopOpen"
                 },
                 "option2":{
-                    "message":"*Start quest Beginner Herbalism*",
+                    "message":"*Start quest <b>Beginner Herbalism</b>*",
                     "triggers":"startQuest",
                     "quest":"Beginner Herbalism"
                 },

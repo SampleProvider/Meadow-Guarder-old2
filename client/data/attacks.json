@@ -1732,5 +1732,19 @@
             "hpCost":1000,
             "xpGain":1000
         }]
+    },
+    "porcelainberry":{
+        "1":[{
+            "id":"debuff",
+            "name":"porcelainberry",
+            "time":1200
+        }]
+    },
+    "mysticporcelainberry":{
+        "1":[{
+            "id":"debuff",
+            "name":"mysticporcelainberry",
+            "time":4800
+        }]
     }
 }

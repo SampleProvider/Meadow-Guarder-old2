@@ -47,6 +47,7 @@ io = require('socket.io')(serv,{upgradeTimeout:36000000});
 io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
+	socket.renderDistance = 2;
 	socket.spam = 0;
 	socket.disconnectUser = function(){
 		socket.emit('disconnected');
@@ -192,6 +193,19 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('error',function(){
 		socket.disconnectUser();
+	});
+	socket.on('renderDistance',function(data){
+		if(!data){
+			return;
+		}
+		if(typeof data !== 'number'){
+			return;
+		}
+		if(data <= 0 || data >= 6){
+			return;
+		}
+		var renderDistance = parseInt(data);
+		socket.renderDistance = renderDistance;
 	});
 	socket.on('chatMessage',function(data){
 		if(!data){
@@ -1221,8 +1235,8 @@ setInterval(function(){
 			var x = Math.floor(Player.list[socket.id].x / 1024);
 			var y = Math.floor(Player.list[socket.id].y / 1024);
 			var data = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-			for(var j = -1;j < 2;j++){
-				for(var k = -1;k < 2;k++){
+			for(var j = -socket.renderDistance + 1;j < socket.renderDistance;j++){
+				for(var k = -socket.renderDistance + 1;k < socket.renderDistance;k++){
 					if(pack[map]){
 						if(pack[map][x + j]){
 							if(pack[map][x + j][y + k]){
@@ -1236,8 +1250,8 @@ setInterval(function(){
 					}
 				}
 			}
-			for(var j = -1;j < 2;j++){
-				for(var k = -1;k < 2;k++){
+			for(var j = -socket.renderDistance + 1;j < socket.renderDistance;j++){
+				for(var k = -socket.renderDistance + 1;k < socket.renderDistance;k++){
 					if(invisPack[map]){
 						if(invisPack[map][x + j]){
 							if(invisPack[map][x + j][y + k]){
