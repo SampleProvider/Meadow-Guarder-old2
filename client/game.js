@@ -983,8 +983,8 @@ var loop = function(){
         WIDTH = window.innerWidth;
         HEIGHT = window.innerHeight;
     }
-    // ctx.fillStyle = '#354149';
-    // ctx.fillRect(0,0,WIDTH,HEIGHT);
+    ctx.fillStyle = '#354149';
+    ctx.fillRect(0,0,WIDTH,HEIGHT);
     for(var i in Player.list){
         Player.list[i].update();
     }
