@@ -845,7 +845,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":0,
+                    "hp":100000,
                     "nextPhases":["phase5"]
                 }
             },
