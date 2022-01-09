@@ -81,8 +81,7 @@ Collision.add = function(collision,id){
     }
     for(var i in Player.list){
         if(Player.list[i].isColliding(collision)){
-            Player.list[i].x = ENV.spawnpoint.x;
-            Player.list[i].y = ENV.spawnpoint.y;
+            Player.list[i].teleportToSpawn();
         }
     }
     for(var i in Monster.list){
