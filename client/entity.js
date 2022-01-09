@@ -96,6 +96,7 @@ var Actor = function(initPack){
         ctx.font = "15px pixel";
         ctx.fillStyle = '#00ff90';
         ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
         if(self.drawSize === 'small'){
             var yDistance = 8;
         }
@@ -475,6 +476,9 @@ var HarvestableNpc = function(initPack){
     self.harvestHp = 0;
     self.harvestHpMax = 0;
     self.drawLayer0 = function(){
+        if(self.img === 'none'){
+            return;
+        }
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
@@ -515,6 +519,9 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawLayer1 = function(){
+        if(self.img === 'none'){
+            return;
+        }
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
