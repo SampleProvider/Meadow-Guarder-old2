@@ -100,7 +100,7 @@ var Actor = function(initPack){
             var yDistance = 8;
         }
         else if(self.drawSize === 'medium'){
-            var yDistance = 17;
+            var yDistance = 16;
         }
         else{
             var yDistance = 16;

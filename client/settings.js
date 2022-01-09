@@ -11,6 +11,7 @@ var settings = {
     entityFadeOut:true,
     textSpeed:2,
     volumePercentage:100,
+    renderDistance:2,
 };
 
 var setCookie = function(){
@@ -69,6 +70,12 @@ var getCookie = function(){
                         volumePercentageSlider.value = settings[i];
                         volumePercentageHeader.innerHTML = 'Volume: ' + volumePercentageSlider.value + '%';
                     }
+                    if(i === 'renderDistance'){
+                        settings[i] = parseInt(settings[i]);
+                        renderDistanceSlider.value = settings[i];
+                        renderDistanceHeader.innerHTML = 'Render Distance: ' + renderDistanceSlider.value;
+                        socket.emit('renderDistance',settings.renderDistance);
+                    }
                 }
             }
         }
@@ -110,7 +117,11 @@ darknessEffectsButton.onclick = function(){
     settings.darknessEffects = !settings.darknessEffects;
     if(settings.darknessEffects === true){
         darknessEffectsButton.innerHTML = 'Darkness Effects';
-        setWeather(currentWeather);
+        if(Player.list[selfId]){
+            if(Player.list[selfId].map === 'World'){
+                setWeather(currentWeather);
+            }
+        }
     }
     else{
         darknessEffectsButton.innerHTML = 'No Darkness Effects';
@@ -148,6 +159,12 @@ volumePercentageSlider.oninput = function(){
             }
         }
     }
+}
+renderDistanceSlider.oninput = function(){
+    settings.renderDistance = parseInt(renderDistanceSlider.value);
+    renderDistanceHeader.innerHTML = 'Render Distance: ' + renderDistanceSlider.value;
+    socket.emit('renderDistance',settings.renderDistance);
+    setCookie();
 }
 openInventory = function(){
     settings.inventoryOpen = true;
