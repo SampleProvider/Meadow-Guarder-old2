@@ -2417,26 +2417,6 @@
    <object id="1" x="0" y="0" width="16" height="6"/>
   </objectgroup>
  </tile>
- <tile id="9416">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="6" width="16" height="10"/>
-  </objectgroup>
- </tile>
- <tile id="9417">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="6" width="16" height="10"/>
-  </objectgroup>
- </tile>
- <tile id="9418">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="6" width="16" height="10"/>
-  </objectgroup>
- </tile>
- <tile id="9419">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="6" width="16" height="10"/>
-  </objectgroup>
- </tile>
  <tile id="9523">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="6"/>
