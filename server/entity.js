@@ -3263,10 +3263,10 @@ Monster = function(param){
                     if(self.getSquareDistance(self.target) > self.aggro * 2 && self.damaged === false){
                         self.retreat();
                     }
-                    else if(self.getSquareDistance(self.target) > self.aggro * 3){
+                    else if(self.getSquareDistance(self.target) > self.aggro * 6){
                         self.retreat();
                     }
-                    else if(self.getSquareDistance(self.randomPos) > 16){
+                    else if(self.getSquareDistance(self.randomPos) > 32){
                         self.retreat();
                     }
                     if(self.target){
