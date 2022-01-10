@@ -3334,7 +3334,7 @@ Monster = function(param){
             if(self.target){
                 self.spdX = 0;
                 self.spdY = 0;
-                var size = 33;
+                var size = 65;
                 var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
                 var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
                 var lastTrackX = self.trackX;
