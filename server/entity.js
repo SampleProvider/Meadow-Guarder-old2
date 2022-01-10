@@ -519,8 +519,8 @@ Actor = function(param){
         for(var i = 0;i < size;i++){
             for(var j = 0;j < size;j++){
                 var setWalkableAt = function(){
-                    for(var k = -self.width / 64 + 1;k < 1;k++){
-                        for(var l = -self.height / 64 + 1;l < 1;l++){
+                    for(var k = -Math.round(self.width / 64) + 1;k < 1;k++){
+                        for(var l = -Math.round(self.height / 64) + 1;l < 1;l++){
                             if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
                                 grid.setWalkableAt(i + k,j + l,false);
                             }
@@ -554,6 +554,24 @@ Actor = function(param){
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
         if(tx < size && tx > 0 && ty < size && ty > 0){
+            if(grid.nodes[tx][ty].walkable === false){
+                var x = tx;
+                var y = ty;
+                var foundPosition = false;
+                for(var i = -Math.round(self.width / 64) + 1;i < 1;i++){
+                    for(var j = -Math.round(self.height / 64) + 1;j < 1;j++){
+                        if(foundPosition === false){
+                            if(x + i >= 0 && x + i < size && y + j >= 0 && y + j < size){
+                                tx = x + i;
+                                ty = y + j;
+                                if(grid.nodes[tx][ty].walkable === true){
+                                    foundPosition = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             var path = finder.findPath(nx,ny,tx,ty,grid);
             if(path[0]){
                 self.trackingPath = PF.Util.compressPath(path);
@@ -730,6 +748,8 @@ Actor = function(param){
                     if(regionChanger.noMonster && self.type === 'Monster'){
                         self.x = self.lastX;
                         self.y = self.lastY;
+                        self.collided.x = true;
+                        self.collided.y = true;
                     }
                     if(regionChanger.region !== self.region){
                         self.doRegionChange(regionChanger);
@@ -3315,10 +3335,10 @@ Monster = function(param){
                 var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
                 var lastTrackX = self.trackX;
                 var lastTrackY = self.trackY;
-                if(self.targetLeftView === 0){
-                    self.trackX = self.target.gridX - dx;
-                    self.trackY = self.target.gridY - dy;
-                }
+                // if(self.targetLeftView === 0){
+                self.trackX = self.target.gridX - dx;
+                self.trackY = self.target.gridY - dy;
+                // }
                 var distance = self.getDistance(self.target);
                 if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
@@ -3392,8 +3412,8 @@ Monster = function(param){
                         for(var i = 0;i < size;i++){
                             for(var j = 0;j < size;j++){
                                 var setWalkableAt = function(){
-                                    for(var k = -self.width / 64 + 1;k < 1;k++){
-                                        for(var l = -self.height / 64 + 1;l < 1;l++){
+                                    for(var k = -Math.round(self.width / 64) + 1;k < 1;k++){
+                                        for(var l = -Math.round(self.height / 64) + 1;l < 1;l++){
                                             if(i + k >= 0 && i + k < size && j + l >= 0 && j + l < size){
                                                 grid.setWalkableAt(i + k,j + l,false);
                                             }
@@ -3425,6 +3445,24 @@ Monster = function(param){
                         var nx = Math.floor(size / 2);
                         var ny = Math.floor(size / 2);
                         if(self.trackX < size && self.trackX > 0 && self.trackY < size && self.trackY > 0){
+                            if(grid.nodes[self.trackX][self.trackY].walkable === false){
+                                var x = self.trackX;
+                                var y = self.trackY;
+                                var foundPosition = false;
+                                for(var i = 0;i > -Math.round(self.width / 64);i--){
+                                    for(var j = 0;j > -Math.round(self.height / 64);j--){
+                                        if(foundPosition === false){
+                                            if(x + i >= 0 && x + i < size && y + j >= 0 && y + j < size){
+                                                if(grid.nodes[x + i][y + j].walkable === true){
+                                                    self.trackX = x + i;
+                                                    self.trackY = y + j;
+                                                    foundPosition = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             var grid2 = grid.clone();
                             var path = finder.findPath(nx,ny,self.trackX,self.trackY,grid);
                             if(path[0]){
