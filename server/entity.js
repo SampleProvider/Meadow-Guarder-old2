@@ -3100,6 +3100,7 @@ Monster = function(param){
             }
             self.damaged = true;
             self.attackState = 'attack';
+            self.targetLeftView = 0;
         }
     }
     self.retreat = function(){
@@ -3488,7 +3489,7 @@ Monster = function(param){
                                         self.trackingPath.shift();
                                     }
                                     else{
-                                        // self.retreat();
+                                        self.retreat();
                                     }
                                 }
                             }
