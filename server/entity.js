@@ -3485,7 +3485,7 @@ Monster = function(param){
                                         self.trackingPath.shift();
                                     }
                                     else{
-                                        self.retreat();
+                                        // self.retreat();
                                     }
                                 }
                             }
