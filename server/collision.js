@@ -6,8 +6,14 @@ Collision = function(param){
     self.width = param.width;
     self.height = param.height;
     self.info = param.info;
-    for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
-        for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
+    for(var i = Math.floor(Math.round(self.x - self.width / 2) / 64);i <= Math.floor(Math.round(self.x + self.width / 2) / 64);i++){
+        if(i * 64 === Math.round(self.x + self.width / 2)){
+            break;
+        }
+        for(var j = Math.floor(Math.round(self.y - self.height / 2) / 64);j <= Math.floor(Math.round(self.y + self.height / 2) / 64);j++){
+            if(j * 64 === Math.round(self.y + self.height / 2)){
+                break;
+            }
             if(Collision.list[self.map]){
                 if(Collision.list[self.map][param.zindex]){
                     if(Collision.list[self.map][param.zindex][i]){
@@ -44,8 +50,8 @@ Collision = function(param){
     return self;
 }
 Collision.add = function(collision,id){
-    for(var i = Math.floor((collision.x - collision.width / 2) / 64);i <= Math.floor((collision.x + collision.width / 2) / 64);i++){
-        for(var j = Math.floor((collision.y - collision.height / 2) / 64);j <= Math.floor((collision.y + collision.height / 2) / 64);j++){
+    for(var i = Math.floor(Math.round(collision.x - collision.width / 2) / 64);i <= Math.floor(Math.round(collision.x + collision.width / 2) / 64);i++){
+        for(var j = Math.floor(Math.round(collision.y - collision.height / 2) / 64);j <= Math.floor(Math.round(collision.y + collision.height / 2) / 64);j++){
             if(Collision.list[collision.map]){
                 if(Collision.list[collision.map][collision.zindex]){
                     if(Collision.list[collision.map][collision.zindex][i]){
@@ -91,8 +97,8 @@ Collision.add = function(collision,id){
     }
 }
 Collision.remove = function(collision,id){
-    for(var i = Math.floor((collision.x - collision.width / 2) / 64);i <= Math.floor((collision.x + collision.width / 2) / 64);i++){
-        for(var j = Math.floor((collision.y - collision.height / 2) / 64);j <= Math.floor((collision.y + collision.height / 2) / 64);j++){
+    for(var i = Math.floor(Math.round(collision.x - collision.width / 2) / 64);i <= Math.floor(Math.round(collision.x + collision.width / 2) / 64);i++){
+        for(var j = Math.floor(Math.round(collision.y - collision.height / 2) / 64);j <= Math.floor(Math.round(collision.y + collision.height / 2) / 64);j++){
             if(Collision.list[collision.map]){
                 if(Collision.list[collision.map][collision.zindex]){
                     if(Collision.list[collision.map][collision.zindex][i]){
