@@ -980,7 +980,6 @@ var loop = function(){
     if(!Player.list[selfId]){
         return;
     }
-    fps += 1;
     if(WIDTH !== window.innerWidth || HEIGHT !== window.innerHeight){
         ctxRaw.style.width = window.innerWidth;
         ctxRaw.style.height = window.innerHeight;
