@@ -6,7 +6,7 @@ if(window.requestAnimationFrame === undefined){
     alert('This game uses RequestAnimationFrame, which is not supported in your browser.');
 }
 
-var VERSION = '0.0.9';
+var VERSION = '0.1.0';
 
 var socket = io({
     reconnection:false,
@@ -115,20 +115,6 @@ Img.items2 = new Image();
 Img.items2.src = '/client/img/items2.png';
 Img.items2select = new Image();
 Img.items2select.src = '/client/img/items2select.png';
-Img.death = new Image();
-Img.death.src = '/client/img/death.png';
-Img.rain = new Image();
-Img.rain.src = '/client/img/weather/rain.png';
-Img.acidrain = new Image();
-Img.acidrain.src = '/client/img/weather/acidrain.png';
-Img.bloodrain = new Image();
-Img.bloodrain.src = '/client/img/weather/bloodrain.png';
-Img.goldenrain = new Image();
-Img.goldenrain.src = '/client/img/weather/goldenrain.png';
-Img.darkrain = new Image();
-Img.darkrain.src = '/client/img/weather/darkrain.png';
-Img.snowflake = new Image();
-Img.snowflake.src = '/client/img/weather/snowflake.png';
 
 var inventory = new Inventory(socket,false);
 var crafts = [];

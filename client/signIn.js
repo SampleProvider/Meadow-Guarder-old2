@@ -215,10 +215,29 @@ window.onload = function(){
         var particleLoading = document.getElementById('particleLoading');
         particleLoading.innerHTML = '<span style="color: #55ff55">Loading particles... (0%)</span>';
         particleData = json;
-        particleLoading.innerHTML = '<span style="color: #55ff55">Loading particles... (100%)</span>';
-        totalLoading -= 1;
-        if(totalLoading === 0){
-            loadingComplete = true;
+        var amount = 0;
+        for(var i in json){
+            if(json[i].drawType === 'image' || json[i].drawType === 'rain'){
+                amount += 1;
+            }
+        }
+        var currentAmount = 0;
+        for(var i in json){
+            if(json[i].drawType === 'image' || json[i].drawType === 'rain'){
+                Img[i] = new Image();
+                Img[i].src = '/client/img/particles/' + i + '.png';
+                Img[i].onload = function(){
+                    currentAmount += 1;
+                    var particleLoading = document.getElementById('particleLoading');
+                    particleLoading.innerHTML = '<span style="color: #55ff55">Loading particles... (' + Math.round(currentAmount / amount * 100) + '%)</span>';
+                    if(currentAmount === amount){
+                        totalLoading -= 1;
+                        if(totalLoading === 0){
+                            loadingComplete = true;
+                        }
+                    }
+                }
+            }
         }
     });
     loadJSON('songs',function(json){

@@ -32,6 +32,11 @@ resetWeather = function(){
 }
 
 socket.on('changeWeather',function(data){
+    if(!Player.list[selfId]){
+        currentWeather = data;
+        resetWeather();
+        return;
+    }
     if(Player.list[selfId].map === 'World'){
         changeWeather(data);
     }
