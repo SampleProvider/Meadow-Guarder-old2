@@ -1174,7 +1174,7 @@ setInterval(function(){
 			for(var k in grid[i][j]){
 				for(var l in grid[i][j][k].players){
 					for(var m in grid[i][j][k].projectiles){
-						if(grid[i][j][k].players[l].team !== m){
+						if(grid[i][j][k].players[l].map === 'PVP Arena' || grid[i][j][k].players[l].team !== m){
 							for(var n in grid[i][j][k].projectiles[m]){
 								if(grid[i][j][k].players[l].map === 'PVP Arena' || grid[i][j][k].projectiles[m][n].parentType !== 'Player'){
 									if(grid[i][j][k].projectiles[m][n].isColliding(grid[i][j][k].players[l]) && grid[i][j][k].projectiles[m][n].parent + '' !== grid[i][j][k].players[l].id + ''){
