@@ -3345,9 +3345,6 @@ Monster = function(param){
                 else if(self.target.map !== self.map){
                     self.retreat();
                 }
-                else if(self.target.regionChanger.noMonster === true){
-                    self.retreat();
-                }
                 else{
                     if(self.getSquareDistance(self.target) > self.aggro * 2 && self.damaged === false){
                         self.retreat();
@@ -3371,6 +3368,13 @@ Monster = function(param){
                         if(self.target){
                             self.targetX = self.target.x;
                             self.targetY = self.target.y;
+                        }
+                    }
+                }
+                if(self.target){
+                    if(self.target.regionChanger){
+                        if(self.target.regionChanger.noMonster === true){
+                            self.retreat();
                         }
                     }
                 }
