@@ -1306,6 +1306,36 @@ canvas {
     text-align: center;
 }
 
+#bossbarDiv {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    width: 502px;
+    height: 42px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 0px;
+    transform: translate(-50%, 0%);
+}
+#bossbarValue {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 500px;
+    height: 40px;
+    background-color: #ea323c;
+}
+#bossbarText {
+    position: absolute;
+    top: 50%;
+    left: 1px;
+    width: 500px;
+    text-align: center;
+    color: #ffffff;
+    transform: translate(0%, -50%);
+}
+
 #shopBackground {
     position: absolute;
     left: 8px;

@@ -125,7 +125,7 @@
                 }],
          "height":16,
          "id":12,
-         "name":"Npc:Wally:",
+         "name":"Npc:Wally:down:",
          "opacity":1,
          "startx":-16,
          "starty":-16,
@@ -9724,7 +9724,7 @@
                      "name":"",
                      "objects":[
                             {
-                             "height":12,
+                             "height":15,
                              "id":1,
                              "name":"",
                              "rotation":0,
@@ -9732,7 +9732,7 @@
                              "visible":true,
                              "width":13,
                              "x":1,
-                             "y":4
+                             "y":1
                             }],
                      "opacity":1,
                      "type":"objectgroup",
@@ -13027,110 +13027,6 @@
                              "width":16,
                              "x":0,
                              "y":0
-                            }],
-                     "opacity":1,
-                     "type":"objectgroup",
-                     "visible":true,
-                     "x":0,
-                     "y":0
-                    }
-                }, 
-                {
-                 "id":9416,
-                 "objectgroup":
-                    {
-                     "draworder":"index",
-                     "id":2,
-                     "name":"",
-                     "objects":[
-                            {
-                             "height":10,
-                             "id":1,
-                             "name":"",
-                             "rotation":0,
-                             "type":"",
-                             "visible":true,
-                             "width":16,
-                             "x":0,
-                             "y":6
-                            }],
-                     "opacity":1,
-                     "type":"objectgroup",
-                     "visible":true,
-                     "x":0,
-                     "y":0
-                    }
-                }, 
-                {
-                 "id":9417,
-                 "objectgroup":
-                    {
-                     "draworder":"index",
-                     "id":2,
-                     "name":"",
-                     "objects":[
-                            {
-                             "height":10,
-                             "id":1,
-                             "name":"",
-                             "rotation":0,
-                             "type":"",
-                             "visible":true,
-                             "width":16,
-                             "x":0,
-                             "y":6
-                            }],
-                     "opacity":1,
-                     "type":"objectgroup",
-                     "visible":true,
-                     "x":0,
-                     "y":0
-                    }
-                }, 
-                {
-                 "id":9418,
-                 "objectgroup":
-                    {
-                     "draworder":"index",
-                     "id":2,
-                     "name":"",
-                     "objects":[
-                            {
-                             "height":10,
-                             "id":1,
-                             "name":"",
-                             "rotation":0,
-                             "type":"",
-                             "visible":true,
-                             "width":16,
-                             "x":0,
-                             "y":6
-                            }],
-                     "opacity":1,
-                     "type":"objectgroup",
-                     "visible":true,
-                     "x":0,
-                     "y":0
-                    }
-                }, 
-                {
-                 "id":9419,
-                 "objectgroup":
-                    {
-                     "draworder":"index",
-                     "id":2,
-                     "name":"",
-                     "objects":[
-                            {
-                             "height":10,
-                             "id":1,
-                             "name":"",
-                             "rotation":0,
-                             "type":"",
-                             "visible":true,
-                             "width":16,
-                             "x":0,
-                             "y":6
                             }],
                      "opacity":1,
                      "type":"objectgroup",
@@ -17549,9 +17445,9 @@
                         }, 
                         {
                          "color":"#96ffa7",
-                         "name":"",
+                         "name":"Light Red Carpet",
                          "probability":1,
-                         "tile":-1
+                         "tile":10521
                         }, 
                         {
                          "color":"#8e7848",
@@ -18000,8 +17896,44 @@
                          "wangid":[0, 11, 0, 0, 0, 11, 0, 11]
                         }, 
                         {
+                         "tileid":10514,
+                         "wangid":[0, 11, 0, 0, 0, 11, 0, 0]
+                        }, 
+                        {
                          "tileid":10517,
                          "wangid":[0, 11, 0, 11, 0, 0, 0, 11]
+                        }, 
+                        {
+                         "tileid":10519,
+                         "wangid":[0, 0, 0, 11, 0, 0, 0, 11]
+                        }, 
+                        {
+                         "tileid":10521,
+                         "wangid":[0, 12, 0, 12, 0, 12, 0, 12]
+                        }, 
+                        {
+                         "tileid":10522,
+                         "wangid":[0, 12, 0, 12, 0, 12, 0, 0]
+                        }, 
+                        {
+                         "tileid":10523,
+                         "wangid":[0, 0, 0, 12, 0, 12, 0, 12]
+                        }, 
+                        {
+                         "tileid":10525,
+                         "wangid":[0, 12, 0, 0, 0, 12, 0, 12]
+                        }, 
+                        {
+                         "tileid":10526,
+                         "wangid":[0, 12, 0, 0, 0, 12, 0, 0]
+                        }, 
+                        {
+                         "tileid":10529,
+                         "wangid":[0, 12, 0, 12, 0, 0, 0, 12]
+                        }, 
+                        {
+                         "tileid":10531,
+                         "wangid":[0, 0, 0, 12, 0, 0, 0, 12]
                         }, 
                         {
                          "tileid":10620,
@@ -18010,6 +17942,14 @@
                         {
                          "tileid":10624,
                          "wangid":[0, 0, 0, 11, 0, 11, 0, 0]
+                        }, 
+                        {
+                         "tileid":10632,
+                         "wangid":[0, 12, 0, 12, 0, 0, 0, 0]
+                        }, 
+                        {
+                         "tileid":10636,
+                         "wangid":[0, 0, 0, 12, 0, 12, 0, 0]
                         }, 
                         {
                          "tileid":10723,
@@ -18024,6 +17964,18 @@
                          "wangid":[0, 0, 0, 11, 0, 0, 0, 0]
                         }, 
                         {
+                         "tileid":10735,
+                         "wangid":[0, 0, 0, 0, 0, 12, 0, 12]
+                        }, 
+                        {
+                         "tileid":10739,
+                         "wangid":[0, 12, 0, 0, 0, 0, 0, 12]
+                        }, 
+                        {
+                         "tileid":10745,
+                         "wangid":[0, 0, 0, 12, 0, 0, 0, 0]
+                        }, 
+                        {
                          "tileid":10830,
                          "wangid":[0, 0, 0, 0, 0, 11, 0, 0]
                         }, 
@@ -18034,6 +17986,18 @@
                         {
                          "tileid":10834,
                          "wangid":[0, 11, 0, 0, 0, 0, 0, 0]
+                        }, 
+                        {
+                         "tileid":10842,
+                         "wangid":[0, 0, 0, 0, 0, 12, 0, 0]
+                        }, 
+                        {
+                         "tileid":10844,
+                         "wangid":[0, 0, 0, 0, 0, 0, 0, 12]
+                        }, 
+                        {
+                         "tileid":10846,
+                         "wangid":[0, 12, 0, 0, 0, 0, 0, 0]
                         }, 
                         {
                          "tileid":10925,

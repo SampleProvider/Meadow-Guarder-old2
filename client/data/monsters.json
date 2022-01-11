@@ -176,7 +176,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     }],
@@ -192,7 +192,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     },{
@@ -207,7 +207,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     },{
@@ -222,7 +222,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     },{
@@ -237,7 +237,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     },{
@@ -252,7 +252,7 @@
                                 "critPower":0
                             },
                             "debuffs":{
-                                "radiation":200
+                                "radiation":100
                             }
                         }
                     }]
@@ -268,7 +268,7 @@
         "name":"Karate Skeleton",
         "hpMax":2500,
         "stats":{
-            "damage":55,
+            "damage":45,
             "defense":50,
             "hpRegen":1,
             "critChance":0,
@@ -390,7 +390,7 @@
         "stats":{
             "damage":600,
             "defense":0,
-            "hpRegen":50000,
+            "hpRegen":5000,
             "critChance":0.05,
             "critPower":10000
         },
@@ -418,6 +418,8 @@
         "img":{
             "body":"Ten Eyed One"
         },
+        "boss":true,
+        "bossMusic":"tenEyedOne",
         "xpDrop":7500,
         "coinDrop":135000,
         "phase":"phase1",
@@ -854,7 +856,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":1000000,
+                    "hp":1500000,
                     "nextPhases":["phase4"]
                 }
             },
@@ -877,7 +879,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":100000,
+                    "hp":500000,
                     "nextPhases":["phase5"]
                 }
             },

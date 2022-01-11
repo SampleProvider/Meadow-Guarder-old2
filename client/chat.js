@@ -31,6 +31,7 @@ socket.on('addToChat',function(data){
         if(message.replace){
             message = message.replace(/</gi,'&lt;');
             message = message.replace(/>/gi,'&gt;');
+            message = message.replace(/\n/gi,'<br>');
         }
         message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }

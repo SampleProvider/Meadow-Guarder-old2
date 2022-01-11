@@ -112,6 +112,33 @@ spawnMonster = function(spawner,spawnId){
                     Projectile.list[i].toRemove = true;
                 }
             }
+            if(pt.boss === true){
+                var message = pt.name + ' has been defeated!\nTop Damagers:';
+                var leaderboard = [];
+                for(var i in pt.playersDamaged){
+                    if(Player.list[i]){
+                        leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
+                    }
+                }
+                var compare = function(a,b){
+                    if(a.damage > b.damage){
+                        return -1;
+                    }
+                    else if(b.damage > a.damage){
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    }
+                }
+                leaderboard.sort(compare);
+                for(var i = 0;i < 5;i++){
+                    if(leaderboard[i]){
+                        message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
+                    }
+                }
+                addToChat('#990099',message);
+            }
             pt.dropItems();
         },
     });
@@ -1083,9 +1110,17 @@ Actor = function(param){
                 self.hpMax += debuffData[id].hpMax;
                 self.hp += debuffData[id].hpMax;
             }
+            if(debuffData[id].hpRegen !== undefined){
+                self.stats.hpRegen += debuffData[id].hpRegen;
+                self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
+            }
             if(debuffData[id].manaMax !== undefined){
                 self.manaMax += debuffData[id].manaMax;
                 self.mana += debuffData[id].manaMax;
+            }
+            if(debuffData[id].manaRegen !== undefined){
+                self.stats.manaRegen += debuffData[id].manaRegen;
+                self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
             }
             if(debuffData[id].damage !== undefined){
                 self.stats.damage += debuffData[id].damage;
@@ -1098,12 +1133,6 @@ Actor = function(param){
             }
             if(debuffData[id].defense !== undefined){
                 self.stats.defense += debuffData[id].defense;
-            }
-            if(debuffData[id].hpRegen !== undefined){
-                self.stats.hpRegen += debuffData[id].hpRegen;
-            }
-            if(debuffData[id].manaRegen !== undefined){
-                self.stats.manaRegen += debuffData[id].manaRegen;
             }
             if(debuffData[id].movementSpeed !== undefined){
                 self.maxSpeed += debuffData[id].movementSpeed;
@@ -1147,9 +1176,17 @@ Actor = function(param){
                     self.hpMax -= debuffData[i].hpMax;
                     self.hp -= debuffData[i].hpMax;
                 }
+                if(debuffData[i].hpRegen !== undefined){
+                    self.stats.hpRegen -= debuffData[i].hpRegen;
+                    self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
+                }
                 if(debuffData[i].manaMax !== undefined){
                     self.manaMax -= debuffData[i].manaMax;
                     self.mana -= debuffData[i].manaMax;
+                }
+                if(debuffData[i].manaRegen !== undefined){
+                    self.stats.manaRegen -= debuffData[i].manaRegen;
+                    self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                 }
                 if(debuffData[i].damage !== undefined){
                     self.stats.damage -= debuffData[i].damage;
@@ -1162,12 +1199,6 @@ Actor = function(param){
                 }
                 if(debuffData[i].defense !== undefined){
                     self.stats.defense -= debuffData[i].defense;
-                }
-                if(debuffData[i].hpRegen !== undefined){
-                    self.stats.hpRegen -= debuffData[i].hpRegen;
-                }
-                if(debuffData[i].manaRegen !== undefined){
-                    self.stats.manaRegen -= debuffData[i].manaRegen;
                 }
                 if(debuffData[i].movementSpeed !== undefined){
                     self.maxSpeed -= debuffData[i].movementSpeed;
@@ -1716,7 +1747,9 @@ Player = function(param,socket){
                                     self.mainReload += 1;
                                     self.doAttack(self.mainAttackData,self.mainReload);
                                     socket.emit('attack',Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type);
-                                    self.lastUsedMana = 0;
+                                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost){
+                                        self.lastUsedMana = 0;
+                                    }
                                     if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume'){
                                         self.inventory.items[self.inventory.hotbarSelectedItem].amount -= 1;
                                         if(self.inventory.items[self.inventory.hotbarSelectedItem].amount <= 0){
@@ -1814,12 +1847,14 @@ Player = function(param,socket){
                         }
                         if(item.hpRegen !== undefined){
                             self.stats.hpRegen += item.hpRegen;
+                            self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
                         }
                         if(item.mana !== undefined){
                             self.manaMax += item.mana;
                         }
                         if(item.manaRegen !== undefined){
                             self.stats.manaRegen += item.manaRegen;
+                            self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                         }
                         if(item.movementSpeed !== undefined){
                             self.maxSpeed += item.movementSpeed;
@@ -1901,12 +1936,14 @@ Player = function(param,socket){
                     }
                     if(item.hpRegen !== undefined){
                         self.stats.hpRegen += item.hpRegen;
+                        self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
                     }
                     if(item.mana !== undefined){
                         self.manaMax += item.mana;
                     }
                     if(item.manaRegen !== undefined){
                         self.stats.manaRegen += item.manaRegen;
+                        self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                     }
                     if(item.movementSpeed !== undefined){
                         self.maxSpeed += item.movementSpeed;
@@ -1973,9 +2010,17 @@ Player = function(param,socket){
                 self.hpMax += debuffData[i].hpMax;
                 self.hp += debuffData[i].hpMax;
             }
+            if(debuffData[i].hpRegen !== undefined){
+                self.stats.hpRegen += debuffData[i].hpRegen;
+                self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
+            }
             if(debuffData[i].manaMax !== undefined){
                 self.manaMax += debuffData[i].manaMax;
                 self.mana += debuffData[i].manaMax;
+            }
+            if(debuffData[i].manaRegen !== undefined){
+                self.stats.manaRegen += debuffData[i].manaRegen;
+                self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
             }
             if(debuffData[i].damage !== undefined){
                 self.stats.damage += debuffData[i].damage;
@@ -1988,12 +2033,6 @@ Player = function(param,socket){
             }
             if(debuffData[i].defense !== undefined){
                 self.stats.defense += debuffData[i].defense;
-            }
-            if(debuffData[i].hpRegen !== undefined){
-                self.stats.hpRegen += debuffData[i].hpRegen;
-            }
-            if(debuffData[i].manaRegen !== undefined){
-                self.stats.manaRegen += debuffData[i].manaRegen;
             }
             if(debuffData[i].movementSpeed !== undefined){
                 self.maxSpeed += debuffData[i].movementSpeed;
@@ -3113,6 +3152,10 @@ Projectile.list = {};
 Monster = function(param){
     var self = Actor(param);
     self.monsterType = param.monsterType;
+
+    self.boss = false;
+    self.bossMusic = 'none';
+    
     for(var i in monsterData[self.monsterType]){
         if(i === 'stats'){
             for(var j in monsterData[self.monsterType][i]){
@@ -3168,6 +3211,11 @@ Monster = function(param){
     self.passiveReload = 0;
     
     self.randomWalk(true);
+
+    if(self.boss === true){
+        addToChat('#990099',self.name + ' has spawned!');
+    }
+    
     self.onHit = function(pt){
         if(pt.sameId === false){
             self.projectilesHit[pt.id] = 10;
@@ -3624,6 +3672,7 @@ Monster = function(param){
     self.getInitPack = function(){
         var pack = getInitPack();
         pack.monsterType = self.monsterType;
+        pack.boss = self.boss;
         pack.type = self.type;
         return pack;
     }
@@ -3634,6 +3683,7 @@ Monster.list = {};
 
 Npc = function(param){
     var self = Actor(param);
+    self.animationDirection = param.animationDirection;
     self.hp = 100;
     self.hpMax = 100;
     self.type = 'Npc';
@@ -3649,19 +3699,19 @@ Npc = function(param){
     }
     self.changeSize();
     self.update = function(){
-        self.stepsLeft = self.maxSpeed;
-        for(var i = 0;i < self.stepsLeft;i++){
-            self.updateMove();
-            if(self.canMove){
-                self.updatePosition();
-            }
-            self.updateGridPosition();
-            self.updateCollisions();
-            self.updateRegion();
-        }
-        self.x = Math.round(self.x);
-        self.y = Math.round(self.y);
-        self.updateAnimation();
+        // self.stepsLeft = self.maxSpeed;
+        // for(var i = 0;i < self.stepsLeft;i++){
+        //     self.updateMove();
+        //     if(self.canMove){
+        //         self.updatePosition();
+        //     }
+        //     self.updateGridPosition();
+        //     self.updateCollisions();
+        //     self.updateRegion();
+        // }
+        // self.x = Math.round(self.x);
+        // self.y = Math.round(self.y);
+        // self.updateAnimation();
     }
     Npc.list[self.id] = self;
     return self;

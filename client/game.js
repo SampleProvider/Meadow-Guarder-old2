@@ -656,6 +656,9 @@ socket.on('update',function(data){
                             monster[j] = data.monster[i][j];
                         }
                     }
+                    if(monster.boss === true){
+                        startBossbar(monster.name,monster.hp,monster.hpMax);
+                    }
                 }
                 else{
                     new Monster(data.monster[i]);
@@ -790,8 +793,11 @@ socket.on('update',function(data){
     for(var i in Monster.list){
         if(Monster.list[i].updated === false){
             if(!Monster.list[i].toRemove){
-                if(Monster.list[i].monsterType === 'teneyedone'){
-                    stopBossSong('tenEyedOne');
+                if(Monster.list[i].boss === true){
+                    if(Monster.list[i].bossMusic !== 'none'){
+                        stopBossSong('tenEyedOne');
+                    }
+                    stopBossbar();
                 }
                 delete Monster.list[i];
             }

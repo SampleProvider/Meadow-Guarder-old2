@@ -12,6 +12,7 @@ var settings = {
     textSpeed:2,
     volumePercentage:100,
     renderDistance:2,
+    chatBackground:false,
 };
 
 var setCookie = function(){
@@ -42,11 +43,11 @@ var getCookie = function(){
                     if(i === 'darknessEffects'){
                         if(settings[i] === 'true'){
                             settings[i] = true;
-                            entityFadeOutButton.innerHTML = 'Darkness Effects';
+                            entityFadeOutButton.innerHTML = 'Darkness Effects: Enabled';
                         }
                         else{
                             settings[i] = false;
-                            entityFadeOutButton.innerHTML = 'No Darkness Effects';
+                            entityFadeOutButton.innerHTML = 'Darkness Effects: Disabled';
                             resetWeather();
                         }
                     }
@@ -75,6 +76,20 @@ var getCookie = function(){
                         renderDistanceSlider.value = settings[i];
                         renderDistanceHeader.innerHTML = 'Render Distance: ' + renderDistanceSlider.value;
                         socket.emit('renderDistance',settings.renderDistance);
+                    }
+                    if(i === 'chatBackground'){
+                        if(settings[i] === 'true'){
+                            settings[i] = true;
+                            chatBackgroundButton.innerHTML = 'Chat Background: Enabled';
+                            chatBackground.style.opacity = 1;
+                            chatBackground.style.backgroundColor = '#362a1e';
+                        }
+                        else{
+                            settings[i] = false;
+                            chatBackgroundButton.innerHTML = 'Chat Background: Disabled';
+                            chatBackground.style.opacity = 0.3;
+                            chatBackground.style.backgroundColor = '#ffffff';
+                        }
                     }
                 }
             }
@@ -116,7 +131,7 @@ particleSlider.oninput = function(){
 darknessEffectsButton.onclick = function(){
     settings.darknessEffects = !settings.darknessEffects;
     if(settings.darknessEffects === true){
-        darknessEffectsButton.innerHTML = 'Darkness Effects';
+        darknessEffectsButton.innerHTML = 'Darkness Effects: Enabled';
         if(Player.list[selfId]){
             if(Player.list[selfId].map === 'World'){
                 setWeather(currentWeather);
@@ -124,7 +139,7 @@ darknessEffectsButton.onclick = function(){
         }
     }
     else{
-        darknessEffectsButton.innerHTML = 'No Darkness Effects';
+        darknessEffectsButton.innerHTML = 'Darkness Effects: Disabled';
         resetWeather();
     }
     setCookie();
@@ -164,6 +179,20 @@ renderDistanceSlider.oninput = function(){
     settings.renderDistance = parseInt(renderDistanceSlider.value);
     renderDistanceHeader.innerHTML = 'Render Distance: ' + renderDistanceSlider.value;
     socket.emit('renderDistance',settings.renderDistance);
+    setCookie();
+}
+chatBackgroundButton.onclick = function(){
+    settings.chatBackground = !settings.chatBackground;
+    if(settings.chatBackground === true){
+        chatBackgroundButton.innerHTML = 'Chat Background: Enabled';
+        chatBackground.style.opacity = 1;
+        chatBackground.style.backgroundColor = '#362a1e';
+    }
+    else{
+        chatBackgroundButton.innerHTML = 'Chat Background: Disabled';
+        chatBackground.style.opacity = 0.3;
+        chatBackground.style.backgroundColor = '#ffffff';
+    }
     setCookie();
 }
 openInventory = function(){

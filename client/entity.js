@@ -121,11 +121,13 @@ var Actor = function(initPack){
                 Particle.create(self.x + Math.random() * self.width - self.width / 2,self.y + Math.random() * self.height - self.height / 2,self.map,j,debuffData[i].particles[j],1);
             }
         }
-        if(self.fadeState !== 1){
-            if(self.fade <= 0){
-                return;
+        if(settings.entityFadeOut === true){
+            if(self.fadeState !== 1){
+                if(self.fade <= 0){
+                    return;
+                }
+                ctx.globalAlpha = self.fade;
             }
-            ctx.globalAlpha = self.fade;
         }
         if(self.name !== ''){
             self.drawName();
@@ -150,8 +152,10 @@ var Actor = function(initPack){
             ctx.drawImage(Img.healthbar,0,20,16,4,Math.round(self.x - 32),Math.round(self.y - yDistance * 4 - 20),64,16);
             ctx.drawImage(Img.healthbar,1,17,Math.round(14 * self.hp / self.hpMax),2,Math.round(self.x - 28),Math.round(self.y - yDistance * 4 - 16),Math.round(14 * self.hp / self.hpMax) * 4,8);
         }
-        if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+        if(settings.entityFadeOut === true){
+            if(self.fadeState !== 1){
+                ctx.globalAlpha = 1;
+            }
         }
     }
     return self;
@@ -169,15 +173,18 @@ var Player = function(initPack){
         }
     }
     self.draw = function(){
+        var onScreen = true;
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-            return;
+            onScreen = false;
         }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade += 0.1;
                 if(self.fade >= 1){
                     self.fade = 1;
@@ -194,14 +201,21 @@ var Player = function(initPack){
                 return;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
-                    ctx.globalAlpha = 1;
+                    if(onScreen){
+                        ctx.globalAlpha = 1;
+                    }
                     delete Player.list[self.id];
                     return;
                 }
             }
+        }
+        if(!onScreen){
+            return;
         }
         if(Item.list[self.currentItem]){
             if(Item.list[self.currentItem].equip === 'shield'){
@@ -311,15 +325,18 @@ var Projectile = function(initPack){
         self.interpolationStage -= 1;
     }
     self.draw = function(){
+        var onScreen = true;
         if(self.x - self.width * 2 - self.height * 2 > -cameraX + WIDTH || self.x + self.width * 2 + self.height * 2 < -cameraX || self.y - self.width * 2 - self.height * 2 > -cameraY + HEIGHT || self.y + self.width * 2 + self.height * 2 < -cameraY){
-            return;
+            onScreen = false;
         }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade += 0.1;
                 if(self.fade >= 1){
                     self.fade = 1;
@@ -336,14 +353,21 @@ var Projectile = function(initPack){
                 return;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
-                    ctx.globalAlpha = 1;
+                    if(onScreen){
+                        ctx.globalAlpha = 1;
+                    }
                     delete Projectile.list[self.id];
                     return;
                 }
             }
+        }
+        if(!onScreen){
+            return;
         }
         self.animation = Math.floor(self.animation);
         if(Img[self.projectileType]){
@@ -371,19 +395,29 @@ Projectile.list = {};
 var Monster = function(initPack){
     var self = Actor(initPack);
     self.monsterType = initPack.monsterType;
-    if(self.monsterType === 'teneyedone'){
-        startBossSong('tenEyedOne');
+
+    self.boss = initPack.boss;
+    self.bossMusic = initPack.bossMusic;
+
+    if(self.boss === true){
+        if(self.bossMusic !== 'none'){
+            startBossSong(self.bossMusic);
+        }
+        startBossbar(self.name,self.hp,self.hpMax);
     }
     self.draw = function(){
+        var onScreen = true;
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-            return;
+            onScreen = false;
         }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade += 0.1;
                 if(self.fade >= 1){
                     self.fade = 1;
@@ -396,24 +430,35 @@ var Monster = function(initPack){
         }
         else{
             if(settings.entityFadeOut === false){
-                if(self.monsterType === 'teneyedone'){
-                    stopBossSong('tenEyedOne');
+                if(self.boss === true){
+                    if(self.bossMusic !== 'none'){
+                        stopBossSong('tenEyedOne');
+                    }
+                    stopBossbar();
                 }
                 delete Monster.list[self.id];
                 return;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
-                    ctx.globalAlpha = 1;
+                    if(onScreen){
+                        ctx.globalAlpha = 1;
+                    }
                     if(self.monsterType === 'teneyedone'){
                         stopBossSong('tenEyedOne');
+                        stopBossbar();
                     }
                     delete Monster.list[self.id];
                     return;
                 }
             }
+        }
+        if(!onScreen){
+            return;
         }
         self.animation = Math.floor(self.animation);
         drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
@@ -428,15 +473,18 @@ Monster.list = {};
 var Npc = function(initPack){
     var self = Actor(initPack);
     self.draw = function(){
+        var onScreen = true;
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-            return;
+            onScreen = false;
         }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade += 0.1;
                 if(self.fade >= 1){
                     self.fade = 1;
@@ -453,14 +501,21 @@ var Npc = function(initPack){
                 return;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
-                    ctx.globalAlpha = 1;
+                    if(onScreen){
+                        ctx.globalAlpha = 1;
+                    }
                     delete Npc.list[self.id];
                     return;
                 }
             }
+        }
+        if(!onScreen){
+            return;
         }
         self.animation = Math.floor(self.animation);
         drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
@@ -482,15 +537,18 @@ var HarvestableNpc = function(initPack){
         if(self.img === 'none'){
             return;
         }
+        var onScreen = true;
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-            return;
+            onScreen = false;
         }
         if(self.fadeState === 0){
             if(settings.entityFadeOut === false){
                 self.fadeState = 1;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade += 0.1;
                 if(self.fade >= 1){
                     self.fade = 1;
@@ -507,14 +565,21 @@ var HarvestableNpc = function(initPack){
                 return;
             }
             else{
-                ctx.globalAlpha = self.fade;
+                if(onScreen){
+                    ctx.globalAlpha = self.fade;
+                }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
-                    ctx.globalAlpha = 1;
+                    if(onScreen){
+                        ctx.globalAlpha = 1;
+                    }
                     delete HarvestableNpc.list[self.id];
                     return;
                 }
             }
+        }
+        if(!onScreen){
+            return;
         }
         ctx.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8 + harvestableNpcData[self.img].aboveHeight / 4,self.width / 4,self.height / 4 - harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2 + harvestableNpcData[self.img].aboveHeight,self.width,self.height - harvestableNpcData[self.img].aboveHeight);
         if(self.fadeState !== 1){
@@ -532,13 +597,7 @@ var HarvestableNpc = function(initPack){
             return;
         }
         if(settings.entityFadeOut === true){
-            if(self.fadeState === 0){
-                ctx.globalAlpha = self.fade;
-            }
-            else if(self.fadeState === 1){
-
-            }
-            else{
+            if(self.fadeState !== 1){
                 ctx.globalAlpha = self.fade;
             }
         }
@@ -554,14 +613,10 @@ var HarvestableNpc = function(initPack){
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
-        if(self.fadeState === 0){
-            ctx.globalAlpha = self.fade;
-        }
-        else if(self.fadeState === 1){
-
-        }
-        else{
-            ctx.globalAlpha = self.fade;
+        if(settings.entityFadeOut === true){
+            if(self.fadeState !== 1){
+                ctx.globalAlpha = self.fade;
+            }
         }
         ctx.drawImage(Img.healthbar,0,12,16,4,Math.round(self.x - 32),Math.round(self.y) - self.height / 2 - 20,64,16);
         ctx.drawImage(Img.healthbar,1,9,Math.round(14 * self.harvestHp / self.harvestHpMax),2,Math.round(self.x - 28),Math.round(self.y) - self.height / 2 - 16,Math.round(14 * self.harvestHp / self.harvestHpMax) * 4,8);
