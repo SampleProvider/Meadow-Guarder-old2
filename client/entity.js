@@ -548,6 +548,9 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawHp = function(){
+        if(self.img === 'none'){
+            return;
+        }
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
