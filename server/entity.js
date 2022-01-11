@@ -3592,7 +3592,7 @@ Monster = function(param){
         else if(self.attackState === 'retreat'){
             if(self.getSquareDistance(self.randomPos) <= 2){
                 self.attackState = 'passive';
-                self.maxSpeed = monsterData[self.monsterType].maxSpeed;
+                self.maxSpeed = Math.round(self.maxSpeed / 2);
             }
         }
     }
