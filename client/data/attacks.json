@@ -136,7 +136,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -145,7 +148,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -154,7 +160,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -163,7 +172,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -172,7 +184,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -181,7 +196,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -190,7 +208,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -199,7 +220,10 @@
             "id":"projectile",
             "projectileType":"fireball",
             "param":{
-                "directionDeviation":5
+                "directionDeviation":5,
+                "debuffs":{
+                    "fire":100
+                }
             }
         }]
     },
@@ -1098,6 +1122,9 @@
                     "critChance":0.05,
                     "critPower":2
                 }
+            },
+            "debuffs":{
+                "frozen":100
             }
         }]
     },
@@ -1113,6 +1140,9 @@
                     "critChance":0.05,
                     "critPower":2
                 }
+            },
+            "debuffs":{
+                "radiation":100
             }
         }]
     },
@@ -1146,6 +1176,9 @@
                     "critChance":0.05,
                     "critPower":2
                 }
+            },
+            "debuffs":{
+                "fire":100
             }
         }]
     },
@@ -1161,6 +1194,9 @@
                     "critChance":0.5,
                     "critPower":3
                 }
+            },
+            "debuffs":{
+                "radiation":100
             }
         }]
     },
@@ -1176,6 +1212,9 @@
                     "critChance":0.05,
                     "critPower":2
                 }
+            },
+            "debuffs":{
+                "frozen":100
             }
         }]
     },
@@ -1193,6 +1232,9 @@
                     "critChance":0.05,
                     "critPower":2
                 }
+            },
+            "debuffs":{
+                "frozen":500
             }
         }]
     },

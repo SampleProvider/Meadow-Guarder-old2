@@ -2,8 +2,18 @@
     "poison":{
         "name":"Poison",
         "drawId":2,
+        "rarity":1,
+        "hpRegen":-10,
+        "particles":{"poison":1},
+        "deathMessage":"poison"
+    },
+    "radiation":{
+        "name":"Radiation",
+        "drawId":2,
         "rarity":4,
-        "hpRegen":-10
+        "hpRegen":-15,
+        "particles":{"radiation":1},
+        "deathMessage":"radiation"
     },
     "regeneration":{
         "name":"Regeneration",
@@ -28,6 +38,22 @@
         "drawId":14,
         "rarity":3,
         "damage":15
+    },
+    "fire":{
+        "name":"Fire",
+        "drawId":32,
+        "rarity":1,
+        "hpRegen":-5,
+        "particles":{"fire":1},
+        "deathMessage":"fire"
+    },
+    "frozen":{
+        "name":"Frozen",
+        "description":"You're frozen!",
+        "drawId":33,
+        "rarity":1,
+        "movementSpeed":-15,
+        "particles":{"frozen":1}
     },
     "porcelainberry":{
         "name":"Porcelain Berry",

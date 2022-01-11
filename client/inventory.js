@@ -532,6 +532,7 @@ Inventory = function(socket,server){
             }
             else if(index2 === 'trash'){
                 self.draggingItem = {};
+                self.itemChange();
                 return;
             }
             else{

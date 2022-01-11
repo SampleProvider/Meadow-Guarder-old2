@@ -86,13 +86,11 @@ var Actor = function(initPack){
     self.stats = initPack.stats;
     self.team = initPack.team;
     self.showHealthBar = initPack.showHealthBar;
+    self.debuffs = initPack.debuffs;
 
     self.render = renderPlayer(self.img,self.drawSize);
 
     self.drawName = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
-            return;
-        }
         ctx.font = "15px pixel";
         ctx.fillStyle = '#00ff90';
         ctx.textAlign = "center";
@@ -114,8 +112,14 @@ var Actor = function(initPack){
         }
     }
     self.drawHp = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
+        }
+        for(var i in self.debuffs){
+            for(var j in debuffData[i].particles){
+                console.log(j)
+                Particle.create(self.x + Math.random() * self.width - self.width / 2,self.y + Math.random() * self.height - self.height / 2,self.map,j,debuffData[i].particles[j],1);
+            }
         }
         if(self.fadeState !== 1){
             if(self.fade <= 0){
@@ -157,7 +161,6 @@ var Player = function(initPack){
     var self = Actor(initPack);
     self.level = initPack.level;
     self.currentItem = initPack.currentItem;
-    self.debuffs = initPack.debuffs;
     self.worldRegion = initPack.worldRegion;
     if(self.id === selfId){
         if(self.worldRegion !== worldRegion){
@@ -166,7 +169,7 @@ var Player = function(initPack){
         }
     }
     self.draw = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(self.fadeState === 0){
@@ -372,7 +375,7 @@ var Monster = function(initPack){
         startBossSong('tenEyedOne');
     }
     self.draw = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(self.fadeState === 0){
@@ -425,7 +428,7 @@ Monster.list = {};
 var Npc = function(initPack){
     var self = Actor(initPack);
     self.draw = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(self.fadeState === 0){
@@ -479,7 +482,7 @@ var HarvestableNpc = function(initPack){
         if(self.img === 'none'){
             return;
         }
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(self.fadeState === 0){
@@ -522,7 +525,7 @@ var HarvestableNpc = function(initPack){
         if(self.img === 'none'){
             return;
         }
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(harvestableNpcData[self.img].aboveHeight === 0){
@@ -545,7 +548,7 @@ var HarvestableNpc = function(initPack){
         }
     }
     self.drawHp = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         if(self.fadeState === 0){
@@ -658,6 +661,11 @@ var Particle = function(initPack){
     if(self.movementType === 'shower'){
         self.spdX = Math.random() * 6 - 3;
         self.spdY = Math.random() * -4;
+    }
+    if(self.movementType === 'rise'){
+        self.spdX = Math.random() * 6 - 3;
+        self.spdY = -self.movementSpeed;
+        self.timer = self.movementTimer;
     }
     if(self.movementType === 'fall'){
         self.spdX = Math.random() * 6 - 3;

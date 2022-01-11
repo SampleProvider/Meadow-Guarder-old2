@@ -465,7 +465,7 @@ Actor = function(param){
                 }
             }
         }
-        else{
+        else if(self.gridX < pt.gridX){
             for(var i = self.gridX;i <= pt.gridX;i++){
                 if(i === self.gridX){
                     var lastY = self.gridY;
@@ -496,6 +496,36 @@ Actor = function(param){
                                     if(Collision.list[self.map][self.zindex][i][j]){
                                         return false;
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            var lastY = self.gridY;
+            var y = pt.gridY;
+            if(lastY > y){
+                for(var j = lastY;j >= y;j--){
+                    if(Collision.list[self.map]){
+                        if(Collision.list[self.map][self.zindex]){
+                            if(Collision.list[self.map][self.zindex][i]){
+                                if(Collision.list[self.map][self.zindex][i][j]){
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                for(var j = lastY;j <= y;j++){
+                    if(Collision.list[self.map]){
+                        if(Collision.list[self.map][self.zindex]){
+                            if(Collision.list[self.map][self.zindex][i]){
+                                if(Collision.list[self.map][self.zindex][i][j]){
+                                    return false;
                                 }
                             }
                         }
@@ -750,6 +780,7 @@ Actor = function(param){
                         self.y = self.lastY;
                         self.collided.x = true;
                         self.collided.y = true;
+                        self.circleDirection *= -1;
                     }
                     if(regionChanger.region !== self.region){
                         self.doRegionChange(regionChanger);
@@ -927,6 +958,13 @@ Actor = function(param){
                 self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
             }
         }
+        if(pt.type === 'Projectile'){
+            if(pt.debuffs){
+                for(var i in pt.debuffs){
+                    self.addDebuff(i,pt.debuffs[i]);
+                }
+            }
+        }
         self.hp = Math.round(self.hp);
         if(pt.type === 'Projectile' && pt.parentType === 'Player'){
             if(self.playersDamaged[pt.parent]){
@@ -992,6 +1030,7 @@ Actor = function(param){
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
             team:param.team !== undefined ? param.team : self.team,
             stats:param.stats !== undefined ? param.stats : self.stats,
+            debuffs:param.debuffs !== undefined ? param.debuffs : {},
         };
         var projectile = new Projectile(properties);
         return projectile;
@@ -1224,6 +1263,7 @@ Actor = function(param){
         pack.canAttack = self.canAttack;
         pack.team = self.team;
         pack.showHealthBar = self.showHealthBar;
+        pack.debuffs = self.debuffs;
         return pack;
     }
     return self;
@@ -1443,6 +1483,24 @@ Player = function(param,socket){
         }
         if(entity){
             if(entity === 'self'){
+                for(var i in self.debuffs){
+                    switch(debuffData[i].deathMessage){
+                        case "poison":
+                            addToChat('#ff0000',pt.name + ' was poisoned to death.');
+                            return;
+                        case "radiation":
+                            if(Math.random() < 0.001){
+                                addToChat('#ff0000',pt.name + ' became Radioactive (64).');
+                            }
+                            else{
+                                addToChat('#ff0000',pt.name + ' became radioactive.');
+                            }
+                            return;
+                        case "fire":
+                            addToChat('#ff0000',pt.name + ' went up in flames.');
+                            return;
+                    }
+                }
                 addToChat('#ff0000',pt.name + ' committed suicide.');
             }
             else if(entity.name){
@@ -1516,11 +1574,11 @@ Player = function(param,socket){
             self.updateGridPosition();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
+                self.x = self.lastX;
+                self.y = self.lastY;
                 if(self.dashing){
                     break;
                 }
-                self.x = self.lastX;
-                self.y = self.lastY;
                 self.stepsLeft = stepsLeft;
                 self.collided.x = false;
                 self.collided.y = false;
@@ -2212,6 +2270,12 @@ Player = function(param,socket){
         if(ENV.spawnpoints[self.worldRegion]){
             self.teleport(ENV.spawnpoints[self.worldRegion].x,ENV.spawnpoints[self.worldRegion].y,ENV.spawnpoints[self.worldRegion].map);
         }
+        else{
+            self.worldRegion = 'Altoris Island';
+            if(ENV.spawnpoints[self.worldRegion]){
+                self.teleport(ENV.spawnpoints[self.worldRegion].x,ENV.spawnpoints[self.worldRegion].y,ENV.spawnpoints[self.worldRegion].map);
+            }
+        }
     }
     self.doRegionChange = function(regionChanger){
         self.region = regionChanger.region;
@@ -2791,6 +2855,7 @@ Projectile = function(param){
     self.height *= 4;
     self.zindex = param.zindex;
     self.stats = param.stats;
+    self.debuffs = param.debuffs;
     self.pierce = param.pierce;
     self.vertices = [];
     self.onHit = function(pt){
@@ -3171,11 +3236,11 @@ Monster = function(param){
             self.updateRegion();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
+                self.x = self.lastX;
+                self.y = self.lastY;
                 if(self.dashing){
                     break;
                 }
-                self.x = self.lastX;
-                self.y = self.lastY;
                 self.stepsLeft = stepsLeft;
                 self.collided.x = false;
                 self.collided.y = false;
@@ -3257,6 +3322,9 @@ Monster = function(param){
                     self.retreat();
                 }
                 else if(self.target.map !== self.map){
+                    self.retreat();
+                }
+                else if(self.target.regionChanger.noMonster === true){
                     self.retreat();
                 }
                 else{
