@@ -63,6 +63,18 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/11/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added a bossbar.
+							<br>
+							Fixed Bugs.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							1/10/2022
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -594,7 +606,7 @@
 							<b>RULES:</b>
 							<br>
 							<br>
-							Do not make accounts with inappropriate names. Do not make accounts that inpersonate another player. Do not advertize using your username or in the chat. No random messages and spamming the chat. No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>. Do not spawnkill. Do not kill players outside of the PVP Arena unless it is an accident. If two accidents happen in a row then it will be considered intentional.
+							Do not make accounts with inappropriate names. Do not make accounts that inpersonate another player. Do not advertize using your username or in the chat. No random messages and spamming the chat. No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>.
 							<br>
 							<br>
 							Violation of any of these rules may result in your account(s) being suspended and/or deleted.
@@ -761,6 +773,10 @@
 				<input id="chatInput" class="UI-input" type="text"></input>
 			</form>
 		</div>
+		<div id="bossbarDiv" class="UI-display" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);" style="display: none;">
+			<div id="bossbarValue" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+			<div id="bossbarText" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		</div>
 		<div id="playerListBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
 			
 		</div>
@@ -874,7 +890,7 @@
 			<div id="settingLine"></div>
 			<div id="particleHeader" class="UI-text" style="left: 358px;top: 30px;font-size: small;" onmouseover="mouseInMenu(event);">Particles: 100%</div>
 			<input id="particleSlider" style="position: absolute;left: 358px;top: 45px;" type="range" min="0" max="100" value="100">
-			<button id="darknessEffectsButton" class="UI-button" style="position: absolute;left: 358px;top: 65px;">Darkness Effects</button>
+			<button id="darknessEffectsButton" class="UI-button" style="position: absolute;left: 358px;top: 65px;">Darkness Effects: Enabled</button>
 			<button id="entityFadeOutButton" class="UI-button" style="position: absolute;left: 358px;top: 95px;">Entities Fade Out</button>
 			<div id="textSpeedHeader" class="UI-text" style="left: 358px;top: 120px;font-size: small;" onmouseover="mouseInMenu(event);">Text Speed: 2</div>
 			<input id="textSpeedSlider" style="position: absolute;left: 358px;top: 135px;" type="range" min="1" max="10" value="2">
@@ -882,6 +898,7 @@
 			<input id="volumePercentageSlider" style="position: absolute;left: 358px;top: 165px;" type="range" min="0" max="100" value="100">
 			<div id="renderDistanceHeader" class="UI-text" style="left: 358px;top: 180px;font-size: small;" onmouseover="mouseInMenu(event);">Render Distance: 2</div>
 			<input id="renderDistanceSlider" style="position: absolute;left: 358px;top: 195px;" type="range" min="1" max="5" value="2">
+			<button id="chatBackgroundButton" class="UI-button" style="position: absolute;left: 358px;top: 215px;">Chat Background: Disabled</button>
 			<button id="settingExit" class="UI-button">
 				<div id="settingExitText">X</div>
 			</button>
@@ -896,18 +913,18 @@
 				<div id="shopExitText">X</div>
 			</button>
 		</div>
-		<div id="selfDisplay" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-			<div id="healthBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+		<div id="selfDisplay" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
+			<div id="healthBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
+				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
 			</div>
-			<div id="xpBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+			<div id="xpBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
+				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
 			</div>
-			<div id="manaBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
+			<div id="manaBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
+				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
 			</div>
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display" style="display: none;"></div>
@@ -922,6 +939,7 @@
 	<script src="/client/sound.js" defer></script>
 	<script src="/client/weather.js" defer></script>
 	<script src="/client/chat.js" defer></script>
+	<script src="/client/bossbar.js" defer></script>
 	<script src="/client/settings.js" defer></script>
 	<script src="/client/entity.js" defer></script>
 	<script src="/client/maps.js" defer></script>

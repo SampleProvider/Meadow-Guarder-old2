@@ -141,12 +141,13 @@ var renderWorld = function(json,name){
                             });
                         }
                         else if(tile_idx + 1 === json.tilesets[1].firstgid + 7){
-                            npcName = json.layers[i].name.substr(4,json.layers[i].name.length - 5);
+                            var array = parseName(json.layers[i].name);
                             var npc = new Npc({
                                 x:s_x + 32,
                                 y:s_y + 32,
                                 map:name,
-                                name:npcName,
+                                name:array[1],
+                                animationDirection:array[2],
                             });
                         }
                         else if(tile_idx + 1 === json.tilesets[1].firstgid + 8){

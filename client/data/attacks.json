@@ -1004,6 +1004,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1012,6 +1015,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1020,6 +1026,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1028,6 +1037,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1036,6 +1048,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1044,6 +1059,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1052,6 +1070,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1060,6 +1081,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1068,6 +1092,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         },{
             "id":"projectile",
@@ -1076,6 +1103,9 @@
                 "pierce":-1,
                 "speed":60,
                 "directionDeviation":15
+            },
+            "debuffs":{
+                "frozen":600
             }
         }]
     },
