@@ -636,6 +636,25 @@ Actor = function(param){
         }
         else{
             self.animation = -1;
+            self.direction = self.direction % 360;
+            while(self.direction < 0){
+                self.direction += 360;
+            }
+            if(self.direction < 45){
+                self.animationDirection = 'right';
+            }
+            else if(self.direction < 135){
+                self.animationDirection = 'down';
+            }
+            else if(self.direction < 225){
+                self.animationDirection = 'left';
+            }
+            else if(self.direction < 315){
+                self.animationDirection = 'up';
+            }
+            else{
+                self.animationDirection = 'right';
+            }
         }
         if(self.canMove === false || self.inDialogue === true){
             self.animation = 0;
@@ -3178,6 +3197,7 @@ Monster = function(param){
     }
     self.update = function(){
         self.stepsLeft = self.maxSpeed;
+        var circleDirection = self.circleDirection;
         while(self.stepsLeft > 0){
             self.trackTarget();
             self.updateMove();
@@ -3236,6 +3256,7 @@ Monster = function(param){
             self.updateRegion();
             self.updateCollisions();
             if(self.collided.x || self.collided.y){
+                self.circleDirection = circleDirection * -1;
                 self.x = self.lastX;
                 self.y = self.lastY;
                 if(self.dashing){
@@ -3287,6 +3308,9 @@ Monster = function(param){
         self.updateAttack();
         self.updateDebuffs();
         self.updateHp();
+        if(self.targetLeftView > 0){
+            self.circleDirection = circleDirection * -1;
+        }
     }
     self.updateTarget = function(){
         if(self.attackState === 'passive'){
@@ -3411,10 +3435,8 @@ Monster = function(param){
                 var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
                 var lastTrackX = self.trackX;
                 var lastTrackY = self.trackY;
-                // if(self.targetLeftView === 0){
                 self.trackX = self.target.gridX - dx;
                 self.trackY = self.target.gridY - dy;
-                // }
                 var distance = self.getDistance(self.target);
                 if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
@@ -3436,9 +3458,6 @@ Monster = function(param){
                     direction = direction % 8;
                     while(direction < 0){
                         direction += 8;
-                    }
-                    if(self.collided.x || self.collided.y || self.targetLeftView > 0){
-                        self.circleDirection *= -1;
                     }
                     switch(direction){
                         case 0:
