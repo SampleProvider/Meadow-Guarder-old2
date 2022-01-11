@@ -1121,10 +1121,10 @@
                     "damage":30,
                     "critChance":0.05,
                     "critPower":2
+                },
+                "debuffs":{
+                    "frozen":100
                 }
-            },
-            "debuffs":{
-                "frozen":100
             }
         }]
     },
@@ -1139,10 +1139,10 @@
                     "damage":45,
                     "critChance":0.05,
                     "critPower":2
+                },
+                "debuffs":{
+                    "poison":100
                 }
-            },
-            "debuffs":{
-                "radiation":100
             }
         }]
     },
@@ -1175,10 +1175,10 @@
                     "damage":1000,
                     "critChance":0.05,
                     "critPower":2
+                },
+                "debuffs":{
+                    "fire":100
                 }
-            },
-            "debuffs":{
-                "fire":100
             }
         }]
     },
@@ -1193,10 +1193,10 @@
                     "damage":15,
                     "critChance":0.5,
                     "critPower":3
+                },
+                "debuffs":{
+                    "poison":100
                 }
-            },
-            "debuffs":{
-                "radiation":100
             }
         }]
     },
@@ -1211,10 +1211,10 @@
                     "damage":60,
                     "critChance":0.05,
                     "critPower":2
+                },
+                "debuffs":{
+                    "frozen":100
                 }
-            },
-            "debuffs":{
-                "frozen":100
             }
         }]
     },
@@ -1231,10 +1231,10 @@
                     "damage":120,
                     "critChance":0.05,
                     "critPower":2
+                },
+                "debuffs":{
+                    "frozen":500
                 }
-            },
-            "debuffs":{
-                "frozen":500
             }
         }]
     },
