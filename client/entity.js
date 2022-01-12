@@ -117,7 +117,6 @@ var Actor = function(initPack){
         }
         for(var i in self.debuffs){
             for(var j in debuffData[i].particles){
-                console.log(j)
                 Particle.create(self.x + Math.random() * self.width - self.width / 2,self.y + Math.random() * self.height - self.height / 2,self.map,j,debuffData[i].particles[j],1);
             }
         }
