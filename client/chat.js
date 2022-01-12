@@ -2,7 +2,6 @@
 var chatText = document.getElementById('chatText');
 var chatInput = document.getElementById('chatInput');
 var chatForm = document.getElementById('chatForm');
-var chat = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
 chatText.innerHTML = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
 var chatPress = false;
 var inChat = false;
@@ -36,8 +35,7 @@ socket.on('addToChat',function(data){
         message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     message = message.replace(/  /gi,'&nbsp;&nbsp;');
-    chat += message;
-    chatText.innerHTML = chat;
+    chatText.innerHTML += message;
     if(scroll){
         chatText.scrollTop = chatText.scrollHeight;
     }

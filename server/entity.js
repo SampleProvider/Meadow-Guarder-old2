@@ -1515,6 +1515,8 @@ Player = function(param,socket){
             leftClick:false,
             rightClick:false,
         }
+        pt.debuffs = {};
+        pt.updateStats();
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
                 if(Player.list[i].map === pt.map){
