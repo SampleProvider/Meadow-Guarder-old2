@@ -136,6 +136,38 @@ clearDatabase = function(){
 	});
 }
 
+chatBanPlayer = function(username,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM chatBans WHERE username=\'' + username + '\';', (err, res) => {
+		if(res.rows[0]){
+			cb(1);
+		}
+		else{
+			client.query('INSERT INTO chatBans(username) VALUES (\'' + username + '\');', (err, res) => {
+				cb(2);
+			});
+		}
+	});
+}
+
+unChatBanPlayer = function(username,cb){
+    if(!USE_DB){
+		return cb(0);
+	}
+	client.query('SELECT * FROM chatBans WHERE username=\'' + username + '\';', (err, res) => {
+		if(res.rows[0]){
+			client.query('DELETE FROM chatBans WHERE username=\'' + username + '\';', (err, res) => {
+				cb(2);
+			});
+		}
+		else{
+			cb(1);
+		}
+	});
+}
+
 banPlayer = function(username,cb){
     if(!USE_DB){
 		return cb(0);
