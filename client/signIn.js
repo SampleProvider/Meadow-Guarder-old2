@@ -372,7 +372,7 @@ socket.on('signInResponse',function(data){
         deathDiv.style.display = 'none';
         gameDiv.style.display = 'none';
     }
-    else if(data.success === 3){
+    else if(data.success === 3 || data.success === 5){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
     }
