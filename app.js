@@ -108,6 +108,9 @@ io.sockets.on('connection',function(socket){
 			stringData.ip = 'sp';
 		}
 		Database.isValidPassword(stringData,function(res){
+			if(res === 5){
+				Player.onConnect(socket,stringData.username,true);
+			}
 			if(res === 3){
 				Player.onConnect(socket,stringData.username);
 			}
@@ -570,6 +573,52 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'chatban' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(debugData[name]){
+						if(debugData[name].level > level){
+							socket.emit('addToChat',{
+								color:'#ff0000',
+								message:'[!] You do not have permission to chat ban ' + name + '.',
+								debug:true,
+							});
+							return;
+						}
+					}
+					chatBanPlayer(name,function(result){
+						if(result === 1){
+							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already chat banned.');
+						}
+						else if(result === 2){
+							Player.list[socket.id].sendMessage('[!] Chat banned player ' + name + '.');
+							for(var i in Player.list){
+								if(Player.list[i].name === name){
+									Player.list[i].chatBanned = true;
+								}
+							}
+						}
+					});
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'unchatban' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					unchatBanPlayer(name,function(result){
+						if(result === 1){
+							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is not chat banned.');
+						}
+						else if(result === 2){
+							Player.list[socket.id].sendMessage('[!] Unchatbanned player ' + name + '.');
+							for(var i in Player.list){
+								if(Player.list[i].name === name){
+									Player.list[i].chatBanned = false;
+								}
+							}
+						}
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
 					commandList.splice(0,1);
 					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
@@ -933,6 +982,8 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/chatban [player name] - Chat Ban someone.';
+						message += '<br>/unchatban [player name] - Unchatban someone.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/seexp [player name] - See someone\'s xp.';
 						message += '<br>/seeinv [player name] - See someone\'s inventory.';
@@ -954,6 +1005,8 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
+						message += '<br>/chatban [player name] - Chat Ban someone.';
+						message += '<br>/unchatban [player name] - Unchatban someone.';
 						message += '<br>/ban [player name] - Ban someone.';
 						message += '<br>/unban [player name] - Unban someone.';
 						message += '<br>/invincible - Toggle invincibility for yourself.';
@@ -979,6 +1032,10 @@ io.sockets.on('connection',function(socket){
 				}
 			}
 			else{
+				if(Player.list[socket.id].chatBanned){
+					Player.list[socket.id].sendMessage('[!] You may not type in the chat at this time.');
+					return;
+				}
 				if(Player.list[socket.id].lastChat > 0){
 					Player.list[socket.id].chatWarnings += 1.5;
 				}

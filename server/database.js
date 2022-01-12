@@ -152,7 +152,7 @@ chatBanPlayer = function(username,cb){
 	});
 }
 
-unChatBanPlayer = function(username,cb){
+unchatBanPlayer = function(username,cb){
     if(!USE_DB){
 		return cb(0);
 	}
@@ -251,26 +251,54 @@ Database.isValidPassword = function(data,cb){
 					return cb(4);
 				}
 				else{
-					client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
-						if(err){
-							throw err;
-						}
+					client.query('SELECT * FROM chatBans WHERE username=\'' + data.username + '\';', (err, res) => {
 						if(res.rows[0]){
-							var row = JSON.parse(JSON.stringify(res.rows[0]));
-							if(row.password === data.password){
-								for(var i in Player.list){
-									if(Player.list[i].username === data.username){
-										return cb(2);
+							client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
+								if(err){
+									throw err;
+								}
+								if(res.rows[0]){
+									var row = JSON.parse(JSON.stringify(res.rows[0]));
+									if(row.password === data.password){
+										for(var i in Player.list){
+											if(Player.list[i].username === data.username){
+												return cb(2);
+											}
+										}
+										return cb(5);
+									}
+									else{
+										return cb(1);
 									}
 								}
-								return cb(3);
-							}
-							else{
-								return cb(1);
-							}
+								else{
+									return cb(0);
+								}
+							});
 						}
 						else{
-							return cb(0);
+							client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
+								if(err){
+									throw err;
+								}
+								if(res.rows[0]){
+									var row = JSON.parse(JSON.stringify(res.rows[0]));
+									if(row.password === data.password){
+										for(var i in Player.list){
+											if(Player.list[i].username === data.username){
+												return cb(2);
+											}
+										}
+										return cb(3);
+									}
+									else{
+										return cb(1);
+									}
+								}
+								else{
+									return cb(0);
+								}
+							});
 						}
 					});
 				}

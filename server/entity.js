@@ -1428,7 +1428,11 @@ Player = function(param,socket){
 
     self.lastChat = 0;
     self.chatWarnings = 0;
+    self.chatBanned = false;
     self.textColor = '#000000';
+    if(param.chatBanned){
+        self.chatBanned = param.chatBanned;
+    }
 
     self.playTime = 0;
 
@@ -2376,12 +2380,13 @@ Player = function(param,socket){
 
 Player.list = {};
 
-Player.onConnect = function(socket,username){
+Player.onConnect = function(socket,username,chatBanned){
     getDatabase(username,function(database){
         var player = Player({
             id:socket.id,
             username:username,
             database:database,
+            chatBanned:chatBanned,
         },socket);
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
