@@ -740,7 +740,7 @@ var Particle = function(initPack){
         self.width = metrics.width;
         self.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     }
-    if(self.drawId){
+    if(self.drawType === 'render'){
         self.render = new OffscreenCanvas(24,24);
         var renderCtx = self.render.getContext("2d");
         resetCanvas(renderCtx);
@@ -822,11 +822,11 @@ var Particle = function(initPack){
                 ctx.save();
                 ctx.translate(self.x,self.y);
                 ctx.rotate(self.direction * Math.PI / 180);
-                ctx.drawImage(self.render,-self.render.width / 2 * self.drawScale,-self.render.height / 2 * self.drawScale,self.render.width * self.drawScale,self.render.height * self.drawScale);
+                ctx.drawImage(self.render,-self.render.width / 2,-self.render.height / 2,self.render.width,self.render.height);
                 ctx.restore();
             }
             else{
-                ctx.drawImage(self.render,self.x - self.render.width / 2 * self.drawScale,self.y - self.render.height / 2 * self.drawScale,self.render.width * self.drawScale,self.render.height * self.drawScale);
+                ctx.drawImage(self.render,self.x - self.render.width / 2,self.y - self.render.height / 2,self.render.width,self.render.height);
             }
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){
