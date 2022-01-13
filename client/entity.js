@@ -740,6 +740,19 @@ var Particle = function(initPack){
         self.width = metrics.width;
         self.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     }
+    if(self.drawId){
+        self.render = new OffscreenCanvas(24,24);
+        var renderCtx = self.render.getContext("2d");
+        resetCanvas(renderCtx);
+        var imgX = ((self.drawId - 1) % 26) * 24;
+        var imgY = ~~((self.drawId - 1) / 26) * 24;
+        if(self.drawId === 155){
+            renderCtx.drawImage(Img.items2,imgX,imgY,14,14,0,0,24,24);
+        }
+        else{
+            renderCtx.drawImage(Img.items2,imgX,imgY,24,24,0,0,24,24);
+        }
+    }
     self.update = function(){
         self.x += self.spdX;
         self.y += self.spdY;
@@ -792,6 +805,28 @@ var Particle = function(initPack){
             }
             else{
                 ctx.drawImage(Img[self.particleType],self.x - Img[self.particleType].width / 2 * self.drawScale,self.y - Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
+            }
+            if(self.opacity !== undefined){
+                if(self.opacity >= 0 && self.opacity < 1){
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+        if(self.drawType === 'render'){
+            if(self.opacity !== undefined){
+                if(self.opacity >= 0 && self.opacity < 1){
+                    ctx.globalAlpha = self.opacity;
+                }
+            }
+            if(self.direction){
+                ctx.save();
+                ctx.translate(self.x,self.y);
+                ctx.rotate(self.direction * Math.PI / 180);
+                ctx.drawImage(self.render,-self.render.width / 2 * self.drawScale,-self.render.height / 2 * self.drawScale,self.render.width * self.drawScale,self.render.height * self.drawScale);
+                ctx.restore();
+            }
+            else{
+                ctx.drawImage(self.render,self.x - self.render.width / 2 * self.drawScale,self.y - self.render.height / 2 * self.drawScale,self.render.width * self.drawScale,self.render.height * self.drawScale);
             }
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){

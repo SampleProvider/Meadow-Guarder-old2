@@ -390,11 +390,11 @@
         "stats":{
             "damage":600,
             "defense":0,
-            "hpRegen":5000,
+            "hpRegen":10000,
             "critChance":0.05,
             "critPower":10000
         },
-        "maxSpeed":25,
+        "maxSpeed":35,
         "drawSize":"large",
         "team":"Harmful",
         "itemDrops":{
@@ -438,6 +438,9 @@
                                 "damage":30,
                                 "critChance":0,
                                 "critPower":0
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }]
@@ -461,6 +464,9 @@
                                 "damage":30,
                                 "critChance":0,
                                 "critPower":0
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }],
@@ -476,6 +482,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -490,6 +499,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -504,6 +516,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -518,6 +533,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -532,6 +550,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -546,6 +567,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -560,6 +584,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -574,6 +601,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -588,6 +618,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -602,6 +635,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -616,6 +652,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }]
@@ -639,6 +678,9 @@
                                 "damage":30,
                                 "critChance":0,
                                 "critPower":0
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }],
@@ -654,6 +696,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -668,6 +713,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -682,6 +730,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -696,6 +747,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -710,6 +764,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -724,6 +781,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -738,6 +798,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -752,6 +815,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -766,6 +832,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -780,6 +849,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -794,6 +866,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":10000
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }],
@@ -809,6 +884,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -823,6 +901,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -837,6 +918,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -851,6 +935,9 @@
                                 "damage":65,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }]
@@ -874,6 +961,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }]
@@ -897,6 +987,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -911,6 +1004,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -925,6 +1021,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -939,6 +1038,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -953,6 +1055,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -967,6 +1072,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -981,6 +1089,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     },{
@@ -995,6 +1106,9 @@
                                 "damage":85,
                                 "critChance":0.05,
                                 "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
                             }
                         }
                     }]

@@ -43,10 +43,8 @@
         "rotationValue":2,
         "opacity":0.9,
         "spdOpacity":-0.05,
-        "drawType":"image",
-        "drawScale":1,
-        "width":12,
-        "height":12
+        "drawType":"render",
+        "drawId":2
     },
     "radiation":{
         "positionType":"fixed",
@@ -57,10 +55,8 @@
         "rotationValue":2,
         "opacity":0.9,
         "spdOpacity":-0.05,
-        "drawType":"image",
-        "drawScale":1,
-        "width":12,
-        "height":12
+        "drawType":"render",
+        "drawId":2
     },
     "fire":{
         "positionType":"fixed",
@@ -71,10 +67,8 @@
         "rotationValue":2,
         "opacity":0.9,
         "spdOpacity":-0.05,
-        "drawType":"image",
-        "drawScale":1,
-        "width":12,
-        "height":12
+        "drawType":"render",
+        "drawId":32
     },
     "frozen":{
         "positionType":"fixed",
@@ -85,10 +79,8 @@
         "rotationValue":2,
         "opacity":0.9,
         "spdOpacity":-0.05,
-        "drawType":"image",
-        "drawScale":1,
-        "width":12,
-        "height":12
+        "drawType":"render",
+        "drawId":33
     },
     "rain":{
         "positionType":"fixed",

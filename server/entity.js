@@ -696,14 +696,44 @@ Actor = function(param){
             }
         }
     }
-    self.updateCollisions = function(){
-        if(Slope.list[self.map]){
-            if(Slope.list[self.map][self.gridX]){
-                if(Slope.list[self.map][self.gridX][self.gridY]){
-                    self.zindex += Slope.list[self.map][self.gridX][self.gridY];
+    self.detectCollisions = function(){
+        var x = self.x;
+        var y = self.y;
+        var width = self.width;
+        var height = self.height;
+        self.width += Math.abs(self.x - self.lastX);
+        self.height += Math.abs(self.y - self.lastY);
+        self.x = (self.x + self.lastX) / 2;
+        self.y = (self.y + self.lastY) / 2;
+        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
+                if(Collision.list[self.map]){
+                    if(Collision.list[self.map][self.zindex]){
+                        if(Collision.list[self.map][self.zindex][i]){
+                            if(Collision.list[self.map][self.zindex][i][j]){
+                                var collision = Collision.list[self.map][self.zindex][i][j];
+                                for(var k in collision){
+                                    if(self.isColliding(collision[k])){
+                                        self.x = x;
+                                        self.y = y;
+                                        self.width = width;
+                                        self.height = height;
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
+        self.x = x;
+        self.y = y;
+        self.width = width;
+        self.height = height;
+        return false;
+    }
+    self.updateCollisions = function(){
         var collisions = [];
         for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
             for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
@@ -760,10 +790,24 @@ Actor = function(param){
                     self.collided = {x:true,y:false};
                 }
             }
+            else{
+                self.collided = {x:false,y:false};
+            }
         }
         else{
             self.collided = {x:false,y:false};
         }
+    }
+    self.updateSlope = function(){
+        if(Slope.list[self.map]){
+            if(Slope.list[self.map][self.gridX]){
+                if(Slope.list[self.map][self.gridX][self.gridY]){
+                    self.zindex += Slope.list[self.map][self.gridX][self.gridY];
+                }
+            }
+        }
+    }
+    self.updateTransporter = function(){
         if(self.canMove && self.type !== 'Monster'){
             for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
                 for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
@@ -1515,8 +1559,6 @@ Player = function(param,socket){
             leftClick:false,
             rightClick:false,
         }
-        pt.debuffs = {};
-        pt.updateStats();
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
                 if(Player.list[i].map === pt.map){
@@ -1565,109 +1607,113 @@ Player = function(param,socket){
                 addToChat('#ff0000',pt.name + ' died.');
             }
         }
+        pt.debuffs = {};
+        pt.updateStats();
     }
     self.update = function(){
         self.playTime += 1;
         self.stepsLeft = self.maxSpeed;
+        var lastX = self.x;
+        var lastY = self.y;
         self.updateDebug();
         self.updateCurrentItem();
         self.updateDebuffs();
-        while(self.stepsLeft > 0){
-            self.updateSpd();
-            self.updateMove();
-            var stepsLeft = self.stepsLeft;
-            if(!self.dashing){
-                if(self.spdX !== 0 && self.spdY !== 0){
-                    var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
-                    if(self.spdX > 0){
-                        self.spdX = minSpeed;
-                    }   
-                    else if(self.spdX < 0){
-                        self.spdX = -minSpeed;
+        if(self.canMove && self.inDialogue === false){
+            while(self.stepsLeft > 0){
+                self.updateSpd();
+                self.updateMove();
+                var stepsLeft = self.stepsLeft;
+                if(!self.dashing){
+                    if(self.spdX !== 0 && self.spdY !== 0){
+                        var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                        if(self.spdX > 0){
+                            self.spdX = minSpeed;
+                        }   
+                        else if(self.spdX < 0){
+                            self.spdX = -minSpeed;
+                        }
+                        if(self.spdY > 0){
+                            self.spdY = minSpeed;
+                        }
+                        else if(self.spdY < 0){
+                            self.spdY = -minSpeed;
+                        }
+                        self.stepsLeft -= minSpeed;
                     }
-                    if(self.spdY > 0){
-                        self.spdY = minSpeed;
+                    else{
+                        var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                        if(self.spdX > 0){
+                            self.spdX = maxSpeed;
+                        }   
+                        else if(self.spdX < 0){
+                            self.spdX = -maxSpeed;
+                        }
+                        if(self.spdY > 0){
+                            self.spdY = maxSpeed;
+                        }
+                        else if(self.spdY < 0){
+                            self.spdY = -maxSpeed;
+                        }
+                        self.stepsLeft -= maxSpeed;
                     }
-                    else if(self.spdY < 0){
-                        self.spdY = -minSpeed;
-                    }
-                    self.stepsLeft -= minSpeed;
                 }
                 else{
-                    var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
-                    if(self.spdX > 0){
-                        self.spdX = maxSpeed;
-                    }   
-                    else if(self.spdX < 0){
-                        self.spdX = -maxSpeed;
-                    }
-                    if(self.spdY > 0){
-                        self.spdY = maxSpeed;
-                    }
-                    else if(self.spdY < 0){
-                        self.spdY = -maxSpeed;
-                    }
-                    self.stepsLeft -= maxSpeed;
+                    self.stepsLeft -= 1;
                 }
-            }
-            else{
-                self.stepsLeft -= 1;
-            }
-            if(self.stepsLeft === stepsLeft){
-                break;
-            }
-            var spdX = self.spdX;
-            var spdY = self.spdY;
-            if(self.canMove && self.inDialogue === false){
+                if(self.stepsLeft === stepsLeft){
+                    break;
+                }
+                var spdX = self.spdX;
+                var spdY = self.spdY;
                 self.updatePosition();
                 self.x = Math.round(self.x);
                 self.y = Math.round(self.y);
-            }
-            self.updateGridPosition();
-            self.updateCollisions();
-            if(self.collided.x || self.collided.y){
-                self.x = self.lastX;
-                self.y = self.lastY;
-                if(self.dashing){
-                    break;
-                }
-                self.stepsLeft = stepsLeft;
-                self.collided.x = false;
-                self.collided.y = false;
-                while(!self.collided.x && !self.collided.y){
-                    if(spdX > 0){
-                        self.spdX = 1;
+                self.updateGridPosition();
+                self.updateSlope();
+                if(self.detectCollisions()){
+                    self.x = self.lastX;
+                    self.y = self.lastY;
+                    self.stepsLeft = stepsLeft;
+                    if(self.dashing){
+                        break;
                     }
-                    else if(spdX < 0){
-                        self.spdX = -1;
-                    }
-                    else{
-                        self.spdX = 0;
-                    }
-                    if(spdY > 0){
-                        self.spdY = 1;
-                    }
-                    else if(spdY < 0){
-                        self.spdY = -1;
-                    }
-                    else{
-                        self.spdY = 0;
-                    }
-                    if(self.canMove && self.inDialogue === false){
+                    self.collided = {x:false,y:false};
+                    while(self.collided.x === false && self.collided.y === false){
+                        if(spdX > 0){
+                            self.spdX = 1;
+                        }
+                        else if(spdX < 0){
+                            self.spdX = -1;
+                        }
+                        else{
+                            self.spdX = 0;
+                        }
+                        if(spdY > 0){
+                            self.spdY = 1;
+                        }
+                        else if(spdY < 0){
+                            self.spdY = -1;
+                        }
+                        else{
+                            self.spdY = 0;
+                        }
                         self.updatePosition();
                         self.x = Math.round(self.x);
                         self.y = Math.round(self.y);
+                        self.updateGridPosition();
+                        self.updateSlope();
+                        self.updateCollisions();
+                        self.updateTransporter();
+                        self.stepsLeft -= 1;
+                        if(self.stepsLeft <= 0){
+                            break;
+                        }
                     }
-                    self.updateGridPosition();
-                    self.updateCollisions();
-                    self.stepsLeft -= 1;
-                    if(self.stepsLeft <= 0){
+                    if(self.collided.x && self.collided.y){
                         break;
                     }
                 }
-                if(self.collided.x && self.collided.y){
-                    break;
-                }
+                self.updateTransporter();
             }
         }
         self.updateRegion();
@@ -1676,8 +1722,8 @@ Player = function(param,socket){
             self.updateStats();
         }
         self.updateXp();
-        self.spdX = self.x - self.lastX;
-        self.spdY = self.y - self.lastY;
+        self.spdX = self.x - lastX;
+        self.spdY = self.y - lastY;
         if(spdX > 0){
             self.spdX = 1;
         }
@@ -1699,19 +1745,17 @@ Player = function(param,socket){
     self.updateSpd = function(){
         self.spdX = 0;
         self.spdY = 0;
-        self.lastX = self.x;
-        self.lastY = self.y;
         if(self.keyPress.up){
-            self.spdY = -Math.min(self.stepsLeft,self.height);
+            self.spdY = -self.height;
         }
         if(self.keyPress.down){
-            self.spdY = Math.min(self.stepsLeft,self.height);
+            self.spdY = self.height;
         }
         if(self.keyPress.left){
-            self.spdX = -Math.min(self.stepsLeft,self.width);
+            self.spdX = -self.width;
         }
         if(self.keyPress.right){
-            self.spdX = Math.min(self.stepsLeft,self.width);
+            self.spdX = self.width;
         }
         if(self.isDead){
             self.spdX = 0;
@@ -3244,110 +3288,119 @@ Monster = function(param){
     }
     self.update = function(){
         self.stepsLeft = self.maxSpeed;
+        var lastX = self.x;
+        var lastY = self.y;
         var circleDirection = self.circleDirection;
-        while(self.stepsLeft > 0){
-            self.trackTarget();
-            self.updateMove();
-            var stepsLeft = self.stepsLeft;
-            if(!self.dashing){
-                if(self.spdX !== 0 && self.spdY !== 0){
-                    var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
-                    if(self.spdX > 0){
-                        self.spdX = minSpeed;
-                    }   
-                    else if(self.spdX < 0){
-                        self.spdX = -minSpeed;
+        if(self.canMove){
+            while(self.stepsLeft > 0){
+                self.trackTarget();
+                self.updateMove();
+                var stepsLeft = self.stepsLeft;
+                if(!self.dashing){
+                    if(self.spdX !== 0 && self.spdY !== 0){
+                        var minSpeed = Math.min(Math.min(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                        if(self.spdX > 0){
+                            self.spdX = minSpeed;
+                        }   
+                        else if(self.spdX < 0){
+                            self.spdX = -minSpeed;
+                        }
+                        if(self.spdY > 0){
+                            self.spdY = minSpeed;
+                        }
+                        else if(self.spdY < 0){
+                            self.spdY = -minSpeed;
+                        }
+                        self.stepsLeft -= minSpeed;
                     }
-                    if(self.spdY > 0){
-                        self.spdY = minSpeed;
+                    else{
+                        var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
+                        if(self.spdX > 0){
+                            self.spdX = maxSpeed;
+                        }   
+                        else if(self.spdX < 0){
+                            self.spdX = -maxSpeed;
+                        }
+                        if(self.spdY > 0){
+                            self.spdY = maxSpeed;
+                        }
+                        else if(self.spdY < 0){
+                            self.spdY = -maxSpeed;
+                        }
+                        self.stepsLeft -= maxSpeed;
                     }
-                    else if(self.spdY < 0){
-                        self.spdY = -minSpeed;
-                    }
-                    self.stepsLeft -= minSpeed;
-                    self.trackSteps += minSpeed;
                 }
                 else{
-                    var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
-                    if(self.spdX > 0){
-                        self.spdX = maxSpeed;
-                    }   
-                    else if(self.spdX < 0){
-                        self.spdX = -maxSpeed;
-                    }
-                    if(self.spdY > 0){
-                        self.spdY = maxSpeed;
-                    }
-                    else if(self.spdY < 0){
-                        self.spdY = -maxSpeed;
-                    }
-                    self.stepsLeft -= maxSpeed;
-                    self.trackSteps += maxSpeed;
+                    self.stepsLeft -= 1;
                 }
-            }
-            else{
-                self.stepsLeft -= 1;
-                self.trackSteps += 50;
-            }
-            if(self.stepsLeft === stepsLeft){
-                break;
-            }
-            var spdX = self.spdX;
-            var spdY = self.spdY;
-            if(self.canMove){
+                if(self.stepsLeft === stepsLeft){
+                    break;
+                }
+                var spdX = self.spdX;
+                var spdY = self.spdY;
                 self.updatePosition();
                 self.x = Math.round(self.x);
                 self.y = Math.round(self.y);
-            }
-            self.updateGridPosition();
-            self.updateRegion();
-            self.updateCollisions();
-            if(self.collided.x || self.collided.y){
-                self.circleDirection = circleDirection * -1;
-                self.x = self.lastX;
-                self.y = self.lastY;
-                if(self.dashing){
-                    break;
-                }
-                self.stepsLeft = stepsLeft;
-                self.collided.x = false;
-                self.collided.y = false;
-                while(!self.collided.x && !self.collided.y){
-                    if(spdX > 0){
-                        self.spdX = 1;
+                self.updateGridPosition();
+                self.updateSlope();
+                if(self.detectCollisions()){
+                    self.x = self.lastX;
+                    self.y = self.lastY;
+                    self.stepsLeft = stepsLeft;
+                    if(self.dashing){
+                        break;
                     }
-                    else if(spdX < 0){
-                        self.spdX = -1;
-                    }
-                    else{
-                        self.spdX = 0;
-                    }
-                    if(spdY > 0){
-                        self.spdY = 1;
-                    }
-                    else if(spdY < 0){
-                        self.spdY = -1;
-                    }
-                    else{
-                        self.spdY = 0;
-                    }
-                    if(self.canMove){
+                    self.collided = {x:false,y:false};
+                    while(self.collided.x === false && self.collided.y === false){
+                        if(spdX > 0){
+                            self.spdX = 1;
+                        }
+                        else if(spdX < 0){
+                            self.spdX = -1;
+                        }
+                        else{
+                            self.spdX = 0;
+                        }
+                        if(spdY > 0){
+                            self.spdY = 1;
+                        }
+                        else if(spdY < 0){
+                            self.spdY = -1;
+                        }
+                        else{
+                            self.spdY = 0;
+                        }
                         self.updatePosition();
                         self.x = Math.round(self.x);
                         self.y = Math.round(self.y);
+                        self.updateGridPosition();
+                        self.updateSlope();
+                        self.updateCollisions();
+                        self.updateTransporter();
+                        self.stepsLeft -= 1;
+                        if(self.stepsLeft <= 0){
+                            break;
+                        }
                     }
-                    self.updateGridPosition();
-                    self.updateRegion();
-                    self.updateCollisions();
-                    self.stepsLeft -= 1;
-                    if(self.stepsLeft <= 0){
+                    if(self.collided.x && self.collided.y){
                         break;
                     }
                 }
-                if(self.collided.x && self.collided.y){
-                    break;
-                }
             }
+        }
+        self.spdX = self.x - lastX;
+        self.spdY = self.y - lastY;
+        if(spdX > 0){
+            self.spdX = 1;
+        }
+        else if(spdX < 0){
+            self.spdX = -1;
+        }
+        if(spdY > 0){
+            self.spdY = 1;
+        }
+        else if(spdY < 0){
+            self.spdY = -1;
         }
         self.updateTarget();
         self.updateAnimation();
