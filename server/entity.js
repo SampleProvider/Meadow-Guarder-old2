@@ -663,25 +663,6 @@ Actor = function(param){
         }
         else{
             self.animation = -1;
-            self.direction = self.direction % 360;
-            while(self.direction < 0){
-                self.direction += 360;
-            }
-            if(self.direction < 45){
-                self.animationDirection = 'right';
-            }
-            else if(self.direction < 135){
-                self.animationDirection = 'down';
-            }
-            else if(self.direction < 225){
-                self.animationDirection = 'left';
-            }
-            else if(self.direction < 315){
-                self.animationDirection = 'up';
-            }
-            else{
-                self.animationDirection = 'right';
-            }
         }
         if(self.canMove === false || self.inDialogue === true){
             self.animation = 0;
@@ -781,13 +762,22 @@ Actor = function(param){
                     if(colliding){
                         self.x = self.lastX;
                         self.collided = {x:true,y:true};
+                        if(self.type === 'Monster'){
+                            self.circleDirection *= -1;
+                        }
                     }
                     else{
                         self.collided = {x:false,y:true};
+                        if(self.type === 'Monster'){
+                            self.circleDirection *= -1;
+                        }
                     }
                 }
                 else{
                     self.collided = {x:true,y:false};
+                    if(self.type === 'Monster'){
+                        self.circleDirection *= -1;
+                    }
                 }
             }
             else{
@@ -1581,10 +1571,12 @@ Player = function(param,socket){
         }
         if(entity){
             if(entity === 'self'){
-                for(var i in self.debuffs){
+                for(var i in pt.debuffs){
                     switch(debuffData[i].deathMessage){
                         case "poison":
                             addToChat('#ff0000',pt.name + ' was poisoned to death.');
+                            pt.debuffs = {};
+                            pt.updateStats();
                             return;
                         case "radiation":
                             if(Math.random() < 0.001){
@@ -1593,9 +1585,13 @@ Player = function(param,socket){
                             else{
                                 addToChat('#ff0000',pt.name + ' became radioactive.');
                             }
+                            pt.debuffs = {};
+                            pt.updateStats();
                             return;
                         case "fire":
                             addToChat('#ff0000',pt.name + ' went up in flames.');
+                            pt.debuffs = {};
+                            pt.updateStats();
                             return;
                     }
                 }
@@ -1622,6 +1618,7 @@ Player = function(param,socket){
         self.updateDebug();
         self.updateCurrentItem();
         self.updateDebuffs();
+        self.collided = {x:false,y:false};
         if(self.canMove && self.inDialogue === false){
             while(self.stepsLeft > 0){
                 self.updateSpd();
@@ -3253,12 +3250,10 @@ Monster = function(param){
     self.randomPos = {
         x:self.x,
         y:self.y,
+        spdX:0,
+        spdY:0,
         timeX:0,
         timeY:0,
-        walkTimeX:100,
-        walkTimeY:100,
-        waitTimeX:60,
-        waitTimeY:60,
     };
 
     self.mainReload = 0;
@@ -3299,6 +3294,7 @@ Monster = function(param){
         var lastX = self.x;
         var lastY = self.y;
         var circleDirection = self.circleDirection;
+        self.collided = {x:false,y:false};
         if(self.canMove){
             while(self.stepsLeft > 0){
                 self.trackTarget();
@@ -3320,6 +3316,7 @@ Monster = function(param){
                             self.spdY = -minSpeed;
                         }
                         self.stepsLeft -= minSpeed;
+                        self.trackSteps += minSpeed;
                     }
                     else{
                         var maxSpeed = Math.min(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)),self.stepsLeft);
@@ -3336,10 +3333,12 @@ Monster = function(param){
                             self.spdY = -maxSpeed;
                         }
                         self.stepsLeft -= maxSpeed;
+                        self.trackSteps += maxSpeed;
                     }
                 }
                 else{
                     self.stepsLeft -= 1;
+                    self.trackSteps += 1;
                 }
                 if(self.stepsLeft === stepsLeft){
                     break;
@@ -3351,9 +3350,11 @@ Monster = function(param){
                 self.y = Math.round(self.y);
                 self.updateGridPosition();
                 self.updateSlope();
+                self.updateRegion();
                 if(self.detectCollisions()){
                     self.x = self.lastX;
                     self.y = self.lastY;
+                    self.trackSteps -= self.stepsLeft - stepsLeft;
                     self.stepsLeft = stepsLeft;
                     if(self.dashing){
                         break;
@@ -3383,9 +3384,10 @@ Monster = function(param){
                         self.y = Math.round(self.y);
                         self.updateGridPosition();
                         self.updateSlope();
+                        self.updateRegion();
                         self.updateCollisions();
-                        self.updateTransporter();
                         self.stepsLeft -= 1;
+                        self.trackSteps += 1;
                         if(self.stepsLeft <= 0){
                             break;
                         }
@@ -3502,29 +3504,27 @@ Monster = function(param){
     }
     self.trackTarget = function(){
         if(self.attackState === 'passive'){
-            if(self.spdX === 0 && self.randomPos.timeX > self.randomPos.walkTimeX){
-                self.spdX = Math.round(Math.random() * 2 - 1);
-                self.randomPos.timeX = 0;
-                self.randomPos.waitTimeX = 100 * Math.random() + 100;
+            if(self.randomPos.spdX === 0 && self.randomPos.timeX <= 0){
+                self.randomPos.spdX = Math.round(Math.random() * 2 - 1);
+                self.randomPos.timeX = 50 * Math.random() + 50;
             }
-            else if(self.spdX !== 0 && self.randomPos.timeX > self.randomPos.waitTimeX){
-                self.spdX = 0;
-                self.randomPos.timeX = 0;
-                self.randomPos.walkTimeX = 200 * Math.random() + 200;
+            else if(self.randomPos.spdX !== 0 && self.randomPos.timeX <= 0){
+                self.randomPos.spdX = 0;
+                self.randomPos.timeX = 50 * Math.random() + 50;
             }
-            if(self.spdY === 0 && self.randomPos.timeY > self.randomPos.walkTimeY){
-                self.spdY = Math.round(Math.random() * 2 - 1);
-                self.randomPos.timeY = 0;
-                self.randomPos.waitTimeY = 100 * Math.random() + 100;
+            if(self.randomPos.spdY === 0 && self.randomPos.timeY <= 0){
+                self.randomPos.spdY = Math.round(Math.random() * 2 - 1);
+                self.randomPos.timeY = 50 * Math.random() + 50;
             }
-            else if(self.spdY !== 0 && self.randomPos.timeY > self.randomPos.waitTimeY){
-                self.spdY = 0;
-                self.randomPos.timeY = 0;
-                self.randomPos.walkTimeY = 200 * Math.random() + 200;
+            else if(self.randomPos.spdY !== 0 && self.randomPos.timeY <= 0){
+                self.randomPos.spdY = 0;
+                self.randomPos.timeY = 50 * Math.random() + 50;
             }
-            self.randomPos.timeX += 1;
-            self.randomPos.timeY += 1;
-            if(self.getSquareDistance(self.randomPos) > 8){
+            self.spdX = self.randomPos.spdX;
+            self.spdY = self.randomPos.spdY;
+            self.randomPos.timeX -= 1;
+            self.randomPos.timeY -= 1;
+            if(self.getSquareDistance(self.randomPos) > 8 && self.trackingPath.length === 0){
                 self.trackPos(self.randomPos.x,self.randomPos.y);
             }
             if(self.collided.x){
@@ -3676,19 +3676,19 @@ Monster = function(param){
                                 }
                                 self.trackingPath.shift();
                             }
-                            else{
-                                if(lastTrackX < size && lastTrackX > 0 && lastTrackY < size && lastTrackY > 0){
-                                    var path = finder.findPath(nx,ny,lastTrackX,lastTrackY,grid2);
-                                    if(path[0]){
-                                        self.trackingPath = PF.Util.compressPath(path);
-                                        for(var i in self.trackingPath){
-                                            self.trackingPath[i][0] += dx;
-                                            self.trackingPath[i][1] += dy;
-                                        }
-                                        self.trackingPath.shift();
-                                    }
-                                }
-                            }
+                            // else{
+                            //     if(lastTrackX < size && lastTrackX > 0 && lastTrackY < size && lastTrackY > 0){
+                            //         var path = finder.findPath(nx,ny,lastTrackX,lastTrackY,grid2);
+                            //         if(path[0]){
+                            //             self.trackingPath = PF.Util.compressPath(path);
+                            //             for(var i in self.trackingPath){
+                            //                 self.trackingPath[i][0] += dx;
+                            //                 self.trackingPath[i][1] += dy;
+                            //             }
+                            //             self.trackingPath.shift();
+                            //         }
+                            //     }
+                            // }
                         }
                     }
                 }

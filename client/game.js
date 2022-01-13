@@ -1136,7 +1136,7 @@ var loop = function(){
         itemMenu.style.display = 'none';
     }
     debuffDisplayed = false;
-    if(debuffMenu.style.display === 'none'){
+    if(debuffMenu.style.display !== 'none'){
         debuffDisplayed = true;
     }
     for(var i = 0;i < entities.length;i++){
