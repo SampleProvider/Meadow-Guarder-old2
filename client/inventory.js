@@ -773,7 +773,10 @@ Inventory = function(socket,server){
             description += 'Left click to use.<br>';
         }
         if(item.description){
-            description += item.description;
+            description += item.description + '<br>';
+        }
+        if(item.effectDescription){
+            description += item.effectDescription + '<br>';
         }
         return description;
     }

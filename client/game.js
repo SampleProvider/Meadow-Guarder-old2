@@ -52,6 +52,8 @@ var worldRegion = '';
 
 var respawnTimer = 0;
 
+var effectDarkness = 0;
+
 var inGame = false;
 
 var getEntityDescription = function(entity){
@@ -487,6 +489,7 @@ socket.on('update',function(data){
                             if(data.player[i].id === selfId){
                                 if(different){
                                     var inSlot = false;
+                                    effectDarkness = 0;
                                     debuffDiv.innerHTML = '';
                                     for(var k in data.player[i][j]){
                                         debuffDiv.innerHTML += '<div id="debuffSlot' + k + '" class="debuffSlot"></div>';
@@ -496,6 +499,9 @@ socket.on('update',function(data){
                                             var slot = document.getElementById('debuffSlot' + index);
                                             var debuff = debuffData[index];
                                             inventory.drawItem(slot,debuff.drawId,'small');
+                                            if(debuff.darkness){
+                                                effectDarkness += debuff.darkness;
+                                            }
                                             var debuffName = debuff.name;
                                             var time = Math.ceil(data.player[i][j][index] / 20);
                                             if(time >= 60){
@@ -1129,9 +1135,13 @@ var loop = function(){
     if(inGame){
         itemMenu.style.display = 'none';
     }
+    debuffDisplayed = false;
+    if(debuffMenu.style.display === 'none'){
+        debuffDisplayed = true;
+    }
     for(var i = 0;i < entities.length;i++){
         entities[i].draw();
-        if(inGame && entities[i].name && selectedDroppedItem === null){
+        if(inGame && entities[i].name && selectedDroppedItem === null && !debuffDisplayed){
             if(entities[i].isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0})){
                 itemMenu.innerHTML = getEntityDescription(entities[i]);
                 itemMenu.style.display = 'inline-block';
@@ -1192,6 +1202,15 @@ var loop = function(){
     for(var i in HarvestableNpc.list){
         HarvestableNpc.list[i].drawHp();
     }
+
+    if(effectDarkness !== 0){
+        var grd = ctx.createRadialGradient(Player.list[selfId].x,Player.list[selfId].y,50,Player.list[selfId].x,Player.list[selfId].y,300);
+        grd.addColorStop(0,"rgba(0,0,0,0)");
+        grd.addColorStop(1,"rgba(0,0,0," + effectDarkness + ")");
+        ctx.fillStyle = grd;
+        ctx.fillRect(Player.list[selfId].x - WIDTH,Player.list[selfId].y - HEIGHT,WIDTH * 2,HEIGHT * 2);
+    }
+
     ctx.restore();
 
     if(mapShadeAmount >= 8.5){

@@ -55,6 +55,13 @@
         "movementSpeed":-15,
         "particles":{"frozen":1}
     },
+    "blindness":{
+        "name":"Blindness",
+        "description":"You're blinded!",
+        "drawId":59,
+        "rarity":5,
+        "darkness":0.75
+    },
     "porcelainberry":{
         "name":"Porcelain Berry",
         "drawId":594,
