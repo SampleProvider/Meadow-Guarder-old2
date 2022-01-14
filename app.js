@@ -418,7 +418,7 @@ io.sockets.on('connection',function(socket){
 				}
 				Player.list[socket.id].lastChat = 10;
 				Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.25);
-				if(commandList[0].toLowerCase() === 'kick' && level >= 1){
+				if(commandList[0].toLowerCase() === 'kick' && level >= 1 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -437,7 +437,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'kill' && level >= 1){
+				if(commandList[0].toLowerCase() === 'kill' && level >= 1 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -461,7 +461,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'teleport' && level >= 1){
+				if(commandList[0].toLowerCase() === 'teleport' && level >= 1 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					for(var i in Player.list){
@@ -475,13 +475,13 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'announce' && level >= 1){
+				if(commandList[0].toLowerCase() === 'announce' && level >= 1 && commandList.length > 1){
 					commandList.splice(0,1);
 					var message = recreateCommand(commandList);
 					addToChat('#00ffff',Player.list[socket.id].name + ' announced: ' + message);
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2){
+				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -501,7 +501,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'summon' && level >= 2){
+				if(commandList[0].toLowerCase() === 'summon' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(monsterData[name]){
@@ -539,7 +539,7 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
+				if(commandList[0].toLowerCase() === 'weather' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(name === ''){
@@ -573,7 +573,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'chatban' && level >= 2){
+				if(commandList[0].toLowerCase() === 'chatban' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(debugData[name]){
@@ -601,7 +601,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'unchatban' && level >= 2){
+				if(commandList[0].toLowerCase() === 'unchatban' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					unchatBanPlayer(name,function(result){
@@ -632,7 +632,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ban' && level >= 2){
+				if(commandList[0].toLowerCase() === 'ban' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(debugData[name]){
@@ -662,7 +662,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'unban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'unban' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					unbanPlayer(name,function(result){
@@ -731,7 +731,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ipban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'ipban' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					for(var i in Player.list){
@@ -762,7 +762,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'unipban' && level >= 3){
+				if(commandList[0].toLowerCase() === 'unipban' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					for(var i in Player.list){
@@ -781,7 +781,7 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'ip' && level >= 3){
+				if(commandList[0].toLowerCase() === 'ip' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -824,7 +824,7 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] ' + result + '.');
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'seexp' && level >= 0){
+				if(commandList[0].toLowerCase() === 'seexp' && level >= 0 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -841,7 +841,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'seeinv' && level >= 0){
+				if(commandList[0].toLowerCase() === 'seeinv' && level >= 0 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					doCommand(name,function(name,i){
@@ -883,7 +883,7 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'trade' && level >= 0){
+				if(commandList[0].toLowerCase() === 'trade' && level >= 0 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(name === '@a'){

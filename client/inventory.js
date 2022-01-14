@@ -1779,15 +1779,10 @@ Inventory = function(socket,server){
     }
     else{
         for(var i = 0;i < 10;i++){
-            if(i % 10 === 0){
-                var row = document.createElement('div');
-                row.className = 'hotbarRow';
-                hotbarItems.appendChild(row);
-            }
             var div = document.createElement('div');
             div.id = 'hotbarSlot' + i;
             div.className = 'hotbarSlot hotbarSlotNormal';
-            row.appendChild(div);
+            hotbarDiv.appendChild(div);
         }
         var addSlot = function(i){
             var div = document.createElement('div');
