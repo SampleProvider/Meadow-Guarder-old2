@@ -1,7 +1,7 @@
 {
     "0":{
         "dialogue":{
-            "message":"You'll need some armor and weapons to defeat Ten-Eyed One, so head to our Forge. It is located North-West of Sleeping Boar Inn. You should meet Macklel there.",
+            "message":"You'll need some armor and weapons, so head to our Forge. It is located North-West of Sleeping Boar Inn. You should meet Macklel there.",
             "option1":"Thanks!"
         },
         "tasks":[
