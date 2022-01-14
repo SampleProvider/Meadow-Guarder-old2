@@ -363,71 +363,54 @@ document.getElementById('changePassword').onclick = function(){
     }
 }
 socket.on('signInResponse',function(data){
-    if(data.success === 4){
-        canSignIn = true;
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: This account is currently suspended.</span><br>' + signErrorText;
-        pageDiv.style.display = 'inline-block';
-        disconnectedDiv.style.display = 'none';
-        deathDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
-    }
-    else if(data.success === 3 || data.success === 5){
+    signErrorText = signError.innerHTML;
+    if(data.success === 'correctPassword'){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
     }
-    else if(data.success === 2){
+    else if(data.success === 'incorrectPassword'){
         canSignIn = true;
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is already currently in game. The other account will be disconnected shortly. Please try to sign again.</span><br>' + signErrorText;
-        pageDiv.style.display = 'inline-block';
-        disconnectedDiv.style.display = 'none';
-        deathDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
-    }
-    else if(data.success === 1){
-        canSignIn = true;
-        signErrorText = signError.innerHTML;
         signError.innerHTML = '<span style="color: #ff0000">Error: Incorrect Password.</span><br>' + signErrorText;
-        pageDiv.style.display = 'inline-block';
+    }
+    else if(data.success === 'noAccount'){
+        canSignIn = true;
+        signError.innerHTML = '<span style="color: #ff0000">Error: There is no account with username \'' + data.username + '\'.</span><br>' + signErrorText;
+    }
+    else if(data.success === 'chatBanned'){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
+    }
+    else if(data.success === 'accountSuspended'){
+        canSignIn = true;
+        signError.innerHTML = '<span style="color: #ff0000">Error: This account is currently suspended.</span><br>' + signErrorText;
     }
     else{
         canSignIn = true;
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: There is no account with username \'' + data.username + '\'.</span><br>' + signErrorText;
-        pageDiv.style.display = 'inline-block';
-        disconnectedDiv.style.display = 'none';
-        deathDiv.style.display = 'none';
-        gameDiv.style.display = 'none';
+        signError.innerHTML = '<span style="color: #ff0000">Error: ' + data.success + '.</span><br>' + signErrorText;
     }
 });
 socket.on('changePasswordResponse',function(data){
-    if(data.success === 3){
-        signErrorText = signError.innerHTML;
+    signErrorText = signError.innerHTML;
+    if(data.success === 'success'){
         signError.innerHTML = '<span style="color: #55ff55">Successfully changed password to \'' + data.newPassword + '\'.</span><br>' + signErrorText;
     }
-    else if(data.success === 2){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is currently in game. Disconnect this account to change this account\'s password.</span><br>' + signErrorText;
-    }
-    else if(data.success === 1){
-        signErrorText = signError.innerHTML;
+    else if(data.success === 'incorrectPassword'){
         signError.innerHTML = '<span style="color: #ff0000">Error: Incorrect Password.</span><br>' + signErrorText;
     }
-    else if(data.success === 4){
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your new password contains invalid characters.</span><br>' + signErrorText;
+    else if(data.success === 'noAccount'){
+        signError.innerHTML = '<span style="color: #ff0000">Error: No account found with username \'' + data.username + '\'.</span><br>' + signErrorText;
     }
-    else if(data.success === 5){
-        signErrorText = signError.innerHTML;
+    else if(data.success === 'longPassword'){
         signError.innerHTML = '<span style="color: #ff0000">Error: Your new password must be at most 40 characters.</span><br>' + signErrorText;
     }
+    else if(data.success === 'invalidCharacters'){
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your new password contains invalid characters.</span><br>' + signErrorText;
+    }
+    else if(data.success === 'inGame'){
+        signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is currently in game. Disconnect this account to change this account\'s password.</span><br>' + signErrorText;
+    }
     else{
-        signErrorText = signError.innerHTML;
-        signError.innerHTML = '<span style="color: #ff0000">Error: No account found with username \'' + data.username + '\'.</span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #ff0000">Error: ' + data.success + '.</span><br>' + signErrorText;
     }
     document.getElementById('newPassword').value = '';
 });
