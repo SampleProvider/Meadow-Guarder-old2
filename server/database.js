@@ -238,17 +238,17 @@ Database = {};
 
 Database.isValidPassword = function(data,cb){
     if(!USE_DB){
-		return cb(3);
+		return cb('correctPassword');
 	}
 	
 	client.query('SELECT * FROM suspendedAccounts WHERE username=\'' + data.username + '\';', (err, res) => {
 		if(res.rows[0]){
-			return cb(4);
+			return cb('accountSuspended');
 		}
 		else{
 			client.query('SELECT * FROM suspendedIps WHERE ip=\'' + data.ip + '\';', (err, res) => {
 				if(res.rows[0]){
-					return cb(4);
+					return cb('accountSuspended');
 				}
 				else{
 					client.query('SELECT * FROM chatBans WHERE username=\'' + data.username + '\';', (err, res) => {
@@ -262,17 +262,17 @@ Database.isValidPassword = function(data,cb){
 									if(row.password === data.password){
 										for(var i in Player.list){
 											if(Player.list[i].username === data.username){
-												return cb(2);
+												return cb('alreadyLoggedOn');
 											}
 										}
-										return cb(5);
+										return cb('chatBanned');
 									}
 									else{
-										return cb(1);
+										return cb('incorrectPassword');
 									}
 								}
 								else{
-									return cb(0);
+									return cb('noAccount');
 								}
 							});
 						}
@@ -286,17 +286,17 @@ Database.isValidPassword = function(data,cb){
 									if(row.password === data.password){
 										for(var i in Player.list){
 											if(Player.list[i].username === data.username){
-												return cb(2);
+												return cb('alreadyLoggedOn');
 											}
 										}
-										return cb(3);
+										return cb('correctPassword');
 									}
 									else{
-										return cb(1);
+										return cb('incorrectPassword');
 									}
 								}
 								else{
-									return cb(0);
+									return cb('noAccount');
 								}
 							});
 						}
@@ -312,7 +312,7 @@ Database.isUsernameTaken = function(data,cb){
 	}
 	client.query('SELECT * FROM suspendedIps WHERE ip=\'' + data.ip + '\';', (err, res) => {
 		if(res.rows[0]){
-			return cb(2);
+			return cb('accountSuspended');
 		}
 		else{
 			client.query('SELECT * FROM account WHERE username=\'' + data.username + '\';', (err, res) => {
@@ -320,10 +320,10 @@ Database.isUsernameTaken = function(data,cb){
 					throw err;
 				}
 				if(res.rows[0]){
-					return cb(0);
+					return cb('usernameTaken');
 				}
 				else{
-					return cb(1);
+					return cb('success');
 				}
 			});
 		}

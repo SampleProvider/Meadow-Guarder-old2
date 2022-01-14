@@ -1285,7 +1285,7 @@ disconnectClient = function(){
     stopAllSongs();
 }
 
-socket.on('rickroll',function(){
+rickroll = function(){
     disconnectClient = function(){};
     pageDiv.style.display = 'none';
     gameDiv.style.display = 'none';
@@ -1294,6 +1294,10 @@ socket.on('rickroll',function(){
     selfId = null;
     stopAllSongs();
     rickroll.play();
+}
+
+socket.on('rickroll',function(){
+    rickroll();
 });
 
 

@@ -108,13 +108,10 @@ io.sockets.on('connection',function(socket){
 			stringData.ip = 'sp';
 		}
 		Database.isValidPassword(stringData,function(res){
-			if(res === 5){
-				Player.onConnect(socket,stringData.username,true);
-			}
-			if(res === 3){
+			if(res === 'correctPassword'){
 				Player.onConnect(socket,stringData.username);
 			}
-			if(res === 2){
+			if(res === 'alreadyLoggedOn'){
 				for(var i in Player.list){
 					if(Player.list[i].username === stringData.username){
 						Player.list[i].toRemove = true;
@@ -123,6 +120,9 @@ io.sockets.on('connection',function(socket){
 						}
 					}
 				}
+			}
+			if(res === 'chatBanned'){
+				Player.onConnect(socket,stringData.username,true);
 			}
 			socket.emit('signInResponse',{success:res,username:stringData.username});
 		});
@@ -154,45 +154,45 @@ io.sockets.on('connection',function(socket){
 			password:data.password.toString(),
 		}
 		if(stringData.username[0] === ' '){
-			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'spaceAtStart',username:stringData.username});
 			return;
 		}
 		if(stringData.username[stringData.username.length - 1] === ' '){
-			socket.emit('createAccountResponse',{success:5,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'spaceAtStart',username:stringData.username});
 			return;
 
 		}
 		if(stringData.username.includes('ㅤ')){
-			socket.emit('createAccountResponse',{success:7,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('--') || stringData.password.includes('--')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes(';') || stringData.password.includes(';')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('\'') || stringData.password.includes('\'')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('`') || stringData.password.includes('`')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('<') || stringData.password.includes('<')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		if(stringData.username.includes('>') || stringData.password.includes('>')){
-			socket.emit('createAccountResponse',{success:3,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
 		for(var i in badwords){
 			if(stringData.username.toLowerCase().includes(badwords[i])){
-				socket.emit('createAccountResponse',{success:6,username:stringData.username});
+				socket.emit('createAccountResponse',{success:'badwordUsername',username:stringData.username});
 				return;
 			}
 		}
@@ -204,22 +204,25 @@ io.sockets.on('connection',function(socket){
 				stringData.ip = 'sp';
 			}
 			Database.isUsernameTaken(stringData,function(res){
-				if(res === 0){
-					socket.emit('createAccountResponse',{success:0,username:stringData.username});
+				if(res === 'usernameTaken'){
+					socket.emit('createAccountResponse',{success:res,username:stringData.username});
 				}
-				else{
+				else if(res === 'success'){
 					Database.addUser(stringData,function(){
-						socket.emit('createAccountResponse',{success:1,username:stringData.username});
+						socket.emit('createAccountResponse',{success:res,username:stringData.username});
 					});
+				}
+				else if(res === 'accountSuspended'){
+					socket.emit('createAccountResponse',{success:res,username:stringData.username});
 				}
 			});
 		}
 		else if(stringData.username.length > 40 || stringData.password.length > 40){
-			socket.emit('createAccountResponse',{success:4,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'longUsername',username:stringData.username});
 			return;
 		}
 		else{
-			socket.emit('createAccountResponse',{success:2,username:stringData.username});
+			socket.emit('createAccountResponse',{success:'shortUsername',username:stringData.username});
 			return;
 		}
 	});
@@ -250,16 +253,23 @@ io.sockets.on('connection',function(socket){
 			password:data.password.toString(),
 		}
 		if(stringData.username === 'sp'){
-			socket.emit('deleteAccountResponse',{success:4,username:stringData.username});
+			socket.emit('deleteAccountResponse',{success:'sp',username:stringData.username});
 			return;
 		}
 		Database.isValidPassword(stringData,function(res){
-			if(res === 3){
+			if(res === 'correctPassword'){
 				Database.removeUser(stringData,function(){
-
+					socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
 				});
 			}
-			socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
+			else if(res === 'chatBanned'){
+				Database.removeUser(stringData,function(){
+					socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
+				});
+			}
+			else{
+				socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
+			}
 		});
 	});
 	socket.on('changePassword',function(data){
@@ -290,37 +300,44 @@ io.sockets.on('connection',function(socket){
 			newPassword:data.newPassword.toString(),
 		}
 		if(stringData.newPassword.includes('--')){
-			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'invalidCharacters',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		if(stringData.newPassword.includes(';')){
-			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'invalidCharacters',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		if(stringData.newPassword.includes('<')){
-			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'invalidCharacters',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		if(stringData.newPassword.includes('>')){
-			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'invalidCharacters',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		if(stringData.newPassword.includes('\'')){
-			socket.emit('changePasswordResponse',{success:4,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'invalidCharacters',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		if(stringData.newPassword.length > 40){
-			socket.emit('changePasswordResponse',{success:5,username:stringData.username,newPassword:stringData.newPassword});
+			socket.emit('changePasswordResponse',{success:'longPassword',username:stringData.username,newPassword:stringData.newPassword});
 			return;
 		}
 		else{
 			Database.isValidPassword(stringData,function(res){
-				if(res === 3){
+				if(res === 'correctPassword'){
 					Database.changePassword(stringData,function(){
-
+						socket.emit('changePasswordResponse',{success:res,username:stringData.username,newPassword:stringData.newPassword});
 					});
 				}
-				socket.emit('changePasswordResponse',{success:res,username:stringData.username,newPassword:stringData.newPassword});
+				else if(res === 'chatBanned'){
+					Database.changePassword(stringData,function(){
+						socket.emit('changePasswordResponse',{success:res,username:stringData.username,newPassword:stringData.newPassword});
+					});
+				}
+				else{
+					socket.emit('changePasswordResponse',{success:res,username:stringData.username,newPassword:stringData.newPassword});
+				}
 			});
 		}
 	});

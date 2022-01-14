@@ -674,6 +674,7 @@ canvas {
     bottom: 8px;
     margin: 0px;
     padding: 2px;
+    padding-bottom: 0px;
     font-size: small;
     border-radius: 4px;
     transform: translate(-50%, 0%);
@@ -760,7 +761,7 @@ canvas {
     image-rendering: pixelated;
 }
 .slotCanvas {
-    position: relative;
+    position: absolute;
     left: 2px;
     top: 2px;
     width: 48px;
