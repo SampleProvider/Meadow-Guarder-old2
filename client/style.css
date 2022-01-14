@@ -543,10 +543,9 @@ canvas {
     position: absolute;
     right: 8px;
     bottom: 8px;
-    width: 291px;
-    height: 60px;
-    padding: 0px;
-    padding-left: 4px;
+    padding: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
     border-radius: 4px;
 }
 #bottomRightBar:before {
@@ -562,18 +561,18 @@ canvas {
 }
 .bottomRightButton {
     position: relative;
-    right: 0px;
+    display: inline-block;
+    left: 0px;
     width: 52px;
     height: 52px;
-    margin-left: 0px;
-    margin-right: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-left: -2px;
+    margin-right: -2px;
+    margin-top: 2px;
+    margin-bottom: 0px;
     padding: 0px;
     background-color: #725640;
     border: 1px solid #000000;
     border-radius: 4px;
-    float: left;
     transition-duration: 0.4s;
     cursor: pointer;
 }
@@ -673,10 +672,8 @@ canvas {
     position: absolute;
     left: 50%;
     bottom: 8px;
-    width: 584px;
-    height: 60px;
     margin: 0px;
-    padding: 0px;
+    padding: 2px;
     font-size: small;
     border-radius: 4px;
     transform: translate(-50%, 0%);
@@ -692,29 +689,19 @@ canvas {
     border-radius: 4px;
     pointer-events: none;
 }
-#hotbarItems {
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    margin: 0px;
-    padding: 0px;
-    height: 20px;
-    width: 584px;
-}
 .hotbarSlot {
     position: relative;
-    right: 0px;
+    display: inline-block;
     width: 52px;
     height: 52px;
-    margin-left: 0px;
-    margin-right: 4px;
-    margin-top: 0px;
-    margin-bottom: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 0px;
     padding: 0px;
     background-color: #725640;
     border: 1px solid #000000;
     border-radius: 4px;
-    float: left;
     cursor: pointer;
 }
 .hotbarSlotNormal:before {
@@ -738,14 +725,6 @@ canvas {
     border: none;
     border-radius: 3px;
     pointer-events: none;
-}
-.hotbarRow {
-    position: relative;
-    font-family: 'pixel';
-    font-size: 13px;
-    color: #ffffff;
-    margin: 8px;
-    width: 584px;
 }
 .inventorySlot {
     position: relative;
