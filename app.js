@@ -1037,7 +1037,7 @@ io.sockets.on('connection',function(socket){
 					return;
 				}
 				if(Player.list[socket.id].lastChat > 0){
-					Player.list[socket.id].chatWarnings += 1.5;
+					Player.list[socket.id].chatWarnings += 1;
 				}
 				Player.list[socket.id].chatWarnings += stringData.length / 100;
 				if(stringData.length > 2000){
