@@ -2748,8 +2748,6 @@ Player.onConnect = function(socket,username){
         socket.on('respawn',function(data){
             socket.detectSpam('nonFrequent');
             if(player.hp > 0){
-                addToChat('#ff0000',player.name + ' cheated using respawn.');
-                socket.disconnectUser();
                 return;
             }
             player.hp = Math.round(player.hpMax / 2);
