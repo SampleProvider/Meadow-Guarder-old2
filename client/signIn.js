@@ -451,7 +451,7 @@ socket.on('createAccountResponse',function(data){
 });
 socket.on('deleteAccountResponse',function(data){
     signErrorText = signError.innerHTML;
-    if(data.success === 'success'){
+    if(data.success === 'correctPassword'){
         signError.innerHTML = '<span style="color: #55ff55">Successfully deleted the account \'' + data.username + '\'.</span><br>' + signErrorText;
     }
     else if(data.success === 'incorrectPassword'){
