@@ -403,6 +403,10 @@ socket.on('signInResponse',function(data){
         canSignIn = true;
         signError.innerHTML = '<span style="color: #ff0000">Error: There is no account with username \'' + data.username + '\'.</span><br>' + signErrorText;
     }
+    else if(data.success === 'alreadySignedIn'){
+        canSignIn = true;
+        signError.innerHTML = '<span style="color: #ff0000">Error: The account with username \'' + data.username + '\' is already currently in game. The other account will be disconnected shortly. Please try to sign again.</span><br>' + signErrorText;
+    }
     else if(data.success === 'chatBanned'){
         disconnectedDiv.style.display = 'none';
         deathDiv.style.display = 'none';
