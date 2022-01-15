@@ -160,7 +160,6 @@ io.sockets.on('connection',function(socket){
 		if(stringData.username[stringData.username.length - 1] === ' '){
 			socket.emit('createAccountResponse',{success:'spaceAtStart',username:stringData.username});
 			return;
-
 		}
 		if(stringData.username.includes('ㅤ')){
 			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
