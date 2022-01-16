@@ -3135,7 +3135,7 @@ Player.onConnect = function(socket,username){
                         }
                     }
                     delete Clan.list[clan];
-                    Database.removeClan(clan.name);
+                    Database.removeClan(clan);
                     return;
                 }
             }
