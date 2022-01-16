@@ -1836,7 +1836,7 @@
         }]
     },
     "snipe2":{
-        "40":[{
+        "35":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -1852,7 +1852,7 @@
         }]
     },
     "snipe3":{
-        "40":[{
+        "30":[{
             "id":"projectile",
             "projectileType":"arrow",
             "param":{
@@ -1885,7 +1885,7 @@
         }]
     },
     "laser2":{
-        "40":[{
+        "35":[{
             "id":"projectile",
             "projectileType":"mysticlaser",
             "param":{
@@ -1902,7 +1902,7 @@
         }]
     },
     "laser3":{
-        "40":[{
+        "30":[{
             "id":"projectile",
             "projectileType":"mysticlaser",
             "param":{
