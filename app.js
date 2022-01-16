@@ -657,24 +657,29 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'clanaccept' && level >= 0){
 					commandList.splice(0,1);
 					if(Player.list[socket.id].invitedClan){
-						Player.list[socket.id].clan = Player.list[socket.id].invitedClan;
-						Player.list[socket.id].invitedClan = null;
-						Clan.list[Player.list[socket.id].clan].members[Player.list[socket.id].name] = 'member';
-						for(var i in Player.list){
-							if(i + '' !== socket.id + ''){
-								for(var j in Clan.list[Player.list[socket.id].clan].members){
-									if(Player.list[i].name === j){
-										Player.list[i].sendMessage('[!] ' + Player.list[socket.id].name + ' has joined your clan.');
-										if(SOCKET_LIST[i]){
-											SOCKET_LIST[i].emit('updateClan',Clan.list[Player.list[socket.id].clan]);
+						if(Clan.list[Player.list[socket.id].invitedClan]){
+							Player.list[socket.id].clan = Player.list[socket.id].invitedClan;
+							Player.list[socket.id].invitedClan = null;
+							Clan.list[Player.list[socket.id].clan].members[Player.list[socket.id].name] = 'member';
+							for(var i in Player.list){
+								if(i + '' !== socket.id + ''){
+									for(var j in Clan.list[Player.list[socket.id].clan].members){
+										if(Player.list[i].name === j){
+											Player.list[i].sendMessage('[!] ' + Player.list[socket.id].name + ' has joined your clan.');
+											if(SOCKET_LIST[i]){
+												SOCKET_LIST[i].emit('updateClan',Clan.list[Player.list[socket.id].clan]);
+											}
+											Player.list[i].updateStats();
 										}
-										Player.list[i].updateStats();
 									}
 								}
 							}
+							Player.list[socket.id].sendMessage('[!] Joined clan ' + Player.list[socket.id].clan + '.');
+							socket.emit('updateClan',Clan.list[Player.list[socket.id].clan]);
 						}
-						Player.list[socket.id].sendMessage('[!] Joined clan ' + Player.list[socket.id].clan + '.');
-						socket.emit('updateClan',Clan.list[Player.list[socket.id].clan]);
+						else{
+							Player.list[socket.id].sendMessage('[!] Clan ' + Player.list[socket.id].invitedClan + ' has been disbanded.');
+						}
 					}
 					else{
 						Player.list[socket.id].sendMessage('[!] No invitation found.');
