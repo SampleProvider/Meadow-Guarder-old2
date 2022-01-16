@@ -94,6 +94,7 @@ weatherLastChanged = 0;
 
 quests = {};
 
+require('./clan');
 require('./../client/inventory.js');
 
 spawnMonster = function(spawner,spawnId){
@@ -115,10 +116,31 @@ spawnMonster = function(spawner,spawnId){
             if(pt.boss === true){
                 var message = pt.name + ' has been defeated!\nTop Damagers:';
                 var leaderboard = [];
+                var clans = {};
+                var clanLeaderboard = [];
                 for(var i in pt.playersDamaged){
                     if(Player.list[i]){
                         leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
+                        if(Player.list[i].clan){
+                            if(clans[Player.list[i].clan]){
+                                clans[Player.list[i].clan].damage += pt.playersDamaged[i];
+                                clans[Player.list[i].clan].membersDamaged += 1;
+                                clans[Player.list[i].clan].luck += Player.list[i].luck;
+                            }
+                            else{
+                                clans[Player.list[i].clan] = {
+                                    damage:pt.playersDamaged[i],
+                                    membersDamaged:1,
+                                    luck:Player.list[i].luck,
+                                };
+                                clanLeaderboard.push(Player.list[i].clan);
+                            }
+                        }
                     }
+                }
+                for(var i in clans){
+                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 1000000);
+                    Clan.list[i].addXp(clans[i].xp);
                 }
                 var compare = function(a,b){
                     if(a.damage > b.damage){
@@ -132,9 +154,27 @@ spawnMonster = function(spawner,spawnId){
                     }
                 }
                 leaderboard.sort(compare);
+                var clanCompare = function(a,b){
+                    if(a.xp > b.xp){
+                        return -1;
+                    }
+                    else if(b.xp > a.xp){
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    }
+                }
+                clanLeaderboard.sort(clanCompare);
                 for(var i = 0;i < 5;i++){
                     if(leaderboard[i]){
                         message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
+                    }
+                }
+                message += '\nTop Clans:';
+                for(var i = 0;i < 5;i++){
+                    if(clanLeaderboard[i]){
+                        message += '\n' + (i + 1) + ': ' + clanLeaderboard[i] + ' (' + clans[clanLeaderboard[i]].damage + ' Damage, ' + clans[clanLeaderboard[i]].xp + ' Xp)';
                     }
                 }
                 addToChat('#990099',message);
@@ -537,8 +577,8 @@ Actor = function(param){
                 for(var j = lastY;j >= y;j--){
                     if(Collision.list[self.map]){
                         if(Collision.list[self.map][self.zindex]){
-                            if(Collision.list[self.map][self.zindex][i]){
-                                if(Collision.list[self.map][self.zindex][i][j]){
+                            if(Collision.list[self.map][self.zindex][self.gridX]){
+                                if(Collision.list[self.map][self.zindex][self.gridX][j]){
                                     return false;
                                 }
                             }
@@ -550,8 +590,8 @@ Actor = function(param){
                 for(var j = lastY;j <= y;j++){
                     if(Collision.list[self.map]){
                         if(Collision.list[self.map][self.zindex]){
-                            if(Collision.list[self.map][self.zindex][i]){
-                                if(Collision.list[self.map][self.zindex][i][j]){
+                            if(Collision.list[self.map][self.zindex][self.gridX]){
+                                if(Collision.list[self.map][self.zindex][self.gridX][j]){
                                     return false;
                                 }
                             }
@@ -1121,13 +1161,27 @@ Actor = function(param){
         }
         self.dashing = true;
         self.dashTime = param.time !== undefined ? param.time : 10;
-        var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
+        if(self.trackingPath[0]){
+            var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + Math.atan2(self.trackingPath[0][1] * 64 + self.height / 2 - self.y,self.trackingPath[0][0] * 64 + self.width / 2 - self.x) : Math.atan2(self.trackingPath[0][1] * 64 + self.height / 2 - self.y,self.trackingPath[0][0] * 64 + self.width / 2 - self.x);
+        }
+        else{
+            var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
+        }
         direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
         var dashX = Math.cos(direction);
         var dashY = Math.sin(direction);
         var dashDistance = param.dashDistance !== undefined ? param.dashDistance * 64 : 256;
         self.dashX = dashDistance / self.dashTime * dashX;
         self.dashY = dashDistance / self.dashTime * dashY;
+    }
+    self.roundStats = function(){
+        for(var i in self.stats){
+            self.stats[i] = Math.round(self.stats[i] * 100) / 100;
+        }
+        if(self.type === 'Player'){
+            self.shieldProtection = Math.round(self.shieldProtection * 100) / 100;
+            self.luck = Math.round(self.luck * 100) / 100;
+        }
     }
     self.addDebuff = function(id,time){
         if(self.debuffs[id]){
@@ -1146,7 +1200,6 @@ Actor = function(param){
             }
             if(debuffData[id].hpRegen !== undefined){
                 self.stats.hpRegen += debuffData[id].hpRegen;
-                self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
             }
             if(debuffData[id].manaMax !== undefined){
                 self.manaMax += debuffData[id].manaMax;
@@ -1154,7 +1207,6 @@ Actor = function(param){
             }
             if(debuffData[id].manaRegen !== undefined){
                 self.stats.manaRegen += debuffData[id].manaRegen;
-                self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
             }
             if(debuffData[id].damage !== undefined){
                 self.stats.damage += debuffData[id].damage;
@@ -1170,6 +1222,9 @@ Actor = function(param){
             }
             if(debuffData[id].movementSpeed !== undefined){
                 self.maxSpeed += debuffData[id].movementSpeed;
+            }
+            if(debuffData[id].luck !== undefined){
+                self.luck += debuffData[id].luck;
             }
             if(debuffData[id].attacks !== undefined){
                 if(attackData[debuffData[id].attacks]){
@@ -1199,6 +1254,7 @@ Actor = function(param){
                     }
                 }
             }
+            self.roundStats();
         }
     }
     self.updateDebuffs = function(){
@@ -1212,7 +1268,6 @@ Actor = function(param){
                 }
                 if(debuffData[i].hpRegen !== undefined){
                     self.stats.hpRegen -= debuffData[i].hpRegen;
-                    self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
                 }
                 if(debuffData[i].manaMax !== undefined){
                     self.manaMax -= debuffData[i].manaMax;
@@ -1220,7 +1275,6 @@ Actor = function(param){
                 }
                 if(debuffData[i].manaRegen !== undefined){
                     self.stats.manaRegen -= debuffData[i].manaRegen;
-                    self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                 }
                 if(debuffData[i].damage !== undefined){
                     self.stats.damage -= debuffData[i].damage;
@@ -1237,9 +1291,13 @@ Actor = function(param){
                 if(debuffData[i].movementSpeed !== undefined){
                     self.maxSpeed -= debuffData[i].movementSpeed;
                 }
+                if(debuffData[i].luck !== undefined){
+                    self.luck -= debuffData[i].luck;
+                }
                 if(debuffData[i].attacks !== undefined || debuffData[i].passives !== undefined){
                     self.updateStats();
                 }
+                self.roundStats();
             }
         }
     }
@@ -1469,6 +1527,16 @@ Player = function(param,socket){
     }
 
     self.playTime = 0;
+
+    self.clan = null;
+    for(var i in Clan.list){
+        for(var j in Clan.list[i].members){
+            if(j === self.name){
+                self.clan = i;
+            }
+        }
+    }
+    self.invitedClan = null;
 
     if(debugData[self.name]){
         self.textColor = debugData[self.name].color;
@@ -1894,14 +1962,12 @@ Player = function(param,socket){
                         }
                         if(item.hpRegen !== undefined){
                             self.stats.hpRegen += item.hpRegen;
-                            self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
                         }
                         if(item.mana !== undefined){
                             self.manaMax += item.mana;
                         }
                         if(item.manaRegen !== undefined){
                             self.stats.manaRegen += item.manaRegen;
-                            self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                         }
                         if(item.movementSpeed !== undefined){
                             self.maxSpeed += item.movementSpeed;
@@ -1923,11 +1989,9 @@ Player = function(param,socket){
                         }
                         if(item.critChance !== undefined){
                             self.stats.critChance += item.critChance;
-                            self.stats.critChance = Math.round(self.stats.critChance * 100) / 100;
                         }
                         if(item.critPower !== undefined){
                             self.stats.critPower += item.critPower;
-                            self.stats.critPower = Math.round(self.stats.critPower * 100) / 100;
                         }
                         if(item.pickaxePower !== undefined){
                             self.pickaxePower = item.pickaxePower;
@@ -1937,6 +2001,9 @@ Player = function(param,socket){
                         }
                         if(item.scythePower !== undefined){
                             self.scythePower = item.scythePower;
+                        }
+                        if(item.luck !== undefined){
+                            self.luck += item.luck;
                         }
                         if(item.useTime !== undefined){
                             self.useTime = item.useTime;
@@ -1983,14 +2050,12 @@ Player = function(param,socket){
                     }
                     if(item.hpRegen !== undefined){
                         self.stats.hpRegen += item.hpRegen;
-                        self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
                     }
                     if(item.mana !== undefined){
                         self.manaMax += item.mana;
                     }
                     if(item.manaRegen !== undefined){
                         self.stats.manaRegen += item.manaRegen;
-                        self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
                     }
                     if(item.movementSpeed !== undefined){
                         self.maxSpeed += item.movementSpeed;
@@ -2009,17 +2074,18 @@ Player = function(param,socket){
                     }
                     if(item.critChance !== undefined){
                         self.stats.critChance += item.critChance;
-                        self.stats.critChance = Math.round(self.stats.critChance * 100) / 100;
                     }
                     if(item.critPower !== undefined){
                         self.stats.critPower += item.critPower;
-                        self.stats.critPower = Math.round(self.stats.critPower * 100) / 100;
                     }
                     if(item.slots !== undefined){
                         self.inventory.maxSlots += item.slots;
                     }
                     if(item.shieldPower !== undefined){
                         self.shieldProtection += item.shieldPower;
+                    }
+                    if(item.luck !== undefined){
+                        self.luck += item.luck;
                     }
                     if(item.attacks !== undefined){
                         if(attackData[item.attacks]){
@@ -2059,7 +2125,6 @@ Player = function(param,socket){
             }
             if(debuffData[i].hpRegen !== undefined){
                 self.stats.hpRegen += debuffData[i].hpRegen;
-                self.stats.hpRegen = Math.round(self.stats.hpRegen * 100) / 100;
             }
             if(debuffData[i].manaMax !== undefined){
                 self.manaMax += debuffData[i].manaMax;
@@ -2067,7 +2132,6 @@ Player = function(param,socket){
             }
             if(debuffData[i].manaRegen !== undefined){
                 self.stats.manaRegen += debuffData[i].manaRegen;
-                self.stats.manaRegen = Math.round(self.stats.manaRegen * 100) / 100;
             }
             if(debuffData[i].damage !== undefined){
                 self.stats.damage += debuffData[i].damage;
@@ -2083,6 +2147,9 @@ Player = function(param,socket){
             }
             if(debuffData[i].movementSpeed !== undefined){
                 self.maxSpeed += debuffData[i].movementSpeed;
+            }
+            if(debuffData[i].luck !== undefined){
+                self.luck += debuffData[i].luck;
             }
             if(debuffData[i].attacks !== undefined){
                 if(attackData[debuffData[i].attacks]){
@@ -2113,6 +2180,76 @@ Player = function(param,socket){
                 }
             }
         }
+        if(self.clan){
+            if(Clan.list[self.clan].boosts.hpMax !== undefined){
+                self.hpMax += Clan.list[self.clan].boosts.hpMax;
+                self.hp += Clan.list[self.clan].boosts.hpMax;
+            }
+            if(Clan.list[self.clan].boosts.hpRegen !== undefined){
+                self.stats.hpRegen += Clan.list[self.clan].boosts.hpRegen;
+            }
+            if(Clan.list[self.clan].boosts.manaMax !== undefined){
+                self.manaMax += Clan.list[self.clan].boosts.manaMax;
+                self.mana += Clan.list[self.clan].boosts.manaMax;
+            }
+            if(Clan.list[self.clan].boosts.manaRegen !== undefined){
+                self.stats.manaRegen += Clan.list[self.clan].boosts.manaRegen;
+            }
+            if(Clan.list[self.clan].boosts.damage !== undefined){
+                self.stats.damage += Clan.list[self.clan].boosts.damage;
+            }
+            if(Clan.list[self.clan].boosts.critChance !== undefined){
+                self.stats.critChance += Clan.list[self.clan].boosts.critChance;
+            }
+            if(Clan.list[self.clan].boosts.critPower !== undefined){
+                self.stats.critPower += Clan.list[self.clan].boosts.critPower;
+            }
+            if(Clan.list[self.clan].boosts.defense !== undefined){
+                self.stats.defense += Clan.list[self.clan].boosts.defense;
+            }
+            if(Clan.list[self.clan].boosts.movementSpeed !== undefined){
+                self.maxSpeed += Clan.list[self.clan].boosts.movementSpeed;
+            }
+            if(Clan.list[self.clan].boosts.slots !== undefined){
+                self.inventory.maxSlots += Clan.list[self.clan].boosts.slots;
+            }
+            if(Clan.list[self.clan].boosts.luck !== undefined){
+                self.luck += Clan.list[self.clan].boosts.luck;
+            }
+            if(Clan.list[self.clan].boosts.attacks !== undefined){
+                for(var i in Clan.list[self.clan].boosts.attacks){
+                    if(attackData[Clan.list[self.clan].boosts.attacks[i]]){
+                        for(var j in attackData[Clan.list[self.clan].boosts.attacks[i]]){
+                            if(self.mainAttackData[j]){
+                                for(var k in attackData[Clan.list[self.clan].boosts.attacks[i]][j]){
+                                    self.mainAttackData[j].push(attackData[Clan.list[self.clan].boosts.attacks[i]][j][k]);
+                                }
+                            }
+                            else{
+                                self.mainAttackData[j] = Object.create(attackData[Clan.list[self.clan].boosts.attacks[i]][j]);
+                            }
+                        }
+                    }
+                }
+            }
+            if(Clan.list[self.clan].boosts.passives !== undefined){
+                for(var i in Clan.list[self.clan].boosts.passives){
+                    if(attackData[Clan.list[self.clan].boosts.passives[i]]){
+                        for(var j in attackData[Clan.list[self.clan].boosts.passives[i]]){
+                            if(self.passiveAttackData[j]){
+                                for(var k in attackData[Clan.list[self.clan].boosts.passives[i]][j]){
+                                    self.passiveAttackData[j].push(attackData[Clan.list[self.clan].boosts.passives[i]][j][k]);
+                                }
+                            }
+                            else{
+                                self.passiveAttackData[j] = Object.create(attackData[Clan.list[self.clan].boosts.passives[i]][j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        self.roundStats();
         if(self.inventory.maxSlots !== maxSlots){
             self.inventory.refreshMenu(maxSlots);
         }
@@ -2437,7 +2574,15 @@ Player.onConnect = function(socket,username,chatBanned){
             }
         }
         
-        socket.emit('selfId',{id:socket.id,img:player.img,worldRegion:player.worldRegion,weather:currentWeather});
+        if(Clan.list[player.clan]){
+            socket.emit('selfId',{id:socket.id,name:player.name,img:player.img,worldRegion:player.worldRegion,weather:currentWeather,clan:Clan.list[player.clan]});
+            if(Clan.list[player.clan].members[player.name] === 'leader' && Clan.list[player.clan].claimBoost){
+                socket.emit('upgradeClan',clanData[Clan.list[player.clan].level].boosts);
+            }
+        }
+        else{
+            socket.emit('selfId',{id:socket.id,name:player.name,img:player.img,worldRegion:player.worldRegion,weather:currentWeather,clan:null});
+        }
 
         socket.on('keyPress',function(data){
             if(!data){
@@ -2641,7 +2786,6 @@ Player.onConnect = function(socket,username,chatBanned){
                 }
             }
         });
-
         socket.on('declineTrade',function(data){
             socket.detectSpam('nonFrequent');
             if(player.tradingEntity){
@@ -2717,6 +2861,370 @@ Player.onConnect = function(socket,username,chatBanned){
                 }
                 else if(player.dialogueMessage[data].triggers === 'startQuest'){
                     player.startQuest(player.dialogueMessage[data].quest);
+                }
+            }
+        });
+
+        socket.on('createClan',function(data){
+            socket.detectSpam('nonFrequent');
+            if(!data){
+                socket.disconnectUser();
+                return;
+            }
+            if(typeof data !== 'string' || data === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(player.clan !== null){
+                return;
+            }
+            if(data[0] === ' '){
+                player.sendMessage('[!] Your clan name may not start with a space.');
+                return;
+            }
+            if(data[data.length - 1] === ' '){
+                player.sendMessage('[!] Your clan name may not end with a space.');
+                return;
+            }
+            if(data.includes('ㅤ')){
+                player.sendMessage('[!] Your clan name may not contain a blank character.');
+                return;
+            }
+            if(data.includes('--')){
+                player.sendMessage('[!] Your clan name contains invalid characters.');
+                return;
+            }
+            if(data.includes(';')){
+                player.sendMessage('[!] Your clan name contains invalid characters.');
+                return;
+            }
+            if(data.includes('<')){
+                player.sendMessage('[!] Your clan name contains invalid characters.');
+                return;
+            }
+            if(data.includes('>')){
+                player.sendMessage('[!] Your clan name contains invalid characters.');
+                return;
+            }
+            if(data.includes('\'')){
+                player.sendMessage('[!] Your clan name contains invalid characters.');
+                return;
+            }
+            if(data.length > 40){
+                player.sendMessage('[!] Your clan name is too long.');
+                return;
+            }
+            if(data.length < 4){
+                player.sendMessage('[!] Your clan name is too short.');
+                return;
+            }
+            for(var i in badwords){
+                if(data.toLowerCase().includes(badwords[i])){
+                    player.sendMessage('[!] Your clan name may not contain a bad word.');
+                    return;
+                }
+            }
+            var clan = new Clan(data,{
+                members:{},
+                level:0,
+                xp:0,
+            });
+            Database.addClan({name:clan.name,progress:JSON.stringify(clan)});
+            clan.members[player.name] = 'leader';
+            player.clan = data;
+            socket.emit('updateClan',clan);
+            player.sendMessage('[!] Created clan ' + data + '.');
+        });
+        socket.on('invitePlayer',function(data){
+            socket.detectSpam('nonFrequent');
+            if(!data){
+                socket.disconnectUser();
+                return;
+            }
+            if(typeof data !== 'string' || data === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(player.clan === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(Clan.list[player.clan]){
+                if(Clan.list[player.clan].members[player.name] !== 'leader'){
+                    return;
+                }
+                var numberOfMembers = 0;
+                for(var i in Clan.list[player.clan].members){
+                    numberOfMembers += 1;
+                }
+                if(Clan.list[player.clan].maxMembers <= numberOfMembers){
+                    player.sendMessage('[!] Your clan may not support any more members.');
+                    return;
+                }
+            }
+            else{
+                return;
+            }
+            for(var i in Player.list){
+                if(Player.list[i].name === data){
+                    if(Player.list[i].clan === null){
+                        Player.list[i].sendMessage('[!] ' + player.name + ' is inviting you to join clan ' + player.clan + '. Type /clanaccept to accept the invitation');
+                        Player.list[i].invitedClan = player.clan;
+                        player.sendMessage('[!] Invited player ' + data + '.');
+                        return;
+                    }
+                    else{
+                        player.sendMessage('[!] Player ' + data + ' is already in a clan.');
+                        return;
+                    }
+                }
+            }
+            player.sendMessage('[!] No player with name ' + data + '.');
+            return;
+        });
+        socket.on('kickMember',function(data){
+            socket.detectSpam('nonFrequent');
+            if(!data){
+                socket.disconnectUser();
+                return;
+            }
+            if(typeof data !== 'string' || data === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(player.clan === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(data === player.name){
+                return;
+            }
+            if(Clan.list[player.clan]){
+                if(Clan.list[player.clan].members[player.name] !== 'leader'){
+                    return;
+                }
+                if(Clan.list[player.clan].members[data]){
+                    var clan = player.clan;
+                    delete Clan.list[player.clan].members[data];
+                    for(var i in Player.list){
+                        for(var j in Clan.list[clan].members){
+                            if(Player.list[i].name === j){
+                                Player.list[i].sendMessage('[!] ' + data + ' has been kicked off clan ' + clan + '.');
+                                if(SOCKET_LIST[i]){
+                                    SOCKET_LIST[i].emit('updateClan',Clan.list[clan]);
+                                }
+                            }
+                        }
+                        if(Player.list[i].name === data){
+                            Player.list[i].sendMessage('[!] You have been kicked off clan ' + clan + '.');
+                            Player.list[i].clan = null;
+                            Player.list[i].updateStats();
+                            if(SOCKET_LIST[i]){
+                                SOCKET_LIST[i].emit('updateClan',null);
+                            }
+                        }
+                    }
+                    return;
+                }
+            }
+            else{
+                return;
+            }
+            player.sendMessage('[!] No player with name ' + data + '.');
+            return;
+        });
+        socket.on('leaveClan',function(){
+            socket.detectSpam('nonFrequent');
+            if(Clan.list[player.clan]){
+                if(Clan.list[player.clan].members[player.name] === 'leader'){
+                    return;
+                }
+                if(Clan.list[player.clan].members[player.name]){
+                    var clan = player.clan;
+                    player.sendMessage('[!] You left clan ' + player.clan + '.');
+                    player.clan = null;
+                    socket.emit('updateClan',null);
+                    player.updateStats();
+                    delete Clan.list[clan].members[player.name];
+                    for(var i in Player.list){
+                        for(var j in Clan.list[clan].members){
+                            if(Player.list[i].name === j){
+                                Player.list[i].sendMessage('[!] ' + player.name + ' has left clan ' + clan + '.');
+                                if(SOCKET_LIST[i]){
+                                    SOCKET_LIST[i].emit('updateClan',Clan.list[clan]);
+                                }
+                            }
+                        }
+                    }
+                    return;
+                }
+            }
+            return;
+        });
+        socket.on('transferLeadership',function(data){
+            socket.detectSpam('nonFrequent');
+            if(!data){
+                socket.disconnectUser();
+                return;
+            }
+            if(typeof data !== 'string' || data === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(player.clan === null){
+                socket.disconnectUser();
+                return;
+            }
+            if(data === player.name){
+                return;
+            }
+            if(Clan.list[player.clan]){
+                if(Clan.list[player.clan].members[player.name] !== 'leader'){
+                    return;
+                }
+                if(Clan.list[player.clan].members[data]){
+                    for(var i in Player.list){
+                        for(var j in Clan.list[player.clan].members){
+                            if(Player.list[i].name === j){
+                                if(Player.list[i].name === data){
+                                    Player.list[i].sendMessage('[!] ' + player.name + ' has transfered leadership to you.');
+                                }
+                                else if(Player.list[i].name === player.name){
+                                    Player.list[i].sendMessage('[!] You transfered leadership to ' + data + '.');
+                                }
+                                else{
+                                    Player.list[i].sendMessage('[!] ' + player.name + ' has transfered leadership to ' + data + '.');
+                                }
+                                if(SOCKET_LIST[i]){
+                                    SOCKET_LIST[i].emit('updateClan',Clan.list[player.clan]);
+                                }
+                            }
+                        }
+                    }
+                    return;
+                }
+                return;
+            }
+            player.sendMessage('[!] No player with name ' + data + '.');
+            return;
+        });
+        socket.on('disbandClan',function(){
+            socket.detectSpam('nonFrequent');
+            if(Clan.list[player.clan]){
+                if(Clan.list[player.clan].members[player.name] !== 'leader'){
+                    return;
+                }
+                if(Clan.list[player.clan].members[player.name]){
+                    var clan = player.clan;
+                    player.sendMessage('[!] You disbanded ' + player.clan + '.');
+                    player.clan = null;
+                    socket.emit('updateClan',null);
+                    player.updateStats();
+                    delete Clan.list[clan].members[player.name];
+                    for(var i in Player.list){
+                        for(var j in Clan.list[clan].members){
+                            if(Player.list[i].name === j){
+                                Player.list[i].clan = null;
+                                Player.list[i].sendMessage('[!] ' + player.name + ' has disbanded clan ' + clan + '.');
+                                if(SOCKET_LIST[i]){
+                                    SOCKET_LIST[i].emit('updateClan',null);
+                                }
+                                Player.list[i].updateStats();
+                            }
+                        }
+                    }
+                    delete Clan.list[clan];
+                    Database.removeClan(clan.name);
+                    return;
+                }
+            }
+            return;
+        });
+        socket.on('selectUpgrade',function(data){
+            socket.detectSpam('nonFrequent');
+            if(data !== 'upgrade1' && data !== 'upgrade2' && data !== 'upgrade3' && data !== 'upgrade4'){
+                socket.disconnectUser();
+                return;
+            }
+            if(!player.clan){
+                return;
+            }
+            if(Clan.list[player.clan].claimBoost === false){
+                return;
+            }
+            for(var i in Clan.list[player.clan].members){
+                if(player.name === i && Clan.list[player.clan].members[i] === 'leader'){
+                    if(clanData[Clan.list[player.clan].level].boosts[data]){
+                        var boost = clanData[Clan.list[player.clan].level].boosts[data];
+                        var clan = Clan.list[player.clan];
+                        for(var j in boost){
+                            if(j === 'name' || j === 'drawId' || j === 'rarity' || j === 'description' || j === 'effects' || j === 'buffs'){
+                                continue;
+                            }
+                            if(j === 'maxMembers'){
+                                clan.maxMembers += boost[j];
+                                continue;
+                            }
+                            if(j === 'effectDescription'){
+                                if(boost[j] === ''){
+                                    continue;
+                                }
+                                if(clan.boosts[j]){
+                                    clan.boosts[j] += '<br>' + boost[j];
+                                }
+                                else{
+                                    clan.boosts[j] = boost[j];
+                                }
+                                continue;
+                            }
+                            if(j === 'attacks'){
+                                if(attackData[boost[j]]){
+                                    if(clan.boosts[j]){
+                                        clan.boosts[j].push(boost[j]);
+                                    }
+                                    else{
+                                        clan.boosts[j] = [boost[j]];
+                                    }
+                                }
+                                continue;
+                            }
+                            if(j === 'passives'){
+                                if(attackData[boost[j]]){
+                                    if(clan.boosts[j]){
+                                        clan.boosts[j].push(boost[j]);
+                                    }
+                                    else{
+                                        clan.boosts[j] = [boost[j]];
+                                    }
+                                }
+                                continue;
+                            }
+                            if(clan.boosts[j]){
+                                clan.boosts[j] += boost[j];
+                            }
+                            else{
+                                clan.boosts[j] = boost[j];
+                            }
+                        }
+                        clan.claimBoost = false;
+                        for(var j in Player.list){
+                            for(var k in clan.members){
+                                if(Player.list[j].name === k){
+                                    if(j + '' === socket.id + ''){
+                                        Player.list[j].sendMessage('[!] You have claimed the boost ' + boost.name + '.');
+                                    }
+                                    else{
+                                        Player.list[j].sendMessage('[!] ' + player.name + ' has claimed the boost ' + boost.name + '.');
+                                    }
+                                    if(SOCKET_LIST[j]){
+                                        SOCKET_LIST[j].emit('updateClan',clan);
+                                    }
+                                    Player.list[j].updateStats();
+                                }
+                            }
+                        }
+                        clan.addXp(0);
+                    }
                 }
             }
         });
@@ -2864,11 +3372,11 @@ Player.onDisconnect = function(socket){
         if(Player.list[socket.id].inventory.draggingItem.id){
             Player.list[socket.id].inventory.addItem(Player.list[socket.id].inventory.draggingItem.id,Player.list[socket.id].inventory.draggingItem.amount);
         }
-        storeDatabase(Player.list);
+        storeDatabase()
         delete Player.list[socket.id];
     }
     else{
-        storeDatabase(Player.list);
+        storeDatabase()
     }
     socket.disconnect();
 }
@@ -3734,6 +4242,7 @@ Monster = function(param){
         var pack = getInitPack();
         pack.monsterType = self.monsterType;
         pack.boss = self.boss;
+        pack.bossMusic = self.bossMusic;
         pack.type = self.type;
         return pack;
     }

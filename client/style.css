@@ -10,6 +10,7 @@ div {
 button {
     outline: none;
     cursor: pointer;
+    pointer-events: all;
 }
 canvas {
     position: absolute;
@@ -108,6 +109,16 @@ canvas {
     bottom: 0px;
     border: 1px solid #725640;
     pointer-events: none;
+}
+.UI-transparent {
+    position: absolute;
+    font-family: 'pixel';
+    font-size: 15px;
+    color: #ffffff;
+    background-color: rgba(255,255,255,0.3);
+    border: 1px solid #000000;
+    border-radius: 8px;
+    cursor: default;
 }
 .UI-button {
     position: absolute;
@@ -472,7 +483,6 @@ canvas {
 }
 
 #chatDiv {
-    position: absolute;
     left: 4px;
     bottom: 4px;
     width: 400px;
@@ -482,30 +492,11 @@ canvas {
     padding-top: 4px;
     padding-right: 0px;
     padding-bottom: 8px;
-    border: none;
-    background-color: transparent;
-    border-radius: 8px;
-}
-#chatBackground {
-    position: absolute;
-    left: 4px;
-    bottom: 4px;
-    width: 400px;
-    height: 170px;
-    margin: 8px;
-    padding-left: 0px;
-    padding-top: 4px;
-    padding-right: 0px;
-    padding-bottom: 8px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
 }
 #chatText {
     position: static;
     width: 390px;
-    height: 155px;
+    height: 160px;
     margin: 0px;
     padding-left: 4px;
     padding-bottom: 0px;
@@ -547,6 +538,7 @@ canvas {
     padding-left: 6px;
     padding-right: 6px;
     border-radius: 4px;
+    white-space: nowrap;
 }
 #bottomRightBar:before {
     content: " ";
@@ -600,39 +592,21 @@ canvas {
     image-rendering: pixelated;
 }
 
-#inventoryBackground {
-    position: absolute;
+#inventoryDiv {
     right: 8px;
     bottom: 76px;
-    width: 650px;
+    width: 645px;
     height: 340px;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-}
-#inventoryDiv {
-    position: absolute;
-    right: 10px;
-    bottom: 78px;
-    width: 648px;
-    height: 336px;
-    margin: 0px;
-    padding: 0px;
     overflow-x: hidden;
     overflow-y: scroll;
     font-size: small;
-    background-color: transparent;
-    border: none;
 }
 #inventoryItems {
     position: absolute;
     top: 200px;
     left: 8px;
     height: 20px;
-    width: 640px;
+    width: 625px;
 }
 #inventoryExit {
     position: fixed;
@@ -676,6 +650,7 @@ canvas {
     padding: 2px;
     padding-bottom: 0px;
     font-size: small;
+    white-space: nowrap;
     border-radius: 4px;
     transform: translate(-50%, 0%);
 }
@@ -739,6 +714,7 @@ canvas {
     background-color: #725640;
     margin: 4px;
     border-radius: 4px;
+    cursor: pointer;
 }
 .inventorySlot:before {
     content: " ";
@@ -757,8 +733,8 @@ canvas {
     top: 2px;
     width: 24px;
     height: 24px;
-    cursor: pointer;
     image-rendering: pixelated;
+    pointer-events: none;
 }
 .slotCanvas {
     position: absolute;
@@ -766,8 +742,8 @@ canvas {
     top: 2px;
     width: 48px;
     height: 48px;
-    cursor: pointer;
     image-rendering: pixelated;
+    pointer-events: none;
 }
 .slotCanvasLarge {
     position: relative;
@@ -776,6 +752,7 @@ canvas {
     width: 60px;
     height: 60px;
     image-rendering: pixelated;
+    pointer-events: none;
 }
 .itemAmount {
     position: relative;
@@ -921,34 +898,18 @@ canvas {
     margin-top: 0px;
     margin-bottom: 4px;
     padding: 0px;
-    background-color: #725640;
+    background-color: rgba(255,255,255,0.3);
     border: 1px solid #000000;
     border-radius: 4px;
     float: left;
     cursor: pointer;
 }
 
-#craftBackground {
-    position: absolute;
+#craftDiv {
     right: 8px;
     top: 8px;
-    width: 530px;
+    width: 520px;
     height: 270px;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-}
-#craftDiv {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 538px;
-    height: 266px;
-    margin: 0px;
-    padding: 0px;
     overflow-x: hidden;
     overflow-y: scroll;
     font-size: small;
@@ -958,13 +919,13 @@ canvas {
     top: 50px;
     left: 8px;
     height: 20px;
-    width: 520px;
+    width: 510px;
 }
 #craftInput {
     position: absolute;
     top: 35px;
     left: 10px;
-    width: 500px;
+    width: 492px;
     height: 15px;
     margin: 0px;
     padding: 0px;
@@ -1011,48 +972,31 @@ canvas {
     text-align: center;
 }
 
-#tradeBackground {
-    position: absolute;
-    left: 50%;
-    top: 8px;
-    width: 410px;
-    height: 288px;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    transform: translate(-50%, 0%);
-}
 #tradeDiv {
-    position: absolute;
     left: 50%;
     top: 8px;
     width: 410px;
-    height: 288px;
-    margin: 0px;
-    padding: 0px;
+    height: 316px;
     font-size: small;
     transform: translate(-50%, 0%);
 }
 #tradeItems1 {
     position: absolute;
     top: 32px;
-    left: 0px;
-    height: 202px;
-    width: 202px;
+    left: 8px;
+    height: 186px;
+    width: 186px;
 }
 #tradeItems2 {
     position: absolute;
     top: 32px;
-    left: 208px;
-    height: 202px;
-    width: 202px;
+    right: 8px;
+    height: 186px;
+    width: 186px;
 }
 #tradeButtons {
     position: absolute;
-    top: 220px;
+    top: 240px;
     left: 208px;
     height: 20px;
     width: 202px;
@@ -1107,21 +1051,7 @@ canvas {
     from {opacity: 0;}
     to {opacity: 0.7;}
 }
-#dialogueBackground {
-    position: absolute;
-    left: 50%;
-    bottom: 76px;
-    width: 584px;
-    height: 152px;
-    padding: 8px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    transform: translate(-50%, 0%);
-}
 #dialogueDiv {
-    position: absolute;
     left: 50%;
     bottom: 76px;
     width: 584px;
@@ -1151,21 +1081,7 @@ canvas {
     background-color: #00ff90;
 }
 
-#settingBackground {
-    position: absolute;
-    left: 20%;
-    top: 20%;
-    width: 60%;
-    height: 60%;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-}
 #settingDiv {
-    position: absolute;
     left: 20%;
     top: 20%;
     width: 60%;
@@ -1173,11 +1089,48 @@ canvas {
     margin: 0px;
     padding: 0px;
     font-size: small;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+#settingNavigationBar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 24px;
+}
+.settingNavigationButtonLeft {
+    border-top-left-radius: 8px;
+}
+.settingNavigationButtonRight {
+    border-top-right-radius: 8px;
+}
+.settingNavigationButton {
+    position: relative;
+    display: inline-block;
+    left: 0px;
+    top: 0px;
+    background-color: #ffffff;
+    opacity: 0.7;
+    border: 1px solid #000000;
+    margin-right: -8px;
+    margin-bottom: 4px;
+    transition-duration: 0.4s;
+    transform: translate(0%, -100%);
+}
+.settingsDiv {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
 }
 #settingPlayerDiv {
     position: absolute;
     left: 16px;
-    top: 48px;
+    top: 8px;
     margin: 0px;
     padding: 0px;
 }
@@ -1222,68 +1175,145 @@ canvas {
     position: relative;
     display: inline-block;
     left: 350px;
+    top: 0px;
     width: 1px;
     height: 100%;
     background-color: #000000;
 }
-
-#playerListBackground {
+#currentClanDisplay {
     position: absolute;
-    left: 172px;
-    top: 8px;
-    width: 300px;
-    height: 200px;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
+    left: 0px;
+    top: 5px;
 }
-#playerListDiv {
+#createClanButton {
     position: absolute;
-    left: 172px;
-    top: 10px;
-    width: 300px;
-    height: 198px;
-    margin: 0px;
-    padding: 0px;
-    font-size: small;
+    left: 4px;
+    top: 25px;
+}
+#createClanForm {
+    position: absolute;
+    left: 4px;
+    top: 55px;
+}
+#clanMembersDisplay {
+    position: absolute;
+    left: 0px;
+    top: 25px;
+    height: 40%;
     overflow-y: scroll;
 }
-#playerListExit {
+#playersOnlineDisplay {
     position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 14px;
-    height: 14px;
-    color: #000000;
-    background-color: #ff0000;
-    border: 1px solid #5b0000;
-}
-#playerListExit:before {
-    content: " ";
-    position: absolute;
-    top: 0px;
     left: 0px;
+    bottom: 5px;
+    height: 40%;
+    overflow-y: scroll;
+}
+#clanOptions {
+    position: absolute;
     right: 0px;
-    bottom: 0px;
-    border: 1px solid #ff5b5b;
+    top: 5px;
+    width: 50%;
+    height: 100%;
     pointer-events: none;
 }
-#playerListExit:hover {
-    background-color: #ff3b3b;
-}
-#playerListExitText {
+#clanXpBar {
     position: absolute;
-    left: 0px;
+    right: 20px;
     top: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 12px;
-    height: 16px;
-    font-size: 8px;
+    width: 152px;
+    height: 22px;
     text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 0px;
+}
+#clanXpBarValue {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    background-color: #cccc00;
+}
+#clanXpBarText {
+    position: absolute;
+    left: 1px;
+    top: 0px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    text-align: center;
+    color: #ffffff;
+}
+#clanStats {
+    position: absolute;
+    right: 8px;
+    top: 28px;
+    text-align: right;
+}
+#disbandClanButton {
+    position: absolute;
+    right: 4px;
+    bottom: 39px;
+    color: #ff0000;
+}
+#transferLeadershipButton {
+    position: absolute;
+    right: 4px;
+    bottom: 9px;
+    color: #ff0000;
+}
+#leaveClanButton {
+    position: absolute;
+    right: 4px;
+    bottom: 9px;
+    color: #ff0000;
+}
+
+#clanRewardDiv {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 208px;
+    height: 252px;
+    background-color: rgba(255,255,255,0.3);
+    border: 1px solid #000000;
+    border-radius: 8px;
+    transform: translate(-50%, 0%);
+}
+#clanRewardText {
+    position: relative;
+    text-align: center;
+}
+.clanReward {
+    width: 84px;
+    height: 84px;
+    cursor: pointer;
+}
+#clanReward1 {
+    left: 8px;
+    bottom: 100px;
+}
+#clanReward2 {
+    right: 8px;
+    bottom: 100px;
+}
+#clanReward3 {
+    left: 8px;
+    bottom: 8px;
+}
+#clanReward4 {
+    right: 8px;
+    bottom: 8px;
+}
+.clanRewardCanvas {
+    position: relative;
+    left: 2px;
+    top: 2px;
+    width: 80px;
+    height: 80px;
+    image-rendering: pixelated;
+    pointer-events: none;
 }
 
 #bossbarDiv {
@@ -1316,28 +1346,11 @@ canvas {
     transform: translate(0%, -50%);
 }
 
-#shopBackground {
-    position: absolute;
-    left: 8px;
-    top: 40%;
-    width: 340px;
-    height: 340px;
-    margin: 0px;
-    padding: 0px;
-    background-color: #ffffff;
-    opacity: 0.3;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    transform: translate(0%, -50%);
-}
 #shopDiv {
-    position: absolute;
     left: 8px;
     top: 40%;
-    width: 338px;
-    height: 338px;
-    margin: 0px;
-    padding: 0px;
+    width: 335px;
+    height: 335px;
     font-size: small;
     overflow-y: scroll;
     transform: translate(0%, -50%);
@@ -1407,16 +1420,16 @@ canvas {
     position: absolute;
     left: 1px;
     top: 1px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     background-color: #5ac54f;
 }
 #healthBarText {
     position: absolute;
     left: 1px;
     top: 0px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     text-align: center;
     color: #ffffff;
 }
@@ -1435,16 +1448,16 @@ canvas {
     position: absolute;
     left: 1px;
     top: 1px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     background-color: #cccc00;
 }
 #xpBarText {
     position: absolute;
     left: 1px;
     top: 0px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     text-align: center;
     color: #ffffff;
 }
@@ -1463,16 +1476,16 @@ canvas {
     position: absolute;
     left: 1px;
     top: 1px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     background-color: #9900ff;
 }
 #manaBarText {
     position: absolute;
     left: 1px;
     top: 0px;
-    width: 150px;
-    height: 20px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     text-align: center;
     color: #ffffff;
 }

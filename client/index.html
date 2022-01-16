@@ -63,6 +63,20 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/16/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Added Clans.
+							<br>
+							Released 0.1.1.
+							<br>
+							Fixed Bugs.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							1/12/2022
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -618,7 +632,7 @@
 							<b>RULES:</b>
 							<br>
 							<br>
-							Do not make accounts with inappropriate names. Do not make accounts that inpersonate another player. Do not advertize using your username or in the chat. No random messages and spamming the chat. No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>.
+							Do not make accounts and clans with inappropriate names. Do not make accounts that inpersonate another player. Do not advertize using your username, clan name, or in the chat. No random messages and spamming the chat. No in-game items and accounts may be traded for <b>REAL WORLD MONEY</b>.
 							<br>
 							<br>
 							Violation of any of these rules may result in your account(s) being suspended and/or deleted.
@@ -672,7 +686,7 @@
 							If you don't see a already posted glitch, feel free to post a glitch! Our Github page is 
 							<a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/issues" target="_blank">here</a>.
 							<br>
-							Copyright (C) MeadowGuarder 2021							
+							Copyright (C) Meadow Guarder 2022
 						</div>
 					</div>
 				</div>
@@ -680,6 +694,12 @@
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							Announcements:
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 20px">
+							1/16/2021
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							0.1.1 has been released!
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 20px">
 							12/27/2021
@@ -774,10 +794,7 @@
 			<div id="respawnTimerDiv"></div>
 			<button id="respawn" onclick="runRespawn()" style="display: none;">Respawn</button>
 		</div>
-		<div id="chatBackground" class="UI-text" onmouseover="mouseInMenu(event);">
-
-		</div>
-		<div id="chatDiv" class="UI-text" onmouseover="mouseInMenu(event);">
+		<div id="chatDiv" class="UI-transparent" onmouseover="mouseInMenu(event);">
 			<div id="chatText" class="UI-text" onmouseover="mouseInMenu(event);">
 					
 			</div>
@@ -789,15 +806,20 @@
 			<div id="bossbarValue" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 			<div id="bossbarText" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		</div>
-		<div id="playerListBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="playerListDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			<div id="playerListHeader" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Players Online: [P]</div>
-			<button id="playerListExit" class="UI-button">
-				<div id="playerListExitText">X</div>
-			</button>
-			<div id="playerList" class="text UI-text" style="left: 8px;top: 30px;font-size: small;" onmouseover="mouseInMenu(event);"></div>
+		<div id="clanRewardDiv" class="UI-transparent" onmouseover="mouseInMenu(event);" style="display: none;">
+			<div id="clanRewardText" class="UI-text" onmouseover="mouseInMenu(event);"><b class="clanRewardName">null</b> has leveled up to Level <b id="clanLevel"></b>! Pick a reward:</div>
+			<div id="clanReward1" class="clanReward UI-transparent" onmouseover="mouseInMenu(event);" onclick="selectClanReward('upgrade1')">
+				<canvas id="clanReward1Canvas" class="clanRewardCanvas" onmouseover="mouseInMenu(event);"></canvas>
+			</div>
+			<div id="clanReward2" class="clanReward UI-transparent" onmouseover="mouseInMenu(event);" onclick="selectClanReward('upgrade2')">
+				<canvas id="clanReward2Canvas" class="clanRewardCanvas" onmouseover="mouseInMenu(event);"></canvas>
+			</div>
+			<div id="clanReward3" class="clanReward UI-transparent" onmouseover="mouseInMenu(event);" onclick="selectClanReward('upgrade3')">
+				<canvas id="clanReward3Canvas" class="clanRewardCanvas" onmouseover="mouseInMenu(event);"></canvas>
+			</div>
+			<div id="clanReward4" class="clanReward UI-transparent" onmouseover="mouseInMenu(event);" onclick="selectClanReward('upgrade4')">
+				<canvas id="clanReward4Canvas" class="clanRewardCanvas" onmouseover="mouseInMenu(event);"></canvas>
+			</div>
 		</div>
 		<div id="bottomRightBar" class="UI-display">
 			<div class="UI-text bottomRightButton">
@@ -817,25 +839,15 @@
 			</div>
 		</div>
 		<div id="debuffDiv" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
-		<div id="inventoryBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="inventoryDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="inventoryDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="inventoryHeader" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Inventory [I]</div>
 			<div id="inventoryItems" onmouseover="mouseInMenu(event);"></div>
 			<button id="inventoryExit" class="UI-button">
 				<div id="inventoryExitText">X</div>
 			</button>
 		</div>
-		<div id="hotbarDiv" class="UI-display" onmouseover="mouseInHotbar(event);">
-			<div id="hotbarItems">
-
-			</div>
-		</div>
-		<div id="craftBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="craftDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="hotbarDiv" class="UI-display" onmouseover="mouseInHotbar(event);"></div>
+		<div id="craftDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="craftHeader" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Crafting [C]</div>
 			<form id="craftForm" autocomplete="off" onmouseover="mouseInMenu(event);">
 				<input id="craftInput" placeholder="Search..." class="UI-input" type="text"></input>
@@ -847,10 +859,7 @@
 				<div id="craftExitText">X</div>
 			</button>
 		</div>
-		<div id="tradeBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="tradeDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="tradeDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="traderLabel" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Trader's Items</div>
 			<div class="UI-text" style="right: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Your Items</div>
 			<div id="tradeItems1" onmouseover="mouseInMenu(event);">
@@ -859,16 +868,13 @@
 			<div id="tradeItems2" onmouseover="mouseInMenu(event);">
 
 			</div>
-			<div id="traderAccepted" class="UI-text" style="position: absolute;left: 25%;top: 218px;font-size: large;transform: translate(-50%, 0%);" onmouseover="mouseInMenu(event);">Pending Accept</div>
+			<div id="traderAccepted" class="UI-text" style="position: absolute;left: 25%;top: 238px;font-size: large;transform: translate(-50%, 0%);" onmouseover="mouseInMenu(event);">Pending Accept</div>
 			<div id="tradeButtons">
 				<button id="acceptTrade" class="UI-button" onmouseover="mouseInMenu(event);">Accept Trade</button>
 				<button id="declineTrade" class="UI-button" onmouseover="mouseInMenu(event);">Decline Trade</button>
 			</div>
 		</div>
-		<div id="dialogueBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="dialogueDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="dialogueDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="dialogueMessage" class="UI-text typewriter" onmouseover="mouseInMenu(event);"></div>
 			<br>
 			<button id="dialogueOption1" class="dialogueOption UI-text" onmouseover="mouseInMenu(event);" onclick="dialogueResponse('option1');"></button>
@@ -879,46 +885,80 @@
 			<br>
 			<button id="dialogueOption4" class="dialogueOption UI-text" onmouseover="mouseInMenu(event);" onclick="dialogueResponse('option4');"></button>
 		</div>
-		<div id="settingBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="settingDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			<div id="settingHeader" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Settings [B]</div>
-			<div id="settingHeader" class="UI-text" style="left: 358px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">Game Settings</div>
-			<div id="settingPlayerDiv" onmouseover="mouseInMenu(event);">
-				<label for="body" class="UI-text" style="position: static;" onmouseover="mouseInMenu(event);">Player Body:</label>
-				<select name="body" class="settingDropdown UI-dropdown" style="position: relative;" onmouseover="mouseInMenu(event);" onmousedown="releaseAll();">
-					<optgroup label="Human">
-						<option value="Human">Human</option>
-						<option value="Avian">Avian</option>
-						<option value="Panda">Panda</option>
-					</optgroup>
-					<optgroup label="Undead">
-						<option value="Undead">Undead</option>
-						<option value="Orc">Orc</option>
-					</optgroup>
-				</select>
+		<div id="settingDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
+			<div id="settingNavigationBar" onmouseover="mouseInMenu(event);">
+				<button id="mainSettings" class="settingNavigationButton settingNavigationButtonLeft UI-text" onclick="switchToSetting('mainSettings')" onmouseover="mouseInMenu(event);">Settings</button>
+				<button id="clanSettings" class="settingNavigationButton UI-text" onclick="switchToSetting('clanSettings')" onmouseover="mouseInMenu(event);">Clans</button>
+				<button id="otherSettings" class="settingNavigationButton settingNavigationButtonRight UI-text" onclick="switchToSetting('otherSettings')" onmouseover="mouseInMenu(event);">Other</button>
 			</div>
-			<div id="settingLine"></div>
-			<div id="particleHeader" class="UI-text" style="left: 358px;top: 30px;font-size: small;" onmouseover="mouseInMenu(event);">Particles: 100%</div>
-			<input id="particleSlider" style="position: absolute;left: 358px;top: 45px;" type="range" min="0" max="100" value="100">
-			<button id="darknessEffectsButton" class="UI-button" style="position: absolute;left: 358px;top: 65px;">Darkness Effects: Enabled</button>
-			<button id="entityFadeOutButton" class="UI-button" style="position: absolute;left: 358px;top: 95px;">Entities Fade Out</button>
-			<div id="textSpeedHeader" class="UI-text" style="left: 358px;top: 120px;font-size: small;" onmouseover="mouseInMenu(event);">Text Speed: 2</div>
-			<input id="textSpeedSlider" style="position: absolute;left: 358px;top: 135px;" type="range" min="1" max="10" value="2">
-			<div id="volumePercentageHeader" class="UI-text" style="left: 358px;top: 150px;font-size: small;" onmouseover="mouseInMenu(event);">Volume: 100%</div>
-			<input id="volumePercentageSlider" style="position: absolute;left: 358px;top: 165px;" type="range" min="0" max="100" value="100">
-			<div id="renderDistanceHeader" class="UI-text" style="left: 358px;top: 180px;font-size: small;" onmouseover="mouseInMenu(event);">Render Distance: 2</div>
-			<input id="renderDistanceSlider" style="position: absolute;left: 358px;top: 195px;" type="range" min="1" max="5" value="2">
-			<button id="chatBackgroundButton" class="UI-button" style="position: absolute;left: 358px;top: 215px;">Chat Background: Disabled</button>
+			<div id="mainSettingsDiv" class="settingsDiv" style="display:none" onmouseover="mouseInMenu(event);">
+				<div id="settingPlayerDiv" onmouseover="mouseInMenu(event);">
+					<label for="body" class="UI-text" style="position: static;" onmouseover="mouseInMenu(event);">Player Body:</label>
+					<select name="body" class="settingDropdown UI-dropdown" style="position: relative;" onmouseover="mouseInMenu(event);" onmousedown="releaseAll();">
+						<optgroup label="Human">
+							<option value="Human">Human</option>
+							<option value="Avian">Avian</option>
+							<option value="Panda">Panda</option>
+						</optgroup>
+						<optgroup label="Undead">
+							<option value="Undead">Undead</option>
+							<option value="Orc">Orc</option>
+						</optgroup>
+					</select>
+				</div>
+				<div id="settingLine"></div>
+				<div id="particleHeader" class="UI-text" style="left: 358px;top: 5px;font-size: small;" onmouseover="mouseInMenu(event);">Particles: 100%</div>
+				<input id="particleSlider" style="position: absolute;left: 358px;top: 20px;" type="range" min="0" max="100" value="100">
+				<button id="darknessEffectsButton" class="UI-button" style="position: absolute;left: 358px;top: 40px;">Darkness Effects: Enabled</button>
+				<button id="entityFadeOutButton" class="UI-button" style="position: absolute;left: 358px;top: 70px;">Entities Fade Out</button>
+				<div id="textSpeedHeader" class="UI-text" style="left: 358px;top: 95px;font-size: small;" onmouseover="mouseInMenu(event);">Text Speed: 2</div>
+				<input id="textSpeedSlider" style="position: absolute;left: 358px;top: 110px;" type="range" min="1" max="10" value="2">
+				<div id="volumePercentageHeader" class="UI-text" style="left: 358px;top: 125px;font-size: small;" onmouseover="mouseInMenu(event);">Volume: 100%</div>
+				<input id="volumePercentageSlider" style="position: absolute;left: 358px;top: 140px;" type="range" min="0" max="100" value="100">
+				<div id="renderDistanceHeader" class="UI-text" style="left: 358px;top: 155px;font-size: small;" onmouseover="mouseInMenu(event);">Render Distance: 2</div>
+				<input id="renderDistanceSlider" style="position: absolute;left: 358px;top: 170px;" type="range" min="1" max="5" value="2">
+				<button id="chatBackgroundButton" class="UI-button" style="position: absolute;left: 358px;top: 190px;">Chat Background: Disabled</button>
+			</div>
+			<div id="clanSettingsDiv" class="settingsDiv" style="display:none" onmouseover="mouseInMenu(event);">
+				<div id="currentClanDisplay" class="UI-text" onmouseover="mouseInMenu(event);">Current Clan: <b class="clanRewardName">null</b></div>
+				<button id="createClanButton" class="UI-button" style="display:none" onmouseover="mouseInMenu(event);">Create Clan</button>
+				<form id="createClanForm" style="display:none" autocomplete="off" onmouseover="mouseInMenu(event);">
+					<input id="createClanInput" placeholder="Clan Name:" class="UI-input" type="text"></input>
+				</form>
+				<div id="clanMembersDisplay" class="UI-text" onmouseover="mouseInMenu(event);">Clan Members: null</div>
+				<div id="playersOnlineDisplay" class="UI-text" onmouseover="mouseInMenu(event);">Players Online: null</div>
+				<div id="clanOptions" onmouseover="mouseInMenu(event);">
+					<div id="clanXpBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
+						<div id="clanXpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+						<div id="clanXpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+					</div>
+					<div id="clanStats" class="UI-text" onmouseover="mouseInMenu(event);"><b class="clanRewardName">null</b>'s stats:</div>
+					<button id="disbandClanButton" class="UI-button" onmouseover="mouseInMenu(event);">Disband Clan</button>
+					<button id="transferLeadershipButton" class="UI-button" onmouseover="mouseInMenu(event);">Transfer Leadership</button>
+					<button id="leaveClanButton" class="UI-button" onmouseover="mouseInMenu(event);">Leave Clan</button>
+				</div>
+			</div>
+			<div id="otherSettingsDiv" class="settingsDiv UI-text" style="display:none" onmouseover="mouseInMenu(event);">
+				Information: This is Meadow Guarder <b id="versionDiv">null</b>.
+				<br>
+				<br>
+				<a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/issues" target="_blank">Github Page</a>
+				<br>
+				<a class="UI-link" href="https://forms.gle/ScdgYv1CqezcGb1r9" target="_blank">Contribution Form</a>
+				<br>
+				<a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/wiki">Meadow Guarder Wiki</a>
+				<br>
+				<br>
+				Copyright (C) Meadow Guarder 2022.
+				<br>
+				<br>
+				FPS: <b id="fpsDisplay"></b>
+			</div>
 			<button id="settingExit" class="UI-button">
 				<div id="settingExitText">X</div>
 			</button>
 		</div>
-		<div id="shopBackground" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
-			
-		</div>
-		<div id="shopDiv" class="UI-text" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="shopDiv" class="UI-transparent" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="shopHeader" class="UI-text" style="left: 8px;top: 8px;font-size: medium;" onmouseover="mouseInMenu(event);">'s Shop</div>
 			<div id="shopItems" onmouseover="mouseInMenu(event);"></div>
 			<button id="shopExit" class="UI-button">
@@ -951,6 +991,9 @@
 	<script src="/client/sound.js" defer></script>
 	<script src="/client/weather.js" defer></script>
 	<script src="/client/chat.js" defer></script>
+	<script src="/client/dialogue.js" defer></script>
+	<script src="/client/clan.js" defer></script>
+	<script src="/client/trade.js" defer></script>
 	<script src="/client/bossbar.js" defer></script>
 	<script src="/client/settings.js" defer></script>
 	<script src="/client/entity.js" defer></script>

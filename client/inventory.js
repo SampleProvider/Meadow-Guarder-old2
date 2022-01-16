@@ -769,6 +769,14 @@ Inventory = function(socket,server){
                 description += '<span style="color: #ee3333">' + Math.round(item.shieldPower * 100) + '% shield power.</span><br>';
             }
         }
+        if(item.luck){
+            if(item.luck > 0){
+                description += '<span style="color: #33ee33">+' + Math.round(item.luck * 100) + '% luck.</span><br>';
+            }
+            else{
+                description += '<span style="color: #ee3333">' + Math.round(item.luck * 100) + '% luck.</span><br>';
+            }
+        }
         if(item.equip === 'consume'){
             description += 'Left click to use.<br>';
         }
@@ -1810,7 +1818,6 @@ Inventory = function(socket,server){
         for(var i = 9;i < 18;i++){
             if(i % 3 === 0){
                 var row = document.createElement('div');
-                row.className = 'inventoryRow';
                 tradeItems1.appendChild(row);
             }
             var div = document.createElement('div');
@@ -1821,7 +1828,6 @@ Inventory = function(socket,server){
         for(var i = 0;i < 9;i++){
             if(i % 3 === 0){
                 var row = document.createElement('div');
-                row.className = 'inventoryRow';
                 tradeItems2.appendChild(row);
             }
             var div = document.createElement('div');
@@ -1859,6 +1865,32 @@ try{
     fs.createReadStream('./client/data/items.csv').pipe(csv()).on('data', (data) => items.push(data)).on('end', () => {
         for(var i in items){
             Item(items[i]);
+        }
+    });
+    var clanBoosts = [];
+    fs.createReadStream('./client/data/clanBoosts.csv').pipe(csv()).on('data', (data) => clanBoosts.push(data)).on('end', () => {
+        var levelNumber = 1;
+        clanData[levelNumber].boosts = {};
+        var upgradeNumber = 1;
+        for(var i in clanBoosts){
+            var boost = clanBoosts[i];
+            for(var j in boost){
+                var parsedInput = boost[j];
+                parsedInput = parsedInput === '\r' ? '' : parsedInput;
+                parsedInput = isNaN(parsedInput) === false && parsedInput !== '' ? Math.round(parseFloat(parsedInput) * 100) / 100 : parsedInput;
+                parsedInput = parsedInput === 'true' ? true : parsedInput;
+                parsedInput = parsedInput === 'false' ? false : parsedInput;
+                boost[j] = parsedInput;
+            }
+            clanData[levelNumber].boosts['upgrade' + upgradeNumber] = boost;
+            upgradeNumber += 1;
+            if(upgradeNumber > 4){
+                upgradeNumber = 1;
+                levelNumber += 1;
+                if(clanData[levelNumber]){
+                    clanData[levelNumber].boosts = {};
+                }
+            }
         }
     });
 }

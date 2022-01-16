@@ -67,3 +67,14 @@ craftInput.onmousedown = function(e){
     inChat = true;
     socket.emit('keyPress',{inputId:'releaseAll'});
 }
+
+createClanInput.onkeydown = function(e){
+    chatPress = true;
+}
+createClanInput.onmousedown = function(e){
+    inChat = true;
+    socket.emit('keyPress',{inputId:'releaseAll'});
+}
+createClanForm.onsubmit = function(e){
+    e.preventDefault();
+}
