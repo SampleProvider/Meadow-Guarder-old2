@@ -55,7 +55,7 @@ sendClanMsg = function(color,message,clanName){
     if(m === '0'){
         m = '00';
     }
-    console.error("[" + h + ":" + m + "] " + message);
+    console.error("[" + h + ":" + m + "] " + clanName + " -> " + message);
     for(var i in Player.list){
         if(Player.list[i]){
             if(Player.list[i].loggedOn){
@@ -72,7 +72,6 @@ sendClanMsg = function(color,message,clanName){
             }
         }
     }
-    client.channels.fetch('927992766452072510').then(channel => channel.send("```[" + h + ":" + m + "] " + clanName + " -> " + message.replace(/`/gi,'\'') + '```'));
 }
 
 logError = function(err){
