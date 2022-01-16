@@ -3143,7 +3143,7 @@ Player.onConnect = function(socket,username,chatBanned){
                         }
                     }
                     delete Clan.list[clan];
-                    Database.removeClan(clan.name);
+                    Database.removeClan(clan);
                     return;
                 }
             }
