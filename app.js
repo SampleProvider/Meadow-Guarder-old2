@@ -1,5 +1,5 @@
 
-VERSION = '0.1.0';
+VERSION = '0.1.1';
 
 if(process.env.PORT){
 	SERVER = 'heroku';
@@ -9,14 +9,15 @@ else{
 }
 
 var express = require('express');
+const { SocketAddress } = require('net');
 const {setInterval} = require('timers');
 var app = express();
 var serv = require('http').Server(app);
 require('./server/chat');
-require('./server/entity');
 require('./server/database');
+require('./server/entity');
 
-var badwords = require('./server/badwords.json').words;
+badwords = require('./server/badwords.json').words;
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -513,6 +514,23 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'giveclanxp' && level >= 3 && commandList.length > 2){
+					commandList.splice(0,1);
+					var amount = commandList.splice(commandList.length - 1,1)[0];
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						if(Player.list[i].clan){
+							Clan.list[Player.list[i].clan].addXp(parseInt(amount));
+							Player.list[socket.id].sendMessage('[!] Gave ' + amount + ' clan xp to ' + name + '.');
+						}
+						else{
+							Player.list[socket.id].sendMessage('[!] ' + name + ' is not in a clan.');
+						}
+					},function(name){
+						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'ip' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -636,6 +654,96 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'clanaccept' && level >= 0){
+					commandList.splice(0,1);
+					if(Player.list[socket.id].invitedClan){
+						Player.list[socket.id].clan = Player.list[socket.id].invitedClan;
+						Player.list[socket.id].invitedClan = null;
+						Clan.list[Player.list[socket.id].clan].members[Player.list[socket.id].name] = 'member';
+						for(var i in Player.list){
+							if(i + '' !== socket.id + ''){
+								for(var j in Clan.list[Player.list[socket.id].clan].members){
+									if(Player.list[i].name === j){
+										Player.list[i].sendMessage('[!] ' + Player.list[socket.id].name + ' has joined your clan.');
+										if(SOCKET_LIST[i]){
+											SOCKET_LIST[i].emit('updateClan',Clan.list[Player.list[socket.id].clan]);
+										}
+										Player.list[i].updateStats();
+									}
+								}
+							}
+						}
+						Player.list[socket.id].sendMessage('[!] Joined clan ' + Player.list[socket.id].clan + '.');
+						socket.emit('updateClan',Clan.list[Player.list[socket.id].clan]);
+					}
+					else{
+						Player.list[socket.id].sendMessage('[!] No invitation found.');
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'clanmsg' && level >= 0 && commandList.length > 1){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(Player.list[socket.id].clan){
+						sendClanMsg(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + name,Player.list[socket.id].clan);
+					}
+					else{
+						Player.list[socket.id].sendMessage('[!] You are not in a clan.');
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'clanleaderboard' && level >= 0){
+					commandList.splice(0,1);
+					var clanLeaderboardString = '[!] Clan Leaderboard:';
+					var clanLeaderboard = [];
+					for(var i in Clan.list){
+						clanLeaderboard.push({name:Clan.list[i].name,xp:Clan.list[i].xp,level:Clan.list[i].level});
+					}
+					var compare = function(a,b){
+						if(a.level > b.level){
+							return -1;
+						}
+						else if(b.level > a.level){
+							return 1;
+						}
+						else{
+							if(a.xp > b.xp){
+								return -1;
+							}
+							else if(b.xp > a.xp){
+								return 1;
+							}
+							return 0;
+						}
+					}
+					clanLeaderboard.sort(compare);
+					for(var i = 0;i < Math.min(10,clanLeaderboard.length);i++){
+						clanLeaderboardString += '<br>' + (i + 1) + ': ' + clanLeaderboard[i].name + ' (Level ' + clanLeaderboard[i].level + ' ' + clanLeaderboard[i].xp + ' Xp)';
+					}
+					Player.list[socket.id].sendMessage(clanLeaderboardString);
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'seeclan' && level >= 0 && commandList.length > 1){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(Clan.list[name]){
+						var clan = Clan.list[name];
+						var message = '[!] ' + name + ' is level ' + clan.level + ' with ' + clan.xp + ' xp.<br>Clan Members:';
+						for(var i in clan.members){
+							if(clan.members[i] === 'leader'){
+								message += '<br><span style="color: #ffff00">' + i + ' (Leader)</span>';
+							}
+							else{
+								message += '<br>' + i;
+							}
+						}
+						Player.list[socket.id].sendMessage(message);
+					}
+					else{
+						Player.list[socket.id].sendMessage('[!] There is no clan with name ' + name + '.');
+					}
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'stats' && level >= 0){
 					commandList.splice(0,1);
 					var statsString = '[!] Your stats:';
@@ -684,6 +792,10 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/clanaccept - Accept a clan invitation.';
+						message += '<br>/clanmsg [message] - Message people in your clan.';
+						message += '<br>/clanleaderboard - Clan leaderboards.';
+						message += '<br>/seeclan [clan name] - See a clan.';
 						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						Player.list[socket.id].sendMessage(message);
@@ -699,6 +811,10 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/clanaccept - Accept a clan invitation.';
+						message += '<br>/clanmsg - Message people in your clan.';
+						message += '<br>/clanleaderboard - Clan leaderboards.';
+						message += '<br>/seeclan [clan name] - See a clan.';
 						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						Player.list[socket.id].sendMessage(message);
@@ -721,6 +837,10 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/clanaccept - Accept a clan invitation.';
+						message += '<br>/clanmsg - Message people in your clan.';
+						message += '<br>/clanleaderboard - Clan leaderboards.';
+						message += '<br>/seeclan [clan name] - See a clan.';
 						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						Player.list[socket.id].sendMessage(message);
@@ -740,6 +860,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
 						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
+						message += '<br>/giveclanxp [player name] [amount] - Give clan xp to someone.';
 						message += '<br>/ip [player name] - See someone\'s ip.';
 						message += '<br>/serverupdate - Announce a server update.';
 						message += '<br>/exit - Exits the server without saving.';
@@ -749,6 +870,10 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/leaderboard - Leaderboards.';
 						message += '<br>/trade [player name] - Trade with someone.';
 						message += '<br>/pvp - Enter the PVP Arena.';
+						message += '<br>/clanaccept - Accept a clan invitation.';
+						message += '<br>/clanmsg - Message people in your clan.';
+						message += '<br>/clanleaderboard - Clan leaderboards.';
+						message += '<br>/seeclan [clan name] - See a clan.';
 						message += '<br>/stats - See your stats.';
 						message += '<br>/help - Help.';
 						Player.list[socket.id].sendMessage(message);
@@ -1223,20 +1348,10 @@ setInterval(function(){
 	for(var i in Player.list){
 		if(Player.list[i].debug.invisible === false){
 			if(Player.list[i].region){
-				if(Player.list[i].hp <= 0){
-					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + ' (' + Player.list[i].region + ')</span><img src="/client/websiteAssets/death.png"></img>');
-				}
-				else{
-					players.push(Player.list[i].name + ' (' + Player.list[i].region + ')');
-				}
+				players.push({name:Player.list[i].name,region:Player.list[i].region});
 			}
 			else{
-				if(Player.list[i].hp <= 0){
-					players.push('<img src="/client/websiteAssets/death.png"></img><span style="color:#ff0000">' + Player.list[i].name + '</span><img src="/client/websiteAssets/death.png"></img>');
-				}
-				else{
-					players.push(Player.list[i].name);
-				}
+				players.push({name:Player.list[i].name});
 			}
 		}
 	}
@@ -1308,14 +1423,14 @@ setInterval(function(){
 
 if(SERVER !== 'localhost'){
 	process.on('SIGTERM',function(){
-		storeDatabase(Player.list);
+		storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
 		},1000);
 	});
 	process.on('SIGINT',function(){
-		storeDatabase(Player.list);
+		storeDatabase()
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
@@ -1323,7 +1438,7 @@ if(SERVER !== 'localhost'){
 	});
 }
 process.on('uncaughtException',function(err){
-	storeDatabase(Player.list);
+	storeDatabase()
 	logError(err.stack);
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\n' + err.message);
 	// setTimeout(function(){
@@ -1331,7 +1446,7 @@ process.on('uncaughtException',function(err){
 	// },1000);
 });
 process.on('unhandledRejection',function(reason,promise){
-	storeDatabase(Player.list);
+	storeDatabase()
 	addToChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
 	// setTimeout(function(){
 	// 	process.exit(1);

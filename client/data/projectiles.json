@@ -96,6 +96,11 @@
         "animations":2,
         "collisionType":"none"
     },
+    "mysticlaser":{
+        "width":32,
+        "height":7,
+        "collisionType":"none"
+    },
     "coppershiv":{
         "width":14,
         "height":14,

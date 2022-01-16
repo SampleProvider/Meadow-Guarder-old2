@@ -40,6 +40,40 @@ addToChat = function(color,message){
     }
     client.channels.fetch('927992766452072510').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace(/`/gi,'\'') + '```'));
 }
+sendClanMsg = function(color,message,clanName){
+    var d = new Date();
+    var m = '' + d.getMinutes();
+    var h = d.getHours() + 24;
+    if(SERVER !== 'localhost'){
+        h -= 5;
+    }
+    h = h % 24;
+    h = '' + h;
+    if(m.length === 1){
+        m = '' + 0 + m;
+    }
+    if(m === '0'){
+        m = '00';
+    }
+    console.error("[" + h + ":" + m + "] " + message);
+    for(var i in Player.list){
+        if(Player.list[i]){
+            if(Player.list[i].loggedOn){
+                for(var j in Clan.list[clanName].members){
+                    if(Player.list[i].name === j){
+                        if(SOCKET_LIST[i]){
+                            SOCKET_LIST[i].emit('addToChat',{
+                                color:color,
+                                message:clanName + " -> " + message,
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    }
+    client.channels.fetch('927992766452072510').then(channel => channel.send("```[" + h + ":" + m + "] " + clanName + " -> " + message.replace(/`/gi,'\'') + '```'));
+}
 
 logError = function(err){
     client.channels.fetch('927995990898782319').then(channel => channel.send("```" + err + "```"));

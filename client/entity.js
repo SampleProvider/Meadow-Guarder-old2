@@ -5,6 +5,8 @@ var Entity = function(initPack){
     self.y = initPack.y;
     self.spdX = 0;
     self.spdY = 0;
+    self.serverX = initPack.x;
+    self.serverY = initPack.y;
     self.direction = initPack.direction;
     self.width = initPack.width;
     self.height = initPack.height;
@@ -24,7 +26,11 @@ var Entity = function(initPack){
     self.toRemove = false;
     self.updated = true;
     self.update = function(){
-        if(self.interpolationStage > 0){
+        if(self.interpolationStage === 1){
+            self.x = self.serverX;
+            self.y = self.serverY;
+        }
+        else if(self.interpolationStage > 0){
             if(self.spdX >= 0.25 && self.spdX <= 0.5){
                 self.x += 0.6;
                 self.spdX = 0;
@@ -310,7 +316,11 @@ var Projectile = function(initPack){
     }
 
     self.update = function(){
-        if(self.interpolationStage > 0){
+        if(self.interpolationStage === 1){
+            self.x = self.serverX;
+            self.y = self.serverY;
+        }
+        else if(self.interpolationStage > 0){
             self.x += self.spdX;
             self.y += self.spdY;
             self.direction += self.spdDirection;

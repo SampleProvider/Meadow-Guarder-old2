@@ -6,7 +6,9 @@ if(window.requestAnimationFrame === undefined){
     alert('This game uses RequestAnimationFrame, which is not supported in your browser.');
 }
 
-var VERSION = '0.1.0';
+var VERSION = '0.1.1';
+
+versionDiv.innerHTML = VERSION;
 
 var socket = io({
     reconnection:false,
@@ -52,6 +54,8 @@ var worldRegion = '';
 
 var respawnTimer = 0;
 
+var fpsTimes = [];
+
 var effectDarkness = 0;
 
 var inGame = false;
@@ -61,10 +65,10 @@ var getEntityDescription = function(entity){
     description += entity.name !== undefined ? entity.name : entity.amount === 1 ? '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + '</span>' : '<span style="color: ' + inventory.getRarityColor(Item.list[entity.item].rarity) + '">' + Item.list[entity.item].name + ' (' + entity.amount + ')</span>';
     description += '<br><div style="font-size: 11px">';
     if(entity.hp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.hp),0) + ' / ' + entity.hpMax + ' (' + Math.max(Math.ceil(entity.hp / entity.hpMax * 100)) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.hp),0) + ' / ' + entity.hpMax + ' (' + Math.max(Math.ceil(entity.hp / entity.hpMax * 100),0) + '%)</span><br>';
     }
     if(entity.harvestHp !== undefined){
-        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.harvestHp),0) + ' / ' + entity.harvestHpMax + ' (' + Math.max(Math.ceil(entity.harvestHp / entity.harvestHpMax * 100)) + '%)</span><br>';
+        description += '<span style="color: #5ac54f">Health: ' + Math.max(Math.round(entity.harvestHp),0) + ' / ' + entity.harvestHpMax + ' (' + Math.max(Math.ceil(entity.harvestHp / entity.harvestHpMax * 100),0) + '%)</span><br>';
     }
     if(entity.xp !== undefined){
         description += '<span style="color: #cccc00">Xp: Level ' + entity.level + ' ' + entity.xp + ' / ' + entity.xpMax + ' (' + Math.ceil(entity.xp / entity.xpMax * 100) + '%)</span><br>';
@@ -147,137 +151,6 @@ socket.on('refreshShop',function(pack){
     inventory.refreshShop(pack);
     openShop();
 });
-
-socket.on('openTrade',function(pack){
-    openTrade();
-    openInventory();
-    canDragTradeItems = true;
-    traderAccepted.innerHTML = 'Pending Accept';
-    traderAccepted.style.color = '#eeee33';
-    acceptTrade.style.display = 'inline-block';
-    acceptTrade.innerHTML = 'Accept Trade';
-    declineTrade.style.display = 'inline-block';
-    traderLabel.innerHTML = pack + '\'s Items';
-    for(var i = 0;i < 18;i++){
-        inventory.items['trade' + i] = {};
-    }
-    inventory.refreshInventory();
-});
-socket.on('updateTrade',function(pack){
-    if(pack.index >= 0 && pack.index <= 8){
-        inventory.items['trade' + (9 + pack.index)] = {
-            id:pack.id,
-            amount:pack.amount,
-        };
-        inventory.refreshItem('trade' + (9 + pack.index));
-    }
-});
-socket.on('closeTrade',function(pack){
-    closeTrade();
-});
-socket.on('traderAccepted',function(pack){
-    if(pack.final === false){
-        traderAccepted.innerHTML = 'Trader Accepted';
-        traderAccepted.style.color = '#33ee33';
-    }
-    else{
-        traderAccepted.innerHTML = 'Trader Final Accepted';
-        traderAccepted.style.color = '#33ee33';
-    }
-});
-socket.on('finalAccept',function(data){
-    traderAccepted.innerHTML = 'Pending Final Accept';
-    traderAccepted.style.color = '#eeee33';
-    acceptTrade.style.display = 'inline-block';
-    acceptTrade.innerHTML = 'Final Accept';
-    declineTrade.style.display = 'inline-block';
-});
-
-var canDragTradeItems = true;
-
-acceptTrade.onclick = function(){
-    acceptTrade.style.display = 'none';
-    socket.emit('acceptTrade');
-    canDragTradeItems = false;
-    for(var i in crafts){
-        inventory.updateCraftClient(i);
-    }
-}
-
-declineTrade.onclick = function(){
-    acceptTrade.style.display = 'none';
-    declineTrade.style.display = 'none';
-    socket.emit('declineTrade');
-    canDragTradeItems = false;
-    for(var i in crafts){
-        inventory.updateCraftClient(i);
-    }
-}
-
-var text = '';
-var textIndex = 0;
-var typeWriter = function(cb){
-    if(textIndex < text.length){
-        dialogueMessage.innerHTML += text.charAt(textIndex);
-        textIndex += 1;
-        setTimeout(function(){
-            typeWriter(cb);
-        },100 / settings.textSpeed);
-    }
-    else{
-        cb();
-    }
-}
-
-socket.on('dialogue',function(data){
-    if(data.message){
-        openDialogue();
-        dialogueMessage.innerHTML = '';
-        text = data.message;
-        textIndex = 0;
-        dialogueOption1.style.display = 'none';
-        dialogueOption2.style.display = 'none';
-        dialogueOption3.style.display = 'none';
-        dialogueOption4.style.display = 'none';
-        dialogueOption1.style.animationName = 'none';
-        dialogueOption2.style.animationName = 'none';
-        dialogueOption3.style.animationName = 'none';
-        dialogueOption4.style.animationName = 'none';
-        typeWriter(function(){
-            if(data.option1){
-                dialogueOption1.innerHTML = data.option1;
-                dialogueOption1.style.display = 'inline-block';
-                dialogueOption1.style.opacity = 0.7;
-                dialogueOption1.style.animationName = 'fadeIn';
-            }
-            if(data.option2){
-                dialogueOption2.innerHTML = data.option2;
-                dialogueOption2.style.display = 'inline-block';
-                dialogueOption2.style.opacity = 0.7;
-                dialogueOption2.style.animationName = 'fadeIn';
-            }
-            if(data.option3){
-                dialogueOption3.innerHTML = data.option3;
-                dialogueOption3.style.display = 'inline-block';
-                dialogueOption3.style.opacity = 0.7;
-                dialogueOption3.style.animationName = 'fadeIn';
-            }
-            if(data.option4){
-                dialogueOption4.innerHTML = data.option4;
-                dialogueOption4.style.display = 'inline-block';
-                dialogueOption4.style.opacity = 0.7;
-                dialogueOption4.style.animationName = 'fadeIn';
-            }
-        });
-    }
-    else{
-        closeDialogue();
-    }
-});
-
-var dialogueResponse = function(response){
-    socket.emit("dialogueResponse",response);
-}
 
 Img.healthbar = new Image();
 Img.healthbar.src = '/client/img/healthbar.png';
@@ -373,6 +246,9 @@ socket.on('selfId',function(data){
         }
     }
     currentWeather = data.weather;
+    playerClan = data.clan;
+    playerName = data.name;
+    updateClan();
     signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         selfId = data.id;
@@ -421,10 +297,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            player.spdX = (data.player[i].x - player.x) / 4;
+                            player.spdX = (data.player[i].x - player.x) / 3;
+                            player.serverX = data.player[i].x;
                         }
                         else if(j === 'y'){
-                            player.spdY = (data.player[i].y - player.y) / 4;
+                            player.spdY = (data.player[i].y - player.y) / 3;
+                            player.serverY = data.player[i].y;
                         }
                         else if(j === 'hp'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
@@ -597,10 +475,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            projectile.spdX = (data.projectile[i].x - projectile.x) / 4;
+                            projectile.spdX = (data.projectile[i].x - projectile.x) / 3;
+                            projectile.serverX = data.projectile[i].x;
                         }
                         else if(j === 'y'){
-                            projectile.spdY = (data.projectile[i].y - projectile.y) / 4;
+                            projectile.spdY = (data.projectile[i].y - projectile.y) / 3;
+                            projectile.serverY = data.projectile[i].y;
                         }
                         else if(j === 'direction'){
                             projectile.direction = projectile.direction % 360;
@@ -614,7 +494,7 @@ socket.on('update',function(data){
                             else if(direction - projectile.direction < -180){
                                 direction += 360;
                             }
-                            projectile.spdDirection = (direction - projectile.direction) / 4;
+                            projectile.spdDirection = (direction - projectile.direction) / 3;
                         }
                         else if(j === 'toRemove'){
                             projectile[j] = data.projectile[i][j];
@@ -644,10 +524,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            monster.spdX = (data.monster[i].x - monster.x) / 4;
+                            monster.spdX = (data.monster[i].x - monster.x) / 3;
+                            monster.serverX = data.monster[i].x;
                         }
                         else if(j === 'y'){
-                            monster.spdY = (data.monster[i].y - monster.y) / 4;
+                            monster.spdY = (data.monster[i].y - monster.y) / 3;
+                            monster.serverY = data.monster[i].y;
                         }
                         else if(j === 'direction'){
                             monster[j] = (data.monster[i][j] + 360) % 360;
@@ -684,10 +566,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            npc.spdX = (data.npc[i].x - npc.x) / 4;
+                            npc.spdX = (data.npc[i].x - npc.x) / 3;
+                            npc.serverX = data.npc[i].x;
                         }
                         else if(j === 'y'){
-                            npc.spdY = (data.npc[i].y - npc.y) / 4;
+                            npc.spdY = (data.npc[i].y - npc.y) / 3;
+                            npc.serverY = data.npc[i].y;
                         }
                         else if(j === 'direction'){
                             npc[j] = (data.npc[i][j] + 360) % 360;
@@ -721,10 +605,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            harvestableNpc.spdX = (data.harvestableNpc[i].x - harvestableNpc.x) / 4;
+                            harvestableNpc.spdX = (data.harvestableNpc[i].x - harvestableNpc.x) / 3;
+                            harvestableNpc.serverX = data.harvestableNpc[i].x;
                         }
                         else if(j === 'y'){
-                            harvestableNpc.spdY = (data.harvestableNpc[i].y - harvestableNpc.y) / 4;
+                            harvestableNpc.spdY = (data.harvestableNpc[i].y - harvestableNpc.y) / 3;
+                            harvestableNpc.serverY = data.harvestableNpc[i].y;
                         }
                         else if(j === 'toRemove'){
                             harvestableNpc[j] = data.harvestableNpc[i][j];
@@ -766,10 +652,12 @@ socket.on('update',function(data){
 
                         }
                         else if(j === 'x'){
-                            droppedItem.spdX = (data.droppedItem[i].x - droppedItem.x) / 4;
+                            droppedItem.spdX = (data.droppedItem[i].x - droppedItem.x) / 3;
+                            droppedItem.serverX = data.droppedItem[i].x;
                         }
                         else if(j === 'y'){
-                            droppedItem.spdY = (data.droppedItem[i].y - droppedItem.y) / 4;
+                            droppedItem.spdY = (data.droppedItem[i].y - droppedItem.y) / 3;
+                            droppedItem.serverY = data.droppedItem[i].y;
                         }
                         else{
                             droppedItem[j] = data.droppedItem[i][j];
@@ -918,7 +806,7 @@ socket.on('changeMap',function(data){
         shadeAmount = 0;
     }
     teleportingMap = data.teleport;
-    shadeSpeed = 3 / 40;
+    shadeSpeed = 0.1;
     closeShop();
 });
 socket.on('regionChange',function(data){
@@ -972,6 +860,15 @@ var MGHC = function(){};
 var MGHC1 = function(){};
 
 var loop = function(){
+    var now = performance.now();
+    while(fpsTimes.length > 0 && fpsTimes[0] <= now - 1000){
+        fpsTimes.shift();
+    }
+    fpsTimes.push(now);
+    if(fpsDisplay.innerHTML !== fpsTimes.length){
+        fpsDisplay.innerHTML = fpsTimes.length;
+    }
+    
     if(!selfId){
         return;
     }
@@ -1061,7 +958,7 @@ var loop = function(){
         socket.emit('teleportFadeIn');
     }
     if(Player.list[selfId].map === teleportingMap && shadeAmount > 1){
-        shadeSpeed = -3 / 40;
+        shadeSpeed = -0.1;
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
         socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
@@ -1260,17 +1157,6 @@ socket.on("attack",function(type){
     }
 });
 
-socket.on('playerList',function(data){
-    var html = '';
-    for(var i in data){
-        var newData = data[i].replace(/ /gi,'&nbsp;');
-        html += newData + '<br>';
-    }
-    if(html !== playerList.innerHTML){
-        playerList.innerHTML = html;
-    }
-});
-
 disconnectClient = function(){
     disconnectedDiv.style.display = 'inline-block';
     if(selfId){
@@ -1354,6 +1240,34 @@ updateDebuffPopupMenu = function(index){
         debuffMenu.style.top = rawMouseY + 'px';
     }
 }
+updateClanPopupMenu = function(index){
+    if(index === -1){
+        itemMenu.style.display = 'none';
+        return;
+    }
+    if(clanDescriptions[index] === undefined){
+        return;
+    }
+    itemMenu.style.display = 'inline-block';
+    itemMenu.innerHTML = clanDescriptions[index];
+    var rect = itemMenu.getBoundingClientRect();
+    itemMenu.style.left = '';
+    itemMenu.style.right = '';
+    itemMenu.style.top = '';
+    itemMenu.style.bottom = '';
+    if(rawMouseX + rect.right - rect.left > window.innerWidth){
+        itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
+    }
+    else{
+        itemMenu.style.left = rawMouseX + 'px';
+    }
+    if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
+        itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
+    }
+    else{
+        itemMenu.style.top = rawMouseY + 'px';
+    }
+}
 dropItem = function(click){
     socket.emit('dragItem',{
         index1:-1,
@@ -1430,9 +1344,6 @@ document.onkeydown = function(event){
     }
     if(key === 'b' || key === 'B'){
         toggleSetting();
-    }
-    if(key === 'p' || key === 'P'){
-        togglePlayerList();
     }
     if(key === 'Enter' || key === '/'){
         chatInput.focus();

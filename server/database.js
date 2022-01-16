@@ -18,12 +18,19 @@ const client = new Client({
 
 client.connect();
 
-storeDatabase = function(players){
+storeDatabase = function(){
     if(!USE_DB){
 		return;
 	}
-	for(var i in players){
-		client.query('UPDATE progress SET username=\'' + players[i].username + '\', progress=\'' + JSON.stringify({items:players[i].inventory.items,xp:players[i].xp,level:players[i].level,img:players[i].img,advancements:players[i].advancements,worldRegion:players[i].worldRegion,playTime:players[i].playTime,version:VERSION}) + '\' WHERE username=\'' + players[i].username + '\';', (err, res) => {
+	for(var i in Player.list){
+		client.query('UPDATE progress SET username=\'' + Player.list[i].username + '\', progress=\'' + JSON.stringify({items:Player.list[i].inventory.items,xp:Player.list[i].xp,level:Player.list[i].level,img:Player.list[i].img,advancements:Player.list[i].advancements,worldRegion:Player.list[i].worldRegion,playTime:Player.list[i].playTime,version:VERSION}) + '\' WHERE username=\'' + Player.list[i].username + '\';', (err, res) => {
+			if(err){
+				throw err;
+			}
+		});
+	}
+	for(var i in Clan.list){
+		client.query('UPDATE clans SET name=\'' + i + '\', progress=\'' + JSON.stringify(Clan.list[i]) + '\' WHERE name=\'' + i + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}
@@ -38,6 +45,28 @@ getDatabase = function(username,cb){
 		if(res){
 			if(res.rows[0]){
 				return cb(JSON.parse(res.rows[0].progress));
+			}
+			else{
+				return cb({});
+			}
+		}
+		else{
+			return cb({});
+		}
+	});
+}
+getClans = function(cb){
+    if(!USE_DB){
+		return cb({});
+	}
+	client.query('SELECT * FROM clans;', (err, res) => {
+		if(res){
+			if(res.rows[0]){
+				var clans = {};
+				for(var i in res.rows){
+					clans[res.rows[i].name] = JSON.parse(res.rows[i].progress);
+				}
+				return cb(clans);
 			}
 			else{
 				return cb({});
@@ -380,5 +409,24 @@ Database.changePassword = function(data,cb){
 			throw err;
 		}
 		return cb();
+	});
+}
+Database.addClan = function(data){
+	client.query('DELETE FROM clans WHERE name=\'' + data.name + '\';', (err, res) => {
+		if(err){
+			throw err;
+		}
+		client.query('INSERT INTO clans(name, progress) VALUES (\'' + data.name + '\', \'' + data.progress + '\');', (err, res) => {
+			if(err){
+				throw err;
+			}
+		});
+	});
+}
+Database.removeClan = function(data){
+	client.query('DELETE FROM clans WHERE name=\'' + data + '\';', (err, res) => {
+		if(err){
+			throw err;
+		}
 	});
 }
