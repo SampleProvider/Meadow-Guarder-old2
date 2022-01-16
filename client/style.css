@@ -734,7 +734,6 @@ canvas {
     width: 24px;
     height: 24px;
     image-rendering: pixelated;
-    pointer-events: none;
 }
 .slotCanvas {
     position: absolute;
@@ -743,7 +742,6 @@ canvas {
     width: 48px;
     height: 48px;
     image-rendering: pixelated;
-    pointer-events: none;
 }
 .slotCanvasLarge {
     position: relative;
@@ -752,7 +750,6 @@ canvas {
     width: 60px;
     height: 60px;
     image-rendering: pixelated;
-    pointer-events: none;
 }
 .itemAmount {
     position: relative;
