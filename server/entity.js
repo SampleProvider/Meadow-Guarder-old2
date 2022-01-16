@@ -3083,6 +3083,8 @@ Player.onConnect = function(socket,username,chatBanned){
                     return;
                 }
                 if(Clan.list[player.clan].members[data]){
+                    Clan.list[player.clan].members[player.name] = 'member';
+                    Clan.list[player.clan].members[data] = 'leader';
                     for(var i in Player.list){
                         for(var j in Clan.list[player.clan].members){
                             if(Player.list[i].name === j){
