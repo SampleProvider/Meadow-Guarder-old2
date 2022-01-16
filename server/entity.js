@@ -2916,6 +2916,10 @@ Player.onConnect = function(socket,username){
                     return;
                 }
             }
+            if(Clan.list[data]){
+                player.sendMessage('[!] There is already a clan with name ' + data + '.');
+                return;
+            }
             var clan = new Clan(data,{
                 members:{},
                 level:0,
