@@ -2213,6 +2213,9 @@ Player = function(param,socket){
             if(Clan.list[self.clan].boosts.slots !== undefined){
                 self.inventory.maxSlots += Clan.list[self.clan].boosts.slots;
             }
+            if(Clan.list[self.clan].boosts.shieldProtection !== undefined){
+                self.shieldProtection += Clan.list[self.clan].boosts.shieldProtection;
+            }
             if(Clan.list[self.clan].boosts.luck !== undefined){
                 self.luck += Clan.list[self.clan].boosts.luck;
             }

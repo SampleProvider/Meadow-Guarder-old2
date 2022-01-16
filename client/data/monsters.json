@@ -984,7 +984,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1001,7 +1001,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1018,7 +1018,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1035,7 +1035,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1052,7 +1052,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1069,7 +1069,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1086,7 +1086,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1103,7 +1103,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":85,
+                                "damage":125,
                                 "critChance":0.05,
                                 "critPower":2
                             },
