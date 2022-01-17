@@ -4174,9 +4174,6 @@ Monster = function(param){
                         }
                     }
                 }
-                if(self.getSquareDistance(self.randomPos) > 16){
-                    self.retreat();
-                }
             }
             else{
                 self.retreat();
