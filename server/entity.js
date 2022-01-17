@@ -3948,7 +3948,7 @@ Monster = function(param){
                     else if(self.getSquareDistance(self.getTarget()) > 32){
                         self.retreat();
                     }
-                    else if(self.getSquareDistance(self.randomPos) > 64){
+                    else if(self.getSquareDistance(self.randomPos) > 48){
                         self.retreat();
                     }
                     if(self.getTarget()){
