@@ -3905,7 +3905,7 @@ Monster = function(param){
                                 if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
                                     if(self.canSee(Player.list[i])){
                                         if(Player.list[i]){
-                                            self.target = Player.list[i];
+                                            self.target = i;
                                             self.targetType = 'Player';
                                             self.attackState = 'attack';
                                             self.damaged = false;
