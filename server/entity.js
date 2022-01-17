@@ -155,10 +155,10 @@ spawnMonster = function(spawner,spawnId){
                 }
                 leaderboard.sort(compare);
                 var clanCompare = function(a,b){
-                    if(a.xp > b.xp){
+                    if(clans[a].xp > clans[b].xp){
                         return -1;
                     }
-                    else if(b.xp > a.xp){
+                    else if(clans[b].xp > clans[a].xp){
                         return 1;
                     }
                     else{
