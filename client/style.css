@@ -794,6 +794,7 @@ canvas {
     height: 0%;
     opacity: 0.5;
     background-color: #ff0000;
+    border-radius: 8px;
 }
 .outlineImage {
     position: relative;
