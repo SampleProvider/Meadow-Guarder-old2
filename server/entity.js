@@ -139,7 +139,7 @@ spawnMonster = function(spawner,spawnId){
                     }
                 }
                 for(var i in clans){
-                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 1000000);
+                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 750000);
                     Clan.list[i].addXp(clans[i].xp);
                 }
                 var compare = function(a,b){
@@ -494,106 +494,39 @@ Actor = function(param){
             var slope = (self.y - pt.y) / (self.x - pt.x);
             return self.y + (x - self.x) * slope;
         }
+        var xDirection = 1;
         if(self.gridX > pt.gridX){
-            for(var i = self.gridX;i >= pt.gridX;i--){
-                if(i === self.gridX){
-                    var lastY = self.gridY;
-                    var y = Math.floor(getYValue(i * 64 - 64) / 64);
-                }
-                else{
-                    var lastY = Math.floor(getYValue(i * 64) / 64);
-                    var y = Math.floor(getYValue(i * 64 - 64) / 64);
-                }
-                if(lastY > y){
-                    for(var j = lastY;j >= y;j--){
-                        if(Collision.list[self.map]){
-                            if(Collision.list[self.map][self.zindex]){
-                                if(Collision.list[self.map][self.zindex][i]){
-                                    if(Collision.list[self.map][self.zindex][i][j]){
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else{
-                    for(var j = lastY;j <= y;j++){
-                        if(Collision.list[self.map]){
-                            if(Collision.list[self.map][self.zindex]){
-                                if(Collision.list[self.map][self.zindex][i]){
-                                    if(Collision.list[self.map][self.zindex][i][j]){
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            xDirection = -1;
         }
-        else if(self.gridX < pt.gridX){
-            for(var i = self.gridX;i <= pt.gridX;i++){
-                if(i === self.gridX){
-                    var lastY = self.gridY;
-                    var y = Math.floor(getYValue(i * 64 + 64) / 64);
-                }
-                else{
-                    var lastY = Math.floor(getYValue(i * 64) / 64);
-                    var y = Math.floor(getYValue(i * 64 + 64) / 64);
-                }
-                if(lastY > y){
-                    for(var j = lastY;j >= y;j--){
-                        if(Collision.list[self.map]){
-                            if(Collision.list[self.map][self.zindex]){
-                                if(Collision.list[self.map][self.zindex][i]){
-                                    if(Collision.list[self.map][self.zindex][i][j]){
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else{
-                    for(var j = lastY;j <= y;j++){
-                        if(Collision.list[self.map]){
-                            if(Collision.list[self.map][self.zindex]){
-                                if(Collision.list[self.map][self.zindex][i]){
-                                    if(Collision.list[self.map][self.zindex][i][j]){
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else{
-            var lastY = self.gridY;
-            var y = pt.gridY;
-            if(lastY > y){
-                for(var j = lastY;j >= y;j--){
-                    if(Collision.list[self.map]){
-                        if(Collision.list[self.map][self.zindex]){
-                            if(Collision.list[self.map][self.zindex][self.gridX]){
-                                if(Collision.list[self.map][self.zindex][self.gridX][j]){
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
+        var x = self.gridX;
+        var distance = Math.abs(self.gridX - pt.gridX);
+        for(var i = 0;i <= distance;i++){
+            x += xDirection;
+            if(x === self.gridX){
+                var y1 = self.gridY;
             }
             else{
-                for(var j = lastY;j <= y;j++){
-                    if(Collision.list[self.map]){
-                        if(Collision.list[self.map][self.zindex]){
-                            if(Collision.list[self.map][self.zindex][self.gridX]){
-                                if(Collision.list[self.map][self.zindex][self.gridX][j]){
-                                    return false;
-                                }
+                var y1 = Math.floor(getYValue(x * 64) / 64);
+            }
+            if(x === pt.gridX){
+                var y2 = pt.gridY;
+            }
+            else{
+                var y2 = Math.floor(getYValue(x * 64 + 64) / 64);
+            }
+            var yDirection = 1;
+            if(y1 > y2){
+                yDirection = -1;
+            }
+            var y = y1;
+            var distance2 = Math.abs(y1 - y2);
+            for(var j = 0;j <= distance2;j++){
+                y += yDirection;
+                if(Collision.list[self.map]){
+                    if(Collision.list[self.map][self.zindex]){
+                        if(Collision.list[self.map][self.zindex][x]){
+                            if(Collision.list[self.map][self.zindex][x][j]){
+                                return false;
                             }
                         }
                     }
@@ -4233,8 +4166,6 @@ Monster = function(param){
     }
     self.updateAttack = function(){
         if(!self.target){
-            self.mainReload = 0;
-            self.passiveReload = 0;
             return;
         }
         if(!self.canAttack){

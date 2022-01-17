@@ -45,7 +45,7 @@ var cameraY = 0;
 var selfId = null;
 var scrollAllowed = true;
 
-var shadeSpeed = -0.01;
+var shadeSpeed = 0;
 var shadeAmount = 1;
 var mapShadeSpeed = 0;
 var mapShadeAmount = 0;
@@ -252,7 +252,9 @@ socket.on('selfId',function(data){
     signError.innerHTML = '<span style="color: #55ff55">Success! Server response recieved.</span><br>' + signError.innerHTML;
     setTimeout(function(){
         selfId = data.id;
-        chat = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
+        renderMap(Player.list[selfId].map,function(){
+            shadeSpeed = -0.01;
+        });
         chatText.innerHTML = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
         gameDiv.style.display = 'inline-block';
         window.requestAnimationFrame(loop);
@@ -958,7 +960,6 @@ var loop = function(){
         socket.emit('teleportFadeIn');
     }
     if(Player.list[selfId].map === teleportingMap && shadeAmount > 1){
-        shadeSpeed = -0.1;
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
         socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
@@ -968,6 +969,9 @@ var loop = function(){
         else{
             resetWeather();
         }
+        renderMap(teleportingMap,function(){
+            shadeSpeed = -0.1;
+        });
     }
     if(Player.list[selfId].map === teleportingMap && shadeAmount <= 0 && shadeSpeed < 0){
         teleportingMap = '';

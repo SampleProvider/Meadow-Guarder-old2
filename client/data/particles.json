@@ -136,7 +136,7 @@
         "positionType":"fixed",
         "movementType":"fall",
         "movementSpeed":5,
-        "movementTimer":50,
+        "movementTimer":20,
         "movementTimerBuffer":0,
         "rotationType":"random",
         "rotationValue":20,

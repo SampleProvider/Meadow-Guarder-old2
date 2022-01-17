@@ -8,7 +8,79 @@ var tilesetLoaded = false;
 tileset.onload = function(){
     tilesetLoaded = true;
 };
-var renderWorld = function(json,name){
+var renderChunks = function(json,name,cb){
+    var tile = json.tilesets[0];
+    var size = json.tilewidth;
+    for(var i in loadedMap){
+        loadedMap[i].loaded = true;
+    }
+    for(var i = 0;i < json.layers.length;i++){
+        if(json.layers[i].type === "tilelayer" && json.layers[i].visible && json.layers[i].name !== "HarvestableNpc:"){
+            for(var j = 0;j < json.layers[i].chunks.length;j++){
+                if(Math.abs(Math.floor(Player.list[selfId].x / 1024) * 16 - json.layers[i].chunks[j].x) < settings.renderDistance * 16 && Math.abs(Math.floor(Player.list[selfId].y / 1024) * 16 - json.layers[i].chunks[j].y) < settings.renderDistance * 16){
+                    if(loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':']){
+                        if(loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].loaded){
+                            continue;
+                        }
+                        var tempLower = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].lower;
+                        var tempUpper = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].upper;
+                    }
+                    else{
+                        if(isFirefox){
+                            var tempLower = document.createElement('canvas');
+                            var tempUpper = document.createElement('canvas');
+                            tempLower.canvas.width = 16 * 64;
+                            tempLower.canvas.height = 16 * 64;
+                            tempUpper.canvas.width = 16 * 64;
+                            tempUpper.canvas.height = 16 * 64;
+                        }
+                        else{
+                            var tempLower = new OffscreenCanvas(16 * 64,16 * 64);
+                            var tempUpper = new OffscreenCanvas(16 * 64,16 * 64);
+                        }
+                    }
+                    var glLower = tempLower.getContext('2d');
+                    var glUpper = tempUpper.getContext('2d');
+                    resetCanvas(glLower);
+                    resetCanvas(glUpper);
+                    for(var k = 0;k < json.layers[i].chunks[j].data.length;k++){
+                        tile_idx = json.layers[i].chunks[j].data[k];
+                        if(tile_idx !== 0){
+                            var imgX, imgY, s_x, s_y;
+                            tile_idx -= 1;
+                            imgX = (tile_idx % ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                            imgY = ~~(tile_idx / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
+                            s_x = (k % 16) * size;
+                            s_y = ~~(k / 16) * size;
+                            if(json.layers[i].offsetx){
+                                s_x += json.layers[i].offsetx;
+                            }
+                            if(json.layers[i].offsety){
+                                s_y += json.layers[i].offsety;
+                            }
+                            // s_x += json.layers[i].chunks[j].x * 64;
+                            // s_y += json.layers[i].chunks[j].y * 64;
+                            if(json.layers[i].name.includes('Roof') || json.layers[i].name.includes('Top')){
+                                glUpper.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
+                            }
+                            else{
+                                glLower.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
+                            }
+                        }
+                    }
+                    loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'] = {
+                        lower:tempLower,
+                        upper:tempUpper,
+                    }
+                }
+            }
+        }
+    }
+    if(cb){
+        cb();
+    }
+}
+var loadWorld = function(json,name,cb){
     var tile = json.tilesets[0];
     var size = json.tilewidth;
     for(var i in json.tilesets[0].tiles){
@@ -18,63 +90,6 @@ var renderWorld = function(json,name){
                 var imgY = ~~(json.tilesets[0].tiles[i].id / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
                 harvestableNpcData[j].imgX = imgX + 8;
                 harvestableNpcData[j].imgY = imgY + 8;
-            }
-        }
-    }
-    for(var i = 0;i < json.layers.length;i++){
-        if(json.layers[i].type === "tilelayer" && json.layers[i].visible && json.layers[i].name !== "HarvestableNpc:"){
-            for(var j = 0;j < json.layers[i].chunks.length;j++){
-                if(loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':']){
-                    var tempLower = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].lower;
-                    var tempUpper = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].upper;
-                }
-                else{
-                    if(isFirefox){
-                        var tempLower = document.createElement('canvas');
-                        var tempUpper = document.createElement('canvas');
-                        tempLower.canvas.width = 16 * 64;
-                        tempLower.canvas.height = 16 * 64;
-                        tempUpper.canvas.width = 16 * 64;
-                        tempUpper.canvas.height = 16 * 64;
-                    }
-                    else{
-                        var tempLower = new OffscreenCanvas(16 * 64,16 * 64);
-                        var tempUpper = new OffscreenCanvas(16 * 64,16 * 64);
-                    }
-                }
-                var glLower = tempLower.getContext('2d');
-                var glUpper = tempUpper.getContext('2d');
-                resetCanvas(glLower);
-                resetCanvas(glUpper);
-                for(var k = 0;k < json.layers[i].chunks[j].data.length;k++){
-                    tile_idx = json.layers[i].chunks[j].data[k];
-                    if(tile_idx !== 0){
-                        var imgX, imgY, s_x, s_y;
-                        tile_idx -= 1;
-                        imgX = (tile_idx % ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
-                        imgY = ~~(tile_idx / ((tile.imagewidth + tile.spacing) / (size + tile.spacing))) * (size + tile.spacing);
-                        s_x = (k % 16) * size;
-                        s_y = ~~(k / 16) * size;
-                        if(json.layers[i].offsetx){
-                            s_x += json.layers[i].offsetx;
-                        }
-                        if(json.layers[i].offsety){
-                            s_y += json.layers[i].offsety;
-                        }
-                        // s_x += json.layers[i].chunks[j].x * 64;
-                        // s_y += json.layers[i].chunks[j].y * 64;
-                        if(json.layers[i].name.includes('Roof') || json.layers[i].name.includes('Top')){
-                            glUpper.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
-                        }
-                        else{
-                            glLower.drawImage(tileset,Math.round(imgX),Math.round(imgY),size,size,Math.round(s_x * 4),Math.round(s_y * 4),64,64);
-                        }
-                    }
-                }
-                loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'] = {
-                    lower:tempLower,
-                    upper:tempUpper,
-                }
             }
         }
     }
@@ -107,6 +122,7 @@ var renderWorld = function(json,name){
         y2:y2,
         width:x2 - x1,
         height:y2 - y1,
+        json:json,
     }
     numLoaded += 1;
     var mapLoading = document.getElementById('mapLoading');
@@ -118,13 +134,13 @@ var renderWorld = function(json,name){
         }
     }
 }
-var loadTileset = function(json,name){
+var loadTileset = function(json,name,cb){
     if(tilesetLoaded){
-        renderWorld(json,name);
+        renderChunks(json,name,cb);
     }
     else{
         setTimeout(function(){
-            loadTileset(json,name);
+            loadTileset(json,name,cb);
         },10);
     }
 }
@@ -134,7 +150,7 @@ var loadMap = function(name){
     request.onload = function(){
         if(this.status >= 200 && this.status < 400){
             var json = JSON.parse(this.response);
-            loadTileset(json,name);
+            loadWorld(json,name);
         }
         else{
 
@@ -144,6 +160,28 @@ var loadMap = function(name){
 
     };
     request.send();
+}
+var renderMap = function(name,cb){
+    if(mapData[name]){
+        loadTileset(mapData[name].json,name,cb);
+    }
+    else{
+        var request = new XMLHttpRequest();
+        request.open('GET',"/client/maps/" + name + ".json",true);
+        request.onload = function(){
+            if(this.status >= 200 && this.status < 400){
+                var json = JSON.parse(this.response);
+                loadTileset(json,name,cb);
+            }
+            else{
+    
+            }
+        };
+        request.onerror = function(){
+    
+        };
+        request.send();
+    }
 }
 var loadAllMaps = function(){
     numLoaded = 0;

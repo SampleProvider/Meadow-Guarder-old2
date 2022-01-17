@@ -91,7 +91,7 @@
             "heavyrain":0.0005,
             "snow":0.0005
         },
-        "particles":{"snowflake":4}
+        "particles":{"snowflake":3}
     },
     "acidrain":{
         "name":"Acid Rain",
