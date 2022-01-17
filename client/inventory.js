@@ -160,11 +160,13 @@ Inventory = function(socket,server){
         else if(hasSpace.hasSpace === 2){
             if(amount + self.items[hasSpace.index].amount > Item.list[id].maxStack){
                 var oldAmount = self.items[hasSpace.index].amount;
-                self.items[hasSpace.index] = {id:id,amount:Item.list[id].maxStack,cooldown:0};
+                var cooldown = self.items[hasSpace.index].cooldown;
+                self.items[hasSpace.index] = {id:id,amount:Item.list[id].maxStack,cooldown:cooldown};
                 self.addItem(id,amount + oldAmount - Item.list[id].maxStack);
             }
             else{
-                self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount,cooldown:0};
+                var cooldown = self.items[hasSpace.index].cooldown;
+                self.items[hasSpace.index] = {id:id,amount:amount + self.items[hasSpace.index].amount,cooldown:cooldown};
             }
             self.refreshItem(hasSpace.index);
             self.itemChange();
