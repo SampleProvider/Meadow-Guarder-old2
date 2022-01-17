@@ -545,6 +545,8 @@ Actor = function(param){
             if(Collision.list[self.map][self.zindex]){
                 if(Collision.list[self.map][self.zindex][self.gridX]){
                     if(Collision.list[self.map][self.zindex][self.gridX][self.gridY]){
+                        var x = dx;
+                        var y = dy;
                         var distance = -1;
                         for(var i = 1;i > -Math.round(self.width / 64) - 1;i--){
                             for(var j = 1;j > -Math.round(self.height / 64) - 1;j--){
@@ -555,8 +557,8 @@ Actor = function(param){
                                 }
                                 if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map}) < distance || distance === -1){
                                     distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map});
-                                    dx += i;
-                                    dy += j;
+                                    dx = x + i;
+                                    dy = y + j;
                                 }
                             }
                         }
@@ -3912,7 +3914,7 @@ Monster = function(param){
                                     if(self.canSee(Player.list[i])){
                                         if(Player.list[i]){
                                             self.target = Player.list[i];
-                                            self.targetType === 'Player';
+                                            self.targetType = 'Player';
                                             self.attackState = 'attack';
                                             self.damaged = false;
                                             self.targetLeftView = 0;
@@ -4018,6 +4020,8 @@ Monster = function(param){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][self.gridX]){
                             if(Collision.list[self.map][self.zindex][self.gridX][self.gridY]){
+                                var x = dx;
+                                var y = dy;
                                 var distance = -1;
                                 for(var i = 1;i > -Math.round(self.width / 64) - 1;i--){
                                     for(var j = 1;j > -Math.round(self.height / 64) - 1;j--){
@@ -4028,8 +4032,8 @@ Monster = function(param){
                                         }
                                         if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map}) < distance || distance === -1){
                                             distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map});
-                                            dx += i;
-                                            dy += j;
+                                            dx = x + i;
+                                            dy = y + j;
                                         }
                                     }
                                 }
