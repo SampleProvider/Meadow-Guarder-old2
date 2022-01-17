@@ -256,6 +256,7 @@ socket.on('selfId',function(data){
             shadeSpeed = -0.01;
         });
         chatText.innerHTML = '<div>Welcome to Meadow Guarder ' + VERSION + '!</div>';
+        pageBackground.style.animation = 'none';
         gameDiv.style.display = 'inline-block';
         window.requestAnimationFrame(loop);
         socket.emit('signInFinished');
@@ -1175,7 +1176,7 @@ disconnectClient = function(){
     stopAllSongs();
 }
 
-rickroll = function(){
+doRickroll = function(){
     disconnectClient = function(){};
     pageDiv.style.display = 'none';
     gameDiv.style.display = 'none';
@@ -1187,7 +1188,7 @@ rickroll = function(){
 }
 
 socket.on('rickroll',function(){
-    rickroll();
+    doRickroll();
 });
 
 
