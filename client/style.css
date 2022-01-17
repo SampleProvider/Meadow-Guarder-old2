@@ -229,7 +229,7 @@ canvas {
     margin: 0px;
     background-image: url("./maps/World.png");
     background-size: 10000px;
-    animation: moving-images 60s ease infinite;
+    animation: moving-images 300s ease infinite;
 }
 #pageShade {
     position: absolute;
