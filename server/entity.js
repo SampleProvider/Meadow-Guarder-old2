@@ -537,6 +537,9 @@ Actor = function(param){
     }
     self.trackPos = function(x,y){
         var size = 65;
+        if(self.getSquareDistance({x:x,y:y}) > 32){
+            size = 129;
+        }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
         var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
@@ -555,8 +558,8 @@ Actor = function(param){
                                         continue;
                                     }
                                 }
-                                if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map}) < distance || distance === -1){
-                                    distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map});
+                                if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
+                                    distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
                                     dx = x + i;
                                     dy = y + j;
                                 }
@@ -3703,7 +3706,6 @@ Monster = function(param){
 
     self.type = 'Monster';
 
-    self.aggro = 6;
     self.attackState = 'passive';
 
     self.mainAttackData = self.phases[self.phase].mainAttackData;
@@ -3940,13 +3942,13 @@ Monster = function(param){
                     self.retreat();
                 }
                 else{
-                    if(self.getSquareDistance(self.getTarget()) > self.aggro * 2 && self.damaged === false){
+                    if(self.getSquareDistance(self.getTarget()) > 12 && self.damaged === false){
                         self.retreat();
                     }
-                    else if(self.getSquareDistance(self.getTarget()) > self.aggro * 6){
+                    else if(self.getSquareDistance(self.getTarget()) > 32){
                         self.retreat();
                     }
-                    else if(self.getSquareDistance(self.randomPos) > 32){
+                    else if(self.getSquareDistance(self.randomPos) > 64){
                         self.retreat();
                     }
                     if(self.getTarget()){
@@ -4030,8 +4032,8 @@ Monster = function(param){
                                                 continue;
                                             }
                                         }
-                                        if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map}) < distance || distance === -1){
-                                            distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32,map:self.map});
+                                        if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
+                                            distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
                                             dx = x + i;
                                             dy = y + j;
                                         }
