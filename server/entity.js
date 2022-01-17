@@ -1705,6 +1705,7 @@ Player = function(param,socket){
                     self.y = self.lastY;
                     self.stepsLeft = stepsLeft;
                     if(self.dashing){
+                        self.dashing = false;
                         break;
                     }
                     self.collided = {x:false,y:false};
@@ -3819,7 +3820,7 @@ Monster = function(param){
                 }
                 else{
                     self.stepsLeft -= 1;
-                    self.trackSteps += 1;
+                    self.trackSteps += Math.max(self.spdX,self.spdY);
                 }
                 if(self.stepsLeft === stepsLeft){
                     break;
@@ -3838,6 +3839,7 @@ Monster = function(param){
                     self.trackSteps -= self.stepsLeft - stepsLeft;
                     self.stepsLeft = stepsLeft;
                     if(self.dashing){
+                        self.dashing = false;
                         break;
                     }
                     self.collided = {x:false,y:false};
