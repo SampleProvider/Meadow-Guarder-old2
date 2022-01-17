@@ -300,8 +300,8 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].disconnectUser();
 							Player.list[socket.id].sendMessage('[!] Kicked player ' + name + '.');
+							SOCKET_LIST[i].disconnectUser();
 						}
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
