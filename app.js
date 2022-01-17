@@ -9,7 +9,6 @@ else{
 }
 
 var express = require('express');
-const { SocketAddress } = require('net');
 const {setInterval} = require('timers');
 var app = express();
 var serv = require('http').Server(app);
@@ -633,6 +632,39 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'playtimeleaderboard' && level >= 0){
+					commandList.splice(0,1);
+					getPlayTimeLeaderboard(function(leaderboard){
+						var playTimeLeaderboardString = '[!] Play Time Leaderboard:';
+						for(var i = 0;i < Math.min(10,leaderboard.length);i++){
+							var seconds = Math.floor(leaderboard[i].playTime / 20);
+							var minutes = Math.floor(seconds / 60);
+							seconds = seconds % 60;
+							var hours = Math.floor(minutes / 60);
+							minutes = minutes % 60;
+							if(hours === 1){
+								playTimeLeaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hour, ';
+							}
+							else{
+								playTimeLeaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hours, ';
+							}
+							if(minutes === 1){
+								playTimeLeaderboardString += minutes + ' minute, ';
+							}
+							else{
+								playTimeLeaderboardString += minutes + ' minutes, ';
+							}
+							if(seconds === 1){
+								playTimeLeaderboardString += seconds + ' second)';
+							}
+							else{
+								playTimeLeaderboardString += seconds + ' seconds)';
+							}
+						}
+						Player.list[socket.id].sendMessage(playTimeLeaderboardString);
+					});
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'trade' && level >= 0 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -1192,14 +1224,24 @@ setInterval(function(){
 		return list;
 	}
 	for(var i in Player.list){
-		var list = getBoundingBox(Player.list[i]);
-		for(var j in list){
-			if(grid[Player.list[i].map]){
-				if(grid[Player.list[i].map][list[j].x]){
-					if(grid[Player.list[i].map][list[j].x][list[j].y]){
-						grid[Player.list[i].map][list[j].x][list[j].y].players.push(Player.list[i]);
+		if(Player.list[i].hp > 0){
+			var list = getBoundingBox(Player.list[i]);
+			for(var j in list){
+				if(grid[Player.list[i].map]){
+					if(grid[Player.list[i].map][list[j].x]){
+						if(grid[Player.list[i].map][list[j].x][list[j].y]){
+							grid[Player.list[i].map][list[j].x][list[j].y].players.push(Player.list[i]);
+						}
+						else{
+							grid[Player.list[i].map][list[j].x][list[j].y] = {
+								players:[Player.list[i]],
+								monsters:[],
+								projectiles:{},
+							};
+						}
 					}
 					else{
+						grid[Player.list[i].map][list[j].x] = [];
 						grid[Player.list[i].map][list[j].x][list[j].y] = {
 							players:[Player.list[i]],
 							monsters:[],
@@ -1208,6 +1250,7 @@ setInterval(function(){
 					}
 				}
 				else{
+					grid[Player.list[i].map] = [];
 					grid[Player.list[i].map][list[j].x] = [];
 					grid[Player.list[i].map][list[j].x][list[j].y] = {
 						players:[Player.list[i]],
@@ -1215,15 +1258,6 @@ setInterval(function(){
 						projectiles:{},
 					};
 				}
-			}
-			else{
-				grid[Player.list[i].map] = [];
-				grid[Player.list[i].map][list[j].x] = [];
-				grid[Player.list[i].map][list[j].x][list[j].y] = {
-					players:[Player.list[i]],
-					monsters:[],
-					projectiles:{},
-				};
 			}
 		}
 	}

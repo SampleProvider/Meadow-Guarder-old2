@@ -177,6 +177,44 @@ var Player = function(initPack){
             playRegionSong(worldRegion);
         }
     }
+    self.update = function(){
+        var chunk = Math.floor(self.x / 1024) + ':' + Math.floor(self.y / 1024);
+        if(self.interpolationStage === 1){
+            self.x = self.serverX;
+            self.y = self.serverY;
+        }
+        else if(self.interpolationStage > 0){
+            if(self.spdX >= 0.25 && self.spdX <= 0.5){
+                self.x += 0.6;
+                self.spdX = 0;
+            }
+            else if(self.spdX <= -0.25 && self.spdX >= -0.5){
+                self.x -= 0.6;
+                self.spdX = 0;
+            }
+            else{
+                self.x += self.spdX;
+            }
+            if(self.spdY >= 0.25 && self.spdY <= 0.5){
+                self.y += 0.6;
+                self.spdY = 0;
+            }
+            else if(self.spdY <= -0.25 && self.spdY >= -0.5){
+                self.y -= 0.6;
+                self.spdY = 0;
+            }
+            else{
+                self.y += self.spdY;
+            }
+            self.x = Math.round(self.x);
+            self.y = Math.round(self.y);
+        }
+        self.interpolationStage -= 1;
+        var newChunk = Math.floor(self.x / 1024) + ':' + Math.floor(self.y / 1024);
+        if(chunk !== newChunk && self.id === selfId){
+            renderMap(self.map);
+        }
+    }
     self.draw = function(){
         var onScreen = true;
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){

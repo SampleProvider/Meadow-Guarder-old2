@@ -119,6 +119,39 @@ getLeaderboard = function(cb){
 		}
 	});
 }
+getPlayTimeLeaderboard = function(cb){
+    if(!USE_DB){
+		return cb([]);
+	}
+	client.query('SELECT * FROM progress;', (err, res) => {
+		if(res.rows[0]){
+			var playtimeleaderboard = [];
+			for(var i in res.rows){
+				var progress = JSON.parse(res.rows[i].progress);
+				if(progress.playTime !== undefined){
+					playtimeleaderboard.push({
+						name:res.rows[i].username,
+						playTime:progress.playTime,
+					});
+				}
+			}
+			var compare = function(a,b){
+				if(a.playTime > b.playTime){
+					return -1;
+				}
+				else if(b.playTime > a.playTime){
+					return 1;
+				}
+				return 0;
+			}
+			playtimeleaderboard.sort(compare);
+			return cb(playtimeleaderboard);
+		}
+		else{
+			return cb([]);
+		}
+	});
+}
 
 clearDatabase = function(){
 	if(!USE_DB){
