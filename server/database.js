@@ -28,13 +28,13 @@ storeDatabase = function(){
 				throw err;
 			}
 		});
-	}
-	for(var i in Clan.list){
-		client.query('UPDATE clans SET name=\'' + i + '\', progress=\'' + JSON.stringify(Clan.list[i]) + '\' WHERE name=\'' + i + '\';', (err, res) => {
-			if(err){
-				throw err;
-			}
-		});
+		if(Player.list[i].clan){
+			client.query('UPDATE clans SET name=\'' + i + '\', progress=\'' + JSON.stringify({name:Clan.list[Player.list[i].clan].name,xp:Clan.list[Player.list[i].clan].xp,level:Clan.list[Player.list[i].clan].level,maxMembers:Clan.list[Player.list[i].clan].maxMembers,boosts:Clan.list[Player.list[i].clan].boosts,claimBoost:Clan.list[Player.list[i].clan].claimBoost}) + '\' WHERE name=\'' + i + '\';', (err, res) => {
+				if(err){
+					throw err;
+				}
+			});
+		}
 	}
 }
 getDatabase = function(username,cb){
