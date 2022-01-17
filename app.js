@@ -440,13 +440,13 @@ io.sockets.on('connection',function(socket){
 					doCommand(name,function(name,i){
 						if(debugData[name]){
 							if(debugData[name].level > level){
-								Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
+								Player.list[socket.id].sendMessage('[!] You do not have permission to kick ' + name + '.');
 								return;
 							}
 						}
 						if(SOCKET_LIST[i]){
-							SOCKET_LIST[i].disconnectUser();
 							Player.list[socket.id].sendMessage('[!] Kicked player ' + name + '.');
+							SOCKET_LIST[i].disconnectUser();
 						}
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
