@@ -443,6 +443,12 @@
                                 "blindness":40
                             }
                         }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
+                        }
                     }]
                 },
                 "changePhase":{
@@ -468,6 +474,12 @@
                             "debuffs":{
                                 "blindness":40
                             }
+                        }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
                         }
                     }],
                     "40":[{
@@ -682,6 +694,12 @@
                             "debuffs":{
                                 "blindness":40
                             }
+                        }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
                         }
                     }],
                     "40":[{
@@ -966,6 +984,12 @@
                                 "blindness":40
                             }
                         }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
+                        }
                     }]
                 },
                 "changePhase":{
@@ -1110,6 +1134,12 @@
                             "debuffs":{
                                 "blindness":40
                             }
+                        }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
                         }
                     }]
                 },
