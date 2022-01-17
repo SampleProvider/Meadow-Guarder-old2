@@ -401,6 +401,40 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'summonmany' && level >= 2 && commandList.length > 2){
+					commandList.splice(0,1);
+					var amount = parseInt(commandList.splice(commandList.length - 1,1)[0]);
+					var name = recreateCommand(commandList);
+					if(monsterData[name]){
+						for(var i = 0;i < amount;i++){
+							new Monster({
+								x:Player.list[socket.id].x,
+								y:Player.list[socket.id].y,
+								map:Player.list[socket.id].map,
+								monsterType:name,
+							});
+						}
+						Player.list[socket.id].sendMessage('[!] Summoned ' + amount + 'x ' + monsterData[name].name + '.');
+					}
+					else{
+						for(var i in monsterData){
+							if(monsterData[i].name === name){
+								for(var j = 0;j < amount;j++){
+									new Monster({
+										x:Player.list[socket.id].x,
+										y:Player.list[socket.id].y,
+										map:Player.list[socket.id].map,
+										monsterType:i,
+									});
+								}
+								Player.list[socket.id].sendMessage('[!] Summoned ' + amount + 'x ' + monsterData[i].name + '.');
+								return;
+							}
+						}
+						Player.list[socket.id].sendMessage('[!] No monster called ' + name + '.');
+					}
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'butcher' && level >= 2){
 					commandList.splice(0,1);
 					for(var i in Monster.list){
@@ -864,6 +898,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
+						message += '<br>/summonmany [monster name] [amount] - Summon many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
@@ -890,6 +925,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/announce [message] - Announce a message.';
 						message += '<br>/rickroll [player name] - Rickroll someone.';
 						message += '<br>/summon [monster name] - Summon a monster.';
+						message += '<br>/summonmany [monster name] [amount] - Summons many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
