@@ -459,7 +459,7 @@ io.sockets.on('connection',function(socket){
 					doCommand(name,function(name,i){
 						if(debugData[name]){
 							if(debugData[name].level > level){
-								Player.list[socket.id].sendMessage('[!] You do not have permission to rickroll ' + name + '.');
+								Player.list[socket.id].sendMessage('[!] You do not have permission to kill ' + name + '.');
 								return;
 							}
 						}
