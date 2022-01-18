@@ -1781,6 +1781,7 @@ Inventory = function(socket,server){
                         amount:npcData[self.shopNpc].shop[data].amount,
                     }
                 }
+                self.itemChange();
             }
             catch(err){
                 console.error(err);

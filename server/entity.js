@@ -139,7 +139,7 @@ spawnMonster = function(spawner,spawnId){
                     }
                 }
                 for(var i in clans){
-                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 750000);
+                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 250000);
                     Clan.list[i].addXp(clans[i].xp);
                 }
                 var compare = function(a,b){
