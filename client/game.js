@@ -96,13 +96,48 @@ var resetCanvas = function(ctx){
     ctx.filter = 'url(#remove-alpha)';
     ctx.imageSmoothingEnabled = false;
 }
-var ctxRaw = document.getElementById('ctx');
-var ctx = document.getElementById("ctx").getContext("2d");
-ctxRaw.style.width = window.innerWidth;
-ctxRaw.style.height = window.innerHeight;
-ctx.canvas.width = window.innerWidth;
-ctx.canvas.height = window.innerHeight;
-resetCanvas(ctx);
+var map0Raw = document.getElementById('map0');
+var map0 = document.getElementById("map0").getContext("2d");
+map0Raw.style.width = window.innerWidth;
+map0Raw.style.height = window.innerHeight;
+map0.canvas.width = window.innerWidth;
+map0.canvas.height = window.innerHeight;
+resetCanvas(map0);
+var ctx0Raw = document.getElementById('ctx0');
+var ctx0 = document.getElementById("ctx0").getContext("2d");
+ctx0Raw.style.width = window.innerWidth;
+ctx0Raw.style.height = window.innerHeight;
+ctx0.canvas.width = window.innerWidth;
+ctx0.canvas.height = window.innerHeight;
+resetCanvas(ctx0);
+var map1Raw = document.getElementById('map1');
+var map1 = document.getElementById("map1").getContext("2d");
+map1Raw.style.width = window.innerWidth;
+map1Raw.style.height = window.innerHeight;
+map1.canvas.width = window.innerWidth;
+map1.canvas.height = window.innerHeight;
+resetCanvas(map1);
+var particleCtxRaw = document.getElementById('particleCtx');
+var particleCtx = document.getElementById("particleCtx").getContext("2d");
+particleCtxRaw.style.width = window.innerWidth;
+particleCtxRaw.style.height = window.innerHeight;
+particleCtx.canvas.width = window.innerWidth;
+particleCtx.canvas.height = window.innerHeight;
+resetCanvas(particleCtx);
+var ctx1Raw = document.getElementById('ctx1');
+var ctx1 = document.getElementById("ctx1").getContext("2d");
+ctx1Raw.style.width = window.innerWidth;
+ctx1Raw.style.height = window.innerHeight;
+ctx1.canvas.width = window.innerWidth;
+ctx1.canvas.height = window.innerHeight;
+resetCanvas(ctx1);
+var darknessEffectCtxRaw = document.getElementById('darknessEffectCtx');
+var darknessEffectCtx = document.getElementById("darknessEffectCtx").getContext("2d");
+darknessEffectCtxRaw.style.width = window.innerWidth;
+darknessEffectCtxRaw.style.height = window.innerHeight;
+darknessEffectCtx.canvas.width = window.innerWidth;
+darknessEffectCtx.canvas.height = window.innerHeight;
+resetCanvas(darknessEffectCtx);
 
 var Img = {};
 Img.Human = new Image();
@@ -879,16 +914,45 @@ var loop = function(){
         return;
     }
     if(WIDTH !== window.innerWidth || HEIGHT !== window.innerHeight){
-        ctxRaw.style.width = window.innerWidth;
-        ctxRaw.style.height = window.innerHeight;
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-        resetCanvas(ctx);
+        map0Raw.style.width = window.innerWidth;
+        map0Raw.style.height = window.innerHeight;
+        map0.canvas.width = window.innerWidth;
+        map0.canvas.height = window.innerHeight;
+        resetCanvas(map0);
+        ctx0Raw.style.width = window.innerWidth;
+        ctx0Raw.style.height = window.innerHeight;
+        ctx0.canvas.width = window.innerWidth;
+        ctx0.canvas.height = window.innerHeight;
+        resetCanvas(ctx0);
+        map1Raw.style.width = window.innerWidth;
+        map1Raw.style.height = window.innerHeight;
+        map1.canvas.width = window.innerWidth;
+        map1.canvas.height = window.innerHeight;
+        resetCanvas(map1);
+        particleCtxRaw.style.width = window.innerWidth;
+        particleCtxRaw.style.height = window.innerHeight;
+        particleCtx.canvas.width = window.innerWidth;
+        particleCtx.canvas.height = window.innerHeight;
+        resetCanvas(particleCtx);
+        ctx1Raw.style.width = window.innerWidth;
+        ctx1Raw.style.height = window.innerHeight;
+        ctx1.canvas.width = window.innerWidth;
+        ctx1.canvas.height = window.innerHeight;
+        resetCanvas(ctx1);
+        darknessEffectCtxRaw.style.width = window.innerWidth;
+        darknessEffectCtxRaw.style.height = window.innerHeight;
+        darknessEffectCtx.canvas.width = window.innerWidth;
+        darknessEffectCtx.canvas.height = window.innerHeight;
+        resetCanvas(darknessEffectCtx);
         WIDTH = window.innerWidth;
         HEIGHT = window.innerHeight;
     }
-    ctx.fillStyle = '#354149';
-    ctx.fillRect(0,0,WIDTH,HEIGHT);
+    map0.fillStyle = '#354149';
+    map0.fillRect(0,0,WIDTH,HEIGHT);
+    ctx0.clearRect(0,0,WIDTH,HEIGHT);
+    map1.clearRect(0,0,WIDTH,HEIGHT);
+    particleCtx.clearRect(0,0,WIDTH,HEIGHT);
+    ctx1.clearRect(0,0,WIDTH,HEIGHT);
     for(var i in Player.list){
         Player.list[i].update();
     }
@@ -991,15 +1055,18 @@ var loop = function(){
     }
     MGHC1();
 
-    ctx.save();
-    ctx.translate(cameraX,cameraY);
+    map0.save();
+    map0.translate(cameraX,cameraY);
     for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
         for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
             if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
-                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].lower,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
+                map0.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].lower,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
             }
         }
     }
+    map0.restore();
+    ctx0.save();
+    ctx0.translate(cameraX,cameraY);
     for(var i in HarvestableNpc.list){
         HarvestableNpc.list[i].drawLayer0();
     }
@@ -1074,23 +1141,32 @@ var loop = function(){
     for(var i in Player.list){
         Player.list[i].drawLayer1();
     }
-    for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
-        for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
-            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
-                ctx.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
-            }
-        }
-    }
     for(var i in HarvestableNpc.list){
         HarvestableNpc.list[i].drawLayer1();
     }
+    ctx0.restore();
+    map1.save();
+    map1.translate(cameraX,cameraY);
+    for(var i = -settings.renderDistance + 1;i < settings.renderDistance;i++){
+        for(var j = -settings.renderDistance + 1;j < settings.renderDistance;j++){
+            if(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':']){
+                map1.drawImage(loadedMap[Player.list[selfId].map + ':' + (Math.floor(Player.list[selfId].x / 1024) + i) * 16 + ':' + (Math.floor(Player.list[selfId].y / 1024) + j) * 16 + ':'].upper,(Math.floor(Player.list[selfId].x / 1024) + i) * 1024,(Math.floor(Player.list[selfId].y / 1024) + j) * 1024);
+            }
+        }
+    }
+    map1.restore();
+    particleCtx.save();
+    particleCtx.translate(cameraX,cameraY);
     for(var i in Particle.list){
         Particle.list[i].draw();
     }
+    particleCtx.restore();
+    ctx1.save();
+    ctx1.translate(cameraX,cameraY);
 
-    ctx.globalAlpha = 0.5;
-    ctx.drawImage(Img.select,64 * Math.floor((Player.list[selfId].x + mouseX) / 64),64 * Math.floor((Player.list[selfId].y + mouseY) / 64),64,64);
-    ctx.globalAlpha = 1;
+    ctx1.globalAlpha = 0.5;
+    ctx1.drawImage(Img.select,64 * Math.floor((Player.list[selfId].x + mouseX) / 64),64 * Math.floor((Player.list[selfId].y + mouseY) / 64),64,64);
+    ctx1.globalAlpha = 1;
 
     for(var i in Player.list){
         Player.list[i].drawHp();
@@ -1105,15 +1181,18 @@ var loop = function(){
         HarvestableNpc.list[i].drawHp();
     }
 
+    ctx1.restore();
+
     if(effectDarkness !== 0){
-        var grd = ctx.createRadialGradient(Player.list[selfId].x,Player.list[selfId].y,50,Player.list[selfId].x,Player.list[selfId].y,300);
+        var grd = darknessEffectCtx.createRadialGradient(Player.list[selfId].x,Player.list[selfId].y,50,Player.list[selfId].x,Player.list[selfId].y,300);
         grd.addColorStop(0,"rgba(0,0,0,0)");
         grd.addColorStop(1,"rgba(0,0,0," + effectDarkness + ")");
-        ctx.fillStyle = grd;
-        ctx.fillRect(Player.list[selfId].x - WIDTH,Player.list[selfId].y - HEIGHT,WIDTH * 2,HEIGHT * 2);
+        darknessEffectCtx.fillStyle = grd;
+        darknessEffectCtx.fillRect(cameraX + Player.list[selfId].x - WIDTH,cameraY + Player.list[selfId].y - HEIGHT,WIDTH * 2,HEIGHT * 2);
     }
-
-    ctx.restore();
+    else{
+        darknessEffectCtx.clearRect(0,0,WIDTH,HEIGHT);
+    }
 
     if(mapShadeAmount >= 8.5){
         mapShadeSpeed = -0.12;

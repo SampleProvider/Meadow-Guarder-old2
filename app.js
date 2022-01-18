@@ -444,7 +444,7 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'weather' && level >= 2 && commandList.length > 1){
+				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(name === ''){
@@ -475,6 +475,19 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 						Player.list[socket.id].sendMessage('[!] No weather found with name ' + name + '.');
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'removeclan' && level >= 2 && commandList.length > 1){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(Clan.list[name]){
+						delete Clan.list[name];
+						Database.removeClan(name);
+						Player.list[socket.id].sendMessage('[!] Removed clan with name ' + name + '.');
+					}
+					else{
+						Player.list[socket.id].sendMessage('[!] No clan with name ' + name + '.');
 					}
 					return;
 				}
@@ -901,6 +914,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summonmany [monster name] [amount] - Summon many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
+						message += '<br>/removeclan [clan name] - Remove a clan.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/invincible - Toggle invincibility for yourself.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
@@ -928,6 +942,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summonmany [monster name] [amount] - Summons many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
+						message += '<br>/removeclan [clan name] - Remove a clan.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/invincible - Toggle invincibility for yourself.';
 						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
@@ -1505,6 +1520,9 @@ if(SERVER !== 'localhost'){
 				process.exit(0);
 			},1000);
 		},10000);
+	});
+	process.on('SIGKILL',function(){
+		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 	});
 	process.on('SIGINT',function(){
 		storeDatabase()
