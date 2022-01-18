@@ -536,8 +536,14 @@ Actor = function(param){
         return true;
     }
     self.trackPos = function(x,y){
-        var size = 65;
+        var size = 33;
+        if(self.getSquareDistance({x:x,y:y}) > 16){
+            size = 65;
+        }
         if(self.getSquareDistance({x:x,y:y}) > 32){
+            size = 97;
+        }
+        if(self.getSquareDistance({x:x,y:y}) > 48){
             size = 129;
         }
         var nx = Math.floor(size / 2);
@@ -612,19 +618,17 @@ Actor = function(param){
             }
         }
         if(tx < size && tx > 0 && ty < size && ty > 0){
-            if(grid.nodes[tx][ty].walkable === false){
+            if(grid.nodes[ty][tx].walkable === false){
                 var x = tx;
                 var y = ty;
-                var foundPosition = false;
-                for(var i = -Math.round(self.width / 64) + 1;i < 1;i++){
-                    for(var j = -Math.round(self.height / 64) + 1;j < 1;j++){
-                        if(foundPosition === false){
-                            if(x + i >= 0 && x + i < size && y + j >= 0 && y + j < size){
+                var distance = -1;
+                for(var i = -2;i < 3;i++){
+                    for(var j = -2;j < 3;j++){
+                        if(x + i >= 0 && x + i < size && y + j >= 0 && y + j < size){
+                            if(grid.nodes[y + j][x + i].walkable === true && (Math.abs(i) + Math.abs(j) < distance || distance === -1)){
                                 tx = x + i;
                                 ty = y + j;
-                                if(grid.nodes[tx][ty].walkable === true){
-                                    foundPosition = true;
-                                }
+                                distance = Math.abs(i) + Math.abs(j);
                             }
                         }
                     }
@@ -3352,59 +3356,54 @@ Player.onDisconnect = function(socket){
     socket.disconnect();
 }
 Player.getAllInitPack = function(socket){
-    try{
-        var player = Player.list[socket.id];
-        if(player){
-            var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
-            for(var i in Player.list){
-                if(Player.list[i].map === player.map){
-                    if(Player.list[i].debug.invisible === false || i + '' === socket.id + ''){
-                        if(player.getSquareDistance(Player.list[i]) < socket.renderDistance * 16){
-                            pack.player.push(Player.list[i].getInitPack());
-                        }
+    var player = Player.list[socket.id];
+    if(player){
+        var pack = {player:[],projectile:[],monster:[],npc:[],droppedItem:[],harvestableNpc:[]};
+        for(var i in Player.list){
+            if(Player.list[i].map === player.map){
+                if(Player.list[i].debug.invisible === false || i + '' === socket.id + ''){
+                    if(player.getSquareDistance(Player.list[i]) < socket.renderDistance * 16){
+                        pack.player.push(Player.list[i].getInitPack());
                     }
                 }
             }
-            for(var i in Projectile.list){
-                if(Projectile.list[i].map === player.map){
-                    if(player.getSquareDistance(Projectile.list[i]) < socket.renderDistance * 16){
-                        pack.projectile.push(Projectile.list[i].getInitPack());
-                    }
-                }
-            }
-            for(var i in Monster.list){
-                if(Monster.list[i].map === player.map){
-                    if(player.getSquareDistance(Monster.list[i]) < socket.renderDistance * 16){
-                        pack.monster.push(Monster.list[i].getInitPack());
-                    }
-                }
-            }
-            for(var i in Npc.list){
-                if(Npc.list[i].map === player.map){
-                    if(player.getSquareDistance(Npc.list[i]) < socket.renderDistance * 16){
-                        pack.npc.push(Npc.list[i].getInitPack());
-                    }
-                }
-            }
-            for(var i in DroppedItem.list){
-                if(DroppedItem.list[i].map === player.map){
-                    if(player.getSquareDistance(DroppedItem.list[i]) < socket.renderDistance * 16){
-                        pack.droppedItem.push(DroppedItem.list[i].getInitPack());
-                    }
-                }
-            }
-            for(var i in HarvestableNpc.list){
-                if(HarvestableNpc.list[i].map === player.map){
-                    if(player.getSquareDistance(HarvestableNpc.list[i]) < socket.renderDistance * 16){
-                        pack.harvestableNpc.push(HarvestableNpc.list[i].getInitPack());
-                    }
-                }
-            }
-            socket.emit('update',pack);
         }
-    }
-    catch(err){
-        console.error(err);
+        for(var i in Projectile.list){
+            if(Projectile.list[i].map === player.map){
+                if(player.getSquareDistance(Projectile.list[i]) < socket.renderDistance * 16){
+                    pack.projectile.push(Projectile.list[i].getInitPack());
+                }
+            }
+        }
+        for(var i in Monster.list){
+            if(Monster.list[i].map === player.map){
+                if(player.getSquareDistance(Monster.list[i]) < socket.renderDistance * 16){
+                    pack.monster.push(Monster.list[i].getInitPack());
+                }
+            }
+        }
+        for(var i in Npc.list){
+            if(Npc.list[i].map === player.map){
+                if(player.getSquareDistance(Npc.list[i]) < socket.renderDistance * 16){
+                    pack.npc.push(Npc.list[i].getInitPack());
+                }
+            }
+        }
+        for(var i in DroppedItem.list){
+            if(DroppedItem.list[i].map === player.map){
+                if(player.getSquareDistance(DroppedItem.list[i]) < socket.renderDistance * 16){
+                    pack.droppedItem.push(DroppedItem.list[i].getInitPack());
+                }
+            }
+        }
+        for(var i in HarvestableNpc.list){
+            if(HarvestableNpc.list[i].map === player.map){
+                if(player.getSquareDistance(HarvestableNpc.list[i]) < socket.renderDistance * 16){
+                    pack.harvestableNpc.push(HarvestableNpc.list[i].getInitPack());
+                }
+            }
+        }
+        socket.emit('update',pack);
     }
 }
 
@@ -3718,8 +3717,6 @@ Monster = function(param){
     self.targetX = 0;
     self.targetY = 0;
 
-    self.trackX = 0;
-    self.trackY = 0;
     self.trackSteps = 64;
     self.targetLeftView = 0;
     self.circlingTarget = false;
@@ -3908,13 +3905,13 @@ Monster = function(param){
     self.updateTarget = function(){
         if(self.attackState === 'passive'){
             self.target = null;
-            self.targetType === null;
+            self.targetType = null;
             for(var i in Player.list){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
                             if(Player.list[i].regionChanger.noMonster === false){
-                                if(self.getSquareDistance(Player.list[i]) < self.aggro && Player.list[i].getSquareDistance(self.randomPos) <= 16){
+                                if(self.getSquareDistance(Player.list[i]) < 8 && Player.list[i].getSquareDistance(self.randomPos) <= 48){
                                     if(self.canSee(Player.list[i])){
                                         if(Player.list[i]){
                                             self.target = i;
@@ -4015,7 +4012,16 @@ Monster = function(param){
             if(self.getTarget()){
                 self.spdX = 0;
                 self.spdY = 0;
-                var size = 65;
+                var size = 33;
+                if(self.getSquareDistance(self.getTarget()) > 16){
+                    size = 65;
+                }
+                if(self.getSquareDistance(self.getTarget()) > 32){
+                    size = 97;
+                }
+                if(self.getSquareDistance(self.getTarget()) > 48){
+                    size = 129;
+                }
                 var nx = Math.floor(size / 2);
                 var ny = Math.floor(size / 2);
                 var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
@@ -4045,8 +4051,8 @@ Monster = function(param){
                         }
                     }
                 }
-                self.trackX = self.getTarget().gridX - dx;
-                self.trackY = self.getTarget().gridY - dy;
+                var tx = self.getTarget().gridX - dx;
+                var ty = self.getTarget().gridY - dy;
                 var distance = self.getDistance(self.getTarget());
                 if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
@@ -4147,24 +4153,24 @@ Monster = function(param){
                                 }
                             }
                         }
-                        if(self.trackX < size && self.trackX > 0 && self.trackY < size && self.trackY > 0){
-                            if(grid.nodes[self.trackX][self.trackY].walkable === false){
-                                var foundPosition = false;
-                                for(var i = 0;i > -Math.round(self.width / 64);i--){
-                                    for(var j = 0;j > -Math.round(self.height / 64);j--){
-                                        if(foundPosition === false){
-                                            if(self.trackX + i >= 0 && self.trackX + i < size && self.trackY + j >= 0 && self.trackY + j < size){
-                                                if(grid.nodes[self.trackX + i][self.trackY + j].walkable === true){
-                                                    self.trackX += i;
-                                                    self.trackY += j;
-                                                    foundPosition = true;
-                                                }
+                        if(tx < size && tx > 0 && ty < size && ty > 0){
+                            if(grid.nodes[ty][tx].walkable === false){
+                                var x = tx;
+                                var y = ty;
+                                var distance = -1;
+                                for(var i = -2;i < 3;i++){
+                                    for(var j = -2;j < 3;j++){
+                                        if(x + i >= 0 && x + i < size && y + j >= 0 && y + j < size){
+                                            if(grid.nodes[y + j][x + i].walkable === true && (Math.abs(i) + Math.abs(j) < distance || distance === -1)){
+                                                tx = x + i;
+                                                ty = y + j;
+                                                distance = Math.abs(i) + Math.abs(j);
                                             }
                                         }
                                     }
                                 }
                             }
-                            var path = finder.findPath(nx,ny,self.trackX,self.trackY,grid);
+                            var path = finder.findPath(nx,ny,tx,ty,grid);
                             if(path[0]){
                                 self.trackingPath = PF.Util.compressPath(path);
                                 for(var i in self.trackingPath){

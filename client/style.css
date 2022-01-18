@@ -54,7 +54,77 @@ canvas {
     padding: 0px;
     margin: 0px;
 }
-#ctx {
+#map0 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#ctx0 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#map1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#particleCtx {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#ctx1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: -o-crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor: crosshair;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+#darknessEffectCtx {
     position: absolute;
     top: 0px;
     left: 0px;

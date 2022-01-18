@@ -64,6 +64,20 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/18/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							We have an attempted fix of the pathfinding bug. Whoever gets a monster stuck again gets 100 golden dewdrop.
+							<br>
+							Added a /removeclan command.
+							<br>
+							Fixed Bugs.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							1/16/2022
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -784,7 +798,12 @@
 	</div>
 	<div id="gameDiv" style="display: none;">
 		<div id="gameBackground"></div>
-    	<canvas id="ctx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="map0" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="ctx0" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="map1" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="particleCtx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="ctx1" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
+    	<canvas id="darknessEffectCtx" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></canvas>
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="darknessFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="regionDisplay" class="UI-display UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">

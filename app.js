@@ -589,7 +589,7 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'weather' && level >= 2 && commandList.length > 1){
+				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
 					if(name === ''){
@@ -620,6 +620,32 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 						Player.list[socket.id].sendMessage('[!] No weather found with name ' + name + '.');
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'removeclan' && level >= 2 && commandList.length > 1){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					if(Clan.list[name]){
+						delete Clan.list[name];
+						Database.removeClan(name);
+						Player.list[socket.id].sendMessage('[!] Removed clan with name ' + name + '.');
+					}
+					else{
+						Player.list[socket.id].sendMessage('[!] No clan with name ' + name + '.');
+					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
+					commandList.splice(0,1);
+					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
+					if(Player.list[socket.id].debug.invisible){
+						addToChat('#ff0000',Player.list[socket.id].name + ' logged off.');
+						Player.list[socket.id].sendMessage('[!] You are now invisible.');
+					}
+					else{
+						addToChat('#00ff00',Player.list[socket.id].name + ' logged on.');
+						Player.list[socket.id].sendMessage('[!] You are not invisible anymore.');
 					}
 					return;
 				}
@@ -667,20 +693,6 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					});
-					return;
-				}
-				if(commandList[0].toLowerCase() === 'invis' && level >= 2){
-					commandList.splice(0,1);
-					Player.list[socket.id].debug.invisible = !Player.list[socket.id].debug.invisible;
-					if(Player.list[socket.id].debug.invisible){
-						addToChat('#ff0000',Player.list[socket.id].name + ' logged off.');
-						Player.list[socket.id].sendMessage('[!] You are now invisible.');
-					}
-					else{
-						addToChat('#00ff00',Player.list[socket.id].name + ' logged on.');
-						Player.list[socket.id].sendMessage('[!] You are not invisible anymore.');
-					}
-					return;
 				}
 				if(commandList[0].toLowerCase() === 'ban' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
@@ -1184,6 +1196,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summonmany [monster name] [amount] - Summon many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
+						message += '<br>/removeclan [clan name] - Remove a clan.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/chatban [player name] - Chat Ban someone.';
 						message += '<br>/unchatban [player name] - Unchatban someone.';
@@ -1212,6 +1225,7 @@ io.sockets.on('connection',function(socket){
 						message += '<br>/summonmany [monster name] [amount] - Summons many monsters.';
 						message += '<br>/butcher - Kills all monsters.';
 						message += '<br>/weather [weather name] - Changes the weather.';
+						message += '<br>/removeclan [clan name] - Remove a clan.';
 						message += '<br>/invis - Toggle invisibility for yourself.';
 						message += '<br>/chatban [player name] - Chat Ban someone.';
 						message += '<br>/unchatban [player name] - Unchatban someone.';
@@ -1799,6 +1813,9 @@ if(SERVER !== 'localhost'){
 				process.exit(0);
 			},1000);
 		},10000);
+	});
+	process.on('SIGKILL',function(){
+		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 	});
 	process.on('SIGINT',function(){
 		storeDatabase()

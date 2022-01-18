@@ -51,7 +51,13 @@ Collision = function(param){
 }
 Collision.add = function(collision,id){
     for(var i = Math.floor(Math.round(collision.x - collision.width / 2) / 64);i <= Math.floor(Math.round(collision.x + collision.width / 2) / 64);i++){
+        if(i * 64 === Math.round(collision.x + collision.width / 2)){
+            break;
+        }
         for(var j = Math.floor(Math.round(collision.y - collision.height / 2) / 64);j <= Math.floor(Math.round(collision.y + collision.height / 2) / 64);j++){
+            if(j * 64 === Math.round(collision.y + collision.height / 2)){
+                break;
+            }
             if(Collision.list[collision.map]){
                 if(Collision.list[collision.map][collision.zindex]){
                     if(Collision.list[collision.map][collision.zindex][i]){
@@ -98,7 +104,13 @@ Collision.add = function(collision,id){
 }
 Collision.remove = function(collision,id){
     for(var i = Math.floor(Math.round(collision.x - collision.width / 2) / 64);i <= Math.floor(Math.round(collision.x + collision.width / 2) / 64);i++){
+        if(i * 64 === Math.round(collision.x + collision.width / 2)){
+            break;
+        }
         for(var j = Math.floor(Math.round(collision.y - collision.height / 2) / 64);j <= Math.floor(Math.round(collision.y + collision.height / 2) / 64);j++){
+            if(j * 64 === Math.round(collision.y + collision.height / 2)){
+                break;
+            }
             if(Collision.list[collision.map]){
                 if(Collision.list[collision.map][collision.zindex]){
                     if(Collision.list[collision.map][collision.zindex][i]){

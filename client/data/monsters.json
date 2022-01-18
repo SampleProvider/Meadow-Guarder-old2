@@ -386,7 +386,7 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":25000000,
+        "hpMax":10000000,
         "stats":{
             "damage":600,
             "defense":0,
@@ -394,7 +394,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":35,
+        "maxSpeed":30,
         "drawSize":"large",
         "team":"Harmful",
         "itemDrops":{
@@ -452,7 +452,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":15000000,
+                    "hp":7500000,
                     "nextPhases":["phase2"]
                 }
             },

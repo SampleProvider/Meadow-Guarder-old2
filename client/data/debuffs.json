@@ -12,6 +12,7 @@
         "drawId":2,
         "rarity":4,
         "hpRegen":-15,
+        "movementSpeed":5,
         "particles":{"radiation":1},
         "deathMessage":"radiation"
     },
@@ -52,7 +53,7 @@
         "description":"You're frozen!",
         "drawId":33,
         "rarity":1,
-        "movementSpeed":-15,
+        "movementSpeed":-10,
         "particles":{"frozen":1}
     },
     "blindness":{

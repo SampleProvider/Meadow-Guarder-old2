@@ -97,10 +97,10 @@ var Actor = function(initPack){
     self.render = renderPlayer(self.img,self.drawSize);
 
     self.drawName = function(){
-        ctx.font = "15px pixel";
-        ctx.fillStyle = '#00ff90';
-        ctx.textAlign = "center";
-        ctx.textBaseline = "bottom";
+        ctx1.font = "15px pixel";
+        ctx1.fillStyle = '#00ff90';
+        ctx1.textAlign = "center";
+        ctx1.textBaseline = "bottom";
         if(self.drawSize === 'small'){
             var yDistance = 8;
         }
@@ -111,14 +111,14 @@ var Actor = function(initPack){
             var yDistance = 16;
         }
         if(self.showHealthBar === false){
-            ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 4));
+            ctx1.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 4));
         }
         else{
-            ctx.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 32));
+            ctx1.fillText(self.name,Math.round(self.x),Math.round(self.y - yDistance * 4 - 32));
         }
     }
     self.drawHp = function(){
-        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
+        if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height - 16 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
         for(var i in self.debuffs){
@@ -131,7 +131,7 @@ var Actor = function(initPack){
                 if(self.fade <= 0){
                     return;
                 }
-                ctx.globalAlpha = self.fade;
+                ctx1.globalAlpha = self.fade;
             }
         }
         if(self.name !== ''){
@@ -150,16 +150,16 @@ var Actor = function(initPack){
             var yDistance = 16;
         }
         if(self.team === Player.list[selfId].team){
-            ctx.drawImage(Img.healthbar,0,4,16,4,Math.round(self.x - 32),Math.round(self.y - yDistance * 4 - 20),64,16);
-            ctx.drawImage(Img.healthbar,1,1,Math.round(14 * self.hp / self.hpMax),2,Math.round(self.x - 28),Math.round(self.y - yDistance * 4 - 16),Math.round(14 * self.hp / self.hpMax) * 4,8);
+            ctx1.drawImage(Img.healthbar,0,4,16,4,Math.round(self.x - 32),Math.round(self.y - yDistance * 4 - 20),64,16);
+            ctx1.drawImage(Img.healthbar,1,1,Math.round(14 * self.hp / self.hpMax),2,Math.round(self.x - 28),Math.round(self.y - yDistance * 4 - 16),Math.round(14 * self.hp / self.hpMax) * 4,8);
         }
         else{
-            ctx.drawImage(Img.healthbar,0,20,16,4,Math.round(self.x - 32),Math.round(self.y - yDistance * 4 - 20),64,16);
-            ctx.drawImage(Img.healthbar,1,17,Math.round(14 * self.hp / self.hpMax),2,Math.round(self.x - 28),Math.round(self.y - yDistance * 4 - 16),Math.round(14 * self.hp / self.hpMax) * 4,8);
+            ctx1.drawImage(Img.healthbar,0,20,16,4,Math.round(self.x - 32),Math.round(self.y - yDistance * 4 - 20),64,16);
+            ctx1.drawImage(Img.healthbar,1,17,Math.round(14 * self.hp / self.hpMax),2,Math.round(self.x - 28),Math.round(self.y - yDistance * 4 - 16),Math.round(14 * self.hp / self.hpMax) * 4,8);
         }
         if(settings.entityFadeOut === true){
             if(self.fadeState !== 1){
-                ctx.globalAlpha = 1;
+                ctx1.globalAlpha = 1;
             }
         }
     }
@@ -226,7 +226,7 @@ var Player = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade += 0.1;
                 if(self.fade >= 1){
@@ -245,12 +245,12 @@ var Player = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     if(onScreen){
-                        ctx.globalAlpha = 1;
+                        ctx0.globalAlpha = 1;
                     }
                     delete Player.list[self.id];
                     return;
@@ -263,31 +263,31 @@ var Player = function(initPack){
         if(Item.list[self.currentItem]){
             if(Item.list[self.currentItem].equip === 'shield'){
                 if(self.direction >= 195 && self.direction <= 345){
-                    ctx.save();
-                    ctx.translate(self.x,self.y);
-                    ctx.rotate((self.direction - 90) / 180 * Math.PI);
+                    ctx0.save();
+                    ctx0.translate(self.x,self.y);
+                    ctx0.rotate((self.direction - 90) / 180 * Math.PI);
                     var drawId = Item.list[self.currentItem].drawId;
                     var imgX = ((drawId - 1) % 26) * 24;
                     var imgY = ~~((drawId - 1) / 26) * 24;
-                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
-                    ctx.restore();
+                    ctx0.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
+                    ctx0.restore();
                 }
             }
             else if(Item.list[self.currentItem].displayItem === true){
-                ctx.save();
-                ctx.translate(self.x,self.y);
-                ctx.rotate((self.direction - 225) / 180 * Math.PI);
+                ctx0.save();
+                ctx0.translate(self.x,self.y);
+                ctx0.rotate((self.direction - 225) / 180 * Math.PI);
                 var drawId = Item.list[self.currentItem].drawId;
                 var imgX = ((drawId - 1) % 26) * 24;
                 var imgY = ~~((drawId - 1) / 26) * 24;
-                ctx.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
-                ctx.restore();
+                ctx0.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
+                ctx0.restore();
             }
         }
         self.animation = Math.floor(self.animation);
-        drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        drawPlayer(self.render,ctx0,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     self.drawLayer1 = function(){
@@ -301,24 +301,24 @@ var Player = function(initPack){
             return;
         }
         if(self.fadeState !== 1){
-            ctx.globalAlpha = self.fade;
+            ctx0.globalAlpha = self.fade;
         }
         if(self.direction < 195 || self.direction > 345){
             if(Item.list[self.currentItem]){
                 if(Item.list[self.currentItem].equip === 'shield'){
-                    ctx.save();
-                    ctx.translate(self.x,self.y);
-                    ctx.rotate((self.direction - 90) / 180 * Math.PI);
+                    ctx0.save();
+                    ctx0.translate(self.x,self.y);
+                    ctx0.rotate((self.direction - 90) / 180 * Math.PI);
                     var drawId = Item.list[self.currentItem].drawId;
                     var imgX = ((drawId - 1) % 26) * 24;
                     var imgY = ~~((drawId - 1) / 26) * 24;
-                    ctx.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
-                    ctx.restore();
+                    ctx0.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
+                    ctx0.restore();
                 }
             }
         }
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     Player.list[self.id] = self;
@@ -382,7 +382,7 @@ var Projectile = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade += 0.1;
                 if(self.fade >= 1){
@@ -401,12 +401,12 @@ var Projectile = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     if(onScreen){
-                        ctx.globalAlpha = 1;
+                        ctx0.globalAlpha = 1;
                     }
                     delete Projectile.list[self.id];
                     return;
@@ -418,21 +418,21 @@ var Projectile = function(initPack){
         }
         self.animation = Math.floor(self.animation);
         if(Img[self.projectileType]){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.rotate(self.direction * Math.PI / 180);
-            ctx.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
-            ctx.restore();
+            ctx0.save();
+            ctx0.translate(Math.round(self.x),Math.round(self.y));
+            ctx0.rotate(self.direction * Math.PI / 180);
+            ctx0.drawImage(Img[self.projectileType],self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
+            ctx0.restore();
         }
         else if(Item.list[self.projectileType]){
-            ctx.save();
-            ctx.translate(Math.round(self.x),Math.round(self.y));
-            ctx.rotate(self.direction * Math.PI / 180);
-            ctx.drawImage(self.render,self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
-            ctx.restore();
+            ctx0.save();
+            ctx0.translate(Math.round(self.x),Math.round(self.y));
+            ctx0.rotate(self.direction * Math.PI / 180);
+            ctx0.drawImage(self.render,self.animation * self.width / 4,0,self.width / 4,self.height / 4,-self.width / 2,-self.height / 2,self.width,self.height);
+            ctx0.restore();
         }
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     Projectile.list[self.id] = self;
@@ -463,7 +463,7 @@ var Monster = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade += 0.1;
                 if(self.fade >= 1){
@@ -488,12 +488,12 @@ var Monster = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     if(onScreen){
-                        ctx.globalAlpha = 1;
+                        ctx0.globalAlpha = 1;
                     }
                     if(self.monsterType === 'teneyedone'){
                         stopBossSong('tenEyedOne');
@@ -508,9 +508,9 @@ var Monster = function(initPack){
             return;
         }
         self.animation = Math.floor(self.animation);
-        drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        drawPlayer(self.render,ctx0,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     Monster.list[self.id] = self;
@@ -530,7 +530,7 @@ var Npc = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade += 0.1;
                 if(self.fade >= 1){
@@ -549,12 +549,12 @@ var Npc = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     if(onScreen){
-                        ctx.globalAlpha = 1;
+                        ctx0.globalAlpha = 1;
                     }
                     delete Npc.list[self.id];
                     return;
@@ -565,9 +565,9 @@ var Npc = function(initPack){
             return;
         }
         self.animation = Math.floor(self.animation);
-        drawPlayer(self.render,ctx,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
+        drawPlayer(self.render,ctx0,self.animationDirection,self.animation,Math.round(self.x),Math.round(self.y),4,self.drawSize);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     Npc.list[self.id] = self;
@@ -594,7 +594,7 @@ var HarvestableNpc = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade += 0.1;
                 if(self.fade >= 1){
@@ -613,12 +613,12 @@ var HarvestableNpc = function(initPack){
             }
             else{
                 if(onScreen){
-                    ctx.globalAlpha = self.fade;
+                    ctx0.globalAlpha = self.fade;
                 }
                 self.fade -= 0.05;
                 if(self.fade <= 0){
                     if(onScreen){
-                        ctx.globalAlpha = 1;
+                        ctx0.globalAlpha = 1;
                     }
                     delete HarvestableNpc.list[self.id];
                     return;
@@ -628,9 +628,9 @@ var HarvestableNpc = function(initPack){
         if(!onScreen){
             return;
         }
-        ctx.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8 + harvestableNpcData[self.img].aboveHeight / 4,self.width / 4,self.height / 4 - harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2 + harvestableNpcData[self.img].aboveHeight,self.width,self.height - harvestableNpcData[self.img].aboveHeight);
+        ctx0.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8 + harvestableNpcData[self.img].aboveHeight / 4,self.width / 4,self.height / 4 - harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2 + harvestableNpcData[self.img].aboveHeight,self.width,self.height - harvestableNpcData[self.img].aboveHeight);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     self.drawLayer1 = function(){
@@ -645,12 +645,12 @@ var HarvestableNpc = function(initPack){
         }
         if(settings.entityFadeOut === true){
             if(self.fadeState !== 1){
-                ctx.globalAlpha = self.fade;
+                ctx0.globalAlpha = self.fade;
             }
         }
-        ctx.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8,self.width / 4,harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2,self.width,harvestableNpcData[self.img].aboveHeight);
+        ctx0.drawImage(tileset,harvestableNpcData[self.img].imgX + harvestableNpcData[self.img].offsetX / 4 - self.width / 8,harvestableNpcData[self.img].imgY + harvestableNpcData[self.img].offsetY / 4 - self.height / 8,self.width / 4,harvestableNpcData[self.img].aboveHeight / 4,self.x - self.width / 2,self.y - self.height / 2,self.width,harvestableNpcData[self.img].aboveHeight);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx0.globalAlpha = 1;
         }
     }
     self.drawHp = function(){
@@ -662,13 +662,13 @@ var HarvestableNpc = function(initPack){
         }
         if(settings.entityFadeOut === true){
             if(self.fadeState !== 1){
-                ctx.globalAlpha = self.fade;
+                ctx1.globalAlpha = self.fade;
             }
         }
-        ctx.drawImage(Img.healthbar,0,12,16,4,Math.round(self.x - 32),Math.round(self.y) - self.height / 2 - 20,64,16);
-        ctx.drawImage(Img.healthbar,1,9,Math.round(14 * self.harvestHp / self.harvestHpMax),2,Math.round(self.x - 28),Math.round(self.y) - self.height / 2 - 16,Math.round(14 * self.harvestHp / self.harvestHpMax) * 4,8);
+        ctx1.drawImage(Img.healthbar,0,12,16,4,Math.round(self.x - 32),Math.round(self.y) - self.height / 2 - 20,64,16);
+        ctx1.drawImage(Img.healthbar,1,9,Math.round(14 * self.harvestHp / self.harvestHpMax),2,Math.round(self.x - 28),Math.round(self.y) - self.height / 2 - 16,Math.round(14 * self.harvestHp / self.harvestHpMax) * 4,8);
         if(self.fadeState !== 1){
-            ctx.globalAlpha = 1;
+            ctx1.globalAlpha = 1;
         }
     }
     if(self.img !== 'none'){
@@ -714,7 +714,7 @@ var DroppedItem = function(initPack){
             return;
         }
         if(self.isColliding({x:mouseX + Player.list[selfId].x,y:mouseY + Player.list[selfId].y,width:0,height:0}) && inGame === true && selectedDroppedItem === null){
-            ctx.drawImage(self.renderSelect,self.x - 24,self.y - 24);
+            ctx0.drawImage(self.renderSelect,self.x - 24,self.y - 24);
             itemMenu.innerHTML = getEntityDescription(self);
             itemMenu.style.display = 'inline-block';
             var rect = itemMenu.getBoundingClientRect();
@@ -737,14 +737,14 @@ var DroppedItem = function(initPack){
             selectedDroppedItem = self.id;
         }
         else{
-            ctx.drawImage(self.render,self.x - 24,self.y - 24);
+            ctx0.drawImage(self.render,self.x - 24,self.y - 24);
         }
         if(self.amount !== 1){
-            ctx.font = "13px pixel";
-            ctx.fillStyle = '#ffffff';
-            ctx.textAlign = "right";
-            ctx.textBaseline = "bottom";
-            ctx.fillText(self.amount,Math.round(self.x + 24),Math.round(self.y + 24));
+            ctx0.font = "13px pixel";
+            ctx0.fillStyle = '#ffffff';
+            ctx0.textAlign = "right";
+            ctx0.textBaseline = "bottom";
+            ctx0.fillText(self.amount,Math.round(self.x + 24),Math.round(self.y + 24));
         }
     }
     DroppedItem.list[self.id] = self;
@@ -783,8 +783,8 @@ var Particle = function(initPack){
         self.spdDirection = self.rotationValue * (Math.random() * 2 - 1);
     }
     if(self.drawType === 'text'){
-        ctx.font = self.drawSize + "px pixel";
-        var metrics = ctx.measureText(initPack.value);
+        particleCtx.font = self.drawSize + "px pixel";
+        var metrics = particleCtx.measureText(initPack.value);
         self.width = metrics.width;
         self.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     }
@@ -841,76 +841,76 @@ var Particle = function(initPack){
         if(self.drawType === 'image'){
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){
-                    ctx.globalAlpha = self.opacity;
+                    particleCtx.globalAlpha = self.opacity;
                 }
             }
             if(self.direction){
-                ctx.save();
-                ctx.translate(self.x,self.y);
-                ctx.rotate(self.direction * Math.PI / 180);
-                ctx.drawImage(Img[self.particleType],-Img[self.particleType].width / 2 * self.drawScale,-Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
-                ctx.restore();
+                particleCtx.save();
+                particleCtx.translate(self.x,self.y);
+                particleCtx.rotate(self.direction * Math.PI / 180);
+                particleCtx.drawImage(Img[self.particleType],-Img[self.particleType].width / 2 * self.drawScale,-Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
+                particleCtx.restore();
             }
             else{
-                ctx.drawImage(Img[self.particleType],self.x - Img[self.particleType].width / 2 * self.drawScale,self.y - Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
+                particleCtx.drawImage(Img[self.particleType],self.x - Img[self.particleType].width / 2 * self.drawScale,self.y - Img[self.particleType].height / 2 * self.drawScale,Img[self.particleType].width * self.drawScale,Img[self.particleType].height * self.drawScale);
             }
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){
-                    ctx.globalAlpha = 1;
+                    particleCtx.globalAlpha = 1;
                 }
             }
         }
         if(self.drawType === 'render'){
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){
-                    ctx.globalAlpha = self.opacity;
+                    particleCtx.globalAlpha = self.opacity;
                 }
             }
             if(self.direction){
-                ctx.save();
-                ctx.translate(self.x,self.y);
-                ctx.rotate(self.direction * Math.PI / 180);
-                ctx.drawImage(self.render,-self.render.width / 2,-self.render.height / 2,self.render.width,self.render.height);
-                ctx.restore();
+                particleCtx.save();
+                particleCtx.translate(self.x,self.y);
+                particleCtx.rotate(self.direction * Math.PI / 180);
+                particleCtx.drawImage(self.render,-self.render.width / 2,-self.render.height / 2,self.render.width,self.render.height);
+                particleCtx.restore();
             }
             else{
-                ctx.drawImage(self.render,self.x - self.render.width / 2,self.y - self.render.height / 2,self.render.width,self.render.height);
+                particleCtx.drawImage(self.render,self.x - self.render.width / 2,self.y - self.render.height / 2,self.render.width,self.render.height);
             }
             if(self.opacity !== undefined){
                 if(self.opacity >= 0 && self.opacity < 1){
-                    ctx.globalAlpha = 1;
+                    particleCtx.globalAlpha = 1;
                 }
             }
         }
         if(self.drawType === 'text'){
             if(self.direction !== undefined){
-                ctx.save();
-                ctx.translate(self.x,self.y);
-                ctx.rotate(self.direction * Math.PI / 180);
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.font = self.drawSize + "px pixel";
-                ctx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
-                ctx.fillText(initPack.value,0,0);
-                ctx.restore();
+                particleCtx.save();
+                particleCtx.translate(self.x,self.y);
+                particleCtx.rotate(self.direction * Math.PI / 180);
+                particleCtx.textAlign = "center";
+                particleCtx.textBaseline = "middle";
+                particleCtx.font = self.drawSize + "px pixel";
+                particleCtx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
+                particleCtx.fillText(initPack.value,0,0);
+                particleCtx.restore();
             }
             else{
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.font = self.drawSize + "px pixel";
-                ctx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
-                ctx.fillText(initPack.value,self.x,self.y);
+                particleCtx.textAlign = "center";
+                particleCtx.textBaseline = "middle";
+                particleCtx.font = self.drawSize + "px pixel";
+                particleCtx.fillStyle = 'rgba(' + self.drawColor + ',' + self.opacity + ')';
+                particleCtx.fillText(initPack.value,self.x,self.y);
             }
         }
         if(self.drawType === 'rain'){
             if(self.timer <= 3){
-                ctx.drawImage(Img[self.particleType],14,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
+                particleCtx.drawImage(Img[self.particleType],14,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
             else if(self.timer <= 6){
-                ctx.drawImage(Img[self.particleType],7,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
+                particleCtx.drawImage(Img[self.particleType],7,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
             else{
-                ctx.drawImage(Img[self.particleType],0,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
+                particleCtx.drawImage(Img[self.particleType],0,0,Img[self.particleType].width / 3,Img[self.particleType].height,self.x - Img[self.particleType].width * 2 / 3,self.y - Img[self.particleType].height * 2,Img[self.particleType].width * 4 / 3,Img[self.particleType].height * 4);
             }
         }
     }
