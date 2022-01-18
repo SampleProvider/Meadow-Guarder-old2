@@ -1521,9 +1521,6 @@ if(SERVER !== 'localhost'){
 			},1000);
 		},10000);
 	});
-	process.on('SIGKILL',function(){
-		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
-	});
 	process.on('SIGINT',function(){
 		storeDatabase()
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
