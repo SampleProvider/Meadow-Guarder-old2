@@ -381,6 +381,43 @@ io.sockets.on('connection',function(socket){
 							y:Player.list[socket.id].y,
 							map:Player.list[socket.id].map,
 							monsterType:name,
+							onDeath:function(pt){
+								if(pt.spawnId){
+									Spawner.list[pt.spawnId].spawned = false;
+								}
+								for(var i in Projectile.list){
+									if(Projectile.list[i].parent === pt.id){
+										Projectile.list[i].toRemove = true;
+									}
+								}
+								if(pt.boss === true){
+									var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+									var leaderboard = [];
+									for(var i in pt.playersDamaged){
+										if(Player.list[i]){
+											leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
+										}
+									}
+									var compare = function(a,b){
+										if(a.damage > b.damage){
+											return -1;
+										}
+										else if(b.damage > a.damage){
+											return 1;
+										}
+										else{
+											return 0;
+										}
+									}
+									leaderboard.sort(compare);
+									for(var i = 0;i < 5;i++){
+										if(leaderboard[i]){
+											message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
+										}
+									}
+									addToChat('#990099',message);
+								}
+							},
 						});
 						Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[name].name + '.');
 					}
@@ -392,6 +429,43 @@ io.sockets.on('connection',function(socket){
 									y:Player.list[socket.id].y,
 									map:Player.list[socket.id].map,
 									monsterType:i,
+									onDeath:function(pt){
+										if(pt.spawnId){
+											Spawner.list[pt.spawnId].spawned = false;
+										}
+										for(var j in Projectile.list){
+											if(Projectile.list[j].parent === pt.id){
+												Projectile.list[j].toRemove = true;
+											}
+										}
+										if(pt.boss === true){
+											var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+											var leaderboard = [];
+											for(var j in pt.playersDamaged){
+												if(Player.list[j]){
+													leaderboard.push({name:Player.list[j].name,damage:pt.playersDamaged[j]});
+												}
+											}
+											var compare = function(a,b){
+												if(a.damage > b.damage){
+													return -1;
+												}
+												else if(b.damage > a.damage){
+													return 1;
+												}
+												else{
+													return 0;
+												}
+											}
+											leaderboard.sort(compare);
+											for(var j = 0;j < 5;j++){
+												if(leaderboard[j]){
+													message += '\n' + (j + 1) + ': ' + leaderboard[j].name + ' (' + leaderboard[j].damage + ' Damage)';
+												}
+											}
+											addToChat('#990099',message);
+										}
+									},
 								});
 								Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[i].name + '.');
 								return;
@@ -412,6 +486,43 @@ io.sockets.on('connection',function(socket){
 								y:Player.list[socket.id].y,
 								map:Player.list[socket.id].map,
 								monsterType:name,
+								onDeath:function(pt){
+									if(pt.spawnId){
+										Spawner.list[pt.spawnId].spawned = false;
+									}
+									for(var j in Projectile.list){
+										if(Projectile.list[j].parent === pt.id){
+											Projectile.list[j].toRemove = true;
+										}
+									}
+									if(pt.boss === true){
+										var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+										var leaderboard = [];
+										for(var j in pt.playersDamaged){
+											if(Player.list[j]){
+												leaderboard.push({name:Player.list[j].name,damage:pt.playersDamaged[j]});
+											}
+										}
+										var compare = function(a,b){
+											if(a.damage > b.damage){
+												return -1;
+											}
+											else if(b.damage > a.damage){
+												return 1;
+											}
+											else{
+												return 0;
+											}
+										}
+										leaderboard.sort(compare);
+										for(var j = 0;j < 5;j++){
+											if(leaderboard[j]){
+												message += '\n' + (j + 1) + ': ' + leaderboard[j].name + ' (' + leaderboard[j].damage + ' Damage)';
+											}
+										}
+										addToChat('#990099',message);
+									}
+								},
 							});
 						}
 						Player.list[socket.id].sendMessage('[!] Summoned ' + amount + 'x ' + monsterData[name].name + '.');
@@ -425,6 +536,43 @@ io.sockets.on('connection',function(socket){
 										y:Player.list[socket.id].y,
 										map:Player.list[socket.id].map,
 										monsterType:i,
+										onDeath:function(pt){
+											if(pt.spawnId){
+												Spawner.list[pt.spawnId].spawned = false;
+											}
+											for(var k in Projectile.list){
+												if(Projectile.list[k].parent === pt.id){
+													Projectile.list[k].toRemove = true;
+												}
+											}
+											if(pt.boss === true){
+												var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+												var leaderboard = [];
+												for(var k in pt.playersDamaged){
+													if(Player.list[k]){
+														leaderboard.push({name:Player.list[k].name,damage:pt.playersDamaged[k]});
+													}
+												}
+												var compare = function(a,b){
+													if(a.damage > b.damage){
+														return -1;
+													}
+													else if(b.damage > a.damage){
+														return 1;
+													}
+													else{
+														return 0;
+													}
+												}
+												leaderboard.sort(compare);
+												for(var k = 0;k < 5;k++){
+													if(leaderboard[k]){
+														message += '\n' + (k + 1) + ': ' + leaderboard[k].name + ' (' + leaderboard[k].damage + ' Damage)';
+													}
+												}
+												addToChat('#990099',message);
+											}
+										},
 									});
 								}
 								Player.list[socket.id].sendMessage('[!] Summoned ' + amount + 'x ' + monsterData[i].name + '.');

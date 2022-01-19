@@ -139,7 +139,7 @@ spawnMonster = function(spawner,spawnId){
                     }
                 }
                 for(var i in clans){
-                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 250000);
+                    clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 200000);
                     Clan.list[i].addXp(clans[i].xp);
                 }
                 var compare = function(a,b){
@@ -548,8 +548,8 @@ Actor = function(param){
         }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
-        var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
-        var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
+        var dx = self.gridX - Math.floor(self.width / 128) - nx + 1;
+        var dy = self.gridY - Math.floor(self.height / 128) - ny + 1;
         if(Collision.list[self.map]){
             if(Collision.list[self.map][self.zindex]){
                 if(Collision.list[self.map][self.zindex][self.gridX]){
@@ -2889,6 +2889,10 @@ Player.onConnect = function(socket,username){
                 player.sendMessage('[!] There is already a clan with name ' + data + '.');
                 return;
             }
+            if(player.level < 5){
+                player.sendMessage('[!] You need level 5 to create a clan.');
+                return;
+            }
             var clan = new Clan(data,{
                 members:{},
                 level:0,
@@ -4016,8 +4020,8 @@ Monster = function(param){
                 }
                 var nx = Math.floor(size / 2);
                 var ny = Math.floor(size / 2);
-                var dx = Math.floor(self.x / 64 - self.width / 128) - size / 2 + 0.5;
-                var dy = Math.floor(self.y / 64 - self.height / 128) - size / 2 + 0.5;
+                var dx = self.gridX - Math.floor(self.width / 128) - nx;
+                var dy = self.gridY - Math.floor(self.height / 128) - ny;
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][self.gridX]){
