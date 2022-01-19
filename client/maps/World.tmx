@@ -5,6 +5,7 @@
  </editorsettings>
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="13055" source="specialtiles.tsx"/>
+ <tileset firstgid="13067" source="tileset.tsx"/>
  <layer id="1" name="Sea Level" width="50" height="50">
   <data encoding="csv">
    <chunk x="-80" y="-112" width="16" height="16">

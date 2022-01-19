@@ -140,7 +140,7 @@
         "movementTimerBuffer":0,
         "rotationType":"random",
         "rotationValue":20,
-        "opacity":5,
+        "opacity":2,
         "spdOpacity":-0.1,
         "drawType":"image",
         "drawScale":2

@@ -42,11 +42,11 @@ var getCookie = function(){
                     if(i === 'darknessEffects'){
                         if(settings[i] === 'true'){
                             settings[i] = true;
-                            entityFadeOutButton.innerHTML = 'Darkness Effects: Enabled';
+                            darknessEffectsButton.innerHTML = 'Darkness Effects: Enabled';
                         }
                         else{
                             settings[i] = false;
-                            entityFadeOutButton.innerHTML = 'Darkness Effects: Disabled';
+                            darknessEffectsButton.innerHTML = 'Darkness Effects: Disabled';
                             resetWeather();
                         }
                     }
