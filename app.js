@@ -1661,7 +1661,7 @@ setInterval(function(){
 
 if(SERVER !== 'localhost'){
 	process.on('SIGTERM',function(){
-		storeDatabase();
+		// storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			setInterval(function(){
@@ -1670,7 +1670,7 @@ if(SERVER !== 'localhost'){
 		},10000);
 	});
 	process.on('SIGINT',function(){
-		storeDatabase()
+		// storeDatabase()
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			setInterval(function(){
