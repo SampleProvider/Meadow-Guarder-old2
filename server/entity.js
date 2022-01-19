@@ -416,6 +416,9 @@ Actor = function(param){
     self.dashX = 0;
     self.dashY = 0;
 
+    self.knockbackX = 0;
+    self.knockbackY = 0;
+
     self.projectilesHit = {};
 
     self.playersDamaged = {};
@@ -887,6 +890,8 @@ Actor = function(param){
         if(pt.sameId === false){
             self.projectilesHit[pt.id] = 10;
         }
+        self.knockbackX += pt.spdX / 4;
+        self.knockbackY += pt.spdY / 4;
     }
     self.dropItems = function(){
         var playersPercentage = {};
@@ -1582,6 +1587,8 @@ Player = function(param,socket){
             leftClick:false,
             rightClick:false,
         }
+        pt.knockbackX = 0;
+        pt.knockbackY = 0;
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
                 if(Player.list[i].map === pt.map){
@@ -1746,6 +1753,41 @@ Player = function(param,socket){
                 }
                 self.updateTransporter();
             }
+            self.spdX = self.x - lastX;
+            self.spdY = self.y - lastY;
+            var spdX = self.spdX;
+            var spdY = self.spdY;
+            var calculations = Math.floor(Math.max(Math.max(Math.abs(self.knockbackX) / self.width,Math.abs(self.knockbackY) / self.height),1));
+            self.spdX = Math.round(self.knockbackX / calculations);
+            self.spdY = Math.round(self.knockbackY / calculations);
+            if(self.collisionType === 'none'){
+                calculations = 1;
+            }
+            for(var i = 0;i < calculations;i++){
+                self.updatePosition();
+                self.updateGridPosition();
+                self.x = Math.round(self.x);
+                self.y = Math.round(self.y);
+                self.updateSlope();
+                if(self.detectCollisions()){
+                    self.updateCollisions();
+                }
+                self.updateTransporter();
+            }
+            self.spdX = spdX;
+            self.spdY = spdY;
+            if(self.knockbackX > 0){
+                self.knockbackX = Math.floor(self.knockbackX * 0.5);
+            }
+            else if(self.knockbackX < 0){
+                self.knockbackX = Math.ceil(self.knockbackX * 0.5);
+            }
+            if(self.knockbackY > 0){
+                self.knockbackY = Math.floor(self.knockbackY * 0.5);
+            }
+            else if(self.knockbackY < 0){
+                self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+            }
         }
         self.updateRegion();
         if(self.inventory.updateStats){
@@ -1753,20 +1795,6 @@ Player = function(param,socket){
             self.updateStats();
         }
         self.updateXp();
-        self.spdX = self.x - lastX;
-        self.spdY = self.y - lastY;
-        if(spdX > 0){
-            self.spdX = 1;
-        }
-        else if(spdX < 0){
-            self.spdX = -1;
-        }
-        if(spdY > 0){
-            self.spdY = 1;
-        }
-        else if(spdY < 0){
-            self.spdY = -1;
-        }
         self.updateAnimation();
         self.updateAttack();
         self.updateHp();
@@ -3445,7 +3473,7 @@ Projectile = function(param){
     self.update = function(){
         self.vertices = [];
         self.updatePattern();
-        var calculations = Math.floor(Math.max(Math.max(Math.abs(self.spdX),Math.abs(self.spdY)) / 20,1));
+        var calculations = Math.floor(Math.max(Math.max(Math.abs(self.spdX) / self.width,Math.abs(self.spdY) / self.height),1));
         var spdX = self.spdX;
         var spdY = self.spdY;
         if(self.collisionType === 'none'){
@@ -3739,6 +3767,8 @@ Monster = function(param){
         if(pt.sameId === false){
             self.projectilesHit[pt.id] = 10;
         }
+        self.knockbackX += pt.spdX / 4;
+        self.knockbackY += pt.spdY / 4;
         if(self.attackState === 'passive'){
             self.target = pt.parent;
             self.targetType = pt.parentType;
@@ -3873,20 +3903,40 @@ Monster = function(param){
                     }
                 }
             }
-        }
-        self.spdX = self.x - lastX;
-        self.spdY = self.y - lastY;
-        if(spdX > 0){
-            self.spdX = 1;
-        }
-        else if(spdX < 0){
-            self.spdX = -1;
-        }
-        if(spdY > 0){
-            self.spdY = 1;
-        }
-        else if(spdY < 0){
-            self.spdY = -1;
+            self.spdX = self.x - lastX;
+            self.spdY = self.y - lastY;
+            var spdX = self.spdX;
+            var spdY = self.spdY;
+            var calculations = Math.floor(Math.max(Math.max(Math.abs(self.knockbackX) / self.width,Math.abs(self.knockbackY) / self.height),1));
+            self.spdX = Math.round(self.knockbackX / calculations);
+            self.spdY = Math.round(self.knockbackY / calculations);
+            if(self.collisionType === 'none'){
+                calculations = 1;
+            }
+            for(var i = 0;i < calculations;i++){
+                self.updatePosition();
+                self.updateGridPosition();
+                self.x = Math.round(self.x);
+                self.y = Math.round(self.y);
+                self.updateSlope();
+                if(self.detectCollisions()){
+                    self.updateCollisions();
+                }
+            }
+            self.spdX = spdX;
+            self.spdY = spdY;
+            if(self.knockbackX > 0){
+                self.knockbackX = Math.floor(self.knockbackX * 0.5);
+            }
+            else if(self.knockbackX < 0){
+                self.knockbackX = Math.ceil(self.knockbackX * 0.5);
+            }
+            if(self.knockbackY > 0){
+                self.knockbackY = Math.floor(self.knockbackY * 0.5);
+            }
+            else if(self.knockbackY < 0){
+                self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+            }
         }
         self.updateTarget();
         self.updateAnimation();
