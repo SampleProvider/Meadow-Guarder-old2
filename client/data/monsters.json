@@ -386,7 +386,7 @@
     },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":10000000,
+        "hpMax":25000000,
         "stats":{
             "damage":600,
             "defense":0,
@@ -394,7 +394,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":30,
+        "maxSpeed":35,
         "drawSize":"large",
         "team":"Harmful",
         "itemDrops":{
@@ -452,7 +452,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":7500000,
+                    "hp":15000000,
                     "nextPhases":["phase2"]
                 }
             },
@@ -988,7 +988,8 @@
                     "20":[{
                         "id":"dash",
                         "param":{
-                            "directionDeviation":15
+                            "directionDeviation":15,
+                            "dashDistance":8
                         }
                     }]
                 },
@@ -1139,7 +1140,8 @@
                     "20":[{
                         "id":"dash",
                         "param":{
-                            "directionDeviation":15
+                            "directionDeviation":15,
+                            "dashDistance":8
                         }
                     }]
                 },
