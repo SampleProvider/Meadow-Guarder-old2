@@ -117,6 +117,14 @@ Collision.remove = function(collision,id){
                         if(Collision.list[collision.map][collision.zindex][i][j]){
                             if(Collision.list[collision.map][collision.zindex][i][j][id]){
                                 delete Collision.list[collision.map][collision.zindex][i][j][id];
+                                var collisionExists = false;
+                                for(var k in Collision.list[collision.map][collision.zindex][i][j]){
+                                    collisionExists = true;
+                                    break;
+                                }
+                                if(!collisionExists){
+                                    Collision.list[collision.map][collision.zindex][i][j] = undefined;
+                                }
                             }
                         }
                     }

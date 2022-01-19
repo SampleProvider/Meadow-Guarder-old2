@@ -57,6 +57,8 @@ var respawnTimer = 0;
 var fpsTimes = [];
 
 var effectDarkness = 0;
+var currentEffectDarkness = 0;
+var effectDarknessSpeed = 0;
 
 var inGame = false;
 
@@ -440,6 +442,12 @@ socket.on('update',function(data){
                                             }
                                         }
                                         createDebuff(k);
+                                    }
+                                    if(effectDarkness === 0){
+                                        effectDarknessSpeed = -0.02;
+                                    }
+                                    else{
+                                        effectDarknessSpeed = 0.02;
                                     }
                                     if(inSlot === false){
                                         updateDebuffPopupMenu(-1);
@@ -1183,15 +1191,25 @@ var loop = function(){
 
     ctx1.restore();
 
-    if(effectDarkness !== 0){
-        var grd = darknessEffectCtx.createRadialGradient(Player.list[selfId].x,Player.list[selfId].y,50,Player.list[selfId].x,Player.list[selfId].y,300);
+    if(currentEffectDarkness !== 0){
+        darknessEffectCtx.clearRect(0,0,WIDTH,HEIGHT);
+        var grd = darknessEffectCtx.createRadialGradient(cameraX + Player.list[selfId].x,cameraY + Player.list[selfId].y,50,cameraX + Player.list[selfId].x,cameraY + Player.list[selfId].y,500);
         grd.addColorStop(0,"rgba(0,0,0,0)");
-        grd.addColorStop(1,"rgba(0,0,0," + effectDarkness + ")");
+        grd.addColorStop(1,"rgba(0,0,0," + currentEffectDarkness + ")");
         darknessEffectCtx.fillStyle = grd;
         darknessEffectCtx.fillRect(cameraX + Player.list[selfId].x - WIDTH,cameraY + Player.list[selfId].y - HEIGHT,WIDTH * 2,HEIGHT * 2);
     }
     else{
         darknessEffectCtx.clearRect(0,0,WIDTH,HEIGHT);
+    }
+    currentEffectDarkness += effectDarknessSpeed;
+    if(effectDarknessSpeed > 0 && currentEffectDarkness > effectDarkness){
+        currentEffectDarkness = effectDarkness;
+        effectDarknessSpeed = 0;
+    }
+    if(effectDarknessSpeed < 0 && currentEffectDarkness < effectDarkness){
+        currentEffectDarkness = effectDarkness;
+        effectDarknessSpeed = 0;
     }
 
     if(mapShadeAmount >= 8.5){
