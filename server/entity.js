@@ -548,8 +548,8 @@ Actor = function(param){
         }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
-        var dx = self.gridX - Math.floor(self.width / 128) - nx + 1;
-        var dy = self.gridY - Math.floor(self.height / 128) - ny + 1;
+        var dx = self.gridX - Math.floor(self.width / 128) - nx;
+        var dy = self.gridY - Math.floor(self.height / 128) - ny;
         if(Collision.list[self.map]){
             if(Collision.list[self.map][self.zindex]){
                 if(Collision.list[self.map][self.zindex][self.gridX]){
