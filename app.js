@@ -260,11 +260,25 @@ io.sockets.on('connection',function(socket){
 				Database.removeUser(stringData,function(){
 					socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
 				});
+				for(var i in Clan.list){
+					for(var j in Clan.list[i].members){
+						if(j === stringData.username){
+							delete Clan.list[i].members[j];
+						}
+					}
+				}
 			}
 			else if(res === 'chatBanned'){
 				Database.removeUser(stringData,function(){
 					socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
 				});
+				for(var i in Clan.list){
+					for(var j in Clan.list[i].members){
+						if(j === stringData.username){
+							delete Clan.list[i].members[j];
+						}
+					}
+				}
 			}
 			else{
 				socket.emit('deleteAccountResponse',{success:res,username:stringData.username});
