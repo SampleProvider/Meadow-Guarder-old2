@@ -553,6 +553,9 @@ Actor = function(param){
         if(self.getSquareDistance({x:x,y:y}) > 64){
             size = 161;
         }
+        if(self.getSquareDistance({x:x,y:y}) > 80){
+            size = 193;
+        }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
         var dx = self.gridX - Math.floor(self.width / 128) - nx;
@@ -571,8 +574,8 @@ Actor = function(param){
                                         continue;
                                     }
                                 }
-                                if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
-                                    distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
+                                if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
+                                    distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
                                     dx = x + i;
                                     dy = y + j;
                                 }
@@ -4168,8 +4171,8 @@ Monster = function(param){
                                                 continue;
                                             }
                                         }
-                                        if(self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
-                                            distance = self.getSquareDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
+                                        if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
+                                            distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
                                             dx = x + i;
                                             dy = y + j;
                                         }

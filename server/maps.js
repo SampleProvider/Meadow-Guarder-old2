@@ -186,6 +186,7 @@ loadMap('Altoris Forge Basement');
 loadMap('Altoris General Store');
 loadMap('Altoris General Store Upstairs');
 loadMap('Altoris Mapmakers Lodge');
+loadMap('Altoris Magic Brewery');
 loadMap('PVP Arena');
 loadMap('Lightning Whelk Inn');
 loadMap('Lightning Whelk Inn Upstairs');
