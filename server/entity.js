@@ -4297,10 +4297,6 @@ Monster = function(param){
                 var distance = self.getDistance(self.getTarget());
                 if(distance < 192 && self.targetLeftView === 0){
                     self.circlingTarget = true;
-                    if(distance < 64){
-                        self.retreat();
-                        return;
-                    }
                 }
                 else if(distance > 256){
                     self.circlingTarget = false;
