@@ -1069,14 +1069,12 @@ canvas {
     top: 32px;
     left: 8px;
     height: 186px;
-    width: 186px;
 }
 #tradeItems2 {
     position: absolute;
     top: 32px;
     right: 8px;
     height: 186px;
-    width: 186px;
 }
 #tradeButtons {
     position: absolute;
