@@ -848,9 +848,6 @@ Actor = function(param){
         self.width = width;
         self.height = height;
         if(collisions[0]){
-            self.collided = {x:false,y:false};
-            var y1 = self.y;
-            self.y = self.lastY;
             var colliding = false;
             for(var i in collisions){
                 if(self.isColliding(collisions[i])){
@@ -858,29 +855,79 @@ Actor = function(param){
                 }
             }
             if(colliding){
+                var x1 = self.x;
                 self.x = self.lastX;
-                self.collided.x = true;
-                if(self.type === 'Monster'){
-                    self.circleDirection *= -1;
+                var colliding = false;
+                for(var i in collisions){
+                    if(self.isColliding(collisions[i])){
+                        colliding = true;
+                    }
+                }
+                if(colliding){
+                    self.x = x1;
+                    self.y = self.lastY;
+                    var colliding = false;
+                    for(var i in collisions){
+                        if(self.isColliding(collisions[i])){
+                            colliding = true;
+                        }
+                    }
+                    if(colliding){
+                        self.x = self.lastX;
+                        self.collided = {x:true,y:true};
+                        if(self.type === 'Monster'){
+                            self.circleDirection *= -1;
+                        }
+                    }
+                    else{
+                        self.collided = {x:false,y:true};
+                        if(self.type === 'Monster'){
+                            self.circleDirection *= -1;
+                        }
+                    }
+                }
+                else{
+                    self.collided = {x:true,y:false};
+                    if(self.type === 'Monster'){
+                        self.circleDirection *= -1;
+                    }
                 }
             }
-            self.y = y1;
-            var x1 = self.x;
-            self.x = self.lastX;
-            var colliding = false;
-            for(var i in collisions){
-                if(self.isColliding(collisions[i])){
-                    colliding = true;
-                }
-            }
-            if(colliding){
+            else{
+                self.collided = {x:false,y:false};
+                var y1 = self.y;
                 self.y = self.lastY;
-                self.collided.y = true;
-                if(self.type === 'Monster'){
-                    self.circleDirection *= -1;
+                var colliding = false;
+                for(var i in collisions){
+                    if(self.isColliding(collisions[i])){
+                        colliding = true;
+                    }
                 }
+                if(colliding){
+                    self.x = self.lastX;
+                    self.collided.x = true;
+                    if(self.type === 'Monster'){
+                        self.circleDirection *= -1;
+                    }
+                }
+                self.y = y1;
+                var x1 = self.x;
+                self.x = self.lastX;
+                var colliding = false;
+                for(var i in collisions){
+                    if(self.isColliding(collisions[i])){
+                        colliding = true;
+                    }
+                }
+                if(colliding){
+                    self.y = self.lastY;
+                    self.collided.y = true;
+                    if(self.type === 'Monster'){
+                        self.circleDirection *= -1;
+                    }
+                }
+                self.x = x1;
             }
-            self.x = x1;
         }
         else{
             self.collided = {x:false,y:false};
