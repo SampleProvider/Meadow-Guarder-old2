@@ -332,7 +332,7 @@ Database.isValidPassword = function(data,cb){
 												return cb('alreadyLoggedOn');
 											}
 										}
-										return cb('chatBanned');
+										return cb('correctPassword');
 									}
 									else{
 										return cb('incorrectPassword');
