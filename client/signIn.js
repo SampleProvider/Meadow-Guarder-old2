@@ -391,7 +391,7 @@ socket.on('signInResponse',function(data){
 });
 socket.on('changePasswordResponse',function(data){
     signErrorText = signError.innerHTML;
-    if(data.success === 'success'){
+    if(data.success === 'correctPassword'){
         signError.innerHTML = '<span style="color: #55ff55">Successfully changed password to \'' + data.newPassword + '\'.</span><br>' + signErrorText;
     }
     else if(data.success === 'incorrectPassword'){
