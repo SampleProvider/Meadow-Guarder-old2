@@ -815,6 +815,77 @@ Actor = function(param){
             self.collided = {x:false,y:false};
         }
     }
+    self.updateKnockbackCollisions = function(){
+        var collisions = [];
+        var x = self.x;
+        var y = self.y;
+        var width = self.width;
+        var height = self.height;
+        self.width += Math.abs(self.x - self.lastX);
+        self.height += Math.abs(self.y - self.lastY);
+        self.x = (self.x + self.lastX) / 2;
+        self.y = (self.y + self.lastY) / 2;
+        for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
+            for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
+                if(Collision.list[self.map]){
+                    if(Collision.list[self.map][self.zindex]){
+                        if(Collision.list[self.map][self.zindex][i]){
+                            if(Collision.list[self.map][self.zindex][i][j]){
+                                var collision = Collision.list[self.map][self.zindex][i][j];
+                                for(var k in collision){
+                                    if(self.isColliding(collision[k])){
+                                        collisions.push(collision[k]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        self.x = x;
+        self.y = y;
+        self.width = width;
+        self.height = height;
+        if(collisions[0]){
+            self.collided = {x:false,y:false};
+            var y1 = self.y;
+            self.y = self.lastY;
+            var colliding = false;
+            for(var i in collisions){
+                if(self.isColliding(collisions[i])){
+                    colliding = true;
+                }
+            }
+            if(colliding){
+                self.x = self.lastX;
+                self.collided.x = true;
+                if(self.type === 'Monster'){
+                    self.circleDirection *= -1;
+                }
+            }
+            self.y = y1;
+            var x1 = self.x;
+            self.x = self.lastX;
+            var colliding = false;
+            for(var i in collisions){
+                if(self.isColliding(collisions[i])){
+                    colliding = true;
+                }
+            }
+            if(colliding){
+                self.y = self.lastY;
+                self.collided.y = true;
+                if(self.type === 'Monster'){
+                    self.circleDirection *= -1;
+                }
+            }
+            self.x = x1;
+        }
+        else{
+            self.collided = {x:false,y:false};
+        }
+    }
     self.updateSlope = function(){
         if(Slope.list[self.map]){
             if(Slope.list[self.map][self.gridX]){
@@ -1817,7 +1888,7 @@ Player = function(param,socket){
                     self.y = Math.round(self.y);
                     self.updateSlope();
                     if(self.detectCollisions()){
-                        self.updateCollisions();
+                        self.updateKnockbackCollisions();
                         if(self.collided.x && self.collided.y){
                             self.updateTransporter();
                             break;
@@ -4001,7 +4072,7 @@ Monster = function(param){
                     self.updateSlope();
                     self.updateRegion();
                     if(self.detectCollisions()){
-                        self.updateCollisions();
+                        self.updateKnockbackCollisions();
                         if(self.collided.x && self.collided.y){
                             break;
                         }
