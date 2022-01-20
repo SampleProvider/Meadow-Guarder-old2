@@ -550,6 +550,9 @@ Actor = function(param){
         if(self.getSquareDistance({x:x,y:y}) > 48){
             size = 129;
         }
+        if(self.getSquareDistance({x:x,y:y}) > 64){
+            size = 161;
+        }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
         var dx = self.gridX - Math.floor(self.width / 128) - nx;
