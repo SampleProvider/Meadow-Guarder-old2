@@ -3296,6 +3296,8 @@ Player.onConnect = function(socket,username){
                 return;
             }
             player.hp = Math.round(player.hpMax / 2);
+            player.knockbackX = 0;
+            player.knockbackY = 0;
             player.teleportToSpawn();
             addToChat('#00ff00',player.name + ' respawned.');
         });
