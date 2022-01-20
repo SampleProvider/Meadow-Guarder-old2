@@ -1664,18 +1664,14 @@ if(SERVER !== 'localhost'){
 		// storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
-			setInterval(function(){
-				process.exit(0);
-			},1000);
+			process.exit(0);
 		},10000);
 	});
 	process.on('SIGINT',function(){
 		// storeDatabase()
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
-			setInterval(function(){
-				process.exit(0);
-			},1000);
+			process.exit(0);
 		},10000);
 	});
 }
