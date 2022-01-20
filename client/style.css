@@ -864,6 +864,15 @@ canvas {
     height: 0%;
     opacity: 0.5;
     background-color: #ff0000;
+}
+.cooldownDivRound {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    height: 0%;
+    opacity: 0.5;
+    background-color: #ff0000;
     border-radius: 4px;
 }
 .outlineImage {

@@ -623,7 +623,7 @@ Inventory = function(socket,server){
             draggingItem.style.display = 'inline-block';
             draggingItem.innerHTML = '';
             var cooldownDiv = document.createElement('div');
-            cooldownDiv.className = 'cooldownDiv';
+            cooldownDiv.className = 'cooldownDivRound';
             cooldownDiv.style.height = 100 * self.draggingItem.cooldown / Item.list[self.draggingItem.id].useTime + "%";
             draggingItem.appendChild(cooldownDiv);
             self.drawItem(draggingItem,Item.list[self.draggingItem.id].drawId,'large');
