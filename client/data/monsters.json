@@ -395,6 +395,7 @@
             "critPower":5
         },
         "maxSpeed":35,
+        "knockbackResistance":1,
         "drawSize":"large",
         "team":"Harmful",
         "itemDrops":{

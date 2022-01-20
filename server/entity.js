@@ -418,6 +418,7 @@ Actor = function(param){
 
     self.knockbackX = 0;
     self.knockbackY = 0;
+    self.knockbackResistance = 0;
 
     self.projectilesHit = {};
 
@@ -890,8 +891,8 @@ Actor = function(param){
         if(pt.sameId === false){
             self.projectilesHit[pt.id] = 10;
         }
-        self.knockbackX += pt.spdX / 4;
-        self.knockbackY += pt.spdY / 4;
+        self.knockbackX += pt.spdX / 4 * (1 - self.knockbackResistance);
+        self.knockbackY += pt.spdY / 4 * (1 - self.knockbackResistance);
     }
     self.dropItems = function(){
         var playersPercentage = {};
@@ -1023,6 +1024,9 @@ Actor = function(param){
     }
     self.onDamage = function(pt){
         if(self.invincible === true){
+            return;
+        }
+        if(self.hp <= 0){
             return;
         }
         if(pt.sameId === false && self.projectilesHit[pt.id]){
@@ -1755,38 +1759,64 @@ Player = function(param,socket){
             }
             self.spdX = self.x - lastX;
             self.spdY = self.y - lastY;
-            var spdX = self.spdX;
-            var spdY = self.spdY;
-            var calculations = Math.floor(Math.max(Math.max(Math.abs(self.knockbackX) / self.width,Math.abs(self.knockbackY) / self.height),1));
-            self.spdX = Math.round(self.knockbackX / calculations);
-            self.spdY = Math.round(self.knockbackY / calculations);
-            if(self.collisionType === 'none'){
-                calculations = 1;
-            }
-            for(var i = 0;i < calculations;i++){
-                self.updatePosition();
-                self.updateGridPosition();
-                self.x = Math.round(self.x);
-                self.y = Math.round(self.y);
-                self.updateSlope();
-                if(self.detectCollisions()){
-                    self.updateCollisions();
+            if(self.knockbackX !== 0 || self.knockbackY !== 0){
+                var spdX = self.spdX;
+                var spdY = self.spdY;
+                var xDistance = Math.abs(self.knockbackX);
+                var yDistance = Math.abs(self.knockbackY);
+                if(self.knockbackX !== 0){
+                    var xDirection = xDistance / self.knockbackX;
                 }
-                self.updateTransporter();
-            }
-            self.spdX = spdX;
-            self.spdY = spdY;
-            if(self.knockbackX > 0){
-                self.knockbackX = Math.floor(self.knockbackX * 0.5);
-            }
-            else if(self.knockbackX < 0){
-                self.knockbackX = Math.ceil(self.knockbackX * 0.5);
-            }
-            if(self.knockbackY > 0){
-                self.knockbackY = Math.floor(self.knockbackY * 0.5);
-            }
-            else if(self.knockbackY < 0){
-                self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+                else{
+                    var xDirection = 0;
+                }
+                if(self.knockbackY !== 0){
+                    var yDirection = yDistance / self.knockbackY;
+                }
+                else{
+                    var yDirection = 0;
+                }
+                while(xDistance > 0 || yDistance > 0){
+                    if(xDistance > yDistance){
+                        self.spdX = Math.min(self.width,xDistance);
+                        self.spdY = yDistance * self.spdX / xDistance;
+                    }
+                    else{
+                        self.spdY = Math.min(self.height,yDistance);
+                        self.spdX = xDistance * self.spdY / yDistance;
+                    }
+                    xDistance -= self.spdX;
+                    yDistance -= self.spdY;
+                    self.spdX *= xDirection;
+                    self.spdY *= yDirection;
+                    self.updatePosition();
+                    self.updateGridPosition();
+                    self.x = Math.round(self.x);
+                    self.y = Math.round(self.y);
+                    self.updateSlope();
+                    if(self.detectCollisions()){
+                        self.updateCollisions();
+                        if(self.collided.x && self.collided.y){
+                            self.updateTransporter();
+                            break;
+                        }
+                    }
+                    self.updateTransporter();
+                }
+                if(self.knockbackX > 0){
+                    self.knockbackX = Math.floor(self.knockbackX * 0.5);
+                }
+                else if(self.knockbackX < 0){
+                    self.knockbackX = Math.ceil(self.knockbackX * 0.5);
+                }
+                if(self.knockbackY > 0){
+                    self.knockbackY = Math.floor(self.knockbackY * 0.5);
+                }
+                else if(self.knockbackY < 0){
+                    self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+                }
+                self.spdX = spdX;
+                self.spdY = spdY;
             }
         }
         self.updateRegion();
@@ -3767,8 +3797,8 @@ Monster = function(param){
         if(pt.sameId === false){
             self.projectilesHit[pt.id] = 10;
         }
-        self.knockbackX += pt.spdX / 4;
-        self.knockbackY += pt.spdY / 4;
+        self.knockbackX += pt.spdX / 4 * (1 - self.knockbackResistance);
+        self.knockbackY += pt.spdY / 4 * (1 - self.knockbackResistance);
         if(self.attackState === 'passive'){
             self.target = pt.parent;
             self.targetType = pt.parentType;
@@ -3905,37 +3935,63 @@ Monster = function(param){
             }
             self.spdX = self.x - lastX;
             self.spdY = self.y - lastY;
-            var spdX = self.spdX;
-            var spdY = self.spdY;
-            var calculations = Math.floor(Math.max(Math.max(Math.abs(self.knockbackX) / self.width,Math.abs(self.knockbackY) / self.height),1));
-            self.spdX = Math.round(self.knockbackX / calculations);
-            self.spdY = Math.round(self.knockbackY / calculations);
-            if(self.collisionType === 'none'){
-                calculations = 1;
-            }
-            for(var i = 0;i < calculations;i++){
-                self.updatePosition();
-                self.updateGridPosition();
-                self.x = Math.round(self.x);
-                self.y = Math.round(self.y);
-                self.updateSlope();
-                if(self.detectCollisions()){
-                    self.updateCollisions();
+            if(self.knockbackX !== 0 || self.knockbackY !== 0){
+                var spdX = self.spdX;
+                var spdY = self.spdY;
+                var xDistance = Math.abs(self.knockbackX);
+                var yDistance = Math.abs(self.knockbackY);
+                if(self.knockbackX !== 0){
+                    var xDirection = xDistance / self.knockbackX;
                 }
-            }
-            self.spdX = spdX;
-            self.spdY = spdY;
-            if(self.knockbackX > 0){
-                self.knockbackX = Math.floor(self.knockbackX * 0.5);
-            }
-            else if(self.knockbackX < 0){
-                self.knockbackX = Math.ceil(self.knockbackX * 0.5);
-            }
-            if(self.knockbackY > 0){
-                self.knockbackY = Math.floor(self.knockbackY * 0.5);
-            }
-            else if(self.knockbackY < 0){
-                self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+                else{
+                    var xDirection = 0;
+                }
+                if(self.knockbackY !== 0){
+                    var yDirection = yDistance / self.knockbackY;
+                }
+                else{
+                    var yDirection = 0;
+                }
+                while(xDistance > 0 || yDistance > 0){
+                    if(xDistance > yDistance){
+                        self.spdX = Math.min(self.width,xDistance);
+                        self.spdY = yDistance * self.spdX / xDistance;
+                    }
+                    else{
+                        self.spdY = Math.min(self.height,yDistance);
+                        self.spdX = xDistance * self.spdY / yDistance;
+                    }
+                    xDistance -= self.spdX;
+                    yDistance -= self.spdY;
+                    self.spdX *= xDirection;
+                    self.spdY *= yDirection;
+                    self.updatePosition();
+                    self.updateGridPosition();
+                    self.x = Math.round(self.x);
+                    self.y = Math.round(self.y);
+                    self.updateSlope();
+                    self.updateRegion();
+                    if(self.detectCollisions()){
+                        self.updateCollisions();
+                        if(self.collided.x && self.collided.y){
+                            break;
+                        }
+                    }
+                }
+                if(self.knockbackX > 0){
+                    self.knockbackX = Math.floor(self.knockbackX * 0.5);
+                }
+                else if(self.knockbackX < 0){
+                    self.knockbackX = Math.ceil(self.knockbackX * 0.5);
+                }
+                if(self.knockbackY > 0){
+                    self.knockbackY = Math.floor(self.knockbackY * 0.5);
+                }
+                else if(self.knockbackY < 0){
+                    self.knockbackY = Math.ceil(self.knockbackY * 0.5);
+                }
+                self.spdX = spdX;
+                self.spdY = spdY;
             }
         }
         self.updateTarget();

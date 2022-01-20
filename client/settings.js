@@ -191,6 +191,7 @@ renderDistanceSlider.oninput = function(){
     renderDistanceHeader.innerHTML = 'Render Distance: ' + renderDistanceSlider.value;
     socket.emit('renderDistance',settings.renderDistance);
     setCookie();
+    renderMap(Player.list[selfId].map);
 }
 chatBackgroundButton.onclick = function(){
     settings.chatBackground = !settings.chatBackground;
