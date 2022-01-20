@@ -421,13 +421,14 @@ socket.on('update',function(data){
                                                 effectDarkness += debuff.darkness;
                                             }
                                             var debuffName = debuff.name;
-                                            var time = Math.ceil(data.player[i][j][index] / 20);
+                                            var time = Math.ceil(data.player[i][j][index].time / 20);
                                             if(time >= 60){
                                                 debuffName += ' (' + Math.ceil(time / 60) + 'm)';
                                             }
                                             else{
                                                 debuffName += ' (' + time + 's)';
                                             }
+                                            slot.style.backgroundImage = 'conic-gradient(rgba(255,255,255,0.7) ' + Math.ceil(data.player[i][j][index].time / data.player[i][j][index].totalTime * 100) + '%, rgba(255,255,255,0.3) ' + Math.floor(100 - data.player[i][j][index].time / data.player[i][j][index].totalTime * 100) + '%)';
                                             debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
                                             slot.onmouseover = function(){
                                                 updateDebuffPopupMenu(index);
@@ -460,13 +461,14 @@ socket.on('update',function(data){
                                         var slot = document.getElementById('debuffSlot' + index);
                                         var debuff = debuffData[index];
                                         var debuffName = debuff.name;
-                                        var time = Math.ceil(data.player[i][j][index] / 20);
+                                        var time = Math.ceil(data.player[i][j][index].time / 20);
                                         if(time >= 60){
                                             debuffName += ' (' + Math.ceil(time / 60) + 'm)';
                                         }
                                         else{
                                             debuffName += ' (' + time + 's)';
                                         }
+                                        slot.style.backgroundImage = 'conic-gradient(rgba(255,255,255,0.7) ' + Math.ceil(data.player[i][j][index].time / data.player[i][j][index].totalTime * 100) + '%, rgba(255,255,255,0.3) ' + Math.floor(100 - data.player[i][j][index].time / data.player[i][j][index].totalTime * 100) + '%)';
                                         debuffDescriptions[index] = '<span style="color: ' + inventory.getRarityColor(debuff.rarity) + '">' + debuffName + '</span><br><div style="font-size: 11px">' + inventory.getDescription(debuff) + '</div>';
                                         var rect = slot.getBoundingClientRect();
                                         if(rawMouseX >= rect.left && rawMouseX <= rect.right && rawMouseY >= rect.top && rawMouseY <= rect.bottom){

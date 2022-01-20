@@ -24,7 +24,11 @@ storeDatabase = function(){
 	}
 	var clans = {};
 	for(var i in Player.list){
-		client.query('UPDATE progress SET username=\'' + Player.list[i].username + '\', progress=\'' + JSON.stringify({items:Player.list[i].inventory.items,xp:Player.list[i].xp,level:Player.list[i].level,img:Player.list[i].img,advancements:Player.list[i].advancements,worldRegion:Player.list[i].worldRegion,playTime:Player.list[i].playTime,version:VERSION}) + '\' WHERE username=\'' + Player.list[i].username + '\';', (err, res) => {
+		var items = Object.create(Player.list[i].inventory.items);
+		for(var j in items){
+			delete items[j].cooldown;
+		}
+		client.query('UPDATE progress SET username=\'' + Player.list[i].username + '\', progress=\'' + JSON.stringify({items:items,xp:Player.list[i].xp,level:Player.list[i].level,img:Player.list[i].img,advancements:Player.list[i].advancements,worldRegion:Player.list[i].worldRegion,playTime:Player.list[i].playTime,version:VERSION}) + '\' WHERE username=\'' + Player.list[i].username + '\';', (err, res) => {
 			if(err){
 				throw err;
 			}
@@ -294,6 +298,10 @@ unIPbanPlayer = function(ip,cb){
 			cb(1);
 		}
 	});
+}
+
+closeDatabase = function(){
+	client.close();
 }
 
 // clearDatabase();
