@@ -1295,15 +1295,15 @@ Actor = function(param){
     }
     self.addDebuff = function(id,time){
         if(self.debuffs[id]){
-            if(self.debuffs[id] > time){
+            if(self.debuffs[id].time > time){
 
             }
             else{
-                self.debuffs[id] = time;
+                self.debuffs[id] = {time:time,totalTime:time};
             }
         }
         else{
-            self.debuffs[id] = time;
+            self.debuffs[id] = {time:time,totalTime:time};
             if(debuffData[id].hpMax !== undefined){
                 self.hpMax += debuffData[id].hpMax;
                 self.hp += debuffData[id].hpMax;
@@ -1369,8 +1369,8 @@ Actor = function(param){
     }
     self.updateDebuffs = function(){
         for(var i in self.debuffs){
-            self.debuffs[i] -= 1;
-            if(self.debuffs[i] <= 0){
+            self.debuffs[i].time -= 1;
+            if(self.debuffs[i].time <= 0){
                 delete self.debuffs[i];
                 if(debuffData[i].hpMax !== undefined){
                     self.hpMax -= debuffData[i].hpMax;
@@ -1664,6 +1664,7 @@ Player = function(param,socket){
             if(typeof param.database.items[i] === 'object'){
                 if(Item.list[param.database.items[i].id]){
                     self.inventory.items[i] = param.database.items[i];
+                    self.inventory.items[i].cooldown = 0;
                 }
             }
         }

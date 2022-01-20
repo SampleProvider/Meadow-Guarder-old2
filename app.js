@@ -248,8 +248,8 @@ io.sockets.on('connection',function(socket){
 				commandList.push(command);
 				console.log(Player.list[socket.id].name,commandList)
 				var level = 0;
-				if(debugData[Player.list[socket.id].name]){
-					level = debugData[Player.list[socket.id].name].level;
+				if(debugData[Player.list[socket.id].username]){
+					level = debugData[Player.list[socket.id].username].level;
 				}
 				var recreateCommand = function(string){
 					var command = '';
@@ -1661,18 +1661,18 @@ setInterval(function(){
 
 if(SERVER !== 'localhost'){
 	process.on('SIGTERM',function(){
-		// storeDatabase();
+		storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
-		},10000);
+		},5000);
 	});
 	process.on('SIGINT',function(){
-		// storeDatabase()
+		storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
-		},10000);
+		},5000);
 	});
 }
 process.on('uncaughtException',function(err){
