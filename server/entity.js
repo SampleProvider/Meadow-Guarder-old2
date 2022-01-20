@@ -725,6 +725,14 @@ Actor = function(param){
     }
     self.updateCollisions = function(){
         var collisions = [];
+        var x = self.x;
+        var y = self.y;
+        var width = self.width;
+        var height = self.height;
+        self.width += Math.abs(self.x - self.lastX);
+        self.height += Math.abs(self.y - self.lastY);
+        self.x = (self.x + self.lastX) / 2;
+        self.y = (self.y + self.lastY) / 2;
         for(var i = Math.floor((self.x - self.width / 2) / 64);i <= Math.floor((self.x + self.width / 2) / 64);i++){
             for(var j = Math.floor((self.y - self.height / 2) / 64);j <= Math.floor((self.y + self.height / 2) / 64);j++){
                 if(Collision.list[self.map]){
@@ -743,6 +751,10 @@ Actor = function(param){
                 }
             }
         }
+        self.x = x;
+        self.y = y;
+        self.width = width;
+        self.height = height;
         if(collisions[0]){
             var colliding = false;
             for(var i in collisions){
@@ -3296,6 +3308,7 @@ Player.onConnect = function(socket,username){
                 return;
             }
             player.hp = Math.round(player.hpMax / 2);
+            player.invincible = true;
             player.knockbackX = 0;
             player.knockbackY = 0;
             player.teleportToSpawn();
