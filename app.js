@@ -1968,18 +1968,18 @@ setInterval(function(){
 
 if(SERVER !== 'localhost'){
 	process.on('SIGTERM',function(){
-		storeDatabase();
+		// storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
-		},5000);
+		},1000);
 	});
 	process.on('SIGINT',function(){
-		storeDatabase();
+		// storeDatabase();
 		addToChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
 		setTimeout(function(){
 			process.exit(0);
-		},5000);
+		},1000);
 	});
 }
 process.on('uncaughtException',function(err){
