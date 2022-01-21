@@ -506,7 +506,7 @@ Actor = function(param){
         var distance = Math.abs(self.gridX - pt.gridX);
         for(var i = 0;i <= distance;i++){
             x += xDirection;
-            if(x === self.gridX){
+            if(x - 1 === self.gridX){
                 var y1 = self.gridY;
             }
             else{
@@ -529,7 +529,7 @@ Actor = function(param){
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][x]){
-                            if(Collision.list[self.map][self.zindex][x][j]){
+                            if(Collision.list[self.map][self.zindex][x][y]){
                                 return false;
                             }
                         }

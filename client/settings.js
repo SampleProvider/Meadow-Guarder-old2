@@ -122,9 +122,11 @@ switchToSetting = function(setting){
     for(var i in settingNavigationButtons){
         if(settingNavigationButtons[i].style){
             settingNavigationButtons[i].style.backgroundColor = '#ffffff';
+            settingNavigationButtons[i].style.border = '1px solid #000000';
         }
     }
     document.getElementById(setting).style.backgroundColor = '#00ff90';
+    document.getElementById(setting).style.borderBottom = 'none';
     document.getElementById(setting + 'Div').style.display = 'inline-block';
 }
 switchToSetting('mainSettings');
