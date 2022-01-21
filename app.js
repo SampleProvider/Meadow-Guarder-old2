@@ -1980,6 +1980,10 @@ setInterval(function(){
 	weatherLastChanged += 1;
 },1000 / 20);
 
+setInterval(function(){
+	storeDatabase();
+},3000000);
+
 // if(SERVER !== 'localhost'){
 // 	process.on('SIGTERM',function(){
 // 		storeDatabase();

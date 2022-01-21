@@ -16,7 +16,7 @@
 			"instruments": [
 				{
 					"type": "FM",
-					"volume": 80,
+					"volume": 0,
 					"eqFilter": [],
 					"preset": 199,
 					"effects": [
@@ -2125,7 +2125,7 @@
 			"instruments": [
 				{
 					"type": "FM",
-					"volume": 100,
+					"volume": 40,
 					"eqFilter": [
 						{
 							"type": "low-pass",
@@ -3738,7 +3738,7 @@
 			"instruments": [
 				{
 					"type": "Picked String",
-					"volume": 20,
+					"volume": -20,
 					"eqFilter": [
 						{
 							"type": "low-pass",
@@ -4111,7 +4111,7 @@
 			"instruments": [
 				{
 					"type": "drumset",
-					"volume": 80,
+					"volume": 40,
 					"eqFilter": [],
 					"preset": 960,
 					"effects": [
