@@ -4178,46 +4178,48 @@ Monster = function(param){
             if(self.getTarget()){
                 if(self.getTarget().hp <= 0){
                     self.retreat();
+                    return;
                 }
                 else if(self.getTarget().team === self.team){
                     self.retreat();
+                    return;
                 }
                 else if(self.getTarget().map !== self.map){
                     self.retreat();
+                    return;
+                }
+                if(self.getSquareDistance(self.getTarget()) > 12 && self.damaged === false){
+                    self.retreat();
+                }
+                else if(self.getSquareDistance(self.getTarget()) > 32){
+                    self.retreat();
+                }
+                else if(self.getSquareDistance(self.randomPos) > 48){
+                    self.retreat();
+                    return;
+                }
+                if(self.canSee(self.getTarget()) === false){
+                    self.targetLeftView += 1;
+                    if(self.targetLeftView >= 100){
+                        self.retreat();
+                        return;
+                    }
                 }
                 else{
-                    if(self.getSquareDistance(self.getTarget()) > 12 && self.damaged === false){
+                    self.targetLeftView = 0;
+                }
+                self.targetX = self.getTarget().x;
+                self.targetY = self.getTarget().y;
+                if(self.getTarget().regionChanger){
+                    if(self.getTarget().regionChanger.noMonster === true){
                         self.retreat();
-                    }
-                    else if(self.getSquareDistance(self.getTarget()) > 32){
-                        self.retreat();
-                    }
-                    else if(self.getSquareDistance(self.randomPos) > 48){
-                        self.retreat();
-                    }
-                    if(self.getTarget()){
-                        if(self.canSee(self.getTarget()) === false){
-                            self.targetLeftView += 1;
-                            if(self.targetLeftView >= 100){
-                                self.retreat();
-                            }
-                        }
-                        else{
-                            self.targetLeftView = 0;
-                        }
-                        if(self.getTarget()){
-                            self.targetX = self.getTarget().x;
-                            self.targetY = self.getTarget().y;
-                        }
+                        return;
                     }
                 }
-                if(self.getTarget()){
-                    if(self.getTarget().regionChanger){
-                        if(self.getTarget().regionChanger.noMonster === true){
-                            self.retreat();
-                        }
-                    }
-                }
+            }
+            else{
+                self.retreat();
+                return;
             }
         }
     }
@@ -4432,6 +4434,9 @@ Monster = function(param){
             if(self.getSquareDistance(self.randomPos) <= 2){
                 self.attackState = 'passive';
                 self.maxSpeed = Math.round(self.maxSpeed / 2);
+            }
+            if(!self.trackingPath[0]){
+                self.trackPos(self.randomPos.x,self.randomPos.y);
             }
         }
     }
