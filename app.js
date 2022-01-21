@@ -592,6 +592,24 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Killed all monsters.');
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'projectiles' && level >= 2){
+					commandList.splice(0,1);
+					var amount = 0;
+					for(var i in Projectile.list){
+						amount += 1;
+					}
+					Player.list[socket.id].sendMessage('[!] There are ' + amount + ' projectiles.');
+					return
+				}
+				if(commandList[0].toLowerCase() === 'monsters' && level >= 2){
+					commandList.splice(0,1);
+					var amount = 0;
+					for(var i in Monster.list){
+						amount += 1;
+					}
+					Player.list[socket.id].sendMessage('[!] There are ' + amount + ' monsters.');
+					return
+				}
 				if(commandList[0].toLowerCase() === 'weather' && level >= 2){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -1061,6 +1079,8 @@ io.sockets.on('connection',function(socket){
 						message += '\n/summon [monster name] - Summon a monster.';
 						message += '\n/summonmany [monster name] [amount] - Summon many monsters.';
 						message += '\n/butcher - Kills all monsters.';
+						message += '\n/projectiles - How many projectiles there are.';
+						message += '\n/monsters - How many monsters there are.';
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
@@ -1089,6 +1109,8 @@ io.sockets.on('connection',function(socket){
 						message += '\n/summon [monster name] - Summon a monster.';
 						message += '\n/summonmany [monster name] [amount] - Summons many monsters.';
 						message += '\n/butcher - Kills all monsters.';
+						message += '\n/projectiles - How many projectiles there are.';
+						message += '\n/monsters - How many monsters there are.';
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
