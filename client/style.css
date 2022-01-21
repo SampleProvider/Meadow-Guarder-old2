@@ -1187,7 +1187,7 @@ canvas {
 }
 #settingNavigationBar {
     position: absolute;
-    left: 0px;
+    left: -1px;
     top: 0px;
     width: 100%;
     height: 24px;

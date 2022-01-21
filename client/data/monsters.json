@@ -390,7 +390,7 @@
         "stats":{
             "damage":600,
             "defense":0,
-            "hpRegen":10000,
+            "hpRegen":1000,
             "critChance":0.05,
             "critPower":5
         },

@@ -37,7 +37,7 @@ Clan = function(name,param){
             self.level += 1;
             self.maxMembers += 1;
             self.xpMax = clanData[self.level].xp;
-            addToChat('#00ff00','Clan ' + self.name + ' is now level ' + self.level + '.');
+            globalChat('#00ff00','Clan ' + self.name + ' is now level ' + self.level + '.');
             self.claimBoost = true;
             if(clanData[self.level]){
                 for(var i in Player.list){
