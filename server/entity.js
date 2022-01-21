@@ -556,6 +556,9 @@ Actor = function(param){
         if(self.getSquareDistance({x:x,y:y}) > 80){
             size = 193;
         }
+        if(self.getSquareDistance({x:x,y:y}) > 96){
+            size = 225;
+        }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
         var dx = self.gridX - Math.floor(self.width / 128) - nx;
@@ -3965,7 +3968,7 @@ Monster = function(param){
     }
     self.retreat = function(){
         self.target = null;
-        self.targetType === null;
+        self.targetType = null;
         self.attackState = 'retreat';
         self.trackPos(self.randomPos.x,self.randomPos.y);
         self.maxSpeed *= 2;
