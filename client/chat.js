@@ -23,15 +23,15 @@ socket.on('addToChat',function(data){
         m = '00';
     }
     var message = data.message;
+    if(message.replace){
+        message = message.replace(/</gi,'&lt;');
+        message = message.replace(/>/gi,'&gt;');
+        message = message.replace(/\n/gi,'<br>');
+    }
     if(data.debug){
         message = '<div class="text command">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     else{
-        if(message.replace){
-            message = message.replace(/</gi,'&lt;');
-            message = message.replace(/>/gi,'&gt;');
-            message = message.replace(/\n/gi,'<br>');
-        }
         message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     message = message.replace(/  /gi,'&nbsp;&nbsp;');
