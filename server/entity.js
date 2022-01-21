@@ -2666,7 +2666,7 @@ Player = function(param,socket){
         }
     }
     self.sendMessage = function(message){
-        socket.emit('globalChat',{
+        socket.emit('addToChat',{
             color:'#ff0000',
             message:message,
             debug:true,

@@ -30,7 +30,7 @@ globalChat = function(color,message){
         if(Player.list[i]){
             if(Player.list[i].loggedOn){
                 if(SOCKET_LIST[i]){
-                    SOCKET_LIST[i].emit('globalChat',{
+                    SOCKET_LIST[i].emit('addToChat',{
                         color:color,
                         message:message,
                     });
@@ -62,7 +62,7 @@ clanChat = function(color,message,clanName){
                 for(var j in Clan.list[clanName].members){
                     if(Player.list[i].name === j){
                         if(SOCKET_LIST[i]){
-                            SOCKET_LIST[i].emit('globalChat',{
+                            SOCKET_LIST[i].emit('addToChat',{
                                 color:color,
                                 message:clanName + " -> " + message,
                             });
