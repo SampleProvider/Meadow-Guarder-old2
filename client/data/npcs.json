@@ -372,6 +372,28 @@
             }
         ]
     },
+    "Magibrel":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_5 Purple",
+            "pants":"Pants_1 Blue",
+            "boots":"Boots_1 Green",
+            "hair":"none",
+            "headwear":"Hat_2 Pink",
+            "gloves":"none",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "message":"The art of magic. Ahh, so wonderful! I would love to teach you some of it!",
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ]
+    },
     "Joseph":{
         "img":{
             "body":"Human",
