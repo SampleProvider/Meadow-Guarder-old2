@@ -1958,22 +1958,22 @@ setInterval(function(){
 	weatherLastChanged += 1;
 },1000 / 20);
 
-if(SERVER !== 'localhost'){
-	process.on('SIGTERM',function(){
-		storeDatabase();
-		globalChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
-		setTimeout(function(){
-			process.exit(0);
-		},1000);
-	});
-	process.on('SIGINT',function(){
-		storeDatabase();
-		globalChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
-		setTimeout(function(){
-			process.exit(0);
-		},1000);
-	});
-}
+// if(SERVER !== 'localhost'){
+// 	process.on('SIGTERM',function(){
+// 		storeDatabase();
+// 		globalChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
+// 		setTimeout(function(){
+// 			process.exit(0);
+// 		},1000);
+// 	});
+// 	process.on('SIGINT',function(){
+// 		storeDatabase();
+// 		globalChat('#ff00ff','[!] THE SERVER HAS RESTARTED. YOU WILL BE DISCONNECTED. [!]');
+// 		setTimeout(function(){
+// 			process.exit(0);
+// 		},1000);
+// 	});
+// }
 process.on('uncaughtException',function(err){
 	storeDatabase();
 	logError(err.stack);
