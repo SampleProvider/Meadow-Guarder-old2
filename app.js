@@ -792,7 +792,7 @@ io.sockets.on('connection',function(socket){
 						var items = '';
 						for(var j in Player.list[i].inventory.items){
 							if(Player.list[i].inventory.items[j].id){
-								items += Item.list[Player.list[i].inventory.items[j].id].name + '</span> x' + Player.list[i].inventory.items[j].amount + '<br>';
+								items += Item.list[Player.list[i].inventory.items[j].id].name + ' x' + Player.list[i].inventory.items[j].amount + '\n';
 							}
 						}
 						items = items.substr(0,items.length - 4);
@@ -803,7 +803,7 @@ io.sockets.on('connection',function(socket){
 								var items = '';
 								for(var j in stringData.items){
 									if(stringData.items[j].id){
-										items += Item.list[stringData.items[j].id].name + '</span> x' + stringData.items[j].amount + '<br>';
+										items += Item.list[stringData.items[j].id].name + ' x' + stringData.items[j].amount + '\n';
 									}
 								}
 								items = items.substr(0,items.length - 4);
@@ -821,7 +821,7 @@ io.sockets.on('connection',function(socket){
 					getLeaderboard(function(leaderboard){
 						var leaderboardString = '[!] Leaderboard:';
 						for(var i = 0;i < Math.min(10,leaderboard.length);i++){
-							leaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (Level ' + leaderboard[i].level + ' ' + leaderboard[i].xp + ' Xp)';
+							leaderboardString += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (Level ' + leaderboard[i].level + ' ' + leaderboard[i].xp + ' Xp)';
 						}
 						Player.list[socket.id].sendMessage(leaderboardString);
 					});
@@ -838,10 +838,10 @@ io.sockets.on('connection',function(socket){
 							var hours = Math.floor(minutes / 60);
 							minutes = minutes % 60;
 							if(hours === 1){
-								playTimeLeaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hour, ';
+								playTimeLeaderboardString += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hour, ';
 							}
 							else{
-								playTimeLeaderboardString += '<br>' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hours, ';
+								playTimeLeaderboardString += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + hours + ' hours, ';
 							}
 							if(minutes === 1){
 								playTimeLeaderboardString += minutes + ' minute, ';
@@ -950,7 +950,7 @@ io.sockets.on('connection',function(socket){
 					}
 					clanLeaderboard.sort(compare);
 					for(var i = 0;i < Math.min(10,clanLeaderboard.length);i++){
-						clanLeaderboardString += '<br>' + (i + 1) + ': ' + clanLeaderboard[i].name + ' (Level ' + clanLeaderboard[i].level + ' ' + clanLeaderboard[i].xp + ' Xp)';
+						clanLeaderboardString += '\n' + (i + 1) + ': ' + clanLeaderboard[i].name + ' (Level ' + clanLeaderboard[i].level + ' ' + clanLeaderboard[i].xp + ' Xp)';
 					}
 					Player.list[socket.id].sendMessage(clanLeaderboardString);
 					return;
@@ -960,13 +960,13 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(Clan.list[name]){
 						var clan = Clan.list[name];
-						var message = '[!] ' + name + ' is level ' + clan.level + ' with ' + clan.xp + ' xp.<br>Clan Members:';
+						var message = '[!] ' + name + ' is level ' + clan.level + ' with ' + clan.xp + ' xp.\nClan Members:';
 						for(var i in clan.members){
 							if(clan.members[i] === 'leader'){
-								message += '<br><span style="color: #ffff00">' + i + ' (Leader)</span>';
+								message += '\n' + i + ' (Leader)';
 							}
 							else{
-								message += '<br>' + i;
+								message += '\n' + i;
 							}
 						}
 						Player.list[socket.id].sendMessage(message);
@@ -979,27 +979,27 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'stats' && level >= 0){
 					commandList.splice(0,1);
 					var statsString = '[!] Your stats:';
-					statsString += '<br>Damage: ' + Player.list[socket.id].stats.damage + '';
-					statsString += '<br>Defense: ' + Player.list[socket.id].stats.defense + '';
-					statsString += '<br>Hp: ' + Player.list[socket.id].hpMax + '';
-					statsString += '<br>Hp Regen: ' + Player.list[socket.id].stats.hpRegen + '';
-					statsString += '<br>Mana: ' + Player.list[socket.id].manaMax + '';
-					statsString += '<br>Mana Regen: ' + Player.list[socket.id].stats.manaRegen + '';
-					statsString += '<br>Crit Chance: ' + Player.list[socket.id].stats.critChance + '';
-					statsString += '<br>Crit Power: ' + Player.list[socket.id].stats.critPower + '';
-					statsString += '<br>Speed: ' + Player.list[socket.id].maxSpeed + '';
-					statsString += '<br>Luck: ' + Player.list[socket.id].luck + '';
-					statsString += '<br>Shield Protection: ' + Player.list[socket.id].shieldProtection + '';
+					statsString += '\nDamage: ' + Player.list[socket.id].stats.damage + '';
+					statsString += '\nDefense: ' + Player.list[socket.id].stats.defense + '';
+					statsString += '\nHp: ' + Player.list[socket.id].hpMax + '';
+					statsString += '\nHp Regen: ' + Player.list[socket.id].stats.hpRegen + '';
+					statsString += '\nMana: ' + Player.list[socket.id].manaMax + '';
+					statsString += '\nMana Regen: ' + Player.list[socket.id].stats.manaRegen + '';
+					statsString += '\nCrit Chance: ' + Player.list[socket.id].stats.critChance + '';
+					statsString += '\nCrit Power: ' + Player.list[socket.id].stats.critPower + '';
+					statsString += '\nSpeed: ' + Player.list[socket.id].maxSpeed + '';
+					statsString += '\nLuck: ' + Player.list[socket.id].luck + '';
+					statsString += '\nShield Protection: ' + Player.list[socket.id].shieldProtection + '';
 					var seconds = Math.floor(Player.list[socket.id].playTime / 20);
 					var minutes = Math.floor(seconds / 60);
 					seconds = seconds % 60;
 					var hours = Math.floor(minutes / 60);
 					minutes = minutes % 60;
 					if(hours === 1){
-						statsString += '<br>Play Time: ' + hours + ' hour, ';
+						statsString += '\nPlay Time: ' + hours + ' hour, ';
 					}
 					else{
-						statsString += '<br>Play Time: ' + hours + ' hours, ';
+						statsString += '\nPlay Time: ' + hours + ' hours, ';
 					}
 					if(minutes === 1){
 						statsString += minutes + ' minute, ';
@@ -1019,99 +1019,99 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
 					if(level === 0){
 						var message = 'Commands:';
-						message += '<br>/seexp [player name] - See someone\'s xp.';
-						message += '<br>/seeinv [player name] - See someone\'s inventory.';
-						message += '<br>/leaderboard - Leaderboards.';
-						message += '<br>/trade [player name] - Trade with someone.';
-						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/clanaccept - Accept a clan invitation.';
-						message += '<br>/clanmsg [message] - Message people in your clan.';
-						message += '<br>/clanleaderboard - Clan leaderboards.';
-						message += '<br>/seeclan [clan name] - See a clan.';
-						message += '<br>/stats - See your stats.';
-						message += '<br>/help - Help.';
+						message += '\n/seexp [player name] - See someone\'s xp.';
+						message += '\n/seeinv [player name] - See someone\'s inventory.';
+						message += '\n/leaderboard - Leaderboards.';
+						message += '\n/trade [player name] - Trade with someone.';
+						message += '\n/pvp - Enter the PVP Arena.';
+						message += '\n/clanaccept - Accept a clan invitation.';
+						message += '\n/clanmsg [message] - Message people in your clan.';
+						message += '\n/clanleaderboard - Clan leaderboards.';
+						message += '\n/seeclan [clan name] - See a clan.';
+						message += '\n/stats - See your stats.';
+						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
 					else if(level === 1){
 						var message = 'Commands:';
-						message += '<br>/kick [player name] - Kick someone.';
-						message += '<br>/kill [player name] - Kill someone.';
-						message += '<br>/teleport [player name] - Teleport to someone.';
-						message += '<br>/announce [message] - Announce a message.';
-						message += '<br>/seexp [player name] - See someone\'s xp.';
-						message += '<br>/seeinv [player name] - See someone\'s inventory.';
-						message += '<br>/leaderboard - Leaderboards.';
-						message += '<br>/trade [player name] - Trade with someone.';
-						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/clanaccept - Accept a clan invitation.';
-						message += '<br>/clanmsg - Message people in your clan.';
-						message += '<br>/clanleaderboard - Clan leaderboards.';
-						message += '<br>/seeclan [clan name] - See a clan.';
-						message += '<br>/stats - See your stats.';
-						message += '<br>/help - Help.';
+						message += '\n/kick [player name] - Kick someone.';
+						message += '\n/kill [player name] - Kill someone.';
+						message += '\n/teleport [player name] - Teleport to someone.';
+						message += '\n/announce [message] - Announce a message.';
+						message += '\n/seexp [player name] - See someone\'s xp.';
+						message += '\n/seeinv [player name] - See someone\'s inventory.';
+						message += '\n/leaderboard - Leaderboards.';
+						message += '\n/trade [player name] - Trade with someone.';
+						message += '\n/pvp - Enter the PVP Arena.';
+						message += '\n/clanaccept - Accept a clan invitation.';
+						message += '\n/clanmsg - Message people in your clan.';
+						message += '\n/clanleaderboard - Clan leaderboards.';
+						message += '\n/seeclan [clan name] - See a clan.';
+						message += '\n/stats - See your stats.';
+						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
 					else if(level === 2){
 						var message = 'Commands:';
-						message += '<br>/kick [player name] - Kick someone.';
-						message += '<br>/kill [player name] - Kill someone.';
-						message += '<br>/teleport [player name] - Teleport to someone.';
-						message += '<br>/announce [message] - Announce a message.';
-						message += '<br>/rickroll [player name] - Rickroll someone.';
-						message += '<br>/summon [monster name] - Summon a monster.';
-						message += '<br>/summonmany [monster name] [amount] - Summon many monsters.';
-						message += '<br>/butcher - Kills all monsters.';
-						message += '<br>/weather [weather name] - Changes the weather.';
-						message += '<br>/removeclan [clan name] - Remove a clan.';
-						message += '<br>/invis - Toggle invisibility for yourself.';
-						message += '<br>/invincible - Toggle invincibility for yourself.';
-						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
-						message += '<br>/seexp [player name] - See someone\'s xp.';
-						message += '<br>/seeinv [player name] - See someone\'s inventory.';
-						message += '<br>/leaderboard - Leaderboards.';
-						message += '<br>/trade [player name] - Trade with someone.';
-						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/clanaccept - Accept a clan invitation.';
-						message += '<br>/clanmsg - Message people in your clan.';
-						message += '<br>/clanleaderboard - Clan leaderboards.';
-						message += '<br>/seeclan [clan name] - See a clan.';
-						message += '<br>/stats - See your stats.';
-						message += '<br>/help - Help.';
+						message += '\n/kick [player name] - Kick someone.';
+						message += '\n/kill [player name] - Kill someone.';
+						message += '\n/teleport [player name] - Teleport to someone.';
+						message += '\n/announce [message] - Announce a message.';
+						message += '\n/rickroll [player name] - Rickroll someone.';
+						message += '\n/summon [monster name] - Summon a monster.';
+						message += '\n/summonmany [monster name] [amount] - Summon many monsters.';
+						message += '\n/butcher - Kills all monsters.';
+						message += '\n/weather [weather name] - Changes the weather.';
+						message += '\n/removeclan [clan name] - Remove a clan.';
+						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/invincible - Toggle invincibility for yourself.';
+						message += '\n/give [player name] [id] [amount] - Give items to someone.';
+						message += '\n/seexp [player name] - See someone\'s xp.';
+						message += '\n/seeinv [player name] - See someone\'s inventory.';
+						message += '\n/leaderboard - Leaderboards.';
+						message += '\n/trade [player name] - Trade with someone.';
+						message += '\n/pvp - Enter the PVP Arena.';
+						message += '\n/clanaccept - Accept a clan invitation.';
+						message += '\n/clanmsg - Message people in your clan.';
+						message += '\n/clanleaderboard - Clan leaderboards.';
+						message += '\n/seeclan [clan name] - See a clan.';
+						message += '\n/stats - See your stats.';
+						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
 					else if(level === 3){
 						var message = 'Commands:';
-						message += '<br>/kick [player name] - Kick someone.';
-						message += '<br>/kill [player name] - Kill someone.';
-						message += '<br>/teleport [player name] - Teleport to someone.';
-						message += '<br>/announce [message] - Announce a message.';
-						message += '<br>/rickroll [player name] - Rickroll someone.';
-						message += '<br>/summon [monster name] - Summon a monster.';
-						message += '<br>/summonmany [monster name] [amount] - Summons many monsters.';
-						message += '<br>/butcher - Kills all monsters.';
-						message += '<br>/weather [weather name] - Changes the weather.';
-						message += '<br>/removeclan [clan name] - Remove a clan.';
-						message += '<br>/invis - Toggle invisibility for yourself.';
-						message += '<br>/invincible - Toggle invincibility for yourself.';
-						message += '<br>/give [player name] [id] [amount] - Give items to someone.';
-						message += '<br>/remove [player name] [id] [amount] - Remove items from someone.';
-						message += '<br>/givexp [player name] [amount] - Give xp to someone.';
-						message += '<br>/giveclanxp [player name] [amount] - Give clan xp to someone.';
-						message += '<br>/ip [player name] - See someone\'s ip.';
-						message += '<br>/serverupdate - Announce a server update.';
-						message += '<br>/exit - Exits the server without saving.';
-						message += '<br>/debug [javascript] - Run javascript.';
-						message += '<br>/seexp [player name] - See someone\'s xp.';
-						message += '<br>/seeinv [player name] - See someone\'s inventory.';
-						message += '<br>/leaderboard - Leaderboards.';
-						message += '<br>/trade [player name] - Trade with someone.';
-						message += '<br>/pvp - Enter the PVP Arena.';
-						message += '<br>/clanaccept - Accept a clan invitation.';
-						message += '<br>/clanmsg - Message people in your clan.';
-						message += '<br>/clanleaderboard - Clan leaderboards.';
-						message += '<br>/seeclan [clan name] - See a clan.';
-						message += '<br>/stats - See your stats.';
-						message += '<br>/help - Help.';
+						message += '\n/kick [player name] - Kick someone.';
+						message += '\n/kill [player name] - Kill someone.';
+						message += '\n/teleport [player name] - Teleport to someone.';
+						message += '\n/announce [message] - Announce a message.';
+						message += '\n/rickroll [player name] - Rickroll someone.';
+						message += '\n/summon [monster name] - Summon a monster.';
+						message += '\n/summonmany [monster name] [amount] - Summons many monsters.';
+						message += '\n/butcher - Kills all monsters.';
+						message += '\n/weather [weather name] - Changes the weather.';
+						message += '\n/removeclan [clan name] - Remove a clan.';
+						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/invincible - Toggle invincibility for yourself.';
+						message += '\n/give [player name] [id] [amount] - Give items to someone.';
+						message += '\n/remove [player name] [id] [amount] - Remove items from someone.';
+						message += '\n/givexp [player name] [amount] - Give xp to someone.';
+						message += '\n/giveclanxp [player name] [amount] - Give clan xp to someone.';
+						message += '\n/ip [player name] - See someone\'s ip.';
+						message += '\n/serverupdate - Announce a server update.';
+						message += '\n/exit - Exits the server without saving.';
+						message += '\n/debug [javascript] - Run javascript.';
+						message += '\n/seexp [player name] - See someone\'s xp.';
+						message += '\n/seeinv [player name] - See someone\'s inventory.';
+						message += '\n/leaderboard - Leaderboards.';
+						message += '\n/trade [player name] - Trade with someone.';
+						message += '\n/pvp - Enter the PVP Arena.';
+						message += '\n/clanaccept - Accept a clan invitation.';
+						message += '\n/clanmsg - Message people in your clan.';
+						message += '\n/clanleaderboard - Clan leaderboards.';
+						message += '\n/seeclan [clan name] - See a clan.';
+						message += '\n/stats - See your stats.';
+						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
 					return;
