@@ -177,7 +177,7 @@ spawnMonster = function(spawner,spawnId){
                         message += '\n' + (i + 1) + ': ' + clanLeaderboard[i] + ' (' + clans[clanLeaderboard[i]].damage + ' Damage, ' + clans[clanLeaderboard[i]].xp + ' Xp)';
                     }
                 }
-                addToChat('#990099',message);
+                globalChat('#990099',message);
             }
             pt.dropItems();
         },
@@ -1424,7 +1424,7 @@ Actor = function(param){
                     for(var i in Player.list){
                         SOCKET_LIST[i].emit('musicBox',data.songName);
                     }
-                    addToChat('#00ffff',self.name + ' started the music ' + songData[data.songName].name + '.');
+                    globalChat('#00ffff',self.name + ' started the music ' + songData[data.songName].name + '.');
                     break;
                 case "debuff":
                     self.addDebuff(data.name,data.time);
@@ -1751,37 +1751,37 @@ Player = function(param,socket){
                 for(var i in pt.debuffs){
                     switch(debuffData[i].deathMessage){
                         case "poison":
-                            addToChat('#ff0000',pt.name + ' was poisoned to death.');
+                            globalChat('#ff0000',pt.name + ' was poisoned to death.');
                             pt.debuffs = {};
                             pt.updateStats();
                             return;
                         case "radiation":
                             if(Math.random() < 0.001){
-                                addToChat('#ff0000',pt.name + ' became Radioactive (64).');
+                                globalChat('#ff0000',pt.name + ' became Radioactive (64).');
                             }
                             else{
-                                addToChat('#ff0000',pt.name + ' became radioactive.');
+                                globalChat('#ff0000',pt.name + ' became radioactive.');
                             }
                             pt.debuffs = {};
                             pt.updateStats();
                             return;
                         case "fire":
-                            addToChat('#ff0000',pt.name + ' went up in flames.');
+                            globalChat('#ff0000',pt.name + ' went up in flames.');
                             pt.debuffs = {};
                             pt.updateStats();
                             return;
                     }
                 }
-                addToChat('#ff0000',pt.name + ' committed suicide.');
+                globalChat('#ff0000',pt.name + ' committed suicide.');
             }
             else if(entity.name){
-                addToChat('#ff0000',pt.name + ' was killed by ' + entity.name + '.');
+                globalChat('#ff0000',pt.name + ' was killed by ' + entity.name + '.');
             }
             else if(entity.parentName){
-                addToChat('#ff0000',pt.name + ' was killed by ' + entity.parentName + '.');
+                globalChat('#ff0000',pt.name + ' was killed by ' + entity.parentName + '.');
             }
             else{
-                addToChat('#ff0000',pt.name + ' died.');
+                globalChat('#ff0000',pt.name + ' died.');
             }
         }
         pt.debuffs = {};
@@ -2469,7 +2469,7 @@ Player = function(param,socket){
             if(xpLevels[self.level]){
                 self.level += 1;
                 self.xpMax = xpLevels[self.level];
-                addToChat('#00ff00',self.name + ' is now level ' + self.level + '.');
+                globalChat('#00ff00',self.name + ' is now level ' + self.level + '.');
                 self.xp -= xpLevels[self.level - 1];
                 self.updateStats();
             }
@@ -2659,7 +2659,7 @@ Player = function(param,socket){
         }
     }
     self.sendMessage = function(message){
-        socket.emit('addToChat',{
+        socket.emit('globalChat',{
             color:'#ff0000',
             message:message,
             debug:true,
@@ -3437,7 +3437,7 @@ Player.onConnect = function(socket,username){
             player.knockbackX = 0;
             player.knockbackY = 0;
             player.teleportToSpawn();
-            addToChat('#00ff00',player.name + ' respawned.');
+            globalChat('#00ff00',player.name + ' respawned.');
         });
 
         socket.on('init',function(data){
@@ -3488,7 +3488,7 @@ Player.onConnect = function(socket,username){
                 player.canMove = true;
                 player.invincible = false;
                 Player.getAllInitPack(socket);
-                addToChat('#00ff00',player.name + " just logged on.");
+                globalChat('#00ff00',player.name + " just logged on.");
             }
         });
     });
@@ -3535,7 +3535,7 @@ Player.onDisconnect = function(socket){
             }
             playerMap[Player.list[socket.id].map] -= 1;
             if(Player.list[socket.id].debug.invisible === false){
-                addToChat('#ff0000',Player.list[socket.id].name + " logged off.");
+                globalChat('#ff0000',Player.list[socket.id].name + " logged off.");
             }
         }
         if(Player.list[socket.id].inventory.draggingItem.id){
@@ -3930,7 +3930,7 @@ Monster = function(param){
     self.randomWalk(true);
 
     if(self.boss === true){
-        addToChat('#990099',self.name + ' has spawned!');
+        globalChat('#990099',self.name + ' has spawned!');
     }
     
     self.onHit = function(pt){

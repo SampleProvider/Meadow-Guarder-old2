@@ -10,7 +10,7 @@ else{
 
 client.login(chatToken);
 
-addToChat = function(color,message){
+globalChat = function(color,message){
     var d = new Date();
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
@@ -30,7 +30,7 @@ addToChat = function(color,message){
         if(Player.list[i]){
             if(Player.list[i].loggedOn){
                 if(SOCKET_LIST[i]){
-                    SOCKET_LIST[i].emit('addToChat',{
+                    SOCKET_LIST[i].emit('globalChat',{
                         color:color,
                         message:message,
                     });
@@ -40,7 +40,7 @@ addToChat = function(color,message){
     }
     client.channels.fetch('927992766452072510').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace(/`/gi,'\'') + '```'));
 }
-sendClanMsg = function(color,message,clanName){
+clanChat = function(color,message,clanName){
     var d = new Date();
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
@@ -62,7 +62,7 @@ sendClanMsg = function(color,message,clanName){
                 for(var j in Clan.list[clanName].members){
                     if(Player.list[i].name === j){
                         if(SOCKET_LIST[i]){
-                            SOCKET_LIST[i].emit('addToChat',{
+                            SOCKET_LIST[i].emit('globalChat',{
                                 color:color,
                                 message:clanName + " -> " + message,
                             });
