@@ -34,7 +34,7 @@ quests[player.quest].updateQuest = function(self,dialogueTask){
 }
 
 quests[player.quest].completeQuest = function(self){
-    addToChat(self.textColor,self.name + ' completed the quest ' + self.quest + '.');
+    globalChat(self.textColor,self.name + ' completed the quest ' + self.quest + '.');
     if(self.advancements[self.quest] === undefined){
         self.advancements[self.quest] = 1;
     }

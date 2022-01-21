@@ -816,11 +816,7 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(debugData[name]){
 						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to chat ban ' + name + '.',
-								debug:true,
-							});
+							Player.list[socket.id].sendMessage('[!] You do not have permission to chat ban ' + name + '.');
 							return;
 						}
 					}
@@ -861,11 +857,7 @@ io.sockets.on('connection',function(socket){
 					var name = recreateCommand(commandList);
 					if(debugData[name]){
 						if(debugData[name].level > level){
-							socket.emit('addToChat',{
-								color:'#ff0000',
-								message:'[!] You do not have permission to ban ' + name + '.',
-								debug:true,
-							});
+							Player.list[socket.id].sendMessage('[!] You do not have permission to ban ' + name + '.');
 							return;
 						}
 					}
