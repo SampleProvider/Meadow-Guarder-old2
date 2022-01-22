@@ -328,7 +328,7 @@
         "hpMax":10000000,
         "stats":{
             "damage":250,
-            "defense":25,
+            "defense":75,
             "hpRegen":250,
             "critChance":0,
             "critPower":0
@@ -340,11 +340,11 @@
         "itemDrops":{
             "batwings":{
                 "chance":1,
-                "amount":10
+                "amount":7
             },
-            "icecubes":{
+            "icecube":{
                 "chance":1,
-                "amount":10
+                "amount":7
             },
             "iceorb":{
                 "chance":1,
@@ -352,7 +352,7 @@
             },
             "goldendewdrop":{
                 "chance":1,
-                "amount":10
+                "amount":7
             }
         },
         "img":{
