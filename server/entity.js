@@ -2778,30 +2778,24 @@ Player.onConnect = function(socket,username){
                 return;
             }
             if(data.inputId === player.keyMap.left || data.inputId === player.secondKeyMap.left || data.inputId === player.thirdKeyMap.left){
-                socket.detectSpam('keyPress');
                 player.keyPress.left = data.state;
             }
             if(data.inputId === player.keyMap.right || data.inputId === player.secondKeyMap.right || data.inputId === player.thirdKeyMap.right){
-                socket.detectSpam('keyPress');
                 player.keyPress.right = data.state;
             }
             if(data.inputId === player.keyMap.up || data.inputId === player.secondKeyMap.up || data.inputId === player.thirdKeyMap.up){
-                socket.detectSpam('keyPress');
                 player.keyPress.up = data.state;
             }
             if(data.inputId === player.keyMap.down || data.inputId === player.secondKeyMap.down || data.inputId === player.thirdKeyMap.down){
-                socket.detectSpam('keyPress');
                 player.keyPress.down = data.state;
             }
             if(data.inputId === player.keyMap.leftClick || data.inputId === player.secondKeyMap.leftClick || data.inputId === player.thirdKeyMap.leftClick){
-                socket.detectSpam('gameClick');
                 player.keyPress.leftClick = data.state;
                 if(data.state === true){
                     player.pickUpItems(data.selectedDroppedItem);
                 }
             }
             if(data.inputId === player.keyMap.rightClick || data.inputId === player.secondKeyMap.rightClick || data.inputId === player.thirdKeyMap.rightClick){
-                socket.detectSpam('gameClick');
                 player.keyPress.rightClick = data.state;
                 if(data.state === true){
                     var entities = [];
@@ -2906,7 +2900,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('acceptTrade',function(data){
-            socket.detectSpam('game');
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     if(player.acceptedTrade){
@@ -2950,7 +2943,6 @@ Player.onConnect = function(socket,username){
             }
         });
         socket.on('declineTrade',function(data){
-            socket.detectSpam('nonFrequent');
             if(player.tradingEntity){
                 if(Player.list[player.tradingEntity]){
                     for(var i in Player.list[player.tradingEntity].inventory.items){
@@ -2980,7 +2972,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('dialogueResponse',function(data){
-            socket.detectSpam('nonFrequent');
             if(data !== 'option1' && data !== 'option2' && data !== 'option3' && data !== 'option4'){
                 socket.disconnectUser();
                 return;
@@ -3029,7 +3020,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('createClan',function(data){
-            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -3107,7 +3097,6 @@ Player.onConnect = function(socket,username){
             player.sendMessage('[!] Created clan ' + data + '.');
         });
         socket.on('invitePlayer',function(data){
-            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -3154,7 +3143,6 @@ Player.onConnect = function(socket,username){
             return;
         });
         socket.on('kickMember',function(data){
-            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -3205,7 +3193,6 @@ Player.onConnect = function(socket,username){
             return;
         });
         socket.on('leaveClan',function(){
-            socket.detectSpam('nonFrequent');
             if(Clan.list[player.clan]){
                 if(Clan.list[player.clan].members[player.name] === 'leader'){
                     return;
@@ -3233,7 +3220,6 @@ Player.onConnect = function(socket,username){
             return;
         });
         socket.on('transferLeadership',function(data){
-            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -3282,7 +3268,6 @@ Player.onConnect = function(socket,username){
             return;
         });
         socket.on('disbandClan',function(){
-            socket.detectSpam('nonFrequent');
             if(Clan.list[player.clan]){
                 if(Clan.list[player.clan].members[player.name] !== 'leader'){
                     return;
@@ -3314,7 +3299,6 @@ Player.onConnect = function(socket,username){
             return;
         });
         socket.on('selectUpgrade',function(data){
-            socket.detectSpam('nonFrequent');
             if(data !== 'upgrade1' && data !== 'upgrade2' && data !== 'upgrade3' && data !== 'upgrade4'){
                 socket.disconnectUser();
                 return;
@@ -3403,7 +3387,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('changePlayer',function(data){
-            socket.detectSpam('nonFrequent');
             if(!data){
                 socket.disconnectUser();
                 return;
@@ -3435,7 +3418,6 @@ Player.onConnect = function(socket,username){
         });
 
         socket.on('respawn',function(data){
-            socket.detectSpam('nonFrequent');
             if(player.hp > 0){
                 return;
             }

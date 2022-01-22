@@ -58,18 +58,6 @@ io.sockets.on('connection',function(socket){
 		if(type === 'database'){
 			socket.spam += 1.5;
 		}
-		if(type === 'game'){
-			socket.spam += 0.2;
-		}
-		if(type === 'keyPress'){
-			socket.spam += 0.1;
-		}
-		if(type === 'nonFrequent'){
-			socket.spam += 1;
-		}
-		if(type === 'veryNonFrequent'){
-			socket.spam += 1.5;
-		}
 		if(socket.spam > 2){
 			socket.disconnectUser();
 		}
