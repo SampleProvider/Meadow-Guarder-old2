@@ -334,6 +334,7 @@
             "critPower":0
         },
         "maxSpeed":15,
+        "knockbackResistance":1,
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
