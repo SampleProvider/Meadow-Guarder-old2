@@ -338,9 +338,21 @@
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
-            "random":{
+            "batwings":{
                 "chance":1,
-                "amount":3
+                "amount":10
+            },
+            "icecubes":{
+                "chance":1,
+                "amount":10
+            },
+            "iceorb":{
+                "chance":1,
+                "amount":2
+            },
+            "goldendewdrop":{
+                "chance":1,
+                "amount":10
             }
         },
         "img":{
