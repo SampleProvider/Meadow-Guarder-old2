@@ -24,23 +24,27 @@ var renderChunks = function(json,name,cb){
                         }
                         var tempLower = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].lower;
                         var tempUpper = loadedMap[name + ':' + json.layers[i].chunks[j].x + ':' + json.layers[i].chunks[j].y + ':'].upper;
+                        var glLower = tempLower.getContext('2d');
+                        var glUpper = tempUpper.getContext('2d');
                     }
                     else{
-                        if(isFirefox){
-                            var tempLower = document.createElement('canvas');
-                            var tempUpper = document.createElement('canvas');
-                            tempLower.canvas.width = 16 * 64;
-                            tempLower.canvas.height = 16 * 64;
-                            tempUpper.canvas.width = 16 * 64;
-                            tempUpper.canvas.height = 16 * 64;
-                        }
-                        else{
+                        try{
                             var tempLower = new OffscreenCanvas(16 * 64,16 * 64);
                             var tempUpper = new OffscreenCanvas(16 * 64,16 * 64);
+                            var glLower = tempLower.getContext('2d');
+                            var glUpper = tempUpper.getContext('2d');
+                        }
+                        catch(err){
+                            var tempLower = document.createElement('canvas');
+                            var tempUpper = document.createElement('canvas');
+                            var glLower = tempLower.getContext('2d');
+                            var glUpper = tempUpper.getContext('2d');
+                            glLower.canvas.width = 16 * 64;
+                            glLower.canvas.height = 16 * 64;
+                            glUpper.canvas.width = 16 * 64;
+                            glUpper.canvas.height = 16 * 64;
                         }
                     }
-                    var glLower = tempLower.getContext('2d');
-                    var glUpper = tempUpper.getContext('2d');
                     resetCanvas(glLower);
                     resetCanvas(glUpper);
                     for(var k = 0;k < json.layers[i].chunks[j].data.length;k++){

@@ -1,7 +1,3 @@
-var isFirefox = typeof InstallTrigger !== 'undefined';
-if(isFirefox === true){
-    alert('This game uses OffscreenCanvas, which is not supported in Firefox.');
-}
 if(window.requestAnimationFrame === undefined){
     alert('This game uses RequestAnimationFrame, which is not supported in your browser.');
 }
@@ -202,15 +198,16 @@ var renderPlayer = function(img,drawSize){
     else{
         var size = 32;
     }
-    if(isFirefox){
-        var temp = document.createElement('canvas');
-        temp.canvas.width = size * 4;
-        temp.canvas.height = size * 4;
-    }
-    else{
+    try{
         var temp = new OffscreenCanvas(size * 4,size * 4);
+        var gl = temp.getContext('2d');
     }
-    var gl = temp.getContext('2d');
+    catch(err){
+        var temp = document.createElement('canvas');
+        var gl = temp.getContext('2d');
+        gl.canvas.width = size * 4;
+        gl.canvas.height = size * 4;
+    }
     resetCanvas(gl);
     for(var i in img){
         if(img[i] !== "none"){
