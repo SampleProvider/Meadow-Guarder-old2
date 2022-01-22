@@ -328,7 +328,7 @@
         "hpMax":10000000,
         "stats":{
             "damage":250,
-            "defense":250,
+            "defense":25,
             "hpRegen":250,
             "critChance":0,
             "critPower":0
