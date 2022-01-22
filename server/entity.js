@@ -506,7 +506,7 @@ Actor = function(param){
         var distance = Math.abs(self.gridX - pt.gridX);
         for(var i = 0;i <= distance;i++){
             x += xDirection;
-            if(x - 1 === self.gridX){
+            if(x - xDirection === self.gridX){
                 var y1 = self.gridY;
             }
             else{
@@ -516,7 +516,7 @@ Actor = function(param){
                 var y2 = pt.gridY;
             }
             else{
-                var y2 = Math.floor(getYValue(x * 64 + 64) / 64);
+                var y2 = Math.floor(getYValue(x * 64 + 64 * xDirection) / 64);
             }
             var yDirection = 1;
             if(y1 > y2){
