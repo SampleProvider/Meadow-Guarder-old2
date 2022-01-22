@@ -333,7 +333,7 @@
             "critChance":0,
             "critPower":0
         },
-        "maxSpeed":5,
+        "maxSpeed":15,
         "drawSize":"medium",
         "team":"Undead",
         "itemDrops":{
