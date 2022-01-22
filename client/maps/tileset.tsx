@@ -3320,10 +3320,19 @@
    <wangtile tileid="10461" wangid="0,0,0,0,0,0,0,9"/>
   </wangset>
   <wangset name="Interior Wall 3" type="corner" tile="6555">
-   <wangcolor name="" color="#ff0000" tile="6876" probability="1"/>
+   <wangcolor name="White Wall" color="#ff0000" tile="6555" probability="1"/>
    <wangcolor name="" color="#00ff00" tile="-1" probability="1"/>
    <wangcolor name="" color="#0000ff" tile="-1" probability="1"/>
    <wangcolor name="Light Wood Wall" color="#ff7700" tile="7206" probability="1"/>
+   <wangtile tileid="6447" wangid="0,0,0,1,0,0,0,0"/>
+   <wangtile tileid="6448" wangid="0,0,0,1,0,1,0,0"/>
+   <wangtile tileid="6450" wangid="0,0,0,0,0,1,0,0"/>
+   <wangtile tileid="6554" wangid="0,1,0,1,0,0,0,0"/>
+   <wangtile tileid="6555" wangid="0,1,0,1,0,1,0,1"/>
+   <wangtile tileid="6557" wangid="0,0,0,0,0,1,0,1"/>
+   <wangtile tileid="6875" wangid="0,1,0,0,0,0,0,0"/>
+   <wangtile tileid="6876" wangid="0,1,0,0,0,0,0,1"/>
+   <wangtile tileid="6878" wangid="0,0,0,0,0,0,0,1"/>
    <wangtile tileid="7098" wangid="0,0,0,4,0,0,0,0"/>
    <wangtile tileid="7099" wangid="0,0,0,4,0,4,0,0"/>
    <wangtile tileid="7101" wangid="0,0,0,0,0,4,0,0"/>

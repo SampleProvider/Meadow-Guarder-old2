@@ -2482,7 +2482,7 @@ Player = function(param,socket){
         }
     }
     self.updateMana = function(){
-        self.mana += self.stats.manaRegen / 20 * (self.lastUsedMana / 5);
+        self.mana += self.stats.manaRegen / 20 * Math.min(self.lastUsedMana / 5,2);
         self.mana = Math.min(self.manaMax,self.mana);
         self.lastUsedMana += 1;
     }
@@ -2873,7 +2873,11 @@ Player.onConnect = function(socket,username){
                                 if(requirementMet === false){
                                     continue;
                                 }
-                                messages.push(interactingEntity.messages[i]);
+                                for(var j in interactingEntity.messages[i].message){
+                                    var message = Object.create(interactingEntity.messages[i]);
+                                    message.message = interactingEntity.messages[i].message[j];
+                                    messages.push(message);
+                                }
                             }
                             var message = messages[Math.floor(Math.random() * messages.length)];
                             player.startDialogue(message);
