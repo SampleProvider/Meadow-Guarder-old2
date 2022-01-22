@@ -487,7 +487,7 @@ var Monster = function(initPack){
             if(settings.entityFadeOut === false){
                 if(self.boss === true){
                     if(self.bossMusic !== 'none'){
-                        stopBossSong('tenEyedOne');
+                        stopBossSong(self.bossMusic);
                     }
                     stopBossbar();
                 }
@@ -503,8 +503,10 @@ var Monster = function(initPack){
                     if(onScreen){
                         ctx0.globalAlpha = 1;
                     }
-                    if(self.monsterType === 'teneyedone'){
-                        stopBossSong('tenEyedOne');
+                    if(self.boss === true){
+                        if(self.bossMusic !== 'none'){
+                            stopBossSong(self.bossMusic);
+                        }
                         stopBossbar();
                     }
                     delete Monster.list[self.id];
