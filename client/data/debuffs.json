@@ -53,7 +53,7 @@
         "description":"You're frozen!",
         "drawId":33,
         "rarity":1,
-        "movementSpeed":-10,
+        "movementSpeed":-5,
         "particles":{"frozen":1}
     },
     "blindness":{

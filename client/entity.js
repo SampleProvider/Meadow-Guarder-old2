@@ -344,8 +344,16 @@ var Projectile = function(initPack){
     }
 
     if(Item.list[self.projectileType]){
-        self.render = new OffscreenCanvas(24,24);
-        var renderCtx = self.render.getContext("2d");
+        try{
+            self.render = new OffscreenCanvas(24,24);
+            var renderCtx = self.render.getContext("2d");
+        }
+        catch(err){
+            self.render = document.createElement('canvas');
+            var renderCtx = self.render.getContext("2d");
+            renderCtx.canvas.width = 24;
+            renderCtx.canvas.height = 24;
+        }
         resetCanvas(renderCtx);
         var drawId = Item.list[self.projectileType].drawId;
         var imgX = ((drawId - 1) % 26) * 24;
@@ -692,10 +700,22 @@ var DroppedItem = function(initPack){
     if(self.parent + '' !== selfId + '' && self.allPlayers === false){
         return
     }
-    self.render = new OffscreenCanvas(48,48);
-    self.renderSelect = new OffscreenCanvas(48,48);
-    var renderCtx = self.render.getContext("2d");
-    var renderSelectCtx = self.renderSelect.getContext("2d");
+    try{
+        self.render = new OffscreenCanvas(48,48);
+        self.renderSelect = new OffscreenCanvas(48,48);
+        var renderCtx = self.render.getContext("2d");
+        var renderSelectCtx = self.renderSelect.getContext("2d");
+    }
+    catch(err){
+        self.render = document.createElement('canvas');
+        var renderCtx = self.render.getContext("2d");
+        renderCtx.canvas.width = 48;
+        renderCtx.canvas.height = 48;
+        self.renderSelect = document.createElement('canvas');
+        var renderSelectCtx = self.renderSelect.getContext("2d");
+        renderSelectCtx.canvas.width = 48;
+        renderSelectCtx.canvas.height = 48;
+    }
     resetCanvas(renderCtx);
     resetCanvas(renderSelectCtx);
     var drawId = Item.list[self.item].drawId;
@@ -789,8 +809,16 @@ var Particle = function(initPack){
         self.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     }
     if(self.drawType === 'render'){
-        self.render = new OffscreenCanvas(24,24);
-        var renderCtx = self.render.getContext("2d");
+        try{
+            self.render = new OffscreenCanvas(24,24);
+            var renderCtx = self.render.getContext("2d");
+        }
+        catch(err){
+            self.render = document.createElement('canvas');
+            var renderCtx = self.render.getContext("2d");
+            renderCtx.canvas.width = 24;
+            renderCtx.canvas.height = 24;
+        }
         resetCanvas(renderCtx);
         var imgX = ((self.drawId - 1) % 26) * 24;
         var imgY = ~~((self.drawId - 1) / 26) * 24;
