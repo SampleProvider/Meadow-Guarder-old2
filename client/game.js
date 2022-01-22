@@ -734,7 +734,7 @@ socket.on('update',function(data){
             if(!Monster.list[i].toRemove){
                 if(Monster.list[i].boss === true){
                     if(Monster.list[i].bossMusic !== 'none'){
-                        stopBossSong('tenEyedOne');
+                        stopBossSong(Monster.list[i].bossMusic);
                     }
                     stopBossbar();
                 }
