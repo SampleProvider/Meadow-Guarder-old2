@@ -1618,7 +1618,7 @@ window.addEventListener('wheel',function(event){
     }
     if(inMap){
         if(event.deltaY < 0){
-            if(mapSize < 75){
+            if(mapSize > 150){
                 return;
             }
             mapSize *= 1.1;
