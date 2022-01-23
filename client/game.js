@@ -1446,6 +1446,9 @@ document.onkeydown = function(event){
     if(key === 'b' || key === 'B'){
         toggleSetting();
     }
+    if(key === 'k' || key === 'K'){
+        toggleBook();
+    }
     if(key === 'Enter' || key === '/'){
         chatInput.focus();
     }
@@ -1611,6 +1614,23 @@ document.oncontextmenu = function(event){
 window.addEventListener('wheel',function(event){
     tabVisible = true;
     if(!selfId){
+        return;
+    }
+    if(inMap){
+        if(event.deltaY < 0){
+            mapSize *= 1.1;
+            var rect = worldMap.getBoundingClientRect();
+            worldMap.style.top = (worldMap.offsetTop + (rect.top - rawMouseY) * 0.1) + "px";
+            worldMap.style.left = (worldMap.offsetLeft + (rect.left - rawMouseX) * 0.1) + "px";
+            worldMap.style.backgroundSize = mapSize + '%';
+        }
+        else{
+            mapSize /= 1.1;
+            var rect = worldMap.getBoundingClientRect();
+            worldMap.style.top = (worldMap.offsetTop + (rect.top - rawMouseY) * -0.09) + "px";
+            worldMap.style.left = (worldMap.offsetLeft + (rect.left - rawMouseX) * -0.09) + "px";
+            worldMap.style.backgroundSize = mapSize + '%';
+        }
         return;
     }
     if(scrollAllowed === false){
