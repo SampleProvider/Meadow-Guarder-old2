@@ -936,9 +936,9 @@
 				<div id="clanMembersDisplay" class="UI-text" onmouseover="mouseInMenu(event);">Clan Members: null</div>
 				<div id="playersOnlineDisplay" class="UI-text" onmouseover="mouseInMenu(event);">Players Online: null</div>
 				<div id="clanOptions" onmouseover="mouseInMenu(event);">
-					<div id="clanXpBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
-						<div id="clanXpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
-						<div id="clanXpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+					<div id="clanXpBar" class="UI-display" onmouseover="mouseInMenu(event);">
+						<div id="clanXpBarValue" onmouseover="mouseInMenu(event);"></div>
+						<div id="clanXpBarText" onmouseover="mouseInMenu(event);"></div>
 					</div>
 					<div id="clanStats" class="UI-text" onmouseover="mouseInMenu(event);"><b class="clanRewardName">null</b>'s stats:</div>
 					<button id="disbandClanButton" class="UI-button" onmouseover="mouseInMenu(event);">Disband Clan</button>
@@ -973,19 +973,38 @@
 				<div id="shopExitText">X</div>
 			</button>
 		</div>
-		<div id="selfDisplay" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
-			<div id="healthBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
-				<div id="healthBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
-				<div id="healthBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+		<div id="selfDisplay" class="UI-display" onmouseover="mouseInMenu(event);">
+			<div id="healthBar" class="UI-display" onmouseover="mouseInMenu(event);">
+				<div id="healthBarValue" onmouseover="mouseInMenu(event);"></div>
+				<div id="healthBarText" onmouseover="mouseInMenu(event);"></div>
 			</div>
-			<div id="xpBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
-				<div id="xpBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
-				<div id="xpBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+			<div id="xpBar" class="UI-display" onmouseover="mouseInMenu(event);">
+				<div id="xpBarValue" onmouseover="mouseInMenu(event);"></div>
+				<div id="xpBarText" onmouseover="mouseInMenu(event);"></div>
 			</div>
-			<div id="manaBar" class="UI-display" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);">
-				<div id="manaBarValue" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
-				<div id="manaBarText" onmouseover="mouseUp(event)" onmouseover="mouseInMenu(event);"></div>
+			<div id="manaBar" class="UI-display" onmouseover="mouseInMenu(event);">
+				<div id="manaBarValue" onmouseover="mouseInMenu(event);"></div>
+				<div id="manaBarText" onmouseover="mouseInMenu(event);"></div>
 			</div>
+		</div>
+		<div id="bookDiv" style="display: none;" onmouseover="mouseInMenu(event);">
+			<div id="mainBookDiv" class="bookPageDiv UI-text">
+				<div class="bookPageLeft">
+					<div class="UI-text" style="position: relative; left: 0px; top: 0px; font-size: 25px; text-align: center;">Book [K]</div>
+					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;" onclick="openBookPage('worldMap');">World Map</button>
+					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;">Bestiary</button>
+					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;">Quest Log</button>
+				</div>
+				<div class="bookPageRight"></div>
+			</div>
+			<div id="worldMapDiv" class="bookPageDiv UI-text" style="display: none;">
+				<div class="UI-text" style="position: relative; left: 0px; top: -15px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
+				<div id="worldMapContainer" style="position: absolute; left: 0px; top: 6%; width: 100%; height: 100%; background-color: #354149; overflow: hidden; cursor: move;">
+					<div id="worldMap" style="position: absolute; width: 10000px; height: 10000px; background-image: url(/client/maps/World.png); background-repeat: no-repeat;"></div>
+				</div>
+			</div>
+			<div id="bookArrowLeft" class="UI-text" onmouseover="mouseInMenu(event);">&lt;</div>
+			<div id="bookArrowRight" class="UI-text" onmouseover="mouseInMenu(event);">&gt;</div>
 		</div>
 		<div id="itemMenu" class="itemMenu UI-display" style="display: none;"></div>
 		<div id="debuffMenu" class="itemMenu UI-display" style="display: none;"></div>

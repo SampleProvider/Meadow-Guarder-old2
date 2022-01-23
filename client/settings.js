@@ -5,6 +5,7 @@ var settings = {
     dialogueOpen:false,
     settingOpen:false,
     shopOpen:false,
+    bookOpen:false,
     particlesPercentage:100,
     darknessEffects:true,
     entityFadeOut:true,
@@ -111,6 +112,77 @@ craftExit.onclick = function(){
 settingButton.onclick = function(){
     toggleSetting();
 }
+settingExit.onclick = function(){
+    closeSetting();
+}
+shopExit.onclick = function(){
+    closeShop();
+}
+bookButton.onclick = function(){
+    toggleBook();
+}
+openBookPage = function(page){
+    var bookPages = document.getElementsByClassName('bookPageDiv');
+    for(var i in bookPages){
+        if(bookPages[i].style){
+            bookPages[i].style.display = 'none';
+        }
+    }
+    if(page === 'worldMap'){
+        bookDiv.style.backgroundImage = 'url("/client/img/map.png")';
+    }
+    else{
+        bookDiv.style.backgroundImage = 'url("/client/img/book.png")';
+    }
+    document.getElementById(page + 'Div').style.display = 'inline-block';
+}
+var mapPosition1 = 0;
+var mapPosition2 = 0;
+var mapPosition3 = 0;
+var mapPosition4 = 0;
+var mapDragging = false;
+var inMap = false;
+var mapSize = 100;
+worldMap.style.backgroundSize = '100%';
+worldMapContainer.onmousedown = function(e){
+    mapDragging = true;
+    e = e || window.event;
+    e.preventDefault();
+    mapPosition3 = e.clientX;
+    mapPosition4 = e.clientY;
+}
+worldMapContainer.onmousemove = function(e){
+    inMap = true;
+    if(!mapDragging){
+        return;
+    }
+    e = e || window.event;
+    e.preventDefault();
+    mapPosition1 = mapPosition3 - e.clientX;
+    mapPosition2 = mapPosition4 - e.clientY;
+    mapPosition3 = e.clientX;
+    mapPosition4 = e.clientY;
+    worldMap.style.top = (worldMap.offsetTop - mapPosition2) + "px";
+    worldMap.style.left = (worldMap.offsetLeft - mapPosition1) + "px";
+}
+worldMapContainer.onmouseup = function(e){
+    mapDragging = false;
+}
+worldMapContainer.onmouseout = function(e){
+    inMap = false;
+    if(!mapDragging){
+        return;
+    }
+    mapDragging = false;
+    e = e || window.event;
+    e.preventDefault();
+    mapPosition1 = mapPosition3 - e.clientX;
+    mapPosition2 = mapPosition4 - e.clientY;
+    mapPosition3 = e.clientX;
+    mapPosition4 = e.clientY;
+    worldMap.style.top = (worldMap.offsetTop - mapPosition2) + "px";
+    worldMap.style.left = (worldMap.offsetLeft - mapPosition1) + "px";
+}
 switchToSetting = function(setting){
     var settingScreens = document.getElementsByClassName('settingsDiv');
     for(var i in settingScreens){
@@ -130,12 +202,6 @@ switchToSetting = function(setting){
     document.getElementById(setting + 'Div').style.display = 'inline-block';
 }
 switchToSetting('mainSettings');
-settingExit.onclick = function(){
-    closeSetting();
-}
-shopExit.onclick = function(){
-    closeShop();
-}
 particleSlider.oninput = function(){
     settings.particlesPercentage = parseInt(particleSlider.value);
     particleHeader.innerHTML = 'Particles: ' + particleSlider.value + '%';
@@ -305,4 +371,21 @@ openShop = function(){
 closeShop = function(){
     settings.shopOpen = false;
     shopDiv.style.display = 'none';
+}
+openBook = function(){
+    settings.bookOpen = true;
+    bookDiv.style.display = 'inline-block';
+}
+closeBook = function(){
+    settings.bookOpen = false;
+    bookDiv.style.display = 'none';
+}
+toggleBook = function(){
+    settings.bookOpen = !settings.bookOpen;
+    if(settings.bookOpen){
+        bookDiv.style.display = 'inline-block';
+    }
+    else{
+        bookDiv.style.display = 'none';
+    }
 }

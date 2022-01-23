@@ -1580,3 +1580,72 @@ canvas {
     text-align: center;
     color: #ffffff;
 }
+
+#bookDiv {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: calc(100vw / 3);
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-image: url("./img/book.png");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    padding: 0px;
+    margin: 0px;
+    transform: translate(-50%, -50%);
+}
+.bookPageDiv {
+    left: 9%;
+    right: 9%;
+    top: 9%;
+    bottom: 18%;
+    padding: 0px;
+    border: none;
+}
+.bookPageLeft {
+    display: inline-block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: calc(11 / 27 * 100%);
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.bookPageRight {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: calc(11 / 27 * 100%);
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+#bookArrowLeft {
+    left: 2px;
+    top: 50%;
+    color: #ffffff;
+    font-size: 20px;
+    transform: translate(0%, -50%);
+}
+#bookArrowLeft:hover {
+    color: #00ff90;
+}
+#bookArrowRight {
+    right: 2px;
+    top: 50%;
+    color: #ffffff;
+    font-size: 20px;
+    transform: translate(0%, -50%);
+}
+#bookArrowRight:hover {
+    color: #00ff90;
+}

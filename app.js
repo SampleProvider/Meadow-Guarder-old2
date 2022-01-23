@@ -1887,6 +1887,13 @@ setInterval(function(){
 							}
 						}
 					}
+					for(var m in grid[i][j][k].monsters){
+						if(grid[i][j][k].monsters[l].team !== grid[i][j][k].monsters[m].team){
+							if(grid[i][j][k].monsters[m].isColliding(grid[i][j][k].monsters[l])){
+								grid[i][j][k].monsters[l].onDamage(grid[i][j][k].monsters[m]);
+							}
+						}
+					}
 				}
 			}
 		}
