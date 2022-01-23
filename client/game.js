@@ -174,10 +174,7 @@ socket.on('refreshCraft',function(pack){
     inventory.refreshCraft();
 });
 socket.on('itemChange',function(pack){
-    for(var i in crafts){
-        inventory.updateCraftClient(i);
-    }
-    inventory.refreshShop();
+    inventory.itemChange();
 });
 socket.on('refreshShop',function(pack){
     shopHeader.innerHTML = pack + '\'s Shop';

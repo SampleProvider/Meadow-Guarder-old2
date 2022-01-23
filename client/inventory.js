@@ -989,6 +989,7 @@ Inventory = function(socket,server){
                         for(var i in crafts[index].materials){
                             self.removeItem(crafts[index].materials[i].id,crafts[index].materials[i].amount);
                         }
+                        self.itemChange();
                     }
                 }
             }
@@ -1307,6 +1308,7 @@ Inventory = function(socket,server){
                                 self.removeItem(npcData[self.shopNpc].shop[index].materials[i].id,npcData[self.shopNpc].shop[index].materials[i].amount);
                             }
                         }
+                        self.itemChange();
                     }
                 }
             }
@@ -1432,6 +1434,13 @@ Inventory = function(socket,server){
                     }
                 }
             }
+            return;
+        }
+        else{
+            for(var i in crafts){
+                inventory.updateCraftClient(i);
+            }
+            inventory.refreshShop();
             return;
         }
     }
@@ -1781,7 +1790,6 @@ Inventory = function(socket,server){
                         amount:npcData[self.shopNpc].shop[data].amount,
                     }
                 }
-                self.itemChange();
             }
             catch(err){
                 console.error(err);
