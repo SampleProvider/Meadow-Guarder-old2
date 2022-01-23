@@ -2057,7 +2057,7 @@ Player = function(param,socket){
     self.updateCurrentItem = function(){
         self.shieldActive = false;
         self.currentItem = '';
-        if(self.keyPress.rightClick === true && self.inventory.items['shield'].id && self.canAttack){
+        if(self.keyPress.rightClick === true && self.inventory.items['shield'].id && (self.canAttack || self.map === 'World')){
             self.currentItem = self.inventory.items['shield'].id;
             self.shieldActive = true;
             self.stepsLeft = Math.ceil(self.stepsLeft / 5);
