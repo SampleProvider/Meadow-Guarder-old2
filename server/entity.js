@@ -570,8 +570,8 @@ Actor = function(param){
                         var x = dx;
                         var y = dy;
                         var distance = -1;
-                        for(var i = 1;i > -Math.round(self.width / 64) - 1;i--){
-                            for(var j = 1;j > -Math.round(self.height / 64) - 1;j--){
+                        for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
+                            for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
                                 if(Collision.list[self.map][self.zindex][self.gridX + i]){
                                     if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
                                         continue;
@@ -4268,8 +4268,8 @@ Monster = function(param){
                                 var x = dx;
                                 var y = dy;
                                 var distance = -1;
-                                for(var i = 1;i > -Math.round(self.width / 64) - 1;i--){
-                                    for(var j = 1;j > -Math.round(self.height / 64) - 1;j--){
+                                for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
+                                    for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
                                         if(Collision.list[self.map][self.zindex][self.gridX + i]){
                                             if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
                                                 continue;
