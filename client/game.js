@@ -1618,6 +1618,9 @@ window.addEventListener('wheel',function(event){
     }
     if(inMap){
         if(event.deltaY < 0){
+            if(mapSize < 75){
+                return;
+            }
             mapSize *= 1.1;
             var rect = worldMap.getBoundingClientRect();
             worldMap.style.top = (worldMap.offsetTop + (rect.top - rawMouseY) * 0.1) + "px";
