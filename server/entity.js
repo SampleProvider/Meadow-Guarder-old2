@@ -3755,6 +3755,18 @@ Projectile = function(param){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
                     if(nearestEntity === null){
                         nearestEntity = Player.list[i];
+                        continue;
+                    }
+                    var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction - self.direction > 180){
+                        direction -= 180;
+                    }
+                    else if(direction - self.direction < -180){
+                        direction += 180;
                     }
                     else if(self.getDistance(Player.list[i]) < self.getDistance(nearestEntity)){
                         nearestEntity = Player.list[i];
