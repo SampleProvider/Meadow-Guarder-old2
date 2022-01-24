@@ -650,7 +650,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"darkflames",
                         "param":{
                             "speed":45,
                             "direction":45,
@@ -664,7 +664,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"frozenflames",
                         "param":{
                             "speed":45,
                             "direction":90,
@@ -678,7 +678,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"alienflames",
                         "param":{
                             "speed":45,
                             "direction":135,
@@ -706,7 +706,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"alienflames",
                         "param":{
                             "speed":45,
                             "direction":225,
@@ -720,7 +720,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"frozenflames",
                         "param":{
                             "speed":45,
                             "direction":270,
@@ -734,7 +734,7 @@
                         }
                     },{
                         "id":"projectile",
-                        "projectileType":"mysticflames",
+                        "projectileType":"darkflames",
                         "param":{
                             "speed":45,
                             "direction":315,
@@ -826,7 +826,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":35,
+        "maxSpeed":25,
         "knockbackResistance":1,
         "drawSize":"large",
         "team":"Harmful",
