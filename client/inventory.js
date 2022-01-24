@@ -1717,6 +1717,25 @@ Inventory = function(socket,server){
                         return;
                     }
                 }
+                if(self.draggingItem.id){
+                    if(self.draggingItem.id === npcData[self.shopNpc].shop[data].id){
+                        if(self.draggingItem.amount + npcData[self.shopNpc].shop[data].amount <= Item.list[self.draggingItem.id].maxStack){
+                            self.draggingItem.amount += npcData[self.shopNpc].shop[data].amount;
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else{
+                        return;
+                    }
+                }
+                else{
+                    self.draggingItem = {
+                        id:npcData[self.shopNpc].shop[data].id,
+                        amount:npcData[self.shopNpc].shop[data].amount,
+                    }
+                }
                 var removeCoins = function(id,amount){
                     if(amount === 0){
                         return;
@@ -1772,22 +1791,6 @@ Inventory = function(socket,server){
                 for(var i in npcData[self.shopNpc].shop[data].materials){
                     if(npcData[self.shopNpc].shop[data].materials[i].id !== 'coppercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'silvercoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'goldcoin' && npcData[self.shopNpc].shop[data].materials[i].id !== 'meteoritecoin'){
                         self.removeItem(npcData[self.shopNpc].shop[data].materials[i].id,npcData[self.shopNpc].shop[data].materials[i].amount);
-                    }
-                }
-                if(self.draggingItem.id){
-                    if(self.draggingItem.id === npcData[self.shopNpc].shop[data].id){
-                        if(self.draggingItem.amount + npcData[self.shopNpc].shop[data].amount <= Item.list[self.draggingItem.id].maxStack){
-                            self.draggingItem.amount += npcData[self.shopNpc].shop[data].amount;
-                        }
-                        else{
-                            return;
-                        }
-                    }
-                }
-                else{
-                    self.draggingItem = {
-                        id:npcData[self.shopNpc].shop[data].id,
-                        amount:npcData[self.shopNpc].shop[data].amount,
                     }
                 }
             }

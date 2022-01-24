@@ -49,7 +49,7 @@ Collision = function(param){
     }
     return self;
 }
-Collision.add = function(collision,id){
+Collision.add = function(collision,id,deathMessage){
     for(var i = Math.floor(Math.round(collision.x - collision.width / 2) / 64);i <= Math.floor(Math.round(collision.x + collision.width / 2) / 64);i++){
         if(i * 64 === Math.round(collision.x + collision.width / 2)){
             break;
@@ -93,7 +93,7 @@ Collision.add = function(collision,id){
     }
     for(var i in Player.list){
         if(Player.list[i].isColliding(collision)){
-            Player.list[i].teleportToSpawn();
+            Player.list[i].onDeath(Player.list[i],deathMessage);
         }
     }
     for(var i in Monster.list){

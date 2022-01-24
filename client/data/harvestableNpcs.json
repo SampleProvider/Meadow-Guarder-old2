@@ -9,6 +9,7 @@
         "harvestPower":10,
         "harvestTool":"axe",
         "harvestHp":25,
+        "deathMessage":"tree",
         "collisions":[
             {
                 "x":0,
