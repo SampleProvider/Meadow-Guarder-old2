@@ -561,27 +561,31 @@ Actor = function(param){
         }
         var nx = Math.floor(size / 2);
         var ny = Math.floor(size / 2);
-        var dx = self.gridX - Math.floor(self.width / 128) - nx;
-        var dy = self.gridY - Math.floor(self.height / 128) - ny;
+        var dx = Math.floor(self.x / 64 - (self.width / 64 - 1) / 2) - nx;
+        var dy = Math.floor(self.y / 64 - (self.height / 64 - 1) / 2) - ny;
         if(Collision.list[self.map]){
             if(Collision.list[self.map][self.zindex]){
-                if(Collision.list[self.map][self.zindex][self.gridX]){
-                    if(Collision.list[self.map][self.zindex][self.gridX][self.gridY]){
+                if(Collision.list[self.map][self.zindex][dx + nx]){
+                    if(Collision.list[self.map][self.zindex][dx + nx][dy + ny]){
                         var x = dx;
                         var y = dy;
                         var distance = -1;
                         for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
                             for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
-                                if(Collision.list[self.map][self.zindex][self.gridX + i]){
-                                    if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
+                                if(Collision.list[self.map][self.zindex][dx + nx + i]){
+                                    if(Collision.list[self.map][self.zindex][dx + nx + i][dy + ny + j]){
                                         continue;
                                     }
                                 }
+                                self.x -= self.width - 64;
+                                self.y -= self.height - 64;
                                 if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
                                     distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
                                     dx = x + i;
                                     dy = y + j;
                                 }
+                                self.x += self.width - 64;
+                                self.y += self.height - 64;
                             }
                         }
                     }
@@ -4271,27 +4275,31 @@ Monster = function(param){
                 }
                 var nx = Math.floor(size / 2);
                 var ny = Math.floor(size / 2);
-                var dx = self.gridX - Math.floor(self.width / 128) - nx;
-                var dy = self.gridY - Math.floor(self.height / 128) - ny;
+                var dx = Math.floor(self.x / 64 - (self.width / 64 - 1) / 2) - nx;
+                var dy = Math.floor(self.y / 64 - (self.height / 64 - 1) / 2) - ny;
                 if(Collision.list[self.map]){
                     if(Collision.list[self.map][self.zindex]){
-                        if(Collision.list[self.map][self.zindex][self.gridX]){
-                            if(Collision.list[self.map][self.zindex][self.gridX][self.gridY]){
+                        if(Collision.list[self.map][self.zindex][dx + nx]){
+                            if(Collision.list[self.map][self.zindex][dx + nx][dy + ny]){
                                 var x = dx;
                                 var y = dy;
                                 var distance = -1;
                                 for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
                                     for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
-                                        if(Collision.list[self.map][self.zindex][self.gridX + i]){
-                                            if(Collision.list[self.map][self.zindex][self.gridX + i][self.gridY + j]){
+                                        if(Collision.list[self.map][self.zindex][dx + nx + i]){
+                                            if(Collision.list[self.map][self.zindex][dx + nx + i][dy + ny + j]){
                                                 continue;
                                             }
                                         }
+                                        self.x -= self.width - 64;
+                                        self.y -= self.height - 64;
                                         if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
                                             distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
                                             dx = x + i;
                                             dy = y + j;
                                         }
+                                        self.x += self.width - 64;
+                                        self.y += self.height - 64;
                                     }
                                 }
                             }
