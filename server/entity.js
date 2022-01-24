@@ -1733,6 +1733,7 @@ Player = function(param,socket){
         }
         pt.knockbackX = 0;
         pt.knockbackY = 0;
+        pt.hp = 0;
         for(var i in SOCKET_LIST){
             if(Player.list[i]){
                 if(Player.list[i].map === pt.map){
@@ -1782,6 +1783,9 @@ Player = function(param,socket){
             }
             else if(entity.parentName){
                 globalChat('#ff0000',pt.name + ' was killed by ' + entity.parentName + '.');
+            }
+            else if(entity === 'tree'){
+                globalChat('#ff0000',pt.name + ' was grown into a tree.');
             }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
@@ -4539,7 +4543,7 @@ HarvestableNpc = function(param){
                     info:'',
                     type:'Collision',
                     zindex:self.zindex,
-                },self.collisionId);
+                },self.collisionId,self.deathMessage);
             }
         }
         self.timer -= 1;

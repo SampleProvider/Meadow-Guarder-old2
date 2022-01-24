@@ -310,7 +310,6 @@ io.sockets.on('connection',function(socket){
 							Player.list[socket.id].sendMessage('[!] Player ' + name + ' is already dead.');
 						}
 						else{
-							Player.list[i].hp = 0;
 							Player.list[i].onDeath(Player.list[i]);
 							globalChat('#ff0000',Player.list[i].name + ' felt the wrath of ' + Player.list[socket.id].name + '.');
 							Player.list[socket.id].sendMessage('[!] Killed player ' + name + '.');
