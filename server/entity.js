@@ -3754,7 +3754,7 @@ Projectile = function(param){
             var nearestDirection = 0;
             for(var i in Player.list){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
-                    var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180;
+                    var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180 - self.direction;
                     direction = direction % 360;
                     while(direction < 0){
                         direction += 360;
@@ -3777,7 +3777,7 @@ Projectile = function(param){
             }
             for(var i in Monster.list){
                 if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map && Monster.list[i].hp > 0){
-                    var direction = Math.atan2(Monster.list[i].y - self.y,Monster.list[i].x - self.x) / Math.PI * 180;
+                    var direction = Math.atan2(Monster.list[i].y - self.y,Monster.list[i].x - self.x) / Math.PI * 180 - self.direction;
                     direction = direction % 360;
                     while(direction < 0){
                         direction += 360;
