@@ -3799,7 +3799,7 @@ Projectile = function(param){
                 }
             }
             if(nearestEntity){
-                self.direction += (nearestDirection - self.direction) / 5;
+                self.direction += nearestDirection / 5;
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
             }
