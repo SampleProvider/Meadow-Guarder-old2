@@ -1,57 +1,34 @@
 javascript:
 var hackedDiv = document.createElement('div');
-document.getElementById('settingDiv').appendChild(hackedDiv);
-hackedDiv.style.top = '20px';
-hackedDiv.style.right = '20px';
+gameDiv.appendChild(hackedDiv);
+hackedDiv.style.position = 'absolute';
+hackedDiv.style.top = '0px';
+hackedDiv.style.left = '170px';
 hackedDiv.backgroundColor = 'none';
 
-var hackedCollumn1 = document.createElement('div');
-hackedCollumn1.className = 'UI-display';
-hackedDiv.appendChild(hackedCollumn1);
-hackedCollumn1.style.top = '20px';
-hackedCollumn1.style.right = '20px';
+var tracersColumn = document.createElement('div');
+tracersColumn.className = 'UI-display';
+hackedDiv.appendChild(tracersColumn);
+tracersColumn.style.top = '25px';
+tracersColumn.style.left = '0px';
+tracersColumn.style.width = '88px';
+tracersColumn.style.display = 'none';
 
-var hackedCollumn2 = document.createElement('div');
-hackedCollumn2.className = 'UI-display';
-hackedDiv.appendChild(hackedCollumn2);
-hackedCollumn2.style.top = '60px';
-hackedCollumn2.style.right = '20px';
-
-var hackedCollumn3 = document.createElement('div');
-hackedCollumn3.className = 'UI-display';
-hackedDiv.appendChild(hackedCollumn3);
-hackedCollumn3.style.top = '100px';
-hackedCollumn3.style.right = '20px';
-
-var hackedCollumn4 = document.createElement('div');
-hackedCollumn4.className = 'UI-display';
-hackedDiv.appendChild(hackedCollumn4);
-hackedCollumn4.style.top = '140px';
-hackedCollumn4.style.right = '20px';
-
-var hackedCollumn5 = document.createElement('div');
-hackedCollumn5.className = 'UI-display';
-hackedDiv.appendChild(hackedCollumn5);
-hackedCollumn5.style.top = '180px';
-hackedCollumn5.style.right = '20px';
-
-var attackMonsters = document.createElement('button');
-attackMonsters.className = 'UI-button';
-attackMonsters.style.position = 'static';
-attackMonsters.style.top = '8px';
-attackMonsters.innerHTML = 'Attack Monsters';
-hackedCollumn1.appendChild(attackMonsters);
-
-var attackMonstersState = false;
-attackMonsters.onclick = function(){
-    attackMonstersState = !attackMonstersState;
-    if(attackMonstersState){
-        attackMonsters.style.color = '#ffffff';
-        attackMonsters.style.backgroundColor = '#725640';
+var tracersButton = document.createElement('button');
+tracersButton.className = 'UI-button';
+hackedDiv.appendChild(tracersButton);
+tracersButton.innerHTML = 'Tracers';
+tracersButton.style.top = '0px';
+tracersButton.style.left = '0px';
+tracersButton.style.width = '100px';
+var tracersOpen = false;
+tracersButton.onclick = function(){
+    tracersOpen = !tracersOpen;
+    if(tracersOpen){
+        tracersColumn.style.display = 'inline-block';
     }
     else{
-        attackMonsters.style.color = '#ffffff';
-        attackMonsters.style.backgroundColor = '#362a1e';
+        tracersColumn.style.display = 'none';
     }
 };
 
@@ -59,8 +36,9 @@ var monsterTracers = document.createElement('button');
 monsterTracers.className = 'UI-button';
 monsterTracers.style.position = 'static';
 monsterTracers.style.top = '8px';
+monsterTracers.style.width = '100%';
 monsterTracers.innerHTML = 'Monster Tracers';
-hackedCollumn1.appendChild(monsterTracers);
+tracersColumn.appendChild(monsterTracers);
 
 var monsterTracersState = false;
 monsterTracers.onclick = function(){
@@ -75,53 +53,13 @@ monsterTracers.onclick = function(){
     }
 };
 
-var autoRespawn = document.createElement('button');
-autoRespawn.className = 'UI-button';
-autoRespawn.style.position = 'static';
-autoRespawn.style.top = '8px';
-autoRespawn.innerHTML = 'Auto Respawn';
-hackedCollumn2.appendChild(autoRespawn);
-
-var autoRespawnState = false;
-var autoRespawning = false;
-autoRespawn.onclick = function(){
-    autoRespawnState = !autoRespawnState;
-    if(autoRespawnState){
-        autoRespawn.style.color = '#ffffff';
-        autoRespawn.style.backgroundColor = '#725640';
-    }
-    else{
-        autoRespawn.style.color = '#ffffff';
-        autoRespawn.style.backgroundColor = '#362a1e';
-    }
-};
-
-var attackPlayers = document.createElement('button');
-attackPlayers.className = 'UI-button';
-attackPlayers.style.position = 'static';
-attackPlayers.style.top = '8px';
-attackPlayers.innerHTML = 'Attack Players';
-hackedCollumn2.appendChild(attackPlayers);
-
-var attackPlayersState = false;
-attackPlayers.onclick = function(){
-    attackPlayersState = !attackPlayersState;
-    if(attackPlayersState){
-        attackPlayers.style.color = '#ffffff';
-        attackPlayers.style.backgroundColor = '#725640';
-    }
-    else{
-        attackPlayers.style.color = '#ffffff';
-        attackPlayers.style.backgroundColor = '#362a1e';
-    }
-};
-
 var playerTracers = document.createElement('button');
 playerTracers.className = 'UI-button';
 playerTracers.style.position = 'static';
 playerTracers.style.top = '8px';
+playerTracers.style.width = '100%';
 playerTracers.innerHTML = 'Player Tracers';
-hackedCollumn2.appendChild(playerTracers);
+tracersColumn.appendChild(playerTracers);
 
 var playerTracersState = false;
 playerTracers.onclick = function(){
@@ -140,8 +78,9 @@ var npcTracers = document.createElement('button');
 npcTracers.className = 'UI-button';
 npcTracers.style.position = 'static';
 npcTracers.style.top = '8px';
+npcTracers.style.width = '100%';
 npcTracers.innerHTML = 'Npc Tracers';
-hackedCollumn3.appendChild(npcTracers);
+tracersColumn.appendChild(npcTracers);
 
 var npcTracersState = false;
 npcTracers.onclick = function(){
@@ -156,17 +95,180 @@ npcTracers.onclick = function(){
     }
 };
 
+var attacksColumn = document.createElement('div');
+attacksColumn.className = 'UI-display';
+hackedDiv.appendChild(attacksColumn);
+attacksColumn.style.top = '25px';
+attacksColumn.style.left = '100px';
+attacksColumn.style.width = '88px';
+attacksColumn.style.display = 'none';
+
+var attacksButton = document.createElement('button');
+attacksButton.className = 'UI-button';
+hackedDiv.appendChild(attacksButton);
+attacksButton.innerHTML = 'Attacks';
+attacksButton.style.top = '0px';
+attacksButton.style.left = '100px';
+attacksButton.style.width = '100px';
+var attacksOpen = false;
+attacksButton.onclick = function(){
+    attacksOpen = !attacksOpen;
+    if(attacksOpen){
+        attacksColumn.style.display = 'inline-block';
+    }
+    else{
+        attacksColumn.style.display = 'none';
+    }
+};
+
+var attackMonsters = document.createElement('button');
+attackMonsters.className = 'UI-button';
+attackMonsters.style.position = 'static';
+attackMonsters.style.top = '8px';
+attackMonsters.style.width = '100%';
+attackMonsters.innerHTML = 'Attack Monsters';
+attacksColumn.appendChild(attackMonsters);
+
+var attackMonstersState = false;
+attackMonsters.onclick = function(){
+    attackMonstersState = !attackMonstersState;
+    if(attackMonstersState){
+        attackMonsters.style.color = '#ffffff';
+        attackMonsters.style.backgroundColor = '#725640';
+    }
+    else{
+        attackMonsters.style.color = '#ffffff';
+        attackMonsters.style.backgroundColor = '#362a1e';
+    }
+};
+
+var attackPlayers = document.createElement('button');
+attackPlayers.className = 'UI-button';
+attackPlayers.style.position = 'static';
+attackPlayers.style.top = '8px';
+attackPlayers.style.width = '100%';
+attackPlayers.innerHTML = 'Attack Players';
+attacksColumn.appendChild(attackPlayers);
+
+var attackPlayersState = false;
+attackPlayers.onclick = function(){
+    attackPlayersState = !attackPlayersState;
+    if(attackPlayersState){
+        attackPlayers.style.color = '#ffffff';
+        attackPlayers.style.backgroundColor = '#725640';
+    }
+    else{
+        attackPlayers.style.color = '#ffffff';
+        attackPlayers.style.backgroundColor = '#362a1e';
+    }
+};
+
+var autoAttack = document.createElement('button');
+autoAttack.className = 'UI-button';
+autoAttack.style.position = 'static';
+autoAttack.style.top = '8px';
+autoAttack.style.width = '100%';
+autoAttack.innerHTML = 'Auto Attack';
+attacksColumn.appendChild(autoAttack);
+
+var autoAttackState = false;
+autoAttack.onclick = function(){
+    autoAttackState = !autoAttackState;
+    if(autoAttackState){
+        autoAttack.style.color = '#ffffff';
+        autoAttack.style.backgroundColor = '#725640';
+    }
+    else{
+        autoAttack.style.color = '#ffffff';
+        autoAttack.style.backgroundColor = '#362a1e';
+        socket.emit('keyPress',{inputId:'leftClick',state:false});
+    }
+};
+
+var autoColumn = document.createElement('div');
+autoColumn.className = 'UI-display';
+hackedDiv.appendChild(autoColumn);
+autoColumn.style.top = '25px';
+autoColumn.style.left = '200px';
+autoColumn.style.width = '88px';
+autoColumn.style.display = 'none';
+
+var autoButton = document.createElement('button');
+autoButton.className = 'UI-button';
+hackedDiv.appendChild(autoButton);
+autoButton.innerHTML = 'Auto';
+autoButton.style.top = '0px';
+autoButton.style.left = '200px';
+autoButton.style.width = '100px';
+var autoOpen = false;
+autoButton.onclick = function(){
+    autoOpen = !autoOpen;
+    if(autoOpen){
+        autoColumn.style.display = 'inline-block';
+    }
+    else{
+        autoColumn.style.display = 'none';
+    }
+};
+
+var autoRespawn = document.createElement('button');
+autoRespawn.className = 'UI-button';
+autoRespawn.style.position = 'static';
+autoRespawn.style.top = '8px';
+autoRespawn.style.width = '100%';
+autoRespawn.innerHTML = 'Auto Respawn';
+autoColumn.appendChild(autoRespawn);
+
+var autoRespawnState = false;
+autoRespawn.onclick = function(){
+    autoRespawnState = !autoRespawnState;
+    if(autoRespawnState){
+        autoRespawn.style.color = '#ffffff';
+        autoRespawn.style.backgroundColor = '#725640';
+    }
+    else{
+        autoRespawn.style.color = '#ffffff';
+        autoRespawn.style.backgroundColor = '#362a1e';
+    }
+};
+
+var otherColumn = document.createElement('div');
+otherColumn.className = 'UI-display';
+hackedDiv.appendChild(otherColumn);
+otherColumn.style.top = '25px';
+otherColumn.style.left = '300px';
+otherColumn.style.width = '88px';
+otherColumn.style.display = 'none';
+
+var otherButton = document.createElement('button');
+otherButton.className = 'UI-button';
+hackedDiv.appendChild(otherButton);
+otherButton.innerHTML = 'Other';
+otherButton.style.top = '0px';
+otherButton.style.left = '300px';
+otherButton.style.width = '100px';
+var otherOpen = false;
+otherButton.onclick = function(){
+    otherOpen = !otherOpen;
+    if(otherOpen){
+        otherColumn.style.display = 'inline-block';
+    }
+    else{
+        otherColumn.style.display = 'none';
+    }
+};
+
 var freeCam = document.createElement('button');
 freeCam.className = 'UI-button';
 freeCam.style.position = 'static';
 freeCam.style.top = '8px';
+freeCam.style.width = '100%';
 freeCam.innerHTML = 'FreeCam';
-hackedCollumn4.appendChild(freeCam);
+otherColumn.appendChild(freeCam);
 
 var freeCamState = false;
 var freeCamX = 0;
 var freeCamY = 0;
-var keys = [];
 freeCam.onclick = function(){
     freeCamState = !freeCamState;
     if(freeCamState){
@@ -181,69 +283,56 @@ freeCam.onclick = function(){
     }
 };
 
-var autoAttack = document.createElement('button');
-autoAttack.className = 'UI-button';
-autoAttack.style.position = 'static';
-autoAttack.style.top = '8px';
-autoAttack.innerHTML = 'Auto Attack';
-hackedCollumn4.appendChild(autoAttack);
+var noDeathScreen = document.createElement('button');
+noDeathScreen.className = 'UI-button';
+noDeathScreen.style.position = 'static';
+noDeathScreen.style.top = '8px';
+noDeathScreen.style.width = '100%';
+noDeathScreen.innerHTML = 'No Death Screen';
+otherColumn.appendChild(noDeathScreen);
 
-var autoAttackState = false;
-autoAttack.onclick = function(){
-    autoAttackState = !autoAttackState;
-    if(autoAttackState){
-        autoAttack.style.color = '#ffffff';
-        autoAttack.style.backgroundColor = '#725640';
-        socket.emit('keyPress',{inputId:'leftClick',state:true});
+var noDeathScreenState = false;
+noDeathScreen.onclick = function(){
+    noDeathScreenState = !noDeathScreenState;
+    if(noDeathScreenState){
+        noDeathScreen.style.color = '#ffffff';
+        noDeathScreen.style.backgroundColor = '#725640';
+        deathScreen.style.background = 'none';
     }
     else{
-        autoAttack.style.color = '#ffffff';
-        autoAttack.style.backgroundColor = '#362a1e';
-        socket.emit('keyPress',{inputId:'leftClick',state:false});
+        noDeathScreen.style.color = '#ffffff';
+        noDeathScreen.style.backgroundColor = '#362a1e';
+        deathScreen.style.background = 'rgba(255,0,0,0.3)';
     }
 };
 
-var disableRickroll = document.createElement('button');
-disableRickroll.className = 'UI-button';
-disableRickroll.style.position = 'static';
-disableRickroll.style.top = '8px';
-disableRickroll.innerHTML = 'Disable Rickroll';
-hackedCollumn5.appendChild(disableRickroll);
+var noDialogueScroll = document.createElement('button');
+noDialogueScroll.className = 'UI-button';
+noDialogueScroll.style.position = 'static';
+noDialogueScroll.style.top = '8px';
+noDialogueScroll.style.width = '100%';
+noDialogueScroll.innerHTML = 'No Dialogue Scroll';
+otherColumn.appendChild(noDialogueScroll);
 
-var disableRickrollState = false;
-disableRickroll.onclick = function(){
-    disableRickrollState = !disableRickrollState;
-    if(disableRickrollState){
-        disableRickroll.style.color = '#ffffff';
-        disableRickroll.style.backgroundColor = '#725640';
+var noDialogueScrollState = false;
+noDialogueScroll.onclick = function(){
+    noDialogueScrollState = !noDialogueScrollState;
+    if(noDialogueScrollState){
+        noDialogueScroll.style.color = '#ffffff';
+        noDialogueScroll.style.backgroundColor = '#725640';
+        deathScreen.style.backgroundColor = 'none';
     }
     else{
-        disableRickroll.style.color = '#ffffff';
-        disableRickroll.style.backgroundColor = '#362a1e';
-    }
-};
-
-var disableDialogueScroll = document.createElement('button');
-disableDialogueScroll.className = 'UI-button';
-disableDialogueScroll.style.position = 'static';
-disableDialogueScroll.style.top = '8px';
-disableDialogueScroll.innerHTML = 'Disable Dialogue Scroll';
-hackedCollumn5.appendChild(disableDialogueScroll);
-
-var disableDialogueScrollState = false;
-disableDialogueScroll.onclick = function(){
-    disableDialogueScrollState = !disableDialogueScrollState;
-    if(disableDialogueScrollState){
-        disableDialogueScroll.style.color = '#ffffff';
-        disableDialogueScroll.style.backgroundColor = '#725640';
-    }
-    else{
-        disableDialogueScroll.style.color = '#ffffff';
-        disableDialogueScroll.style.backgroundColor = '#362a1e';
+        noDialogueScroll.style.color = '#ffffff';
+        noDialogueScroll.style.backgroundColor = '#362a1e';
+        deathScreen.style.backgroundColor = 'rgba(255,0,0,0.3)';
     }
 };
 
 var t = 0;
+var autoAim = false;
+
+var keys = [];
 
 var getDistance = function(pt1,pt2){
     return (pt1.x - pt2.x)**2 + (pt1.y - pt2.y)**2;
@@ -252,140 +341,142 @@ var getDistance = function(pt1,pt2){
 MGHC = function(){
     t += 1;
     if(monsterTracersState){
-        ctx.save();
-        ctx.translate(cameraX,cameraY);
+        ctx1.save();
+        ctx1.translate(cameraX,cameraY);
         for(var i in Monster.list){
-            var tracers = {
-                skeleton:{
-                    strokeStyle:'#999955',
-                    lineWidth:4,
-                },
-                snake:{
-                    strokeStyle:'#cccc55',
-                    lineWidth:4,
-                },
-                slime:{
-                    strokeStyle:'#33dd33',
-                    lineWidth:4,
-                },
-                radioactiveskeleton:{
-                    strokeStyle:'#ff0000',
-                    lineWidth:6,
-                },
-                karateskeleton:{
-                    strokeStyle:'#725640',
-                    lineWidth:6,
-                },
-                skeletonking:{
-                    strokeStyle:'#ffff00',
-                    lineWidth:8,
-                },
-                teneyedone:{
-                    strokeStyle:'#ff3333',
-                    lineWidth:10,
-                },
-            };
-            ctx.strokeStyle = tracers[Monster.list[i].monsterType].strokeStyle;
-            ctx.lineWidth = tracers[Monster.list[i].monsterType].lineWidth;
-            ctx.beginPath();
-            ctx.moveTo(Player.list[selfId].x,Player.list[selfId].y);
-            ctx.lineTo(Monster.list[i].x,Monster.list[i].y);
-            ctx.stroke();
+            if(Monster.list[i].team === Player.list[selfId].team){
+                ctx1.lineWidth = 4;
+                if(Monster.list[i].boss){
+                    ctx1.lineWidth = 8;
+                }
+                ctx1.strokeStyle = '#5ac54f';
+                ctx1.beginPath();
+                ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+                ctx1.lineTo(Monster.list[i].x,Monster.list[i].y);
+                ctx1.stroke();
+            }
+            else{
+                ctx1.lineWidth = 4;
+                if(Monster.list[i].boss){
+                    ctx1.lineWidth = 8;
+                }
+                ctx1.strokeStyle = '#ea323c';
+                ctx1.beginPath();
+                ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+                ctx1.lineTo(Monster.list[i].x,Monster.list[i].y);
+                ctx1.stroke();
+            }
         }
-        ctx.restore();
+        ctx1.restore();
     }
     if(playerTracersState){
-        ctx.save();
-        ctx.translate(cameraX,cameraY);
+        ctx1.save();
+        ctx1.translate(cameraX,cameraY);
         for(var i in Player.list){
-            ctx.strokeStyle = '#ff9000';
-            ctx.lineWidth = 8;
-            ctx.beginPath();
-            ctx.moveTo(Player.list[selfId].x,Player.list[selfId].y);
-            ctx.lineTo(Player.list[i].x,Player.list[i].y);
-            ctx.stroke();
+            if(Player.list[i].team === Player.list[selfId].team){
+                ctx1.strokeStyle = '#5ac54f';
+                ctx1.lineWidth = 6;
+                ctx1.beginPath();
+                ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+                ctx1.lineTo(Player.list[i].x,Player.list[i].y);
+                ctx1.stroke();
+            }
+            else{
+                ctx1.strokeStyle = '#ff9000';
+                ctx1.lineWidth = 6;
+                ctx1.beginPath();
+                ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+                ctx1.lineTo(Player.list[i].x,Player.list[i].y);
+                ctx1.stroke();
+            }
         }
-        ctx.restore();
+        ctx1.restore();
     }
     if(npcTracersState){
-        ctx.save();
-        ctx.translate(cameraX,cameraY);
+        ctx1.save();
+        ctx1.translate(cameraX,cameraY);
         for(var i in Npc.list){
-            ctx.strokeStyle = '#90ff00';
-            ctx.lineWidth = 8;
-            ctx.beginPath();
-            ctx.moveTo(Player.list[selfId].x,Player.list[selfId].y);
-            ctx.lineTo(Npc.list[i].x,Npc.list[i].y);
-            ctx.stroke();
+            ctx1.strokeStyle = '#90ff00';
+            ctx1.lineWidth = 4;
+            ctx1.beginPath();
+            ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+            ctx1.lineTo(Npc.list[i].x,Npc.list[i].y);
+            ctx1.stroke();
         }
-        ctx.restore();
+        for(var i in HarvestableNpc.list){
+            ctx1.strokeStyle = '#0090ff';
+            ctx1.lineWidth = 4;
+            ctx1.beginPath();
+            ctx1.moveTo(Player.list[selfId].x,Player.list[selfId].y);
+            ctx1.lineTo(HarvestableNpc.list[i].x,HarvestableNpc.list[i].y);
+            ctx1.stroke();
+        }
+        ctx1.restore();
     }
+    autoAim = false;
     if(attackMonstersState){
-        if(Monster.list === {}){
-            return;
-        };
         var closestMonster = undefined;
         for(var i in Monster.list){
-            if(closestMonster === undefined){
-                closestMonster = Monster.list[i];
-            }
-            else if(getDistance(Player.list[selfId],closestMonster) > getDistance(Player.list[selfId],Monster.list[i])){
-                closestMonster = Monster.list[i];
+            if(Monster.list[i].team !== Player.list[selfId].team){
+                if(closestMonster === undefined){
+                    closestMonster = Monster.list[i];
+                }
+                else if(getDistance(Player.list[selfId],closestMonster) > getDistance(Player.list[selfId],Monster.list[i])){
+                    closestMonster = Monster.list[i];
+                }
             }
         }
         if(closestMonster !== undefined){
             socket.emit('keyPress',{inputId:'direction',state:{x:closestMonster.x - Player.list[selfId].x,y:closestMonster.y - Player.list[selfId].y}});
+            autoAim = true;
         }
     }
     if(attackPlayersState){
-        var numPlayers = 0;
-        for(var i in Player.list){
-            numPlayers += 1;
-        }
-        if(numPlayers === 1){
-            return;
-        };
         var closestPlayer = undefined;
         for(var i in Player.list){
-            if(i + '' === selfId + ''){
-
-            }
-            else if(closestPlayer === undefined){
-                closestPlayer = Player.list[i];
-            }
-            else if(getDistance(Player.list[selfId],closestPlayer) > getDistance(Player.list[selfId],Player.list[i])){
-                closestPlayer = Player.list[i];
+            if(Player.list[i].team !== Player.list[selfId].team){
+                if(closestPlayer === undefined){
+                    closestPlayer = Player.list[i];
+                }
+                else if(getDistance(Player.list[selfId],closestPlayer) > getDistance(Player.list[selfId],Player.list[i])){
+                    closestPlayer = Player.list[i];
+                }
             }
         }
         if(closestPlayer !== undefined){
             socket.emit('keyPress',{inputId:'direction',state:{x:closestPlayer.x - Player.list[selfId].x,y:closestPlayer.y - Player.list[selfId].y}});
+            autoAim = true;
         }
     }
     if(autoAttackState && t % 20 === 0){
-        socket.emit('keyPress',{inputId:'leftClick',state:true});
+        socket.emit('keyPress',{inputId:'leftClick',state:true,selectedDroppedItem:null});
     }
 };
 MGHC1 = function(){
     if(freeCamState){
-        talking = true;
         socket.emit('keyPress',{inputId:'releaseAll'});
-        if(keys['w']){
+        if(keys['w'] || keys['W'] || keys['ArrowUp']){
             freeCamY += 35;
         }
-        if(keys['s']){
+        if(keys['s'] || keys['S'] || keys['ArrowDown']){
             freeCamY -= 35;
         }
-        if(keys['a']){
+        if(keys['a'] || keys['A'] || keys['ArrowLeft']){
             freeCamX += 35;
         }
-        if(keys['d']){
+        if(keys['d'] || keys['D'] || keys['ArrowRight']){
             freeCamX -= 35;
         }
         cameraX = freeCamX;
         cameraY = freeCamY;
     }
-    if(keys['f']){
-        keys['f'] = false;
+};
+
+var onkeydown = document.onkeydown;
+document.onkeydown = function(event){
+    var key = event.key || event.keyCode;
+    keys[key] = true;
+    if(key === 'f' || key === 'F'){
         freeCamState = !freeCamState;
         if(freeCamState){
             freeCam.style.color = '#ffffff';
@@ -396,108 +487,18 @@ MGHC1 = function(){
         else{
             freeCam.style.color = '#ffffff';
             freeCam.style.backgroundColor = '#362a1e';
-            talking = false;
         }
     }
 };
-document.onkeydown = function(event){
-    if(!selfId){
-        return;
-    }
-    if(chatPress){
-        var key = event.key || event.keyCode;
-        if(key === 'ArrowUp'){
-            commandIndex = Math.max(commandIndex - 1,0);
-            if(commandIndex >= 0 && commandIndex < commandList.length){
-                chatInput.value = commandList[commandIndex];
-            }
-            event.preventDefault();
-        }
-        if(key === 'ArrowDown'){
-            commandIndex = Math.min(commandIndex + 1,commandList.length - 1);
-            if(commandIndex >= 0 && commandIndex < commandList.length){
-                chatInput.value = commandList[commandIndex];
-            }
-            event.preventDefault();
-        }
-        return;
-    }
-    if(!event.isTrusted){
-        socket.emit('timeout');
-    }
-    var key = event.key || event.keyCode;
-    if(key === 'i' || key === 'I'){
-        toggleInventory();
-    }
-    if(key === 'c' || key === 'c'){
-        toggleCraft();
-    }
-    if(key === 'b' || key === 'B'){
-        toggleSetting();
-    }
-    if(key === 'p' || key === 'P'){
-        togglePlayerList();
-    }
-    if(key === 'Enter' || key === '/'){
-        chatInput.focus();
-    }
-    if(key === 'Enter'){
-        event.preventDefault();
-    }
-    if(key === 'Meta' || key === 'Alt' || key === 'Control'){
-        socket.emit('keyPress',{inputId:'releaseAll'});
-    }
-    socket.emit('keyPress',{inputId:key,state:true});
-    keys[key] = true;
-};
+var onkeyup = document.onkeyup;
 document.onkeyup = function(event){
-    chatPress = false;
     var key = event.key || event.keyCode;
-    socket.emit('keyPress',{inputId:key,state:false});
     keys[key] = false;
 };
+var onmousemove = document.onmousemove;
 document.onmousemove = function(event){
-    if(selfId){
-        var x = -cameraX - Player.list[selfId].x + event.clientX;
-        var y = -cameraY - Player.list[selfId].y + event.clientY;
-        if(event.clientY > window.innerHeight){
-            socket.emit('keyPress',{inputId:'releaseAll'});
-            attacking = false;
-        }
-        rawMouseX = event.clientX;
-        rawMouseY = event.clientY;
-        if(!attackMonstersState && !attackPlayersState){
-            socket.emit('keyPress',{inputId:'direction',state:{x:x,y:y}});
-            mouseX = x;
-            mouseY = y;
-        }
-        if(inventory.draggingItem.id){
-            draggingItem.style.left = (rawMouseX - 32) + 'px';
-            draggingItem.style.top = (rawMouseY - 32) + 'px';
-        }
-        else{
-            draggingItem.style.left = '-100px';
-            draggingItem.style.top = '-100px';
-        }
-        if(itemMenu.style.display === 'inline-block'){
-            var rect = itemMenu.getBoundingClientRect();
-            itemMenu.style.left = '';
-            itemMenu.style.right = '';
-            itemMenu.style.top = '';
-            itemMenu.style.bottom = '';
-            if(rawMouseX + rect.right - rect.left > window.innerWidth){
-                itemMenu.style.right = window.innerWidth - rawMouseX + 'px';
-            }
-            else{
-                itemMenu.style.left = rawMouseX + 'px';
-            }
-            if(rawMouseY + rect.bottom - rect.top > window.innerHeight){
-                itemMenu.style.bottom = window.innerHeight - rawMouseY + 'px';
-            }
-            else{
-                itemMenu.style.top = rawMouseY + 'px';
-            }
-        }
+    if(autoAim){
+        return;
     }
 };
 
@@ -523,7 +524,7 @@ socket.on('death',function(data){
 });
 socket.removeListener('dialogue');
 socket.on('dialogue',function(data){
-    if(disableDialogueScrollState){
+    if(noDialogueScrollState){
         if(data.message){
             openDialogue();
             dialogueMessage.innerHTML = data.message;

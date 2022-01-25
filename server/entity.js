@@ -2641,6 +2641,28 @@ Player = function(param,socket){
             self.updateQuest(self);
         }
     }
+    self.continueQuest = function(quest,questStage){
+        if(self.quest === false){
+            self.quest = quest;
+            self.questStage = questStage;
+            self.questTasks = [];
+            if(quests[self.quest]){
+                self.updateQuest = quests[self.quest].updateQuest;
+                self.completeQuest = quests[self.quest].completeQuest;
+                self.abandonQuest = quests[self.quest].abandonQuest;
+            }
+            else{
+                player = self;
+                require('./../client/data/quests/' + self.quest + '.js');
+                self.updateQuest = quests[self.quest].updateQuest;
+                self.completeQuest = quests[self.quest].completeQuest;
+                self.abandonQuest = quests[self.quest].abandonQuest;
+            }
+            self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
+            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
+            self.updateQuest(self);
+        }
+    }
     self.completeQuest = function(){
 
     }
@@ -2712,6 +2734,9 @@ Player = function(param,socket){
     self.updateRegion();
     if(!self.advancements['Tutorial']){
         self.startQuest('Tutorial');
+    }
+    else if(param.database.quest){
+        self.continueQuest(param.database.quest,param.database.questStage);
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
