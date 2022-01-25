@@ -3546,11 +3546,11 @@ Player.onDisconnect = function(socket){
         if(Player.list[socket.id].inventory.draggingItem.id){
             Player.list[socket.id].inventory.addItem(Player.list[socket.id].inventory.draggingItem.id,Player.list[socket.id].inventory.draggingItem.amount);
         }
-        storeDatabase()
+        storeDatabase();
         delete Player.list[socket.id];
     }
     else{
-        storeDatabase()
+        storeDatabase();
     }
     socket.disconnect();
 }
@@ -3760,6 +3760,7 @@ Projectile = function(param){
         if(self.projectilePattern === 'homing'){
             var nearestEntity = null;
             var nearestDirection = 0;
+            var nearestDistance = 0;
             for(var i in Player.list){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
                     var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180 - self.direction;
@@ -3775,10 +3776,12 @@ Projectile = function(param){
                     }
                     if(nearestEntity === null){
                         nearestDirection = direction;
+                        nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection)){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
+                        nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
                 }
@@ -3798,10 +3801,12 @@ Projectile = function(param){
                     }
                     if(nearestEntity === null){
                         nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection)){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
                 }
