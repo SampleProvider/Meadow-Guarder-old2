@@ -1938,9 +1938,9 @@
                 "directionDeviation":2,
                 "timer":80,
                 "stats":{
-                    "damage":1000,
+                    "damage":10000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]
@@ -1954,9 +1954,9 @@
                 "directionDeviation":2,
                 "timer":80,
                 "stats":{
-                    "damage":15000,
+                    "damage":150000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]
@@ -1970,9 +1970,9 @@
                 "directionDeviation":2,
                 "timer":80,
                 "stats":{
-                    "damage":35000,
+                    "damage":350000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]
@@ -1987,9 +1987,9 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":300,
+                    "damage":3000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]
@@ -2004,9 +2004,9 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":7500,
+                    "damage":75000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]
@@ -2021,9 +2021,9 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":15000,
+                    "damage":150000,
                     "critChance":0.05,
-                    "critPower":2
+                    "critPower":3
                 }
             }
         }]

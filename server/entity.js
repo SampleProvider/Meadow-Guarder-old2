@@ -3751,39 +3751,55 @@ Projectile = function(param){
         }
         if(self.projectilePattern === 'homing'){
             var nearestEntity = null;
+            var nearestDirection = 0;
             for(var i in Player.list){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
+                    var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction - self.direction > 180){
+                        direction -= 180;
+                    }
+                    else if(direction - self.direction < -180){
+                        direction += 180;
+                    }
                     if(nearestEntity === null){
+                        nearestDirection = direction;
                         nearestEntity = Player.list[i];
                     }
-                    else if(self.getDistance(Player.list[i]) < self.getDistance(nearestEntity)){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection)){
+                        nearestDirection = direction;
                         nearestEntity = Player.list[i];
                     }
                 }
             }
             for(var i in Monster.list){
                 if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map && Monster.list[i].hp > 0){
+                    var direction = Math.atan2(Monster.list[i].y - self.y,Monster.list[i].x - self.x) / Math.PI * 180;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction - self.direction > 180){
+                        direction -= 180;
+                    }
+                    else if(direction - self.direction < -180){
+                        direction += 180;
+                    }
                     if(nearestEntity === null){
+                        nearestDirection = direction;
                         nearestEntity = Monster.list[i];
                     }
-                    else if(self.getDistance(Monster.list[i]) < self.getDistance(nearestEntity)){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection)){
+                        nearestDirection = direction;
                         nearestEntity = Monster.list[i];
                     }
                 }
             }
             if(nearestEntity){
-                var direction = Math.atan2(nearestEntity.y - self.y,nearestEntity.x - self.x) / Math.PI * 180;
-                direction = direction % 360;
-                while(direction < 0){
-                    direction += 360;
-                }
-                if(direction - self.direction > 180){
-                    direction -= 180;
-                }
-                else if(direction - self.direction < -180){
-                    direction += 180;
-                }
-                self.direction += (direction - self.direction) / 3;
+                self.direction += (nearestDirection - self.direction) / 5;
                 self.spdX = Math.cos(self.direction / 180 * Math.PI) * param.speed;
                 self.spdY = Math.sin(self.direction / 180 * Math.PI) * param.speed;
             }
