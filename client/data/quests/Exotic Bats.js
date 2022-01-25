@@ -22,16 +22,6 @@ quests[player.quest].updateQuest = function(self,dialogueTask){
         }
     }
     switch(self.questStage){
-        case 2:
-            self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
-            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
-            self.inventory.addItem('batwings',2);
-            break;
-        case 4:
-            self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
-            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
-            self.inventory.removeItem('batwings',2);
-            break;
         default:
             self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
             self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
