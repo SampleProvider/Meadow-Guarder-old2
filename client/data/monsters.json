@@ -330,8 +330,8 @@
             "damage":250,
             "defense":75,
             "hpRegen":250,
-            "critChance":0,
-            "critPower":0
+            "critChance":0.05,
+            "critPower":2
         },
         "maxSpeed":15,
         "knockbackResistance":1,
