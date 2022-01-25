@@ -1976,7 +1976,7 @@ setInterval(function(){
 
 setInterval(function(){
 	storeDatabase();
-},3000000);
+},300000);
 
 // if(SERVER !== 'localhost'){
 // 	process.on('SIGTERM',function(){
