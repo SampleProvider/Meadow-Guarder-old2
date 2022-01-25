@@ -3767,11 +3767,11 @@ Projectile = function(param){
                     while(direction < 0){
                         direction += 360;
                     }
-                    if(direction - self.direction > 180){
-                        direction -= 180;
+                    if(direction > 180){
+                        direction -= 360;
                     }
-                    else if(direction - self.direction < -180){
-                        direction += 180;
+                    else if(direction < -180){
+                        direction += 360;
                     }
                     if(nearestEntity === null){
                         nearestDirection = direction;
@@ -3790,11 +3790,11 @@ Projectile = function(param){
                     while(direction < 0){
                         direction += 360;
                     }
-                    if(direction - self.direction > 180){
-                        direction -= 180;
+                    if(direction > 180){
+                        direction -= 360;
                     }
-                    else if(direction - self.direction < -180){
-                        direction += 180;
+                    else if(direction < -180){
+                        direction += 360;
                     }
                     if(nearestEntity === null){
                         nearestDirection = direction;
