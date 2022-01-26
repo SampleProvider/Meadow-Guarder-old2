@@ -334,7 +334,7 @@ noBlindness.className = 'UI-button';
 noBlindness.style.position = 'static';
 noBlindness.style.top = '8px';
 noBlindness.style.width = '100%';
-noBlindness.innerHTML = 'No Dialogue Scroll';
+noBlindness.innerHTML = 'No Blindness';
 otherColumn.appendChild(noBlindness);
 
 var noBlindnessState = false;

@@ -1730,8 +1730,8 @@ process.on('uncaughtException',function(err){
 	// },1000);
 });
 process.on('unhandledRejection',function(reason,promise){
-	storeDatabase();
-	globalChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
+	// storeDatabase();
+	// globalChat('#ff00ff','[!] THE SERVER HAS CRASHED. CRASH CODE:\nPromise:' + promise + '\nReason:' + reason);
 	// setTimeout(function(){
 	// 	process.exit(1);
 	// },1000);

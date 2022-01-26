@@ -260,6 +260,9 @@ Entity = function(param){
 	self.getSquareDistance = function(pt){
 		return Math.max(Math.abs(Math.floor(self.x - pt.x)),Math.abs(Math.floor(self.y - pt.y))) / 64;
     }
+	self.getRhombusDistance = function(pt){
+		return Math.abs(Math.floor(self.x - pt.x)) + Math.abs(Math.floor(self.y - pt.y));
+    }
     self.isColliding = function(pt){
         if(pt.map !== self.map){
             return false;
@@ -592,25 +595,25 @@ Actor = function(param){
             if(Collision.list[self.map][self.zindex]){
                 if(Collision.list[self.map][self.zindex][dx + nx]){
                     if(Collision.list[self.map][self.zindex][dx + nx][dy + ny]){
-                        var x = dx;
-                        var y = dy;
+                        var lastDx = dx;
+                        var lastDy = dy;
                         var distance = -1;
-                        for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
-                            for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
-                                if(Collision.list[self.map][self.zindex][dx + nx + i]){
-                                    if(Collision.list[self.map][self.zindex][dx + nx + i][dy + ny + j]){
+                        for(var i = 2;i > -Math.round(self.width / 64) - 2;i--){
+                            for(var j = 2;j > -Math.round(self.height / 64) - 2;j--){
+                                if(Collision.list[self.map][self.zindex][lastDx + nx + i]){
+                                    if(Collision.list[self.map][self.zindex][lastDx + nx + i][lastDy + ny + j]){
                                         continue;
                                     }
                                 }
-                                self.x -= self.width - 64;
-                                self.y -= self.height - 64;
-                                if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
-                                    distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
-                                    dx = x + i;
-                                    dy = y + j;
+                                self.x -= (self.width - 64) / 2;
+                                self.y -= (self.height - 64) / 2;
+                                if(self.getRhombusDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
+                                    distance = self.getRhombusDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
+                                    dx = lastDx + i;
+                                    dy = lastDy + j;
                                 }
-                                self.x += self.width - 64;
-                                self.y += self.height - 64;
+                                self.x += (self.width - 64) / 2;
+                                self.y += (self.height - 64) / 2;
                             }
                         }
                     }
@@ -4344,25 +4347,25 @@ Monster = function(param){
                     if(Collision.list[self.map][self.zindex]){
                         if(Collision.list[self.map][self.zindex][dx + nx]){
                             if(Collision.list[self.map][self.zindex][dx + nx][dy + ny]){
-                                var x = dx;
-                                var y = dy;
+                                var lastDx = dx;
+                                var lastDy = dy;
                                 var distance = -1;
-                                for(var i = 2;i > -Math.round(self.width / 64) - 1;i--){
-                                    for(var j = 2;j > -Math.round(self.height / 64) - 1;j--){
-                                        if(Collision.list[self.map][self.zindex][dx + nx + i]){
-                                            if(Collision.list[self.map][self.zindex][dx + nx + i][dy + ny + j]){
+                                for(var i = 2;i > -Math.round(self.width / 64) - 2;i--){
+                                    for(var j = 2;j > -Math.round(self.height / 64) - 2;j--){
+                                        if(Collision.list[self.map][self.zindex][lastDx + nx + i]){
+                                            if(Collision.list[self.map][self.zindex][lastDx + nx + i][lastDy + ny + j]){
                                                 continue;
                                             }
                                         }
-                                        self.x -= self.width - 64;
-                                        self.y -= self.height - 64;
-                                        if(self.getSquareDistance({x:self.x + i * 64 + 32,y:self.y + j * 64 + 32}) < distance || distance === -1){
-                                            distance = self.getSquareDistance({x:self.x + i * 64 + 32,y:y + j * 64 + 32});
-                                            dx = x + i;
-                                            dy = y + j;
+                                        self.x -= (self.width - 64) / 2;
+                                        self.y -= (self.height - 64) / 2;
+                                        if(self.getRhombusDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32}) < distance || distance === -1){
+                                            distance = self.getRhombusDistance({x:self.gridX * 64 + i * 64 + 32,y:self.gridY * 64 + j * 64 + 32});
+                                            dx = lastDx + i;
+                                            dy = lastDy + j;
                                         }
-                                        self.x += self.width - 64;
-                                        self.y += self.height - 64;
+                                        self.x += (self.width - 64) / 2;
+                                        self.y += (self.height - 64) / 2;
                                     }
                                 }
                             }
