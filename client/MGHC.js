@@ -329,6 +329,29 @@ noDialogueScroll.onclick = function(){
     }
 };
 
+var noBlindness = document.createElement('button');
+noBlindness.className = 'UI-button';
+noBlindness.style.position = 'static';
+noBlindness.style.top = '8px';
+noBlindness.style.width = '100%';
+noBlindness.innerHTML = 'No Dialogue Scroll';
+otherColumn.appendChild(noBlindness);
+
+var noBlindnessState = false;
+noBlindness.onclick = function(){
+    noBlindnessState = !noBlindnessState;
+    if(noBlindnessState){
+        noBlindness.style.color = '#ffffff';
+        noBlindness.style.backgroundColor = '#725640';
+        darknessEffectCtxRaw.style.display = 'none';
+    }
+    else{
+        noBlindness.style.color = '#ffffff';
+        noBlindness.style.backgroundColor = '#362a1e';
+        darknessEffectCtxRaw.style.display = 'inline-block';
+    }
+};
+
 var t = 0;
 var autoAim = false;
 
@@ -474,6 +497,9 @@ MGHC1 = function(){
 
 var onkeydown = document.onkeydown;
 document.onkeydown = function(event){
+    if(chatPress){
+        return;
+    }
     var key = event.key || event.keyCode;
     keys[key] = true;
     if(key === 'f' || key === 'F'){
@@ -492,6 +518,9 @@ document.onkeydown = function(event){
 };
 var onkeyup = document.onkeyup;
 document.onkeyup = function(event){
+    if(chatPress){
+        return;
+    }
     var key = event.key || event.keyCode;
     keys[key] = false;
 };

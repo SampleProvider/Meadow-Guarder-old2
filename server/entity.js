@@ -498,26 +498,51 @@ Actor = function(param){
             var slope = (self.y - pt.y) / (self.x - pt.x);
             return self.y + (x - self.x) * slope;
         }
-        var xDirection = 1;
         if(self.gridX > pt.gridX){
-            xDirection = -1;
+            var x = pt.gridX;
         }
-        var x = self.gridX;
+        else{
+            var x = self.gridX;
+        }
         var distance = Math.abs(self.gridX - pt.gridX);
         for(var i = 0;i <= distance;i++){
-            x += xDirection;
-            if(x - xDirection === self.gridX){
+            if(x === self.gridX && x === pt.gridX){
                 var y1 = self.gridY;
-            }
-            else{
-                var y1 = Math.floor(getYValue(x * 64) / 64);
-            }
-            if(x === pt.gridX){
                 var y2 = pt.gridY;
             }
-            else{
-                var y2 = Math.floor(getYValue(x * 64 + 64 * xDirection) / 64);
+            if(self.gridX > pt.gridX){
+                if(x === pt.gridX){
+                    var y1 = pt.gridY;
+                }
+                else{
+                    var y1 = Math.floor(getYValue(x * 64) / 64);
+                }
             }
+            else{
+                if(x === self.gridX){
+                    var y1 = self.gridY;
+                }
+                else{
+                    var y1 = Math.floor(getYValue(x * 64) / 64);
+                }
+            }
+            if(self.gridX > pt.gridX){
+                if(x === self.gridX){
+                    var y2 = self.gridY;
+                }
+                else{
+                    var y2 = Math.floor(getYValue(x * 64 + 64) / 64);
+                }
+            }
+            else{
+                if(x === pt.gridX){
+                    var y2 = pt.gridY;
+                }
+                else{
+                    var y2 = Math.floor(getYValue(x * 64 + 64) / 64);
+                }
+            }
+            x += 1;
             var yDirection = 1;
             if(y1 > y2){
                 yDirection = -1;
