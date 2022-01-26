@@ -816,6 +816,37 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'restart' && level >= 2){
+					commandList.splice(0,1);
+					globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 30 SECONDS [!]');
+					storeDatabase();
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 15 SECONDS [!]');
+					},15000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 10 SECONDS [!]');
+					},20000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 5 SECONDS [!]');
+					},25000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 4 SECONDS [!]');
+					},26000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 3 SECONDS [!]');
+					},27000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 2 SECONDS [!]');
+					},28000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 1 SECONDS [!]');
+					},29000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 0 SECONDS [!]');
+						process.exit(0);
+					},30000);
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'chatban' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -1032,7 +1063,33 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'serverupdate' && level >= 3){
 					commandList.splice(0,1);
-					globalChat('#ff00ff','[!] SERVER UPDATE [!]');
+					globalChat('#ff00ff','[!] SERVER IS UPDATING IN 30 SECONDS [!]');
+					storeDatabase();
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 15 SECONDS [!]');
+					},15000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 10 SECONDS [!]');
+					},20000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 5 SECONDS [!]');
+					},25000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 4 SECONDS [!]');
+					},26000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 3 SECONDS [!]');
+					},27000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 2 SECONDS [!]');
+					},28000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 1 SECONDS [!]');
+					},29000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS UPDATING IN 0 SECONDS [!]');
+						process.exit(0);
+					},30000);
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'exit' && level >= 3){
@@ -1359,6 +1416,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/restart - Restart the server.';
 						message += '\n/chatban [player name] - Chat Ban someone.';
 						message += '\n/unchatban [player name] - Unchatban someone.';
 						message += '\n/ban [player name] - Ban someone.';
@@ -1390,6 +1448,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/restart - Restart the server.';
 						message += '\n/chatban [player name] - Chat Ban someone.';
 						message += '\n/unchatban [player name] - Unchatban someone.';
 						message += '\n/ban [player name] - Ban someone.';
@@ -1402,7 +1461,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/ipban [player name] - IPBan someone.';
 						message += '\n/unipban [player name] - UnIPban someone.';
 						message += '\n/ip [player name] - See someone\'s ip.';
-						message += '\n/serverupdate - Announce a server update.';
+						message += '\n/serverupdate - Start a server update.';
 						message += '\n/exit - Exits the server without saving.';
 						message += '\n/debug [javascript] - Run javascript.';
 						message += '\n/seexp [player name] - See someone\'s xp.';
