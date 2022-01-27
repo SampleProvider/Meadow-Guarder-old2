@@ -52,7 +52,7 @@ knightlysword,Knightly Sword,1.5,1.01,129,false,1,hotbar,Weapon,0,35,0,0,0.15,0.
 spikedsword,Spiked Sword,3.5,1.00,130,false,1,hotbar,Weapon,0,41,0,0,0.35,0.00,0,10,0.50,55.35,1.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,spikedsword,none,none,none,0.00,,
 bladeofdeath,Blade of Death,5.5,1.00,131,false,1,hotbar,Weapon,0,108,0,0,0.35,0.75,0,15,0.50,116.10,1.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,bladeofdeath,none,none,none,0.00,The legend's sword.,
 icystinger,Icy Stinger,2.5,1.01,132,false,1,hotbar,Weapon,0,32,0,0,0.05,0.00,0,10,0.50,33.60,1.01,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,icystinger,none,none,none,0.00,,
-coldhearticicle,Coldheart Icicle,2.0,1.00,133,false,1,hotbar,Weapon,0,1,0,0,0.01,3550.00,0,15,0.50,24.34,1.00,0,0,-40.00,0,0.00,0,0,0.00,-20.00,0,0,0,0.00,coldhearticicle,none,none,none,20.00,AAAAAAA!!! CALAMITY!!!,
+coldhearticicle,Coldheart Icicle,2.0,1.00,133,false,1,hotbar,Weapon,0,1,0,0,0.01,800.00,0,15,0.50,6.01,0.25,0,0,0.00,0,0.00,3,0,0.00,0.75,0,0,0,0.00,coldhearticicle,none,none,none,0.00,AAAAAAA!!! CALAMITY!!!,
 heavywhammo,Heavy Whammo,4.5,1.00,134,false,1,hotbar,Weapon,0,252,0,0,0.05,0.00,0,20,0.50,132.30,1.60,0,0,0.00,0,0.00,-8,0,0.00,-0.60,0,0,0,0.00,heavywhammo,none,none,none,0.00,,
 staffoflife,Staff of Life,5.5,1.01,135,true,1,hotbar,Weapon,0,0,0,123,0.05,0.00,15,5,0.50,258.30,1.01,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,staffoflife,none,none,none,0.00,,
 staffoflove,Staff of Love,4.5,1.00,136,true,1,hotbar,Weapon,0,0,0,258,0.05,0.00,33,15,0.50,180.60,1.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,staffoflove,none,none,none,0.00,,
