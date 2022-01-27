@@ -71,9 +71,3 @@ Clan = function(name,param){
     return self;
 }
 Clan.list = {};
-
-getClans(function(data){
-    for(var i in data){
-        new Clan(i,data[i]);
-    }
-});
