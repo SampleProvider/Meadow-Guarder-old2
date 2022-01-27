@@ -64,6 +64,18 @@
 				<div class="pageStackOuter UI-display">
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							1/27/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Started the quest log. Currently the Abandon Quest button is not implemented yet.
+							<br>
+							Fixed Bugs.
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
 							1/22/2022
 						</div>
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
@@ -995,7 +1007,7 @@
 					<div class="UI-text" style="position: relative; left: 0px; top: 0px; font-size: 25px; text-align: center;">Book [K]</div>
 					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;" onclick="openBookPage('worldMap');">World Map</button>
 					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;">Bestiary</button>
-					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;">Quest Log</button>
+					<button class="UI-button" style="display: block; position: relative; left: 50%; transform: translate(-50%, 0%); margin-top: 8px;" onclick="openBookPage('questLog');">Quest Log</button>
 				</div>
 				<div class="bookPageRight"></div>
 			</div>
@@ -1003,6 +1015,17 @@
 				<div class="UI-text" style="position: relative; left: 0px; top: -15px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
 				<div id="worldMapContainer" style="position: absolute; left: 0px; top: 6%; width: 100%; height: 100%; background-color: #354149; overflow: hidden; cursor: move;">
 					<div id="worldMap" style="position: absolute; width: 100000px; height: 100000px; background-image: url(/client/maps/World.png); background-repeat: no-repeat;"></div>
+				</div>
+			</div>
+			<div id="questLogDiv" class="bookPageDiv UI-text" style="display: none;">
+				<div class="UI-text" style="position: relative; left: 0px; top: -15px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
+				<div class="bookPageLeft">
+					<div id="currentQuestDisplay" style="position: relative; left: 0px; top: 10px; font-size: 15px;">Current Quest: <b id="currentQuest">None</b></div>
+					<div id="currentQuestObjectiveDisplay" style="position: relative; display: none; left: 0px; top: 10px; font-size: 15px;">Current Quest Objective: <b id="currentQuestObjective"></b></div>
+				</div>
+				<div class="bookPageRight">
+					<img id="questImage" src="/client/data/quests/img/Base.png" style="position: relative; left: 0px; top: 10px; width: 100%; image-rendering: pixelated; display: none;">
+					<button id="abandonQuestButton" class="UI-button" onmouseover="mouseInMenu(event);" style="position: relative; display: none; right: 0px; bottom: 10px;">Abandon Quest</button>
 				</div>
 			</div>
 			<div id="bookArrowLeft" class="UI-text" onmouseover="mouseInMenu(event);">&lt;</div>
@@ -1024,6 +1047,7 @@
 	<script src="/client/clan.js" defer></script>
 	<script src="/client/trade.js" defer></script>
 	<script src="/client/bossbar.js" defer></script>
+	<script src="/client/quest.js" defer></script>
 	<script src="/client/settings.js" defer></script>
 	<script src="/client/entity.js" defer></script>
 	<script src="/client/maps.js" defer></script>

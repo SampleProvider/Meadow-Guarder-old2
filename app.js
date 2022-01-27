@@ -1246,11 +1246,11 @@ io.sockets.on('connection',function(socket){
 											if(SOCKET_LIST[i]){
 												SOCKET_LIST[i].emit('updateClan',Clan.list[Player.list[socket.id].clan]);
 											}
-											Player.list[i].updateStats();
 										}
 									}
 								}
 							}
+							Player.list[socket.id].updateStats();
 							Player.list[socket.id].sendMessage('[!] Joined clan ' + Player.list[socket.id].clan + '.');
 							socket.emit('updateClan',Clan.list[Player.list[socket.id].clan]);
 						}

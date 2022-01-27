@@ -1,4 +1,4 @@
-{
+{ 
     "skeleton":{
         "name":"Skeleton",
         "hpMax":50,
@@ -1332,7 +1332,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":65,
+                                "damage":1000,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1349,7 +1349,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":65,
+                                "damage":1000,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1366,7 +1366,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":65,
+                                "damage":1000,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1383,7 +1383,7 @@
                             "pierce":-1,
                             "collisionType":"none",
                             "stats":{
-                                "damage":65,
+                                "damage":1000,
                                 "critChance":0.05,
                                 "critPower":2
                             },
@@ -1423,6 +1423,75 @@
                         "param":{
                             "directionDeviation":15,
                             "dashDistance":8
+                        }
+                    }],
+                    "80":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
                         }
                     }]
                 },
@@ -1575,6 +1644,75 @@
                         "param":{
                             "directionDeviation":15,
                             "dashDistance":8
+                        }
+                    }],
+                    "80":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"teneyedonelaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":60,
+                            "pierce":-1,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":1000,
+                                "critChance":0.05,
+                                "critPower":2
+                            },
+                            "debuffs":{
+                                "blindness":40
+                            }
                         }
                     }]
                 },

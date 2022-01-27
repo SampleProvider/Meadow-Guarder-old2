@@ -63,6 +63,14 @@
         "rarity":5,
         "darkness":0.75
     },
+    "goldenstar":{
+        "name":"Golden Star",
+        "description":"Shines like the sun.",
+        "drawId":68,
+        "rarity":3,
+        "movementSpeed":5,
+        "luck":1.5
+    },
     "porcelainberry":{
         "name":"Porcelain Berry",
         "drawId":594,

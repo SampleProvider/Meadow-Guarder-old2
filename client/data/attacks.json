@@ -19,6 +19,13 @@
             }]
         }]
     },
+    "goldenstar":{
+        "1":[{
+            "id":"debuff",
+            "name":"goldenstar",
+            "time":9600
+        }]
+    },
     "coppersword":{
         "1":[{
             "id":"projectile",

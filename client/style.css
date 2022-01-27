@@ -1612,7 +1612,7 @@ canvas {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: calc(11 / 27 * 100%);
+    width: calc(13 / 27 * 100%);
     height: 100%;
     padding: 0px;
     margin: 0px;
@@ -1623,7 +1623,7 @@ canvas {
     position: absolute;
     right: 0px;
     top: 0px;
-    width: calc(11 / 27 * 100%);
+    width: calc(13 / 27 * 100%);
     height: 100%;
     padding: 0px;
     margin: 0px;
