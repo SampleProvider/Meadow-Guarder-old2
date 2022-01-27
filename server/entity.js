@@ -1206,6 +1206,9 @@ Actor = function(param){
         if(pt.sameId === false && self.projectilesHit[pt.id]){
             return;
         }
+        if(pt.type === 'Projectile' && pt.collided){
+            return;
+        }
         var hp = self.hp;
         var crit = false;
         if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) > 105){
