@@ -8,11 +8,12 @@ if(SERVER === 'localhost'){
 else{
 	connectionString = connectionString = process.env.DATABASE_URL;
 }
+console.log(process.env.DATABASE_URL)
 
 const client = new Client({
 	connectionString:connectionString,
 	ssl:{
-		rejectUnauthorized: false
+		rejectUnauthorized:false
 	}
 });
 
