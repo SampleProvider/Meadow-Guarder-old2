@@ -16,7 +16,13 @@ const client = new Client({
 	}
 });
 
-client.connect();
+client.connect().then(function(){
+	getClans(function(data){
+		for(var i in data){
+			new Clan(i,data[i]);
+		}
+	});
+});
 
 storeDatabase = function(){
     if(!USE_DB){
