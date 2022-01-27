@@ -1,6 +1,8 @@
 id,name,rarity,PPR,drawId,displayItem,maxStack,equip,type,damage,meleeDamage,rangedDamage,magicDamage,critChance,critPower,manaCost,useTime,missChance,DPS,DPR,defense,hp,hpRegen,mana,manaRegen,movementSpeed,slots,luck,BPR,axePower,pickaxePower,scythePower,shieldPower,attacks,passives,buffs,effects,EPR,description,effectDescription
 death,Death,6.0,148958482.14,1,true,1,hotbar,Weapon,1000,0,0,0,1000.00,1000.00,0,1,0.00,20020020000.00,148958482.14,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,death,none,none,none,0.00,How did you get this? sp made an oopsie.,Kills you.
-shieldoflife,Shield of Life,5.5,1.00,13,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,116,1.50,0,0.00,3,0,0.00,1.00,0,0,0,0.85,none,alienarrow,none,none,0.00,,
+shieldoflife,Shield of Life,5.5,1.00,13,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,116,1.50,0,0.00,3,0,0.00,1.00,0,0,0,0.50,none,alienarrow,none,none,0.00,,
+goldenstar,Golden Star,3.0,0.00,68,false,1,hotbar,Star,0,0,0,0,0.00,0.00,0,1200,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,goldenstar,none,none,none,0.00,,
+redbadge,Red Badge,4.0,1.00,72,false,1,accessory,Ring,62,0,0,0,0.00,0.00,0,0,0.00,62.00,0.91,0,0,0.00,0,0.00,0,0,0.10,0.09,0,0,0,0.00,none,none,none,none,0.00,Badge of Rage,
 coppersword,Copper Sword,0.5,1.01,80,false,1,hotbar,Weapon,0,6,0,0,0.05,0.00,0,10,0.50,6.30,1.01,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,coppersword,none,none,none,0.00,,
 ironsword,Iron Sword,1.0,1.06,81,false,1,hotbar,Weapon,0,11,0,0,0.05,0.00,0,10,0.50,11.55,1.06,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,ironsword,none,none,none,0.00,,
 goldsword,Gold Sword,2.0,1.03,82,false,1,hotbar,Weapon,0,24,0,0,0.05,0.00,0,10,0.50,25.20,1.03,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,goldsword,none,none,none,0.00,,
@@ -101,7 +103,7 @@ greenrobe,Green Robe,2.0,1.00,213,false,1,chestplate,Chestplate,0,0,0,3,0.00,0.2
 skyrobe,Sky Robe,4.0,1.00,214,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,20,0.50,5,0,0.00,1.00,0,0,0,0.00,none,none,none,none,0.00,Lighter than feathers.,
 angelrobe,Angel Robe,3.0,1.00,215,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,30,0.20,0,0,0.00,0.70,0,0,0,0.00,none,none,none,Rebirth.,0.30,Made with wings from an angel.,
 mysticrobe,Mystic Robe,5.0,1.01,216,false,1,chestplate,Chestplate,0,0,0,13,0.25,0.25,0,0,0.00,25.31,0.26,7,16,0.00,56,0.60,0,0,0.00,0.76,0,0,0,0.00,none,mysticflames,none,none,0.00,A robe for the best of mages.,Allows you to shoot mystic flames.
-crimsonrobe,Crimson Robe,3.0,1.00,217,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.24,0,0,0.00,1.57,0.04,5,16,0.20,0,0.00,0,0,0.00,0.66,0,0,0,0.00,none,none,none,Lifesteal.,0.30,Bloodshed.,
+crimsonrobe,Crimson Robe,3.0,1.00,217,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.25,0,0,0.00,1.63,0.04,5,16,0.20,0,0.00,0,0,0.00,0.66,0,0,0,0.00,none,none,none,Lifesteal.,0.30,Bloodshed.,
 magentarobe,Magenta Robe,3.0,1.00,218,false,1,chestplate,Chestplate,0,0,0,5,0.10,0.00,0,0,0.00,5.44,0.12,5,14,0.00,26,0.20,0,0,0.00,0.88,0,0,0,0.00,none,none,none,none,0.00,,
 azurerobe,Azure Robe,2.0,1.00,219,false,1,chestplate,Chestplate,0,0,0,2,0.00,0.10,0,0,0.00,2.37,0.10,4,0,0.10,21,0.00,0,0,0.00,0.91,0,0,0,0.00,none,none,none,none,0.00,,
 thornrobe,Thorn Robe,4.0,1.00,220,false,1,chestplate,Chestplate,0,0,0,9,0.00,1.60,0,0,0.00,25.37,0.37,9,0,0.30,0,0.00,0,0,0.00,0.63,0,0,0,0.00,thorn,none,none,none,0.00,Prickly.,
@@ -154,22 +156,22 @@ goldenamethystchestplate,Golden Amethyst Chestplate,2.5,1.00,266,false,1,chestpl
 goldenemeralditechestplate,Golden Emeraldite Chestplate,3.5,1.00,267,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,10,33,0.00,0,0.00,0,0,0.00,1.00,0,0,0,0.00,none,none,none,none,0.00,,
 goldenrubychestplate,Golden Ruby Chestplate,4.0,1.00,268,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,11,49,0.00,0,0.00,0,0,0.00,1.00,0,0,0,0.00,none,none,none,none,0.00,,
 goldendiamondchestplate,Golden Diamond Chestplate,5.0,1.00,269,false,1,chestplate,Chestplate,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,15,66,0.00,0,0.00,0,0,0.00,1.00,0,0,0,0.00,none,none,none,none,0.00,,
-coppershield,Copper Shield,0.5,0.85,270,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0,0.00,0.35,0,0,0,0.50,none,none,none,none,0.50,,
-ironshield,Iron Shield,1.0,1.00,271,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.55,none,none,none,none,0.50,,
-goldshield,Gold Shield,2.0,1.07,272,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,0,0,0.00,0.57,0,0,0,0.60,none,none,none,none,0.50,,
-amethystshield,Amethyst Shield,2.5,1.06,273,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,0,0.00,0,0,0.00,0.56,0,0,0,0.65,none,none,none,none,0.50,,
-azuriteshield,Azurite Shield,3.0,1.05,274,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,6,0,0.00,0,0.00,0,0,0.00,0.55,0,0,0,0.70,none,none,none,none,0.50,,
-emeralditeshield,Emeraldite Shield,3.5,1.02,275,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,7,0,0.00,0,0.00,0,0,0.00,0.52,0,0,0,0.75,none,none,none,none,0.50,,
-rubyshield,Ruby Shield,4.0,1.00,276,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.80,none,none,none,none,0.50,,
-diamondshield,Diamond Shield,5.0,1.00,277,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,11,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.85,none,none,none,none,0.50,,
-woodenshield,Wooden Shield,0.0,1.00,278,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.20,0,0.00,0,0,0.00,0.50,0,0,0,0.35,none,none,none,none,0.50,,
-nightmareshield,Nightmare Shield,5.0,1.00,279,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,15,2.00,0,0,0.00,0.50,0,0,0,0.80,none,mysticflames,none,none,0.50,Hopefully you don't get a nightmare from this.,Allows you to shoot mystic flames.
-alienshield,Alien Shield,2.0,1.01,280,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.45,0,0,0.00,0.51,0,0,0,0.65,none,alienflames,none,none,0.50,Aliens created this.,Allows you to shoot poison flames.
-royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0,0.00,0.51,0,0,0,0.70,none,none,none,none,0.50,"A royal shield for a royal warri- Hey wait, you're not a royal warrior!",
-warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.60,none,none,none,none,0.50,A true warrior shield.,
+coppershield,Copper Shield,0.5,0.85,270,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,0,0.00,0,0.00,0,0,0.00,0.35,0,0,0,0.15,none,none,none,none,0.50,,
+ironshield,Iron Shield,1.0,1.00,271,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.20,none,none,none,none,0.50,,
+goldshield,Gold Shield,2.0,1.07,272,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,0,0.00,0,0.00,0,0,0.00,0.57,0,0,0,0.25,none,none,none,none,0.50,,
+amethystshield,Amethyst Shield,2.5,1.06,273,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,5,0,0.00,0,0.00,0,0,0.00,0.56,0,0,0,0.30,none,none,none,none,0.50,,
+azuriteshield,Azurite Shield,3.0,1.05,274,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,6,0,0.00,0,0.00,0,0,0.00,0.55,0,0,0,0.35,none,none,none,none,0.50,,
+emeralditeshield,Emeraldite Shield,3.5,1.02,275,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,7,0,0.00,0,0.00,0,0,0.00,0.52,0,0,0,0.40,none,none,none,none,0.50,,
+rubyshield,Ruby Shield,4.0,1.00,276,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,8,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.45,none,none,none,none,0.50,,
+diamondshield,Diamond Shield,5.0,1.00,277,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,11,0,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.50,none,none,none,none,0.50,,
+woodenshield,Wooden Shield,0.0,1.00,278,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,5,0.20,0,0.00,0,0,0.00,0.50,0,0,0,0.10,none,none,none,none,0.50,,
+nightmareshield,Nightmare Shield,5.0,1.00,279,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.00,15,2.00,0,0,0.00,0.50,0,0,0,0.45,none,mysticflames,none,none,0.50,Hopefully you don't get a nightmare from this.,Allows you to shoot mystic flames.
+alienshield,Alien Shield,2.0,1.01,280,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,0,0.00,0,0.45,0,0,0.00,0.51,0,0,0,0.40,none,alienflames,none,none,0.50,Aliens created this.,Allows you to shoot poison flames.
+royalshield,Royal Shield,3.0,1.01,281,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,0,0.75,0,0.00,0,0,0.00,0.51,0,0,0,0.35,none,none,none,none,0.50,"A royal shield for a royal warri- Hey wait, you're not a royal warrior!",
+warriorshield,Warrior Shield,1.0,1.00,282,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,1,11,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.50,none,none,none,none,0.50,A true warrior shield.,
 goldtoken,Gold Token,3.0,0.00,283,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,
 ashtoken,Ash Token,1.0,0.00,284,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,
-shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0,0.00,0.20,0,0,0,0.80,none,none,none,Lifesteal.,0.80,OG Item.,
+shieldofbloodlust,Shield of Bloodlust,4.0,1.00,285,false,1,shield,Shield,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,12,0.00,0,0.00,0,0,0.00,0.20,0,0,0,0.30,none,none,none,Lifesteal.,0.80,OG Item.,
 frozenboots,Frozen Boots,2.0,1.00,286,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,3,5,0.00,0,0.00,0,0,0.00,0.50,0,0,0,0.00,none,frozenflames,none,none,0.50,I think your feet are already getting frostbite.,Allows you to shoot frozen flames.
 hikingboots,Hiking Boots,3.0,1.00,287,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,2,4,0.00,0,0.00,2,0,0.00,0.50,0,0,0,0.00,none,none,none,none,0.50,A pair of excellent hiking boots.,
 woolenboots,Woolen Boots,3.0,1.00,288,false,1,boots,Boots,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,4,8,0.20,0,0.00,0,0,0.00,0.50,0,0,0,0.00,none,none,none,none,0.50,Nice and warm.,

@@ -120,6 +120,28 @@
                     "triggers":"endConversation"
                 }
             }
+        ],
+        "shop":[
+            {
+                "id":"healthpotion",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":50
+                    }
+                ]
+            },
+            {
+                "id":"manapotion",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coppercoin",
+                        "amount":50
+                    }
+                ]
+            }
         ]
     },
     "Macklel":{
@@ -348,9 +370,25 @@
             {
                 "message":["I'm an apprentice mage! Magibrel is teaching me!"],
                 "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"openShop"
+                },
+                "option2":{
                     "message":"*End conversation*",
                     "triggers":"endConversation"
                 }
+            }
+        ],
+        "shop":[
+            {
+                "id":"redtoken",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"meteoritecoin",
+                        "amount":50
+                    }
+                ]
             }
         ]
     },

@@ -10,6 +10,7 @@ quests[player.quest].updateQuest = function(self,dialogueTask){
                     continue;
                 }
             }
+            self.updateClientQuest();
             return;
         }
     }

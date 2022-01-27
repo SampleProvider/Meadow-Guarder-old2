@@ -1079,6 +1079,9 @@ Actor = function(param){
                             Player.list[i].questTasks[j].completed = true;
                             Player.list[i].updateQuest(Player.list[i]);
                         }
+                        else{
+                            Player.list[i].updateClientQuest();
+                        }
                     }
                 }
             }
@@ -2035,7 +2038,7 @@ Player = function(param,socket){
         if(self.keyPress.leftClick === true && self.hp > 0 && self.shieldActive === false){
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
                 if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Music Box' || self.canAttack){
+                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Music Box' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Star' || self.canAttack){
                         if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
                             if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
                                 var hasMana = true;
@@ -2662,11 +2665,11 @@ Player = function(param,socket){
             self.updateQuest(self);
         }
     }
-    self.continueQuest = function(quest,questStage){
+    self.continueQuest = function(quest,questStage,questTasks){
         if(self.quest === false){
             self.quest = quest;
             self.questStage = questStage;
-            self.questTasks = [];
+            self.questTasks = questTasks;
             if(quests[self.quest]){
                 self.updateQuest = quests[self.quest].updateQuest;
                 self.completeQuest = quests[self.quest].completeQuest;
@@ -2680,7 +2683,6 @@ Player = function(param,socket){
                 self.abandonQuest = quests[self.quest].abandonQuest;
             }
             self.startDialogue(quests[self.quest].json[self.questStage].dialogue);
-            self.setQuestTasks(quests[self.quest].json[self.questStage].tasks);
             self.updateQuest(self);
         }
     }
@@ -2689,6 +2691,9 @@ Player = function(param,socket){
     }
     self.abandonQuest = function(){
 
+    }
+    self.updateClientQuest = function(){
+        socket.emit('updateQuest',{quest:self.quest,tasks:self.questTasks});
     }
     self.setQuestTasks = function(tasks){
         self.questTasks = tasks;
@@ -2718,6 +2723,7 @@ Player = function(param,socket){
             }
             self.questTasks[i].completed = false;
         }
+        updateClientQuest();
     }
     self.sendMessage = function(message){
         socket.emit('addToChat',{
@@ -2757,7 +2763,7 @@ Player = function(param,socket){
         self.startQuest('Tutorial');
     }
     else if(param.database.quest){
-        self.continueQuest(param.database.quest,param.database.questStage);
+        self.continueQuest(param.database.quest,param.database.questStage,param.database.questTasks);
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
