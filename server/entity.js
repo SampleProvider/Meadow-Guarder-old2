@@ -2730,7 +2730,7 @@ Player = function(param,socket){
             }
             self.questTasks[i].completed = false;
         }
-        updateClientQuest();
+        self.updateClientQuest();
     }
     self.sendMessage = function(message){
         socket.emit('addToChat',{
