@@ -1428,12 +1428,14 @@ Inventory = function(socket,server){
     self.itemChange = function(){
         if(server){
             socket.emit('itemChange');
-            for(var i in Player.list[socket.id].questTasks){
-                if(Player.list[socket.id].questTasks[i].id === 'obtain'){
-                    Player.list[socket.id].questTasks[i].amount = self.hasItem(Player.list[socket.id].questTasks[i].name,1);
-                    if(Player.list[socket.id].questTasks[i].amount >= Player.list[socket.id].questTasks[i].target){
-                        Player.list[socket.id].questTasks[i].completed = true;
-                        Player.list[socket.id].updateQuest(Player.list[socket.id]);
+            if(Player.list[socket.id]){
+                for(var i in Player.list[socket.id].questTasks){
+                    if(Player.list[socket.id].questTasks[i].id === 'obtain'){
+                        Player.list[socket.id].questTasks[i].amount = self.hasItem(Player.list[socket.id].questTasks[i].name,1);
+                        if(Player.list[socket.id].questTasks[i].amount >= Player.list[socket.id].questTasks[i].target){
+                            Player.list[socket.id].questTasks[i].completed = true;
+                            Player.list[socket.id].updateQuest(Player.list[socket.id]);
+                        }
                     }
                 }
             }

@@ -2767,14 +2767,6 @@ Player = function(param,socket){
             self.worldRegion = self.region;
         }
     }
-    self.updateGridPosition();
-    self.updateRegion();
-    if(!self.advancements['Tutorial']){
-        self.startQuest('Tutorial');
-    }
-    else if(param.database.quest){
-        self.continueQuest(param.database.quest,param.database.questStage,param.database.questTasks);
-    }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
         var pack = getInitPack();
@@ -2790,6 +2782,14 @@ Player = function(param,socket){
         return pack;
     }
     Player.list[self.id] = self;
+    if(!self.advancements['Tutorial']){
+        self.startQuest('Tutorial');
+    }
+    else if(param.database.quest){
+        self.continueQuest(param.database.quest,param.database.questStage,param.database.questTasks);
+    }
+    self.updateGridPosition();
+    self.updateRegion();
     return self;
 }
 
