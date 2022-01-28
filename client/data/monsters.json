@@ -492,6 +492,20 @@
                                 "critPower":0
                             }
                         }
+                    }],
+                    "80":[{
+                        "id":"projectile",
+                        "projectileType":"mysticlaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":5,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":350,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
                     }]
                 },
                 "changePhase":{
@@ -626,6 +640,20 @@
                                 "critPower":0
                             }
                         }
+                    }],
+                    "40":[{
+                        "id":"projectile",
+                        "projectileType":"mysticlaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":5,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":350,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
                     }]
                 },
                 "changePhase":{
@@ -742,6 +770,20 @@
                             "collisionType":"none",
                             "stats":{
                                 "damage":75,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
+                    }],
+                    "20":[{
+                        "id":"projectile",
+                        "projectileType":"mysticlaser",
+                        "param":{
+                            "speed":25,
+                            "directionDeviation":5,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":350,
                                 "critChance":0,
                                 "critPower":0
                             }
