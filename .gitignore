@@ -3,3 +3,5 @@ node_modules
 server/DATABASE_URL.js
 
 server/CHAT_TOKEN.js
+
+1-27-2022.dump
