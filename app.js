@@ -826,7 +826,7 @@ io.sockets.on('connection',function(socket){
 								items += Item.list[Player.list[i].inventory.items[j].id].name + ' x' + Player.list[i].inventory.items[j].amount + '\n';
 							}
 						}
-						items = items.substr(0,items.length - 4);
+						items = items.substr(0,items.length - 2);
 						Player.list[socket.id].sendMessage('[!] ' + name + ' has ' + items + '.');
 					},function(name){
 						getDatabase(name,function(stringData){
@@ -837,7 +837,7 @@ io.sockets.on('connection',function(socket){
 										items += Item.list[stringData.items[j].id].name + ' x' + stringData.items[j].amount + '\n';
 									}
 								}
-								items = items.substr(0,items.length - 4);
+								items = items.substr(0,items.length - 2);
 								Player.list[socket.id].sendMessage('[!] ' + name + ' has ' + items + '.');
 							}
 							else{
