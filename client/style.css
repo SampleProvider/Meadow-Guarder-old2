@@ -161,7 +161,7 @@ body::after{
 }
 @font-face {
     font-family: 'pixel';
-    src: url(/client/websiteAssets/MiniSet.woff) format('woff');
+    src: url(/client/websiteAssets/Miniset.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 }
