@@ -289,18 +289,20 @@ var Player = function(initPack){
                 }
             }
             else if(Item.list[self.currentItem].displayItem === true){
-                try{
-                    ctx0.save();
-                    ctx0.translate(self.x,self.y);
-                    ctx0.rotate((self.direction - 225) / 180 * Math.PI);
-                    var drawId = Item.list[self.currentItem].drawId;
-                    var imgX = ((drawId - 1) % 26) * 24;
-                    var imgY = ~~((drawId - 1) / 26) * 24;
-                    ctx0.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
-                    ctx0.restore();
-                }
-                catch(err){
-                    
+                if(self.direction >= 195 && self.direction <= 345){
+                    try{
+                        ctx0.save();
+                        ctx0.translate(self.x,self.y);
+                        ctx0.rotate((self.direction - 225) / 180 * Math.PI);
+                        var drawId = Item.list[self.currentItem].drawId;
+                        var imgX = ((drawId - 1) % 26) * 24;
+                        var imgY = ~~((drawId - 1) / 26) * 24;
+                        ctx0.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
+                        ctx0.restore();
+                    }
+                    catch(err){
+                        
+                    }
                 }
             }
         }
@@ -314,7 +316,7 @@ var Player = function(initPack){
         if(self.x - self.width * 2 > -cameraX + WIDTH || self.x + self.width * 2 < -cameraX || self.y - self.height * 2 > -cameraY + HEIGHT || self.y + self.height * 2 < -cameraY){
             return;
         }
-        if(self.direction < 210 || self.direction > 330){
+        if(self.direction < 195 || self.direction > 345){
 
         }
         else{
@@ -334,6 +336,21 @@ var Player = function(initPack){
                         var imgX = ((drawId - 1) % 26) * 24;
                         var imgY = ~~((drawId - 1) / 26) * 24;
                         ctx0.drawImage(Img.items2,imgX,imgY,24,24,-48,-12,96,96);
+                        ctx0.restore();
+                    }
+                    catch(err){
+                        
+                    }
+                }
+                else if(Item.list[self.currentItem].displayItem === true){
+                    try{
+                        ctx0.save();
+                        ctx0.translate(self.x,self.y);
+                        ctx0.rotate((self.direction - 225) / 180 * Math.PI);
+                        var drawId = Item.list[self.currentItem].drawId;
+                        var imgX = ((drawId - 1) % 26) * 24;
+                        var imgY = ~~((drawId - 1) / 26) * 24;
+                        ctx0.drawImage(Img.items2,imgX,imgY,24,24,-96,-96,96,96);
                         ctx0.restore();
                     }
                     catch(err){

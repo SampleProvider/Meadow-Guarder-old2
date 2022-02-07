@@ -1381,7 +1381,11 @@ dropItem = function(click){
     if(inventory.draggingItem.id){
         draggingItem.style.display = 'inline-block';
         draggingItem.innerHTML = '';
-        inventory.drawItem(draggingItem,Item.list[inventory.draggingItem.id].drawId,true);
+        var cooldownDiv = document.createElement('div');
+        cooldownDiv.className = 'cooldownDivRound';
+        cooldownDiv.style.height = 100 * inventory.draggingItem.cooldown / Item.list[inventory.draggingItem.id].useTime + "%";
+        draggingItem.appendChild(cooldownDiv);
+        inventory.drawItem(draggingItem,Item.list[inventory.draggingItem.id].drawId,'large');
         draggingItem.style.left = (rawMouseX - 32) + 'px';
         draggingItem.style.top = (rawMouseY - 32) + 'px';
         if(inventory.draggingItem.amount !== 1){
@@ -1393,10 +1397,6 @@ dropItem = function(click){
             itemAmountDiv.appendChild(itemAmount);
             draggingItem.appendChild(itemAmountDiv);
         }
-        var cooldownDiv = document.createElement('div');
-        cooldownDiv.className = 'cooldownDiv';
-        cooldownDiv.style.height = 100 * inventory.draggingItem.cooldown / Item.list[inventory.draggingItem.id].useTime + "%";
-        draggingItem.appendChild(cooldownDiv);
     }
     else{
         draggingItem.style.display = 'none';
@@ -1625,6 +1625,9 @@ window.addEventListener('wheel',function(event){
             worldMap.style.backgroundSize = mapSize + '%';
         }
         else{
+            if(mapSize < 500){
+                return;
+            }
             mapSize /= 1.1;
             var rect = worldMap.getBoundingClientRect();
             worldMap.style.top = (worldMap.offsetTop + (rect.top - rawMouseY) * -0.09) + "px";

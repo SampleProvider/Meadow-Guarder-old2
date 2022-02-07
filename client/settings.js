@@ -389,3 +389,5 @@ toggleBook = function(){
         bookDiv.style.display = 'none';
     }
 }
+openBookPage('mainBook');
+closeBook();
