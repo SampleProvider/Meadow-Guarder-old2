@@ -27,6 +27,15 @@ canvas {
     margin: 0px;
 }
 
+body::after{
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -10;
+    content: url("./img/book.png") url("./img/map.png");  
+}
+
 #gameDiv {
     top: 0px;
     left: 0px;
@@ -152,7 +161,7 @@ canvas {
 }
 @font-face {
     font-family: 'pixel';
-    src: url(/client/websiteAssets/MiniSet2.ttf@14d552ae72d147f7b96abae4220f32c0.woff) format('woff');
+    src: url(/client/websiteAssets/MiniSet.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -331,6 +340,7 @@ canvas {
     font-family: 'pixel';
     color: #000000;
     text-align: center;
+    text-shadow: 4px 4px rgba(0,0,0,0.3);
 }
 
 #pageStackLeft {
@@ -451,6 +461,10 @@ canvas {
     position: relative;
     top: 8px;
     left: 8px;
+}
+
+#regionDisplay {
+    text-shadow: 3px 3px rgba(0,0,0,0.3);
 }
 
 .disconnectedDiv {
@@ -578,6 +592,7 @@ canvas {
     padding-top: 4px;
     padding-right: 0px;
     padding-bottom: 8px;
+    text-shadow: 2px 2px rgba(0,0,0,0.3);
 }
 #chatText {
     position: static;

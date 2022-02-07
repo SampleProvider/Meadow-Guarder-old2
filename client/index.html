@@ -11,7 +11,7 @@
 	<link href="/client/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<video style="left: 0px; top: 0px; width: 100%; height: 100%;" src="/client/websiteAssets/Never Gonna Give You Up.mp4" id="rickroll"></video>
+	<video style="display: none; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; pointer-events: none; z-index: -3;" src="/client/websiteAssets/Never Gonna Give You Up.mp4" id="rickroll"></video>
 	<div id="pageDiv" style="display: inline-block;">
 		<div id="pageBackground"></div>
 		<div id="pageShade"></div>
@@ -58,6 +58,16 @@
 					<div class="pageStackInner">
 						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
 							Do you want to contribute to this game? Then click <a class="UI-link" href="https://forms.gle/ScdgYv1CqezcGb1r9" target="_blank">here</a>! Also, be sure to join our discord server <a class="UI-link" href="https://discord.gg/Py5GKdMvrZ" target="_blank">here</a>! The Official Meadow Guarder Wiki is <a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/wiki">here</a>!
+						</div>
+					</div>
+				</div>
+				<div class="pageStackOuter UI-display">
+					<div class="pageStackInner">
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff; font-size: 30px">
+							2/6/2022
+						</div>
+						<div class="UI-text" style="position: static;top: 8px;left: 8px;color: #ffffff">
+							Fixed Bugs.
 						</div>
 					</div>
 				</div>
@@ -701,6 +711,11 @@
 							If you don't see a already posted glitch, feel free to post a glitch! Our Github page is 
 							<a class="UI-link" href="https://github.com/maitian352/Meadow-Guarder/issues" target="_blank">here</a>.
 							<br>
+							<br>
+							<b>Privacy Policy:</b>
+							Meadow Guarder stores cookies on your computer. These cookies store your settings, such as particles, volume, etc. Meadow Guarder will check your ip in the case of an ip ban.
+							<br>
+							<br>
 							Copyright (C) Meadow Guarder 2022
 						</div>
 					</div>
@@ -807,7 +822,7 @@
 		<div id="mapFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="darknessFade" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		<div id="regionDisplay" class="UI-display UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">
-			<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);">lol</div>
+			<div id="regionDisplaySmall" class="UI-text" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)" onmouseover="mouseInGame(event);" onclick="dropItem(0);" oncontextmenu="dropItem(2);"></div>
 		</div>
 		<div id="deathDiv" style="display: none;" onmouseover="mouseInMenu(event);">
 			<div id="deathScreen" onmouseover="mouseInMenu(event);"></div>
@@ -1001,7 +1016,7 @@
 				<div id="manaBarText" onmouseover="mouseInMenu(event);"></div>
 			</div>
 		</div>
-		<div id="bookDiv" style="display: none;" onmouseover="mouseInMenu(event);">
+		<div id="bookDiv" onmouseover="mouseInMenu(event);">
 			<div id="mainBookDiv" class="bookPageDiv UI-text">
 				<div class="bookPageLeft">
 					<div class="UI-text" style="position: relative; left: 0px; top: 0px; font-size: 25px; text-align: center;">Book [K]</div>
@@ -1011,21 +1026,21 @@
 				</div>
 				<div class="bookPageRight"></div>
 			</div>
-			<div id="worldMapDiv" class="bookPageDiv UI-text" style="display: none;">
-				<div class="UI-text" style="position: relative; left: 0px; top: -15px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
+			<div id="worldMapDiv" class="bookPageDiv UI-text">
+				<div class="UI-text" style="position: relative; left: 0px; top: 0px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
 				<div id="worldMapContainer" style="position: absolute; left: 0px; top: 6%; width: 100%; height: 100%; background-color: #354149; overflow: hidden; cursor: move;">
 					<div id="worldMap" style="position: absolute; width: 100000px; height: 100000px; background-image: url(/client/maps/World.png); background-repeat: no-repeat;"></div>
 				</div>
 			</div>
-			<div id="questLogDiv" class="bookPageDiv UI-text" style="display: none;">
-				<div class="UI-text" style="position: relative; left: 0px; top: -15px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
+			<div id="questLogDiv" class="bookPageDiv UI-text">
 				<div class="bookPageLeft">
-					<div id="currentQuestDisplay" style="position: relative; left: 0px; top: 10px; font-size: 15px;">Current Quest: <b id="currentQuest">None</b></div>
+					<div class="UI-text" style="position: relative; left: 0px; top: 0px; font-size: 15px; color: #ee3333;" onclick="openBookPage('mainBook');">&lt; Back</div>
+					<div id="currentQuestDisplay" style="position: relative; left: 0px; top: 0px; font-size: 15px;">Current Quest: <b id="currentQuest">None</b></div>
 					<div id="currentQuestObjectiveDisplay" style="position: relative; display: none; left: 0px; top: 10px; font-size: 15px;">Current Quest Objective: <b id="currentQuestObjective"></b></div>
 				</div>
 				<div class="bookPageRight">
 					<img id="questImage" src="/client/data/quests/img/Base.png" style="position: relative; left: 0px; top: 10px; width: 100%; image-rendering: pixelated; display: none;">
-					<button id="abandonQuestButton" class="UI-button" onmouseover="mouseInMenu(event);" style="position: relative; display: none; right: 0px; bottom: 10px;">Abandon Quest</button>
+					<button id="abandonQuestButton" class="UI-button" onmouseover="mouseInMenu(event);" style="position: absolute; display: none; right: 0px; bottom: 10px;">Abandon Quest</button>
 				</div>
 			</div>
 			<div id="bookArrowLeft" class="UI-text" onmouseover="mouseInMenu(event);">&lt;</div>
