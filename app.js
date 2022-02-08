@@ -153,6 +153,10 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
 			return;
 		}
+		if(stringData.username.includes('‏‏‎ ‎')){
+			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
+			return;
+		}
 		if(stringData.username.includes('--') || stringData.password.includes('--')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;

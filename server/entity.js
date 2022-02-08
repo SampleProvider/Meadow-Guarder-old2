@@ -3121,6 +3121,10 @@ Player.onConnect = function(socket,username,chatBanned){
                 player.sendMessage('[!] Your clan name may not contain a blank character.');
                 return;
             }
+            if(data.includes('‏‏‎ ‎')){
+                player.sendMessage('[!] Your clan name may not contain a blank character.');
+                return;
+            }
             if(data.includes('--')){
                 player.sendMessage('[!] Your clan name contains invalid characters.');
                 return;
