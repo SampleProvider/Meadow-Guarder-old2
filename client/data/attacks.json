@@ -15,7 +15,26 @@
                 }
             }],
             "incorrect":[{
-                "hpCost":1000
+                "id":"nameChecker",
+                "name":"suvanth",
+                "correct":[{
+                    "id":"projectile",
+                    "projectileType":"bluefrozenflames",
+                    "param":{
+                        "speed":20,
+                        "timer":80,
+                        "directionDeviation":60,
+                        "projectilePattern":"homing",
+                        "collisionType":"none"
+                    }
+                },{
+                    "id":"debuff",
+                    "name":"death",
+                    "time":9600
+                }],
+                "incorrect":[{
+                    "hpCost":1000
+                }]
             }]
         }]
     },

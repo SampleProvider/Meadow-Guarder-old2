@@ -1796,6 +1796,11 @@ Player = function(param,socket){
             if(entity === 'self'){
                 for(var i in pt.debuffs){
                     switch(debuffData[i].deathMessage){
+                        case "death":
+                            globalChat('#ff0000',pt.name + ' realized nerfed death.');
+                            pt.debuffs = {};
+                            pt.updateStats();
+                            return;
                         case "poison":
                             globalChat('#ff0000',pt.name + ' was poisoned to death.');
                             pt.debuffs = {};

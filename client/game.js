@@ -1625,7 +1625,7 @@ window.addEventListener('wheel',function(event){
             worldMap.style.backgroundSize = mapSize + '%';
         }
         else{
-            if(mapSize < 500){
+            if(mapSize < 1.05){
                 return;
             }
             mapSize /= 1.1;

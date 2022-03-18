@@ -1,4 +1,11 @@
 {
+    "death":{
+        "name":"Death",
+        "drawId":1,
+        "rarity":5,
+        "hpRegen":-10,
+        "deathMessage":"death"
+    },
     "poison":{
         "name":"Poison",
         "drawId":2,
