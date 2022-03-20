@@ -208,6 +208,9 @@ playRegionSong = function(region){
     else if(region === 'Seashell Village'){
         playOneSong('theOasis');
     }
+    else if(region === 'Island of Orcs'){
+        playOneSong('sandstorm');
+    }
     else if(region === 'Lujadih Mountain'){
         playOneSong('theOldDays');
     }
