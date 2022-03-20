@@ -371,7 +371,7 @@
                 "message":["I'm an apprentice mage! Magibrel is teaching me!"],
                 "option1":{
                     "message":"*Open shop*",
-                    "triggers":"shopOpen"
+                    "triggers":"openShop"
                 },
                 "option2":{
                     "message":"*End conversation*",
