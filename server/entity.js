@@ -1141,6 +1141,9 @@ Actor = function(param){
                                 allPlayers:false,
                             });
                         }
+                        if(self.itemDrops[j].chance <= 0.01){
+                            globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + (self.itemDrops[j].chance * 100) + '% Drop Chance!');
+                        }
                     }
                 }
             }
@@ -4742,6 +4745,9 @@ HarvestableNpc = function(param){
                         parent:pt,
                         allPlayers:false,
                     });
+                }
+                if(self.itemDrops[i].chance <= 0.01){
+                    globalChat('#00ffff','RARE DROP! ' + Player.list[pt].name + ' got ' + Item.list[i].name + '! ' + (self.itemDrops[i].chance * 100) + '% Drop Chance!');
                 }
             }
         }
