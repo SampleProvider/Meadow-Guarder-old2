@@ -78,6 +78,13 @@
         "movementSpeed":5,
         "luck":2.5
     },
+    "orcking":{
+        "name":"Orc King",
+        "drawId":146,
+        "rarity":2,
+        "defense":-125,
+        "hpRegen":-333333
+    },
     "porcelainberry":{
         "name":"Porcelain Berry",
         "drawId":594,

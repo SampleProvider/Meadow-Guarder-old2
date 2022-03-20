@@ -33,7 +33,26 @@
                     "time":9600
                 }],
                 "incorrect":[{
-                    "hpCost":1000
+                    "id":"nameChecker",
+                    "name":"the-real-tianmu",
+                    "correct":[{
+                        "id":"projectile",
+                        "projectileType":"bluefrozenflames",
+                        "param":{
+                            "speed":20,
+                            "timer":80,
+                            "directionDeviation":60,
+                            "projectilePattern":"homing",
+                            "collisionType":"none"
+                        }
+                    },{
+                        "id":"debuff",
+                        "name":"death",
+                        "time":9600
+                    }],
+                    "incorrect":[{
+                        "hpCost":1000
+                    }]
                 }]
             }]
         }]
@@ -1009,6 +1028,25 @@
                 "speed":0,
                 "pierce":-1,
                 "collisionType":"none"
+            }
+        }]
+    },
+    "axeoftheorcking":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"axeoftheorcking",
+            "param":{
+                "speed":50,
+                "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
+                "relativeToParent":false,
+                "projectilePattern":"waraxe",
+                "collisionType":"sticky",
+                "debuffs":{
+                    "orcking":100
+                }
             }
         }]
     },
