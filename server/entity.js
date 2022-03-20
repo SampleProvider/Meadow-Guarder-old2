@@ -1458,6 +1458,16 @@ Actor = function(param){
                 case "projectile":
                     self.shootProjectile(data.projectileType,data.param);
                     break;
+                case "monster":
+                    for(var i = 0;i < data.amount;i++){
+                        spawnMonster({
+                            x:self.x,
+                            y:self.y,
+                            map:self.map,
+                            spawnId:data.monsterType,
+                        });
+                    }
+                    break;
                 case "dash":
                     self.dash(data.param);
                     break;
@@ -1794,6 +1804,7 @@ Player = function(param,socket){
         }
         if(entity){
             if(entity === 'self'){
+                console.log(pt.debuffs);
                 for(var i in pt.debuffs){
                     switch(debuffData[i].deathMessage){
                         case "death":
@@ -3812,6 +3823,63 @@ Projectile = function(param){
             self.direction += 135;
         }
         if(self.projectilePattern === 'waraxe'){
+            var nearestEntity = null;
+            var nearestDirection = 0;
+            var nearestDistance = 0;
+            for(var i in Player.list){
+                if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
+                    var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180 - self.direction;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction > 180){
+                        direction -= 360;
+                    }
+                    else if(direction < -180){
+                        direction += 360;
+                    }
+                    if(nearestEntity === null){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Player.list[i]);
+                        nearestEntity = Player.list[i];
+                    }
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 3){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Player.list[i]);
+                        nearestEntity = Player.list[i];
+                    }
+                }
+            }
+            for(var i in Monster.list){
+                if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map && Monster.list[i].hp > 0){
+                    var direction = Math.atan2(Monster.list[i].y - self.y,Monster.list[i].x - self.x) / Math.PI * 180 - self.direction;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction > 180){
+                        direction -= 360;
+                    }
+                    else if(direction < -180){
+                        direction += 360;
+                    }
+                    if(nearestEntity === null){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
+                        nearestEntity = Monster.list[i];
+                    }
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 3){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
+                        nearestEntity = Monster.list[i];
+                    }
+                }
+            }
+            if(nearestEntity){
+                self.spdX += Math.cos(self.direction / 180 * Math.PI) * param.speed / 20;
+                self.spdY += Math.sin(self.direction / 180 * Math.PI) * param.speed / 20;
+            }
             if(entity.x > self.x){
                 self.spdX += 2;
             }
@@ -4456,7 +4524,7 @@ Monster = function(param){
                     self.spdY *= self.circleDirection;
                 }
                 else{
-                    if(self.trackSteps >= 64){
+                    if(self.trackSteps >= 64 || self.trackingPath.length === 0){
                         self.trackSteps = 0;
                         var finder = new PF.BiAStarFinder({
                             allowDiagonal:true,

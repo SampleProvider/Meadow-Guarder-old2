@@ -862,6 +862,12 @@ socket.on('regionChange',function(data){
                 playRegionSong(data.region);
             }
         }
+        if(data.mapName !== ''){
+            if(worldRegion !== data.mapName){
+                worldRegion = data.mapName;
+                playRegionSong(data.mapName);
+            }
+        }
     }
 });
 
