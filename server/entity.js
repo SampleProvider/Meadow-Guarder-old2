@@ -1803,37 +1803,32 @@ Player = function(param,socket){
         }
         if(entity){
             if(entity === 'self'){
-                console.log(pt.debuffs);
+                var deathMessage = '';
                 for(var i in pt.debuffs){
-                    switch(debuffData[i].deathMessage){
-                        case "death":
-                            globalChat('#ff0000',pt.name + ' realized nerfed death.');
-                            pt.debuffs = {};
-                            pt.updateStats();
-                            return;
-                        case "poison":
-                            globalChat('#ff0000',pt.name + ' was poisoned to death.');
-                            pt.debuffs = {};
-                            pt.updateStats();
-                            return;
-                        case "radiation":
-                            if(Math.random() < 0.001){
-                                globalChat('#ff0000',pt.name + ' became Radioactive (64).');
-                            }
-                            else{
-                                globalChat('#ff0000',pt.name + ' became radioactive.');
-                            }
-                            pt.debuffs = {};
-                            pt.updateStats();
-                            return;
-                        case "fire":
-                            globalChat('#ff0000',pt.name + ' went up in flames.');
-                            pt.debuffs = {};
-                            pt.updateStats();
-                            return;
-                    }
+                    deathMessage = debuffData[i].deathMessage;
                 }
-                globalChat('#ff0000',pt.name + ' committed suicide.');
+                switch(deathMessage){
+                    case "death":
+                        globalChat('#ff0000',pt.name + ' realized nerfed death.');
+                        break;
+                    case "poison":
+                        globalChat('#ff0000',pt.name + ' was poisoned to death.');
+                        break;
+                    case "radiation":
+                        if(Math.random() < 0.001){
+                            globalChat('#ff0000',pt.name + ' became Radioactive (64).');
+                        }
+                        else{
+                            globalChat('#ff0000',pt.name + ' became radioactive.');
+                        }
+                        break;
+                    case "fire":
+                        globalChat('#ff0000',pt.name + ' went up in flames.');
+                        break;
+                    default:
+                        globalChat('#ff0000',pt.name + ' committed suicide.');
+                        break;
+                }
             }
             else if(entity.name){
                 globalChat('#ff0000',pt.name + ' was killed by ' + entity.name + '.');
@@ -3765,10 +3760,18 @@ Projectile = function(param){
                 self.toRemove = true;
                 return;
             }
+            if(!Player.list[self.parent] && self.projectilePattern === 'waraxe'){
+                self.toRemove = true;
+                return;
+            }
             var entity = Player.list[self.parent];
         }
         else if(self.parentType === 'Monster'){
             if(!Monster.list[self.parent] && self.relativeToParent){
+                self.toRemove = true;
+                return;
+            }
+            if(!Monster.list[self.parent] && self.projectilePattern === 'waraxe'){
                 self.toRemove = true;
                 return;
             }
