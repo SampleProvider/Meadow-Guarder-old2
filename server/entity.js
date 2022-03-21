@@ -1096,7 +1096,7 @@ Actor = function(param){
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material'){
+                            if(Item.list[k].type === 'Material' && k !== 'greengrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1105,7 +1105,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material'){
+                            if(Item.list[k].type === 'Material' && k !== 'greengrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
