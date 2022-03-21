@@ -1096,7 +1096,7 @@
     },
     "orcking":{
         "name":"Orc King",
-        "hpMax":100000000,
+        "hpMax":50000000,
         "stats":{
             "damage":600,
             "defense":0,
@@ -1163,7 +1163,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":50000000,
+                    "hp":35000000,
                     "nextPhases":["phase2"]
                 }
             },
