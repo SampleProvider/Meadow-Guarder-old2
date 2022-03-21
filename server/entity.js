@@ -3875,8 +3875,8 @@ Projectile = function(param){
                 }
             }
             if(nearestEntity){
-                self.spdX += Math.cos(self.direction / 180 * Math.PI) * param.speed / 20;
-                self.spdY += Math.sin(self.direction / 180 * Math.PI) * param.speed / 20;
+                self.spdX += Math.cos(self.direction / 180 * Math.PI) * param.speed / 10;
+                self.spdY += Math.sin(self.direction / 180 * Math.PI) * param.speed / 10;
             }
             if(entity.x > self.x){
                 self.spdX += 2;
@@ -4467,17 +4467,17 @@ Monster = function(param){
                 var tx = self.getTarget().gridX - dx;
                 var ty = self.getTarget().gridY - dy;
                 var distance = self.getDistance(self.getTarget());
-                if(distance < 192 && self.targetLeftView === 0){
+                if(distance < self.circleDistance * 3 / 4 && self.targetLeftView === 0){
                     self.circlingTarget = true;
                 }
-                else if(distance > 256){
+                else if(distance > self.circleDistance){
                     self.circlingTarget = false;
                 }
                 if(self.circlingTarget){
                     self.trackingPath = [];
                     var direction = Math.atan2(self.y - self.targetY,self.x - self.targetX) / Math.PI * 180;
                     direction = Math.floor(direction / 45 + 0.5);
-                    if(distance < 128){
+                    if(distance < self.circleDistance / 2){
                         direction -= 1;
                     }
                     direction = direction % 8;

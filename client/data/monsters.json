@@ -23,6 +23,7 @@
         },
         "xpDrop":5,
         "coinDrop":5,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -70,6 +71,7 @@
         },
         "xpDrop":10,
         "coinDrop":5,
+        "circleDistance":128,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -117,6 +119,7 @@
         },
         "xpDrop":15,
         "coinDrop":15,
+        "circleDistance":0,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -161,6 +164,7 @@
         },
         "xpDrop":15,
         "coinDrop":50,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -291,6 +295,7 @@
         },
         "xpDrop":15,
         "coinDrop":50,
+        "circleDistance":0,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -363,6 +368,7 @@
         "boss":true,
         "xpDrop":2000,
         "coinDrop":50000,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -792,6 +798,7 @@
         },
         "xpDrop":250,
         "coinDrop":150,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -838,6 +845,7 @@
         "boss":false,
         "xpDrop":750,
         "coinDrop":0,
+        "circleDistance":0,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -878,6 +886,7 @@
         "boss":false,
         "xpDrop":750,
         "coinDrop":0,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -964,6 +973,7 @@
         "boss":false,
         "xpDrop":750,
         "coinDrop":0,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -1085,6 +1095,7 @@
         "boss":true,
         "xpDrop":75000,
         "coinDrop":1350000,
+        "circleDistance":0,
         "phase":"phase1",
         "phases":{
             "phase1":{
@@ -1370,6 +1381,7 @@
         "bossMusic":"tenEyedOne",
         "xpDrop":7500,
         "coinDrop":135000,
+        "circleDistance":256,
         "phase":"phase1",
         "phases":{
             "phase1":{
