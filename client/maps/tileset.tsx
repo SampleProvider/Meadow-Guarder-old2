@@ -940,6 +940,16 @@
    <object id="1" x="0" y="2" width="14" height="14"/>
   </objectgroup>
  </tile>
+ <tile id="4512">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4517">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="4616" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0" width="14" height="16"/>
