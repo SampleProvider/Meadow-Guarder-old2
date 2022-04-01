@@ -94,6 +94,8 @@ weatherLastChanged = 0;
 
 quests = {};
 
+spiritWall = 10;
+
 require('./clan');
 require('./../client/inventory.js');
 
@@ -178,6 +180,31 @@ spawnMonster = function(spawner,spawnId){
                     }
                 }
                 globalChat('#990099',message);
+                if(spiritWall > 5){
+                    globalChat('#ffffff','The spirit wall weakens...');
+                    spiritWall -= 1;
+                }
+                else if(spiritWall > 2){
+                    globalChat('#ffffff','The spirit wall seems to be cracking...');
+                    spiritWall -= 1;
+                }
+                else if(spiritWall === 2){
+                    globalChat('#ffffff','The spirit wall is going to break soon...');
+                    spiritWall -= 1;
+                }
+                else if(spiritWall === 1){
+                    globalChat('#ffffff','The spirit wall has broken!');
+                    spiritWall -= 1;
+                    spawnMonster({
+                        x:-3232,
+                        y:-672,
+                        map:'World',
+                        spawnId:'spirit',
+                    },null);
+                }
+                if(pt.monsterType === 'spirit'){
+                    spiritWall = 10;
+                }
             }
             pt.dropItems();
         },

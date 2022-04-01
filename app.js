@@ -522,6 +522,12 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'rickroll' && level < 2 && commandList.length > 1){
+					commandList.splice(0,1);
+                    socket.emit('rickroll');
+                    globalChat('#ffff00','OOPS! ' + Player.list[socket.id].name + ' rickrolled ' + Player.list[socket.id].name + '!');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'summon' && level >= 2 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);

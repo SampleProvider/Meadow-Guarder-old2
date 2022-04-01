@@ -1283,6 +1283,7 @@ doRickroll = function(){
     socket.emit('timeout');
     selfId = null;
     stopAllSongs();
+    rickroll.style.display = 'inline-block';
     rickroll.play();
 }
 
