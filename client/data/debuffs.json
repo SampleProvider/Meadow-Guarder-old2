@@ -63,6 +63,14 @@
         "movementSpeed":-5,
         "particles":{"frozen":1}
     },
+    "icefrozen":{
+        "name":"Ice Frozen",
+        "description":"You're frozen solid and can't move!",
+        "drawId":33,
+        "rarity":1,
+        "movementSpeed":-50,
+        "particles":{"icefrozen":1}
+    },
     "blindness":{
         "name":"Blindness",
         "description":"You're blinded!",

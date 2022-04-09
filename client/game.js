@@ -1540,7 +1540,6 @@ document.onmousemove = function(event){
 var tabVisible = true;
 document.addEventListener("visibilitychange",function(){
     tabVisible = !tabVisible;
-    socket.emit('init');
     socket.emit('keyPress',{inputId:"releaseAll",state:true});
 });
 mouseDown = function(event){

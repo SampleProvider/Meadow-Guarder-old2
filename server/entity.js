@@ -210,6 +210,7 @@ spawnMonster = function(spawner,spawnId){
         },
     });
     spawner.spawned = true;
+    return monster;
 }
 
 Entity = function(param){
@@ -1332,6 +1333,7 @@ Actor = function(param){
             team:param.team !== undefined ? param.team : self.team,
             stats:param.stats !== undefined ? param.stats : self.stats,
             debuffs:param.debuffs !== undefined ? param.debuffs : {},
+            attacks:param.attacks !== undefined ? param.attacks : {},
         };
         var projectile = new Projectile(properties);
         return projectile;
@@ -1490,12 +1492,21 @@ Actor = function(param){
                     break;
                 case "monster":
                     for(var i = 0;i < data.amount;i++){
-                        spawnMonster({
+                        var monster = spawnMonster({
                             x:self.x,
                             y:self.y,
                             map:self.map,
                             spawnId:data.monsterType,
                         });
+                        if(data.name){
+                            monster.name = data.name.replaceAll('<name>',self.name);
+                        }
+                        if(data.sameTeam){
+                            monster.team = self.team;
+                        }
+                        if(data.timer){
+                            monster.timer = data.timer;
+                        }
                     }
                     break;
                 case "dash":
@@ -3552,10 +3563,6 @@ Player.onConnect = function(socket,username,chatBanned){
             globalChat('#00ff00',player.name + ' respawned.');
         });
 
-        socket.on('init',function(data){
-            Player.getAllInitPack(socket);
-        });
-
         socket.on('teleportFadeIn',function(data){
             if(player.teleportStage === 'fadeIn'){
                 var map = player.map;
@@ -3744,6 +3751,8 @@ Projectile = function(param){
     self.zindex = param.zindex;
     self.stats = param.stats;
     self.debuffs = param.debuffs;
+    self.attacks = param.attacks;
+    self.reload = 0;
     self.pierce = param.pierce;
     self.vertices = [];
     self.onHit = function(pt){
@@ -3770,6 +3779,7 @@ Projectile = function(param){
             self.y = Math.round(self.y);
             self.updateCollisions();
         }
+        self.updateAttack();
         self.spdX = spdX;
         self.spdY = spdY;
         self.animation += 0.5;
@@ -3785,6 +3795,69 @@ Projectile = function(param){
             self.toRemove = true;
         }
         self.timer -= 1;
+    }
+    self.shootProjectile = function(projectileType,param){
+        var direction = param.direction !== undefined ? param.direction / 180 * Math.PI + self.direction / 180 * Math.PI : self.direction / 180 * Math.PI;
+        direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
+        var properties = {
+            id:param.sameId !== undefined ? self.id : undefined,
+            parent:param.id !== undefined ? param.id : self.id,
+            parentName:self.name,
+            x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
+            y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
+            spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 20,
+            spdY:param.speed !== undefined ? Math.sin(direction) * param.speed : Math.sin(direction) * 20,
+            speed:param.speed !== undefined ? param.speed : 20,
+            direction:direction * 180 / Math.PI,
+            spin:param.spin !== undefined ? param.spin : 0,
+            map:self.map,
+            projectileType:projectileType,
+            pierce:param.pierce !== undefined ? param.pierce : 1,
+            timer:param.timer !== undefined ? param.timer : 40,
+            relativeToParent:param.relativeToParent !== undefined ? param.relativeToParent : false,
+            parentType:param.parentType !== undefined ? param.parentType : self.type,
+            projectilePattern:param.projectilePattern !== undefined ? param.projectilePattern : false,
+            collisionType:param.collisionType !== undefined ? param.collisionType : false,
+            zindex:param.zindex !== undefined ? param.zindex : self.zindex,
+            team:param.team !== undefined ? param.team : self.team,
+            stats:param.stats !== undefined ? param.stats : self.stats,
+            debuffs:param.debuffs !== undefined ? param.debuffs : {},
+            attacks:param.attacks !== undefined ? param.attacks : {},
+        };
+        var projectile = new Projectile(properties);
+        return projectile;
+    }
+    self.doAttack = function(data,reload){
+        var runAttack = function(data){
+            switch(data.id){
+                case "projectile":
+                    self.shootProjectile(data.projectileType,data.param);
+                    break;
+                case "monster":
+                    for(var i = 0;i < data.amount;i++){
+                        spawnMonster({
+                            x:self.x,
+                            y:self.y,
+                            map:self.map,
+                            spawnId:data.monsterType,
+                        });
+                    }
+                    break;
+            }
+        }
+        for(var i in data){
+            if(reload % parseInt(i) === 0){
+                for(var j = 0;j < data[i].length;j++){
+                    if(data[i][j]){
+                        runAttack(data[i][j]);
+                    }
+                }
+            }
+        }
+    }
+    self.updateAttack = function(){
+        self.reload += 1;
+        self.doAttack(self.attacks,self.reload);
     }
     self.updatePattern = function(){
         if(self.collided){
@@ -3846,6 +3919,9 @@ Projectile = function(param){
             if(self.timer === 3){
                 entity.updateHarvest();
             }
+        }
+        if(self.projectilePattern === 'spear'){
+            self.direction = param.direction + 135;
         }
         if(self.projectilePattern === 'claw'){
             self.x = entity.x;
@@ -3951,7 +4027,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(Math.abs(direction) - Math.abs(nearestDirection)) < 30 && self.getDistance(Player.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
@@ -3976,7 +4052,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(Math.abs(direction) - Math.abs(nearestDirection)) < 30 && self.getDistance(Monster.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
@@ -4074,6 +4150,8 @@ Monster = function(param){
 
     self.boss = false;
     self.bossMusic = 'none';
+
+    self.attackMonsters = false;
     
     for(var i in monsterData[self.monsterType]){
         if(i === 'stats'){
@@ -4124,6 +4202,8 @@ Monster = function(param){
 
     self.mainReload = 0;
     self.passiveReload = 0;
+
+    self.timer = -1;
     
     self.randomWalk(true);
 
@@ -4341,6 +4421,10 @@ Monster = function(param){
         if(self.targetLeftView > 0){
             self.circleDirection = circleDirection * -1;
         }
+        self.timer -= 1;
+        if(self.timer === 0){
+            self.toRemove = true;
+        }
     }
     self.updateTarget = function(){
         if(self.attackState === 'passive'){
@@ -4356,6 +4440,28 @@ Monster = function(param){
                                         if(Player.list[i]){
                                             self.target = i;
                                             self.targetType = 'Player';
+                                            self.attackState = 'attack';
+                                            self.damaged = false;
+                                            self.targetLeftView = 0;
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if(self.attackMonsters){
+                for(var i in Monster.list){
+                    if(Monster.list[i].map === self.map){
+                        if(Monster.list[i].team !== self.team){
+                            if(Monster.list[i].hp > 0){
+                                if(self.getSquareDistance(Monster.list[i]) < 8 && Monster.list[i].getSquareDistance(self.randomPos) <= 48){
+                                    if(self.canSee(Monster.list[i])){
+                                        if(Monster.list[i]){
+                                            self.target = i;
+                                            self.targetType = 'Monster';
                                             self.attackState = 'attack';
                                             self.damaged = false;
                                             self.targetLeftView = 0;

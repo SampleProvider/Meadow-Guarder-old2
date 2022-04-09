@@ -113,7 +113,7 @@
                 "message":["Hello. I am your server today. Will you like anything to eat?"],
                 "option1":{
                     "message":"*Open shop*",
-                    "triggers":"openShop"
+                    "triggers":"shopOpen"
                 },
                 "option2":{
                     "message":"*End conversation*",
@@ -381,7 +381,7 @@
         ],
         "shop":[
             {
-                "id":"redtoken",
+                "id":"redbadge",
                 "amount":1,
                 "materials":[
                     {

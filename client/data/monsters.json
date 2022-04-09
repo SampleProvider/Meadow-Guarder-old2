@@ -358,6 +358,10 @@
             "goldendewdrop":{
                 "chance":1,
                 "amount":7
+            },
+            "icytitaniumstaff":{
+                "chance":0.01,
+                "amount":1
             }
         },
         "img":{
@@ -708,6 +712,9 @@
                                 "damage":75,
                                 "critChance":0,
                                 "critPower":0
+                            },
+                            "debuffs":{
+                                "icefrozen":20
                             }
                         }
                     },{
@@ -764,6 +771,9 @@
                                 "damage":75,
                                 "critChance":0,
                                 "critPower":0
+                            },
+                            "debuffs":{
+                                "icefrozen":20
                             }
                         }
                     },{
@@ -1434,6 +1444,10 @@
             "blueopal":{
                 "chance":0.5,
                 "amount":15
+            },
+            "spiritsword":{
+                "chance":0.01,
+                "amount":1
             }
         },
         "img":{
@@ -1621,9 +1635,59 @@
             }
         }
     },
+    "playerSpirit":{
+        "name":"Spirit",
+        "hpMax":10000,
+        "stats":{
+            "damage":0,
+            "defense":0,
+            "hpRegen":0,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":5,
+        "knockbackResistance":1,
+        "drawSize":"medium",
+        "team":"Human",
+        "itemDrops":{},
+        "img":{
+            "body":"Spirit"
+        },
+        "boss":false,
+        "xpDrop":0,
+        "coinDrop":0,
+        "circleDistance":64,
+        "attackMonsters":true,
+        "phase":"phase1",
+        "phases":{
+            "phase1":{
+                "mainAttackData":{
+                    "5":[{
+                        "id":"projectile",
+                        "projectileType":"darkflames",
+                        "param":{
+                            "speed":35,
+                            "relativeToParent":false,
+                            "projectilePattern":"waraxe",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":25000,
+                                "critChance":0.01,
+                                "critPower":10
+                            }
+                        }
+                    }]
+                },
+                "changePhase":{
+                    "hp":0,
+                    "nextPhases":["phase1"]
+                }
+            }
+        }
+    },
     "teneyedone":{
         "name":"Ten Eyed One",
-        "hpMax":25000000,
+        "hpMax":250000000,
         "stats":{
             "damage":600,
             "defense":0,
@@ -1651,6 +1715,10 @@
             "deathglobe":{
                 "chance":1,
                 "amount":15
+            },
+            "teneyedspear":{
+                "chance":0.01,
+                "amount":1
             }
         },
         "img":{
@@ -1691,7 +1759,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":15000000,
+                    "hp":150000000,
                     "nextPhases":["phase2"]
                 }
             },
@@ -1908,10 +1976,59 @@
                                 "blindness":40
                             }
                         }
+                    }],
+                    "100":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedspear",
+                        "param":{
+                            "speed":35,
+                            "pierce":15,
+                            "timer":50,
+                            "projectilePattern":"spear",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":350,
+                                "critChance":0,
+                                "critPower":0
+                            },
+                            "attacks":{
+                                "5":[{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":35,
+                                        "direction":0,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":35,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":35,
+                                        "direction":90,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":35,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                }]
+                            }
+                        }
                     }]
                 },
                 "changePhase":{
-                    "hp":5000000,
+                    "hp":50000000,
                     "nextPhases":["phase3"]
                 }
             },
@@ -2197,10 +2314,59 @@
                                 "blindness":40
                             }
                         }
+                    }],
+                    "100":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedspear",
+                        "param":{
+                            "speed":35,
+                            "pierce":15,
+                            "timer":50,
+                            "projectilePattern":"spear",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":400,
+                                "critChance":0,
+                                "critPower":0
+                            },
+                            "attacks":{
+                                "5":[{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":35,
+                                        "direction":0,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":40,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":35,
+                                        "direction":90,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":40,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                }]
+                            }
+                        }
                     }]
                 },
                 "changePhase":{
-                    "hp":1500000,
+                    "hp":15000000,
                     "nextPhases":["phase4"]
                 }
             },
@@ -2299,10 +2465,89 @@
                                 "blindness":40
                             }
                         }
+                    }],
+                    "100":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedspear",
+                        "param":{
+                            "speed":40,
+                            "pierce":15,
+                            "timer":50,
+                            "projectilePattern":"spear",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":600,
+                                "critChance":0,
+                                "critPower":0
+                            },
+                            "attacks":{
+                                "5":[{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":-45,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":60,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":0,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":60,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":90,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":60,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":135,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":60,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                }]
+                            }
+                        }
                     }]
                 },
                 "changePhase":{
-                    "hp":500000,
+                    "hp":5000000,
                     "nextPhases":["phase5"]
                 }
             },
@@ -2518,6 +2763,85 @@
                             },
                             "debuffs":{
                                 "blindness":40
+                            }
+                        }
+                    }],
+                    "100":[{
+                        "id":"projectile",
+                        "projectileType":"teneyedspear",
+                        "param":{
+                            "speed":40,
+                            "pierce":15,
+                            "timer":50,
+                            "projectilePattern":"spear",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":700,
+                                "critChance":0,
+                                "critPower":0
+                            },
+                            "attacks":{
+                                "5":[{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":-45,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":70,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":0,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":70,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":90,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":70,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                },{
+                                    "id":"projectile",
+                                    "projectileType":"fireball",
+                                    "param":{
+                                        "speed":40,
+                                        "direction":135,
+                                        "timer":50,
+                                        "projectilePattern":"homing",
+                                        "collisionType":"none",
+                                        "stats":{
+                                            "damage":70,
+                                            "critChance":0,
+                                            "critPower":0
+                                        }
+                                    }
+                                }]
                             }
                         }
                     }]

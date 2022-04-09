@@ -82,6 +82,18 @@
         "drawType":"render",
         "drawId":33
     },
+    "icefrozen":{
+        "positionType":"fixed",
+        "movementType":"rise",
+        "movementSpeed":5,
+        "movementTimer":18,
+        "rotationType":"random",
+        "rotationValue":2,
+        "opacity":0.9,
+        "spdOpacity":-0.05,
+        "drawType":"render",
+        "drawId":33
+    },
     "rain":{
         "positionType":"fixed",
         "movementType":"fall",

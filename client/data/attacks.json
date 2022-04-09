@@ -957,6 +957,68 @@
             }
         }]
     },
+    "icytitaniumstaff":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"frozenflames",
+            "param":{
+                "speed":35,
+                "pierce":15,
+                "timer":50,
+                "projectilePattern":"homing",
+                "collisionType":"none",
+                "debuffs":{
+                    "icefrozen":500
+                }
+            }
+        }]
+    },
+    "teneyedspear":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"teneyedspear",
+            "param":{
+                "speed":35,
+                "pierce":15,
+                "timer":50,
+                "projectilePattern":"spear",
+                "collisionType":"none",
+                "attacks":{
+                    "5":[{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":35,
+                            "direction":0,
+                            "timer":50,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":10000,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":35,
+                            "direction":90,
+                            "timer":50,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":10000,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
+                    }]
+                }
+            }
+        }]
+    },
     "valerianwand":{
         "1":[{
             "id":"projectile",
@@ -1294,6 +1356,28 @@
                 "relativeToParent":true,
                 "projectilePattern":"shiv"
             }
+        }]
+    },
+    "spiritsword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"spiritsword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        }],
+        "5":[{
+            "id":"monster",
+            "monsterType":"playerSpirit",
+            "amount":1,
+            "name":"<name>'s Spirit",
+            "selfTeam":true,
+            "timer":500
         }]
     },
     "mysticflames":{
@@ -2051,7 +2135,7 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":3000,
+                    "damage":10000,
                     "critChance":0.05,
                     "critPower":3
                 }
@@ -2068,7 +2152,7 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":75000,
+                    "damage":25000,
                     "critChance":0.05,
                     "critPower":3
                 }
@@ -2085,7 +2169,7 @@
                 "pierce":5,
                 "timer":80,
                 "stats":{
-                    "damage":150000,
+                    "damage":50000,
                     "critChance":0.05,
                     "critPower":3
                 }
