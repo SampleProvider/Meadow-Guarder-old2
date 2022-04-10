@@ -1695,6 +1695,8 @@ Player = function(param,socket){
     self.manaMax = 100;
     self.lastUsedMana = 0;
 
+    self.respawning = false;
+
     self.level = 0;
 
     self.stats = {
@@ -3561,8 +3563,7 @@ Player.onConnect = function(socket,username,chatBanned){
             if(player.hp > 0){
                 return;
             }
-            player.hp = Math.round(player.hpMax / 2);
-            player.invincible = true;
+            player.respawning = true;
             player.knockbackX = 0;
             player.knockbackY = 0;
             player.teleportToSpawn();
@@ -3597,6 +3598,11 @@ Player.onConnect = function(socket,username,chatBanned){
                 player.updateGridPosition();
                 player.updateRegion();
                 player.teleportStage = 'fadeOut';
+                if(player.respawning){
+                    player.hp = Math.round(player.hpMax / 2);
+                    player.invincible = true;
+                    player.respawning = false;
+                }
             }
         });
         socket.on('teleportFadeOut',function(data){
