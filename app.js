@@ -499,7 +499,27 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'announce' && level >= 1 && commandList.length > 1){
 					commandList.splice(0,1);
 					var message = recreateCommand(commandList);
-					globalChat('#00ffff',Player.list[socket.id].name + ' announced: ' + message);
+                    if(message.length > 2000){
+						Player.list[socket.id].sendMessage('[!] That message is too long.');
+                        return;
+                    }
+                    if(Player.list[socket.id].chatBanned){
+                        Player.list[socket.id].sendMessage('[!] You may not type in the chat at this time.');
+                        return;
+                    }
+                    if(Player.list[socket.id].lastChat > 0){
+                        Player.list[socket.id].chatWarnings += 1;
+                    }
+                    Player.list[socket.id].chatWarnings += message.length / 100;
+					globalChat('#00ffff',Player.list[socket.id].name + ' announced: ' + message.replaceAll('|','\\').replaceAll('\n','|n'));
+                    Player.list[socket.id].lastChat = 20;
+                    Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
+                        Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account.');
+                    }
+                    if(Player.list[socket.id].chatWarnings > 7){
+                        socket.disconnectUser();
+                        return;
+                    }
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'rickroll' && level >= 2 && commandList.length > 1){
@@ -1275,9 +1295,30 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'clanmsg' && level >= 0 && commandList.length > 1){
 					commandList.splice(0,1);
-					var name = recreateCommand(commandList);
+					var message = recreateCommand(commandList);
+                    if(message.length > 2000){
+						Player.list[socket.id].sendMessage('[!] That message is too long.');
+                        return;
+                    }
+                    if(Player.list[socket.id].chatBanned){
+                        Player.list[socket.id].sendMessage('[!] You may not type in the chat at this time.');
+                        return;
+                    }
 					if(Player.list[socket.id].clan){
-						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + name,Player.list[socket.id].clan);
+                        if(Player.list[socket.id].lastChat > 0){
+                            Player.list[socket.id].chatWarnings += 1;
+                        }
+                        Player.list[socket.id].chatWarnings += message.length / 100;
+						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + message.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].clan);
+                        Player.list[socket.id].lastChat = 20;
+                        Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
+                        if(Player.list[socket.id].chatWarnings > 5){
+                            Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account.');
+                        }
+                        if(Player.list[socket.id].chatWarnings > 7){
+                            socket.disconnectUser();
+                            return;
+                        }
 					}
 					else{
 						Player.list[socket.id].sendMessage('[!] You are not in a clan.');
@@ -1532,7 +1573,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					}
-					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData);
+					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData.replaceAll('|','\\').replaceAll('\n','|n'));
 					Player.list[socket.id].lastChat = 20;
 					Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
 				}
