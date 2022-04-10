@@ -1120,7 +1120,7 @@ Actor = function(param){
         for(var i in playersPercentage){
             for(var j in self.itemDrops){
                 if(Math.random() < self.itemDrops[j].chance * Player.list[i].luck){
-                    var amount = Math.round(self.itemDrops[j].amount * (Math.random() + 0.5) * Player.list[i].luck * playersPercentage[i]);
+                    var amount = Math.ceil(self.itemDrops[j].amount * (Math.random() + 0.5) * Player.list[i].luck * playersPercentage[i]);
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
