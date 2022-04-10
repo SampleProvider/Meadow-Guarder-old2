@@ -3815,7 +3815,7 @@ Projectile = function(param){
             pierce:param.pierce !== undefined ? param.pierce : 1,
             timer:param.timer !== undefined ? param.timer : 40,
             relativeToParent:param.relativeToParent !== undefined ? param.relativeToParent : false,
-            parentType:param.parentType !== undefined ? param.parentType : self.type,
+            parentType:param.parentType !== undefined ? param.parentType : self.parentType,
             projectilePattern:param.projectilePattern !== undefined ? param.projectilePattern : false,
             collisionType:param.collisionType !== undefined ? param.collisionType : false,
             zindex:param.zindex !== undefined ? param.zindex : self.zindex,
