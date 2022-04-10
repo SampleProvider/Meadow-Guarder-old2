@@ -1501,7 +1501,7 @@ Actor = function(param){
                         if(data.name){
                             monster.name = data.name.replaceAll('<name>',self.name);
                         }
-                        if(data.sameTeam){
+                        if(data.selfTeam){
                             monster.team = self.team;
                         }
                         if(data.timer){
@@ -3802,7 +3802,7 @@ Projectile = function(param){
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
             parent:param.id !== undefined ? param.id : self.id,
-            parentName:self.name,
+            parentName:self.parentName,
             x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
             y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
             spdX:param.speed !== undefined ? Math.cos(direction) * param.speed : Math.cos(direction) * 20,
@@ -4027,7 +4027,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(Math.abs(direction) - Math.abs(nearestDirection)) < 30 && self.getDistance(Player.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Player.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
@@ -4052,7 +4052,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(Math.abs(direction) - Math.abs(nearestDirection)) < 30 && self.getDistance(Monster.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Player.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];

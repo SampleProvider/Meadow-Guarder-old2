@@ -984,7 +984,7 @@
                 "projectilePattern":"spear",
                 "collisionType":"none",
                 "attacks":{
-                    "5":[{
+                    "10":[{
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
