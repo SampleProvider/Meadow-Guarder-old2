@@ -3563,6 +3563,9 @@ Player.onConnect = function(socket,username,chatBanned){
             if(player.hp > 0){
                 return;
             }
+            if(player.respawning){
+                return;
+            }
             player.respawning = true;
             player.knockbackX = 0;
             player.knockbackY = 0;
