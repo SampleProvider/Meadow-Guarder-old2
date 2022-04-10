@@ -514,6 +514,7 @@ io.sockets.on('connection',function(socket){
 					globalChat('#00ffff',Player.list[socket.id].name + ' announced: ' + message.replaceAll('|','\\').replaceAll('\n','|n'));
                     Player.list[socket.id].lastChat = 20;
                     Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
+                    if(Player.list[socket.id].chatWarnings > 5){
                         Player.list[socket.id].sendMessage('[!] Spamming the chat has been detected on this account.');
                     }
                     if(Player.list[socket.id].chatWarnings > 7){
