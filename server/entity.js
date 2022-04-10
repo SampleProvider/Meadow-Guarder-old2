@@ -4027,7 +4027,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Player.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Player.list[i]) < nearestDistance / 2){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
@@ -4052,7 +4052,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Monster.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Monster.list[i]) < nearestDistance / 2){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
