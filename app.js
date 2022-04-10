@@ -1549,9 +1549,13 @@ io.sockets.on('connection',function(socket){
 			socket.disconnectUser();
 		}
 	});
+	socket.on('ping',function(data){
+        socket.emit('ping');
+	});
 });
 
 setInterval(function(){
+    tps += 1;
     var pack = {};
 	var invisPack = {};
     for(var i in Projectile.list){
@@ -2042,6 +2046,15 @@ setInterval(function(){
 	}
 	weatherLastChanged += 1;
 },1000 / 20);
+
+var tps = 0;
+
+setInterval(function(){
+    for(var i in SOCKET_LIST){
+        SOCKET_LIST[i].emit('tps',tps);
+    }
+    tps = 0;
+},1000);
 
 setInterval(function(){
 	storeDatabase();

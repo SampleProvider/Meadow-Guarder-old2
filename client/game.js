@@ -1230,6 +1230,21 @@ var loop = function(){
     window.requestAnimationFrame(loop);
 }
 
+socket.emit('ping');
+
+var startDate = new Date().getTime();
+
+socket.on('ping',function(data){
+    var date = new Date().getTime();
+    socket.emit('ping');
+    pingDisplay.innerHTML = date - startDate;
+    startDate = new Date().getTime();
+});
+
+socket.on('tps',function(data){
+    tpsDisplay.innerHTML = data;
+});
+
 socket.on("nextReload",function(){
     for(var i in inventory.items){
         if(inventory.items[i]){
