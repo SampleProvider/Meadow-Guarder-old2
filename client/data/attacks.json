@@ -994,7 +994,7 @@
                             "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
-                                "damage":20000,
+                                "damage":35000,
                                 "critChance":0,
                                 "critPower":0
                             }
@@ -1009,7 +1009,7 @@
                             "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
-                                "damage":20000,
+                                "damage":35000,
                                 "critChance":0,
                                 "critPower":0
                             }

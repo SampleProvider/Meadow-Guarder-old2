@@ -1404,6 +1404,9 @@ Actor = function(param){
                 self.stats.defense += debuffData[id].defense;
             }
             if(debuffData[id].movementSpeed !== undefined){
+                if(self.attackState === 'retreat'){
+                    self.maxSpeed += debuffData[id].movementSpeed;
+                }
                 self.maxSpeed += debuffData[id].movementSpeed;
             }
             if(debuffData[id].luck !== undefined){
@@ -1472,6 +1475,9 @@ Actor = function(param){
                     self.stats.defense -= debuffData[i].defense;
                 }
                 if(debuffData[i].movementSpeed !== undefined){
+                    if(self.attackState === 'retreat'){
+                        self.maxSpeed -= debuffData[i].movementSpeed;
+                    }
                     self.maxSpeed -= debuffData[i].movementSpeed;
                 }
                 if(debuffData[i].luck !== undefined){
@@ -3801,7 +3807,7 @@ Projectile = function(param){
         direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
-            parent:param.id !== undefined ? param.id : self.id,
+            parent:param.id !== undefined ? param.id : self.parent,
             parentName:self.parentName,
             x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
             y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
@@ -4009,6 +4015,7 @@ Projectile = function(param){
             var nearestEntity = null;
             var nearestDirection = 0;
             var nearestDistance = 0;
+            var bossMonster = false;
             for(var i in Player.list){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
                     var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180 - self.direction;
@@ -4027,7 +4034,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Player.list[i]) < nearestDistance / 2){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 3){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
@@ -4052,10 +4059,20 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) || self.getDistance(Monster.list[i]) < nearestDistance / 2){
-                        nearestDirection = direction;
-                        nearestDistance = self.getDistance(Monster.list[i]);
-                        nearestEntity = Monster.list[i];
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 3 || (self.getDistance(Monster.list[i]) < nearestDistance * 3 && Monster.list[i].boss === true)){
+                        if(Monster.list[i].boss === true){
+                            bossMonster = true;
+                            nearestDirection = direction;
+                            nearestDistance = self.getDistance(Monster.list[i]);
+                            nearestEntity = Monster.list[i];
+                        }
+                        else{
+                            if(bossMonster === false){
+                                nearestDirection = direction;
+                                nearestDistance = self.getDistance(Monster.list[i]);
+                                nearestEntity = Monster.list[i];
+                            }
+                        }
                     }
                 }
             }
@@ -4523,6 +4540,56 @@ Monster = function(param){
             else{
                 self.retreat();
                 return;
+            }
+        }
+        else if(self.attackState === 'retreat'){
+            if(self.maxSpeed <= 0){
+                self.target = null;
+                self.targetType = null;
+                for(var i in Player.list){
+                    if(Player.list[i].map === self.map){
+                        if(Player.list[i].team !== self.team){
+                            if(Player.list[i].hp > 0){
+                                if(Player.list[i].regionChanger.noMonster === false){
+                                    if(self.getSquareDistance(Player.list[i]) < 8){
+                                        if(self.canSee(Player.list[i])){
+                                            if(Player.list[i]){
+                                                self.target = i;
+                                                self.targetType = 'Player';
+                                                self.attackState = 'attack';
+                                                self.damaged = false;
+                                                self.targetLeftView = 0;
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if(self.attackMonsters){
+                    for(var i in Monster.list){
+                        if(Monster.list[i].map === self.map){
+                            if(Monster.list[i].team !== self.team){
+                                if(Monster.list[i].hp > 0){
+                                    if(self.getSquareDistance(Monster.list[i]) < 8){
+                                        if(self.canSee(Monster.list[i])){
+                                            if(Monster.list[i]){
+                                                self.target = i;
+                                                self.targetType = 'Monster';
+                                                self.attackState = 'attack';
+                                                self.damaged = false;
+                                                self.targetLeftView = 0;
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

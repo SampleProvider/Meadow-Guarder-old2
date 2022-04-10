@@ -1394,6 +1394,127 @@
             }
         }
     },
+    "spiritbat":{
+        "name":"Spirit Bat",
+        "hpMax":1250000,
+        "stats":{
+            "damage":0,
+            "defense":0,
+            "hpRegen":0,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":25,
+        "knockbackResistance":1,
+        "drawSize":"large",
+        "team":"Spirit",
+        "itemDrops":{
+            "batwings":{
+                "chance":1,
+                "amount":25
+            },
+            "angelwings":{
+                "chance":1,
+                "amount":25
+            },
+            "mysticopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "redopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "orangeopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "yellowopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "limeopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "cyanopal":{
+                "chance":0.5,
+                "amount":3
+            },
+            "blueopal":{
+                "chance":0.5,
+                "amount":3
+            }
+        },
+        "img":{
+            "body":"Spirit Bat"
+        },
+        "boss":false,
+        "xpDrop":0,
+        "coinDrop":0,
+        "circleDistance":0,
+        "phase":"phase1",
+        "phases":{
+            "phase1":{
+                "mainAttackData":{
+                    "20":[{
+                        "id":"projectile",
+                        "projectileType":"darkflames",
+                        "param":{
+                            "speed":35,
+                            "relativeToParent":false,
+                            "projectilePattern":"waraxe",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":35,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
+                    }],
+                    "40":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
+                        }
+                    }]
+                },
+                "changePhase":{
+                    "hp":250000,
+                    "nextPhases":["phase2"]
+                }
+            },
+            "phase2":{
+                "mainAttackData":{
+                    "5":[{
+                        "id":"projectile",
+                        "projectileType":"darkflames",
+                        "param":{
+                            "speed":35,
+                            "relativeToParent":false,
+                            "projectilePattern":"waraxe",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":35,
+                                "critChance":0,
+                                "critPower":0
+                            }
+                        }
+                    }],
+                    "20":[{
+                        "id":"dash",
+                        "param":{
+                            "directionDeviation":15
+                        }
+                    }]
+                },
+                "changePhase":{
+                    "hp":0,
+                    "nextPhases":["phase2"]
+                }
+            }
+        }
+    },
     "spirit":{
         "name":"Spirit",
         "hpMax":100000000,
@@ -1407,7 +1528,7 @@
         "maxSpeed":5,
         "knockbackResistance":1,
         "drawSize":"medium",
-        "team":"Undead",
+        "team":"Spirit",
         "itemDrops":{
             "batwings":{
                 "chance":1,
@@ -1524,7 +1645,7 @@
                     }],
                     "100":[{
                         "id":"monster",
-                        "monsterType":"skeletonking",
+                        "monsterType":"spiritbat",
                         "amount":1
                     }]
                 },
@@ -1552,12 +1673,8 @@
                     }],
                     "150":[{
                         "id":"monster",
-                        "monsterType":"skeletonking",
-                        "amount":2
-                    },{
-                        "id":"monster",
-                        "monsterType":"skeletonmage",
-                        "amount":1
+                        "monsterType":"spiritbat",
+                        "amount":3
                     }]
                 },
                 "changePhase":{
@@ -1584,12 +1701,8 @@
                     }],
                     "150":[{
                         "id":"monster",
-                        "monsterType":"skeletonking",
-                        "amount":3
-                    },{
-                        "id":"monster",
-                        "monsterType":"skeletonmage",
-                        "amount":2
+                        "monsterType":"spiritbat",
+                        "amount":5
                     }]
                 },
                 "changePhase":{
@@ -1616,16 +1729,8 @@
                     }],
                     "150":[{
                         "id":"monster",
-                        "monsterType":"skeletonking",
-                        "amount":5
-                    },{
-                        "id":"monster",
-                        "monsterType":"skeletonmage",
-                        "amount":3
-                    },{
-                        "id":"monster",
-                        "monsterType":"orcking",
-                        "amount":1
+                        "monsterType":"spiritbat",
+                        "amount":10
                     }]
                 },
                 "changePhase":{
@@ -1637,7 +1742,7 @@
     },
     "playerSpirit":{
         "name":"Spirit",
-        "hpMax":10000,
+        "hpMax":25000,
         "stats":{
             "damage":0,
             "defense":0,
@@ -1671,7 +1776,7 @@
                             "projectilePattern":"waraxe",
                             "collisionType":"none",
                             "stats":{
-                                "damage":25000,
+                                "damage":35000,
                                 "critChance":0.01,
                                 "critPower":10
                             }
