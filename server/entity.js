@@ -18,7 +18,17 @@ var xpLevels = [
     550000,
     780000,
     1000000,
-    10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+    25000000,
+    35000000,
+    50000000,
+    75000000,
+    100000000,
+    125000000,
+    165000000,
+    200000000,
+    250000000,
+    350000000,
+    500000000,
 ];
 
 var hpLevels = [
@@ -42,7 +52,17 @@ var hpLevels = [
     505,
     565,
     630,
-    10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+    700,
+    750,
+    860,
+    990,
+    1100,
+    1250,
+    1400,
+    1600,
+    1830,
+    2000,
+    2500,
 ];
 
 var manaLevels = [
@@ -66,7 +86,17 @@ var manaLevels = [
     505,
     565,
     630,
-    10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+    700,
+    750,
+    860,
+    990,
+    1100,
+    1250,
+    1400,
+    1600,
+    1830,
+    2000,
+    2500,
 ];
 
 
@@ -1118,13 +1148,14 @@ Actor = function(param){
             playersPercentage[i] /= totalDamage;
         }
         for(var i in playersPercentage){
+            var gotRareDrop = false;
             for(var j in self.itemDrops){
-                if(Math.random() < self.itemDrops[j].chance * Player.list[i].luck){
+                if(Math.random() < self.itemDrops[j].chance * Player.list[i].luck || Player.list[i].raisedDropChances){
                     var amount = Math.ceil(self.itemDrops[j].amount * (Math.random() + 0.5) * Player.list[i].luck * playersPercentage[i]);
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'greengrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1133,7 +1164,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'greengrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
@@ -1156,6 +1187,11 @@ Actor = function(param){
                         }
                     }
                     else{
+                        if(self.itemDrops[j].chance <= 0.01){
+                            globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + (self.itemDrops[j].chance * 100) + '% Drop Chance!');
+                            amount = self.itemDrops[j].amount;
+                            gotRareDrop = true;
+                        }
                         while(amount > 0){
                             var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
                             amount -= amountRemoved;
@@ -1169,11 +1205,11 @@ Actor = function(param){
                                 allPlayers:false,
                             });
                         }
-                        if(self.itemDrops[j].chance <= 0.01){
-                            globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + (self.itemDrops[j].chance * 100) + '% Drop Chance!');
-                        }
                     }
                 }
+            }
+            if(gotRareDrop){
+                Player.list[i].raisedDropChances = false;
             }
             Player.list[i].xp += parseInt(Math.round((0.8 + Math.random() * 0.4) * self.xpDrop * playersPercentage[i]));
             var coins = parseInt(Math.round((0.8 + Math.random() * 0.4) * self.coinDrop * playersPercentage[i]));
@@ -1735,6 +1771,8 @@ Player = function(param,socket){
     if(param.chatBanned){
         self.chatBanned = param.chatBanned;
     }
+
+    self.raisedDropChances = false;
 
     self.playTime = 0;
 

@@ -39,6 +39,12 @@ Inventory = function(socket,server){
         if(Math.floor(rarity) === 7){
             return '#00ffff';
         }
+        if(Math.floor(rarity) === 8){
+            return '#ff00ff';
+        }
+        if(Math.floor(rarity) === 9){
+            return '#00ff90';
+        }
     }
     self.getTypeColor = function(type){
         if(type === 'Weapon'){

@@ -1138,6 +1138,10 @@
             "greengrape":{
                 "chance":0.01,
                 "amount":1
+            },
+            "purplegrape":{
+                "chance":0.001,
+                "amount":1
             }
         },
         "img":{
@@ -1517,7 +1521,7 @@
     },
     "spirit":{
         "name":"Spirit",
-        "hpMax":100000000,
+        "hpMax":200000000,
         "stats":{
             "damage":0,
             "defense":0,
@@ -1525,7 +1529,7 @@
             "critChance":0,
             "critPower":0
         },
-        "maxSpeed":5,
+        "maxSpeed":55,
         "knockbackResistance":1,
         "drawSize":"medium",
         "team":"Spirit",
@@ -1569,6 +1573,10 @@
             "spiritsword":{
                 "chance":0.01,
                 "amount":1
+            },
+            "spiritbadge":{
+                "chance":0.001,
+                "amount":1
             }
         },
         "img":{
@@ -1599,7 +1607,7 @@
                     }]
                 },
                 "changePhase":{
-                    "hp":50000000,
+                    "hp":150000000,
                     "nextPhases":["phase2"]
                 }
             },
@@ -1619,10 +1627,15 @@
                                 "critPower":0
                             }
                         }
+                    }],
+                    "50":[{
+                        "id":"monster",
+                        "monsterType":"spiritbat",
+                        "amount":1
                     }]
                 },
                 "changePhase":{
-                    "hp":25000000,
+                    "hp":100000000,
                     "nextPhases":["phase3"]
                 }
             },
@@ -1643,14 +1656,14 @@
                             }
                         }
                     }],
-                    "100":[{
+                    "35":[{
                         "id":"monster",
                         "monsterType":"spiritbat",
                         "amount":1
                     }]
                 },
                 "changePhase":{
-                    "hp":15000000,
+                    "hp":70000000,
                     "nextPhases":["phase4"]
                 }
             },
@@ -1671,14 +1684,14 @@
                             }
                         }
                     }],
-                    "150":[{
+                    "50":[{
                         "id":"monster",
                         "monsterType":"spiritbat",
                         "amount":3
                     }]
                 },
                 "changePhase":{
-                    "hp":10000000,
+                    "hp":50000000,
                     "nextPhases":["phase5"]
                 }
             },
@@ -1699,14 +1712,14 @@
                             }
                         }
                     }],
-                    "150":[{
+                    "40":[{
                         "id":"monster",
                         "monsterType":"spiritbat",
                         "amount":5
                     }]
                 },
                 "changePhase":{
-                    "hp":5000000,
+                    "hp":25000000,
                     "nextPhases":["phase6"]
                 }
             },
@@ -1726,11 +1739,6 @@
                                 "critPower":0
                             }
                         }
-                    }],
-                    "150":[{
-                        "id":"monster",
-                        "monsterType":"spiritbat",
-                        "amount":10
                     }]
                 },
                 "changePhase":{
@@ -1800,7 +1808,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":25,
+        "maxSpeed":55,
         "knockbackResistance":1,
         "drawSize":"large",
         "team":"Harmful",
@@ -1823,6 +1831,10 @@
             },
             "teneyedspear":{
                 "chance":0.01,
+                "amount":1
+            },
+            "rubycore":{
+                "chance":0.0005,
                 "amount":1
             }
         },

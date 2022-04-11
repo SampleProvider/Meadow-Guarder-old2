@@ -1031,6 +1031,12 @@ io.sockets.on('connection',function(socket){
 					});
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'raisedrops' && level >= 3){
+					commandList.splice(0,1);
+					Player.list[socket.id].raisedDropChances = true;
+					Player.list[socket.id].sendMessage('[!] Raised drop chances.');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'ipban' && level >= 3 && commandList.length > 1){
 					commandList.splice(0,1);
 					var name = recreateCommand(commandList);
@@ -1510,6 +1516,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/remove [player name] [id] [amount] - Remove items from someone.';
 						message += '\n/givexp [player name] [amount] - Give xp to someone.';
 						message += '\n/giveclanxp [player name] [amount] - Give clan xp to someone.';
+						message += '\n/raisedrops - Get a guaranteed rare drop.';
 						message += '\n/ipban [player name] - IPBan someone.';
 						message += '\n/unipban [player name] - UnIPban someone.';
 						message += '\n/ip [player name] - See someone\'s ip.';

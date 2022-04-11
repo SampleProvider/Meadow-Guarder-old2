@@ -362,7 +362,21 @@ socket.on('update',function(data){
                         else if(j === 'xpMax'){
                             player[j] = Math.max(Math.round(data.player[i][j]),0);
                             if(data.player[i].id === selfId){
-                                xpBarText.innerHTML = player.xp + " / " + player.xpMax;
+                                var xp = player.xp;
+                                var xpMax = player.xpMax;
+                                if(player.xp > 10000000){
+                                    xp = Math.floor(player.xp / 100000) / 10 + 'M';
+                                }
+                                else if(player.xp > 10000){
+                                    xp = Math.floor(player.xp / 100) / 10 + 'K';
+                                }
+                                if(player.xpMax > 10000000){
+                                    xpMax = Math.floor(player.xpMax / 100000) / 10 + 'M';
+                                }
+                                else if(player.xpMax > 10000){
+                                    xpMax = Math.floor(player.xpMax / 100) / 10 + 'K';
+                                }
+                                xpBarText.innerHTML = xp + " / " + xpMax;
                                 xpBarValue.style.width = "" + 150 * player.xp / player.xpMax + "px";
                             }
                         }
