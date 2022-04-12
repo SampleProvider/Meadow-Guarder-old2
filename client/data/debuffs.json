@@ -68,7 +68,7 @@
         "description":"You're frozen solid and can't move!",
         "drawId":33,
         "rarity":1,
-        "movementSpeed":-50,
+        "movementSpeed":-25,
         "particles":{"icefrozen":1}
     },
     "blindness":{

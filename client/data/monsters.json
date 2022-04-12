@@ -1400,7 +1400,7 @@
     },
     "spiritbat":{
         "name":"Spirit Bat",
-        "hpMax":1250000,
+        "hpMax":500000,
         "stats":{
             "damage":0,
             "defense":0,
@@ -1492,7 +1492,7 @@
             "critChance":0,
             "critPower":0
         },
-        "maxSpeed":60,
+        "maxSpeed":35,
         "knockbackResistance":1,
         "drawSize":"medium",
         "team":"Spirit",
@@ -1771,7 +1771,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":60,
+        "maxSpeed":35,
         "knockbackResistance":1,
         "drawSize":"large",
         "team":"Harmful",

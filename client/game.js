@@ -1043,7 +1043,9 @@ var loop = function(){
     if(cameraChanged){
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-        socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        if(!autoAim){
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        }
     }
     // cameraX -= mouseCameraX;
     // cameraY -= mouseCameraY;
@@ -1056,7 +1058,9 @@ var loop = function(){
     if(Player.list[selfId].map === teleportingMap && shadeAmount > 1){
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
-        socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        if(!autoAim){
+            socket.emit('keyPress',{inputId:'direction',state:{x:mouseX,y:mouseY}});
+        }
         if(Player.list[selfId].map === 'World'){
             setWeather(currentWeather);
         }
