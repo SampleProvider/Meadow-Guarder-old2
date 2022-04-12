@@ -5,7 +5,7 @@ var startMGHC = function(){
         return;
     }
     MGHCRunning = true;
-    
+
     var hackedDiv = document.createElement('div');
     gameDiv.appendChild(hackedDiv);
     hackedDiv.style.position = 'absolute';
@@ -467,7 +467,7 @@ var startMGHC = function(){
         if(autoCollectState){
             var pickedUp = false;
             for(var i in DroppedItem.list){
-                if(inventory.hasItem(DroppedItem.list[i].item,1) && inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount)){
+                if(inventory.hasItem(DroppedItem.list[i].item,1) && inventory.hasSpace(DroppedItem.list[i].item,DroppedItem.list[i].amount).hasSpace){
                     pickedUp = true;
                     socket.emit('keyPress',{inputId:'direction',state:{x:DroppedItem.list[i].x - Player.list[selfId].x,y:DroppedItem.list[i].y - Player.list[selfId].y}});
                     socket.emit('keyPress',{inputId:'leftClick',state:true,selectedDroppedItem:i});
