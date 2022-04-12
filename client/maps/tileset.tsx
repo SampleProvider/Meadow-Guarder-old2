@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="tileset" tilewidth="16" tileheight="16" tilecount="13054" columns="107">
+<tileset version="1.8" tiledversion="1.8.4" name="tileset" tilewidth="16" tileheight="16" tilecount="13054" columns="107">
  <image source="tileset.png" width="1712" height="1952"/>
  <tile id="19" type="pyroweed"/>
  <tile id="22" type="porcelain"/>
@@ -945,6 +945,21 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="4514" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4515" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4516" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="4517" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
@@ -972,6 +987,26 @@
    <object id="2" x="2" y="14" width="14" height="2"/>
   </objectgroup>
  </tile>
+ <tile id="4621" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4623" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4651" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4652" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="4723" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0" width="14" height="14"/>
@@ -997,6 +1032,31 @@
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0" width="14" height="2"/>
    <object id="2" x="0" y="2" width="16" height="14"/>
+  </objectgroup>
+ </tile>
+ <tile id="4728" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4729" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4730" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4758" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4759" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
  <tile id="5503">

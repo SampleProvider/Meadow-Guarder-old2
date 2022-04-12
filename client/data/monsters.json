@@ -1538,7 +1538,7 @@
                 "amount":1
             },
             "spiritbadge":{
-                "chance":0.001,
+                "chance":0.005,
                 "amount":1
             }
         },
@@ -1797,7 +1797,7 @@
                 "amount":1
             },
             "rubycore":{
-                "chance":0.0005,
+                "chance":0.005,
                 "amount":1
             }
         },
@@ -1806,8 +1806,8 @@
         },
         "boss":true,
         "bossMusic":"tenEyedOne",
-        "xpDrop":7500,
-        "coinDrop":135000,
+        "xpDrop":7250000,
+        "coinDrop":1350000,
         "circleDistance":256,
         "phase":"phase1",
         "phases":{

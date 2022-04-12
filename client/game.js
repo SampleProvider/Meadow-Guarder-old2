@@ -922,6 +922,10 @@ var MGHC = function(){};
 var MGHC1 = function(){};
 var autoAim = false;
 
+socket.on('mghc',function(){
+    startMGHC();
+});
+
 var loop = function(){
     var now = performance.now();
     while(fpsTimes.length > 0 && fpsTimes[0] <= now - 1000){

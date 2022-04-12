@@ -1268,6 +1268,11 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'mghc' && level >= 0){
+					commandList.splice(0,1);
+					socket.emit('mghc');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'clanaccept' && level >= 0){
 					commandList.splice(0,1);
 					if(Player.list[socket.id].invitedClan){
