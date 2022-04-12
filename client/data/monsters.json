@@ -1492,7 +1492,7 @@
             "critChance":0,
             "critPower":0
         },
-        "maxSpeed":55,
+        "maxSpeed":60,
         "knockbackResistance":1,
         "drawSize":"medium",
         "team":"Spirit",
@@ -1546,7 +1546,7 @@
             "body":"Spirit"
         },
         "boss":true,
-        "xpDrop":0,
+        "xpDrop":150000,
         "coinDrop":0,
         "circleDistance":64,
         "phase":"phase1",
@@ -1771,7 +1771,7 @@
             "critChance":0.05,
             "critPower":5
         },
-        "maxSpeed":55,
+        "maxSpeed":60,
         "knockbackResistance":1,
         "drawSize":"large",
         "team":"Harmful",

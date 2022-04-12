@@ -920,6 +920,7 @@ var decreaseProjectileByParent = function(projectile){
 
 var MGHC = function(){};
 var MGHC1 = function(){};
+var autoAim = false;
 
 var loop = function(){
     var now = performance.now();
@@ -1500,6 +1501,9 @@ document.onkeyup = function(event){
     socket.emit('keyPress',{inputId:key,state:false});
 }
 document.onmousemove = function(event){
+    if(autoAim){
+        return;
+    }
     onGesture();
     if(selfId){
         var x = -cameraX - Player.list[selfId].x + event.clientX;

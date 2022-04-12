@@ -232,6 +232,27 @@ autoRespawn.onclick = function(){
     }
 };
 
+var autoCollect = document.createElement('button');
+autoCollect.className = 'UI-button';
+autoCollect.style.position = 'static';
+autoCollect.style.top = '8px';
+autoCollect.style.width = '100%';
+autoCollect.innerHTML = 'Auto Collect';
+autoColumn.appendChild(autoCollect);
+
+var autoCollectState = false;
+autoCollect.onclick = function(){
+    autoCollectState = !autoCollectState;
+    if(autoCollectState){
+        autoCollect.style.color = '#ffffff';
+        autoCollect.style.backgroundColor = '#725640';
+    }
+    else{
+        autoCollect.style.color = '#ffffff';
+        autoCollect.style.backgroundColor = '#362a1e';
+    }
+};
+
 var otherColumn = document.createElement('div');
 otherColumn.className = 'UI-display';
 hackedDiv.appendChild(otherColumn);
@@ -436,6 +457,19 @@ MGHC = function(){
         }
         ctx1.restore();
     }
+    if(autoCollectState){
+        var pickedUp = false;
+        for(var i in DroppedItem.list){
+            if(inventory.hasItem(DroppedItem.list[i].item,1)){
+                pickedUp = true;
+                socket.emit('keyPress',{inputId:'direction',state:{x:DroppedItem.list[i].x - Player.list[selfId].x,y:DroppedItem.list[i].y - Player.list[selfId].y}});
+                socket.emit('keyPress',{inputId:'leftClick',state:true,selectedDroppedItem:i});
+            }
+        }
+        if(pickedUp === true){
+            socket.emit('keyPress',{inputId:'leftClick',state:false});
+        }
+    }
     autoAim = false;
     if(attackMonstersState){
         var closestMonster = undefined;
@@ -497,6 +531,7 @@ MGHC1 = function(){
 
 var onkeydown = document.onkeydown;
 document.onkeydown = function(event){
+    onkeydown(event);
     if(chatPress){
         return;
     }
@@ -518,17 +553,12 @@ document.onkeydown = function(event){
 };
 var onkeyup = document.onkeyup;
 document.onkeyup = function(event){
+    onkeyup(event);
     if(chatPress){
         return;
     }
     var key = event.key || event.keyCode;
     keys[key] = false;
-};
-var onmousemove = document.onmousemove;
-document.onmousemove = function(event){
-    if(autoAim){
-        return;
-    }
 };
 
 socket.removeListener('death');
