@@ -1410,46 +1410,9 @@
         },
         "maxSpeed":25,
         "knockbackResistance":1,
-        "drawSize":"large",
+        "drawSize":"small",
         "team":"Spirit",
-        "itemDrops":{
-            "batwings":{
-                "chance":1,
-                "amount":25
-            },
-            "angelwings":{
-                "chance":1,
-                "amount":25
-            },
-            "mysticopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "redopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "orangeopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "yellowopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "limeopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "cyanopal":{
-                "chance":0.5,
-                "amount":3
-            },
-            "blueopal":{
-                "chance":0.5,
-                "amount":3
-            }
-        },
+        "itemDrops":{},
         "img":{
             "body":"Spirit Bat"
         },
