@@ -389,6 +389,16 @@
                         "amount":50
                     }
                 ]
+            },
+            {
+                "id":"bluebadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"meteoritecoin",
+                        "amount":50
+                    }
+                ]
             }
         ]
     },
@@ -476,6 +486,96 @@
                 "materials":[
                     {
                         "id":"lead",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondsword",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondstaff",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondwaraxe",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondclaw",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondbow",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondgun",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"diamondchestplate",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"fakegreengrape",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"greengrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"fakepurplegrape",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"purplegrape",
                         "amount":1
                     }
                 ]
@@ -712,6 +812,16 @@
         "shop":[
             {
                 "id":"mysticscales",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":50
+                    }
+                ]
+            },
+            {
+                "id":"thornyhide",
                 "amount":1,
                 "materials":[
                     {
