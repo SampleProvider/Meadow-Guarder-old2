@@ -1155,7 +1155,7 @@ Actor = function(param){
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1164,7 +1164,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
