@@ -4522,15 +4522,13 @@ Monster = function(param){
                         if(Monster.list[i].team !== self.team){
                             if(Monster.list[i].hp > 0){
                                 if(self.getSquareDistance(Monster.list[i]) < 8 && Monster.list[i].getSquareDistance(self.randomPos) <= 48){
-                                    if(self.canSee(Monster.list[i])){
-                                        if(Monster.list[i]){
-                                            self.target = i;
-                                            self.targetType = 'Monster';
-                                            self.attackState = 'attack';
-                                            self.damaged = false;
-                                            self.targetLeftView = 0;
-                                            return;
-                                        }
+                                    if(Monster.list[i]){
+                                        self.target = i;
+                                        self.targetType = 'Monster';
+                                        self.attackState = 'attack';
+                                        self.damaged = false;
+                                        self.targetLeftView = 0;
+                                        return;
                                     }
                                 }
                             }
