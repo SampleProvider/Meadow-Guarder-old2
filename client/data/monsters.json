@@ -1140,7 +1140,15 @@
                 "amount":1
             },
             "purplegrape":{
+                "chance":0.005,
+                "amount":1
+            },
+            "redgrape":{
                 "chance":0.001,
+                "amount":1
+            },
+            "mysticgrape":{
+                "chance":0.0005,
                 "amount":1
             }
         },

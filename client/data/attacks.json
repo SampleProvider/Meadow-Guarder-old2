@@ -1356,6 +1356,63 @@
             }
         }]
     },
+    "purpleaxeoftheorcking":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"axeoftheorcking",
+            "param":{
+                "speed":50,
+                "directionDeviation":5,
+                "spin":50,
+                "pierce":5,
+                "timer":80,
+                "relativeToParent":false,
+                "projectilePattern":"waraxe",
+                "collisionType":"sticky",
+                "debuffs":{
+                    "purpleorcking":200
+                }
+            }
+        }]
+    },
+    "redaxeoftheorcking":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"axeoftheorcking",
+            "param":{
+                "speed":50,
+                "directionDeviation":5,
+                "spin":50,
+                "pierce":10,
+                "timer":80,
+                "relativeToParent":false,
+                "projectilePattern":"waraxe",
+                "collisionType":"none",
+                "debuffs":{
+                    "fieryorcking":200
+                }
+            }
+        }]
+    },
+    "mysticaxeoftheorcking":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"axeoftheorcking",
+            "param":{
+                "speed":50,
+                "directionDeviation":5,
+                "spin":50,
+                "pierce":15,
+                "timer":80,
+                "relativeToParent":false,
+                "projectilePattern":"waraxe",
+                "collisionType":"none",
+                "debuffs":{
+                    "mysticorcking":250
+                }
+            }
+        }]
+    },
     "thornedbow":{
         "1":[{
             "id":"projectile",

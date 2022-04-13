@@ -93,6 +93,29 @@
         "defense":-125,
         "hpRegen":-333333
     },
+    "purpleorcking":{
+        "name":"Purple Orc King",
+        "drawId":146,
+        "rarity":5,
+        "defense":-250,
+        "hpRegen":-666666
+    },
+    "fieryorcking":{
+        "name":"Fiery Orc King",
+        "drawId":146,
+        "rarity":4,
+        "defense":-250,
+        "hpRegen":-999999,
+        "movementSpeed":-4
+    },
+    "mysticorcking":{
+        "name":"Mystic Orc King",
+        "drawId":146,
+        "rarity":7,
+        "defense":-450,
+        "hpRegen":-1999999,
+        "movementSpeed":-4
+    },
     "porcelainberry":{
         "name":"Porcelain Berry",
         "drawId":594,

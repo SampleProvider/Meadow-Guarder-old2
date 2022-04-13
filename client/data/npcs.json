@@ -399,6 +399,48 @@
                         "amount":50
                     }
                 ]
+            },
+            {
+                "id":"purpleaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"axeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"purplegrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"redaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"purpleaxeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"redgrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"mysticaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"redaxeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"mysticgrape",
+                        "amount":1
+                    }
+                ]
             }
         ]
     },
@@ -556,26 +598,6 @@
                 "materials":[
                     {
                         "id":"diamondchestplate",
-                        "amount":1
-                    }
-                ]
-            },
-            {
-                "id":"fakegreengrape",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"greengrape",
-                        "amount":1
-                    }
-                ]
-            },
-            {
-                "id":"fakepurplegrape",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"purplegrape",
                         "amount":1
                     }
                 ]
