@@ -1150,7 +1150,7 @@ Actor = function(param){
         for(var i in playersPercentage){
             var gotRareDrop = false;
             for(var j in self.itemDrops){
-                if(Math.random() < self.itemDrops[j].chance * Player.list[i].luck || Player.list[i].raisedDropChances){
+                if(Math.random() < self.itemDrops[j].chance * playersPercentage[i] * Player.list[i].luck || Player.list[i].raisedDropChances){
                     var amount = Math.ceil(self.itemDrops[j].amount * (Math.random() + 0.5) * Player.list[i].luck * playersPercentage[i]);
                     if(j === 'random'){
                         var numItems = 0;
