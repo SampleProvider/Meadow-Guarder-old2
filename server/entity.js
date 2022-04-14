@@ -1195,14 +1195,16 @@ Actor = function(param){
                                     chance = chance.slice(0,chance.length - 1);
                                 }
                                 else if(k < 6){
-                                    chance = chance.slice(0,chance.length - 1);
                                     break;
+                                }
+                                else{
+                                    chance = chance.slice(0,chance.length - 1);
                                 }
                             }
                             globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + chance + '% Drop Chance!');
                             amount = self.itemDrops[j].amount;
                             gotRareDrop = true;
-                            Player.list[i].inventory.addItem(j,amount);
+                            Player.list[i].inventory.addItem(j,Math.ceil(amount));
                         }
                         else{
                             while(amount > 0){
@@ -2437,16 +2439,16 @@ Player = function(param,socket){
             }
         }
         for(var i in self.debuffs){
-            if(debuffData[i].hpMax !== undefined){
-                self.hpMax += debuffData[i].hpMax;
-                self.hp += debuffData[i].hpMax;
+            if(debuffData[i].hp !== undefined){
+                self.hpMax += debuffData[i].hp;
+                self.hp += debuffData[i].hp;
             }
             if(debuffData[i].hpRegen !== undefined){
                 self.stats.hpRegen += debuffData[i].hpRegen;
             }
-            if(debuffData[i].manaMax !== undefined){
-                self.manaMax += debuffData[i].manaMax;
-                self.mana += debuffData[i].manaMax;
+            if(debuffData[i].mana !== undefined){
+                self.manaMax += debuffData[i].mana;
+                self.mana += debuffData[i].mana;
             }
             if(debuffData[i].manaRegen !== undefined){
                 self.stats.manaRegen += debuffData[i].manaRegen;
