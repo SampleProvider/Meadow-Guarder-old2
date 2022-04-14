@@ -1113,6 +1113,26 @@
                 ]
             },
             {
+                "id":"grapejuice",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"greengrape",
+                        "amount":2
+                    }
+                ]
+            },
+            {
+                "id":"orangejuice",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"orange",
+                        "amount":2
+                    }
+                ]
+            },
+            {
                 "id":"goldenshield",
                 "amount":1,
                 "materials":[

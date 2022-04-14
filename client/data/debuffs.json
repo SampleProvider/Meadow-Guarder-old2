@@ -116,6 +116,26 @@
         "hpRegen":-1999999,
         "movementSpeed":-4
     },
+    "orangejuice":{
+        "name":"Orange Juice",
+        "drawId":587,
+        "rarity":7,
+        "defense":12,
+        "movementSpeed":3,
+        "hpRegen":5,
+        "hp":500,
+        "particles":{"orangejuice":1}
+    },
+    "grapejuice":{
+        "name":"Grape Juice",
+        "drawId":589,
+        "rarity":6,
+        "defense":12,
+        "movementSpeed":3,
+        "manaRegen":5,
+        "mana":500,
+        "particles":{"grapejuice":1}
+    },
     "porcelainberry":{
         "name":"Porcelain Berry",
         "drawId":594,

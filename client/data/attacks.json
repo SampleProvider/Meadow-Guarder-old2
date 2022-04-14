@@ -2293,6 +2293,20 @@
             "time":9600
         }]
     },
+    "grapejuice":{
+        "1":[{
+            "id":"debuff",
+            "name":"grapejuice",
+            "time":9600
+        }]
+    },
+    "orangejuice":{
+        "1":[{
+            "id":"debuff",
+            "name":"orangejuice",
+            "time":9600
+        }]
+    },
     "healthpotion":{
         "1":[{
             "id":"none",

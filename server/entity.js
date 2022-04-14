@@ -1194,26 +1194,29 @@ Actor = function(param){
                                 if(chance[k] === '0'){
                                     chance = chance.slice(0,chance.length - 1);
                                 }
-                                else{
+                                else if(k < 10){
                                     break;
                                 }
                             }
                             globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + chance + '% Drop Chance!');
                             amount = self.itemDrops[j].amount;
                             gotRareDrop = true;
+                            Player.list[i].inventory.addItem(j,amount);
                         }
-                        while(amount > 0){
-                            var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
-                            amount -= amountRemoved;
-                            new DroppedItem({
-                                x:self.x,
-                                y:self.y,
-                                map:self.map,
-                                item:j,
-                                amount:amountRemoved,
-                                parent:i,
-                                allPlayers:false,
-                            });
+                        else{
+                            while(amount > 0){
+                                var amountRemoved = Math.ceil(Math.random() * amount / 4 + amount / 4);
+                                amount -= amountRemoved;
+                                new DroppedItem({
+                                    x:self.x,
+                                    y:self.y,
+                                    map:self.map,
+                                    item:j,
+                                    amount:amountRemoved,
+                                    parent:i,
+                                    allPlayers:false,
+                                });
+                            }
                         }
                     }
                 }
@@ -1423,16 +1426,16 @@ Actor = function(param){
         }
         else{
             self.debuffs[id] = {time:time,totalTime:time};
-            if(debuffData[id].hpMax !== undefined){
-                self.hpMax += debuffData[id].hpMax;
-                self.hp += debuffData[id].hpMax;
+            if(debuffData[id].hp !== undefined){
+                self.hpMax += debuffData[id].hp;
+                self.hp += debuffData[id].hp;
             }
             if(debuffData[id].hpRegen !== undefined){
                 self.stats.hpRegen += debuffData[id].hpRegen;
             }
-            if(debuffData[id].manaMax !== undefined){
-                self.manaMax += debuffData[id].manaMax;
-                self.mana += debuffData[id].manaMax;
+            if(debuffData[id].mana !== undefined){
+                self.manaMax += debuffData[id].mana;
+                self.mana += debuffData[id].mana;
             }
             if(debuffData[id].manaRegen !== undefined){
                 self.stats.manaRegen += debuffData[id].manaRegen;
@@ -2153,7 +2156,7 @@ Player = function(param,socket){
         if(self.keyPress.leftClick === true && self.hp > 0 && self.shieldActive === false){
             if(self.inventory.items[self.inventory.hotbarSelectedItem]){
                 if(self.inventory.items[self.inventory.hotbarSelectedItem].id){
-                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Music Box' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Star' || self.canAttack){
+                    if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Tool' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Music Box' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Star' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].type === 'Juice' || self.canAttack){
                         if(Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'consume' || Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].equip === 'hotbar'){
                             if(self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === 0 || self.inventory.items[self.inventory.hotbarSelectedItem].cooldown === undefined){
                                 var hasMana = true;

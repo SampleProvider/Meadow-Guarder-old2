@@ -95,6 +95,9 @@ Inventory = function(socket,server){
         if(type === 'Food'){
             return '#dd9900';
         }
+        if(type === 'Juice'){
+            return '#dd9900';
+        }
         if(type === 'Star'){
             return '#ffff00';
         }

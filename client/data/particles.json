@@ -94,6 +94,30 @@
         "drawType":"render",
         "drawId":33
     },
+    "grapejuice":{
+        "positionType":"fixed",
+        "movementType":"rise",
+        "movementSpeed":5,
+        "movementTimer":18,
+        "rotationType":"random",
+        "rotationValue":2,
+        "opacity":0.9,
+        "spdOpacity":-0.05,
+        "drawType":"render",
+        "drawId":589
+    },
+    "orangejuice":{
+        "positionType":"fixed",
+        "movementType":"rise",
+        "movementSpeed":5,
+        "movementTimer":18,
+        "rotationType":"random",
+        "rotationValue":2,
+        "opacity":0.9,
+        "spdOpacity":-0.05,
+        "drawType":"render",
+        "drawId":587
+    },
     "rain":{
         "positionType":"fixed",
         "movementType":"fall",
