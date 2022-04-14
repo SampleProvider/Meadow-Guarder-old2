@@ -3196,7 +3196,7 @@ Player.onConnect = function(socket,username,chatBanned){
                     player.startQuest(player.dialogueMessage[data].quest);
                 }
                 else if(player.dialogueMessage[data].triggers === 'teleport'){
-                    player.teleport(player.dialogueMessage[data].map,player.dialogueMessage[data].x * 64 + 32,player.dialogueMessage[data].y * 64 + 32);
+                    player.teleport(player.dialogueMessage[data].x * 64 + 32,player.dialogueMessage[data].y * 64 + 32,player.dialogueMessage[data].map);
                 }
             }
         });
