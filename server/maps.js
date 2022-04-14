@@ -202,3 +202,4 @@ loadMap('Maple Cabin');
 loadMap('Lumberjack General Store');
 loadMap('Lumberjack General Store Upstairs');
 loadMap('Forest Fortress Mining Hut');
+loadMap('The Mist');

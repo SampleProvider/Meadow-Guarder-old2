@@ -1,7 +1,7 @@
 var loadedMap = {};
 var mapData = {};
 var numLoaded = 0;
-var totalMaps = 23;
+var totalMaps = 24;
 var tileset = new Image();
 tileset.src = '/client/maps/tileset.png';
 var tilesetLoaded = false;
@@ -215,4 +215,5 @@ var loadAllMaps = function(){
     loadMap('Lumberjack General Store');
     loadMap('Lumberjack General Store Upstairs');
     loadMap('Forest Fortress Mining Hut');
+    loadMap('The Mist');
 }

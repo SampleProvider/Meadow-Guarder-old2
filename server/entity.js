@@ -226,9 +226,9 @@ spawnMonster = function(spawner,spawnId){
                     globalChat('#ffffff','The spirit wall has broken!');
                     spiritWall -= 1;
                     spawnMonster({
-                        x:-3232,
-                        y:-672,
-                        map:'World',
+                        x:0,
+                        y:0,
+                        map:'The Mist',
                         spawnId:'spirit',
                     },null);
                 }
@@ -1155,7 +1155,7 @@ Actor = function(param){
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1164,7 +1164,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'diamondcore' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
@@ -2864,6 +2864,9 @@ Player = function(param,socket){
         if(self.map === 'World'){
             self.worldRegion = self.region;
         }
+        if(regionChanger.mapName !== ''){
+            self.worldRegion = regionChanger.mapName;
+        }
     }
     var getInitPack = self.getInitPack;
     self.getInitPack = function(){
@@ -3191,6 +3194,9 @@ Player.onConnect = function(socket,username,chatBanned){
                 }
                 else if(player.dialogueMessage[data].triggers === 'startQuest'){
                     player.startQuest(player.dialogueMessage[data].quest);
+                }
+                else if(player.dialogueMessage[data].triggers === 'teleport'){
+                    player.teleport(player.dialogueMessage[data].map,player.dialogueMessage[data].x * 64 + 32,player.dialogueMessage[data].y * 64 + 32);
                 }
             }
         });

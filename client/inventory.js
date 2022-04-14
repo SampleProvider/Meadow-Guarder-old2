@@ -40,7 +40,7 @@ Inventory = function(socket,server){
             return '#00ffff';
         }
         if(Math.floor(rarity) === 8){
-            return '#ff00ff';
+            return '#ff0090';
         }
         if(Math.floor(rarity) === 9){
             return '#00ff90';

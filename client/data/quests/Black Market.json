@@ -1,0 +1,63 @@
+{
+    "0":{
+        "dialogue":{
+            "message":"To enter the Black Market you need to prove yourself. Defeat Ten Eyed One.",
+            "option1":"..."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "1":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"monster",
+                "name":"Ten Eyed One",
+                "amount":0,
+                "target":1
+            }
+        ],
+        "questStage":1
+    },
+    "2":{
+        "dialogue":{
+            "message":"I defeated Ten Eyed One!",
+            "option1":"I should return back."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "questStage":1
+            }
+        ]
+    },
+    "3":{
+        "dialogue":{},
+        "tasks":[
+            {
+                "id":"npc",
+                "name":" "
+            }
+        ],
+        "questStage":1
+    },
+    "4":{
+        "dialogue":{
+            "message":"Now you may access the Black Market.",
+            "option1":"..."
+        },
+        "tasks":[
+            {
+                "id":"dialogue",
+                "option":"option1",
+                "triggers":"completeQuest"
+            }
+        ]
+    }
+}

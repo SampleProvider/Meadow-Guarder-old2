@@ -381,64 +381,12 @@
         ],
         "shop":[
             {
-                "id":"redbadge",
+                "id":"batwings",
                 "amount":1,
                 "materials":[
                     {
-                        "id":"meteoritecoin",
-                        "amount":50
-                    }
-                ]
-            },
-            {
-                "id":"bluebadge",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"meteoritecoin",
-                        "amount":50
-                    }
-                ]
-            },
-            {
-                "id":"purpleaxeoftheorcking",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"axeoftheorcking",
-                        "amount":1
-                    },
-                    {
-                        "id":"purplegrape",
-                        "amount":1
-                    }
-                ]
-            },
-            {
-                "id":"redaxeoftheorcking",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"purpleaxeoftheorcking",
-                        "amount":1
-                    },
-                    {
-                        "id":"redgrape",
-                        "amount":1
-                    }
-                ]
-            },
-            {
-                "id":"mysticaxeoftheorcking",
-                "amount":1,
-                "materials":[
-                    {
-                        "id":"redaxeoftheorcking",
-                        "amount":1
-                    },
-                    {
-                        "id":"mysticgrape",
-                        "amount":1
+                        "id":"silvercoin",
+                        "amount":10
                     }
                 ]
             }
@@ -879,6 +827,308 @@
                     {
                         "id":"silvercoin",
                         "amount":10
+                    }
+                ]
+            }
+        ]
+    },
+    " ":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_2 Black",
+            "pants":"Pants_1 Black",
+            "boots":"Boots_1 Black",
+            "hair":"MHair_1 Black",
+            "headwear":"none",
+            "gloves":"Gloves_1 Black",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Black Market":false
+                },
+                "message":["Welcome to the Black Market."],
+                "option1":{
+                    "message":"*Start quest <b>Black Market</b>*",
+                    "triggers":"startQuest",
+                    "quest":"Black Market"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Black Market":1
+                },
+                "message":["Welcome to the Black Market."],
+                "option1":{
+                    "message":"*Enter*",
+                    "triggers":"teleport",
+                    "map":"Forest Fortress Inn",
+                    "x":5,
+                    "y":-45
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ]
+    },
+    "Troy":{
+        "img":{
+            "body":"Human",
+            "shirt":"Shirt_2 Black",
+            "pants":"Pants_1 Black",
+            "boots":"Boots_1 Black",
+            "hair":"MHair_1 Black",
+            "headwear":"none",
+            "gloves":"Gloves_1 Black",
+            "waist":"none"
+        },
+        "showHealthBar":false,
+        "messages":[
+            {
+                "requirements":{
+                    "Black Market":false
+                },
+                "message":["I do not talk to strangers."],
+                "option1":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            },
+            {
+                "requirements":{
+                    "Black Market":1
+                },
+                "message":["Welcome to the Black Market."],
+                "option1":{
+                    "message":"*Open shop*",
+                    "triggers":"shopOpen"
+                },
+                "option2":{
+                    "message":"*End conversation*",
+                    "triggers":"endConversation"
+                }
+            }
+        ],
+        "shop":[
+            {
+                "id":"redbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"rubyring",
+                        "amount":9
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":2
+                    }
+                ]
+            },
+            {
+                "id":"orangebadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"orange",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"yellowbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lemon",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"limebadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lemon",
+                        "amount":1
+                    },
+                    {
+                        "id":"limeopal",
+                        "amount":200
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"cyanbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"diamondcore",
+                        "amount":1
+                    },
+                    {
+                        "id":"cyanopal",
+                        "amount":1000
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"bluebadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"diamondring",
+                        "amount":9
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":2
+                    }
+                ]
+            },
+            {
+                "id":"mysticbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"mysticgrape",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":15
+                    }
+                ]
+            },
+            {
+                "id":"purpleaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"axeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"purplegrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"redaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"purpleaxeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"redgrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"mysticaxeoftheorcking",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"redaxeoftheorcking",
+                        "amount":1
+                    },
+                    {
+                        "id":"mysticgrape",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"lostspiritsword",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"spiritsword",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25
+                    }
+                ]
+            },
+            {
+                "id":"possessedspiritsword",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lostspiritsword",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":125
+                    }
+                ]
+            },
+            {
+                "id":"lightningcore",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lemon",
+                        "amount":1
+                    },
+                    {
+                        "id":"goldendewdrop",
+                        "amount":1000
+                    },
+                    {
+                        "id":"goldenglow",
+                        "amount":1000
+                    }
+                ]
+            },
+            {
+                "id":"goldenshield",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lemon",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"goldenstar",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lemon",
+                        "amount":9
                     }
                 ]
             }

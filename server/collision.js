@@ -188,8 +188,8 @@ Transporter = function(param){
     self.y -= 8;
     self.map = param.map;
     self.teleport = param.teleport;
-    self.teleportx = parseInt(param.teleportx,10) * 64 + 32;
-    self.teleporty = parseInt(param.teleporty,10) * 64 + 32;
+    self.teleportx = parseFloat(param.teleportx,10) * 64 + 32;
+    self.teleporty = parseFloat(param.teleporty,10) * 64 + 32;
     self.teleportdirection = param.teleportdirection;
     if(Transporter.list[self.map]){
         if(Transporter.list[self.map][Math.floor(self.x / 64)]){

@@ -1674,11 +1674,55 @@
         }],
         "5":[{
             "id":"monster",
-            "monsterType":"playerSpirit",
+            "monsterType":"playerspirit",
             "amount":1,
             "name":"<name>'s Spirit",
             "selfTeam":true,
             "timer":500
+        }]
+    },
+    "lostspiritsword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"lostspiritsword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        }],
+        "5":[{
+            "id":"monster",
+            "monsterType":"playerlostspirit",
+            "amount":1,
+            "name":"<name>'s Lost Spirit",
+            "selfTeam":true,
+            "timer":750
+        }]
+    },
+    "possessedspiritsword":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"possessedspiritsword",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":5,
+                "relativeToParent":true,
+                "projectilePattern":"sword",
+                "collisionType":"none"
+            }
+        }],
+        "5":[{
+            "id":"monster",
+            "monsterType":"playerpossessedspirit",
+            "amount":1,
+            "name":"<name>'s Possessed Spirit",
+            "selfTeam":true,
+            "timer":1000
         }]
     },
     "mysticflames":{
@@ -1823,6 +1867,22 @@
                 },
                 "debuffs":{
                     "frozen":500
+                }
+            }
+        }]
+    },
+    "goldlaser":{
+        "15":[{
+            "id":"projectile",
+            "projectileType":"goldenlaser",
+            "param":{
+                "speed":70,
+                "timer":80,
+                "collisionType":"none",
+                "stats":{
+                    "damage":500000,
+                    "critChance":0.05,
+                    "critPower":10
                 }
             }
         }]

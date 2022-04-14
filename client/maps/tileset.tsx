@@ -965,6 +965,23 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="4546" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="7"/>
+   <object id="2" x="0" y="7" width="7" height="9"/>
+  </objectgroup>
+ </tile>
+ <tile id="4547" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="7"/>
+  </objectgroup>
+ </tile>
+ <tile id="4548" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="4">
+   <object id="3" x="0" y="0" width="16" height="7"/>
+   <object id="4" x="9" y="7" width="7" height="9"/>
+  </objectgroup>
+ </tile>
  <tile id="4616" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0" width="14" height="16"/>
@@ -1005,6 +1022,26 @@
  <tile id="4652" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4653" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="7" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4655" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="9" y="0" width="7" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4656" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="9" y="9" width="7" height="7"/>
+  </objectgroup>
+ </tile>
+ <tile id="4657" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="6">
+   <object id="6" x="0" y="9" width="7" height="7"/>
   </objectgroup>
  </tile>
  <tile id="4723" type="noProjectileCollisions">
@@ -1057,6 +1094,29 @@
  <tile id="4759" type="noProjectileCollisions">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="4760" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="7" height="16"/>
+   <object id="2" x="7" y="9" width="9" height="7"/>
+  </objectgroup>
+ </tile>
+ <tile id="4761" type="noProjectileCollisions"/>
+ <tile id="4762" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="0" y="9" width="16" height="7"/>
+   <object id="3" x="9" y="0" width="7" height="9"/>
+  </objectgroup>
+ </tile>
+ <tile id="4763" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="9" y="0" width="7" height="7"/>
+  </objectgroup>
+ </tile>
+ <tile id="4764" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="7" height="7"/>
   </objectgroup>
  </tile>
  <tile id="5503">
@@ -3053,6 +3113,9 @@
    <wangtile tileid="4515" wangid="0,3,0,5,0,5,0,3"/>
    <wangtile tileid="4516" wangid="0,3,0,3,0,5,0,3"/>
    <wangtile tileid="4517" wangid="0,5,0,5,0,5,0,5"/>
+   <wangtile tileid="4546" wangid="0,5,0,6,0,5,0,5"/>
+   <wangtile tileid="4547" wangid="0,5,0,6,0,6,0,5"/>
+   <wangtile tileid="4548" wangid="0,5,0,5,0,6,0,5"/>
    <wangtile tileid="4616" wangid="0,3,0,3,0,4,0,4"/>
    <wangtile tileid="4618" wangid="0,4,0,4,0,3,0,3"/>
    <wangtile tileid="4619" wangid="0,3,0,4,0,3,0,3"/>
@@ -3061,6 +3124,10 @@
    <wangtile tileid="4623" wangid="0,3,0,3,0,5,0,5"/>
    <wangtile tileid="4651" wangid="0,5,0,5,0,5,0,3"/>
    <wangtile tileid="4652" wangid="0,3,0,5,0,5,0,5"/>
+   <wangtile tileid="4653" wangid="0,6,0,6,0,5,0,5"/>
+   <wangtile tileid="4655" wangid="0,5,0,5,0,6,0,6"/>
+   <wangtile tileid="4656" wangid="0,6,0,5,0,6,0,6"/>
+   <wangtile tileid="4657" wangid="0,6,0,6,0,5,0,6"/>
    <wangtile tileid="4723" wangid="0,3,0,4,0,4,0,4"/>
    <wangtile tileid="4724" wangid="0,3,0,4,0,4,0,3"/>
    <wangtile tileid="4725" wangid="0,4,0,4,0,4,0,3"/>
@@ -3071,6 +3138,11 @@
    <wangtile tileid="4730" wangid="0,3,0,3,0,3,0,5"/>
    <wangtile tileid="4758" wangid="0,5,0,5,0,3,0,5"/>
    <wangtile tileid="4759" wangid="0,5,0,3,0,5,0,5"/>
+   <wangtile tileid="4760" wangid="0,6,0,5,0,5,0,5"/>
+   <wangtile tileid="4761" wangid="0,6,0,5,0,5,0,6"/>
+   <wangtile tileid="4762" wangid="0,5,0,5,0,5,0,6"/>
+   <wangtile tileid="4763" wangid="0,5,0,6,0,6,0,6"/>
+   <wangtile tileid="4764" wangid="0,6,0,6,0,6,0,5"/>
   </wangset>
   <wangset name="Elevated" type="corner" tile="0">
    <wangcolor name="Grass" color="#ff0000" tile="0" probability="1"/>

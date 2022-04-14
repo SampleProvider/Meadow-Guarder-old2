@@ -229,6 +229,9 @@ playRegionSong = function(region){
     else if(region === 'Forest Fortress'){
         playOneSong('dewdrop');
     }
+    else if(region === '???'){
+        playOneSong('crystalite');
+    }
 }
 startBossSong = function(songName){
     if(music.name){
