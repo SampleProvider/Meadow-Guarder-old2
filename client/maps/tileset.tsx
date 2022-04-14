@@ -1102,7 +1102,11 @@
    <object id="2" x="7" y="9" width="9" height="7"/>
   </objectgroup>
  </tile>
- <tile id="4761" type="noProjectileCollisions"/>
+ <tile id="4761" type="noProjectileCollisions">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="9" width="16" height="7"/>
+  </objectgroup>
+ </tile>
  <tile id="4762" type="noProjectileCollisions">
   <objectgroup draworder="index" id="3">
    <object id="2" x="0" y="9" width="16" height="7"/>
