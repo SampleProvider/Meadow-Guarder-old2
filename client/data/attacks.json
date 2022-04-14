@@ -1678,6 +1678,7 @@
             "amount":1,
             "name":"<name>'s Spirit",
             "selfTeam":true,
+            "selfParent":true,
             "timer":500
         }]
     },
@@ -1700,6 +1701,7 @@
             "amount":1,
             "name":"<name>'s Lost Spirit",
             "selfTeam":true,
+            "selfParent":true,
             "timer":750
         }]
     },
@@ -1722,6 +1724,7 @@
             "amount":1,
             "name":"<name>'s Possessed Spirit",
             "selfTeam":true,
+            "selfParent":true,
             "timer":1000
         }]
     },

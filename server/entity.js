@@ -1189,16 +1189,18 @@ Actor = function(param){
                     else{
                         if(self.itemDrops[j].chance <= 0.01){
                             var chance = (self.itemDrops[j].chance * playersPercentage[i] * Player.list[i].luck * 100) + '';
-                            chance = chance.slice(0,chance.length - 1);
-                            for(var k = chance.length - 1;k >= 0;k--){
-                                if(chance[k] === '0'){
-                                    chance = chance.slice(0,chance.length - 1);
-                                }
-                                else if(k < 6){
-                                    break;
-                                }
-                                else{
-                                    chance = chance.slice(0,chance.length - 1);
+                            if(chance.length > 3){
+                                chance = chance.slice(0,chance.length - 1);
+                                for(var k = chance.length - 1;k >= 0;k--){
+                                    if(chance[k] === '0'){
+                                        chance = chance.slice(0,chance.length - 1);
+                                    }
+                                    else if(k < 6){
+                                        break;
+                                    }
+                                    else{
+                                        chance = chance.slice(0,chance.length - 1);
+                                    }
                                 }
                             }
                             globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + chance + '% Drop Chance!');
@@ -1315,12 +1317,12 @@ Actor = function(param){
         if(pt.type === 'Projectile'){
             if(pt.debuffs){
                 for(var i in pt.debuffs){
-                    self.addDebuff(i,pt.debuffs[i]);
+                    self.addDebuff(i,pt.debuffs[i],pt.parent);
                 }
             }
         }
         self.hp = Math.round(self.hp);
-        if(pt.type === 'Projectile' && pt.parentType === 'Player'){
+        if(pt.type === 'Projectile'){
             if(self.playersDamaged[pt.parent]){
                 self.playersDamaged[pt.parent] += Math.ceil(hp - Math.max(self.hp,0));
             }
@@ -1364,7 +1366,7 @@ Actor = function(param){
         direction += param.directionDeviation !== undefined ? Math.random() * param.directionDeviation / 180 * Math.PI - param.directionDeviation / 180 * Math.PI / 2 : 0;
         var properties = {
             id:param.sameId !== undefined ? self.id : undefined,
-            parent:param.id !== undefined ? param.id : self.id,
+            parent:param.id !== undefined ? param.id : self.parent !== undefined ? self.parent : self.id,
             parentName:self.name,
             x:param.x !== undefined ? param.x : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * (param.distance + projectileData[projectileType].width * 2) : self.x + Math.cos(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.x + Math.cos(direction) * projectileData[projectileType].width * 2 : self.x + Math.cos(direction) * 48,
             y:param.y !== undefined ? param.y : param.distance !== undefined ? projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * (param.distance + projectileData[projectileType].width * 2) : self.y + Math.sin(direction) * (param.distance + 48) : projectileData[projectileType] !== undefined ? self.y + Math.sin(direction) * projectileData[projectileType].width * 2 : self.y + Math.sin(direction) * 48,
@@ -1418,17 +1420,17 @@ Actor = function(param){
             self.luck = Math.round(self.luck * 100) / 100;
         }
     }
-    self.addDebuff = function(id,time){
+    self.addDebuff = function(id,time,parent){
         if(self.debuffs[id]){
             if(self.debuffs[id].time > time){
-
+                self.debuffs[id] = {time:self.debuffs[id].time,totalTime:self.debuffs[id].totalTime,parent:parent};
             }
             else{
-                self.debuffs[id] = {time:time,totalTime:time};
+                self.debuffs[id] = {time:time,totalTime:time,parent:parent};
             }
         }
         else{
-            self.debuffs[id] = {time:time,totalTime:time};
+            self.debuffs[id] = {time:time,totalTime:time,parent:parent};
             if(debuffData[id].hp !== undefined){
                 self.hpMax += debuffData[id].hp;
                 self.hp += debuffData[id].hp;
@@ -1498,18 +1500,26 @@ Actor = function(param){
     self.updateDebuffs = function(){
         for(var i in self.debuffs){
             self.debuffs[i].time -= 1;
+            if(debuffData[i].hpRegen < 0){
+                if(self.playersDamaged[self.debuffs[i].parent]){
+                    self.playersDamaged[self.debuffs[i].parent] += Math.floor(-debuffData[i].hpRegen / 20);
+                }
+                else{
+                    self.playersDamaged[self.debuffs[i].parent] = Math.floor(-debuffData[i].hpRegen / 20);
+                }
+            }
             if(self.debuffs[i].time <= 0){
                 delete self.debuffs[i];
-                if(debuffData[i].hpMax !== undefined){
-                    self.hpMax -= debuffData[i].hpMax;
-                    self.hp -= debuffData[i].hpMax;
+                if(debuffData[i].hp !== undefined){
+                    self.hpMax -= debuffData[i].hp;
+                    self.hp -= debuffData[i].hp;
                 }
                 if(debuffData[i].hpRegen !== undefined){
                     self.stats.hpRegen -= debuffData[i].hpRegen;
                 }
-                if(debuffData[i].manaMax !== undefined){
-                    self.manaMax -= debuffData[i].manaMax;
-                    self.mana -= debuffData[i].manaMax;
+                if(debuffData[i].mana !== undefined){
+                    self.manaMax -= debuffData[i].mana;
+                    self.mana -= debuffData[i].mana;
                 }
                 if(debuffData[i].manaRegen !== undefined){
                     self.stats.manaRegen -= debuffData[i].manaRegen;
@@ -1562,6 +1572,9 @@ Actor = function(param){
                         if(data.selfTeam){
                             monster.team = self.team;
                         }
+                        if(data.selfParent){
+                            monster.parent = self.id;
+                        }
                         if(data.timer){
                             monster.timer = data.timer;
                         }
@@ -1577,7 +1590,7 @@ Actor = function(param){
                     globalChat('#00ffff',self.name + ' started the music ' + songData[data.songName].name + '.');
                     break;
                 case "debuff":
-                    self.addDebuff(data.name,data.time);
+                    self.addDebuff(data.name,data.time,self.id);
                     break;
                 case "nameChecker":
                     if(self.name === data.name){
@@ -2235,6 +2248,7 @@ Player = function(param,socket){
 
         var hp = self.hp;
         var hpMax = self.hpMax;
+        var mana = self.mana;
         var manaMax = self.manaMax;
 
         self.hpMax = hpLevels[self.level];
@@ -2441,14 +2455,12 @@ Player = function(param,socket){
         for(var i in self.debuffs){
             if(debuffData[i].hp !== undefined){
                 self.hpMax += debuffData[i].hp;
-                self.hp += debuffData[i].hp;
             }
             if(debuffData[i].hpRegen !== undefined){
                 self.stats.hpRegen += debuffData[i].hpRegen;
             }
             if(debuffData[i].mana !== undefined){
                 self.manaMax += debuffData[i].mana;
-                self.mana += debuffData[i].mana;
             }
             if(debuffData[i].manaRegen !== undefined){
                 self.stats.manaRegen += debuffData[i].manaRegen;
@@ -2578,10 +2590,10 @@ Player = function(param,socket){
         }
 
         if(hp > 0){
-            self.hp += self.hpMax - hpMax;
+            self.hp = self.hpMax - hpMax + hp;
         }
 
-        self.mana += self.manaMax - manaMax;
+        self.mana = self.manaMax - manaMax + mana;
 
         if(self.hp <= 0 && hp > 0){
             self.onDeath(self,'self');
