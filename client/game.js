@@ -1498,7 +1498,7 @@ document.onkeydown = function(event){
         event.preventDefault();
     }
     if(key === '1'){
-        inventory.hotbarSelectedItem = 1;
+        inventory.hotbarSelectedItem = 0;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1509,7 +1509,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '2'){
-        inventory.hotbarSelectedItem = 2;
+        inventory.hotbarSelectedItem = 1;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1520,7 +1520,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '3'){
-        inventory.hotbarSelectedItem = 3;
+        inventory.hotbarSelectedItem = 2;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1531,7 +1531,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '4'){
-        inventory.hotbarSelectedItem = 4;
+        inventory.hotbarSelectedItem = 3;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1542,7 +1542,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '5'){
-        inventory.hotbarSelectedItem = 5;
+        inventory.hotbarSelectedItem = 4;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1553,7 +1553,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '6'){
-        inventory.hotbarSelectedItem = 6;
+        inventory.hotbarSelectedItem = 5;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1564,7 +1564,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '7'){
-        inventory.hotbarSelectedItem = 7;
+        inventory.hotbarSelectedItem = 6;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1575,7 +1575,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '8'){
-        inventory.hotbarSelectedItem = 8;
+        inventory.hotbarSelectedItem = 7;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
@@ -1586,7 +1586,7 @@ document.onkeydown = function(event){
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
     if(key === '9'){
-        inventory.hotbarSelectedItem = 9;
+        inventory.hotbarSelectedItem = 8;
         var hotbarSlots = document.getElementsByClassName('hotbarSlot');
         for(var i = 0;i < hotbarSlots.length;i++){
             hotbarSlots[i].style.border = '1px solid #000000';
