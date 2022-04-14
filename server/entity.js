@@ -1133,7 +1133,7 @@ Actor = function(param){
                 for(var j in Player.list[i].questTasks){
                     if(Player.list[i].questTasks[j].id === 'monster' && Player.list[i].questTasks[j].name === self.name){
                         Player.list[i].questTasks[j].amount += 1;
-                        if(Player.list[i].questTasks[j].amount === Player.list[i].questTasks[j].target){
+                        if(Player.list[i].questTasks[j].amount >= Player.list[i].questTasks[j].target){
                             Player.list[i].questTasks[j].completed = true;
                             Player.list[i].updateQuest(Player.list[i]);
                         }
