@@ -1188,7 +1188,17 @@ Actor = function(param){
                     }
                     else{
                         if(self.itemDrops[j].chance <= 0.01){
-                            globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + (self.itemDrops[j].chance * 100) + '% Drop Chance!');
+                            var chance = (self.itemDrops[j].chance * playersPercentage[i] * Player.list[i].luck * 100) + '';
+                            chance = chance.slice(0,chance.length - 1);
+                            for(var k = chance.length - 1;k >= 0;k--){
+                                if(chance[k] === '0'){
+                                    chance = chance.slice(0,chance.length - 1);
+                                }
+                                else{
+                                    break;
+                                }
+                            }
+                            globalChat('#00ffff','RARE DROP! ' + Player.list[i].name + ' got ' + Item.list[j].name + '! ' + chance + '% Drop Chance!');
                             amount = self.itemDrops[j].amount;
                             gotRareDrop = true;
                         }
