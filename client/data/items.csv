@@ -295,6 +295,8 @@ mysticbook,Mystic Book,5.0,,5.0,0.00,435,false,1000,consume,Book,0,0,0,0,0.00,0.
 pinkbook,Pink Book,4.5,,4.5,0.00,436,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,pinkbook,none,none,none,0.00,,
 book,Book,0.0,,0.0,0.00,437,false,1000,none,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,
 blackbook,Black Book,0.0,,0.0,0.00,438,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,blackbook,none,none,none,0.00,,
+midnightbook,Midnight Book,0.0,,0.0,0.00,438,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,midnightbook,none,none,none,0.00,As dark as the night sky...,
+bookofdeath,Book of Death,0.0,,0.0,0.00,438,false,1000,consume,Book,0,0,0,0,0.00,0.00,0,20,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,bookofdeath,none,none,none,0.00,OG rank if you remember this.,
 coal,Coal,0.0,,0.0,0.00,442,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,
 copperore,Copper Ore,0.5,,0.5,0.00,443,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,
 ironore,Iron Ore,1.0,,1.0,0.00,444,false,1000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0.00,0,0,0,0.00,none,none,none,none,0.00,,

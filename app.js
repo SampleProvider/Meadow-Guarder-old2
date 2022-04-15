@@ -1321,7 +1321,13 @@ io.sockets.on('connection',function(socket){
                             Player.list[socket.id].chatWarnings += 1;
                         }
                         Player.list[socket.id].chatWarnings += message.length / 100;
-						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + message.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].clan);
+						var rank = '';
+						var rankColor = '';
+						if(debugData[Player.list[socket.id].username]){
+							rank = debugData[Player.list[socket.id].username].rank;
+							rankColor = debugData[Player.list[socket.id].username].rankColor;
+						}
+						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + message.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].clan,rank,rankColor);
                         Player.list[socket.id].lastChat = 20;
                         Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
                         if(Player.list[socket.id].chatWarnings > 5){
@@ -1586,7 +1592,13 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					}
-					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData.replaceAll('|','\\').replaceAll('\n','|n'));
+					var rank = '';
+					var rankColor = '';
+					if(debugData[Player.list[socket.id].username]){
+						rank = debugData[Player.list[socket.id].username].rank;
+						rankColor = debugData[Player.list[socket.id].username].rankColor;
+					}
+					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData.replaceAll('|','\\').replaceAll('\n','|n'),rank,rankColor);
 					Player.list[socket.id].lastChat = 20;
 					Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
 				}

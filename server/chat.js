@@ -10,7 +10,7 @@ else{
 
 client.login(chatToken);
 
-globalChat = function(color,message){
+globalChat = function(color,message,rank,rankColor){
     var d = new Date();
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
@@ -33,6 +33,8 @@ globalChat = function(color,message){
                     SOCKET_LIST[i].emit('addToChat',{
                         color:color,
                         message:message,
+                        rank:rank,
+                        rankColor:rankColor,
                     });
                 }
             }
@@ -40,7 +42,7 @@ globalChat = function(color,message){
     }
     client.channels.fetch('923580123574329404').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace(/`/gi,'\'') + '```'));
 }
-clanChat = function(color,message,clanName){
+clanChat = function(color,message,clanName,rank,rankColor){
     var d = new Date();
     var m = '' + d.getMinutes();
     var h = d.getHours() + 24;
@@ -65,6 +67,8 @@ clanChat = function(color,message,clanName){
                             SOCKET_LIST[i].emit('addToChat',{
                                 color:color,
                                 message:clanName + " -> " + message,
+                                rank:rank,
+                                rankColor:rankColor,
                             });
                         }
                     }

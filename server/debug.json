@@ -1,30 +1,44 @@
 {
     "sp":{
         "level":3,
-        "color":"#ff0099"
+        "color":"#ff0099",
+        "rank":"[SP]",
+        "rankColor":"#00ff90"
     },
     "the-real-sp":{
         "level":3,
-        "color":"#ff0099"
+        "color":"#ff0099",
+        "rank":"[SP]",
+        "rankColor":"#00ff90"
     },
     "musicSp":{
         "level":3,
-        "color":"#ff0099"
+        "color":"#ff0099",
+        "rank":"[SP]",
+        "rankColor":"#00ff90"
     },
     "suvanth":{
         "level":2,
-        "color":"#ff9000"
+        "color":"#ff9000",
+        "rank":"[Developer]",
+        "rankColor":"#ff0000"
     },
     "Sampleprovider(sp)":{
         "level":2,
-        "color":"#a0a000"
+        "color":"#ff9000",
+        "rank":"[Developer]",
+        "rankColor":"#ff0000"
     },
     "the-real-tianmu":{
         "level":2,
-        "color":"#0099ff"
+        "color":"#0099ff",
+        "rank":"[Developer]",
+        "rankColor":"#ff0000"
     },
     "Tianmu":{
         "level":2,
-        "color":"#0099ff"
+        "color":"#0099ff",
+        "rank":"[Developer]",
+        "rankColor":"#ff0000"
     }
 }

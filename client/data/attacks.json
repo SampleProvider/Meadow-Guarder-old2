@@ -2438,7 +2438,21 @@
         "1":[{
             "id":"none",
             "hpCost":1000,
-            "xpGain":1000
+            "xpGain":2000
+        }]
+    },
+    "midnightbook":{
+        "1":[{
+            "id":"none",
+            "hpCost":1000,
+            "xpGain":500000
+        }]
+    },
+    "bookofdeath":{
+        "1":[{
+            "id":"none",
+            "hpCost":1000,
+            "xpGain":200000000
         }]
     },
     "porcelainberry":{

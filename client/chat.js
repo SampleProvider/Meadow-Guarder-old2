@@ -33,7 +33,12 @@ socket.on('addToChat',function(data){
         message = '<div class="text command">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
     }
     else{
-        message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+        if(data.rank){
+            message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] <span style="color:' + data.rankColor + '">' + data.rank + '</span> ' + message + '</div>';
+        }
+        else{
+            message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+        }
     }
     message = message.replace(/  /gi,'&nbsp;&nbsp;');
     chatText.innerHTML += message;

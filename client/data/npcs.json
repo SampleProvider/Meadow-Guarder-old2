@@ -1095,6 +1095,40 @@
                 ]
             },
             {
+                "id":"blackbook",
+                "amount":1000,
+                "materials":[
+                    {
+                        "id":"deathglobe",
+                        "amount":3000
+                    },
+                    {
+                        "id":"paper",
+                        "amount":5000
+                    }
+                ]
+            },
+            {
+                "id":"midnightbook",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"blackbook",
+                        "amount":100
+                    }
+                ]
+            },
+            {
+                "id":"bookofdeath",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"midnightbook",
+                        "amount":100
+                    }
+                ]
+            },
+            {
                 "id":"lightningcore",
                 "amount":1,
                 "materials":[
