@@ -1596,6 +1596,17 @@ document.onkeydown = function(event){
         document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).className = 'hotbarSlot hotbarSlotSelected';
         socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
     }
+    if(key === '0'){
+        inventory.hotbarSelectedItem = 9;
+        var hotbarSlots = document.getElementsByClassName('hotbarSlot');
+        for(var i = 0;i < hotbarSlots.length;i++){
+            hotbarSlots[i].style.border = '1px solid #000000';
+            hotbarSlots[i].className = 'hotbarSlot hotbarSlotNormal';
+        }
+        document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).style.border = '1px solid #ffff00';
+        document.getElementById('hotbarSlot' + inventory.hotbarSelectedItem).className = 'hotbarSlot hotbarSlotSelected';
+        socket.emit('hotbarSelectedItem',inventory.hotbarSelectedItem);
+    }
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }

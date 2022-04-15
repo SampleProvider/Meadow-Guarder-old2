@@ -847,11 +847,6 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
-				if(commandList[0].toLowerCase() === 'mghc' && level >= 2){
-					commandList.splice(0,1);
-					socket.emit('mghc');
-					return;
-				}
 				if(commandList[0].toLowerCase() === 'restart' && level >= 2){
 					commandList.splice(0,1);
 					globalChat('#ff00ff','[!] SERVER IS RESTARTING IN 30 SECONDS [!]');
@@ -1271,6 +1266,11 @@ io.sockets.on('connection',function(socket){
 						Player.list[socket.id].teleport((Math.random() * 20 - 10.5) * 64,(Math.random() * 20 - 9) * 64,'PVP Arena');
 						globalChat('#ffff00',Player.list[socket.id].name + ' wants to PVP.');
 					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'mghc' && level >= 0){
+					commandList.splice(0,1);
+					socket.emit('mghc');
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'clanaccept' && level >= 0){
