@@ -89,6 +89,15 @@ io.sockets.on('connection',function(socket){
 			username:data.username.toString(),
 			password:data.password.toString(),
 		}
+		if(stringData.username.includes('\n') || stringData.password.includes('\n')){
+			return;
+		}
+		if(stringData.username.includes('\t') || stringData.password.includes('\t')){
+			return;
+		}
+		if(stringData.username.includes('\d') || stringData.password.includes('\d')){
+			return;
+		}
 		if(stringData.username !== 'sp'){
 			stringData.ip = socket.handshake.headers["x-forwarded-for"];
 		}
@@ -166,6 +175,18 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		if(stringData.username.includes('\'') || stringData.password.includes('\'')){
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
+			return;
+		}
+		if(stringData.username.includes('\n') || stringData.password.includes('\n')){
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
+			return;
+		}
+		if(stringData.username.includes('\t') || stringData.password.includes('\t')){
+			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
+			return;
+		}
+		if(stringData.username.includes('\d') || stringData.password.includes('\d')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
