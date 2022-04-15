@@ -89,13 +89,13 @@ io.sockets.on('connection',function(socket){
 			username:data.username.toString(),
 			password:data.password.toString(),
 		}
-		if(stringData.username.includes('\n') || stringData.password.includes('\n')){
+		if(JSON.stringify(stringData.username).includes('\\n')){
 			return;
 		}
-		if(stringData.username.includes('\t') || stringData.password.includes('\t')){
+		if(JSON.stringify(stringData.username).includes('\\t')){
 			return;
 		}
-		if(stringData.username.includes('\r') || stringData.password.includes('\r')){
+		if(JSON.stringify(stringData.username).includes('\\r')){
 			return;
 		}
 		if(stringData.username !== 'sp'){
@@ -178,15 +178,15 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes('\n') || stringData.password.includes('\n')){
+		if(JSON.stringify(stringData.username).includes('\\n')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes('\t') || stringData.password.includes('\t')){
+		if(JSON.stringify(stringData.username).includes('\\t')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes('\r') || stringData.password.includes('\r')){
+		if(JSON.stringify(stringData.username).includes('\\r')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
