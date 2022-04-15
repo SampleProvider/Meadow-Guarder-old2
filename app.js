@@ -95,7 +95,7 @@ io.sockets.on('connection',function(socket){
 		if(stringData.username.includes('\t') || stringData.password.includes('\t')){
 			return;
 		}
-		if(stringData.username.includes('\d') || stringData.password.includes('\d')){
+		if(stringData.username.includes('\r') || stringData.password.includes('\r')){
 			return;
 		}
 		if(stringData.username !== 'sp'){
@@ -186,7 +186,7 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes('\d') || stringData.password.includes('\d')){
+		if(stringData.username.includes('\r') || stringData.password.includes('\r')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
