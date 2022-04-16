@@ -18,6 +18,8 @@ require('./server/entity');
 
 badwords = require('./server/badwords.json').words;
 
+validCharacters = 'abcdefghijklmnopqrstuvwxyz1234567890-=_+~[]{}|;:",./ ';
+
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
 });
@@ -158,49 +160,15 @@ io.sockets.on('connection',function(socket){
 			socket.emit('createAccountResponse',{success:'spaceAtStart',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes('ㅤ')){
-			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
-			return;
-		}
-		if(stringData.username.includes('‏‏‎ ‎')){
-			socket.emit('createAccountResponse',{success:'blankCharacter',username:stringData.username});
-			return;
-		}
 		if(stringData.username.includes('--') || stringData.password.includes('--')){
 			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 			return;
 		}
-		if(stringData.username.includes(';') || stringData.password.includes(';')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(stringData.username.includes('\'') || stringData.password.includes('\'')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(JSON.stringify(stringData.username).includes('\\n')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(JSON.stringify(stringData.username).includes('\\t')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(JSON.stringify(stringData.username).includes('\\r')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(stringData.username.includes('`') || stringData.password.includes('`')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(stringData.username.includes('<') || stringData.password.includes('<')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
-		}
-		if(stringData.username.includes('>') || stringData.password.includes('>')){
-			socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
-			return;
+		for(var i = 0;i < stringData.username.length;i++){
+			if(validCharacters.includes(stringData.username[i]) === false){
+				socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
+				return;
+			}
 		}
 		for(var i in badwords){
 			if(stringData.username.toLowerCase().includes(badwords[i])){

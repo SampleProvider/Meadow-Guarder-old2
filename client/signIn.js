@@ -435,7 +435,7 @@ socket.on('createAccountResponse',function(data){
         signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password may not exceed 40 characters.</span><br>' + signErrorText;
     }
     else if(data.success === 'invalidCharacters'){
-        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters. Invalid characters: <b>-- ; \' ` < ></b></span><br>' + signErrorText;
+        signError.innerHTML = '<span style="color: #ff0000">Error: Your username/password contains invalid characters.</b></span><br>' + signErrorText;
     }
     else if(data.success === 'spaceAtStart'){
         signError.innerHTML = '<span style="color: #ff0000">Error: Your username may not start or end with a space.</span><br>' + signErrorText;
