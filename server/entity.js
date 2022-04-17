@@ -2146,7 +2146,7 @@ Player = function(param,socket){
         self.updateMana();
         self.lastChat -= 1;
         self.lastMove += 1;
-        if(self.lastMove > 18000){
+        if(self.lastMove > 6000){
             self.toRemove = true;
         }
     }
