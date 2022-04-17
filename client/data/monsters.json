@@ -2216,7 +2216,7 @@
     },
     "playerlostspirit":{
         "name":"Lost Spirit",
-        "hpMax":75000,
+        "hpMax":50000,
         "stats":{
             "damage":0,
             "defense":0,
@@ -2266,7 +2266,7 @@
     },
     "playerpossessedspirit":{
         "name":"Possessed Spirit",
-        "hpMax":225000,
+        "hpMax":75000,
         "stats":{
             "damage":0,
             "defense":0,
