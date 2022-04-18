@@ -1782,6 +1782,9 @@ setInterval(function(){
 					HarvestableNpc.list[i].toRemove = false;
 				}
 				else{
+					if(HarvestableNpc.list[i].regrow === false){
+						delete HarvestableNpc.list[i];
+					}
 					continue;
 				}
 			}

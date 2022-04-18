@@ -1580,6 +1580,17 @@ Actor = function(param){
                         }
                     }
                     break;
+                case "harvestableNpc":
+                    var harvestableNpc = new HarvestableNpc({
+                        x:self.x + Math.cos((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
+                        y:self.y + Math.sin((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
+                        width:64,
+                        height:64,
+                        map:self.map,
+                        img:data.harvestableNpcType,
+                        zIndex:0,
+                    });
+                    break;
                 case "dash":
                     self.dash(data.param);
                     break;
@@ -1603,6 +1614,9 @@ Actor = function(param){
                             runAttack(data.incorrect[i]);
                         }
                     }
+                    break;
+                case "chat":
+                    globalChat(data.chatColor,data.message,data.rank,data.rankColor);
                     break;
             }
             if(data.xpGain){
@@ -1957,6 +1971,9 @@ Player = function(param,socket){
             }
             else if(entity === 'tree'){
                 globalChat('#ff0000',pt.name + ' was grown into a tree.');
+            }
+            else if(entity === 'sunTree'){
+                globalChat('#ff0000',pt.name + ' was grown into a tree, then got swallowed by the sun.');
             }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
@@ -5019,6 +5036,23 @@ HarvestableNpc = function(param){
             }
         }
         self.timer -= 1;
+        if(self.despawn === true && self.timer < -self.despawnTime){
+            self.img = 'none';
+            self.toRemove = true;
+            for(var i in self.collisions){
+                Collision.remove({
+                    x:self.x + self.collisions[i].x,
+                    y:self.y + self.collisions[i].y,
+                    map:self.map,
+                    width:self.collisions[i].width,
+                    height:self.collisions[i].height,
+                    info:'',
+                    type:'Collision',
+                    zindex:self.zindex,
+                },self.collisionId);
+            }
+            return;
+        }
     }
     self.dropItems = function(pt){
         if(!Player.list[pt]){
@@ -5057,6 +5091,9 @@ HarvestableNpc = function(param){
                 type:'Collision',
                 zindex:self.zindex,
             },self.collisionId);
+        }
+        if(self.regrow === false){
+            return;
         }
         self.timer = Math.floor(2400 + 1200 * Math.random());
     }
