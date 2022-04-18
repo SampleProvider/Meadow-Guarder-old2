@@ -4568,7 +4568,23 @@
         "phase":"phase1",
         "phases":{
             "phase1":{
-                "mainAttackData":{},
+                "mainAttackData":{
+                    "5":[{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":50,
+                            "pierce":15,
+                            "timer":60,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":45,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    }]
+                },
                 "changePhase":{
                     "hp":0,
                     "nextPhases":["phase1"]
