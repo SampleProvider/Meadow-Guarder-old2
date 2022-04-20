@@ -1438,7 +1438,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "pierce":15,
                             "timer":300,
                             "collisionType":"none",
@@ -1452,7 +1452,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":45,
                             "pierce":15,
                             "timer":300,
@@ -1467,7 +1467,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":90,
                             "pierce":15,
                             "timer":300,
@@ -1482,7 +1482,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":135,
                             "pierce":15,
                             "timer":300,
@@ -1497,7 +1497,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":180,
                             "pierce":15,
                             "timer":300,
@@ -1512,7 +1512,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":225,
                             "pierce":15,
                             "timer":300,
@@ -1527,7 +1527,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":270,
                             "pierce":15,
                             "timer":300,
@@ -1542,7 +1542,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":315,
                             "pierce":15,
                             "timer":300,
@@ -1623,7 +1623,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "pierce":15,
                             "timer":300,
                             "collisionType":"none",
@@ -1637,7 +1637,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":45,
                             "pierce":15,
                             "timer":300,
@@ -1652,7 +1652,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":90,
                             "pierce":15,
                             "timer":300,
@@ -1667,7 +1667,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":135,
                             "pierce":15,
                             "timer":300,
@@ -1682,7 +1682,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":180,
                             "pierce":15,
                             "timer":300,
@@ -1697,7 +1697,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":225,
                             "pierce":15,
                             "timer":300,
@@ -1712,7 +1712,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":270,
                             "pierce":15,
                             "timer":300,
@@ -1727,7 +1727,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":315,
                             "pierce":15,
                             "timer":300,
@@ -1819,7 +1819,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "pierce":15,
                             "timer":300,
                             "collisionType":"none",
@@ -1833,7 +1833,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":45,
                             "pierce":15,
                             "timer":300,
@@ -1848,7 +1848,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":90,
                             "pierce":15,
                             "timer":300,
@@ -1863,7 +1863,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":135,
                             "pierce":15,
                             "timer":300,
@@ -1878,7 +1878,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":180,
                             "pierce":15,
                             "timer":300,
@@ -1893,7 +1893,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":225,
                             "pierce":15,
                             "timer":300,
@@ -1908,7 +1908,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":270,
                             "pierce":15,
                             "timer":300,
@@ -1923,7 +1923,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":315,
                             "pierce":15,
                             "timer":300,
@@ -2507,7 +2507,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "pierce":15,
                             "timer":300,
                             "collisionType":"none",
@@ -2521,7 +2521,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":45,
                             "pierce":15,
                             "timer":300,
@@ -2536,7 +2536,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":90,
                             "pierce":15,
                             "timer":300,
@@ -2551,7 +2551,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":135,
                             "pierce":15,
                             "timer":300,
@@ -2566,7 +2566,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":180,
                             "pierce":15,
                             "timer":300,
@@ -2581,7 +2581,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":225,
                             "pierce":15,
                             "timer":300,
@@ -2596,7 +2596,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":270,
                             "pierce":15,
                             "timer":300,
@@ -2611,7 +2611,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":315,
                             "pierce":15,
                             "timer":300,
@@ -3206,7 +3206,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "pierce":15,
                             "timer":300,
                             "collisionType":"none",
@@ -3220,7 +3220,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":45,
                             "pierce":15,
                             "timer":300,
@@ -3235,7 +3235,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":90,
                             "pierce":15,
                             "timer":300,
@@ -3250,7 +3250,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":135,
                             "pierce":15,
                             "timer":300,
@@ -3265,7 +3265,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":180,
                             "pierce":15,
                             "timer":300,
@@ -3280,7 +3280,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":225,
                             "pierce":15,
                             "timer":300,
@@ -3295,7 +3295,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":270,
                             "pierce":15,
                             "timer":300,
@@ -3310,7 +3310,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "direction":315,
                             "pierce":15,
                             "timer":300,
@@ -3903,7 +3903,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3919,7 +3919,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3935,7 +3935,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3951,7 +3951,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3967,7 +3967,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3983,7 +3983,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -3999,7 +3999,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4015,7 +4015,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4031,7 +4031,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4047,7 +4047,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4063,7 +4063,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4079,7 +4079,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4095,7 +4095,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4111,7 +4111,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4127,7 +4127,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4143,7 +4143,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4159,7 +4159,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4175,7 +4175,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4191,7 +4191,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4207,7 +4207,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4223,7 +4223,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4239,7 +4239,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4255,7 +4255,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4271,7 +4271,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4287,7 +4287,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4303,7 +4303,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4319,7 +4319,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4335,7 +4335,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4351,7 +4351,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4367,7 +4367,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4383,7 +4383,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4399,7 +4399,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4415,7 +4415,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4431,7 +4431,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4447,7 +4447,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4463,7 +4463,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4479,7 +4479,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4495,7 +4495,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4511,7 +4511,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4527,7 +4527,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4543,7 +4543,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4559,7 +4559,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4575,7 +4575,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4591,7 +4591,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4607,7 +4607,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4623,7 +4623,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4639,7 +4639,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4655,7 +4655,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4671,7 +4671,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4687,7 +4687,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4703,7 +4703,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4719,7 +4719,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4735,7 +4735,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4751,7 +4751,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4767,7 +4767,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4783,7 +4783,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4799,7 +4799,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4815,7 +4815,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4831,7 +4831,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4847,7 +4847,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4863,7 +4863,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4879,7 +4879,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4895,7 +4895,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
@@ -4911,7 +4911,7 @@
                         "id":"projectile",
                         "projectileType":"fireball",
                         "param":{
-                            "speed":5,
+                            "speed":50,
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
