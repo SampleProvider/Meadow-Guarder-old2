@@ -33,10 +33,6 @@
             "wood":{
                 "chance":1,
                 "amount":3
-            },
-            "carrot":{
-                "chance":0.01,
-                "amount":1
             }
         },
         "harvestPower":90,

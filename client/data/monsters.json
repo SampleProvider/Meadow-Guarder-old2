@@ -1412,7 +1412,7 @@
         "stats":{
             "damage":10000,
             "defense":400,
-            "hpRegen":10000,
+            "hpRegen":100000,
             "critChance":0,
             "critPower":0
         },
@@ -1421,14 +1421,6 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
-            "carrot":{
-                "chance":0.25,
-                "amount":2
-            },
-            "firecarrot":{
-                "chance":0.001,
-                "amount":1
-            }
         },
         "img":{
             "body":"Avian",
@@ -1807,7 +1799,7 @@
                     "200":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Soldiers, aid me!",
+                        "message":"Eagle King: Eagle Soldiers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -2484,7 +2476,7 @@
                     "200":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Soldiers, aid me!",
+                        "message":"Eagle King: Eagle Soldiers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -2495,7 +2487,7 @@
                     "300":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Farmers, aid me!",
+                        "message":"Eagle King: Eagle Farmers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3172,7 +3164,7 @@
                     "200":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Soldiers, aid me!",
+                        "message":"Eagle King: Eagle Soldiers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3183,7 +3175,7 @@
                     "300":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Farmers, aid me!",
+                        "message":"Eagle King: Eagle Farmers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3194,7 +3186,7 @@
                     "500":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Alchemists, aid me!",
+                        "message":"Eagle King: Eagle Alchemists, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3871,7 +3863,7 @@
                     "200":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Soldiers, aid me!",
+                        "message":"Eagle King: Eagle Soldiers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3882,7 +3874,7 @@
                     "300":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Farmers, aid me!",
+                        "message":"Eagle King: Eagle Farmers, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3893,7 +3885,7 @@
                     "500":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"Eagle Alchemists, aid me!",
+                        "message":"Eagle King: Eagle Alchemists, aid me!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3904,7 +3896,7 @@
                     "700":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
-                        "message":"The Fire Storm has begun!",
+                        "message":"Eagle King: The Fire Storm has begun!",
                         "rank":"[BOSS]",
                         "rankColor":"#ff0000"
                     },{
@@ -3915,6 +3907,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -3930,6 +3923,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -3945,6 +3939,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -3960,6 +3955,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -3975,6 +3971,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -3990,6 +3987,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4005,6 +4003,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4020,6 +4019,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4035,6 +4035,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4050,6 +4051,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4065,6 +4067,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4080,6 +4083,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4095,6 +4099,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4110,6 +4115,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4125,6 +4131,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4140,6 +4147,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4155,6 +4163,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4170,6 +4179,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4185,6 +4195,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4200,6 +4211,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4215,6 +4227,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4230,6 +4243,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4245,6 +4259,7 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4260,6 +4275,647 @@
                             "directionDeviation":360,
                             "pierce":15,
                             "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":155,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    },{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":5,
+                            "directionDeviation":360,
+                            "pierce":15,
+                            "timer":300,
+                            "projectilePattern":"homing",
                             "collisionType":"none",
                             "stats":{
                                 "damage":155,
@@ -4291,10 +4947,6 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
-            "carrot":{
-                "chance":0.025,
-                "amount":1
-            }
         },
         "img":{
             "body":"Avian",
@@ -4337,10 +4989,6 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
-            "carrot":{
-                "chance":0.025,
-                "amount":1
-            }
         },
         "img":{
             "body":"Avian",
@@ -4369,7 +5017,7 @@
     },
     "eaglealchemist":{
         "name":"Eagle Alchemist",
-        "hpMax":50000000,
+        "hpMax":150000000,
         "stats":{
             "damage":35,
             "defense":200,
@@ -4382,10 +5030,6 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
-            "carrot":{
-                "chance":0.025,
-                "amount":1
-            }
         },
         "img":{
             "body":"Avian",
