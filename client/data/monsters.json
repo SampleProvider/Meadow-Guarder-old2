@@ -3860,40 +3860,7 @@
                             "distance":192
                         }
                     }],
-                    "200":[{
-                        "id":"chat",
-                        "chatColor":"#ffff00",
-                        "message":"Eagle King: Eagle Soldiers, aid me!",
-                        "rank":"[BOSS]",
-                        "rankColor":"#ff0000"
-                    },{
-                        "id":"monster",
-                        "monsterType":"eaglesoldier",
-                        "amount":15
-                    }],
-                    "300":[{
-                        "id":"chat",
-                        "chatColor":"#ffff00",
-                        "message":"Eagle King: Eagle Farmers, aid me!",
-                        "rank":"[BOSS]",
-                        "rankColor":"#ff0000"
-                    },{
-                        "id":"monster",
-                        "monsterType":"eaglefarmer",
-                        "amount":5
-                    }],
-                    "500":[{
-                        "id":"chat",
-                        "chatColor":"#ffff00",
-                        "message":"Eagle King: Eagle Alchemists, aid me!",
-                        "rank":"[BOSS]",
-                        "rankColor":"#ff0000"
-                    },{
-                        "id":"monster",
-                        "monsterType":"eaglealchemist",
-                        "amount":5
-                    }],
-                    "700":[{
+                    "150":[{
                         "id":"chat",
                         "chatColor":"#ffff00",
                         "message":"Eagle King: The Fire Storm has begun!",
@@ -4923,6 +4890,39 @@
                                 "critPower":2
                             }
                         }
+                    }],
+                    "200":[{
+                        "id":"chat",
+                        "chatColor":"#ffff00",
+                        "message":"Eagle King: Eagle Soldiers, aid me!",
+                        "rank":"[BOSS]",
+                        "rankColor":"#ff0000"
+                    },{
+                        "id":"monster",
+                        "monsterType":"eaglesoldier",
+                        "amount":15
+                    }],
+                    "300":[{
+                        "id":"chat",
+                        "chatColor":"#ffff00",
+                        "message":"Eagle King: Eagle Farmers, aid me!",
+                        "rank":"[BOSS]",
+                        "rankColor":"#ff0000"
+                    },{
+                        "id":"monster",
+                        "monsterType":"eaglefarmer",
+                        "amount":5
+                    }],
+                    "500":[{
+                        "id":"chat",
+                        "chatColor":"#ffff00",
+                        "message":"Eagle King: Eagle Alchemists, aid me!",
+                        "rank":"[BOSS]",
+                        "rankColor":"#ff0000"
+                    },{
+                        "id":"monster",
+                        "monsterType":"eaglealchemist",
+                        "amount":5
                     }]
                 },
                 "changePhase":{
