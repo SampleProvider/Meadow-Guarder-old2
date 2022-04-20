@@ -6080,7 +6080,7 @@
                             "projectilePattern":"waraxe",
                             "collisionType":"none",
                             "stats":{
-                                "damage":75000,
+                                "damage":55000,
                                 "critChance":0.01,
                                 "critPower":10
                             }
@@ -6130,7 +6130,7 @@
                             "projectilePattern":"waraxe",
                             "collisionType":"none",
                             "stats":{
-                                "damage":125000,
+                                "damage":75000,
                                 "critChance":0.01,
                                 "critPower":10
                             }
