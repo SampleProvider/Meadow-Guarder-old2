@@ -44,7 +44,7 @@
         "harvestHp":500,
         "regrow":false,
         "despawn":true,
-        "despawnTime":1200,
+        "despawnTime":300,
         "collisions":[],
         "offsetX":0,
         "offsetY":0,
