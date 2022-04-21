@@ -4568,7 +4568,7 @@ Monster = function(param){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
                             if(Player.list[i].regionChanger.noMonster === false){
-                                if(self.getSquareDistance(Player.list[i]) < 8 * Player.list[i].aggro && Player.list[i].getSquareDistance(self.randomPos) <= 48){
+                                if(self.getSquareDistance(Player.list[i]) < 8 * (Player.list[i].aggro + 1) && Player.list[i].getSquareDistance(self.randomPos) <= 48){
                                     if(self.canSee(Player.list[i]) && Player.list[i].aggro > maxAggro){
                                         if(Player.list[i]){
                                             self.target = i;
