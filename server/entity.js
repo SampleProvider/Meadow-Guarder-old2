@@ -4562,14 +4562,14 @@ Monster = function(param){
         if(self.attackState === 'passive'){
             self.target = null;
             self.targetType = null;
-            var maxAggro = -1;
+            var maxAggro = 0;
             for(var i in Player.list){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
                             if(Player.list[i].regionChanger.noMonster === false){
                                 if(self.getSquareDistance(Player.list[i]) < 8 * (Player.list[i].aggro + 1) && Player.list[i].getSquareDistance(self.randomPos) <= 48){
-                                    if(self.canSee(Player.list[i]) && Player.list[i].aggro > maxAggro){
+                                    if(self.canSee(Player.list[i]) && Player.list[i].aggro >= maxAggro){
                                         if(Player.list[i]){
                                             self.target = i;
                                             self.targetType = 'Player';
