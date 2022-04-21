@@ -791,6 +791,14 @@ Inventory = function(socket,server){
                 description += '<span style="color: #ee3333">' + Math.round(item.luck * 100) + '% luck.</span><br>';
             }
         }
+        if(item.aggro){
+            if(item.aggro > 0){
+                description += '<span style="color: #33ee33">+' + item.aggro + ' aggro.</span><br>';
+            }
+            else{
+                description += '<span style="color: #ee3333">' + item.aggro + ' aggro.</span><br>';
+            }
+        }
         if(item.equip === 'consume'){
             description += 'Left click to use.<br>';
         }

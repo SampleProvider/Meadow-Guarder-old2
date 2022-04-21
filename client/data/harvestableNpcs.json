@@ -28,37 +28,30 @@
         "harvestOffsetX":0,
         "harvestOffsetY":32
     },
-    "sunTree":{
+    "sunFlower":{
         "itemDrops":{
             "wood":{
                 "chance":1,
                 "amount":3
+            },
+            "carrot":{
+                "chance":0.01,
+                "amount":1
             }
         },
         "harvestPower":90,
-        "harvestTool":"axe",
+        "harvestTool":"scythe",
         "harvestHp":500,
-        "deathMessage":"sunTree",
-        "regrow":false,
-        "despawn":true,
-        "despawnTime":1200,
-        "collisions":[
-            {
-                "x":0,
-                "y":28,
-                "width":64,
-                "height":56
-            }
-        ],
+        "collisions":[],
         "offsetX":0,
-        "offsetY":-32,
+        "offsetY":0,
         "width":64,
-        "height":128,
-        "aboveHeight":64,
+        "height":64,
+        "aboveHeight":0,
         "harvestWidth":64,
         "harvestHeight":64,
         "harvestOffsetX":0,
-        "harvestOffsetY":32
+        "harvestOffsetY":0
     },
     "pyroweed":{
         "itemDrops":{

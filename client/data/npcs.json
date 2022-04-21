@@ -451,7 +451,7 @@
                 ]
             },
             {
-                "id":"sand",
+                "id":"josephsand",
                 "amount":1,
                 "materials":[
                     {
@@ -1091,6 +1091,94 @@
                     {
                         "id":"spiritdust",
                         "amount":125
+                    }
+                ]
+            },
+            {
+                "id":"lostspiritbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"spiritbadge",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":1000
+                    }
+                ]
+            },
+            {
+                "id":"possessedspiritbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"lostspiritbadge",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":25000
+                    }
+                ]
+            },
+            {
+                "id":"deathbadge",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"possessedspiritbadge",
+                        "amount":1
+                    },
+                    {
+                        "id":"spiritdust",
+                        "amount":125000
+                    }
+                ]
+            },
+            {
+                "id":"sandstaff",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"josephsand",
+                        "amount":2
+                    },
+                    {
+                        "id":"woodstick",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"sandstormstaff",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"josephsand",
+                        "amount":8
+                    },
+                    {
+                        "id":"sandstaff",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"carrotstick",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"firecarrot",
+                        "amount":1
+                    },
+                    {
+                        "id":"carrot",
+                        "amount":100
+                    },
+                    {
+                        "id":"malachite",
+                        "amount":1000
                     }
                 ]
             },

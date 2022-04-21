@@ -1155,7 +1155,7 @@ Actor = function(param){
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1164,7 +1164,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
@@ -1791,6 +1791,8 @@ Player = function(param,socket){
     self.shieldProtection = 0;
     self.luck = 1;
 
+    self.aggro = 0;
+
     self.shieldActive = false;
 
     self.pickaxePower = 0;
@@ -1971,9 +1973,6 @@ Player = function(param,socket){
             }
             else if(entity === 'tree'){
                 globalChat('#ff0000',pt.name + ' was grown into a tree.');
-            }
-            else if(entity === 'sunTree'){
-                globalChat('#ff0000',pt.name + ' was grown into a tree, then got swallowed by the sun.');
             }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
@@ -2287,6 +2286,7 @@ Player = function(param,socket){
         }
         self.shieldProtection = 0;
         self.luck = 1;
+        self.aggro = 0;
 
         self.pickaxePower = 0;
         self.axePower = 0;
@@ -2361,6 +2361,9 @@ Player = function(param,socket){
                         }
                         if(item.luck !== undefined){
                             self.luck += item.luck;
+                        }
+                        if(item.aggro !== undefined){
+                            self.aggro += item.aggro;
                         }
                         if(item.useTime !== undefined){
                             self.useTime = item.useTime;
@@ -2619,7 +2622,7 @@ Player = function(param,socket){
         self.mana = self.manaMax - manaMax + mana;
 
         if(self.hp <= 0 && hp > 0){
-            self.onDeath(self,'self');
+            self.hp = Math.min(self.hpMax,hp);
         }
     }
     self.updateHarvest = function(){
@@ -4038,6 +4041,9 @@ Projectile = function(param){
         if(self.projectilePattern === 'spear'){
             self.direction = param.direction + 135;
         }
+        if(self.projectilePattern === 'noDirection'){
+            self.direction = 0;
+        }
         if(self.projectilePattern === 'claw'){
             self.x = entity.x;
             self.y = entity.y;
@@ -4556,20 +4562,21 @@ Monster = function(param){
         if(self.attackState === 'passive'){
             self.target = null;
             self.targetType = null;
+            var maxAggro = -1;
             for(var i in Player.list){
                 if(Player.list[i].map === self.map){
                     if(Player.list[i].team !== self.team){
                         if(Player.list[i].hp > 0){
                             if(Player.list[i].regionChanger.noMonster === false){
-                                if(self.getSquareDistance(Player.list[i]) < 8 && Player.list[i].getSquareDistance(self.randomPos) <= 48){
-                                    if(self.canSee(Player.list[i])){
+                                if(self.getSquareDistance(Player.list[i]) < 8 * Player.list[i].aggro && Player.list[i].getSquareDistance(self.randomPos) <= 48){
+                                    if(self.canSee(Player.list[i]) && Player.list[i].aggro > maxAggro){
                                         if(Player.list[i]){
                                             self.target = i;
                                             self.targetType = 'Player';
                                             self.attackState = 'attack';
                                             self.damaged = false;
                                             self.targetLeftView = 0;
-                                            return;
+                                            maxAggro = Player.list[i].aggro;
                                         }
                                     }
                                 }

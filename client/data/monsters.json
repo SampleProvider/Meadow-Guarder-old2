@@ -1416,11 +1416,19 @@
             "critChance":0,
             "critPower":0
         },
-        "maxSpeed":20,
+        "maxSpeed":45,
         "knockbackResistance":1,
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
+            "carrot":{
+                "chance":0.25,
+                "amount":2
+            },
+            "firecarrot":{
+                "chance":0.001,
+                "amount":1
+            }
         },
         "img":{
             "body":"Avian",
@@ -1556,56 +1564,56 @@
                     }],
                     "100":[{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":0,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":45,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":90,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":135,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":180,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":225,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":270,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":315,
                             "distance":192
@@ -1741,56 +1749,56 @@
                     }],
                     "100":[{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":0,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":45,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":90,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":135,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":180,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":225,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":270,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":315,
                             "distance":192
@@ -2418,56 +2426,56 @@
                     }],
                     "100":[{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":0,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":45,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":90,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":135,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":180,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":225,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":270,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":315,
                             "distance":192
@@ -3106,56 +3114,56 @@
                     }],
                     "100":[{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":0,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":45,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":90,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":135,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":180,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":225,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":270,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":315,
                             "distance":192
@@ -3805,56 +3813,56 @@
                     }],
                     "100":[{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":0,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":45,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":90,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":135,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":180,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":225,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":270,
                             "distance":192
                         }
                     },{
                         "id":"harvestableNpc",
-                        "harvestableNpcType":"sunTree",
+                        "harvestableNpcType":"sunFlower",
                         "param":{
                             "direction":315,
                             "distance":192
@@ -4947,6 +4955,10 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
+            "carrot":{
+                "chance":0.005,
+                "amount":1
+            }
         },
         "img":{
             "body":"Avian",
@@ -4989,6 +5001,10 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
+            "carrot":{
+                "chance":0.005,
+                "amount":1
+            }
         },
         "img":{
             "body":"Avian",
@@ -5030,6 +5046,10 @@
         "drawSize":"medium",
         "team":"Human",
         "itemDrops":{
+            "carrot":{
+                "chance":0.005,
+                "amount":1
+            }
         },
         "img":{
             "body":"Avian",
@@ -5223,6 +5243,56 @@
                             "collisionType":"none",
                             "stats":{
                                 "damage":45,
+                                "critChance":0.05,
+                                "critPower":2
+                            }
+                        }
+                    }]
+                },
+                "changePhase":{
+                    "hp":0,
+                    "nextPhases":["phase1"]
+                }
+            }
+        }
+    },
+    "playersunchicken":{
+        "name":"Sun Chicken",
+        "hpMax":15000,
+        "stats":{
+            "damage":1500,
+            "defense":200,
+            "hpRegen":1000,
+            "critChance":0,
+            "critPower":0
+        },
+        "maxSpeed":10,
+        "knockbackResistance":0.95,
+        "drawSize":"small",
+        "team":"Human",
+        "itemDrops":{},
+        "img":{
+            "body":"Sun Chicken"
+        },
+        "boss":false,
+        "xpDrop":0,
+        "coinDrop":0,
+        "circleDistance":0,
+        "attackMonsters":true,
+        "phase":"phase1",
+        "phases":{
+            "phase1":{
+                "mainAttackData":{
+                    "5":[{
+                        "id":"projectile",
+                        "projectileType":"fireball",
+                        "param":{
+                            "speed":50,
+                            "pierce":15,
+                            "timer":60,
+                            "collisionType":"none",
+                            "stats":{
+                                "damage":125000,
                                 "critChance":0.05,
                                 "critPower":2
                             }
