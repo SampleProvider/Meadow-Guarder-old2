@@ -3,19 +3,19 @@
         "level":3,
         "color":"#ff0099",
         "rank":"[SP]",
-        "rankColor":"#00ff90"
+        "rankColor":"#00ff90; animation: sp 3s infinite"
     },
     "the-real-sp":{
         "level":3,
         "color":"#ff0099",
         "rank":"[SP]",
-        "rankColor":"#00ff90"
+        "rankColor":"#00ff90; animation: sp 3s infinite"
     },
     "musicSp":{
         "level":3,
         "color":"#ff0099",
         "rank":"[SP]",
-        "rankColor":"#00ff90"
+        "rankColor":"#00ff90; animation: sp 3s infinite"
     },
     "suvanth":{
         "level":2,
@@ -35,10 +35,16 @@
         "rank":"[Developer]",
         "rankColor":"#ff0000"
     },
-    "Tianmu":{
+    "TianmuPlays":{
         "level":2,
         "color":"#0099ff",
         "rank":"[Developer]",
         "rankColor":"#ff0000"
+    },
+    "MaxSpeed":{
+        "level":1,
+        "color":"#ffffff",
+        "rank":"[SPEED]",
+        "rankColor":"#ff0000; animation: speed 3s infinite"
     }
 }

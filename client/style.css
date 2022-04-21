@@ -630,6 +630,26 @@ body::after{
 .command {
     animation: command 3s infinite; 
 }
+@keyframes speed{
+    0%{color: #ffffff;}
+    50%{color: #000000;}
+    100%{color: #ffffff;}
+}
+@keyframes sp{
+    0%{color: #ff0000;}
+    8%{color: #ff9900;}
+    16%{color: #ffff00;}
+    25%{color: #99ff00;}
+    33%{color: #00ff00;}
+    41%{color: #00ff99;}
+    50%{color: #00ffff;}
+    58%{color: #0099ff;}
+    66%{color: #0000ff;}
+    75%{color: #9900ff;}
+    83%{color: #ff00ff;}
+    91%{color: #ff0090;}
+    100%{color: #ff0000;}
+}
 
 #bottomRightBar {
     position: absolute;

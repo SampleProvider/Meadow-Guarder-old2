@@ -34,10 +34,10 @@ socket.on('addToChat',function(data){
     }
     else{
         if(data.rank){
-            message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] <span style="color:' + data.rankColor + '">' + data.rank + '</span> ' + message + '</div>';
+            message = '<div class="text" style="color:' + data.color + ';">[' + d.getHours() + ':' + m + '] <span style="color:' + data.rankColor + '">' + data.rank + '</span> ' + message + '</div>';
         }
         else{
-            message = '<div class="text" style="color:' + data.color + '";>[' + d.getHours() + ':' + m + '] ' + message + '</div>';
+            message = '<div class="text" style="color:' + data.color + ';">[' + d.getHours() + ':' + m + '] ' + message + '</div>';
         }
     }
     message = message.replace(/  /gi,'&nbsp;&nbsp;');
