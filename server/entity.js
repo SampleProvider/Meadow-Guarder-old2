@@ -2163,7 +2163,12 @@ Player = function(param,socket){
         self.lastChat -= 1;
         self.lastMove += 1;
         if(self.lastMove > 6000){
-            self.toRemove = true;
+            if(debugData[self.username]){
+
+            }
+            else{
+                self.toRemove = true;
+            }
         }
     }
     self.updateSpd = function(){
