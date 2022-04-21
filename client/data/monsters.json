@@ -4898,6 +4898,10 @@
                                 "critPower":2
                             }
                         }
+                    },{
+                        "id":"monster",
+                        "monsterType":"sunchicken",
+                        "amount":25
                     }],
                     "200":[{
                         "id":"chat",
