@@ -4380,6 +4380,7 @@ Monster = function(param){
         var lastY = self.y;
         var circleDirection = self.circleDirection;
         self.collided = {x:false,y:false};
+        self.trackTarget();
         if(self.canMove){
             while(self.stepsLeft > 0){
                 self.trackTarget();
