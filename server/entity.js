@@ -2163,7 +2163,7 @@ Player = function(param,socket){
         self.lastChat -= 1;
         self.lastMove += 1;
         if(self.lastMove > 12000){
-            if(debugData[self.username]){
+            if(debugData[self.username].level >= 2){
 
             }
             else{

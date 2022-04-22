@@ -46,5 +46,11 @@
         "color":"#ffffff",
         "rank":"[SPEED]",
         "rankColor":"#ff0000; animation: speed 3s infinite"
+    },
+    "Gift":{
+        "level":0,
+        "color":"#000000",
+        "rank":"[SCAMMER]",
+        "rankColor":"#90ff90"
     }
 }
