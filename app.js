@@ -165,7 +165,7 @@ io.sockets.on('connection',function(socket){
 			return;
 		}
 		for(var i = 0;i < stringData.username.length;i++){
-			if(validCharacters.includes(stringData.username[i]) === false){
+			if(validCharacters.includes(stringData.username[i].toLowerCase()) === false){
 				socket.emit('createAccountResponse',{success:'invalidCharacters',username:stringData.username});
 				return;
 			}
