@@ -2162,7 +2162,7 @@ Player = function(param,socket){
         self.updateMana();
         self.lastChat -= 1;
         self.lastMove += 1;
-        if(self.lastMove > 6000){
+        if(self.lastMove > 12000){
             if(debugData[self.username]){
 
             }
@@ -3017,19 +3017,27 @@ Player.onConnect = function(socket,username,chatBanned){
             }
             if(data.inputId === player.keyMap.left || data.inputId === player.secondKeyMap.left || data.inputId === player.thirdKeyMap.left){
                 player.keyPress.left = data.state;
-                player.lastMove = 0;
+                if(data.state && Math.random() < 0.3){
+                    player.lastMove = 0;
+                }
             }
             if(data.inputId === player.keyMap.right || data.inputId === player.secondKeyMap.right || data.inputId === player.thirdKeyMap.right){
                 player.keyPress.right = data.state;
-                player.lastMove = 0;
+                if(data.state && Math.random() < 0.3){
+                    player.lastMove = 0;
+                }
             }
             if(data.inputId === player.keyMap.up || data.inputId === player.secondKeyMap.up || data.inputId === player.thirdKeyMap.up){
                 player.keyPress.up = data.state;
-                player.lastMove = 0;
+                if(data.state && Math.random() < 0.3){
+                    player.lastMove = 0;
+                }
             }
             if(data.inputId === player.keyMap.down || data.inputId === player.secondKeyMap.down || data.inputId === player.thirdKeyMap.down){
                 player.keyPress.down = data.state;
-                player.lastMove = 0;
+                if(data.state && Math.random() < 0.3){
+                    player.lastMove = 0;
+                }
             }
             if(data.inputId === player.keyMap.leftClick || data.inputId === player.secondKeyMap.leftClick || data.inputId === player.thirdKeyMap.leftClick){
                 player.keyPress.leftClick = data.state;
