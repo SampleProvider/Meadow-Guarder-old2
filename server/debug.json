@@ -52,5 +52,11 @@
         "color":"#000000",
         "rank":"[SCAMMER]",
         "rankColor":"#90ff90"
+    },
+    "rod12345":{
+        "level":0,
+        "color":"#000000",
+        "rank":"[Beta Tester]",
+        "rankColor":"#ffff00"
     }
 }
