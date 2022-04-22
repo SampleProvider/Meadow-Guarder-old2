@@ -58,5 +58,23 @@
         "color":"#000000",
         "rank":"[Beta Tester]",
         "rankColor":"#ffff00"
+    },
+    "Lufaja":{
+        "level":0,
+        "color":"#000000",
+        "rank":"[Beta Tester]",
+        "rankColor":"#ffff00"
+    },
+    "Spirit":{
+        "level":4,
+        "color":"#ffffff",
+        "rank":"[THE SPIRIT STRIKES AGAIN]",
+        "rankColor":"#00ff90; animation: sp 3s infinite"
+    },
+    "Rick Astley":{
+        "level":4,
+        "color":"#90ff90",
+        "rank":"[RICKROLL]",
+        "rankColor":"#ffff90"
     }
 }
