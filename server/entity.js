@@ -1296,22 +1296,44 @@ Actor = function(param){
         }
         var hp = self.hp;
         var crit = false;
-        if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) > 105){
-            if(Math.random() < pt.stats.critChance){
-                crit = true;
-                self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) * (1 - self.shieldProtection) - self.stats.defense)),0);
+        if(self.type === 'Player' && self.map === 'PVP Arena'){
+            if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) > 105){
+                if(Math.random() < pt.stats.critChance){
+                    crit = true;
+                    self.hp -= Math.max(Math.floor((pt.stats.damage * 0.002 * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) * (1 - self.shieldProtection) - self.stats.defense)),0);
+                }
+                else{
+                    self.hp -= Math.max(Math.floor(pt.stats.damage * 0.002 * (0.8 + Math.random() * 0.4) * (1 - self.shieldProtection) - self.stats.defense),0);
+                }
             }
             else{
-                self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 - self.shieldProtection) - self.stats.defense),0);
+                if(Math.random() < pt.stats.critChance){
+                    crit = true;
+                    self.hp -= Math.max(Math.floor((pt.stats.damage * 0.002 * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
+                }
+                else{
+                    self.hp -= Math.max(Math.floor(pt.stats.damage * 0.002 * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+                }
             }
         }
         else{
-            if(Math.random() < pt.stats.critChance){
-                crit = true;
-                self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
+            if(self.shieldProtection && self.shieldActive && Math.abs(pt.direction - self.direction) > 105){
+                if(Math.random() < pt.stats.critChance){
+                    crit = true;
+                    self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) * (1 - self.shieldProtection) - self.stats.defense)),0);
+                }
+                else{
+                    self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 - self.shieldProtection) - self.stats.defense),0);
+                }
             }
             else{
-                self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+                if(Math.random() < pt.stats.critChance){
+                    crit = true;
+                    self.hp -= Math.max(Math.floor((pt.stats.damage * (0.8 + Math.random() * 0.4) * (1 + pt.stats.critPower) - self.stats.defense)),0);
+                }
+                else{
+                    self.hp -= Math.max(Math.floor(pt.stats.damage * (0.8 + Math.random() * 0.4) - self.stats.defense),0);
+                }
             }
         }
         if(pt.type === 'Projectile'){
@@ -4148,7 +4170,6 @@ Projectile = function(param){
             var nearestEntity = null;
             var nearestDirection = 0;
             var nearestDistance = 0;
-            var bossMonster = false;
             for(var i in Player.list){
                 if(Player.list[i].team !== self.team && Player.list[i].map === self.map && Player.list[i].hp > 0){
                     var direction = Math.atan2(Player.list[i].y - self.y,Player.list[i].x - self.x) / Math.PI * 180 - self.direction;
@@ -4167,7 +4188,7 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 3){
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Player.list[i]) < nearestDistance * 2){
                         nearestDirection = direction;
                         nearestDistance = self.getDistance(Player.list[i]);
                         nearestEntity = Player.list[i];
@@ -4192,20 +4213,35 @@ Projectile = function(param){
                         nearestDistance = self.getDistance(Monster.list[i]);
                         nearestEntity = Monster.list[i];
                     }
-                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 3 || (self.getDistance(Monster.list[i]) < nearestDistance * 3 && Monster.list[i].boss === true)){
-                        if(Monster.list[i].boss === true){
-                            bossMonster = true;
-                            nearestDirection = direction;
-                            nearestDistance = self.getDistance(Monster.list[i]);
-                            nearestEntity = Monster.list[i];
-                        }
-                        else{
-                            if(bossMonster === false){
-                                nearestDirection = direction;
-                                nearestDistance = self.getDistance(Monster.list[i]);
-                                nearestEntity = Monster.list[i];
-                            }
-                        }
+                    else if(Math.abs(direction) < Math.abs(nearestDirection) && self.getDistance(Monster.list[i]) < nearestDistance * 2){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
+                        nearestEntity = Monster.list[i];
+                    }
+                }
+            }
+            for(var i in Monster.list){
+                if(Monster.list[i].team !== self.team && Monster.list[i].map === self.map && Monster.list[i].hp > 0 && Monster.list[i].boss){
+                    var direction = Math.atan2(Monster.list[i].y - self.y,Monster.list[i].x - self.x) / Math.PI * 180 - self.direction;
+                    direction = direction % 360;
+                    while(direction < 0){
+                        direction += 360;
+                    }
+                    if(direction > 180){
+                        direction -= 360;
+                    }
+                    else if(direction < -180){
+                        direction += 360;
+                    }
+                    if(nearestEntity === null){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
+                        nearestEntity = Monster.list[i];
+                    }
+                    else if(self.getDistance(Monster.list[i]) < nearestDistance * 2){
+                        nearestDirection = direction;
+                        nearestDistance = self.getDistance(Monster.list[i]);
+                        nearestEntity = Monster.list[i];
                     }
                 }
             }
