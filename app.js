@@ -1179,7 +1179,9 @@ io.sockets.on('connection',function(socket){
 								var items = '';
 								for(var j in stringData.items){
 									if(stringData.items[j].id){
-										items += Item.list[stringData.items[j].id].name + ' x' + stringData.items[j].amount + '\n';
+										if(Item.list[stringData.items[j].id]){
+											items += Item.list[stringData.items[j].id].name + ' x' + stringData.items[j].amount + '\n';
+										}
 									}
 								}
 								items = items.substr(0,items.length - 2);
