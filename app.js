@@ -1312,13 +1312,7 @@ io.sockets.on('connection',function(socket){
                             Player.list[socket.id].chatWarnings += 1;
                         }
                         Player.list[socket.id].chatWarnings += message.length / 100;
-						var rank = '';
-						var rankColor = '';
-						if(debugData[Player.list[socket.id].username]){
-							rank = debugData[Player.list[socket.id].username].rank;
-							rankColor = debugData[Player.list[socket.id].username].rankColor;
-						}
-						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + message.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].clan,rank,rankColor);
+						clanChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + message.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].clan,Player.list[socket.id].rank.rankName,Player.list[socket.id].rank.rankColor);
                         Player.list[socket.id].lastChat = 20;
                         Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
                         if(Player.list[socket.id].chatWarnings > 5){
@@ -1426,6 +1420,53 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage(statsString);
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'rank' && level >= 0){
+					commandList.splice(0,1);
+					var rank = recreateCommand(commandList);
+					if(commandList.length === 0){
+						if(debugData[Player.list[socket.id].username]){
+							if(debugData[Player.list[socket.id].username].ranks){
+								var ranksString = '[!] Ranks:';
+								for(var i in debugData[Player.list[socket.id].username].ranks){
+									ranksString += '\n' + debugData[Player.list[socket.id].username].ranks[i].rankName
+								}
+								Player.list[socket.id].sendMessage(ranksString);
+							}
+							else{
+								Player.list[socket.id].sendMessage('[!] You don\'t have any ranks!');
+							}
+						}
+						else{
+							Player.list[socket.id].sendMessage('[!] You don\'t have any ranks!');
+						}
+					}
+					else{
+						if(debugData[Player.list[socket.id].username]){
+							if(debugData[Player.list[socket.id].username].ranks){
+								for(var i in debugData[Player.list[socket.id].username].ranks){
+									if(debugData[Player.list[socket.id].username].ranks[i].rankName === rank){
+										Player.list[socket.id].rank = debugData[Player.list[socket.id].username].ranks[i];
+										Player.list[socket.id].sendMessage('[!] Switched rank to ' + rank + '.');
+										return;
+									}
+								}
+								if(rank === 'none'){
+									Player.list[socket.id].rank = {};
+									Player.list[socket.id].sendMessage('[!] Switched rank to ' + rank + '.');
+									return;
+								}
+								Player.list[socket.id].sendMessage('[!] You do not have rank ' + rank + '.');
+							}
+							else{
+								Player.list[socket.id].sendMessage('[!] You don\'t have any ranks!');
+							}
+						}
+						else{
+							Player.list[socket.id].sendMessage('[!] You don\'t have any ranks!');
+						}
+					}
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'help' && level >= 0){
 					if(level === 0){
 						var message = 'Commands:';
@@ -1439,6 +1480,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/clanleaderboard - Clan leaderboards.';
 						message += '\n/seeclan [clan name] - See a clan.';
 						message += '\n/stats - See your stats.';
+						message += '\n/rank - Change your rank.';
 						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
@@ -1458,6 +1500,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/clanleaderboard - Clan leaderboards.';
 						message += '\n/seeclan [clan name] - See a clan.';
 						message += '\n/stats - See your stats.';
+						message += '\n/rank - Change your rank.';
 						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
@@ -1490,6 +1533,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/clanleaderboard - Clan leaderboards.';
 						message += '\n/seeclan [clan name] - See a clan.';
 						message += '\n/stats - See your stats.';
+						message += '\n/rank - Change your rank.';
 						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
@@ -1535,6 +1579,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/clanleaderboard - Clan leaderboards.';
 						message += '\n/seeclan [clan name] - See a clan.';
 						message += '\n/stats - See your stats.';
+						message += '\n/rank - Change your rank.';
 						message += '\n/help - Help.';
 						Player.list[socket.id].sendMessage(message);
 					}
@@ -1583,13 +1628,7 @@ io.sockets.on('connection',function(socket){
 							}
 						}
 					}
-					var rank = '';
-					var rankColor = '';
-					if(debugData[Player.list[socket.id].username]){
-						rank = debugData[Player.list[socket.id].username].rank;
-						rankColor = debugData[Player.list[socket.id].username].rankColor;
-					}
-					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData.replaceAll('|','\\').replaceAll('\n','|n'),rank,rankColor);
+					globalChat(Player.list[socket.id].textColor,Player.list[socket.id].name + ': ' + stringData.replaceAll('|','\\').replaceAll('\n','|n'),Player.list[socket.id].rank.rankName,Player.list[socket.id].rank.rankColor);
 					Player.list[socket.id].lastChat = 20;
 					Player.list[socket.id].chatWarnings = Math.max(0,Player.list[socket.id].chatWarnings - 0.5);
 				}

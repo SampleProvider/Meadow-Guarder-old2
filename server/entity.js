@@ -1155,7 +1155,7 @@ Actor = function(param){
                     if(j === 'random'){
                         var numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'josephsand' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'flaskofice' && k !== 'josephsand' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     numItems += 1;
                                 }
@@ -1164,7 +1164,7 @@ Actor = function(param){
                         var randomItem = Math.floor(Math.random() * numItems);
                         numItems = 0;
                         for(var k in Item.list){
-                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'josephsand' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
+                            if(Item.list[k].type === 'Material' && k !== 'rubycore' && k !== 'lightningcore' && k !== 'diamondcore' && k !== 'flaskofice' && k !== 'josephsand' && k !== 'carrot' && k !== 'firecarrot' && k !== 'spiritdust' && k !== 'lemon' && k !== 'orange' && k !== 'greengrape' && k !== 'purplegrape' && k !== 'redgrape' && k !== 'mysticgrape'){
                                 if(k !== 'coppercoin' && k !== 'silvercoin' && k !== 'goldcoin' && k !== 'meteoritecoin'){
                                     if(numItems === randomItem){
                                         while(amount > 0){
@@ -1840,6 +1840,12 @@ Player = function(param,socket){
     if(param.chatBanned){
         self.chatBanned = param.chatBanned;
     }
+    self.rank = {};
+    if(debugData[self.username]){
+        if(debugData[self.username].ranks){
+            self.rank = debugData[self.username].ranks[0];
+        }
+    }
 
     self.raisedDropChances = false;
 
@@ -2184,7 +2190,7 @@ Player = function(param,socket){
         self.updateMana();
         self.lastChat -= 1;
         self.lastMove += 1;
-        if(self.lastMove > 12000){
+        if(self.lastMove > 6000){
             if(debugData[self.username]){
                 if(debugData[self.username].level >= 2){
     

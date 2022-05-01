@@ -1273,6 +1273,52 @@
                         "amount":9
                     }
                 ]
+            },
+            {
+                "id":"flaskofice",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"icecube",
+                        "amount":1000
+                    },
+                    {
+                        "id":"iceorb",
+                        "amount":100
+                    },
+                    {
+                        "id":"orange",
+                        "amount":9
+                    }
+                ]
+            },
+            {
+                "id":"frozencoldhearticicle",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"coldhearticicle",
+                        "amount":3
+                    },
+                    {
+                        "id":"flaskofice",
+                        "amount":3
+                    }
+                ]
+            },
+            {
+                "id":"glaciericicle",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"frozencoldhearticicle",
+                        "amount":3
+                    },
+                    {
+                        "id":"flaskofice",
+                        "amount":3
+                    }
+                ]
             }
         ]
     }
