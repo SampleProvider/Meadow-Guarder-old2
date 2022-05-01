@@ -865,6 +865,34 @@
             }
         }]
     },
+    "frozencoldhearticicle":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"frozencoldhearticicle",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":10,
+                "relativeToParent":true,
+                "projectilePattern":"shiv",
+                "collisionType":"none"
+            }
+        }]
+    },
+    "glaciericicle":{
+        "1":[{
+            "id":"projectile",
+            "projectileType":"glaciericicle",
+            "param":{
+                "sameId":true,
+                "pierce":-1,
+                "timer":10,
+                "relativeToParent":true,
+                "projectilePattern":"shiv",
+                "collisionType":"none"
+            }
+        }]
+    },
     "heavywhammo":{
         "1":[{
             "id":"projectile",
