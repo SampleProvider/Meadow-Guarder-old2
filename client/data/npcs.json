@@ -1280,15 +1280,15 @@
                 "materials":[
                     {
                         "id":"icecube",
-                        "amount":1000
+                        "amount":250
                     },
                     {
                         "id":"iceorb",
-                        "amount":100
+                        "amount":25
                     },
                     {
                         "id":"orange",
-                        "amount":9
+                        "amount":1
                     }
                 ]
             },
