@@ -86,7 +86,7 @@
         "color":"#ffffff",
         "ranks":[
             {
-                "rankName":"[SP]",
+                "rankName":"[SPEED]",
                 "rankColor":"#ffffff; animation: speed 6s infinite"
             }
         ]
@@ -108,6 +108,10 @@
             {
                 "rankName":"[Beta Tester]",
                 "rankColor":"#ffff00"
+            },
+            {
+                "rankName":"[SPEED]",
+                "rankColor":"#ffffff; animation: speed 6s infinite"
             }
         ]
     },
