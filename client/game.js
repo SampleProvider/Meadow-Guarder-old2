@@ -1320,7 +1320,12 @@ doRickroll = function(){
     disconnectedDiv.style.display = 'none';
     socket.emit('timeout');
     selfId = null;
-    stopAllSongs();
+    try{
+        stopAllSongs();
+    }
+    catch(err){
+
+    }
     rickroll.style.display = 'inline-block';
     rickroll.play();
 }
