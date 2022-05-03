@@ -28,7 +28,7 @@ onGesture = function(){
 
     }
     tabVisible = true;
-    doRickroll();
+    // doRickroll();
 }
 
 var WIDTH = window.innerWidth;
