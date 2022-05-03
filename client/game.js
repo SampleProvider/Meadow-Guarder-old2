@@ -28,6 +28,7 @@ onGesture = function(){
 
     }
     tabVisible = true;
+    doRickroll();
 }
 
 var WIDTH = window.innerWidth;
@@ -1320,16 +1321,10 @@ doRickroll = function(){
     disconnectedDiv.style.display = 'none';
     socket.emit('timeout');
     selfId = null;
-    try{
-        stopAllSongs();
-    }
-    catch(err){
-
-    }
+    stopAllSongs();
     rickroll.style.display = 'inline-block';
     rickroll.play();
 }
-doRickroll();
 
 socket.on('rickroll',function(){
     doRickroll();
