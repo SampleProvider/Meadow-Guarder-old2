@@ -1330,7 +1330,6 @@ doRickroll = function(){
     rickroll.style.display = 'inline-block';
     rickroll.play();
 }
-doRickroll();
 
 socket.on('rickroll',function(){
     doRickroll();
