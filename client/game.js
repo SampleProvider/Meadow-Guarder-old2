@@ -1628,7 +1628,6 @@ document.onmousemove = function(event){
     if(autoAim){
         return;
     }
-    onGesture();
     if(selfId){
         var x = -cameraX - Player.list[selfId].x + event.clientX;
         var y = -cameraY - Player.list[selfId].y + event.clientY;
