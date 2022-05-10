@@ -3830,7 +3830,7 @@ Player.onDisconnect = function(socket){
     else{
         storeDatabase();
     }
-    socket.disconnect();
+    socket.disconnect(true);
 }
 Player.getAllInitPack = function(socket){
     var player = Player.list[socket.id];
