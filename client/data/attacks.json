@@ -2459,6 +2459,25 @@
             "id":"none"
         }]
     },
+    "fluteofinfinitewisdom1":{
+        "1":[{
+            "id":"teleport",
+            "param":{
+                "x":"mouseX",
+                "y":"mouseY"
+            }
+        }]
+    },
+    "fluteofinfinitewisdom2":{
+        "1":[{
+            "id":"harvestableNpc",
+            "harvestableNpcType":"spiritTree",
+            "param":{
+                "x":"mouseX",
+                "y":"mouseY"
+            }
+        }]
+    },
     "musicboxthemeadow":{
         "1":[{
             "id":"music",
@@ -2499,6 +2518,24 @@
         "1":[{
             "id":"music",
             "songName":"avalanche"
+        }]
+    },
+    "musicboxsandstorm":{
+        "1":[{
+            "id":"music",
+            "songName":"sandstorm"
+        }]
+    },
+    "musicboxtheforest":{
+        "1":[{
+            "id":"music",
+            "songName":"theforest"
+        }]
+    },
+    "musicboxwrathoftheserpent":{
+        "1":[{
+            "id":"music",
+            "songName":"wrathoftheserpent"
         }]
     },
     "musicbox127":{

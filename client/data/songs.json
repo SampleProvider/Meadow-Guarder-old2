@@ -47,6 +47,18 @@
         "loaded":false,
         "state":"paused"
     },
+    "theforest":{
+        "name":"The Forest",
+        "url":"./client/websiteAssets/The Forest - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
+    "wrathoftheserpent":{
+        "name":"Wrath of the Serpent",
+        "url":"./client/websiteAssets/Wrath of the Serpent - Official Meadow Guarder Song.mp3",
+        "loaded":false,
+        "state":"paused"
+    },
     "127":{
         "name":"127",
         "url":"./client/websiteAssets/127 - Official Meadow Guarder Song.mp3",

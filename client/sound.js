@@ -224,10 +224,10 @@ playRegionSong = function(region){
         playOneSong('avalanche');
     }
     else if(region === 'The Eternal Forest'){
-        playOneSong('dewdrop');
+        playOneSong('theforest');
     }
     else if(region === 'Forest Fortress'){
-        playOneSong('dewdrop');
+        playOneSong('theforest');
     }
     else if(region === '???'){
         playOneSong('crystalite');

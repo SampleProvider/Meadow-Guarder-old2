@@ -1603,15 +1603,42 @@ Actor = function(param){
                     }
                     break;
                 case "harvestableNpc":
-                    var harvestableNpc = new HarvestableNpc({
-                        x:self.x + Math.cos((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
-                        y:self.y + Math.sin((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
-                        width:64,
-                        height:64,
-                        map:self.map,
-                        img:data.harvestableNpcType,
-                        zIndex:0,
-                    });
+                    if(data.param.x || data.param.y){
+                        var x = 0;
+                        var y = 0;
+                        if(data.param.x === 'mouseX'){
+                            x = self.mouseX;
+                        }
+                        else{
+                            x = data.param.x;
+                        }
+                        if(data.param.y === 'mouseY'){
+                            y = self.mouseY;
+                        }
+                        else{
+                            y = data.param.y;
+                        }
+                        var harvestableNpc = new HarvestableNpc({
+                            x:Math.floor(x / 64) * 64 + 32,
+                            y:Math.floor(y / 64) * 64 + 32,
+                            width:64,
+                            height:64,
+                            map:self.map,
+                            img:data.harvestableNpcType,
+                            zIndex:0,
+                        });
+                    }
+                    else{
+                        var harvestableNpc = new HarvestableNpc({
+                            x:self.x + Math.cos((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
+                            y:self.y + Math.sin((self.direction + data.param.direction) / 180 * Math.PI) * data.param.distance,
+                            width:64,
+                            height:64,
+                            map:self.map,
+                            img:data.harvestableNpcType,
+                            zIndex:0,
+                        });
+                    }
                     break;
                 case "dash":
                     self.dash(data.param);
@@ -1624,6 +1651,43 @@ Actor = function(param){
                     break;
                 case "debuff":
                     self.addDebuff(data.name,data.time,self.id);
+                    break;
+                case "teleport":
+                    var x1 = 0;
+                    var y1 = 0;
+                    if(data.param.x === 'mouseX'){
+                        x1 = self.mouseX;
+                    }
+                    else{
+                        x1 = data.param.x
+                    }
+                    if(data.param.y === 'mouseY'){
+                        y1 = self.mouseY;
+                    }
+                    else{
+                        y1 = data.param.y
+                    }
+                    var x2 = self.x;
+                    var y2 = self.y;
+                    var x3 = self.lastX;
+                    var y3 = self.lastY;
+                    self.x = Math.floor(x1 / 64) * 64 + 32;
+                    self.y = Math.floor(y1 / 64) * 64 + 32;
+                    self.lastX = Math.floor(x1 / 64) * 64 + 32;
+                    self.lastY = Math.floor(y1 / 64) * 64 + 32;
+                    if(self.detectCollisions()){
+                        self.x = x2;
+                        self.y = y2;
+                        self.lastX = x3;
+                        self.lastY = y3;
+                        self.mana += Item.list[self.inventory.items[self.inventory.hotbarSelectedItem].id].manaCost;
+                    }
+                    else{
+                        self.updateGridPosition();
+                        self.updateSlope();
+                        self.updateCollisions();
+                        self.updateTransporter();
+                    }
                     break;
                 case "nameChecker":
                     if(self.name === data.name){
@@ -2001,6 +2065,9 @@ Player = function(param,socket){
             }
             else if(entity === 'tree'){
                 globalChat('#ff0000',pt.name + ' was grown into a tree.');
+            }
+            else if(entity === 'spiritTree'){
+                globalChat('#ff0000',pt.name + ' was grown into the spirit of a tree.');
             }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
@@ -2658,6 +2725,10 @@ Player = function(param,socket){
         }
 
         self.mana = self.manaMax - manaMax + mana;
+
+        if(self.mana < 0){
+            self.mana = 0;
+        }
 
         if(self.hp <= 0 && hp > 0){
             self.hp = Math.min(self.hpMax,hp);
@@ -4986,6 +5057,10 @@ Monster = function(param){
             }
             if(!self.trackingPath[0]){
                 self.trackPos(self.randomPos.x,self.randomPos.y);
+                if(!self.trackingPath[0]){
+                    self.attackState = 'passive';
+                    self.maxSpeed = Math.round(self.maxSpeed / 2);
+                }
             }
         }
     }

@@ -197,6 +197,7 @@
   </objectgroup>
  </tile>
  <tile id="565" type="tree"/>
+ <tile id="569" type="spiritTree"/>
  <tile id="891">
   <objectgroup draworder="index" id="2">
    <object id="1" x="10" y="0" width="6" height="13"/>

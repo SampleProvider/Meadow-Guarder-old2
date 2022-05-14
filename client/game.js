@@ -928,6 +928,14 @@ socket.on('mghc',function(){
 });
 
 var loop = function(){
+    try{
+        if(!rickroll){
+            location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        }
+    }
+    catch{
+        location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+    }
     var now = performance.now();
     while(fpsTimes.length > 0 && fpsTimes[0] <= now - 1000){
         fpsTimes.shift();
