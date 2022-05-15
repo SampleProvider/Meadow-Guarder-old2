@@ -2080,6 +2080,9 @@ Player = function(param,socket){
             else if(entity === 'spiritTree'){
                 globalChat('#ff0000',pt.name + ' was grown into the spirit of a tree.');
             }
+            else if(entity === 'suffocation'){
+                globalChat('#ff0000',pt.name + ' could not get oxygen.');
+            }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
             }
@@ -2096,6 +2099,12 @@ Player = function(param,socket){
         self.updateCurrentItem();
         self.updateDebuffs();
         self.collided = {x:false,y:false};
+        if(self.detectCollisions() && self.hp > 0){
+            self.hp -= 5;
+            if(self.hp <= 0){
+                self.onDeath(self,'suffocation');
+            }
+        }
         if(self.canMove && self.inDialogue === false){
             while(self.stepsLeft > 0){
                 self.updateSpd();
