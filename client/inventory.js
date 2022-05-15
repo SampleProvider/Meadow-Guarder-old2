@@ -400,16 +400,30 @@ Inventory = function(socket,server){
                         self.refreshItem(index1);
                     }
                     else if(data.click === 2){
-                        self.draggingItem = {
-                            id:item1.id,
-                            amount:1,
-                            cooldown:item1.cooldown,
-                        };
-                        self.items[index1].amount -= 1;
-                        if(self.items[index1].amount === 0){
-                            self.items[index1] = {};
+                        if(self.items[index1].amount > 0){
+                            self.draggingItem = {
+                                id:item1.id,
+                                amount:Math.floor(self.items[index1].amount / 2),
+                                cooldown:item1.cooldown,
+                            };
+                            self.items[index1].amount -= Math.floor(self.items[index1].amount / 2);
+                            if(self.items[index1].amount === 0){
+                                self.items[index1] = {};
+                            }
+                            self.refreshItem(index1);
                         }
-                        self.refreshItem(index1);
+                        else{
+                            self.draggingItem = {
+                                id:item1.id,
+                                amount:1,
+                                cooldown:item1.cooldown,
+                            };
+                            self.items[index1].amount -= 1;
+                            if(self.items[index1].amount === 0){
+                                self.items[index1] = {};
+                            }
+                            self.refreshItem(index1);
+                        }
                     }
                     return;
                 }
