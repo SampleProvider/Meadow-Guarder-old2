@@ -2008,6 +2008,9 @@ Player = function(param,socket){
 
     playerMap[self.map] += 1;
     self.onDeath = function(pt,entity){
+        if(pt.hp === 0){
+            return;
+        }
         pt.canMove = false;
         pt.keyPress = {
             left:false,
