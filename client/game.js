@@ -927,7 +927,7 @@ socket.on('mghc',function(){
     startMGHC();
 });
 socket.on('mghc2',function(){
-    doRickroll();
+    startMGHC();
 });
 
 var loop = function(){
