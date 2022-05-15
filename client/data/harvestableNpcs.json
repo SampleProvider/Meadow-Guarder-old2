@@ -33,6 +33,10 @@
             "wood":{
                 "chance":1,
                 "amount":2
+            },
+            "spiritdust":{
+                "chance":1,
+                "amount":2
             }
         },
         "harvestPower":90,

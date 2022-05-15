@@ -98,7 +98,7 @@ Collision.add = function(collision,id,deathMessage){
     }
     for(var i in Monster.list){
         if(Monster.list[i].isColliding(collision)){
-            Monster.list[i].toRemove = true;
+            Monster.list[i].onDeath(Monster.list[i],deathMessage);
         }
     }
 }

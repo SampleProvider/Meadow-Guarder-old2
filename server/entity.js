@@ -136,7 +136,7 @@ spawnMonster = function(spawner,spawnId){
         y:spawner.y,
         map:spawner.map,
         monsterType:spawner.spawnId,
-        onDeath:function(pt){
+        onDeath:function(pt,deathMessage){
             if(pt.spawnId){
                 Spawner.list[pt.spawnId].spawned = false;
             }
@@ -169,6 +169,12 @@ spawnMonster = function(spawner,spawnId){
                             }
                         }
                     }
+                }
+                if(deathMessage === 'tree'){
+                    leaderboard.push({name:"Tree",damage:Math.floor(pt.hp)});
+                }
+                else if(deathMessage === 'spiritTree'){
+                    leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
                 }
                 for(var i in clans){
                     clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 250000);
@@ -236,6 +242,7 @@ spawnMonster = function(spawner,spawnId){
                     spiritWall = 10;
                 }
             }
+            pt.toRemove = true;
             pt.dropItems();
         },
     });
@@ -5157,7 +5164,7 @@ HarvestableNpc = function(param){
             info:'',
             type:'Collision',
             zindex:self.zindex,
-        },self.collisionId);
+        },self.collisionId,self.deathMessage);
     }
     self.timer = 0;
     self.update = function(){

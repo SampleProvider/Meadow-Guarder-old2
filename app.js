@@ -18,7 +18,7 @@ require('./server/entity');
 
 badwords = require('./server/badwords.json').words;
 
-validCharacters = 'abcdefghijklmnopqrstuvwxyz1234567890-=_+~[]{}|;:",./ ';
+validCharacters = 'abcdefghijklmnopqrstuvwxyz1234567890-=_+~[]{}|;:",./!@#$%^&*() ';
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/client/index.html');
@@ -547,7 +547,7 @@ io.sockets.on('connection',function(socket){
 							y:Player.list[socket.id].y,
 							map:Player.list[socket.id].map,
 							monsterType:name,
-							onDeath:function(pt){
+							onDeath:function(pt,deathMessage){
 								if(pt.spawnId){
 									Spawner.list[pt.spawnId].spawned = false;
 								}
@@ -557,12 +557,18 @@ io.sockets.on('connection',function(socket){
 									}
 								}
 								if(pt.boss === true){
-									var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+									var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.\nTop Damagers:';
 									var leaderboard = [];
 									for(var i in pt.playersDamaged){
 										if(Player.list[i]){
 											leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
 										}
+									}
+									if(deathMessage === 'tree'){
+										leaderboard.push({name:"Tree",damage:Math.floor(pt.hp)});
+									}
+									else if(deathMessage === 'spiritTree'){
+										leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 									}
 									var compare = function(a,b){
 										if(a.damage > b.damage){
@@ -583,6 +589,7 @@ io.sockets.on('connection',function(socket){
 									}
 									globalChat('#990099',message);
 								}
+								pt.toRemove = true;
 							},
 						});
 						Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[name].name + '.');
@@ -595,22 +602,28 @@ io.sockets.on('connection',function(socket){
 									y:Player.list[socket.id].y,
 									map:Player.list[socket.id].map,
 									monsterType:i,
-									onDeath:function(pt){
+									onDeath:function(pt,deathMessage){
 										if(pt.spawnId){
 											Spawner.list[pt.spawnId].spawned = false;
 										}
-										for(var j in Projectile.list){
-											if(Projectile.list[j].parent === pt.id){
-												Projectile.list[j].toRemove = true;
+										for(var i in Projectile.list){
+											if(Projectile.list[i].parent === pt.id){
+												Projectile.list[i].toRemove = true;
 											}
 										}
 										if(pt.boss === true){
-											var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+											var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.\nTop Damagers:';
 											var leaderboard = [];
-											for(var j in pt.playersDamaged){
-												if(Player.list[j]){
-													leaderboard.push({name:Player.list[j].name,damage:pt.playersDamaged[j]});
+											for(var i in pt.playersDamaged){
+												if(Player.list[i]){
+													leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
 												}
+											}
+											if(deathMessage === 'tree'){
+												leaderboard.push({name:"Tree",damage:Math.floor(pt.hp)});
+											}
+											else if(deathMessage === 'spiritTree'){
+												leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 											}
 											var compare = function(a,b){
 												if(a.damage > b.damage){
@@ -624,13 +637,14 @@ io.sockets.on('connection',function(socket){
 												}
 											}
 											leaderboard.sort(compare);
-											for(var j = 0;j < 5;j++){
-												if(leaderboard[j]){
-													message += '\n' + (j + 1) + ': ' + leaderboard[j].name + ' (' + leaderboard[j].damage + ' Damage)';
+											for(var i = 0;i < 5;i++){
+												if(leaderboard[i]){
+													message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
 												}
 											}
 											globalChat('#990099',message);
 										}
+										pt.toRemove = true;
 									},
 								});
 								Player.list[socket.id].sendMessage('[!] Summoned ' + monsterData[i].name + '.');
@@ -652,22 +666,28 @@ io.sockets.on('connection',function(socket){
 								y:Player.list[socket.id].y,
 								map:Player.list[socket.id].map,
 								monsterType:name,
-								onDeath:function(pt){
+								onDeath:function(pt,deathMessage){
 									if(pt.spawnId){
 										Spawner.list[pt.spawnId].spawned = false;
 									}
-									for(var j in Projectile.list){
-										if(Projectile.list[j].parent === pt.id){
-											Projectile.list[j].toRemove = true;
+									for(var i in Projectile.list){
+										if(Projectile.list[i].parent === pt.id){
+											Projectile.list[i].toRemove = true;
 										}
 									}
 									if(pt.boss === true){
-										var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+										var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.\nTop Damagers:';
 										var leaderboard = [];
-										for(var j in pt.playersDamaged){
-											if(Player.list[j]){
-												leaderboard.push({name:Player.list[j].name,damage:pt.playersDamaged[j]});
+										for(var i in pt.playersDamaged){
+											if(Player.list[i]){
+												leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
 											}
+										}
+										if(deathMessage === 'tree'){
+											leaderboard.push({name:"Tree",damage:Math.floor(pt.hp)});
+										}
+										else if(deathMessage === 'spiritTree'){
+											leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 										}
 										var compare = function(a,b){
 											if(a.damage > b.damage){
@@ -681,13 +701,14 @@ io.sockets.on('connection',function(socket){
 											}
 										}
 										leaderboard.sort(compare);
-										for(var j = 0;j < 5;j++){
-											if(leaderboard[j]){
-												message += '\n' + (j + 1) + ': ' + leaderboard[j].name + ' (' + leaderboard[j].damage + ' Damage)';
+										for(var i = 0;i < 5;i++){
+											if(leaderboard[i]){
+												message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
 											}
 										}
 										globalChat('#990099',message);
 									}
+									pt.toRemove = true;
 								},
 							});
 						}
@@ -702,22 +723,28 @@ io.sockets.on('connection',function(socket){
 										y:Player.list[socket.id].y,
 										map:Player.list[socket.id].map,
 										monsterType:i,
-										onDeath:function(pt){
+										onDeath:function(pt,deathMessage){
 											if(pt.spawnId){
 												Spawner.list[pt.spawnId].spawned = false;
 											}
-											for(var k in Projectile.list){
-												if(Projectile.list[k].parent === pt.id){
-													Projectile.list[k].toRemove = true;
+											for(var i in Projectile.list){
+												if(Projectile.list[i].parent === pt.id){
+													Projectile.list[i].toRemove = true;
 												}
 											}
 											if(pt.boss === true){
-												var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.';
+												var message = pt.name + ' has been defeated!\nHowever, this boss was spawned using a command. Players that have contributed to the kill will not get rewards.\nTop Damagers:';
 												var leaderboard = [];
-												for(var k in pt.playersDamaged){
-													if(Player.list[k]){
-														leaderboard.push({name:Player.list[k].name,damage:pt.playersDamaged[k]});
+												for(var i in pt.playersDamaged){
+													if(Player.list[i]){
+														leaderboard.push({name:Player.list[i].name,damage:pt.playersDamaged[i]});
 													}
+												}
+												if(deathMessage === 'tree'){
+													leaderboard.push({name:"Tree",damage:Math.floor(pt.hp)});
+												}
+												else if(deathMessage === 'spiritTree'){
+													leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 												}
 												var compare = function(a,b){
 													if(a.damage > b.damage){
@@ -731,13 +758,14 @@ io.sockets.on('connection',function(socket){
 													}
 												}
 												leaderboard.sort(compare);
-												for(var k = 0;k < 5;k++){
-													if(leaderboard[k]){
-														message += '\n' + (k + 1) + ': ' + leaderboard[k].name + ' (' + leaderboard[k].damage + ' Damage)';
+												for(var i = 0;i < 5;i++){
+													if(leaderboard[i]){
+														message += '\n' + (i + 1) + ': ' + leaderboard[i].name + ' (' + leaderboard[i].damage + ' Damage)';
 													}
 												}
 												globalChat('#990099',message);
 											}
+											pt.toRemove = true;
 										},
 									});
 								}
@@ -834,6 +862,31 @@ io.sockets.on('connection',function(socket){
 						globalChat('#00ff00',Player.list[socket.id].name + ' logged on.');
 						Player.list[socket.id].sendMessage('[!] You are not invisible anymore.');
 					}
+					return;
+				}
+				if(commandList[0].toLowerCase() === 'freeze' && level >= 2){
+					commandList.splice(0,1);
+					var name = recreateCommand(commandList);
+					doCommand(name,function(name,i){
+						if(debugData[name]){
+							if(debugData[name].level > level){
+								Player.list[socket.id].sendMessage('[!] You do not have permission to freeze ' + name + '.');
+								return;
+							}
+						}
+						if(Player.list[i].debug.frozen === false){
+							Player.list[i].debug.frozen = true;
+							Player.list[i].canMove = false;
+							Player.list[socket.id].sendMessage('[!] Froze player ' + name + '.');
+						}
+						else{
+							Player.list[i].debug.frozen = false;
+							Player.list[i].canMove = true;
+							Player.list[socket.id].sendMessage('[!] Unfroze player ' + name + '.');
+						}
+					},function(name){
+						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
+					});
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'restart' && level >= 2){
@@ -1519,6 +1572,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/freeze [player name] - Freeze a player.';
 						message += '\n/restart - Restart the server.';
 						message += '\n/chatban [player name] - Chat Ban someone.';
 						message += '\n/unchatban [player name] - Unchatban someone.';
@@ -1552,6 +1606,7 @@ io.sockets.on('connection',function(socket){
 						message += '\n/weather [weather name] - Changes the weather.';
 						message += '\n/removeclan [clan name] - Remove a clan.';
 						message += '\n/invis - Toggle invisibility for yourself.';
+						message += '\n/freeze [player name] - Freeze a player.';
 						message += '\n/restart - Restart the server.';
 						message += '\n/chatban [player name] - Chat Ban someone.';
 						message += '\n/unchatban [player name] - Unchatban someone.';
