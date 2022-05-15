@@ -1314,6 +1314,11 @@ io.sockets.on('connection',function(socket){
 					}
 					return;
 				}
+				if(commandList[0].toLowerCase() === 'mghc' && level >= 1){
+					commandList.splice(0,1);
+					socket.emit('mghc2');
+					return;
+				}
 				if(commandList[0].toLowerCase() === 'mghc' && level >= 0){
 					commandList.splice(0,1);
 					socket.emit('mghc');
