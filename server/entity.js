@@ -764,17 +764,23 @@ Actor = function(param){
         if(!self.animate){
             return;
         }
-        if(self.spdY >= 0.1){
-            self.animationDirection = "down";
-        }
-        else if(self.spdY <= -0.1){
-            self.animationDirection = "up";
-        }
-        else if(self.spdX >= 0.1){
-            self.animationDirection = "right";
-        }
-        else if(self.spdX <= -0.1){
-            self.animationDirection = "left";
+        if(Math.abs(self.spdX) >= 0.1 || Math.abs(self.spdY) >= 0.1){
+            if(Math.abs(self.spdY) >= Math.abs(self.spdX)){
+                if(self.spdY >= 0.1){
+                    self.animationDirection = "down";
+                }
+                else if(self.spdY <= -0.1){
+                    self.animationDirection = "up";
+                }
+            }
+            else{
+                if(self.spdX >= 0.1){
+                    self.animationDirection = "right";
+                }
+                else if(self.spdX <= -0.1){
+                    self.animationDirection = "left";
+                }
+            }
         }
         else{
             self.animation = -1;
@@ -1694,6 +1700,9 @@ Actor = function(param){
                         self.updateSlope();
                         self.updateCollisions();
                         self.updateTransporter();
+                        self.spdX = self.x - x2;
+                        self.spdY = self.y - y2;
+                        self.updateAnimation();
                     }
                     break;
                 case "nameChecker":
@@ -2099,12 +2108,18 @@ Player = function(param,socket){
         self.updateCurrentItem();
         self.updateDebuffs();
         self.collided = {x:false,y:false};
+        var lastX2 = self.lastX;
+        var lastY2 = self.lastY;
+        self.lastX = self.x;
+        self.lastY = self.y;
         if(self.detectCollisions() && self.hp > 0){
             self.hp -= 5;
             if(self.hp <= 0){
                 self.onDeath(self,'suffocation');
             }
         }
+        self.lastX = lastX2;
+        self.lastY = lastY2;
         if(self.canMove && self.inDialogue === false){
             while(self.stepsLeft > 0){
                 self.updateSpd();
