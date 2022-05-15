@@ -1944,6 +1944,7 @@ Player = function(param,socket){
     self.debug = {
         invisible:false,
         invincible:false,
+        frozen:false,
     }
 
     self.inventory = new Inventory(socket,true);

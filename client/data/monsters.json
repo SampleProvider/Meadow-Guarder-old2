@@ -1437,7 +1437,7 @@
         "boss":true,
         "xpDrop":7500000,
         "coinDrop":25000000,
-        "circleDistance":256,
+        "circleDistance":0,
         "phase":"phase1",
         "phases":{
             "phase1":{
