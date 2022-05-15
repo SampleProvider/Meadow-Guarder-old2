@@ -524,6 +524,7 @@ io.sockets.on('connection',function(socket){
 						}
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('rickroll');
+							SOCKET_LIST[i].disconnectUser();
 						}
 						globalChat('#ff0000',name + ' just got rickrolled.');
 						Player.list[socket.id].sendMessage('[!] Rickrolled player ' + name + '.');
@@ -535,6 +536,7 @@ io.sockets.on('connection',function(socket){
 				if(commandList[0].toLowerCase() === 'rickroll' && level < 2 && commandList.length > 1){
 					commandList.splice(0,1);
                     socket.emit('rickroll');
+					socket.disconnectUser();
                     globalChat('#ffff00','OOPS! ' + Player.list[socket.id].name + ' rickrolled ' + Player.list[socket.id].name + '!');
 					return;
 				}

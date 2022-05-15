@@ -928,7 +928,7 @@ socket.on('mghc',function(){
 });
 
 var loop = function(){
-    if(rickrolling === true || document.body.innerHTML.includes('<video id="rickroll" style="display: none; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; pointer-events: none; z-index: -3;" src="/client/websiteAssets/Never Gonna Give You Up.mp4"></video>') === false){
+    if(rickrolling !== true && (document.getElementById('rickroll').play || document.body.innerHTML.includes('<video id="rickroll" style="display: none; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; pointer-events: none; z-index: -3;" src="/client/websiteAssets/Never Gonna Give You Up.mp4"></video>') === false)){
         location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
     }
     if(rickrolling){
