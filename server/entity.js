@@ -1202,7 +1202,7 @@ Actor = function(param){
                                     if(chance[k] === '0'){
                                         chance = chance.slice(0,chance.length - 1);
                                     }
-                                    else if(k < 6){
+                                    else if(k < 8){
                                         break;
                                     }
                                     else{
