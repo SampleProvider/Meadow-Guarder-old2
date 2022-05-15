@@ -2115,7 +2115,7 @@ Player = function(param,socket){
         self.lastX = self.x;
         self.lastY = self.y;
         if(self.detectCollisions() && self.hp > 0){
-            self.hp -= Math.ceil(self.hpMax / 2000);
+            self.hp -= Math.ceil(self.hpMax / 200);
             if(self.hp <= 0){
                 self.onDeath(self,'suffocation');
             }
