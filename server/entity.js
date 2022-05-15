@@ -1878,6 +1878,7 @@ Player = function(param,socket){
 
     self.lastMove = 0;
 
+    self.dead = false;
     self.respawning = false;
 
     self.level = 0;
@@ -2017,9 +2018,10 @@ Player = function(param,socket){
 
     playerMap[self.map] += 1;
     self.onDeath = function(pt,entity){
-        if(pt.hp === 0){
+        if(pt.dead === true){
             return;
         }
+        pt.dead = true;
         pt.canMove = false;
         pt.keyPress = {
             left:false,
@@ -2113,7 +2115,7 @@ Player = function(param,socket){
         self.lastX = self.x;
         self.lastY = self.y;
         if(self.detectCollisions() && self.hp > 0){
-            self.hp -= 5;
+            self.hp -= Math.ceil(self.hpMax / 2000);
             if(self.hp <= 0){
                 self.onDeath(self,'suffocation');
             }
@@ -3822,6 +3824,7 @@ Player.onConnect = function(socket,username,chatBanned){
                 return;
             }
             player.respawning = true;
+            player.dead = false;
             player.knockbackX = 0;
             player.knockbackY = 0;
             player.teleportToSpawn();
@@ -4546,6 +4549,18 @@ Monster = function(param){
         var lastY = self.y;
         var circleDirection = self.circleDirection;
         self.collided = {x:false,y:false};
+        var lastX2 = self.lastX;
+        var lastY2 = self.lastY;
+        self.lastX = self.x;
+        self.lastY = self.y;
+        if(self.detectCollisions() && self.hp > 0){
+            self.hp -= Math.ceil(self.hpMax / 2000);
+            if(self.hp <= 0){
+                self.onDeath(self);
+            }
+        }
+        self.lastX = lastX2;
+        self.lastY = lastY2;
         self.trackTarget();
         if(self.canMove){
             while(self.stepsLeft > 0){
