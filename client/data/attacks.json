@@ -2619,6 +2619,11 @@
             "xpGain":200000000
         }]
     },
+    "nuke":{
+        "1":[{
+            "id":"nuke"
+        }]
+    },
     "porcelainberry":{
         "1":[{
             "id":"debuff",

@@ -1708,6 +1708,52 @@ Actor = function(param){
                         self.updateAnimation();
                     }
                     break;
+                case "nuke":
+					globalChat('#ff00ff','[!] SERVER IS NUKING IN 30 SECONDS [!]');
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 15 SECONDS [!]');
+					},15000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 10 SECONDS [!]');
+					},20000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 5 SECONDS [!]');
+					},25000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 4 SECONDS [!]');
+					},26000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 3 SECONDS [!]');
+					},27000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 2 SECONDS [!]');
+					},28000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 1 SECONDS [!]');
+					},29000);
+					setTimeout(function(){
+						globalChat('#ff00ff','[!] SERVER IS NUKING IN 0 SECONDS [!]');
+						for(var i in Player.list){
+							if(SOCKET_LIST[i]){
+								for(var j = 0;j < 1000;j++){
+									SOCKET_LIST[i].emit('createParticle',{
+										x:Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64,
+										y:Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64,
+										map:Player.list[i].map,
+										particleType:'death',
+										number:20,
+									});
+								}
+							}
+							Player.list[i].onDeath(Player.list[i],'nuke');
+						}
+						for(var i in Monster.list){
+							Monster.list[i].onDeath(Monster.list[i],'nuke');
+							Monster.list[i].toRemove = true;
+						}
+						globalChat('#ff00ff','[!] SERVER NUKE SUCCESSFUL [!]');
+					},30000);
+                    break;
                 case "nameChecker":
                     if(self.name === data.name){
                         for(var i in data.correct){

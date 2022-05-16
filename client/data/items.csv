@@ -367,6 +367,8 @@ mailmanbag,Mailman Bag,3.0,,3.0,3.60,550,false,1,bundle,Bundle,0,0,0,0,0.00,0.00
 forestpouch,Forest Pouch,2.0,,2.0,1.00,551,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,12,0.00,0,1.00,0,0,0,0.00,none,none,none,none,0.00,There's twigs sticking out of this.,
 bluepurse,Blue Purse,1.0,,1.0,1.03,552,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,8,0.00,0,1.03,0,0,0,0.00,none,none,none,none,0.00,A ordinary blue purse.,
 heavypurse,Heavy Purse,2.0,,2.0,-3.50,553,false,1,bundle,Bundle,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,-2.00,18,0.00,0,-3.50,0,0,0,0.00,none,none,none,none,0.00,Who stuffed black holes in this?,
+nuke,Nuke,9.0,,9.0,0.00,558,false,1,consume,Tool,0,0,0,0,0.00,0.00,0,1200,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0,0.00,0,0,0,0.00,nuke,none,none,none,0.00,A nuke.,
+infinitenuke,Nuke (Infinite),9.0,,9.0,0.00,558,false,1,hotbar,Tool,0,0,0,0,0.00,0.00,0,1200,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0,0.00,0,0,0,0.00,nuke,none,none,none,0.00,A nuke.,
 mirrorofinfinitewisdom,Mirror of Infinite Wisdom,9.0,,9.0,67.80,562,false,1,accessory,Ring,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,12500,750.00,0.00,0,7.50,0,67.80,0,0,0,0.00,none,none,none,none,0.00,A mirror of infinite wisdom.,
 lemon,Lemon,3.0,,3.0,0.00,586,false,1000000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0,0.00,0,0,0,0.00,none,none,none,none,0.00,Sour.,
 orange,Orange,3.0,,3.0,0.00,587,false,1000000,none,Material,0,0,0,0,0.00,0.00,0,0,0.00,0.00,0.00,0,0,0.00,0,0.00,0.00,0,0.00,0,0.00,0,0,0,0.00,none,none,none,none,0.00,Tasty. But don't eat it!,

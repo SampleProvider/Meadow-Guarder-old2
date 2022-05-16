@@ -1189,7 +1189,6 @@ io.sockets.on('connection',function(socket){
 					commandList.splice(0,1);
 					Player.list[socket.id].sendMessage('[!] Nuked Meadow Guarder.');
 					globalChat('#ff00ff','[!] SERVER IS NUKING IN 30 SECONDS [!]');
-					storeDatabase();
 					setTimeout(function(){
 						globalChat('#ff00ff','[!] SERVER IS NUKING IN 15 SECONDS [!]');
 					},15000);
@@ -1233,7 +1232,7 @@ io.sockets.on('connection',function(socket){
 						}
 						globalChat('#ff00ff','[!] SERVER NUKE SUCCESSFUL [!]');
 					},30000);
-					return
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'exit' && level >= 3){
 					commandList.splice(0,1);
@@ -1242,7 +1241,7 @@ io.sockets.on('connection',function(socket){
 					setTimeout(function(){
 						process.exit(0);
 					},1000);
-					return
+					return;
 				}
 				if(commandList[0].toLowerCase() === 'debug' && level >= 3){
 					commandList.splice(0,1);
