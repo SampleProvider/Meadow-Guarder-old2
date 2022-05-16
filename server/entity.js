@@ -176,6 +176,9 @@ spawnMonster = function(spawner,spawnId){
                 else if(deathMessage === 'spiritTree'){
                     leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
                 }
+                else if(deathMessage === 'nuke'){
+                    leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});
+                }
                 for(var i in clans){
                     clans[i].xp = Math.round((clans[i].damage * Math.sqrt(clans[i].membersDamaged) * clans[i].luck / clans[i].membersDamaged * (0.8 + Math.random() * 0.4)) / 250000);
                     Clan.list[i].addXp(clans[i].xp);
@@ -2093,6 +2096,9 @@ Player = function(param,socket){
             }
             else if(entity === 'suffocation'){
                 globalChat('#ff0000',pt.name + ' could not get oxygen.');
+            }
+            else if(entity === 'nuke'){
+                globalChat('#ff0000',pt.name + ' got nuked.');
             }
             else{
                 globalChat('#ff0000',pt.name + ' died.');
