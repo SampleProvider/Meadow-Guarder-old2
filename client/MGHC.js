@@ -518,6 +518,7 @@ var startMGHC = function(){
     };
     MGHC1 = function(){
         if(freeCamState){
+            socket.emit('keyPress',{inputId:'releaseAll'});
             if(keys['w'] || keys['W'] || keys['ArrowUp']){
                 freeCamY += 35;
             }
