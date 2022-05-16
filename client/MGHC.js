@@ -294,7 +294,6 @@ var startMGHC = function(){
     freeCam.innerHTML = 'FreeCam';
     otherColumn.appendChild(freeCam);
     
-    var freeCamState = false;
     var freeCamX = 0;
     var freeCamY = 0;
     freeCam.onclick = function(){
@@ -381,7 +380,6 @@ var startMGHC = function(){
     };
     
     var t = 0;
-    var autoAim = false;
     
     var keys = [];
     

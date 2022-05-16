@@ -1045,7 +1045,7 @@ var loop = function(){
             cameraChanged = true;
         }
     }
-    if(cameraChanged){
+    if(cameraChanged && freeCamState === false){
         mouseX = -cameraX - Player.list[selfId].x + rawMouseX;
         mouseY = -cameraY - Player.list[selfId].y + rawMouseY;
         if(!autoAim){
