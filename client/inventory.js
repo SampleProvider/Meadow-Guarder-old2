@@ -403,10 +403,10 @@ Inventory = function(socket,server){
                         if(self.items[index1].amount > 0){
                             self.draggingItem = {
                                 id:item1.id,
-                                amount:Math.floor(self.items[index1].amount / 2),
+                                amount:Math.ceil(self.items[index1].amount / 2),
                                 cooldown:item1.cooldown,
                             };
-                            self.items[index1].amount -= Math.floor(self.items[index1].amount / 2);
+                            self.items[index1].amount -= Math.ceil(self.items[index1].amount / 2);
                             if(self.items[index1].amount === 0){
                                 self.items[index1] = {};
                             }
