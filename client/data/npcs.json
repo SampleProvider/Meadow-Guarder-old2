@@ -1118,7 +1118,7 @@
                     },
                     {
                         "id":"spiritdust",
-                        "amount":25000
+                        "amount":5000
                     }
                 ]
             },
@@ -1132,7 +1132,7 @@
                     },
                     {
                         "id":"spiritdust",
-                        "amount":125000
+                        "amount":25000
                     }
                 ]
             },
