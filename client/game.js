@@ -922,6 +922,7 @@ var decreaseProjectileByParent = function(projectile){
 var MGHC = function(){};
 var MGHC1 = function(){};
 var autoAim = false;
+var freeCamState = false;
 
 socket.on('mghc',function(){
     startMGHC();
@@ -1620,7 +1621,9 @@ document.onkeydown = function(event){
     if(key === 'Meta' || key === 'Alt' || key === 'Control'){
         socket.emit('keyPress',{inputId:'releaseAll'});
     }
-    socket.emit('keyPress',{inputId:key,state:true});
+    if(!freeCamState){
+        socket.emit('keyPress',{inputId:key,state:true});
+    }
 }
 document.onkeyup = function(event){
     onGesture();
