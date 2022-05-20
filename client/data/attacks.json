@@ -1475,7 +1475,7 @@
                 "pierce":5,
                 "timer":80,
                 "relativeToParent":false,
-                "projectilePattern":"waraxe",
+                "projectilePattern":"harvestWaraxe",
                 "collisionType":"sticky",
                 "debuffs":{
                     "orcking":100
@@ -1494,7 +1494,7 @@
                 "pierce":5,
                 "timer":80,
                 "relativeToParent":false,
-                "projectilePattern":"waraxe",
+                "projectilePattern":"harvestWaraxe",
                 "collisionType":"sticky",
                 "debuffs":{
                     "purpleorcking":200
@@ -1513,7 +1513,7 @@
                 "pierce":10,
                 "timer":80,
                 "relativeToParent":false,
-                "projectilePattern":"waraxe",
+                "projectilePattern":"harvestWaraxe",
                 "collisionType":"none",
                 "debuffs":{
                     "fieryorcking":200
@@ -1532,7 +1532,7 @@
                 "pierce":15,
                 "timer":80,
                 "relativeToParent":false,
-                "projectilePattern":"waraxe",
+                "projectilePattern":"harvestWaraxe",
                 "collisionType":"none",
                 "debuffs":{
                     "mysticorcking":250

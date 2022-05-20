@@ -4293,6 +4293,8 @@ Projectile = function(param){
             self.direction += 135;
         }
         if(self.projectilePattern === 'waraxe'){
+        }
+        if(self.projectilePattern === 'harvestWaraxe'){
             var nearestEntity = null;
             var nearestDirection = 0;
             var nearestDistance = 0;
@@ -4453,7 +4455,7 @@ Projectile = function(param){
         }
     }
     self.updateCollisions = function(){
-        if(self.collisionType === 'none'){
+        if(self.collisionType === 'none' && self.projectilePattern !== 'harvestWaraxe'){
             return;
         }
         for(var i = Math.floor((self.x - self.width / 2 - self.height / 2) / 64);i <= Math.floor((self.x + self.width / 2 + self.height / 2) / 64);i++){
@@ -4468,13 +4470,68 @@ Projectile = function(param){
                                         continue;
                                     }
                                     if(self.isColliding(collision[k])){
+                                        if(self.projectilePattern === 'harvestWaraxe' && self.collided === false){
+                                            var harvestSuccessful = false;
+                                            if(self.parentType === 'Player'){
+                                                if(!Player.list[self.parent] && self.relativeToParent){
+                                                    self.toRemove = true;
+                                                    return;
+                                                }
+                                                if(!Player.list[self.parent] && self.projectilePattern === 'waraxe'){
+                                                    self.toRemove = true;
+                                                    return;
+                                                }
+                                                var entity = Player.list[self.parent];
+                                            }
+                                            for(var i in HarvestableNpc.list){
+                                                if(HarvestableNpc.list[i].img !== 'none'){
+                                                    if(HarvestableNpc.list[i].harvestTool === 'pickaxe' && entity.pickaxePower >= HarvestableNpc.list[i].harvestPower){
+                                                        if(HarvestableNpc.list[i].map === self.map){
+                                                            var npc = HarvestableNpc.list[i];
+                                                            if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.x + self.width / 2 + self.height / 2 && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.x - self.width / 2 - self.height / 2 && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.y + self.width / 2 + self.height / 2 && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.y - self.width / 2 - self.height / 2){
+                                                                npc.harvestHp -= entity.pickaxePower;
+                                                                if(npc.harvestHp <= 0){
+                                                                    npc.dropItems(entity.id);
+                                                                    harvestSuccessful = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    else if(HarvestableNpc.list[i].harvestTool === 'axe' && entity.axePower >= HarvestableNpc.list[i].harvestPower){
+                                                        if(HarvestableNpc.list[i].map === self.map){
+                                                            var npc = HarvestableNpc.list[i];
+                                                            if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.x + self.width / 2 + self.height / 2 && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.x - self.width / 2 - self.height / 2 && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.y + self.width / 2 + self.height / 2 && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.y - self.width / 2 - self.height / 2){
+                                                                npc.harvestHp -= entity.axePower;
+                                                                if(npc.harvestHp <= 0){
+                                                                    npc.dropItems(entity.id);
+                                                                    harvestSuccessful = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    else if(HarvestableNpc.list[i].harvestTool === 'scythe' && entity.scythePower >= HarvestableNpc.list[i].harvestPower){
+                                                        if(HarvestableNpc.list[i].map === self.map){
+                                                            var npc = HarvestableNpc.list[i];
+                                                            if(npc.x + npc.harvestOffsetX - npc.harvestWidth / 2 <= self.x + self.width / 2 + self.height / 2 && npc.x + npc.harvestOffsetX + npc.harvestWidth / 2 >= self.x - self.width / 2 - self.height / 2 && npc.y + npc.harvestOffsetY - npc.harvestHeight / 2 <= self.y + self.width / 2 + self.height / 2 && npc.y + npc.harvestOffsetY + npc.harvestHeight / 2 >= self.y - self.width / 2 - self.height / 2){
+                                                                npc.harvestHp -= entity.scythePower;
+                                                                if(npc.harvestHp <= 0){
+                                                                    npc.dropItems(entity.id);
+                                                                    harvestSuccessful = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if(harvestSuccessful){
+                                                continue;
+                                            }
+                                        }
                                         if(self.collisionType === 'remove'){
                                             self.toRemove = true;
                                             self.collided = true;
                                         }
                                         else if(self.collisionType === 'sticky'){
-                                            self.spdX = 0;
-                                            self.spdY = 0;
                                             self.x = self.lastX;
                                             self.y = self.lastY;
                                             self.spin = 0;
@@ -4488,6 +4545,9 @@ Projectile = function(param){
                     }
                 }
             }
+        }if(self.collisionType === 'sticky'){
+            self.spin = param.spin;
+            self.collided = false;
         }
     }
     self.updateCollisions();

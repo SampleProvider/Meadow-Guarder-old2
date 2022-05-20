@@ -39,7 +39,7 @@
                 "amount":2
             }
         },
-        "harvestPower":90,
+        "harvestPower":30,
         "harvestTool":"axe",
         "harvestHp":270,
         "deathMessage":"spiritTree",
@@ -68,7 +68,7 @@
                 "amount":2
             }
         },
-        "harvestPower":90,
+        "harvestPower":30,
         "harvestTool":"axe",
         "harvestHp":360,
         "regrow":false,
