@@ -572,6 +572,9 @@ io.sockets.on('connection',function(socket){
 									else if(deathMessage === 'spiritTree'){
 										leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 									}
+									else if(deathMessage === 'fireTree'){
+										leaderboard.push({name:"Fire Tree",damage:Math.floor(pt.hp)});
+									}
 									else if(deathMessage === 'nuke'){
 										leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});
 									}
@@ -629,6 +632,9 @@ io.sockets.on('connection',function(socket){
 											}
 											else if(deathMessage === 'spiritTree'){
 												leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
+											}
+											else if(deathMessage === 'fireTree'){
+												leaderboard.push({name:"Fire Tree",damage:Math.floor(pt.hp)});
 											}
 											else if(deathMessage === 'nuke'){
 												leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});
@@ -697,6 +703,9 @@ io.sockets.on('connection',function(socket){
 										else if(deathMessage === 'spiritTree'){
 											leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
 										}
+										else if(deathMessage === 'fireTree'){
+											leaderboard.push({name:"Fire Tree",damage:Math.floor(pt.hp)});
+										}
 										else if(deathMessage === 'nuke'){
 											leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});
 										}
@@ -756,6 +765,9 @@ io.sockets.on('connection',function(socket){
 												}
 												else if(deathMessage === 'spiritTree'){
 													leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
+												}
+												else if(deathMessage === 'fireTree'){
+													leaderboard.push({name:"Fire Tree",damage:Math.floor(pt.hp)});
 												}
 												else if(deathMessage === 'nuke'){
 													leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});

@@ -176,6 +176,9 @@ spawnMonster = function(spawner,spawnId){
                 else if(deathMessage === 'spiritTree'){
                     leaderboard.push({name:"Spirit Tree",damage:Math.floor(pt.hp)});
                 }
+                else if(deathMessage === 'fireTree'){
+                    leaderboard.push({name:"Fire Tree",damage:Math.floor(pt.hp)});
+                }
                 else if(deathMessage === 'nuke'){
                     leaderboard.push({name:"Nuke",damage:Math.floor(pt.hp)});
                 }
@@ -2165,6 +2168,9 @@ Player = function(param,socket){
             }
             else if(entity === 'spiritTree'){
                 globalChat('#ff0000',pt.name + ' was grown into the spirit of a tree.');
+            }
+            else if(entity === 'fireTree'){
+                globalChat('#ff0000',pt.name + ' was grown into a tree that was on fire.');
             }
             else if(entity === 'suffocation'){
                 globalChat('#ff0000',pt.name + ' could not get oxygen.');
