@@ -1754,6 +1754,32 @@ Actor = function(param){
 						globalChat('#ff00ff','[!] SERVER NUKE SUCCESSFUL [!]');
 					},30000);
                     break;
+                case "treeStorm":
+                    for(var i in Player.list){
+                        if(SOCKET_LIST[i]){
+                            for(var j = 0;j < 1000;j++){
+                                var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                SOCKET_LIST[i].emit('createParticle',{
+                                    x:x,
+                                    y:y,
+                                    map:Player.list[i].map,
+                                    particleType:'death',
+                                    number:20,
+                                });
+                                var harvestableNpc = new HarvestableNpc({
+                                    x:Math.floor(x / 64) * 64 + 32,
+                                    y:Math.floor(y / 64) * 64 + 32,
+                                    width:64,
+                                    height:64,
+                                    map:self.map,
+                                    img:'fireTree',
+                                    zIndex:0,
+                                });
+                            }
+                        }
+                    }
+                    break;
                 case "nameChecker":
                     if(self.name === data.name){
                         for(var i in data.correct){
@@ -3912,6 +3938,7 @@ Player.onConnect = function(socket,username,chatBanned){
                 player.updateRegion();
                 player.teleportStage = 'fadeOut';
                 if(player.respawning){
+                    player.dead = false;
                     player.hp = Math.round(player.hpMax / 2);
                     player.invincible = true;
                     player.respawning = false;
@@ -5306,18 +5333,15 @@ HarvestableNpc = function(param){
         for(var i in self.itemDrops){
             if(Math.random() < self.itemDrops[i].chance * Player.list[pt].luck){
                 var amount = Math.round(self.itemDrops[i].amount * (Math.random() + 0.5) * Player.list[pt].luck);
-                while(amount > 0){
-                    amount -= 1;
-                    new DroppedItem({
-                        x:self.x,
-                        y:self.y,
-                        map:self.map,
-                        item:i,
-                        amount:1,
-                        parent:pt,
-                        allPlayers:false,
-                    });
-                }
+                new DroppedItem({
+                    x:self.x,
+                    y:self.y,
+                    map:self.map,
+                    item:i,
+                    amount:amount,
+                    parent:pt,
+                    allPlayers:false,
+                });
                 if(self.itemDrops[i].chance <= 0.01){
                     globalChat('#00ffff','RARE DROP! ' + Player.list[pt].name + ' got ' + Item.list[i].name + '! ' + (self.itemDrops[i].chance * 100) + '% Drop Chance!');
                 }

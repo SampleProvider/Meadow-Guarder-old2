@@ -389,6 +389,26 @@
                         "amount":10
                     }
                 ]
+            },
+            {
+                "id":"batwings",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"goldcoin",
+                        "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"batwings",
+                "amount":100,
+                "materials":[
+                    {
+                        "id":"goldcoin",
+                        "amount":10
+                    }
+                ]
             }
         ]
     },
@@ -471,12 +491,52 @@
                 ]
             },
             {
+                "id":"deathglobe",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":10
+                    }
+                ]
+            },
+            {
+                "id":"deathglobe",
+                "amount":100,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":100
+                    }
+                ]
+            },
+            {
                 "id":"diamond",
                 "amount":1,
                 "materials":[
                     {
                         "id":"lead",
                         "amount":1
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":10
+                    }
+                ]
+            },
+            {
+                "id":"diamond",
+                "amount":100,
+                "materials":[
+                    {
+                        "id":"lead",
+                        "amount":100
                     }
                 ]
             },
@@ -738,6 +798,26 @@
                 "materials":[
                     {
                         "id":"silvercoin",
+                        "amount":5
+                    }
+                ]
+            },
+            {
+                "id":"goldenglow",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"silvercoin",
+                        "amount":50
+                    }
+                ]
+            },
+            {
+                "id":"goldenglow",
+                "amount":100,
+                "materials":[
+                    {
+                        "id":"goldcoin",
                         "amount":5
                     }
                 ]
@@ -1203,6 +1283,26 @@
                     {
                         "id":"blackbook",
                         "amount":100
+                    }
+                ]
+            },
+            {
+                "id":"midnightbook",
+                "amount":10,
+                "materials":[
+                    {
+                        "id":"blackbook",
+                        "amount":1000
+                    }
+                ]
+            },
+            {
+                "id":"midnightbook",
+                "amount":100,
+                "materials":[
+                    {
+                        "id":"blackbook",
+                        "amount":10000
                     }
                 ]
             },

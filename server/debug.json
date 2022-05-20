@@ -10,6 +10,10 @@
             {
                 "rankName":"[Developer]",
                 "rankColor":"#ff0000"
+            },
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
             }
         ]
     },
@@ -24,6 +28,10 @@
             {
                 "rankName":"[Developer]",
                 "rankColor":"#ff0000"
+            },
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
             }
         ]
     },
@@ -38,6 +46,10 @@
             {
                 "rankName":"[Developer]",
                 "rankColor":"#ff0000"
+            },
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
             }
         ]
     },
@@ -48,6 +60,10 @@
             {
                 "rankName":"[Developer]",
                 "rankColor":"#ff0000"
+            },
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
             }
         ]
     },
@@ -132,6 +148,26 @@
             {
                 "rankName":"[RICKROLL]",
                 "rankColor":"#ffff90"
+            }
+        ]
+    },
+    "ovrlord":{
+        "level":0,
+        "color":"#000000",
+        "ranks":[
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
+            }
+        ]
+    },
+    "xyztika":{
+        "level":0,
+        "color":"#000000",
+        "ranks":[
+            {
+                "rankName":"[Ice]",
+                "rankColor":"#5050ff"
             }
         ]
     }

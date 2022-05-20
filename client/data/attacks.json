@@ -2471,11 +2471,22 @@
     "fluteofinfinitewisdom2":{
         "1":[{
             "id":"harvestableNpc",
-            "harvestableNpcType":"spiritTree",
+            "harvestableNpcType":"fireTree",
             "param":{
                 "x":"mouseX",
                 "y":"mouseY"
             }
+        }]
+    },
+    "fluteofinfinitewisdom3":{
+        "1":[{
+            "id":"treeStorm"
+        },{
+            "id":"chat",
+            "chatColor":"#ff0000",
+            "message":"The Fire Storm has begun!",
+            "rank":"[???]",
+            "rankColor":"#ff5000"
         }]
     },
     "musicboxthemeadow":{
