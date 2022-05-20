@@ -1250,7 +1250,7 @@ io.sockets.on('connection',function(socket){
 					Player.list[socket.id].sendMessage('[!] Tree Stormed Meadow Guarder.');
                     for(var i in Player.list){
                         if(SOCKET_LIST[i]){
-                            for(var j = 0;j < 1000;j++){
+                            for(var j = 0;j < 100;j++){
                                 var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
                                 var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
                                 SOCKET_LIST[i].emit('createParticle',{
