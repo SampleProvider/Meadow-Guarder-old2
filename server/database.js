@@ -199,6 +199,24 @@ clearDatabase = function(){
 			});
 		}
 	});
+	client.query('SELECT * from clans;', (err, res) => {
+		if(err){
+			throw err;
+		}
+		if(res.rows[0]){
+			console.log(res.rows.length)
+			for(var i in res.rows){
+				var clan = JSON.parse(res.rows[i].progress);
+				var realClan = false;
+				for(var j in clan.members){
+					realClan = true;
+				}
+				if(!realClan){
+					client.query('DELETE FROM clans WHERE name=\'' + res.rows[i].name + '\';', (err, res) => {});
+				}
+			}
+		}
+	});
 }
 
 chatBanPlayer = function(username,cb){

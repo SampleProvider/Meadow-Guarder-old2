@@ -3751,6 +3751,10 @@ Player.onConnect = function(socket,username,chatBanned){
             return;
         });
         socket.on('disbandClan',function(){
+            socket.detectSpam('database');
+            if(socket.spam > 10){
+                return;
+            }
             if(Clan.list[player.clan]){
                 if(Clan.list[player.clan].members[player.name] !== 'leader'){
                     return;
