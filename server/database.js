@@ -172,23 +172,12 @@ clearDatabase = function(){
 			console.log(res.rows.length);
 			for(var i in res.rows){
 				var progress = JSON.parse(res.rows[i].progress);
-				if(progress.version || progress.xp || progress.level){
-					realAccounts[res.rows[i].username] = true;
+				if(progress.playTime < 12000){
+					// console.log('Progress Delete',res.rows[i].username)
+					client.query('DELETE FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\';', (err, res) => {});
 				}
 				else{
-					var realAccount = false;
-					for(var j in progress.items){
-						if(progress.items[j].id){
-							if(progress.items[j].id !== 'coppershiv'){
-								realAccounts[res.rows[i].username] = true;
-								realAccount = true;
-							}
-						}
-					}
-					if(realAccount === false){
-						// console.log('Progress Delete',res.rows[i].username,progress)
-						client.query('DELETE FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\';', (err, res) => {});
-					}
+					realAccounts[res.rows[i].username] = true;
 				}
 				accounts[res.rows[i].username] = true;
 			}
