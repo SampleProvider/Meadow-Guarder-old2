@@ -62,6 +62,7 @@ io.sockets.on('connection',function(socket){
 			socket.spam += 1.5;
 		}
 		if(socket.spam > 2){
+			socket.spam = 100000000;
 			socket.disconnectUser();
 		}
 	}
@@ -128,6 +129,9 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('createAccount',function(data){
 		socket.detectSpam('database');
+		if(socket.spam > 2){
+			return;
+		}
 		if(!data){
 			socket.disconnectUser();
 			return;
