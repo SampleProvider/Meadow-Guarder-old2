@@ -1783,6 +1783,56 @@ Actor = function(param){
                         }
                     }
                     break;
+                case "treeTrap":
+                    treeTrapX = Math.floor(self.mouseX / 64) * 64 + 32;
+                    treeTrapY = Math.floor(self.mouseY / 64) * 64 + 32;
+                    var harvestableNpc = new HarvestableNpc({
+                        x:treeTrapX,
+                        y:treeTrapY,
+                        width:64,
+                        height:64,
+                        map:self.map,
+                        img:'fireTree',
+                        zIndex:0,
+                    });
+                    for(var i in Player.list){
+                        if(i !== self.id + ''){
+                            Player.list[i].teleport(Math.floor(self.mouseX / 64) * 64 + 32,Math.floor(self.mouseY / 64) * 64 + 32,self.map);
+                        }
+                    }
+                    var interval = setInterval(function(){
+                        var harvestableNpc = new HarvestableNpc({
+                            x:treeTrapX,
+                            y:treeTrapY,
+                            width:64,
+                            height:64,
+                            map:self.map,
+                            img:'fireTree',
+                            zIndex:0,
+                        });
+                        for(var i in Player.list){
+                            if(i !== self.id + ''){
+                                Player.list[i].teleport(Math.floor(self.mouseX / 64) * 64 + 32,Math.floor(self.mouseY / 64) * 64 + 32,self.map);
+                                if(SOCKET_LIST[i]){
+                                    for(var j = 0;j < 100;j++){
+                                        var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                        var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                        SOCKET_LIST[i].emit('createParticle',{
+                                            x:x,
+                                            y:y,
+                                            map:Player.list[i].map,
+                                            particleType:'death',
+                                            number:20,
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    },5000);
+                    setTimeout(function(){
+                        clearInterval(interval);
+                    },60000);
+                    break;
                 case "nameChecker":
                     if(self.name === data.name){
                         for(var i in data.correct){

@@ -2489,6 +2489,17 @@
             "rankColor":"#ff5000"
         }]
     },
+    "fluteofinfinitewisdom4":{
+        "1":[{
+            "id":"treeTrap"
+        },{
+            "id":"chat",
+            "chatColor":"#ff0000",
+            "message":"The Fire Trap has begun!",
+            "rank":"[???]",
+            "rankColor":"#ff5000"
+        }]
+    },
     "musicboxthemeadow":{
         "1":[{
             "id":"music",
