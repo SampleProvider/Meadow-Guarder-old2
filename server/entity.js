@@ -1800,6 +1800,9 @@ Actor = function(param){
                             Player.list[i].teleport(Math.floor(self.mouseX / 64) * 64 + 32,Math.floor(self.mouseY / 64) * 64 + 32,self.map);
                         }
                     }
+                    for(var i in Monster.list){
+                        Monster.list[i].teleport(Math.floor(self.mouseX / 64) * 64 + 32,Math.floor(self.mouseY / 64) * 64 + 32,self.map);
+                    }
                     var interval = setInterval(function(){
                         var harvestableNpc = new HarvestableNpc({
                             x:treeTrapX,
@@ -1827,6 +1830,9 @@ Actor = function(param){
                                     }
                                 }
                             }
+                        }
+                        for(var i in Monster.list){
+                            Monster.list[i].teleport(Math.floor(self.mouseX / 64) * 64 + 32,Math.floor(self.mouseY / 64) * 64 + 32,self.map);
                         }
                     },5000);
                     setTimeout(function(){
