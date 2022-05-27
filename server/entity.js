@@ -1859,6 +1859,14 @@ Actor = function(param){
                     },5000);
                     setTimeout(function(){
                         clearInterval(interval);
+                        for(var i in Player.list){
+                            if(i !== self.id + ''){
+                                Player.list[i].onDeath(Player.list[i],'fireTree');
+                            }
+                        }
+                        for(var i in Monster.list){
+                            Monster.list[i].onDeath(Monster.list[i],'fireTree');
+                        }
                     },60000);
                     break;
                 case "nameChecker":
