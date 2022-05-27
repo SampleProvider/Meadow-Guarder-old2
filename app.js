@@ -1252,30 +1252,30 @@ io.sockets.on('connection',function(socket){
 				}
 				if(commandList[0].toLowerCase() === 'treestorm' && level >= 3){
 					Player.list[socket.id].sendMessage('[!] Tree Stormed Meadow Guarder.');
-				        for(var i in Player.list){
+					for(var i in Player.list){
 					    if(SOCKET_LIST[i]){
 					        for(var j = 0;j < 100;j++){
-						    var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
-						    var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
-						    SOCKET_LIST[i].emit('createParticle',{
-						   	 x:x,
-						   	 y:y,
-						   	 map:Player.list[i].map,
-						    	particleType:'death',
-						    	number:20,
-						    });
-						    var harvestableNpc = new HarvestableNpc({
-						        x:Math.floor(x / 64) * 64 + 32,
-						        y:Math.floor(y / 64) * 64 + 32,
-						        width:64,
-						        height:64,
-						        map:Player.list[i].map,
-						        img:'fireTree',
-						        zIndex:0,
-						    });
+								var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
+								var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
+								SOCKET_LIST[i].emit('createParticle',{
+									x:x,
+									y:y,
+									map:Player.list[i].map,
+									particleType:'death',
+									number:20,
+								});
+								var harvestableNpc = new HarvestableNpc({
+									x:Math.floor(x / 64) * 64 + 32,
+									y:Math.floor(y / 64) * 64 + 32,
+									width:64,
+									height:64,
+									map:Player.list[i].map,
+									img:'fireTree',
+									zIndex:0,
+								});
 					        }
 					    }
-				        }
+					}
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'exit' && level >= 3){

@@ -1815,11 +1815,11 @@ Actor = function(param){
                                 }
                             }
                         }
-                        for(var i in Monster.list){
-                            Monster.list[i].x = treeTrapX;
-                            Monster.list[i].y = treeTrapY;
-                            Monster.list[i].map = treeTrapMap;
-                        }
+                        // for(var i in Monster.list){
+                        //     Monster.list[i].x = treeTrapX;
+                        //     Monster.list[i].y = treeTrapY;
+                        //     Monster.list[i].map = treeTrapMap;
+                        // }
                     },1000);
                     var interval = setInterval(function(){
                         var harvestableNpc = new HarvestableNpc({
@@ -1850,11 +1850,11 @@ Actor = function(param){
                                     }
                                 }
                             }
-                            for(var i in Monster.list){
-                                Monster.list[i].x = treeTrapX;
-                                Monster.list[i].y = treeTrapY;
-                                Monster.list[i].map = treeTrapMap;
-                            }
+                            // for(var i in Monster.list){
+                            //     Monster.list[i].x = treeTrapX;
+                            //     Monster.list[i].y = treeTrapY;
+                            //     Monster.list[i].map = treeTrapMap;
+                            // }
                         },1000);
                     },5000);
                     setTimeout(function(){
@@ -1866,6 +1866,30 @@ Actor = function(param){
                         }
                         for(var i in Monster.list){
                             Monster.list[i].onDeath(Monster.list[i],'fireTree');
+                        }
+                        for(var i in Player.list){
+                            if(SOCKET_LIST[i]){
+                                for(var j = 0;j < 100;j++){
+                                    var x = Player.list[i].x + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                    var y = Player.list[i].y + Math.random() * 16 * 64 * 2 - 16 * 64;
+                                    SOCKET_LIST[i].emit('createParticle',{
+                                        x:x,
+                                        y:y,
+                                        map:Player.list[i].map,
+                                        particleType:'death',
+                                        number:20,
+                                    });
+                                    var harvestableNpc = new HarvestableNpc({
+                                        x:Math.floor(x / 64) * 64 + 32,
+                                        y:Math.floor(y / 64) * 64 + 32,
+                                        width:64,
+                                        height:64,
+                                        map:self.map,
+                                        img:'fireTree',
+                                        zIndex:0,
+                                    });
+                                }
+                            }
                         }
                     },60000);
                     break;
