@@ -6243,11 +6243,11 @@
             },
             "paper":{
                 "chance":1,
-                "amount":15
+                "amount":150
             },
             "deathglobe":{
                 "chance":1,
-                "amount":15
+                "amount":150
             },
             "teneyedspear":{
                 "chance":0.01,
@@ -6264,7 +6264,7 @@
         "boss":true,
         "bossMusic":"tenEyedOne",
         "xpDrop":1250000,
-        "coinDrop":1350000,
+        "coinDrop":5000000,
         "circleDistance":256,
         "phase":"phase1",
         "phases":{
