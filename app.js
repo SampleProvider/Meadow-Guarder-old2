@@ -129,7 +129,7 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('createAccount',function(data){
 		socket.detectSpam('database');
-		if(socket.spam > 10){
+		if(socket.spam > 10 || !socket.spam){
 			return;
 		}
 		if(!data){

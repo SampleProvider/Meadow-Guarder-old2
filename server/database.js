@@ -172,7 +172,7 @@ clearDatabase = function(){
 			console.log(res.rows.length);
 			for(var i in res.rows){
 				var progress = JSON.parse(res.rows[i].progress);
-				if(progress.playTime < 12000){
+				if(progress.playTime < 12000 || !progress.playTime){
 					// console.log('Progress Delete',res.rows[i].username)
 					client.query('DELETE FROM progress WHERE username=\'' + res.rows[i].username + '\' AND progress=\'' + res.rows[i].progress + '\';', (err, res) => {});
 				}
@@ -218,6 +218,7 @@ clearDatabase = function(){
 		}
 	});
 }
+// clearDatabase()
 
 chatBanPlayer = function(username,cb){
     if(!USE_DB){
