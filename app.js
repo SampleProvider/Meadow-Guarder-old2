@@ -46,6 +46,7 @@ s = {
 }
 
 SOCKET_LIST = {};
+amountOfIps = {};
 io = require('socket.io')(serv,{upgradeTimeout:36000000});
 io.sockets.on('connection',function(socket){
 	socket.id = Math.random();
@@ -53,9 +54,22 @@ io.sockets.on('connection',function(socket){
 	socket.renderDistance = 2;
 	socket.spam = 0;
 	socket.disconnectUser = function(){
+		socket.spam = 100;
 		socket.emit('disconnected');
 		Player.onDisconnect(socket);
 		delete SOCKET_LIST[socket.id];
+		delete socket;
+	}
+	if(amountOfIps[socket.handshake.headers["x-forwarded-for"]]){
+		amountOfIps[socket.handshake.headers["x-forwarded-for"]] += 1;
+		if(amountOfIps[socket.handshake.headers["x-forwarded-for"]] > 10){
+			socket.disconnectUser();
+			socket.spam = 100;
+			return;
+		}
+	}
+	else{
+		amountOfIps[socket.handshake.headers["x-forwarded-for"]] = 1;
 	}
 	socket.detectSpam = function(type){
 		if(type === 'database'){
@@ -2326,6 +2340,12 @@ setInterval(function(){
 
 setInterval(function(){
 	storeDatabase();
+	for(var i in amountOfIps){
+		amountOfIps[i] -= 1;
+		if(amountOfIps[i] <= 0){
+			delete amountOfIps[i];
+		}
+	}
 },300000);
 
 // if(SERVER !== 'localhost'){

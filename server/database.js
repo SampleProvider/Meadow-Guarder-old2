@@ -218,7 +218,7 @@ clearDatabase = function(){
 		}
 	});
 }
-// clearDatabase()
+clearDatabase();
 
 chatBanPlayer = function(username,cb){
     if(!USE_DB){
