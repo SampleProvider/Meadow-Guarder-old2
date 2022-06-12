@@ -62,7 +62,7 @@ io.sockets.on('connection',function(socket){
 	}
 	if(amountOfIps[socket.handshake.headers["x-forwarded-for"]]){
 		amountOfIps[socket.handshake.headers["x-forwarded-for"]] += 1;
-		if(amountOfIps[socket.handshake.headers["x-forwarded-for"]] > 10){
+		if(amountOfIps[socket.handshake.headers["x-forwarded-for"]] > 100){
 			socket.disconnectUser();
 			socket.spam = 100;
 			return;
