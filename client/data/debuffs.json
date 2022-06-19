@@ -98,7 +98,7 @@
         "description":"You've fell right into my trap.",
         "drawId":148,
         "rarity":9,
-        "hpRegen":-250,
+        "hpRegen":-500,
         "movementSpeed":-100,
         "deathMessage":"frozenbreath"
     },
