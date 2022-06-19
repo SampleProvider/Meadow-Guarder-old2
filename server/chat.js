@@ -25,7 +25,7 @@ globalChat = function(color,message,rank,rankColor){
     if(m === '0'){
         m = '00';
     }
-    console.error("[" + h + ":" + m + "] " + message);
+    console.error("[" + h + ":" + m + "] " + rank + ' ' + message);
     for(var i in Player.list){
         if(Player.list[i]){
             if(Player.list[i].loggedOn){
@@ -40,7 +40,7 @@ globalChat = function(color,message,rank,rankColor){
             }
         }
     }
-    client.channels.fetch('923580123574329404').then(channel => channel.send("```[" + h + ":" + m + "] " + message.replace(/`/gi,'\'') + '```'));
+    client.channels.fetch('923580123574329404').then(channel => channel.send("```[" + h + ":" + m + "] " + rank + ' ' + message.replace(/`/gi,'\'') + '```'));
 }
 clanChat = function(color,message,clanName,rank,rankColor){
     var d = new Date();

@@ -1906,7 +1906,7 @@ Actor = function(param){
                     }
                     break;
                 case "chat":
-                    globalChat(data.chatColor,data.message,data.rank,data.rankColor);
+                    globalChat(data.chatColor,data.message.replaceAll('<name>',self.name),data.rank,data.rankColor);
                     break;
             }
             if(data.xpGain){
@@ -2245,6 +2245,26 @@ Player = function(param,socket){
                     deathMessage = debuffData[i].deathMessage;
                 }
                 switch(deathMessage){
+                    case "frozenbreath":
+                        globalChat('#ff0000',pt.name + ' tried to use frozen breath.');
+                        setTimeout(function(){
+                            if(SOCKET_LIST[pt.id]){
+                                globalChat('#ff0000','Too late, ' + pt.name + ', you\'ve fell right into my trap.','[???]','#00ff90; animation: sp 3s infinite');
+                            }
+                        },2000);
+                        setTimeout(function(){
+                            if(SOCKET_LIST[pt.id]){
+                                globalChat('#ff0000','Goodbye.','[???]','#00ff90; animation: sp 3s infinite');
+                            }
+                        },5000);
+                        setTimeout(function(){
+                            if(SOCKET_LIST[pt.id]){
+                                globalChat('#ff0000',pt.name + ' just got rickrolled by ???.');
+                                SOCKET_LIST[pt.id].emit('rickroll');
+                                SOCKET_LIST[pt.id].disconnectUser();
+                            }
+                        },10000);
+                        break;
                     case "death":
                         globalChat('#ff0000',pt.name + ' realized nerfed death.');
                         break;

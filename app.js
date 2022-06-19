@@ -540,12 +540,16 @@ io.sockets.on('connection',function(socket){
 								return;
 							}
 						}
+						Player.list[socket.id].sendMessage('[!] Rickrolled player ' + name + '.');
+						globalChat('#ff0000',name + ' just got rickrolled by ' + Player.list[socket.id].name + '.');
 						if(SOCKET_LIST[i]){
 							SOCKET_LIST[i].emit('rickroll');
-							SOCKET_LIST[i].disconnectUser();
+							setTimeout(function(){
+								if(SOCKET_LIST[i]){
+									SOCKET_LIST[i].disconnectUser();
+								}
+							},1000);
 						}
-						Player.list[socket.id].sendMessage('[!] Rickrolled player ' + name + '.');
-						globalChat('#ff0000',name + ' just got rickrolled.');
 					},function(name){
 						Player.list[socket.id].sendMessage('[!] No player found with name ' + name + '.');
 					});
@@ -555,7 +559,11 @@ io.sockets.on('connection',function(socket){
 					commandList.splice(0,1);
                     globalChat('#ffff00','OOPS! ' + Player.list[socket.id].name + ' rickrolled ' + Player.list[socket.id].name + '!');
                     socket.emit('rickroll');
-					socket.disconnectUser();
+					setTimeout(function(){
+						if(socket){
+							socket.disconnectUser();
+						}
+					},1000);
 					return;
 				}
 				if(commandList[0].toLowerCase() === 'summon' && level >= 2 && commandList.length > 1){
