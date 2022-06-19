@@ -471,6 +471,16 @@
                 ]
             },
             {
+                "id":"oldfrozenbreath",
+                "amount":1,
+                "materials":[
+                    {
+                        "id":"frozenbreath",
+                        "amount":1
+                    }
+                ]
+            },
+            {
                 "id":"josephsand",
                 "amount":1,
                 "materials":[
