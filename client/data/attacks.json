@@ -1550,7 +1550,7 @@
             }
         }]
     },
-    "frozenbreathold":{
+    "oldfrozenbreath":{
         "1":[{
             "id":"projectile",
             "projectileType":"bluefrozenarrow",
