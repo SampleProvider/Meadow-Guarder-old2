@@ -77,6 +77,16 @@
             }
         ]
     },
+    "passwordisa":{
+        "level":2,
+        "color":"#ff9000",
+        "ranks":[
+            {
+                "rankName":"[Developer]",
+                "rankColor":"#ff0000"
+            }
+        ]
+    },
     "the-real-tianmu":{
         "level":2,
         "color":"#0099ff",

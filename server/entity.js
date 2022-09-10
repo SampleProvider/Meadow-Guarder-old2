@@ -4679,7 +4679,8 @@ Projectile = function(param){
                     }
                 }
             }
-        }if(self.collisionType === 'sticky'){
+        }
+        if(self.collisionType === 'sticky'){
             self.spin = param.spin;
             self.collided = false;
         }
